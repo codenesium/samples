@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PostLinkController : AbstractPostLinkController
 	{
 		public PostLinkController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<PostLinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostLinkService postLinkService,
-			IApiPostLinkModelMapper postLinkModelMapper
+			IApiPostLinkServerModelMapper postLinkModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>351c8f31bc9914b161f9f3108fdc1a59</Hash>
+    <Hash>5238ab02d71fe2442f74058a8d4fbe27</Hash>
 </Codenesium>*/

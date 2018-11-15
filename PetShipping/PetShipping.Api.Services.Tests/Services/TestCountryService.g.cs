@@ -35,7 +35,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiCountryResponseModel> response = await service.All();
+			List<ApiCountryServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -57,7 +57,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			ApiCountryResponseModel response = await service.Get(default(int));
+			ApiCountryServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +78,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			ApiCountryResponseModel response = await service.Get(default(int));
+			ApiCountryServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -88,7 +88,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
-			var model = new ApiCountryRequestModel();
+			var model = new ApiCountryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(Task.FromResult(new Country()));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -100,10 +100,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			CreateResponse<ApiCountryResponseModel> response = await service.Create(model);
+			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRequestModel>()));
+			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Country>()));
 		}
 
@@ -111,7 +111,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
-			var model = new ApiCountryRequestModel();
+			var model = new ApiCountryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(Task.FromResult(new Country()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
 			var service = new CountryService(mock.LoggerMock.Object,
@@ -124,10 +124,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			UpdateResponse<ApiCountryResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()));
+			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Country>()));
 		}
 
@@ -135,7 +135,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
-			var model = new ApiCountryRequestModel();
+			var model = new ApiCountryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -171,7 +171,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
+			List<ApiCountryRequirementServerResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -192,7 +192,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
+			List<ApiCountryRequirementServerResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiDestinationResponseModel> response = await service.DestinationsByCountryId(default(int));
+			List<ApiDestinationServerResponseModel> response = await service.DestinationsByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -236,7 +236,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiDestinationResponseModel> response = await service.DestinationsByCountryId(default(int));
+			List<ApiDestinationServerResponseModel> response = await service.DestinationsByCountryId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -245,5 +245,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fc2d065ffbbf8a0b323269220251dfa7</Hash>
+    <Hash>86e6eebab9480553f7b93b43ba7fb115</Hash>
 </Codenesium>*/

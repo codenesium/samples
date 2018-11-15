@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected ISpaceService SpaceService { get; private set; }
 
-		protected IApiSpaceModelMapper SpaceModelMapper { get; private set; }
+		protected IApiSpaceServerModelMapper SpaceModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractSpaceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpaceService spaceService,
-			IApiSpaceModelMapper spaceModelMapper
+			IApiSpaceServerModelMapper spaceModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpaceResponseModel> response = await this.SpaceService.All(query.Limit, query.Offset);
+			List<ApiSpaceServerResponseModel> response = await this.SpaceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSpaceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSpaceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSpaceResponseModel response = await this.SpaceService.Get(id);
+			ApiSpaceServerResponseModel response = await this.SpaceService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSpaceServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSpaceResponseModel> records = new List<ApiSpaceResponseModel>();
+			List<ApiSpaceServerResponseModel> records = new List<ApiSpaceServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Create(model);
+				CreateResponse<ApiSpaceServerResponseModel> result = await this.SpaceService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSpaceServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSpaceResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSpaceServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceServerRequestModel model)
 		{
-			CreateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Create(model);
+			CreateResponse<ApiSpaceServerResponseModel> result = await this.SpaceService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpaceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpaceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpaceRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpaceServerRequestModel> patch)
 		{
-			ApiSpaceResponseModel record = await this.SpaceService.Get(id);
+			ApiSpaceServerResponseModel record = await this.SpaceService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiSpaceRequestModel model = await this.PatchModel(id, patch);
+				ApiSpaceServerRequestModel model = await this.PatchModel(id, patch) as ApiSpaceServerRequestModel;
 
-				UpdateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Update(id, model);
+				UpdateResponse<ApiSpaceServerResponseModel> result = await this.SpaceService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpaceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpaceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceServerRequestModel model)
 		{
-			ApiSpaceRequestModel request = await this.PatchModel(id, this.SpaceModelMapper.CreatePatch(model));
+			ApiSpaceServerRequestModel request = await this.PatchModel(id, this.SpaceModelMapper.CreatePatch(model)) as ApiSpaceServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSpaceResponseModel> result = await this.SpaceService.Update(id, request);
+				UpdateResponse<ApiSpaceServerResponseModel> result = await this.SpaceService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SpaceService.Delete(id);
@@ -209,7 +219,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("bySpaceFeatureId/{spaceFeatureId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> BySpaceFeatureId(int spaceFeatureId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpaceResponseModel> response = await this.SpaceService.BySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
+			List<ApiSpaceServerResponseModel> response = await this.SpaceService.BySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiSpaceRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceRequestModel> patch)
+		private async Task<ApiSpaceServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceServerRequestModel> patch)
 		{
 			var record = await this.SpaceService.Get(id);
 
@@ -233,7 +243,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiSpaceRequestModel request = this.SpaceModelMapper.MapResponseToRequest(record);
+				ApiSpaceServerRequestModel request = this.SpaceModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1c9a6dc5f9f555bfa860f20c7fe38876</Hash>
+    <Hash>57a233679b8fc35c27de7855a7f4887d</Hash>
 </Codenesium>*/

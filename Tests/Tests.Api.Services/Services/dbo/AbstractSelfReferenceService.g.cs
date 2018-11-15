@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ISelfReferenceRepository SelfReferenceRepository { get; private set; }
 
-		protected IApiSelfReferenceRequestModelValidator SelfReferenceModelValidator { get; private set; }
+		protected IApiSelfReferenceServerRequestModelValidator SelfReferenceModelValidator { get; private set; }
 
 		protected IBOLSelfReferenceMapper BolSelfReferenceMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractSelfReferenceService(
 			ILogger logger,
 			ISelfReferenceRepository selfReferenceRepository,
-			IApiSelfReferenceRequestModelValidator selfReferenceModelValidator,
+			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
 			IBOLSelfReferenceMapper bolSelfReferenceMapper,
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSelfReferenceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SelfReferenceRepository.All(limit, offset);
 
 			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSelfReferenceResponseModel> Get(int id)
+		public virtual async Task<ApiSelfReferenceServerResponseModel> Get(int id)
 		{
 			var record = await this.SelfReferenceRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSelfReferenceResponseModel>> Create(
-			ApiSelfReferenceRequestModel model)
+		public virtual async Task<CreateResponse<ApiSelfReferenceServerResponseModel>> Create(
+			ApiSelfReferenceServerRequestModel model)
 		{
-			CreateResponse<ApiSelfReferenceResponseModel> response = new CreateResponse<ApiSelfReferenceResponseModel>(await this.SelfReferenceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSelfReferenceServerResponseModel> response = ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.CreateResponse(await this.SelfReferenceModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSelfReferenceMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSelfReferenceResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSelfReferenceServerResponseModel>> Update(
 			int id,
-			ApiSelfReferenceRequestModel model)
+			ApiSelfReferenceServerRequestModel model)
 		{
 			var validationResult = await this.SelfReferenceModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.SelfReferenceRepository.Get(id);
 
-				return new UpdateResponse<ApiSelfReferenceResponseModel>(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.UpdateResponse(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSelfReferenceResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.SelfReferenceModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SelfReferenceModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.SelfReferenceRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5ffee21e975fa6b0d2156a0b7af69c9</Hash>
+    <Hash>dfa3b586b2542298c3179794af0bba56</Hash>
 </Codenesium>*/

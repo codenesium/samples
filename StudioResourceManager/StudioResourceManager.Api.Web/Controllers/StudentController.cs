@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class StudentController : AbstractStudentController
 	{
 		public StudentController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<StudentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStudentService studentService,
-			IApiStudentModelMapper studentModelMapper
+			IApiStudentServerModelMapper studentModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4d86d618da97e2b136697301d15c242a</Hash>
+    <Hash>bffbb281343cf8aea8277c5e9d8622ec</Hash>
 </Codenesium>*/

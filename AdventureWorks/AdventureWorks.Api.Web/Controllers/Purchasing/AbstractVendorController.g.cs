@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IVendorService VendorService { get; private set; }
 
-		protected IApiVendorModelMapper VendorModelMapper { get; private set; }
+		protected IApiVendorServerModelMapper VendorModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractVendorController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVendorService vendorService,
-			IApiVendorModelMapper vendorModelMapper
+			IApiVendorServerModelMapper vendorModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVendorServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVendorResponseModel> response = await this.VendorService.All(query.Limit, query.Offset);
+			List<ApiVendorServerResponseModel> response = await this.VendorService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiVendorServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiVendorResponseModel response = await this.VendorService.Get(id);
+			ApiVendorServerResponseModel response = await this.VendorService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiVendorServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVendorRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVendorServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiVendorResponseModel> records = new List<ApiVendorResponseModel>();
+			List<ApiVendorServerResponseModel> records = new List<ApiVendorServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiVendorResponseModel> result = await this.VendorService.Create(model);
+				CreateResponse<ApiVendorServerResponseModel> result = await this.VendorService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiVendorServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiVendorResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiVendorServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVendorRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiVendorServerRequestModel model)
 		{
-			CreateResponse<ApiVendorResponseModel> result = await this.VendorService.Create(model);
+			CreateResponse<ApiVendorServerResponseModel> result = await this.VendorService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVendorServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVendorRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVendorServerRequestModel> patch)
 		{
-			ApiVendorResponseModel record = await this.VendorService.Get(id);
+			ApiVendorServerResponseModel record = await this.VendorService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiVendorRequestModel model = await this.PatchModel(id, patch);
+				ApiVendorServerRequestModel model = await this.PatchModel(id, patch) as ApiVendorServerRequestModel;
 
-				UpdateResponse<ApiVendorResponseModel> result = await this.VendorService.Update(id, model);
+				UpdateResponse<ApiVendorServerResponseModel> result = await this.VendorService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVendorResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVendorServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorServerRequestModel model)
 		{
-			ApiVendorRequestModel request = await this.PatchModel(id, this.VendorModelMapper.CreatePatch(model));
+			ApiVendorServerRequestModel request = await this.PatchModel(id, this.VendorModelMapper.CreatePatch(model)) as ApiVendorServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiVendorResponseModel> result = await this.VendorService.Update(id, request);
+				UpdateResponse<ApiVendorServerResponseModel> result = await this.VendorService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.VendorService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byAccountNumber/{accountNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiVendorServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByAccountNumber(string accountNumber)
 		{
-			ApiVendorResponseModel response = await this.VendorService.ByAccountNumber(accountNumber);
+			ApiVendorServerResponseModel response = await this.VendorService.ByAccountNumber(accountNumber);
 
 			if (response == null)
 			{
@@ -226,26 +236,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/ProductVendorsByBusinessEntityID")]
+		[Route("{vendorID}/PurchaseOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductVendorsByBusinessEntityID(int businessEntityID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiProductVendorResponseModel> response = await this.VendorService.ProductVendorsByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{vendorID}/PurchaseOrderHeadersByVendorID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PurchaseOrderHeadersByVendorID(int vendorID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -254,12 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await this.VendorService.PurchaseOrderHeadersByVendorID(vendorID, query.Limit, query.Offset);
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = await this.VendorService.PurchaseOrderHeadersByVendorID(vendorID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiVendorRequestModel> PatchModel(int id, JsonPatchDocument<ApiVendorRequestModel> patch)
+		private async Task<ApiVendorServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiVendorServerRequestModel> patch)
 		{
 			var record = await this.VendorService.Get(id);
 
@@ -269,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiVendorRequestModel request = this.VendorModelMapper.MapResponseToRequest(record);
+				ApiVendorServerRequestModel request = this.VendorModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -278,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b9276e89c4c4ab2b9303e3b5c7bf0b5f</Hash>
+    <Hash>366235cfeedb0496050564a38ad2d6f5</Hash>
 </Codenesium>*/

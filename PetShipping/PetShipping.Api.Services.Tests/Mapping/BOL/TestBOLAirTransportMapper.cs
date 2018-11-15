@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLAirTransportMapper();
-			ApiAirTransportRequestModel model = new ApiAirTransportRequestModel();
+			ApiAirTransportServerRequestModel model = new ApiAirTransportServerRequestModel();
 			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			BOAirTransport response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLAirTransportMapper();
 			BOAirTransport bo = new BOAirTransport();
 			bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
-			ApiAirTransportResponseModel response = mapper.MapBOToModel(bo);
+			ApiAirTransportServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AirlineId.Should().Be(1);
 			response.FlightNumber.Should().Be("A");
@@ -52,7 +52,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLAirTransportMapper();
 			BOAirTransport bo = new BOAirTransport();
 			bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
-			List<ApiAirTransportResponseModel> response = mapper.MapBOToModel(new List<BOAirTransport>() { { bo } });
+			List<ApiAirTransportServerResponseModel> response = mapper.MapBOToModel(new List<BOAirTransport>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fe9cfc4ffe2d8ae3c55728f91b412e6d</Hash>
+    <Hash>ef626ee88b889e6449af4966061787e4</Hash>
 </Codenesium>*/

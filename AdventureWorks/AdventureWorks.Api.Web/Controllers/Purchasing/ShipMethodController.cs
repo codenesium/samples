@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ShipMethodController : AbstractShipMethodController
 	{
 		public ShipMethodController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShipMethodService shipMethodService,
-			IApiShipMethodModelMapper shipMethodModelMapper
+			IApiShipMethodServerModelMapper shipMethodModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5d3fa22e2baae516e714d8a991283644</Hash>
+    <Hash>bf3392fdb3d5de051136ae62a83e18fc</Hash>
 </Codenesium>*/

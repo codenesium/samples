@@ -18,6 +18,7 @@ namespace FileServiceNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class FileController : AbstractFileController
 	{
 		public FileController(
@@ -25,7 +26,7 @@ namespace FileServiceNS.Api.Web
 			ILogger<FileController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFileService fileService,
-			IApiFileModelMapper fileModelMapper
+			IApiFileServerModelMapper fileModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>db5065717e038b85f91620e7e64e8dab</Hash>
+    <Hash>b6f2cc90770af7b2f818aead7aa9cd37</Hash>
 </Codenesium>*/

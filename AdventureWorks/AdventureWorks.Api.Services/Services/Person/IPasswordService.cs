@@ -1,9 +1,5 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,5 +9,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>925e3488b97d5cb5247c29b24847f921</Hash>
+    <Hash>ffd4f68d1bf59d4bdea1485ef9ee66ce</Hash>
 </Codenesium>*/

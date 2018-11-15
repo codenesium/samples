@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class AdminController : AbstractAdminController
 	{
 		public AdminController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAdminService adminService,
-			IApiAdminModelMapper adminModelMapper
+			IApiAdminServerModelMapper adminModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee6c4074ef54f3db220fc90209c4bc7a</Hash>
+    <Hash>7440bc8583d282eaff557a3bb1f0db91</Hash>
 </Codenesium>*/

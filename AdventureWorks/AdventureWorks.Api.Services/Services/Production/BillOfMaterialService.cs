@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public BillOfMaterialService(
 			ILogger<IBillOfMaterialRepository> logger,
 			IBillOfMaterialRepository billOfMaterialRepository,
-			IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator,
-			IBOLBillOfMaterialMapper bolbillOfMaterialMapper,
-			IDALBillOfMaterialMapper dalbillOfMaterialMapper)
+			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
+			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
+			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base(logger,
 			       billOfMaterialRepository,
 			       billOfMaterialModelValidator,
-			       bolbillOfMaterialMapper,
-			       dalbillOfMaterialMapper)
+			       bolBillOfMaterialMapper,
+			       dalBillOfMaterialMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3b38265f1d5855745117a0e4490607c</Hash>
+    <Hash>32dbac41e4d017cfab38aa7a740f22b9</Hash>
 </Codenesium>*/

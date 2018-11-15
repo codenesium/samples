@@ -1,4 +1,3 @@
-using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace FileServiceNS.Api.Services
 	{
 		public virtual BOBucket MapModelToBO(
 			int id,
-			ApiBucketRequestModel model
+			ApiBucketServerRequestModel model
 			)
 		{
 			BOBucket boBucket = new BOBucket();
@@ -20,20 +19,20 @@ namespace FileServiceNS.Api.Services
 			return boBucket;
 		}
 
-		public virtual ApiBucketResponseModel MapBOToModel(
+		public virtual ApiBucketServerResponseModel MapBOToModel(
 			BOBucket boBucket)
 		{
-			var model = new ApiBucketResponseModel();
+			var model = new ApiBucketServerResponseModel();
 
 			model.SetProperties(boBucket.Id, boBucket.ExternalId, boBucket.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiBucketResponseModel> MapBOToModel(
+		public virtual List<ApiBucketServerResponseModel> MapBOToModel(
 			List<BOBucket> items)
 		{
-			List<ApiBucketResponseModel> response = new List<ApiBucketResponseModel>();
+			List<ApiBucketServerResponseModel> response = new List<ApiBucketServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d39753c0a77e7dea3331a28a18e8c859</Hash>
+    <Hash>a691178a83f4b19fd3ca7b88455c0165</Hash>
 </Codenesium>*/

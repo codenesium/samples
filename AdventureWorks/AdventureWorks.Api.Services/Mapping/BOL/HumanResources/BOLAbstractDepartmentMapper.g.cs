@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BODepartment MapModelToBO(
 			short departmentID,
-			ApiDepartmentRequestModel model
+			ApiDepartmentServerRequestModel model
 			)
 		{
 			BODepartment boDepartment = new BODepartment();
@@ -21,20 +20,20 @@ namespace AdventureWorksNS.Api.Services
 			return boDepartment;
 		}
 
-		public virtual ApiDepartmentResponseModel MapBOToModel(
+		public virtual ApiDepartmentServerResponseModel MapBOToModel(
 			BODepartment boDepartment)
 		{
-			var model = new ApiDepartmentResponseModel();
+			var model = new ApiDepartmentServerResponseModel();
 
 			model.SetProperties(boDepartment.DepartmentID, boDepartment.GroupName, boDepartment.ModifiedDate, boDepartment.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiDepartmentResponseModel> MapBOToModel(
+		public virtual List<ApiDepartmentServerResponseModel> MapBOToModel(
 			List<BODepartment> items)
 		{
-			List<ApiDepartmentResponseModel> response = new List<ApiDepartmentResponseModel>();
+			List<ApiDepartmentServerResponseModel> response = new List<ApiDepartmentServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ee21dac43fb109b58a8b02aa02e7a01</Hash>
+    <Hash>cd9cd6f1aaae6178f342fc2aa99c9372</Hash>
 </Codenesium>*/

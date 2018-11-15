@@ -31,34 +31,43 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
 		[Key]
 		[Column("TerritoryID")]
-		public int TerritoryID { get; private set; }
+		public virtual int TerritoryID { get; private set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual SalesPerson SalesPersonNavigation { get; private set; }
 
+		public void SetSalesPersonNavigation(SalesPerson item)
+		{
+			this.SalesPersonNavigation = item;
+		}
+
 		[ForeignKey("TerritoryID")]
 		public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
+
+		public void SetSalesTerritoryNavigation(SalesTerritory item)
+		{
+			this.SalesTerritoryNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd1b8a33fc9c22540bbbd5dace1bffaf</Hash>
+    <Hash>5a8c949ea74f8c244a32c7b14fb80567</Hash>
 </Codenesium>*/

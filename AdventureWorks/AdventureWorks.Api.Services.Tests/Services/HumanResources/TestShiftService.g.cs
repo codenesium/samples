@@ -29,11 +29,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			List<ApiShiftResponseModel> response = await service.All();
+			List<ApiShiftServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,11 +47,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.Get(default(int));
+			ApiShiftServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -68,11 +64,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.Get(default(int));
+			ApiShiftServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,20 +76,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
-			var model = new ApiShiftRequestModel();
+			var model = new ApiShiftServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Shift>())).Returns(Task.FromResult(new Shift()));
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			CreateResponse<ApiShiftResponseModel> response = await service.Create(model);
+			CreateResponse<ApiShiftServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftRequestModel>()));
+			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Shift>()));
 		}
 
@@ -103,21 +95,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
-			var model = new ApiShiftRequestModel();
+			var model = new ApiShiftServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Shift>())).Returns(Task.FromResult(new Shift()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			UpdateResponse<ApiShiftResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiShiftServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftRequestModel>()));
+			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Shift>()));
 		}
 
@@ -125,15 +115,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
-			var model = new ApiShiftRequestModel();
+			var model = new ApiShiftServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -152,11 +140,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.ByName(default(string));
+			ApiShiftServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -171,11 +157,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.ByName(default(string));
+			ApiShiftServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -191,11 +175,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
+			ApiShiftServerResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>()));
@@ -210,58 +192,16 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
-			ApiShiftResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
+			ApiShiftServerResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>()));
-		}
-
-		[Fact]
-		public async void EmployeeDepartmentHistoriesByShiftID_Exists()
-		{
-			var mock = new ServiceMockFacade<IShiftRepository>();
-			var records = new List<EmployeeDepartmentHistory>();
-			records.Add(new EmployeeDepartmentHistory());
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new ShiftService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
-
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByShiftID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EmployeeDepartmentHistoriesByShiftID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IShiftRepository>();
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmployeeDepartmentHistory>>(new List<EmployeeDepartmentHistory>()));
-			var service = new ShiftService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
-			                               mock.DALMapperMockFactory.DALShiftMapperMock,
-			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
-
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByShiftID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8db926601e20902e8eefdc95fc0561c5</Hash>
+    <Hash>4fc6859e88d440a749aaa985ca266fc0</Hash>
 </Codenesium>*/

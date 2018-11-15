@@ -76,40 +76,28 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinationsByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<PipelineStepDestination>().Where(x => x.DestinationId == destinationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+		}
+
 		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
 			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
-		}
-
-		public async virtual Task<List<Destination>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.PipelineStepDestinations
-			              join destinations in this.Context.Destinations on
-			              refTable.DestinationId equals destinations.Id
-			              where refTable.DestinationId == destinationId
-			              select destinations).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Destination>> Where(
 			Expression<Func<Destination, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Destination, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Destination, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Destination>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Destination>();
-			}
-			else
-			{
-				return await this.Context.Set<Destination>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Destination>();
-			}
+			return await this.Context.Set<Destination>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Destination>();
 		}
 
 		private async Task<Destination> GetById(int id)
@@ -122,5 +110,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2503ecebc7ae3db52d575b80528c2b5b</Hash>
+    <Hash>e3d6fc533847a24d9ae93bfdee3dd797</Hash>
 </Codenesium>*/

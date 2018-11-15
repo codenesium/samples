@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace TestsNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace TestsNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<TableRepository>> loggerMoc = TableRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TableRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace TestsNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<TableRepository>> loggerMoc = TableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TableRepositoryMoc.GetContext();
+			var repository = new TableRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d5970223bf0a48039ceecff645db0fd</Hash>
+    <Hash>899650b631332a4b61422f6c92491ae1</Hash>
 </Codenesium>*/

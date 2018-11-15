@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLUserMapper();
-			ApiUserRequestModel model = new ApiUserRequestModel();
+			ApiUserServerRequestModel model = new ApiUserServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", "A", "A");
 			BOUser response = mapper.MapModelToBO(1, model);
 
@@ -42,7 +42,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", "A", "A");
-			ApiUserResponseModel response = mapper.MapBOToModel(bo);
+			ApiUserServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.BioImgUrl.Should().Be("A");
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -66,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", "A", "A");
-			List<ApiUserResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
+			List<ApiUserServerResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -74,5 +74,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9ecf1ce67c93b957cd1a94d74196a57f</Hash>
+    <Hash>e389645b9b2b9a78b9704f0a903e3168</Hash>
 </Codenesium>*/

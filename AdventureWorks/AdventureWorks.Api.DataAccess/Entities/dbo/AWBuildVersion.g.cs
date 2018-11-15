@@ -27,20 +27,20 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(25)]
 		[Column("Database Version")]
-		public string Database_Version { get; private set; }
+		public virtual string Database_Version { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("SystemInformationID")]
-		public int SystemInformationID { get; private set; }
+		public virtual int SystemInformationID { get; private set; }
 
 		[Column("VersionDate")]
-		public DateTime VersionDate { get; private set; }
+		public virtual DateTime VersionDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a03bfb33419cac0628751651d4270651</Hash>
+    <Hash>860d7c2393935b7d4f94bbc6f83f9c4c</Hash>
 </Codenesium>*/

@@ -81,35 +81,28 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
-		public async virtual Task<List<Handler>> ByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineStepsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.HandlerPipelineSteps
-			              join handlers in this.Context.Handlers on
-			              refTable.HandlerId equals handlers.Id
-			              where refTable.HandlerId == handlerId
-			              select handlers).Skip(offset).Take(limit).ToListAsync();
+			return await this.Context.Set<HandlerPipelineStep>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
+		}
+
+		public async virtual Task<List<OtherTransport>> OtherTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<OtherTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
 		}
 
 		protected async Task<List<Handler>> Where(
 			Expression<Func<Handler, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Handler, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Handler, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Handler>();
-			}
-			else
-			{
-				return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Handler>();
-			}
+			return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Handler>();
 		}
 
 		private async Task<Handler> GetById(int id)
@@ -122,5 +115,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b59fdad76197502964b0f0c59292176b</Hash>
+    <Hash>7d43940c9c163b4d99c03cb51978c306</Hash>
 </Codenesium>*/

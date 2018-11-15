@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IProductDescriptionService ProductDescriptionService { get; private set; }
 
-		protected IApiProductDescriptionModelMapper ProductDescriptionModelMapper { get; private set; }
+		protected IApiProductDescriptionServerModelMapper ProductDescriptionModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractProductDescriptionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductDescriptionService productDescriptionService,
-			IApiProductDescriptionModelMapper productDescriptionModelMapper
+			IApiProductDescriptionServerModelMapper productDescriptionModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductDescriptionServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductDescriptionResponseModel> response = await this.ProductDescriptionService.All(query.Limit, query.Offset);
+			List<ApiProductDescriptionServerResponseModel> response = await this.ProductDescriptionService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiProductDescriptionServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiProductDescriptionResponseModel response = await this.ProductDescriptionService.Get(id);
+			ApiProductDescriptionServerResponseModel response = await this.ProductDescriptionService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiProductDescriptionServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDescriptionRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDescriptionServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiProductDescriptionResponseModel> records = new List<ApiProductDescriptionResponseModel>();
+			List<ApiProductDescriptionServerResponseModel> records = new List<ApiProductDescriptionServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Create(model);
+				CreateResponse<ApiProductDescriptionServerResponseModel> result = await this.ProductDescriptionService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiProductDescriptionServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiProductDescriptionResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiProductDescriptionServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductDescriptionRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductDescriptionServerRequestModel model)
 		{
-			CreateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Create(model);
+			CreateResponse<ApiProductDescriptionServerResponseModel> result = await this.ProductDescriptionService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductDescriptionRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductDescriptionServerRequestModel> patch)
 		{
-			ApiProductDescriptionResponseModel record = await this.ProductDescriptionService.Get(id);
+			ApiProductDescriptionServerResponseModel record = await this.ProductDescriptionService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiProductDescriptionRequestModel model = await this.PatchModel(id, patch);
+				ApiProductDescriptionServerRequestModel model = await this.PatchModel(id, patch) as ApiProductDescriptionServerRequestModel;
 
-				UpdateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Update(id, model);
+				UpdateResponse<ApiProductDescriptionServerResponseModel> result = await this.ProductDescriptionService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProductDescriptionServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionServerRequestModel model)
 		{
-			ApiProductDescriptionRequestModel request = await this.PatchModel(id, this.ProductDescriptionModelMapper.CreatePatch(model));
+			ApiProductDescriptionServerRequestModel request = await this.PatchModel(id, this.ProductDescriptionModelMapper.CreatePatch(model)) as ApiProductDescriptionServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiProductDescriptionResponseModel> result = await this.ProductDescriptionService.Update(id, request);
+				UpdateResponse<ApiProductDescriptionServerResponseModel> result = await this.ProductDescriptionService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ProductDescriptionService.Delete(id);
@@ -207,23 +217,25 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{productDescriptionID}/ProductModelProductDescriptionCulturesByProductDescriptionID")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductModelProductDescriptionCulturesByProductDescriptionID(int productDescriptionID, int? limit, int? offset)
+		[ProducesResponseType(typeof(ApiProductDescriptionServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			ApiProductDescriptionServerResponseModel response = await this.ProductDescriptionService.ByRowguid(rowguid);
+
+			if (response == null)
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
-
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.ProductDescriptionService.ProductModelProductDescriptionCulturesByProductDescriptionID(productDescriptionID, query.Limit, query.Offset);
-
-			return this.Ok(response);
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
-		private async Task<ApiProductDescriptionRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductDescriptionRequestModel> patch)
+		private async Task<ApiProductDescriptionServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductDescriptionServerRequestModel> patch)
 		{
 			var record = await this.ProductDescriptionService.Get(id);
 
@@ -233,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiProductDescriptionRequestModel request = this.ProductDescriptionModelMapper.MapResponseToRequest(record);
+				ApiProductDescriptionServerRequestModel request = this.ProductDescriptionModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>962071eaffb3adf279bfe2e2d0be36cb</Hash>
+    <Hash>1748797ea6667c6f1f5f9b2a8952577f</Hash>
 </Codenesium>*/

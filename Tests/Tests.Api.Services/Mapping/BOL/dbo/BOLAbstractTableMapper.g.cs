@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOTable MapModelToBO(
 			int id,
-			ApiTableRequestModel model
+			ApiTableServerRequestModel model
 			)
 		{
 			BOTable boTable = new BOTable();
@@ -19,20 +18,20 @@ namespace TestsNS.Api.Services
 			return boTable;
 		}
 
-		public virtual ApiTableResponseModel MapBOToModel(
+		public virtual ApiTableServerResponseModel MapBOToModel(
 			BOTable boTable)
 		{
-			var model = new ApiTableResponseModel();
+			var model = new ApiTableServerResponseModel();
 
 			model.SetProperties(boTable.Id, boTable.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiTableResponseModel> MapBOToModel(
+		public virtual List<ApiTableServerResponseModel> MapBOToModel(
 			List<BOTable> items)
 		{
-			List<ApiTableResponseModel> response = new List<ApiTableResponseModel>();
+			List<ApiTableServerResponseModel> response = new List<ApiTableServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72a89120f9e26a09b11d14205305fdc7</Hash>
+    <Hash>0f4845e60b58536d3ade4292fb710e1a</Hash>
 </Codenesium>*/

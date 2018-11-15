@@ -30,16 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.All();
+			List<ApiPersonServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -56,16 +50,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			ApiPersonResponseModel response = await service.Get(default(int));
+			ApiPersonServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -81,16 +69,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			ApiPersonResponseModel response = await service.Get(default(int));
+			ApiPersonServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -100,26 +82,20 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			var model = new ApiPersonRequestModel();
+			var model = new ApiPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Person>())).Returns(Task.FromResult(new Person()));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			CreateResponse<ApiPersonResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPersonServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPersonRequestModel>()));
+			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Person>()));
 		}
 
@@ -127,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			var model = new ApiPersonRequestModel();
+			var model = new ApiPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Person>())).Returns(Task.FromResult(new Person()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 			var service = new PersonService(mock.LoggerMock.Object,
@@ -135,19 +111,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			UpdateResponse<ApiPersonResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPersonServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonRequestModel>()));
+			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Person>()));
 		}
 
@@ -155,27 +125,60 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			var model = new ApiPersonRequestModel();
+			var model = new ApiPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Exists()
+		{
+			var mock = new ServiceMockFacade<IPersonRepository>();
+			var record = new Person();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new PersonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
+
+			ApiPersonServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IPersonRepository>();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<Person>(null));
+			var service = new PersonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
+
+			ApiPersonServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
 		}
 
 		[Fact]
@@ -190,16 +193,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByLastNameFirstNameMiddleName(default(string), default(string), default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByLastNameFirstNameMiddleName("test_value", "test_value", "test_value");
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,16 +212,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByLastNameFirstNameMiddleName(default(string), default(string), default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByLastNameFirstNameMiddleName("test_value", "test_value", "test_value");
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -242,16 +233,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByAdditionalContactInfo(default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByAdditionalContactInfo("test_value");
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -267,16 +252,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByAdditionalContactInfo(default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByAdditionalContactInfo("test_value");
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -294,16 +273,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByDemographic("test_value");
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -319,123 +292,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
+			List<ApiPersonServerResponseModel> response = await service.ByDemographic("test_value");
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void BusinessEntityContactsByPersonID_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			var records = new List<BusinessEntityContact>();
-			records.Add(new BusinessEntityContact());
-			mock.RepositoryMock.Setup(x => x.BusinessEntityContactsByPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContactsByPersonID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.BusinessEntityContactsByPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void BusinessEntityContactsByPersonID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.BusinessEntityContactsByPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContactsByPersonID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.BusinessEntityContactsByPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EmailAddressesByBusinessEntityID_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			var records = new List<EmailAddress>();
-			records.Add(new EmailAddress());
-			mock.RepositoryMock.Setup(x => x.EmailAddressesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiEmailAddressResponseModel> response = await service.EmailAddressesByBusinessEntityID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmailAddressesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EmailAddressesByBusinessEntityID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.EmailAddressesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmailAddress>>(new List<EmailAddress>()));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiEmailAddressResponseModel> response = await service.EmailAddressesByBusinessEntityID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmailAddressesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -450,16 +313,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPasswordResponseModel> response = await service.PasswordsByBusinessEntityID(default(int));
+			List<ApiPasswordServerResponseModel> response = await service.PasswordsByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.PasswordsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -475,75 +332,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
+			                                mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPasswordResponseModel> response = await service.PasswordsByBusinessEntityID(default(int));
+			List<ApiPasswordServerResponseModel> response = await service.PasswordsByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.PasswordsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PersonPhonesByBusinessEntityID_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			var records = new List<PersonPhone>();
-			records.Add(new PersonPhone());
-			mock.RepositoryMock.Setup(x => x.PersonPhonesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiPersonPhoneResponseModel> response = await service.PersonPhonesByBusinessEntityID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonPhonesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PersonPhonesByBusinessEntityID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.PersonPhonesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonPhone>>(new List<PersonPhone>()));
-			var service = new PersonService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEmailAddressMapperMock,
-			                                mock.DALMapperMockFactory.DALEmailAddressMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPasswordMapperMock,
-			                                mock.DALMapperMockFactory.DALPasswordMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
-
-			List<ApiPersonPhoneResponseModel> response = await service.PersonPhonesByBusinessEntityID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonPhonesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>331f198665ca92977a9fb7aad326ef44</Hash>
+    <Hash>6186749b5df49ede708d55a1a1ffb711</Hash>
 </Codenesium>*/

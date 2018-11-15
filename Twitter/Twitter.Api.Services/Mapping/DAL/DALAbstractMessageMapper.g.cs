@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -47,5 +46,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ab0dc515e69f1e58e2fec35df05f234</Hash>
+    <Hash>a1fbe645295d07bc6746247a9f89c662</Hash>
 </Codenesium>*/

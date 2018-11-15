@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TestsNS.Api.Services
 		public PersonService(
 			ILogger<IPersonRepository> logger,
 			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolpersonMapper,
-			IDALPersonMapper dalpersonMapper)
+			IApiPersonServerRequestModelValidator personModelValidator,
+			IBOLPersonMapper bolPersonMapper,
+			IDALPersonMapper dalPersonMapper)
 			: base(logger,
 			       personRepository,
 			       personModelValidator,
-			       bolpersonMapper,
-			       dalpersonMapper)
+			       bolPersonMapper,
+			       dalPersonMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e58921773d657f1221f5de147d567935</Hash>
+    <Hash>9c6984f4998cd338194ee45c10dd6428</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			var record = new ApiMachineResponseModel();
-			var records = new List<ApiMachineResponseModel>();
+			var record = new ApiMachineServerResponseModel();
+			var records = new List<ApiMachineServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiMachineResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiMachineServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiMachineResponseModel>>(new List<ApiMachineResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiMachineServerResponseModel>>(new List<ApiMachineServerResponseModel>()));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiMachineResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiMachineServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineServerResponseModel()));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiMachineResponseModel;
+			var record = (response as OkObjectResult).Value as ApiMachineServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineServerResponseModel>(null));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiMachineResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiMachineResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiMachineServerResponseModel>.CreateResponse(null as ApiMachineServerResponseModel);
+
+			mockResponse.SetRecord(new ApiMachineServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineServerResponseModel>>(mockResponse));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiMachineRequestModel>();
-			records.Add(new ApiMachineRequestModel());
+			var records = new List<ApiMachineServerRequestModel>();
+			records.Add(new ApiMachineServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiMachineResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiMachineServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiMachineResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiMachineServerResponseModel>>(null as ApiMachineServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineServerResponseModel>>(mockResponse.Object));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiMachineRequestModel>();
-			records.Add(new ApiMachineRequestModel());
+			var records = new List<ApiMachineServerRequestModel>();
+			records.Add(new ApiMachineServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiMachineResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiMachineResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiMachineServerResponseModel>.CreateResponse(null as ApiMachineServerResponseModel);
+
+			mockResponse.SetRecord(new ApiMachineServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineServerResponseModel>>(mockResponse));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiMachineRequestModel());
+			IActionResult response = await controller.Create(new ApiMachineServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiMachineResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiMachineServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiMachineResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiMachineResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiMachineServerResponseModel>>(null as ApiMachineServerResponseModel);
+			var mockRecord = new ApiMachineServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiMachineServerResponseModel>>(mockResponse.Object));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiMachineRequestModel());
+			IActionResult response = await controller.Create(new ApiMachineServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiMachineResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiMachineServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>()))
-			.Callback<int, ApiMachineRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()))
+			.Callback<int, ApiMachineServerRequestModel>(
 				(id, model) => model.Description.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiMachineResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineResponseModel>(new ApiMachineResponseModel()));
-			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiMachineServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineServerResponseModel>(new ApiMachineServerResponseModel()));
+			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiMachineRequestModel>();
+			var patch = new JsonPatchDocument<ApiMachineServerRequestModel>();
 			patch.Replace(x => x.Description, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineServerResponseModel>(null));
 			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiMachineRequestModel>();
+			var patch = new JsonPatchDocument<ApiMachineServerRequestModel>();
 			patch.Replace(x => x.Description, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiMachineResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiMachineServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineResponseModel()));
-			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineServerResponseModel()));
+			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiMachineRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiMachineServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiMachineResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiMachineServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineResponseModel()));
-			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiMachineServerResponseModel()));
+			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiMachineRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiMachineServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			MachineControllerMockFacade mock = new MachineControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiMachineResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiMachineServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineResponseModel>(null));
-			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiMachineServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiMachineServerResponseModel>(null));
+			MachineController controller = new MachineController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiMachineServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiMachineRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiMachineServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<IMachineService> ServiceMock { get; set; } = new Mock<IMachineService>();
 
-		public Mock<IApiMachineModelMapper> ModelMapperMock { get; set; } = new Mock<IApiMachineModelMapper>();
+		public Mock<IApiMachineServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiMachineServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>aeb5a31143e5f227b43b9c563c32b619</Hash>
+    <Hash>6a1b81b63f8cb2613e06f95d8343c18a</Hash>
 </Codenesium>*/

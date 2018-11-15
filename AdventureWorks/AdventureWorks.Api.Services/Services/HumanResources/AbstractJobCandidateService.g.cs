@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IJobCandidateRepository JobCandidateRepository { get; private set; }
 
-		protected IApiJobCandidateRequestModelValidator JobCandidateModelValidator { get; private set; }
+		protected IApiJobCandidateServerRequestModelValidator JobCandidateModelValidator { get; private set; }
 
 		protected IBOLJobCandidateMapper BolJobCandidateMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractJobCandidateService(
 			ILogger logger,
 			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
+			IApiJobCandidateServerRequestModelValidator jobCandidateModelValidator,
 			IBOLJobCandidateMapper bolJobCandidateMapper,
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiJobCandidateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiJobCandidateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.JobCandidateRepository.All(limit, offset);
 
 			return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiJobCandidateResponseModel> Get(int jobCandidateID)
+		public virtual async Task<ApiJobCandidateServerResponseModel> Get(int jobCandidateID)
 		{
 			var record = await this.JobCandidateRepository.Get(jobCandidateID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
-			ApiJobCandidateRequestModel model)
+		public virtual async Task<CreateResponse<ApiJobCandidateServerResponseModel>> Create(
+			ApiJobCandidateServerRequestModel model)
 		{
-			CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.JobCandidateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiJobCandidateServerResponseModel> response = ValidationResponseFactory<ApiJobCandidateServerResponseModel>.CreateResponse(await this.JobCandidateModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolJobCandidateMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiJobCandidateResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiJobCandidateServerResponseModel>> Update(
 			int jobCandidateID,
-			ApiJobCandidateRequestModel model)
+			ApiJobCandidateServerRequestModel model)
 		{
 			var validationResult = await this.JobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.JobCandidateRepository.Get(jobCandidateID);
 
-				return new UpdateResponse<ApiJobCandidateResponseModel>(this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiJobCandidateServerResponseModel>.UpdateResponse(this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiJobCandidateResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiJobCandidateServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int jobCandidateID)
 		{
-			ActionResponse response = new ActionResponse(await this.JobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.JobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
+
 			if (response.Success)
 			{
 				await this.JobCandidateRepository.Delete(jobCandidateID);
@@ -108,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiJobCandidateServerResponseModel>> ByBusinessEntityID(int? businessEntityID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<JobCandidate> records = await this.JobCandidateRepository.ByBusinessEntityID(businessEntityID, limit, offset);
 
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bd11cb9d6501a0515761da3a3898d15</Hash>
+    <Hash>f4570fc0f56be70f259f6b85c923bc6b</Hash>
 </Codenesium>*/

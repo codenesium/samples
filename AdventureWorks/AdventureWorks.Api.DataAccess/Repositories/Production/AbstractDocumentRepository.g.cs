@@ -76,40 +76,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Document>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<Document> ByRowguid(Guid rowguid)
 		{
-			return await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
+			return await this.Context.Set<Document>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
-		public async virtual Task<List<Document>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Document>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.ProductDocuments
-			              join documents in this.Context.Documents on
-			              refTable.DocumentNode equals documents.DocumentNode
-			              where refTable.ProductID == productID
-			              select documents).Skip(offset).Take(limit).ToListAsync();
+			return await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
 		}
 
 		protected async Task<List<Document>> Where(
 			Expression<Func<Document, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Document, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Document, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Rowguid;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
-			}
-			else
-			{
-				return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
-			}
+			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
 		}
 
 		private async Task<Document> GetById(Guid rowguid)
@@ -122,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>083fa5b3866b9de5943b744f5b78dfb2</Hash>
+    <Hash>8cb3ccb7bfd9a33b043b60f2b54bbc85</Hash>
 </Codenesium>*/

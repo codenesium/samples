@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLHandlerMapper();
-			ApiHandlerRequestModel model = new ApiHandlerRequestModel();
+			ApiHandlerServerRequestModel model = new ApiHandlerServerRequestModel();
 			model.SetProperties(1, "A", "A", "A", "A");
 			BOHandler response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLHandlerMapper();
 			BOHandler bo = new BOHandler();
 			bo.SetProperties(1, 1, "A", "A", "A", "A");
-			ApiHandlerResponseModel response = mapper.MapBOToModel(bo);
+			ApiHandlerServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CountryId.Should().Be(1);
 			response.Email.Should().Be("A");
@@ -50,7 +50,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLHandlerMapper();
 			BOHandler bo = new BOHandler();
 			bo.SetProperties(1, 1, "A", "A", "A", "A");
-			List<ApiHandlerResponseModel> response = mapper.MapBOToModel(new List<BOHandler>() { { bo } });
+			List<ApiHandlerServerResponseModel> response = mapper.MapBOToModel(new List<BOHandler>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>23eb3ca7d30c7ec50447cb3d7313c003</Hash>
+    <Hash>95d6c17a8e1406e58af9b75ecc43a4db</Hash>
 </Codenesium>*/

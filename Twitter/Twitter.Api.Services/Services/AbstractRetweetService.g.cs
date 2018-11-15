@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IRetweetRepository RetweetRepository { get; private set; }
 
-		protected IApiRetweetRequestModelValidator RetweetModelValidator { get; private set; }
+		protected IApiRetweetServerRequestModelValidator RetweetModelValidator { get; private set; }
 
 		protected IBOLRetweetMapper BolRetweetMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractRetweetService(
 			ILogger logger,
 			IRetweetRepository retweetRepository,
-			IApiRetweetRequestModelValidator retweetModelValidator,
+			IApiRetweetServerRequestModelValidator retweetModelValidator,
 			IBOLRetweetMapper bolRetweetMapper,
 			IDALRetweetMapper dalRetweetMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiRetweetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRetweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.RetweetRepository.All(limit, offset);
 
 			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiRetweetResponseModel> Get(int id)
+		public virtual async Task<ApiRetweetServerResponseModel> Get(int id)
 		{
 			var record = await this.RetweetRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiRetweetResponseModel>> Create(
-			ApiRetweetRequestModel model)
+		public virtual async Task<CreateResponse<ApiRetweetServerResponseModel>> Create(
+			ApiRetweetServerRequestModel model)
 		{
-			CreateResponse<ApiRetweetResponseModel> response = new CreateResponse<ApiRetweetResponseModel>(await this.RetweetModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRetweetServerResponseModel> response = ValidationResponseFactory<ApiRetweetServerResponseModel>.CreateResponse(await this.RetweetModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolRetweetMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiRetweetResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiRetweetServerResponseModel>> Update(
 			int id,
-			ApiRetweetRequestModel model)
+			ApiRetweetServerRequestModel model)
 		{
 			var validationResult = await this.RetweetModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.RetweetRepository.Get(id);
 
-				return new UpdateResponse<ApiRetweetResponseModel>(this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiRetweetServerResponseModel>.UpdateResponse(this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiRetweetResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiRetweetServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.RetweetModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.RetweetModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.RetweetRepository.Delete(id);
@@ -108,14 +105,14 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiRetweetResponseModel>> ByRetwitterUserId(int? retwitterUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiRetweetServerResponseModel>> ByRetwitterUserId(int? retwitterUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Retweet> records = await this.RetweetRepository.ByRetwitterUserId(retwitterUserId, limit, offset);
 
 			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiRetweetResponseModel>> ByTweetTweetId(int tweetTweetId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiRetweetServerResponseModel>> ByTweetTweetId(int tweetTweetId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Retweet> records = await this.RetweetRepository.ByTweetTweetId(tweetTweetId, limit, offset);
 
@@ -125,5 +122,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>535bff1418af0e04fa908fd4b5dfbca5</Hash>
+    <Hash>1f040dc8bca5cfa61281d4b9c3f3d51e</Hash>
 </Codenesium>*/

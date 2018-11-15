@@ -14,29 +14,27 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int nextChainId,
 			int previousChainId)
 		{
+			this.Id = id;
 			this.NextChainId = nextChainId;
 			this.PreviousChainId = previousChainId;
 		}
 
 		[Key]
+		[Column("id")]
+		public virtual int Id { get; private set; }
+
 		[Column("nextChainId")]
-		public int NextChainId { get; private set; }
+		public virtual int NextChainId { get; private set; }
 
-		[Key]
 		[Column("previousChainId")]
-		public int PreviousChainId { get; private set; }
-
-		[ForeignKey("NextChainId")]
-		public virtual Chain ChainNavigation { get; private set; }
-
-		[ForeignKey("PreviousChainId")]
-		public virtual Chain Chain1Navigation { get; private set; }
+		public virtual int PreviousChainId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e195661f7380620028f79fd5f80a81ba</Hash>
+    <Hash>f9b0f0fb18b40c7d047b42bfaaec86b6</Hash>
 </Codenesium>*/

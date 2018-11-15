@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace FileServiceNS.Api.Services
 		public BucketService(
 			ILogger<IBucketRepository> logger,
 			IBucketRepository bucketRepository,
-			IApiBucketRequestModelValidator bucketModelValidator,
-			IBOLBucketMapper bolbucketMapper,
-			IDALBucketMapper dalbucketMapper,
+			IApiBucketServerRequestModelValidator bucketModelValidator,
+			IBOLBucketMapper bolBucketMapper,
+			IDALBucketMapper dalBucketMapper,
 			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base(logger,
 			       bucketRepository,
 			       bucketModelValidator,
-			       bolbucketMapper,
-			       dalbucketMapper,
+			       bolBucketMapper,
+			       dalBucketMapper,
 			       bolFileMapper,
 			       dalFileMapper)
 		{
@@ -34,5 +27,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b43609b71f3d83ac30a71b034989cad4</Hash>
+    <Hash>7003f8f0d576c58042e66fe2f19c2573</Hash>
 </Codenesium>*/

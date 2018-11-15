@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IDocumentRepository DocumentRepository { get; private set; }
 
-		protected IApiDocumentRequestModelValidator DocumentModelValidator { get; private set; }
+		protected IApiDocumentServerRequestModelValidator DocumentModelValidator { get; private set; }
 
 		protected IBOLDocumentMapper BolDocumentMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractDocumentService(
 			ILogger logger,
 			IDocumentRepository documentRepository,
-			IApiDocumentRequestModelValidator documentModelValidator,
+			IApiDocumentServerRequestModelValidator documentModelValidator,
 			IBOLDocumentMapper bolDocumentMapper,
 			IDALDocumentMapper dalDocumentMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDocumentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.DocumentRepository.All(limit, offset);
 
 			return this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiDocumentResponseModel> Get(Guid rowguid)
+		public virtual async Task<ApiDocumentServerResponseModel> Get(Guid rowguid)
 		{
 			var record = await this.DocumentRepository.Get(rowguid);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiDocumentResponseModel>> Create(
-			ApiDocumentRequestModel model)
+		public virtual async Task<CreateResponse<ApiDocumentServerResponseModel>> Create(
+			ApiDocumentServerRequestModel model)
 		{
-			CreateResponse<ApiDocumentResponseModel> response = new CreateResponse<ApiDocumentResponseModel>(await this.DocumentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDocumentServerResponseModel> response = ValidationResponseFactory<ApiDocumentServerResponseModel>.CreateResponse(await this.DocumentModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolDocumentMapper.MapModelToBO(default(Guid), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiDocumentResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiDocumentServerResponseModel>> Update(
 			Guid rowguid,
-			ApiDocumentRequestModel model)
+			ApiDocumentServerRequestModel model)
 		{
 			var validationResult = await this.DocumentModelValidator.ValidateUpdateAsync(rowguid, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.DocumentRepository.Get(rowguid);
 
-				return new UpdateResponse<ApiDocumentResponseModel>(this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiDocumentServerResponseModel>.UpdateResponse(this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiDocumentResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiDocumentServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			Guid rowguid)
 		{
-			ActionResponse response = new ActionResponse(await this.DocumentModelValidator.ValidateDeleteAsync(rowguid));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DocumentModelValidator.ValidateDeleteAsync(rowguid));
+
 			if (response.Success)
 			{
 				await this.DocumentRepository.Delete(rowguid);
@@ -108,16 +105,23 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<ApiDocumentServerResponseModel> ByRowguid(Guid rowguid)
 		{
-			List<Document> records = await this.DocumentRepository.ByFileNameRevision(fileName, revision, limit, offset);
+			Document record = await this.DocumentRepository.ByRowguid(rowguid);
 
-			return this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(records));
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(record));
+			}
 		}
 
-		public async virtual Task<List<ApiDocumentResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDocumentServerResponseModel>> ByFileNameRevision(string fileName, string revision, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Document> records = await this.DocumentRepository.ByProductID(productID, limit, offset);
+			List<Document> records = await this.DocumentRepository.ByFileNameRevision(fileName, revision, limit, offset);
 
 			return this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(records));
 		}
@@ -125,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40d70009fb2e1102c45b4d4b78b77f07</Hash>
+    <Hash>1e1eb365a6ac132ebda5302ec444d8b3</Hash>
 </Codenesium>*/

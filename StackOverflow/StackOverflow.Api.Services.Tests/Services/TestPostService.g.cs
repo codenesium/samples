@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			List<ApiPostResponseModel> response = await service.All();
+			List<ApiPostServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			ApiPostResponseModel response = await service.Get(default(int));
+			ApiPostServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			ApiPostResponseModel response = await service.Get(default(int));
+			ApiPostServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
-			var model = new ApiPostRequestModel();
+			var model = new ApiPostServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Post>())).Returns(Task.FromResult(new Post()));
 			var service = new PostService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			CreateResponse<ApiPostResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPostServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostRequestModel>()));
+			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Post>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
-			var model = new ApiPostRequestModel();
+			var model = new ApiPostServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Post>())).Returns(Task.FromResult(new Post()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Post()));
 			var service = new PostService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			UpdateResponse<ApiPostResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPostServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostRequestModel>()));
+			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Post>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
-			var model = new ApiPostRequestModel();
+			var model = new ApiPostServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PostService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			List<ApiPostResponseModel> response = await service.ByOwnerUserId(default(int?));
+			List<ApiPostServerResponseModel> response = await service.ByOwnerUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByOwnerUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
 			                              mock.DALMapperMockFactory.DALPostMapperMock);
 
-			List<ApiPostResponseModel> response = await service.ByOwnerUserId(default(int?));
+			List<ApiPostServerResponseModel> response = await service.ByOwnerUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByOwnerUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c54b96b782329118a8faebc774644561</Hash>
+    <Hash>8f569544c64c6dd4a1adf4d5dc6880c9</Hash>
 </Codenesium>*/

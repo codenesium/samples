@@ -7,66 +7,20 @@ using System.Threading.Tasks;
 
 namespace TwitterNS.Api.DataAccess
 {
-	public class IntegrationTestMigration
+	public class IntegrationTestMigration : AbstractIntegrationTestMigration
 	{
-		private ApplicationDbContext context;
-
 		public IntegrationTestMigration(ApplicationDbContext context)
+			: base(context)
 		{
-			this.context = context;
 		}
 
-		public async void Migrate()
+		public override async void Migrate()
 		{
-			var directTweetItem1 = new DirectTweet();
-			directTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
-			this.context.DirectTweets.Add(directTweetItem1);
-
-			var followerItem1 = new Follower();
-			followerItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
-			this.context.Followers.Add(followerItem1);
-
-			var followingItem1 = new Following();
-			followingItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
-			this.context.Followings.Add(followingItem1);
-
-			var locationItem1 = new Location();
-			locationItem1.SetProperties(1, 1, 1, "A");
-			this.context.Locations.Add(locationItem1);
-
-			var messageItem1 = new Message();
-			messageItem1.SetProperties("A", 1, 1);
-			this.context.Messages.Add(messageItem1);
-
-			var messengerItem1 = new Messenger();
-			messengerItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"), 1, 1);
-			this.context.Messengers.Add(messengerItem1);
-
-			var quoteTweetItem1 = new QuoteTweet();
-			quoteTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"));
-			this.context.QuoteTweets.Add(quoteTweetItem1);
-
-			var replyItem1 = new Reply();
-			replyItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
-			this.context.Replies.Add(replyItem1);
-
-			var retweetItem1 = new Retweet();
-			retweetItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"), 1);
-			this.context.Retweets.Add(retweetItem1);
-
-			var tweetItem1 = new Tweet();
-			tweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1, 1);
-			this.context.Tweets.Add(tweetItem1);
-
-			var userItem1 = new User();
-			userItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", 1, "A", "A");
-			this.context.Users.Add(userItem1);
-
-			await this.context.SaveChangesAsync();
+			base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2114da6c7c8bea54738d717f4d6303ae</Hash>
+    <Hash>3289f7a868bbe50f10ebd1672366089c</Hash>
 </Codenesium>*/

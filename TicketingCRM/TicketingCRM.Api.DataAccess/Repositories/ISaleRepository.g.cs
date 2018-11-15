@@ -22,9 +22,13 @@ namespace TicketingCRMNS.Api.DataAccess
 		Task<Transaction> TransactionByTransactionId(int transactionId);
 
 		Task<List<Sale>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0);
+
+		Task<SaleTicket> CreateSaleTicket(SaleTicket item);
+
+		Task DeleteSaleTicket(SaleTicket item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>75db5679479fe38af13f4d5936cc8560</Hash>
+    <Hash>2832946b634837fa69acaecbeab90128</Hash>
 </Codenesium>*/

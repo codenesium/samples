@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			var record = new ApiCurrencyRateResponseModel();
-			var records = new List<ApiCurrencyRateResponseModel>();
+			var record = new ApiCurrencyRateServerResponseModel();
+			var records = new List<ApiCurrencyRateServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCurrencyRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCurrencyRateServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCurrencyRateResponseModel>>(new List<ApiCurrencyRateResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCurrencyRateServerResponseModel>>(new List<ApiCurrencyRateServerResponseModel>()));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCurrencyRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCurrencyRateServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateServerResponseModel()));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCurrencyRateResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCurrencyRateServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateServerResponseModel>(null));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCurrencyRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCurrencyRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCurrencyRateServerResponseModel>.CreateResponse(null as ApiCurrencyRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCurrencyRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateServerResponseModel>>(mockResponse));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCurrencyRateRequestModel>();
-			records.Add(new ApiCurrencyRateRequestModel());
+			var records = new List<ApiCurrencyRateServerRequestModel>();
+			records.Add(new ApiCurrencyRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCurrencyRateResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCurrencyRateServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCurrencyRateResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCurrencyRateServerResponseModel>>(null as ApiCurrencyRateServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateServerResponseModel>>(mockResponse.Object));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCurrencyRateRequestModel>();
-			records.Add(new ApiCurrencyRateRequestModel());
+			var records = new List<ApiCurrencyRateServerRequestModel>();
+			records.Add(new ApiCurrencyRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCurrencyRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCurrencyRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCurrencyRateServerResponseModel>.CreateResponse(null as ApiCurrencyRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCurrencyRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateServerResponseModel>>(mockResponse));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCurrencyRateRequestModel());
+			IActionResult response = await controller.Create(new ApiCurrencyRateServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCurrencyRateResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCurrencyRateServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCurrencyRateResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCurrencyRateResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCurrencyRateServerResponseModel>>(null as ApiCurrencyRateServerResponseModel);
+			var mockRecord = new ApiCurrencyRateServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCurrencyRateServerResponseModel>>(mockResponse.Object));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCurrencyRateRequestModel());
+			IActionResult response = await controller.Create(new ApiCurrencyRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>()))
-			.Callback<int, ApiCurrencyRateRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>()))
+			.Callback<int, ApiCurrencyRateServerRequestModel>(
 				(id, model) => model.AverageRate.Should().Be(1m)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateResponseModel>(new ApiCurrencyRateResponseModel()));
-			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateServerResponseModel>(new ApiCurrencyRateServerResponseModel()));
+			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiCurrencyRateServerRequestModel>();
 			patch.Replace(x => x.AverageRate, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateServerResponseModel>(null));
 			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCurrencyRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiCurrencyRateServerRequestModel>();
 			patch.Replace(x => x.AverageRate, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateResponseModel()));
-			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateServerResponseModel()));
+			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateResponseModel()));
-			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCurrencyRateServerResponseModel()));
+			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CurrencyRateControllerMockFacade mock = new CurrencyRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCurrencyRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateResponseModel>(null));
-			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCurrencyRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCurrencyRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCurrencyRateServerResponseModel>(null));
+			CurrencyRateController controller = new CurrencyRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCurrencyRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCurrencyRateServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ICurrencyRateService> ServiceMock { get; set; } = new Mock<ICurrencyRateService>();
 
-		public Mock<IApiCurrencyRateModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCurrencyRateModelMapper>();
+		public Mock<IApiCurrencyRateServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCurrencyRateServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3bd662aaf14b3c945722ba6a69ccffc</Hash>
+    <Hash>dd4fe87ab4898ec115725afa8aefe88d</Hash>
 </Codenesium>*/

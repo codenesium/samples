@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ISpecialOfferRepository SpecialOfferRepository { get; private set; }
 
-		protected IApiSpecialOfferRequestModelValidator SpecialOfferModelValidator { get; private set; }
+		protected IApiSpecialOfferServerRequestModelValidator SpecialOfferModelValidator { get; private set; }
 
 		protected IBOLSpecialOfferMapper BolSpecialOfferMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractSpecialOfferService(
 			ILogger logger,
 			ISpecialOfferRepository specialOfferRepository,
-			IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
+			IApiSpecialOfferServerRequestModelValidator specialOfferModelValidator,
 			IBOLSpecialOfferMapper bolSpecialOfferMapper,
 			IDALSpecialOfferMapper dalSpecialOfferMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSpecialOfferResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSpecialOfferServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SpecialOfferRepository.All(limit, offset);
 
 			return this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSpecialOfferResponseModel> Get(int specialOfferID)
+		public virtual async Task<ApiSpecialOfferServerResponseModel> Get(int specialOfferID)
 		{
 			var record = await this.SpecialOfferRepository.Get(specialOfferID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
-			ApiSpecialOfferRequestModel model)
+		public virtual async Task<CreateResponse<ApiSpecialOfferServerResponseModel>> Create(
+			ApiSpecialOfferServerRequestModel model)
 		{
-			CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.SpecialOfferModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpecialOfferServerResponseModel> response = ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.CreateResponse(await this.SpecialOfferModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSpecialOfferMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSpecialOfferResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSpecialOfferServerResponseModel>> Update(
 			int specialOfferID,
-			ApiSpecialOfferRequestModel model)
+			ApiSpecialOfferServerRequestModel model)
 		{
 			var validationResult = await this.SpecialOfferModelValidator.ValidateUpdateAsync(specialOfferID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SpecialOfferRepository.Get(specialOfferID);
 
-				return new UpdateResponse<ApiSpecialOfferResponseModel>(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.UpdateResponse(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSpecialOfferResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int specialOfferID)
 		{
-			ActionResponse response = new ActionResponse(await this.SpecialOfferModelValidator.ValidateDeleteAsync(specialOfferID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SpecialOfferModelValidator.ValidateDeleteAsync(specialOfferID));
+
 			if (response.Success)
 			{
 				await this.SpecialOfferRepository.Delete(specialOfferID);
@@ -107,9 +104,23 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<ApiSpecialOfferServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			SpecialOffer record = await this.SpecialOfferRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record));
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0344f6c73353f404db98243deffcc65</Hash>
+    <Hash>e837729d92fe02a6020080c5739464af</Hash>
 </Codenesium>*/

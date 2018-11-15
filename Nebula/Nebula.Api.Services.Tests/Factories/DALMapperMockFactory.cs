@@ -8,8 +8,6 @@ namespace NebulaNS.Api.Services.Tests
 {
 	public class DALMapperMockFactory
 	{
-		public IDALChainMapper DALChainMapperMock { get; set; } = new DALChainMapper();
-
 		public IDALChainStatusMapper DALChainStatusMapperMock { get; set; } = new DALChainStatusMapper();
 
 		public IDALLinkMapper DALLinkMapperMock { get; set; } = new DALLinkMapper();
@@ -33,5 +31,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7b762bb216de63720d9705c3dcbbd9b1</Hash>
+    <Hash>075a2086bb03f597895a5b73e4814330</Hash>
 </Codenesium>*/

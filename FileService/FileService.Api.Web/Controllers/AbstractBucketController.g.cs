@@ -20,7 +20,7 @@ namespace FileServiceNS.Api.Web
 	{
 		protected IBucketService BucketService { get; private set; }
 
-		protected IApiBucketModelMapper BucketModelMapper { get; private set; }
+		protected IApiBucketServerModelMapper BucketModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.Web
 			ILogger<AbstractBucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBucketService bucketService,
-			IApiBucketModelMapper bucketModelMapper
+			IApiBucketServerModelMapper bucketModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBucketServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace FileServiceNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBucketResponseModel> response = await this.BucketService.All(query.Limit, query.Offset);
+			List<ApiBucketServerResponseModel> response = await this.BucketService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBucketServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiBucketResponseModel response = await this.BucketService.Get(id);
+			ApiBucketServerResponseModel response = await this.BucketService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace FileServiceNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiBucketServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBucketRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBucketServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiBucketResponseModel> records = new List<ApiBucketResponseModel>();
+			List<ApiBucketServerResponseModel> records = new List<ApiBucketServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiBucketResponseModel> result = await this.BucketService.Create(model);
+				CreateResponse<ApiBucketServerResponseModel> result = await this.BucketService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace FileServiceNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiBucketServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiBucketResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiBucketServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBucketRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiBucketServerRequestModel model)
 		{
-			CreateResponse<ApiBucketResponseModel> result = await this.BucketService.Create(model);
+			CreateResponse<ApiBucketServerResponseModel> result = await this.BucketService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace FileServiceNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBucketResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBucketServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBucketRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBucketServerRequestModel> patch)
 		{
-			ApiBucketResponseModel record = await this.BucketService.Get(id);
+			ApiBucketServerResponseModel record = await this.BucketService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				ApiBucketRequestModel model = await this.PatchModel(id, patch);
+				ApiBucketServerRequestModel model = await this.PatchModel(id, patch) as ApiBucketServerRequestModel;
 
-				UpdateResponse<ApiBucketResponseModel> result = await this.BucketService.Update(id, model);
+				UpdateResponse<ApiBucketServerResponseModel> result = await this.BucketService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace FileServiceNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBucketResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBucketServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketServerRequestModel model)
 		{
-			ApiBucketRequestModel request = await this.PatchModel(id, this.BucketModelMapper.CreatePatch(model));
+			ApiBucketServerRequestModel request = await this.PatchModel(id, this.BucketModelMapper.CreatePatch(model)) as ApiBucketServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiBucketResponseModel> result = await this.BucketService.Update(id, request);
+				UpdateResponse<ApiBucketServerResponseModel> result = await this.BucketService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace FileServiceNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.BucketService.Delete(id);
@@ -209,11 +219,11 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("byExternalId/{externalId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBucketServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByExternalId(Guid externalId)
 		{
-			ApiBucketResponseModel response = await this.BucketService.ByExternalId(externalId);
+			ApiBucketServerResponseModel response = await this.BucketService.ByExternalId(externalId);
 
 			if (response == null)
 			{
@@ -228,11 +238,11 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBucketServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiBucketResponseModel response = await this.BucketService.ByName(name);
+			ApiBucketServerResponseModel response = await this.BucketService.ByName(name);
 
 			if (response == null)
 			{
@@ -245,9 +255,9 @@ namespace FileServiceNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{bucketId}/FilesByBucketId")]
+		[Route("{bucketId}/Files")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFileResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> FilesByBucketId(int bucketId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,12 +266,12 @@ namespace FileServiceNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFileResponseModel> response = await this.BucketService.FilesByBucketId(bucketId, query.Limit, query.Offset);
+			List<ApiFileServerResponseModel> response = await this.BucketService.FilesByBucketId(bucketId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiBucketRequestModel> PatchModel(int id, JsonPatchDocument<ApiBucketRequestModel> patch)
+		private async Task<ApiBucketServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBucketServerRequestModel> patch)
 		{
 			var record = await this.BucketService.Get(id);
 
@@ -271,7 +281,7 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				ApiBucketRequestModel request = this.BucketModelMapper.MapResponseToRequest(record);
+				ApiBucketServerRequestModel request = this.BucketModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -280,5 +290,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3dbdb245e27d1da45e9c0627483de2ad</Hash>
+    <Hash>b0f5b9a7dd171cdaa586d8ba69c160d1</Hash>
 </Codenesium>*/

@@ -29,11 +29,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.All();
+			List<ApiWorkOrderServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,11 +47,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiWorkOrderResponseModel response = await service.Get(default(int));
+			ApiWorkOrderServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -68,11 +64,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiWorkOrderResponseModel response = await service.Get(default(int));
+			ApiWorkOrderServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,20 +76,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
-			var model = new ApiWorkOrderRequestModel();
+			var model = new ApiWorkOrderServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkOrder>())).Returns(Task.FromResult(new WorkOrder()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			CreateResponse<ApiWorkOrderResponseModel> response = await service.Create(model);
+			CreateResponse<ApiWorkOrderServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderRequestModel>()));
+			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<WorkOrder>()));
 		}
 
@@ -103,21 +95,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
-			var model = new ApiWorkOrderRequestModel();
+			var model = new ApiWorkOrderServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkOrder>())).Returns(Task.FromResult(new WorkOrder()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new WorkOrder()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			UpdateResponse<ApiWorkOrderResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiWorkOrderServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>()));
+			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<WorkOrder>()));
 		}
 
@@ -125,15 +115,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
-			var model = new ApiWorkOrderRequestModel();
+			var model = new ApiWorkOrderServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new WorkOrderService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -153,11 +141,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.ByProductID(default(int));
+			List<ApiWorkOrderServerResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -172,11 +158,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.ByProductID(default(int));
+			List<ApiWorkOrderServerResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -193,11 +177,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(short?));
+			List<ApiWorkOrderServerResponseModel> response = await service.ByScrapReasonID(default(short));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<short?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -212,58 +194,16 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
+			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.ByScrapReasonID(default(short?));
+			List<ApiWorkOrderServerResponseModel> response = await service.ByScrapReasonID(default(short));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByScrapReasonID(It.IsAny<short?>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void WorkOrderRoutingsByWorkOrderID_Exists()
-		{
-			var mock = new ServiceMockFacade<IWorkOrderRepository>();
-			var records = new List<WorkOrderRouting>();
-			records.Add(new WorkOrderRouting());
-			mock.RepositoryMock.Setup(x => x.WorkOrderRoutingsByWorkOrderID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new WorkOrderService(mock.LoggerMock.Object,
-			                                   mock.RepositoryMock.Object,
-			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
-
-			List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutingsByWorkOrderID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.WorkOrderRoutingsByWorkOrderID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void WorkOrderRoutingsByWorkOrderID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IWorkOrderRepository>();
-			mock.RepositoryMock.Setup(x => x.WorkOrderRoutingsByWorkOrderID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrderRouting>>(new List<WorkOrderRouting>()));
-			var service = new WorkOrderService(mock.LoggerMock.Object,
-			                                   mock.RepositoryMock.Object,
-			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
-			                                   mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
-
-			List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutingsByWorkOrderID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.WorkOrderRoutingsByWorkOrderID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e398e07f8af529d579716355b4d7439</Hash>
+    <Hash>9c204377d8fe04430657d04aa0997751</Hash>
 </Codenesium>*/

@@ -17,15 +17,15 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLFollowerMapper();
-			ApiFollowerRequestModel model = new ApiFollowerRequestModel();
-			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, "A");
+			ApiFollowerServerRequestModel model = new ApiFollowerServerRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A");
 			BOFollower response = mapper.MapModelToBO(1, model);
 
 			response.Blocked.Should().Be("A");
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.FollowRequestStatu.Should().Be("A");
 			response.FollowedUserId.Should().Be(1);
 			response.FollowingUserId.Should().Be(1);
+			response.FollowRequestStatu.Should().Be("A");
 			response.Muted.Should().Be("A");
 		}
 
@@ -34,14 +34,14 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLFollowerMapper();
 			BOFollower bo = new BOFollower();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, "A");
-			ApiFollowerResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A");
+			ApiFollowerServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Blocked.Should().Be("A");
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.FollowRequestStatu.Should().Be("A");
 			response.FollowedUserId.Should().Be(1);
 			response.FollowingUserId.Should().Be(1);
+			response.FollowRequestStatu.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Muted.Should().Be("A");
 		}
@@ -51,8 +51,8 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLFollowerMapper();
 			BOFollower bo = new BOFollower();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, "A");
-			List<ApiFollowerResponseModel> response = mapper.MapBOToModel(new List<BOFollower>() { { bo } });
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A");
+			List<ApiFollowerServerResponseModel> response = mapper.MapBOToModel(new List<BOFollower>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>13d809fc3d3d97c1d30bcef7c3adf6e8</Hash>
+    <Hash>8b185b8fa0ff9f3c781e133cbc931b53</Hash>
 </Codenesium>*/

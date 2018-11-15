@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PhoneNumberTypeController : AbstractPhoneNumberTypeController
 	{
 		public PhoneNumberTypeController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<PhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPhoneNumberTypeService phoneNumberTypeService,
-			IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
+			IApiPhoneNumberTypeServerModelMapper phoneNumberTypeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>63746d006d12fbcaf28741263519de7e</Hash>
+    <Hash>7a615245e9a5b5fa1644b0fd79284195</Hash>
 </Codenesium>*/

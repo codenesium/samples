@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			var record = new ApiRateResponseModel();
-			var records = new List<ApiRateResponseModel>();
+			var record = new ApiRateServerResponseModel();
+			var records = new List<ApiRateServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiRateServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiRateResponseModel>>(new List<ApiRateResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiRateServerResponseModel>>(new List<ApiRateServerResponseModel>()));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiRateServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateServerResponseModel()));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiRateResponseModel;
+			var record = (response as OkObjectResult).Value as ApiRateServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateServerResponseModel>(null));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiRateServerResponseModel>.CreateResponse(null as ApiRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateServerResponseModel>>(mockResponse));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiRateRequestModel>();
-			records.Add(new ApiRateRequestModel());
+			var records = new List<ApiRateServerRequestModel>();
+			records.Add(new ApiRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiRateResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiRateServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiRateResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiRateServerResponseModel>>(null as ApiRateServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateServerResponseModel>>(mockResponse.Object));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiRateRequestModel>();
-			records.Add(new ApiRateRequestModel());
+			var records = new List<ApiRateServerRequestModel>();
+			records.Add(new ApiRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiRateServerResponseModel>.CreateResponse(null as ApiRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateServerResponseModel>>(mockResponse));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiRateRequestModel());
+			IActionResult response = await controller.Create(new ApiRateServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiRateResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiRateServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiRateResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiRateResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiRateServerResponseModel>>(null as ApiRateServerResponseModel);
+			var mockRecord = new ApiRateServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRateServerResponseModel>>(mockResponse.Object));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiRateRequestModel());
+			IActionResult response = await controller.Create(new ApiRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>()))
-			.Callback<int, ApiRateRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()))
+			.Callback<int, ApiRateServerRequestModel>(
 				(id, model) => model.AmountPerMinute.Should().Be(1m)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateResponseModel>(new ApiRateResponseModel()));
-			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateServerResponseModel>(new ApiRateServerResponseModel()));
+			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiRateServerRequestModel>();
 			patch.Replace(x => x.AmountPerMinute, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateServerResponseModel>(null));
 			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiRateServerRequestModel>();
 			patch.Replace(x => x.AmountPerMinute, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateResponseModel()));
-			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateServerResponseModel()));
+			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRateServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateResponseModel()));
-			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRateServerResponseModel()));
+			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			RateControllerMockFacade mock = new RateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateResponseModel>(null));
-			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRateServerResponseModel>(null));
+			RateController controller = new RateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRateServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<IRateService> ServiceMock { get; set; } = new Mock<IRateService>();
 
-		public Mock<IApiRateModelMapper> ModelMapperMock { get; set; } = new Mock<IApiRateModelMapper>();
+		public Mock<IApiRateServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiRateServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>91cded8c8d31d710b5c5e30ddd885e51</Hash>
+    <Hash>b352cd0172a362a0cc2a9ea7a8faa846</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.Web
 	{
 		protected IEventService EventService { get; private set; }
 
-		protected IApiEventModelMapper EventModelMapper { get; private set; }
+		protected IApiEventServerModelMapper EventModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AbstractEventController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEventService eventService,
-			IApiEventModelMapper eventModelMapper
+			IApiEventServerModelMapper eventModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEventServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventResponseModel> response = await this.EventService.All(query.Limit, query.Offset);
+			List<ApiEventServerResponseModel> response = await this.EventService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiEventResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiEventServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiEventResponseModel response = await this.EventService.Get(id);
+			ApiEventServerResponseModel response = await this.EventService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiEventServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEventRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEventServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiEventResponseModel> records = new List<ApiEventResponseModel>();
+			List<ApiEventServerResponseModel> records = new List<ApiEventServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiEventResponseModel> result = await this.EventService.Create(model);
+				CreateResponse<ApiEventServerResponseModel> result = await this.EventService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TicketingCRMNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiEventServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiEventResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiEventServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEventRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiEventServerRequestModel model)
 		{
-			CreateResponse<ApiEventResponseModel> result = await this.EventService.Create(model);
+			CreateResponse<ApiEventServerResponseModel> result = await this.EventService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiEventServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEventRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEventServerRequestModel> patch)
 		{
-			ApiEventResponseModel record = await this.EventService.Get(id);
+			ApiEventServerResponseModel record = await this.EventService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiEventRequestModel model = await this.PatchModel(id, patch);
+				ApiEventServerRequestModel model = await this.PatchModel(id, patch) as ApiEventServerRequestModel;
 
-				UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, model);
+				UpdateResponse<ApiEventServerResponseModel> result = await this.EventService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiEventServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEventRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEventServerRequestModel model)
 		{
-			ApiEventRequestModel request = await this.PatchModel(id, this.EventModelMapper.CreatePatch(model));
+			ApiEventServerRequestModel request = await this.PatchModel(id, this.EventModelMapper.CreatePatch(model)) as ApiEventServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiEventResponseModel> result = await this.EventService.Update(id, request);
+				UpdateResponse<ApiEventServerResponseModel> result = await this.EventService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TicketingCRMNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.EventService.Delete(id);
@@ -209,7 +219,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("byCityId/{cityId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEventServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByCityId(int cityId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventResponseModel> response = await this.EventService.ByCityId(cityId, query.Limit, query.Offset);
+			List<ApiEventServerResponseModel> response = await this.EventService.ByCityId(cityId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiEventRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventRequestModel> patch)
+		private async Task<ApiEventServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventServerRequestModel> patch)
 		{
 			var record = await this.EventService.Get(id);
 
@@ -233,7 +243,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiEventRequestModel request = this.EventModelMapper.MapResponseToRequest(record);
+				ApiEventServerRequestModel request = this.EventModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb74d029ad6f8a74d282ccc225503c26</Hash>
+    <Hash>1f9b49f594b6f5263aa3ff64e34a0b6a</Hash>
 </Codenesium>*/

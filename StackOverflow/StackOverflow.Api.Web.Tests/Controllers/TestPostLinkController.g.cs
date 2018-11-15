@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			var record = new ApiPostLinkResponseModel();
-			var records = new List<ApiPostLinkResponseModel>();
+			var record = new ApiPostLinkServerResponseModel();
+			var records = new List<ApiPostLinkServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPostLinkResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPostLinkServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPostLinkResponseModel>>(new List<ApiPostLinkResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPostLinkServerResponseModel>>(new List<ApiPostLinkServerResponseModel>()));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPostLinkResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPostLinkServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkServerResponseModel()));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPostLinkResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPostLinkServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkServerResponseModel>(null));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPostLinkResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPostLinkResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPostLinkServerResponseModel>.CreateResponse(null as ApiPostLinkServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPostLinkServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkServerResponseModel>>(mockResponse));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPostLinkRequestModel>();
-			records.Add(new ApiPostLinkRequestModel());
+			var records = new List<ApiPostLinkServerRequestModel>();
+			records.Add(new ApiPostLinkServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPostLinkResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPostLinkServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPostLinkResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPostLinkServerResponseModel>>(null as ApiPostLinkServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkServerResponseModel>>(mockResponse.Object));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPostLinkRequestModel>();
-			records.Add(new ApiPostLinkRequestModel());
+			var records = new List<ApiPostLinkServerRequestModel>();
+			records.Add(new ApiPostLinkServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPostLinkResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPostLinkResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPostLinkServerResponseModel>.CreateResponse(null as ApiPostLinkServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPostLinkServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkServerResponseModel>>(mockResponse));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPostLinkRequestModel());
+			IActionResult response = await controller.Create(new ApiPostLinkServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPostLinkResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPostLinkServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPostLinkResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPostLinkResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPostLinkServerResponseModel>>(null as ApiPostLinkServerResponseModel);
+			var mockRecord = new ApiPostLinkServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostLinkServerResponseModel>>(mockResponse.Object));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPostLinkRequestModel());
+			IActionResult response = await controller.Create(new ApiPostLinkServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostLinkResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostLinkServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>()))
-			.Callback<int, ApiPostLinkRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>()))
+			.Callback<int, ApiPostLinkServerRequestModel>(
 				(id, model) => model.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPostLinkResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkResponseModel>(new ApiPostLinkResponseModel()));
-			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPostLinkServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkServerResponseModel>(new ApiPostLinkServerResponseModel()));
+			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPostLinkRequestModel>();
+			var patch = new JsonPatchDocument<ApiPostLinkServerRequestModel>();
 			patch.Replace(x => x.CreationDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkServerResponseModel>(null));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPostLinkRequestModel>();
+			var patch = new JsonPatchDocument<ApiPostLinkServerRequestModel>();
 			patch.Replace(x => x.CreationDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostLinkResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostLinkServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkResponseModel()));
-			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkServerResponseModel()));
+			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostLinkRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostLinkServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostLinkResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostLinkServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkResponseModel()));
-			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostLinkServerResponseModel()));
+			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostLinkRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostLinkServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostLinkResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostLinkServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkResponseModel>(null));
-			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostLinkServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostLinkServerResponseModel>(null));
+			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostLinkServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostLinkRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostLinkServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<IPostLinkService> ServiceMock { get; set; } = new Mock<IPostLinkService>();
 
-		public Mock<IApiPostLinkModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPostLinkModelMapper>();
+		public Mock<IApiPostLinkServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPostLinkServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>955eec0510388c0975830f54c00d07ee</Hash>
+    <Hash>0eacd391516438aaebc4e0b356fc68a5</Hash>
 </Codenesium>*/

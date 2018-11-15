@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLAddressTypeMapper();
-			ApiAddressTypeRequestModel model = new ApiAddressTypeRequestModel();
+			ApiAddressTypeServerRequestModel model = new ApiAddressTypeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BOAddressType response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLAddressTypeMapper();
 			BOAddressType bo = new BOAddressType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiAddressTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiAddressTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AddressTypeID.Should().Be(1);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLAddressTypeMapper();
 			BOAddressType bo = new BOAddressType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiAddressTypeResponseModel> response = mapper.MapBOToModel(new List<BOAddressType>() { { bo } });
+			List<ApiAddressTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOAddressType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>acdfdd220a6a107ffda05e27ca80bf15</Hash>
+    <Hash>12233e2ff4bef5768b48c736d1a49ace</Hash>
 </Codenesium>*/

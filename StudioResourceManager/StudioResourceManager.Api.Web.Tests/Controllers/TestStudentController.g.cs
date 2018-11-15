@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			var record = new ApiStudentResponseModel();
-			var records = new List<ApiStudentResponseModel>();
+			var record = new ApiStudentServerResponseModel();
+			var records = new List<ApiStudentServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiStudentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiStudentServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiStudentResponseModel>>(new List<ApiStudentResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiStudentServerResponseModel>>(new List<ApiStudentServerResponseModel>()));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiStudentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiStudentServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentServerResponseModel()));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiStudentResponseModel;
+			var record = (response as OkObjectResult).Value as ApiStudentServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentServerResponseModel>(null));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiStudentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiStudentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiStudentServerResponseModel>.CreateResponse(null as ApiStudentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiStudentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentServerResponseModel>>(mockResponse));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiStudentRequestModel>();
-			records.Add(new ApiStudentRequestModel());
+			var records = new List<ApiStudentServerRequestModel>();
+			records.Add(new ApiStudentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiStudentResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiStudentServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiStudentResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiStudentServerResponseModel>>(null as ApiStudentServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentServerResponseModel>>(mockResponse.Object));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiStudentRequestModel>();
-			records.Add(new ApiStudentRequestModel());
+			var records = new List<ApiStudentServerRequestModel>();
+			records.Add(new ApiStudentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiStudentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiStudentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiStudentServerResponseModel>.CreateResponse(null as ApiStudentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiStudentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentServerResponseModel>>(mockResponse));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiStudentRequestModel());
+			IActionResult response = await controller.Create(new ApiStudentServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiStudentResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiStudentServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiStudentResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiStudentResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiStudentServerResponseModel>>(null as ApiStudentServerResponseModel);
+			var mockRecord = new ApiStudentServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudentServerResponseModel>>(mockResponse.Object));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiStudentRequestModel());
+			IActionResult response = await controller.Create(new ApiStudentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>()))
-			.Callback<int, ApiStudentRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()))
+			.Callback<int, ApiStudentServerRequestModel>(
 				(id, model) => model.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiStudentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentResponseModel>(new ApiStudentResponseModel()));
-			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiStudentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentServerResponseModel>(new ApiStudentServerResponseModel()));
+			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiStudentRequestModel>();
+			var patch = new JsonPatchDocument<ApiStudentServerRequestModel>();
 			patch.Replace(x => x.Birthday, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentServerResponseModel>(null));
 			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiStudentRequestModel>();
+			var patch = new JsonPatchDocument<ApiStudentServerRequestModel>();
 			patch.Replace(x => x.Birthday, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentResponseModel()));
-			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentServerResponseModel()));
+			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudentRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudentServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentResponseModel()));
-			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudentServerResponseModel()));
+			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudentRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			StudentControllerMockFacade mock = new StudentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentResponseModel>(null));
-			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudentServerResponseModel>(null));
+			StudentController controller = new StudentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudentRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudentServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<IStudentService> ServiceMock { get; set; } = new Mock<IStudentService>();
 
-		public Mock<IApiStudentModelMapper> ModelMapperMock { get; set; } = new Mock<IApiStudentModelMapper>();
+		public Mock<IApiStudentServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiStudentServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b0b57cac6790f8992e36eac444ae9bc</Hash>
+    <Hash>428742a313f1b9ebe87184ccd8cf6196</Hash>
 </Codenesium>*/

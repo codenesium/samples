@@ -2,29 +2,28 @@ using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
 	public partial interface IPetService
 	{
-		Task<CreateResponse<ApiPetResponseModel>> Create(
-			ApiPetRequestModel model);
+		Task<CreateResponse<ApiPetServerResponseModel>> Create(
+			ApiPetServerRequestModel model);
 
-		Task<UpdateResponse<ApiPetResponseModel>> Update(int id,
-		                                                  ApiPetRequestModel model);
+		Task<UpdateResponse<ApiPetServerResponseModel>> Update(int id,
+		                                                        ApiPetServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPetResponseModel> Get(int id);
+		Task<ApiPetServerResponseModel> Get(int id);
 
-		Task<List<ApiPetResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleServerResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6aec967f2150720c97fedc336a4dd781</Hash>
+    <Hash>b4d8ade3de542e5720c941a3f8d3ef97</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLStoreMapper();
-			ApiStoreRequestModel model = new ApiStoreRequestModel();
+			ApiStoreServerRequestModel model = new ApiStoreServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 			BOStore response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLStoreMapper();
 			BOStore bo = new BOStore();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			ApiStoreResponseModel response = mapper.MapBOToModel(bo);
+			ApiStoreServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.BusinessEntityID.Should().Be(1);
 			response.Demographic.Should().Be("A");
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLStoreMapper();
 			BOStore bo = new BOStore();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
-			List<ApiStoreResponseModel> response = mapper.MapBOToModel(new List<BOStore>() { { bo } });
+			List<ApiStoreServerResponseModel> response = mapper.MapBOToModel(new List<BOStore>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>085f22ce815d88059dc01a2c352a3aae</Hash>
+    <Hash>204872b3c9fa6c79b9955561d28c1daf</Hash>
 </Codenesium>*/

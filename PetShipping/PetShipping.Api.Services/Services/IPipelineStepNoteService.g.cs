@@ -2,27 +2,26 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IPipelineStepNoteService
 	{
-		Task<CreateResponse<ApiPipelineStepNoteResponseModel>> Create(
-			ApiPipelineStepNoteRequestModel model);
+		Task<CreateResponse<ApiPipelineStepNoteServerResponseModel>> Create(
+			ApiPipelineStepNoteServerRequestModel model);
 
-		Task<UpdateResponse<ApiPipelineStepNoteResponseModel>> Update(int id,
-		                                                               ApiPipelineStepNoteRequestModel model);
+		Task<UpdateResponse<ApiPipelineStepNoteServerResponseModel>> Update(int id,
+		                                                                     ApiPipelineStepNoteServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPipelineStepNoteResponseModel> Get(int id);
+		Task<ApiPipelineStepNoteServerResponseModel> Get(int id);
 
-		Task<List<ApiPipelineStepNoteResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStepNoteServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>75a610cfe2b78912fee3da7e2518c2fb</Hash>
+    <Hash>c68631ef9abafef20ba5ad7ee2dd23f6</Hash>
 </Codenesium>*/

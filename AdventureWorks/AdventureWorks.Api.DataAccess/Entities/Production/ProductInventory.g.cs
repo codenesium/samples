@@ -32,32 +32,31 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Bin")]
-		public int Bin { get; private set; }
+		public virtual int Bin { get; private set; }
 
 		[Key]
 		[Column("LocationID")]
-		public short LocationID { get; private set; }
+		public virtual short LocationID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("Quantity")]
-		public short Quantity { get; private set; }
+		public virtual short Quantity { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[MaxLength(10)]
 		[Column("Shelf")]
-		public string Shelf { get; private set; }
+		public virtual string Shelf { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>86131cffc6cd690054362142a1fcac56</Hash>
+    <Hash>cad140ab9e7df1866d89891feb16ac6a</Hash>
 </Codenesium>*/

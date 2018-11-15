@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ITransactionHistoryArchiveService TransactionHistoryArchiveService { get; private set; }
 
-		protected IApiTransactionHistoryArchiveModelMapper TransactionHistoryArchiveModelMapper { get; private set; }
+		protected IApiTransactionHistoryArchiveServerModelMapper TransactionHistoryArchiveModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractTransactionHistoryArchiveController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITransactionHistoryArchiveService transactionHistoryArchiveService,
-			IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
+			IApiTransactionHistoryArchiveServerModelMapper transactionHistoryArchiveModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.All(query.Limit, query.Offset);
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await this.TransactionHistoryArchiveService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTransactionHistoryArchiveServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTransactionHistoryArchiveResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
+			ApiTransactionHistoryArchiveServerResponseModel response = await this.TransactionHistoryArchiveService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTransactionHistoryArchiveServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryArchiveRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryArchiveServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTransactionHistoryArchiveResponseModel> records = new List<ApiTransactionHistoryArchiveResponseModel>();
+			List<ApiTransactionHistoryArchiveServerResponseModel> records = new List<ApiTransactionHistoryArchiveServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Create(model);
+				CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> result = await this.TransactionHistoryArchiveService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTransactionHistoryArchiveServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTransactionHistoryArchiveResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTransactionHistoryArchiveServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryArchiveRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryArchiveServerRequestModel model)
 		{
-			CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Create(model);
+			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> result = await this.TransactionHistoryArchiveService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionHistoryArchiveServerRequestModel> patch)
 		{
-			ApiTransactionHistoryArchiveResponseModel record = await this.TransactionHistoryArchiveService.Get(id);
+			ApiTransactionHistoryArchiveServerResponseModel record = await this.TransactionHistoryArchiveService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiTransactionHistoryArchiveRequestModel model = await this.PatchModel(id, patch);
+				ApiTransactionHistoryArchiveServerRequestModel model = await this.PatchModel(id, patch) as ApiTransactionHistoryArchiveServerRequestModel;
 
-				UpdateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, model);
+				UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveServerRequestModel model)
 		{
-			ApiTransactionHistoryArchiveRequestModel request = await this.PatchModel(id, this.TransactionHistoryArchiveModelMapper.CreatePatch(model));
+			ApiTransactionHistoryArchiveServerRequestModel request = await this.PatchModel(id, this.TransactionHistoryArchiveModelMapper.CreatePatch(model)) as ApiTransactionHistoryArchiveServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, request);
+				UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> result = await this.TransactionHistoryArchiveService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TransactionHistoryArchiveService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.ByProductID(productID, query.Limit, query.Offset);
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await this.TransactionHistoryArchiveService.ByProductID(productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, query.Limit, query.Offset);
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await this.TransactionHistoryArchiveService.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiTransactionHistoryArchiveRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryArchiveRequestModel> patch)
+		private async Task<ApiTransactionHistoryArchiveServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTransactionHistoryArchiveServerRequestModel> patch)
 		{
 			var record = await this.TransactionHistoryArchiveService.Get(id);
 
@@ -250,7 +260,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiTransactionHistoryArchiveRequestModel request = this.TransactionHistoryArchiveModelMapper.MapResponseToRequest(record);
+				ApiTransactionHistoryArchiveServerRequestModel request = this.TransactionHistoryArchiveModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b2bfe9f9cada39e6539c8c55867c2168</Hash>
+    <Hash>eeffa115689e421d456797d4356b3457</Hash>
 </Codenesium>*/

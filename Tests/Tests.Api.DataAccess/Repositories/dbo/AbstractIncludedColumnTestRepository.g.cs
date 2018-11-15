@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<IncludedColumnTest, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<IncludedColumnTest, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<IncludedColumnTest, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<IncludedColumnTest>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<IncludedColumnTest>();
-			}
-			else
-			{
-				return await this.Context.Set<IncludedColumnTest>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<IncludedColumnTest>();
-			}
+			return await this.Context.Set<IncludedColumnTest>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<IncludedColumnTest>();
 		}
 
 		private async Task<IncludedColumnTest> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>60032e56870cbeb73eb9cbf4b843193e</Hash>
+    <Hash>bc7eb2c03400bb43017ab058dd26c1d1</Hash>
 </Codenesium>*/

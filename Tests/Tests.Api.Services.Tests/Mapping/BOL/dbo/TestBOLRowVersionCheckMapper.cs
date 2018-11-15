@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLRowVersionCheckMapper();
-			ApiRowVersionCheckRequestModel model = new ApiRowVersionCheckRequestModel();
+			ApiRowVersionCheckServerRequestModel model = new ApiRowVersionCheckServerRequestModel();
 			model.SetProperties("A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BORowVersionCheck response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLRowVersionCheckMapper();
 			BORowVersionCheck bo = new BORowVersionCheck();
 			bo.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiRowVersionCheckResponseModel response = mapper.MapBOToModel(bo);
+			ApiRowVersionCheckServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLRowVersionCheckMapper();
 			BORowVersionCheck bo = new BORowVersionCheck();
 			bo.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiRowVersionCheckResponseModel> response = mapper.MapBOToModel(new List<BORowVersionCheck>() { { bo } });
+			List<ApiRowVersionCheckServerResponseModel> response = mapper.MapBOToModel(new List<BORowVersionCheck>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>63474c7b1cee647dbe89abec9e5ab961</Hash>
+    <Hash>588d9f20069d2e84e114e2f5dee1ac96</Hash>
 </Codenesium>*/

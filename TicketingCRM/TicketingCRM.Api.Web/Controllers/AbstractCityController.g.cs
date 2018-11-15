@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.Web
 	{
 		protected ICityService CityService { get; private set; }
 
-		protected IApiCityModelMapper CityModelMapper { get; private set; }
+		protected IApiCityServerModelMapper CityModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AbstractCityController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICityService cityService,
-			IApiCityModelMapper cityModelMapper
+			IApiCityServerModelMapper cityModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCityServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCityResponseModel> response = await this.CityService.All(query.Limit, query.Offset);
+			List<ApiCityServerResponseModel> response = await this.CityService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCityResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCityServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCityResponseModel response = await this.CityService.Get(id);
+			ApiCityServerResponseModel response = await this.CityService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCityServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCityRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCityServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCityResponseModel> records = new List<ApiCityResponseModel>();
+			List<ApiCityServerResponseModel> records = new List<ApiCityServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCityResponseModel> result = await this.CityService.Create(model);
+				CreateResponse<ApiCityServerResponseModel> result = await this.CityService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TicketingCRMNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCityServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCityResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCityServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCityRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCityServerRequestModel model)
 		{
-			CreateResponse<ApiCityResponseModel> result = await this.CityService.Create(model);
+			CreateResponse<ApiCityServerResponseModel> result = await this.CityService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCityServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCityRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCityServerRequestModel> patch)
 		{
-			ApiCityResponseModel record = await this.CityService.Get(id);
+			ApiCityServerResponseModel record = await this.CityService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiCityRequestModel model = await this.PatchModel(id, patch);
+				ApiCityServerRequestModel model = await this.PatchModel(id, patch) as ApiCityServerRequestModel;
 
-				UpdateResponse<ApiCityResponseModel> result = await this.CityService.Update(id, model);
+				UpdateResponse<ApiCityServerResponseModel> result = await this.CityService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCityServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCityRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCityServerRequestModel model)
 		{
-			ApiCityRequestModel request = await this.PatchModel(id, this.CityModelMapper.CreatePatch(model));
+			ApiCityServerRequestModel request = await this.PatchModel(id, this.CityModelMapper.CreatePatch(model)) as ApiCityServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCityResponseModel> result = await this.CityService.Update(id, request);
+				UpdateResponse<ApiCityServerResponseModel> result = await this.CityService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TicketingCRMNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CityService.Delete(id);
@@ -209,7 +219,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("byProvinceId/{provinceId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCityServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByProvinceId(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,15 +228,15 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCityResponseModel> response = await this.CityService.ByProvinceId(provinceId, query.Limit, query.Offset);
+			List<ApiCityServerResponseModel> response = await this.CityService.ByProvinceId(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{cityId}/EventsByCityId")]
+		[Route("{cityId}/Events")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiEventServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> EventsByCityId(int cityId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventResponseModel> response = await this.CityService.EventsByCityId(cityId, query.Limit, query.Offset);
+			List<ApiEventServerResponseModel> response = await this.CityService.EventsByCityId(cityId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiCityRequestModel> PatchModel(int id, JsonPatchDocument<ApiCityRequestModel> patch)
+		private async Task<ApiCityServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCityServerRequestModel> patch)
 		{
 			var record = await this.CityService.Get(id);
 
@@ -250,7 +260,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiCityRequestModel request = this.CityModelMapper.MapResponseToRequest(record);
+				ApiCityServerRequestModel request = this.CityModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>29beee556fa9acc63d89ce4f67abc4d5</Hash>
+    <Hash>d03dec465a8a731b444a0ccbe50057ca</Hash>
 </Codenesium>*/

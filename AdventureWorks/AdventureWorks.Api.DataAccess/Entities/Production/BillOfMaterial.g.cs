@@ -37,35 +37,35 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BillOfMaterialsID")]
-		public int BillOfMaterialsID { get; private set; }
+		public virtual int BillOfMaterialsID { get; private set; }
 
 		[Column("BOMLevel")]
-		public short BOMLevel { get; private set; }
+		public virtual short BOMLevel { get; private set; }
 
 		[Column("ComponentID")]
-		public int ComponentID { get; private set; }
+		public virtual int ComponentID { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("PerAssemblyQty")]
-		public double PerAssemblyQty { get; private set; }
+		public virtual double PerAssemblyQty { get; private set; }
 
 		[Column("ProductAssemblyID")]
-		public int? ProductAssemblyID { get; private set; }
+		public virtual int? ProductAssemblyID { get; private set; }
 
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
 		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
-		public string UnitMeasureCode { get; private set; }
+		public virtual string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>df1ae60224f70b2882f32a514b66876d</Hash>
+    <Hash>864fc5a3f931e28ec85e51996b5f8fbe</Hash>
 </Codenesium>*/

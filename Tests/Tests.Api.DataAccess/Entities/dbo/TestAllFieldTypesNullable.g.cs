@@ -76,104 +76,103 @@ namespace TestsNS.Api.DataAccess
 		}
 
 		[Column("fieldBigInt")]
-		public long? FieldBigInt { get; private set; }
+		public virtual long? FieldBigInt { get; private set; }
 
 		[MaxLength(50)]
 		[Column("fieldBinary")]
-		public byte[] FieldBinary { get; private set; }
+		public virtual byte[] FieldBinary { get; private set; }
 
 		[Column("fieldBit")]
-		public bool? FieldBit { get; private set; }
+		public virtual bool? FieldBit { get; private set; }
 
 		[MaxLength(10)]
 		[Column("fieldChar")]
-		public string FieldChar { get; private set; }
+		public virtual string FieldChar { get; private set; }
 
 		[Column("fieldDate")]
-		public DateTime? FieldDate { get; private set; }
+		public virtual DateTime? FieldDate { get; private set; }
 
 		[Column("fieldDateTime")]
-		public DateTime? FieldDateTime { get; private set; }
+		public virtual DateTime? FieldDateTime { get; private set; }
 
 		[Column("fieldDateTime2")]
-		public DateTime? FieldDateTime2 { get; private set; }
+		public virtual DateTime? FieldDateTime2 { get; private set; }
 
 		[Column("fieldDateTimeOffset")]
-		public DateTimeOffset? FieldDateTimeOffset { get; private set; }
+		public virtual DateTimeOffset? FieldDateTimeOffset { get; private set; }
 
 		[Column("fieldDecimal")]
-		public double? FieldDecimal { get; private set; }
+		public virtual double? FieldDecimal { get; private set; }
 
 		[Column("fieldFloat")]
-		public double? FieldFloat { get; private set; }
+		public virtual double? FieldFloat { get; private set; }
 
 		[Column("fieldImage")]
-		public byte[] FieldImage { get; private set; }
+		public virtual byte[] FieldImage { get; private set; }
 
 		[Column("fieldMoney")]
-		public decimal? FieldMoney { get; private set; }
+		public virtual decimal? FieldMoney { get; private set; }
 
 		[MaxLength(10)]
 		[Column("fieldNChar")]
-		public string FieldNChar { get; private set; }
+		public virtual string FieldNChar { get; private set; }
 
 		[MaxLength(1073741823)]
 		[Column("fieldNText")]
-		public string FieldNText { get; private set; }
+		public virtual string FieldNText { get; private set; }
 
 		[Column("fieldNumeric")]
-		public decimal? FieldNumeric { get; private set; }
+		public virtual decimal? FieldNumeric { get; private set; }
 
 		[MaxLength(50)]
 		[Column("fieldNVarchar")]
-		public string FieldNVarchar { get; private set; }
+		public virtual string FieldNVarchar { get; private set; }
 
 		[Column("fieldReal")]
-		public decimal? FieldReal { get; private set; }
+		public virtual decimal? FieldReal { get; private set; }
 
 		[Column("fieldSmallDateTime")]
-		public DateTime? FieldSmallDateTime { get; private set; }
+		public virtual DateTime? FieldSmallDateTime { get; private set; }
 
 		[Column("fieldSmallInt")]
-		public short? FieldSmallInt { get; private set; }
+		public virtual short? FieldSmallInt { get; private set; }
 
 		[Column("fieldSmallMoney")]
-		public decimal? FieldSmallMoney { get; private set; }
+		public virtual decimal? FieldSmallMoney { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("fieldText")]
-		public string FieldText { get; private set; }
+		public virtual string FieldText { get; private set; }
 
 		[Column("fieldTime")]
-		public TimeSpan? FieldTime { get; private set; }
+		public virtual TimeSpan? FieldTime { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("fieldTimestamp")]
-		public byte[] FieldTimestamp { get; private set; }
+		public virtual byte[] FieldTimestamp { get; private set; }
 
 		[Column("fieldTinyInt")]
-		public int? FieldTinyInt { get; private set; }
+		public virtual int? FieldTinyInt { get; private set; }
 
 		[Column("fieldUniqueIdentifier")]
-		public Guid? FieldUniqueIdentifier { get; private set; }
+		public virtual Guid? FieldUniqueIdentifier { get; private set; }
 
 		[MaxLength(50)]
 		[Column("fieldVarBinary")]
-		public byte[] FieldVarBinary { get; private set; }
+		public virtual byte[] FieldVarBinary { get; private set; }
 
 		[MaxLength(50)]
 		[Column("fieldVarchar")]
-		public string FieldVarchar { get; private set; }
+		public virtual string FieldVarchar { get; private set; }
 
 		[Column("fieldXML")]
-		public string FieldXML { get; private set; }
+		public virtual string FieldXML { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f1ba3209885a0b45666627dced1fc21</Hash>
+    <Hash>892e5dc38ebd8c22e85318e87510b86c</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOTransactionHistoryArchive MapModelToBO(
 			int transactionID,
-			ApiTransactionHistoryArchiveRequestModel model
+			ApiTransactionHistoryArchiveServerRequestModel model
 			)
 		{
 			BOTransactionHistoryArchive boTransactionHistoryArchive = new BOTransactionHistoryArchive();
@@ -26,20 +25,20 @@ namespace AdventureWorksNS.Api.Services
 			return boTransactionHistoryArchive;
 		}
 
-		public virtual ApiTransactionHistoryArchiveResponseModel MapBOToModel(
+		public virtual ApiTransactionHistoryArchiveServerResponseModel MapBOToModel(
 			BOTransactionHistoryArchive boTransactionHistoryArchive)
 		{
-			var model = new ApiTransactionHistoryArchiveResponseModel();
+			var model = new ApiTransactionHistoryArchiveServerResponseModel();
 
 			model.SetProperties(boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionType);
 
 			return model;
 		}
 
-		public virtual List<ApiTransactionHistoryArchiveResponseModel> MapBOToModel(
+		public virtual List<ApiTransactionHistoryArchiveServerResponseModel> MapBOToModel(
 			List<BOTransactionHistoryArchive> items)
 		{
-			List<ApiTransactionHistoryArchiveResponseModel> response = new List<ApiTransactionHistoryArchiveResponseModel>();
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = new List<ApiTransactionHistoryArchiveServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>317c647c28b8dc3a40aff68fb9ce98c7</Hash>
+    <Hash>48f7929101babad5f1f5e95b2e363e61</Hash>
 </Codenesium>*/

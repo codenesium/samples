@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -9,22 +8,22 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IEventService
 	{
-		Task<CreateResponse<ApiEventResponseModel>> Create(
-			ApiEventRequestModel model);
+		Task<CreateResponse<ApiEventServerResponseModel>> Create(
+			ApiEventServerRequestModel model);
 
-		Task<UpdateResponse<ApiEventResponseModel>> Update(int id,
-		                                                    ApiEventRequestModel model);
+		Task<UpdateResponse<ApiEventServerResponseModel>> Update(int id,
+		                                                          ApiEventServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiEventResponseModel> Get(int id);
+		Task<ApiEventServerResponseModel> Get(int id);
 
-		Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEventResponseModel>> ByCityId(int cityId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventServerResponseModel>> ByCityId(int cityId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc0bb0793fa38eded684b07543d33909</Hash>
+    <Hash>30a5c92622ebc5984e70f693bf481334</Hash>
 </Codenesium>*/

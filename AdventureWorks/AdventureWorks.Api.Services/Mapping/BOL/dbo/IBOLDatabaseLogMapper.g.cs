@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BODatabaseLog MapModelToBO(
 			int databaseLogID,
-			ApiDatabaseLogRequestModel model);
+			ApiDatabaseLogServerRequestModel model);
 
-		ApiDatabaseLogResponseModel MapBOToModel(
+		ApiDatabaseLogServerResponseModel MapBOToModel(
 			BODatabaseLog boDatabaseLog);
 
-		List<ApiDatabaseLogResponseModel> MapBOToModel(
+		List<ApiDatabaseLogServerResponseModel> MapBOToModel(
 			List<BODatabaseLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0309ff19b6160e388901056c55350b50</Hash>
+    <Hash>8acb8a8dfc778667bd9dd473a61707ef</Hash>
 </Codenesium>*/

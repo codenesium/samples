@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			var record = new ApiTestAllFieldTypeResponseModel();
-			var records = new List<ApiTestAllFieldTypeResponseModel>();
+			var record = new ApiTestAllFieldTypeServerResponseModel();
+			var records = new List<ApiTestAllFieldTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTestAllFieldTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTestAllFieldTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTestAllFieldTypeResponseModel>>(new List<ApiTestAllFieldTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTestAllFieldTypeServerResponseModel>>(new List<ApiTestAllFieldTypeServerResponseModel>()));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTestAllFieldTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTestAllFieldTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeServerResponseModel()));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTestAllFieldTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTestAllFieldTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeServerResponseModel>(null));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTestAllFieldTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTestAllFieldTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.CreateResponse(null as ApiTestAllFieldTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTestAllFieldTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResponse));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTestAllFieldTypeRequestModel>();
-			records.Add(new ApiTestAllFieldTypeRequestModel());
+			var records = new List<ApiTestAllFieldTypeServerRequestModel>();
+			records.Add(new ApiTestAllFieldTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTestAllFieldTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTestAllFieldTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTestAllFieldTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(null as ApiTestAllFieldTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResponse.Object));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTestAllFieldTypeRequestModel>();
-			records.Add(new ApiTestAllFieldTypeRequestModel());
+			var records = new List<ApiTestAllFieldTypeServerRequestModel>();
+			records.Add(new ApiTestAllFieldTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTestAllFieldTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTestAllFieldTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.CreateResponse(null as ApiTestAllFieldTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTestAllFieldTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResponse));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTestAllFieldTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiTestAllFieldTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTestAllFieldTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTestAllFieldTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTestAllFieldTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTestAllFieldTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(null as ApiTestAllFieldTypeServerResponseModel);
+			var mockRecord = new ApiTestAllFieldTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResponse.Object));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTestAllFieldTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiTestAllFieldTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>()))
-			.Callback<int, ApiTestAllFieldTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>()))
+			.Callback<int, ApiTestAllFieldTypeServerRequestModel>(
 				(id, model) => model.FieldBigInt.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeResponseModel>(new ApiTestAllFieldTypeResponseModel()));
-			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeServerResponseModel>(new ApiTestAllFieldTypeServerResponseModel()));
+			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTestAllFieldTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiTestAllFieldTypeServerRequestModel>();
 			patch.Replace(x => x.FieldBigInt, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeServerResponseModel>(null));
 			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTestAllFieldTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiTestAllFieldTypeServerRequestModel>();
 			patch.Replace(x => x.FieldBigInt, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeResponseModel()));
-			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeServerResponseModel()));
+			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeResponseModel()));
-			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTestAllFieldTypeServerResponseModel()));
+			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TestAllFieldTypeControllerMockFacade mock = new TestAllFieldTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeResponseModel>(null));
-			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTestAllFieldTypeServerResponseModel>(null));
+			TestAllFieldTypeController controller = new TestAllFieldTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTestAllFieldTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTestAllFieldTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<ITestAllFieldTypeService> ServiceMock { get; set; } = new Mock<ITestAllFieldTypeService>();
 
-		public Mock<IApiTestAllFieldTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTestAllFieldTypeModelMapper>();
+		public Mock<IApiTestAllFieldTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTestAllFieldTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c557a7d2adba32377e79ce12f5719564</Hash>
+    <Hash>b38e3c74931cc7e498e9ed73f8332048</Hash>
 </Codenesium>*/

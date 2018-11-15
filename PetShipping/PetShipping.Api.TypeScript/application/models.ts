@@ -1,4 +1,4 @@
-export class ApiAirlineRequestModel {
+export class ApiAirlineServerRequestModel {
 				id:number;
 name:string;
 
@@ -11,7 +11,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiAirlineResponseModel {
+			export class ApiAirlineServerResponseModel {
 				id:number;
 name:string;
 
@@ -23,7 +23,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiAirTransportRequestModel {
+			export class ApiAirTransportServerRequestModel {
 				airlineId:number;
 flightNumber:string;
 handlerId:number;
@@ -47,7 +47,7 @@ this.takeoffDate = '';
 				}
 			}
 
-			export class ApiAirTransportResponseModel {
+			export class ApiAirTransportServerResponseModel {
 				airlineId:number;
 flightNumber:string;
 handlerId:number;
@@ -70,7 +70,7 @@ this.takeoffDate = '';
 		
 				}
 			}
-			export class ApiBreedRequestModel {
+			export class ApiBreedServerRequestModel {
 				id:number;
 name:string;
 speciesId:number;
@@ -86,7 +86,7 @@ this.speciesId = 0;
 				}
 			}
 
-			export class ApiBreedResponseModel {
+			export class ApiBreedServerResponseModel {
 				id:number;
 name:string;
 speciesId:number;
@@ -101,7 +101,7 @@ this.speciesId = 0;
 		
 				}
 			}
-			export class ApiClientRequestModel {
+			export class ApiClientServerRequestModel {
 				email:string;
 firstName:string;
 id:number;
@@ -122,7 +122,7 @@ this.phone = '';
 				}
 			}
 
-			export class ApiClientResponseModel {
+			export class ApiClientServerResponseModel {
 				email:string;
 firstName:string;
 id:number;
@@ -142,7 +142,7 @@ this.phone = '';
 		
 				}
 			}
-			export class ApiClientCommunicationRequestModel {
+			export class ApiClientCommunicationServerRequestModel {
 				clientId:number;
 clientIdEntity:number;
 dateCreated:string;
@@ -163,7 +163,7 @@ this.note = '';
 				}
 			}
 
-			export class ApiClientCommunicationResponseModel {
+			export class ApiClientCommunicationServerResponseModel {
 				clientId:number;
 clientIdEntity:number;
 dateCreated:string;
@@ -183,7 +183,7 @@ this.note = '';
 		
 				}
 			}
-			export class ApiCountryRequestModel {
+			export class ApiCountryServerRequestModel {
 				id:number;
 name:string;
 
@@ -196,7 +196,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiCountryResponseModel {
+			export class ApiCountryServerResponseModel {
 				id:number;
 name:string;
 
@@ -208,7 +208,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiCountryRequirementRequestModel {
+			export class ApiCountryRequirementServerRequestModel {
 				countryId:number;
 countryIdEntity:number;
 detail:string;
@@ -224,7 +224,7 @@ this.id = 0;
 				}
 			}
 
-			export class ApiCountryRequirementResponseModel {
+			export class ApiCountryRequirementServerResponseModel {
 				countryId:number;
 countryIdEntity:number;
 detail:string;
@@ -239,7 +239,7 @@ this.id = 0;
 		
 				}
 			}
-			export class ApiDestinationRequestModel {
+			export class ApiDestinationServerRequestModel {
 				countryId:number;
 countryIdEntity:number;
 id:number;
@@ -257,7 +257,7 @@ this.order = 0;
 				}
 			}
 
-			export class ApiDestinationResponseModel {
+			export class ApiDestinationServerResponseModel {
 				countryId:number;
 countryIdEntity:number;
 id:number;
@@ -274,7 +274,7 @@ this.order = 0;
 		
 				}
 			}
-			export class ApiEmployeeRequestModel {
+			export class ApiEmployeeServerRequestModel {
 				firstName:string;
 id:number;
 isSalesPerson:boolean;
@@ -293,7 +293,7 @@ this.lastName = '';
 				}
 			}
 
-			export class ApiEmployeeResponseModel {
+			export class ApiEmployeeServerResponseModel {
 				firstName:string;
 id:number;
 isSalesPerson:boolean;
@@ -311,7 +311,7 @@ this.lastName = '';
 		
 				}
 			}
-			export class ApiHandlerRequestModel {
+			export class ApiHandlerServerRequestModel {
 				countryId:number;
 email:string;
 firstName:string;
@@ -332,7 +332,7 @@ this.phone = '';
 				}
 			}
 
-			export class ApiHandlerResponseModel {
+			export class ApiHandlerServerResponseModel {
 				countryId:number;
 email:string;
 firstName:string;
@@ -352,7 +352,7 @@ this.phone = '';
 		
 				}
 			}
-			export class ApiPetRequestModel {
+			export class ApiPetServerRequestModel {
 				breedId:number;
 breedIdEntity:number;
 clientId:number;
@@ -373,7 +373,7 @@ this.weight = 0;
 				}
 			}
 
-			export class ApiPetResponseModel {
+			export class ApiPetServerResponseModel {
 				breedId:number;
 breedIdEntity:number;
 clientId:number;
@@ -393,7 +393,7 @@ this.weight = 0;
 		
 				}
 			}
-			export class ApiPipelineRequestModel {
+			export class ApiPipelineServerRequestModel {
 				id:number;
 pipelineStatusId:number;
 pipelineStatusIdEntity:number;
@@ -409,7 +409,7 @@ this.saleId = 0;
 				}
 			}
 
-			export class ApiPipelineResponseModel {
+			export class ApiPipelineServerResponseModel {
 				id:number;
 pipelineStatusId:number;
 pipelineStatusIdEntity:number;
@@ -424,7 +424,7 @@ this.saleId = 0;
 		
 				}
 			}
-			export class ApiPipelineStatuRequestModel {
+			export class ApiPipelineStatuServerRequestModel {
 				id:number;
 name:string;
 
@@ -437,7 +437,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiPipelineStatuResponseModel {
+			export class ApiPipelineStatuServerResponseModel {
 				id:number;
 name:string;
 
@@ -449,7 +449,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiPipelineStepRequestModel {
+			export class ApiPipelineStepServerRequestModel {
 				id:number;
 name:string;
 pipelineStepStatusId:number;
@@ -468,7 +468,7 @@ this.shipperId = 0;
 				}
 			}
 
-			export class ApiPipelineStepResponseModel {
+			export class ApiPipelineStepServerResponseModel {
 				id:number;
 name:string;
 pipelineStepStatusId:number;
@@ -486,7 +486,7 @@ this.shipperId = 0;
 		
 				}
 			}
-			export class ApiPipelineStepNoteRequestModel {
+			export class ApiPipelineStepNoteServerRequestModel {
 				employeeId:number;
 employeeIdEntity:number;
 id:number;
@@ -505,7 +505,7 @@ this.pipelineStepId = 0;
 				}
 			}
 
-			export class ApiPipelineStepNoteResponseModel {
+			export class ApiPipelineStepNoteServerResponseModel {
 				employeeId:number;
 employeeIdEntity:number;
 id:number;
@@ -523,7 +523,7 @@ this.pipelineStepId = 0;
 		
 				}
 			}
-			export class ApiPipelineStepStatuRequestModel {
+			export class ApiPipelineStepStatuServerRequestModel {
 				id:number;
 name:string;
 
@@ -536,7 +536,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiPipelineStepStatuResponseModel {
+			export class ApiPipelineStepStatuServerResponseModel {
 				id:number;
 name:string;
 
@@ -548,7 +548,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiPipelineStepStepRequirementRequestModel {
+			export class ApiPipelineStepStepRequirementServerRequestModel {
 				detail:string;
 id:number;
 pipelineStepId:number;
@@ -566,7 +566,7 @@ this.requirementMet = false;
 				}
 			}
 
-			export class ApiPipelineStepStepRequirementResponseModel {
+			export class ApiPipelineStepStepRequirementServerResponseModel {
 				detail:string;
 id:number;
 pipelineStepId:number;
@@ -583,7 +583,7 @@ this.requirementMet = false;
 		
 				}
 			}
-			export class ApiSaleRequestModel {
+			export class ApiSaleServerRequestModel {
 				amount:number;
 clientId:number;
 clientIdEntity:number;
@@ -608,7 +608,7 @@ this.salesPersonId = 0;
 				}
 			}
 
-			export class ApiSaleResponseModel {
+			export class ApiSaleServerResponseModel {
 				amount:number;
 clientId:number;
 clientIdEntity:number;
@@ -632,7 +632,7 @@ this.salesPersonId = 0;
 		
 				}
 			}
-			export class ApiSpeciesRequestModel {
+			export class ApiSpeciesServerRequestModel {
 				id:number;
 name:string;
 
@@ -645,7 +645,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiSpeciesResponseModel {
+			export class ApiSpeciesServerResponseModel {
 				id:number;
 name:string;
 

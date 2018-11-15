@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SalesReasonController : AbstractSalesReasonController
 	{
 		public SalesReasonController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<SalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesReasonService salesReasonService,
-			IApiSalesReasonModelMapper salesReasonModelMapper
+			IApiSalesReasonServerModelMapper salesReasonModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>435422c69d7d51e3256a0aa048c98e9a</Hash>
+    <Hash>f9448202b28313b725929658b38846f4</Hash>
 </Codenesium>*/

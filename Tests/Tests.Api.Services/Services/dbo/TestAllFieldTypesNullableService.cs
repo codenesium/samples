@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TestsNS.Api.Services
 		public TestAllFieldTypesNullableService(
 			ILogger<ITestAllFieldTypesNullableRepository> logger,
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
-			IApiTestAllFieldTypesNullableRequestModelValidator testAllFieldTypesNullableModelValidator,
-			IBOLTestAllFieldTypesNullableMapper boltestAllFieldTypesNullableMapper,
-			IDALTestAllFieldTypesNullableMapper daltestAllFieldTypesNullableMapper)
+			IApiTestAllFieldTypesNullableServerRequestModelValidator testAllFieldTypesNullableModelValidator,
+			IBOLTestAllFieldTypesNullableMapper bolTestAllFieldTypesNullableMapper,
+			IDALTestAllFieldTypesNullableMapper dalTestAllFieldTypesNullableMapper)
 			: base(logger,
 			       testAllFieldTypesNullableRepository,
 			       testAllFieldTypesNullableModelValidator,
-			       boltestAllFieldTypesNullableMapper,
-			       daltestAllFieldTypesNullableMapper)
+			       bolTestAllFieldTypesNullableMapper,
+			       dalTestAllFieldTypesNullableMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>32a658c09e8a890c24fbfe3a9b6e7ae7</Hash>
+    <Hash>999061f0fb8d2ff012f4becc625325f7</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IPipelineRepository PipelineRepository { get; private set; }
 
-		protected IApiPipelineRequestModelValidator PipelineModelValidator { get; private set; }
+		protected IApiPipelineServerRequestModelValidator PipelineModelValidator { get; private set; }
 
 		protected IBOLPipelineMapper BolPipelineMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractPipelineService(
 			ILogger logger,
 			IPipelineRepository pipelineRepository,
-			IApiPipelineRequestModelValidator pipelineModelValidator,
+			IApiPipelineServerRequestModelValidator pipelineModelValidator,
 			IBOLPipelineMapper bolPipelineMapper,
 			IDALPipelineMapper dalPipelineMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPipelineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PipelineRepository.All(limit, offset);
 
 			return this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPipelineResponseModel> Get(int id)
+		public virtual async Task<ApiPipelineServerResponseModel> Get(int id)
 		{
 			var record = await this.PipelineRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineResponseModel>> Create(
-			ApiPipelineRequestModel model)
+		public virtual async Task<CreateResponse<ApiPipelineServerResponseModel>> Create(
+			ApiPipelineServerRequestModel model)
 		{
-			CreateResponse<ApiPipelineResponseModel> response = new CreateResponse<ApiPipelineResponseModel>(await this.PipelineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPipelineServerResponseModel> response = ValidationResponseFactory<ApiPipelineServerResponseModel>.CreateResponse(await this.PipelineModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPipelineMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPipelineServerResponseModel>> Update(
 			int id,
-			ApiPipelineRequestModel model)
+			ApiPipelineServerRequestModel model)
 		{
 			var validationResult = await this.PipelineModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.PipelineRepository.Get(id);
 
-				return new UpdateResponse<ApiPipelineResponseModel>(this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPipelineServerResponseModel>.UpdateResponse(this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPipelineResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPipelineServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PipelineModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PipelineModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PipelineRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b323580b6383c590e37fe7784f257a70</Hash>
+    <Hash>ab1e2a7f78fec60027d2615cf15adf9d</Hash>
 </Codenesium>*/

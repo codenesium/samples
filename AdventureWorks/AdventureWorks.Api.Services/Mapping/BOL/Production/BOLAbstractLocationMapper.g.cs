@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOLocation MapModelToBO(
 			short locationID,
-			ApiLocationRequestModel model
+			ApiLocationServerRequestModel model
 			)
 		{
 			BOLocation boLocation = new BOLocation();
@@ -22,20 +21,20 @@ namespace AdventureWorksNS.Api.Services
 			return boLocation;
 		}
 
-		public virtual ApiLocationResponseModel MapBOToModel(
+		public virtual ApiLocationServerResponseModel MapBOToModel(
 			BOLocation boLocation)
 		{
-			var model = new ApiLocationResponseModel();
+			var model = new ApiLocationServerResponseModel();
 
 			model.SetProperties(boLocation.LocationID, boLocation.Availability, boLocation.CostRate, boLocation.ModifiedDate, boLocation.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiLocationResponseModel> MapBOToModel(
+		public virtual List<ApiLocationServerResponseModel> MapBOToModel(
 			List<BOLocation> items)
 		{
-			List<ApiLocationResponseModel> response = new List<ApiLocationResponseModel>();
+			List<ApiLocationServerResponseModel> response = new List<ApiLocationServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85757f0a7060d2c7fb1c8f295c9cee09</Hash>
+    <Hash>c14faf3fc00e246a3b5dda187cbb8577</Hash>
 </Codenesium>*/

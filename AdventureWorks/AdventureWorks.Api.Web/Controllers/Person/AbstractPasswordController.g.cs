@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IPasswordService PasswordService { get; private set; }
 
-		protected IApiPasswordModelMapper PasswordModelMapper { get; private set; }
+		protected IApiPasswordServerModelMapper PasswordModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractPasswordController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPasswordService passwordService,
-			IApiPasswordModelMapper passwordModelMapper
+			IApiPasswordServerModelMapper passwordModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPasswordResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPasswordServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPasswordResponseModel> response = await this.PasswordService.All(query.Limit, query.Offset);
+			List<ApiPasswordServerResponseModel> response = await this.PasswordService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPasswordResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPasswordServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPasswordResponseModel response = await this.PasswordService.Get(id);
+			ApiPasswordServerResponseModel response = await this.PasswordService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPasswordResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPasswordServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPasswordRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPasswordServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPasswordResponseModel> records = new List<ApiPasswordResponseModel>();
+			List<ApiPasswordServerResponseModel> records = new List<ApiPasswordServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Create(model);
+				CreateResponse<ApiPasswordServerResponseModel> result = await this.PasswordService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPasswordServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPasswordResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPasswordServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPasswordRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPasswordServerRequestModel model)
 		{
-			CreateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Create(model);
+			CreateResponse<ApiPasswordServerResponseModel> result = await this.PasswordService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPasswordResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPasswordServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPasswordRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPasswordServerRequestModel> patch)
 		{
-			ApiPasswordResponseModel record = await this.PasswordService.Get(id);
+			ApiPasswordServerResponseModel record = await this.PasswordService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiPasswordRequestModel model = await this.PatchModel(id, patch);
+				ApiPasswordServerRequestModel model = await this.PatchModel(id, patch) as ApiPasswordServerRequestModel;
 
-				UpdateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Update(id, model);
+				UpdateResponse<ApiPasswordServerResponseModel> result = await this.PasswordService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPasswordResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPasswordServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordServerRequestModel model)
 		{
-			ApiPasswordRequestModel request = await this.PatchModel(id, this.PasswordModelMapper.CreatePatch(model));
+			ApiPasswordServerRequestModel request = await this.PatchModel(id, this.PasswordModelMapper.CreatePatch(model)) as ApiPasswordServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPasswordResponseModel> result = await this.PasswordService.Update(id, request);
+				UpdateResponse<ApiPasswordServerResponseModel> result = await this.PasswordService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PasswordService.Delete(id);
@@ -206,7 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiPasswordRequestModel> PatchModel(int id, JsonPatchDocument<ApiPasswordRequestModel> patch)
+		private async Task<ApiPasswordServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPasswordServerRequestModel> patch)
 		{
 			var record = await this.PasswordService.Get(id);
 
@@ -216,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiPasswordRequestModel request = this.PasswordModelMapper.MapResponseToRequest(record);
+				ApiPasswordServerRequestModel request = this.PasswordModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8d281e9775c811385050f541c39d2b9f</Hash>
+    <Hash>404ab4c9e8f80d1880a71937ac1da2dc</Hash>
 </Codenesium>*/

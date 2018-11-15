@@ -32,37 +32,47 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AverageRate")]
-		public decimal AverageRate { get; private set; }
+		public virtual decimal AverageRate { get; private set; }
 
 		[Column("CurrencyRateDate")]
-		public DateTime CurrencyRateDate { get; private set; }
+		public virtual DateTime CurrencyRateDate { get; private set; }
 
 		[Key]
 		[Column("CurrencyRateID")]
-		public int CurrencyRateID { get; private set; }
+		public virtual int CurrencyRateID { get; private set; }
 
 		[Column("EndOfDayRate")]
-		public decimal EndOfDayRate { get; private set; }
+		public virtual decimal EndOfDayRate { get; private set; }
 
 		[MaxLength(3)]
 		[Column("FromCurrencyCode")]
-		public string FromCurrencyCode { get; private set; }
+		public virtual string FromCurrencyCode { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(3)]
 		[Column("ToCurrencyCode")]
-		public string ToCurrencyCode { get; private set; }
+		public virtual string ToCurrencyCode { get; private set; }
 
 		[ForeignKey("FromCurrencyCode")]
 		public virtual Currency CurrencyNavigation { get; private set; }
 
+		public void SetCurrencyNavigation(Currency item)
+		{
+			this.CurrencyNavigation = item;
+		}
+
 		[ForeignKey("ToCurrencyCode")]
 		public virtual Currency Currency1Navigation { get; private set; }
+
+		public void SetCurrency1Navigation(Currency item)
+		{
+			this.Currency1Navigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>371ccd4af29cfc0dec8aecf273ac87fa</Hash>
+    <Hash>70649586497bf74c82e7d00ece208e5a</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTimestampCheckMapper();
-			ApiTimestampCheckRequestModel model = new ApiTimestampCheckRequestModel();
+			ApiTimestampCheckServerRequestModel model = new ApiTimestampCheckServerRequestModel();
 			model.SetProperties("A", BitConverter.GetBytes(1));
 			BOTimestampCheck response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLTimestampCheckMapper();
 			BOTimestampCheck bo = new BOTimestampCheck();
 			bo.SetProperties(1, "A", BitConverter.GetBytes(1));
-			ApiTimestampCheckResponseModel response = mapper.MapBOToModel(bo);
+			ApiTimestampCheckServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLTimestampCheckMapper();
 			BOTimestampCheck bo = new BOTimestampCheck();
 			bo.SetProperties(1, "A", BitConverter.GetBytes(1));
-			List<ApiTimestampCheckResponseModel> response = mapper.MapBOToModel(new List<BOTimestampCheck>() { { bo } });
+			List<ApiTimestampCheckServerResponseModel> response = mapper.MapBOToModel(new List<BOTimestampCheck>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>372b0c4f7e9d87d59fd53abb01e17bfa</Hash>
+    <Hash>ef0580ce43b89be0c0df8269e4c393df</Hash>
 </Codenesium>*/

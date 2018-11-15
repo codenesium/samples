@@ -28,30 +28,32 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("breedId")]
-		public int BreedId { get; private set; }
+		public virtual int BreedId { get; private set; }
 
 		[Column("clientId")]
-		public int ClientId { get; private set; }
+		public virtual int ClientId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("weight")]
-		public int Weight { get; private set; }
+		public virtual int Weight { get; private set; }
 
 		[ForeignKey("BreedId")]
 		public virtual Breed BreedNavigation { get; private set; }
 
-		[ForeignKey("ClientId")]
-		public virtual Client ClientNavigation { get; private set; }
+		public void SetBreedNavigation(Breed item)
+		{
+			this.BreedNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c306c5889421d18818d1c94bab54adc</Hash>
+    <Hash>ce4234756f3737f0cf6cc8ad32da4f2b</Hash>
 </Codenesium>*/

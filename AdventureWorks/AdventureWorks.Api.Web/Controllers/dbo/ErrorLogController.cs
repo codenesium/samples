@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ErrorLogController : AbstractErrorLogController
 	{
 		public ErrorLogController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IErrorLogService errorLogService,
-			IApiErrorLogModelMapper errorLogModelMapper
+			IApiErrorLogServerModelMapper errorLogModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c04d57f77b7f0d7abba9d2a1a2fd51ba</Hash>
+    <Hash>f4fe66bc8fc4ea3149dbbe505e8c444d</Hash>
 </Codenesium>*/

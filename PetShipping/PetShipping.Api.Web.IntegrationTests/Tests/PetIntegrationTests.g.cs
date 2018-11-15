@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using PetShippingNS.Api.Client;
 using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,72 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Pet")]
 	[Trait("Area", "Integration")]
-	public class PetIntegrationTests
+	public partial class PetIntegrationTests
 	{
 		public PetIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.PetDeleteAsync(1);
+			var model = new ApiPetClientRequestModel();
+			model.SetProperties(1, 2, "B", 2);
+			var model2 = new ApiPetClientRequestModel();
+			model2.SetProperties(1, 3, "C", 3);
+			var request = new List<ApiPetClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiPetClientResponseModel>> result = await client.PetBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Pet>().ToList()[1].BreedId.Should().Be(1);
+			context.Set<Pet>().ToList()[1].ClientId.Should().Be(2);
+			context.Set<Pet>().ToList()[1].Name.Should().Be("B");
+			context.Set<Pet>().ToList()[1].Weight.Should().Be(2);
+
+			context.Set<Pet>().ToList()[2].BreedId.Should().Be(1);
+			context.Set<Pet>().ToList()[2].ClientId.Should().Be(3);
+			context.Set<Pet>().ToList()[2].Name.Should().Be("C");
+			context.Set<Pet>().ToList()[2].Weight.Should().Be(3);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiPetClientRequestModel();
+			model.SetProperties(1, 2, "B", 2);
+			CreateResponse<ApiPetClientResponseModel> result = await client.PetCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Pet>().ToList()[1].BreedId.Should().Be(1);
+			context.Set<Pet>().ToList()[1].ClientId.Should().Be(2);
+			context.Set<Pet>().ToList()[1].Name.Should().Be("B");
+			context.Set<Pet>().ToList()[1].Weight.Should().Be(2);
+
+			result.Record.BreedId.Should().Be(1);
+			result.Record.ClientId.Should().Be(2);
+			result.Record.Name.Should().Be("B");
+			result.Record.Weight.Should().Be(2);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +91,59 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiPetServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IPetService service = testServer.Host.Services.GetService(typeof(IPetService)) as IPetService;
+			ApiPetServerResponseModel model = await service.Get(1);
 
-			ApiPetResponseModel model = await client.PetGetAsync(1);
+			ApiPetClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(1, 2, "B", 2);
 
-			ApiPetModelMapper mapper = new ApiPetModelMapper();
+			UpdateResponse<ApiPetClientResponseModel> updateResponse = await client.PetUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiPetResponseModel> updateResponse = await client.PetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Pet>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Pet>().ToList()[0].BreedId.Should().Be(1);
+			context.Set<Pet>().ToList()[0].ClientId.Should().Be(2);
+			context.Set<Pet>().ToList()[0].Name.Should().Be("B");
+			context.Set<Pet>().ToList()[0].Weight.Should().Be(2);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.BreedId.Should().Be(1);
+			updateResponse.Record.ClientId.Should().Be(2);
+			updateResponse.Record.Name.Should().Be("B");
+			updateResponse.Record.Weight.Should().Be(2);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiPetRequestModel();
-			createModel.SetProperties(1, 1, "B", 2);
-			CreateResponse<ApiPetResponseModel> createResult = await client.PetCreateAsync(createModel);
+			IPetService service = testServer.Host.Services.GetService(typeof(IPetService)) as IPetService;
+			var model = new ApiPetServerRequestModel();
+			model.SetProperties(1, 2, "B", 2);
+			CreateResponse<ApiPetServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiPetResponseModel getResponse = await client.PetGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.PetDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiPetResponseModel verifyResponse = await client.PetGetAsync(2);
+			ApiPetServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +151,34 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiPetResponseModel response = await client.PetGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiPetClientResponseModel response = await client.PetGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.BreedId.Should().Be(1);
+			response.ClientId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Weight.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPetClientResponseModel response = await client.PetGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +187,66 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiPetResponseModel> response = await client.PetAllAsync();
+			List<ApiPetClientResponseModel> response = await client.PetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].BreedId.Should().Be(1);
+			response[0].ClientId.Should().Be(1);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+			response[0].Weight.Should().Be(1);
 		}
 
-		private async Task<ApiPetResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestForeignKeySalesByPetIdFound()
 		{
-			var model = new ApiPetRequestModel();
-			model.SetProperties(1, 1, "B", 2);
-			CreateResponse<ApiPetResponseModel> result = await client.PetCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleClientResponseModel> response = await client.SalesByPetId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeySalesByPetIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleClientResponseModel> response = await client.SalesByPetId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.PetAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9fb82f4711f96e7bc1c3f5ccef26e6b7</Hash>
+    <Hash>e5a926b68bed83554fab1718f5f9a8cf</Hash>
 </Codenesium>*/

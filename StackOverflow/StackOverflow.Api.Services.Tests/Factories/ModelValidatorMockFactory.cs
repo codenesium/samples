@@ -9,83 +9,83 @@ namespace StackOverflowNS.Api.Services.Tests
 {
 	public class ModelValidatorMockFactory
 	{
-		public Mock<IApiBadgeRequestModelValidator> BadgeModelValidatorMock { get; set; } = new Mock<IApiBadgeRequestModelValidator>();
+		public Mock<IApiBadgeServerRequestModelValidator> BadgeModelValidatorMock { get; set; } = new Mock<IApiBadgeServerRequestModelValidator>();
 
-		public Mock<IApiCommentRequestModelValidator> CommentModelValidatorMock { get; set; } = new Mock<IApiCommentRequestModelValidator>();
+		public Mock<IApiCommentServerRequestModelValidator> CommentModelValidatorMock { get; set; } = new Mock<IApiCommentServerRequestModelValidator>();
 
-		public Mock<IApiLinkTypeRequestModelValidator> LinkTypeModelValidatorMock { get; set; } = new Mock<IApiLinkTypeRequestModelValidator>();
+		public Mock<IApiLinkTypeServerRequestModelValidator> LinkTypeModelValidatorMock { get; set; } = new Mock<IApiLinkTypeServerRequestModelValidator>();
 
-		public Mock<IApiPostHistoryRequestModelValidator> PostHistoryModelValidatorMock { get; set; } = new Mock<IApiPostHistoryRequestModelValidator>();
+		public Mock<IApiPostHistoryServerRequestModelValidator> PostHistoryModelValidatorMock { get; set; } = new Mock<IApiPostHistoryServerRequestModelValidator>();
 
-		public Mock<IApiPostHistoryTypeRequestModelValidator> PostHistoryTypeModelValidatorMock { get; set; } = new Mock<IApiPostHistoryTypeRequestModelValidator>();
+		public Mock<IApiPostHistoryTypeServerRequestModelValidator> PostHistoryTypeModelValidatorMock { get; set; } = new Mock<IApiPostHistoryTypeServerRequestModelValidator>();
 
-		public Mock<IApiPostLinkRequestModelValidator> PostLinkModelValidatorMock { get; set; } = new Mock<IApiPostLinkRequestModelValidator>();
+		public Mock<IApiPostLinkServerRequestModelValidator> PostLinkModelValidatorMock { get; set; } = new Mock<IApiPostLinkServerRequestModelValidator>();
 
-		public Mock<IApiPostRequestModelValidator> PostModelValidatorMock { get; set; } = new Mock<IApiPostRequestModelValidator>();
+		public Mock<IApiPostServerRequestModelValidator> PostModelValidatorMock { get; set; } = new Mock<IApiPostServerRequestModelValidator>();
 
-		public Mock<IApiPostTypeRequestModelValidator> PostTypeModelValidatorMock { get; set; } = new Mock<IApiPostTypeRequestModelValidator>();
+		public Mock<IApiPostTypeServerRequestModelValidator> PostTypeModelValidatorMock { get; set; } = new Mock<IApiPostTypeServerRequestModelValidator>();
 
-		public Mock<IApiTagRequestModelValidator> TagModelValidatorMock { get; set; } = new Mock<IApiTagRequestModelValidator>();
+		public Mock<IApiTagServerRequestModelValidator> TagModelValidatorMock { get; set; } = new Mock<IApiTagServerRequestModelValidator>();
 
-		public Mock<IApiUserRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserRequestModelValidator>();
+		public Mock<IApiUserServerRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserServerRequestModelValidator>();
 
-		public Mock<IApiVoteRequestModelValidator> VoteModelValidatorMock { get; set; } = new Mock<IApiVoteRequestModelValidator>();
+		public Mock<IApiVoteServerRequestModelValidator> VoteModelValidatorMock { get; set; } = new Mock<IApiVoteServerRequestModelValidator>();
 
-		public Mock<IApiVoteTypeRequestModelValidator> VoteTypeModelValidatorMock { get; set; } = new Mock<IApiVoteTypeRequestModelValidator>();
+		public Mock<IApiVoteTypeServerRequestModelValidator> VoteTypeModelValidatorMock { get; set; } = new Mock<IApiVoteTypeServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
 		{
-			this.BadgeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.BadgeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.BadgeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.BadgeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.BadgeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.CommentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCommentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.CommentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCommentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.CommentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCommentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.CommentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCommentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CommentModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.LinkTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LinkTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LinkTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LinkTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.LinkTypeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PostHistoryModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PostHistoryModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostHistoryModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostHistoryModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PostHistoryModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PostHistoryTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PostHistoryTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostHistoryTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostHistoryTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PostHistoryTypeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PostLinkModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PostLinkModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostLinkModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostLinkModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PostLinkModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PostModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PostModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PostModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PostTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PostTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.PostTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PostTypeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.TagModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TagModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TagModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TagModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TagModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.VoteModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVoteRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VoteModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VoteModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVoteServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VoteModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VoteModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.VoteTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VoteTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VoteTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VoteTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VoteTypeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35901f5089eb737d27bd7698d77a1464</Hash>
+    <Hash>187c113cc071d9ede5d645762f2d129e</Hash>
 </Codenesium>*/

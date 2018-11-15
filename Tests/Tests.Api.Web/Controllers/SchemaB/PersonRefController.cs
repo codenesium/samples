@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PersonRefController : AbstractPersonRefController
 	{
 		public PersonRefController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<PersonRefController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPersonRefService personRefService,
-			IApiPersonRefModelMapper personRefModelMapper
+			IApiPersonRefServerModelMapper personRefModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8c4e52e6861e1b44a0771268eca37f30</Hash>
+    <Hash>8fed5584621df5f0fff70fd51cf63e2a</Hash>
 </Codenesium>*/

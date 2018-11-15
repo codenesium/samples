@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCountryRegionMapper();
-			ApiCountryRegionRequestModel model = new ApiCountryRegionRequestModel();
+			ApiCountryRegionServerRequestModel model = new ApiCountryRegionServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOCountryRegion response = mapper.MapModelToBO("A", model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCountryRegionMapper();
 			BOCountryRegion bo = new BOCountryRegion();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCountryRegionResponseModel response = mapper.MapBOToModel(bo);
+			ApiCountryRegionServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CountryRegionCode.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCountryRegionMapper();
 			BOCountryRegion bo = new BOCountryRegion();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCountryRegionResponseModel> response = mapper.MapBOToModel(new List<BOCountryRegion>() { { bo } });
+			List<ApiCountryRegionServerResponseModel> response = mapper.MapBOToModel(new List<BOCountryRegion>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e8475a47ba48fd73798521f5e3d9e4d7</Hash>
+    <Hash>11ba7d2c8976a60b2d8e43615088682d</Hash>
 </Codenesium>*/

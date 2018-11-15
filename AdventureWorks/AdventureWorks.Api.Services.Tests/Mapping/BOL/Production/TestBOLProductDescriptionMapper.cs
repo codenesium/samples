@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLProductDescriptionMapper();
-			ApiProductDescriptionRequestModel model = new ApiProductDescriptionRequestModel();
+			ApiProductDescriptionServerRequestModel model = new ApiProductDescriptionServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BOProductDescription response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductDescriptionMapper();
 			BOProductDescription bo = new BOProductDescription();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiProductDescriptionResponseModel response = mapper.MapBOToModel(bo);
+			ApiProductDescriptionServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Description.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductDescriptionMapper();
 			BOProductDescription bo = new BOProductDescription();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiProductDescriptionResponseModel> response = mapper.MapBOToModel(new List<BOProductDescription>() { { bo } });
+			List<ApiProductDescriptionServerResponseModel> response = mapper.MapBOToModel(new List<BOProductDescription>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dbdb407efa793f9dac01fa9ce8e9fc93</Hash>
+    <Hash>6b1e46195365f8d242518eaa812ca16d</Hash>
 </Codenesium>*/

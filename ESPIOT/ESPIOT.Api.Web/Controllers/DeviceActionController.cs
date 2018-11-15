@@ -18,6 +18,7 @@ namespace ESPIOTNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class DeviceActionController : AbstractDeviceActionController
 	{
 		public DeviceActionController(
@@ -25,7 +26,7 @@ namespace ESPIOTNS.Api.Web
 			ILogger<DeviceActionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDeviceActionService deviceActionService,
-			IApiDeviceActionModelMapper deviceActionModelMapper
+			IApiDeviceActionServerModelMapper deviceActionModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>790c5eca43dce4c40d1a99053daaf6e3</Hash>
+    <Hash>d91819e1559be0c046328979dc3eda09</Hash>
 </Codenesium>*/

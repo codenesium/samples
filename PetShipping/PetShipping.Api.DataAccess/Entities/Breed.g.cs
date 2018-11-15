@@ -25,20 +25,25 @@ namespace PetShippingNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("speciesId")]
-		public int SpeciesId { get; private set; }
+		public virtual int SpeciesId { get; private set; }
 
 		[ForeignKey("SpeciesId")]
 		public virtual Species SpeciesNavigation { get; private set; }
+
+		public void SetSpeciesNavigation(Species item)
+		{
+			this.SpeciesNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3b969df3448e2469176302a4f815983</Hash>
+    <Hash>f9f0123dcfea87abdbd5e814a5d7b945</Hash>
 </Codenesium>*/

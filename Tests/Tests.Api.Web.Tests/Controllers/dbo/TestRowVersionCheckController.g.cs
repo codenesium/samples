@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			var record = new ApiRowVersionCheckResponseModel();
-			var records = new List<ApiRowVersionCheckResponseModel>();
+			var record = new ApiRowVersionCheckServerResponseModel();
+			var records = new List<ApiRowVersionCheckServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiRowVersionCheckResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiRowVersionCheckServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiRowVersionCheckResponseModel>>(new List<ApiRowVersionCheckResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiRowVersionCheckServerResponseModel>>(new List<ApiRowVersionCheckServerResponseModel>()));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiRowVersionCheckResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiRowVersionCheckServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckServerResponseModel()));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiRowVersionCheckResponseModel;
+			var record = (response as OkObjectResult).Value as ApiRowVersionCheckServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckServerResponseModel>(null));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiRowVersionCheckResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiRowVersionCheckResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.CreateResponse(null as ApiRowVersionCheckServerResponseModel);
+
+			mockResponse.SetRecord(new ApiRowVersionCheckServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckServerResponseModel>>(mockResponse));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiRowVersionCheckRequestModel>();
-			records.Add(new ApiRowVersionCheckRequestModel());
+			var records = new List<ApiRowVersionCheckServerRequestModel>();
+			records.Add(new ApiRowVersionCheckServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiRowVersionCheckResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiRowVersionCheckServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiRowVersionCheckResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiRowVersionCheckServerResponseModel>>(null as ApiRowVersionCheckServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckServerResponseModel>>(mockResponse.Object));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiRowVersionCheckRequestModel>();
-			records.Add(new ApiRowVersionCheckRequestModel());
+			var records = new List<ApiRowVersionCheckServerRequestModel>();
+			records.Add(new ApiRowVersionCheckServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiRowVersionCheckResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiRowVersionCheckResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.CreateResponse(null as ApiRowVersionCheckServerResponseModel);
+
+			mockResponse.SetRecord(new ApiRowVersionCheckServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckServerResponseModel>>(mockResponse));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiRowVersionCheckRequestModel());
+			IActionResult response = await controller.Create(new ApiRowVersionCheckServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiRowVersionCheckResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiRowVersionCheckServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiRowVersionCheckResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiRowVersionCheckResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiRowVersionCheckServerResponseModel>>(null as ApiRowVersionCheckServerResponseModel);
+			var mockRecord = new ApiRowVersionCheckServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiRowVersionCheckServerResponseModel>>(mockResponse.Object));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiRowVersionCheckRequestModel());
+			IActionResult response = await controller.Create(new ApiRowVersionCheckServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>()))
-			.Callback<int, ApiRowVersionCheckRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()))
+			.Callback<int, ApiRowVersionCheckServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckResponseModel>(new ApiRowVersionCheckResponseModel()));
-			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckServerResponseModel>(new ApiRowVersionCheckServerResponseModel()));
+			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiRowVersionCheckRequestModel>();
+			var patch = new JsonPatchDocument<ApiRowVersionCheckServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckServerResponseModel>(null));
 			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiRowVersionCheckRequestModel>();
+			var patch = new JsonPatchDocument<ApiRowVersionCheckServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckResponseModel()));
-			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckServerResponseModel()));
+			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckResponseModel()));
-			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiRowVersionCheckServerResponseModel()));
+			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			RowVersionCheckControllerMockFacade mock = new RowVersionCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiRowVersionCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckResponseModel>(null));
-			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiRowVersionCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiRowVersionCheckServerResponseModel>(null));
+			RowVersionCheckController controller = new RowVersionCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiRowVersionCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiRowVersionCheckServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<IRowVersionCheckService> ServiceMock { get; set; } = new Mock<IRowVersionCheckService>();
 
-		public Mock<IApiRowVersionCheckModelMapper> ModelMapperMock { get; set; } = new Mock<IApiRowVersionCheckModelMapper>();
+		public Mock<IApiRowVersionCheckServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiRowVersionCheckServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>5af281ef560938b540f595159c435631</Hash>
+    <Hash>bc1f360f43279bced599231fb1d6ea9e</Hash>
 </Codenesium>*/

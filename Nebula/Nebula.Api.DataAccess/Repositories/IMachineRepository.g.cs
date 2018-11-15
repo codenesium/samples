@@ -20,11 +20,9 @@ namespace NebulaNS.Api.DataAccess
 		Task<Machine> ByMachineGuid(Guid machineGuid);
 
 		Task<List<Link>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<Machine>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d02758629d9bb030f5c54b2429acce92</Hash>
+    <Hash>f67770551d2f4d85600acab2e451f4c9</Hash>
 </Codenesium>*/

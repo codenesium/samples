@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BOUser MapModelToBO(
 			int id,
-			ApiUserRequestModel model);
+			ApiUserServerRequestModel model);
 
-		ApiUserResponseModel MapBOToModel(
+		ApiUserServerResponseModel MapBOToModel(
 			BOUser boUser);
 
-		List<ApiUserResponseModel> MapBOToModel(
+		List<ApiUserServerResponseModel> MapBOToModel(
 			List<BOUser> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c32d92b4fcede4ca40c8525e8e8d574</Hash>
+    <Hash>61e297e15dc662ab14d84c874283aa4e</Hash>
 </Codenesium>*/

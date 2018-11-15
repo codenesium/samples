@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected IRowVersionCheckService RowVersionCheckService { get; private set; }
 
-		protected IApiRowVersionCheckModelMapper RowVersionCheckModelMapper { get; private set; }
+		protected IApiRowVersionCheckServerModelMapper RowVersionCheckModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractRowVersionCheckController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRowVersionCheckService rowVersionCheckService,
-			IApiRowVersionCheckModelMapper rowVersionCheckModelMapper
+			IApiRowVersionCheckServerModelMapper rowVersionCheckModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRowVersionCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiRowVersionCheckServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRowVersionCheckResponseModel> response = await this.RowVersionCheckService.All(query.Limit, query.Offset);
+			List<ApiRowVersionCheckServerResponseModel> response = await this.RowVersionCheckService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiRowVersionCheckResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiRowVersionCheckServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiRowVersionCheckResponseModel response = await this.RowVersionCheckService.Get(id);
+			ApiRowVersionCheckServerResponseModel response = await this.RowVersionCheckService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiRowVersionCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiRowVersionCheckServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRowVersionCheckRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRowVersionCheckServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiRowVersionCheckResponseModel> records = new List<ApiRowVersionCheckResponseModel>();
+			List<ApiRowVersionCheckServerResponseModel> records = new List<ApiRowVersionCheckServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiRowVersionCheckResponseModel> result = await this.RowVersionCheckService.Create(model);
+				CreateResponse<ApiRowVersionCheckServerResponseModel> result = await this.RowVersionCheckService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiRowVersionCheckServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiRowVersionCheckResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiRowVersionCheckServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiRowVersionCheckRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiRowVersionCheckServerRequestModel model)
 		{
-			CreateResponse<ApiRowVersionCheckResponseModel> result = await this.RowVersionCheckService.Create(model);
+			CreateResponse<ApiRowVersionCheckServerResponseModel> result = await this.RowVersionCheckService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRowVersionCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRowVersionCheckServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRowVersionCheckRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRowVersionCheckServerRequestModel> patch)
 		{
-			ApiRowVersionCheckResponseModel record = await this.RowVersionCheckService.Get(id);
+			ApiRowVersionCheckServerResponseModel record = await this.RowVersionCheckService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiRowVersionCheckRequestModel model = await this.PatchModel(id, patch);
+				ApiRowVersionCheckServerRequestModel model = await this.PatchModel(id, patch) as ApiRowVersionCheckServerRequestModel;
 
-				UpdateResponse<ApiRowVersionCheckResponseModel> result = await this.RowVersionCheckService.Update(id, model);
+				UpdateResponse<ApiRowVersionCheckServerResponseModel> result = await this.RowVersionCheckService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRowVersionCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRowVersionCheckServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRowVersionCheckRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRowVersionCheckServerRequestModel model)
 		{
-			ApiRowVersionCheckRequestModel request = await this.PatchModel(id, this.RowVersionCheckModelMapper.CreatePatch(model));
+			ApiRowVersionCheckServerRequestModel request = await this.PatchModel(id, this.RowVersionCheckModelMapper.CreatePatch(model)) as ApiRowVersionCheckServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiRowVersionCheckResponseModel> result = await this.RowVersionCheckService.Update(id, request);
+				UpdateResponse<ApiRowVersionCheckServerResponseModel> result = await this.RowVersionCheckService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.RowVersionCheckService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiRowVersionCheckRequestModel> PatchModel(int id, JsonPatchDocument<ApiRowVersionCheckRequestModel> patch)
+		private async Task<ApiRowVersionCheckServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiRowVersionCheckServerRequestModel> patch)
 		{
 			var record = await this.RowVersionCheckService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiRowVersionCheckRequestModel request = this.RowVersionCheckModelMapper.MapResponseToRequest(record);
+				ApiRowVersionCheckServerRequestModel request = this.RowVersionCheckModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>229a6a05e10476cc9e488ab321eba058</Hash>
+    <Hash>1f48c43568b53ec275afcde3d45469db</Hash>
 </Codenesium>*/

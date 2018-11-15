@@ -1,4 +1,4 @@
-export class ApiDeviceRequestModel {
+export class ApiDeviceServerRequestModel {
 				id:number;
 name:string;
 publicId:string;
@@ -13,7 +13,7 @@ this.publicId = '';
 				}
 			}
 
-			export class ApiDeviceResponseModel {
+			export class ApiDeviceServerResponseModel {
 				id:number;
 name:string;
 publicId:string;
@@ -27,7 +27,7 @@ this.publicId = '';
 		
 				}
 			}
-			export class ApiDeviceActionRequestModel {
+			export class ApiDeviceActionServerRequestModel {
 				deviceId:number;
 deviceIdEntity:number;
 id:number;
@@ -45,7 +45,7 @@ this.value = '';
 				}
 			}
 
-			export class ApiDeviceActionResponseModel {
+			export class ApiDeviceActionServerResponseModel {
 				deviceId:number;
 deviceIdEntity:number;
 id:number;

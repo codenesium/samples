@@ -31,7 +31,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.All();
+			List<ApiVenueServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiVenueResponseModel response = await service.Get(default(int));
+			ApiVenueServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiVenueResponseModel response = await service.Get(default(int));
+			ApiVenueServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IVenueRepository>();
-			var model = new ApiVenueRequestModel();
+			var model = new ApiVenueServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Venue>())).Returns(Task.FromResult(new Venue()));
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			CreateResponse<ApiVenueResponseModel> response = await service.Create(model);
+			CreateResponse<ApiVenueServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VenueModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVenueRequestModel>()));
+			mock.ModelValidatorMockFactory.VenueModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVenueServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Venue>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IVenueRepository>();
-			var model = new ApiVenueRequestModel();
+			var model = new ApiVenueServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Venue>())).Returns(Task.FromResult(new Venue()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Venue()));
 			var service = new VenueService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			UpdateResponse<ApiVenueResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiVenueServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VenueModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()));
+			mock.ModelValidatorMockFactory.VenueModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Venue>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IVenueRepository>();
-			var model = new ApiVenueRequestModel();
+			var model = new ApiVenueServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.ByAdminId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.ByAdminId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -179,7 +179,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.ByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -196,7 +196,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.ByProvinceId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -205,5 +205,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>94c4f31453417838ed9b97f68037a14b</Hash>
+    <Hash>10dd3594c6565fc256e5dc1fe664c45c</Hash>
 </Codenesium>*/

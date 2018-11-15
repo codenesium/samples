@@ -1,4 +1,3 @@
-using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +12,10 @@ namespace ESPIOTNS.Api.Services
 		{
 			DeviceAction efDeviceAction = new DeviceAction();
 			efDeviceAction.SetProperties(
+				bo.@Value,
 				bo.DeviceId,
 				bo.Id,
-				bo.Name,
-				bo.@Value);
+				bo.Name);
 			return efDeviceAction;
 		}
 
@@ -27,9 +26,9 @@ namespace ESPIOTNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
+				ef.@Value,
 				ef.DeviceId,
-				ef.Name,
-				ef.@Value);
+				ef.Name);
 			return bo;
 		}
 
@@ -49,5 +48,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>380e0e0a138f6a93c502ae4781a22717</Hash>
+    <Hash>99d0ff30460e2eee332cfda2b15262ef</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOTestAllFieldType MapModelToBO(
 			int id,
-			ApiTestAllFieldTypeRequestModel model
+			ApiTestAllFieldTypeServerRequestModel model
 			)
 		{
 			BOTestAllFieldType boTestAllFieldType = new BOTestAllFieldType();
@@ -46,20 +45,20 @@ namespace TestsNS.Api.Services
 			return boTestAllFieldType;
 		}
 
-		public virtual ApiTestAllFieldTypeResponseModel MapBOToModel(
+		public virtual ApiTestAllFieldTypeServerResponseModel MapBOToModel(
 			BOTestAllFieldType boTestAllFieldType)
 		{
-			var model = new ApiTestAllFieldTypeResponseModel();
+			var model = new ApiTestAllFieldTypeServerResponseModel();
 
 			model.SetProperties(boTestAllFieldType.Id, boTestAllFieldType.FieldBigInt, boTestAllFieldType.FieldBinary, boTestAllFieldType.FieldBit, boTestAllFieldType.FieldChar, boTestAllFieldType.FieldDate, boTestAllFieldType.FieldDateTime, boTestAllFieldType.FieldDateTime2, boTestAllFieldType.FieldDateTimeOffset, boTestAllFieldType.FieldDecimal, boTestAllFieldType.FieldFloat, boTestAllFieldType.FieldImage, boTestAllFieldType.FieldMoney, boTestAllFieldType.FieldNChar, boTestAllFieldType.FieldNText, boTestAllFieldType.FieldNumeric, boTestAllFieldType.FieldNVarchar, boTestAllFieldType.FieldReal, boTestAllFieldType.FieldSmallDateTime, boTestAllFieldType.FieldSmallInt, boTestAllFieldType.FieldSmallMoney, boTestAllFieldType.FieldText, boTestAllFieldType.FieldTime, boTestAllFieldType.FieldTimestamp, boTestAllFieldType.FieldTinyInt, boTestAllFieldType.FieldUniqueIdentifier, boTestAllFieldType.FieldVarBinary, boTestAllFieldType.FieldVarchar, boTestAllFieldType.FieldXML);
 
 			return model;
 		}
 
-		public virtual List<ApiTestAllFieldTypeResponseModel> MapBOToModel(
+		public virtual List<ApiTestAllFieldTypeServerResponseModel> MapBOToModel(
 			List<BOTestAllFieldType> items)
 		{
-			List<ApiTestAllFieldTypeResponseModel> response = new List<ApiTestAllFieldTypeResponseModel>();
+			List<ApiTestAllFieldTypeServerResponseModel> response = new List<ApiTestAllFieldTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -72,5 +71,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c76f2810174d325f44f9346d52de651</Hash>
+    <Hash>2e1e1fda3cb54af7cf6e050f0a487a1c</Hash>
 </Codenesium>*/

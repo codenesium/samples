@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,45 +11,37 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ICultureRepository CultureRepository { get; private set; }
 
-		protected IApiCultureRequestModelValidator CultureModelValidator { get; private set; }
+		protected IApiCultureServerRequestModelValidator CultureModelValidator { get; private set; }
 
 		protected IBOLCultureMapper BolCultureMapper { get; private set; }
 
 		protected IDALCultureMapper DalCultureMapper { get; private set; }
-
-		protected IBOLProductModelProductDescriptionCultureMapper BolProductModelProductDescriptionCultureMapper { get; private set; }
-
-		protected IDALProductModelProductDescriptionCultureMapper DalProductModelProductDescriptionCultureMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractCultureService(
 			ILogger logger,
 			ICultureRepository cultureRepository,
-			IApiCultureRequestModelValidator cultureModelValidator,
+			IApiCultureServerRequestModelValidator cultureModelValidator,
 			IBOLCultureMapper bolCultureMapper,
-			IDALCultureMapper dalCultureMapper,
-			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
+			IDALCultureMapper dalCultureMapper)
 			: base()
 		{
 			this.CultureRepository = cultureRepository;
 			this.CultureModelValidator = cultureModelValidator;
 			this.BolCultureMapper = bolCultureMapper;
 			this.DalCultureMapper = dalCultureMapper;
-			this.BolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
-			this.DalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCultureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CultureRepository.All(limit, offset);
 
 			return this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCultureResponseModel> Get(string cultureID)
+		public virtual async Task<ApiCultureServerResponseModel> Get(string cultureID)
 		{
 			var record = await this.CultureRepository.Get(cultureID);
 
@@ -68,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCultureResponseModel>> Create(
-			ApiCultureRequestModel model)
+		public virtual async Task<CreateResponse<ApiCultureServerResponseModel>> Create(
+			ApiCultureServerRequestModel model)
 		{
-			CreateResponse<ApiCultureResponseModel> response = new CreateResponse<ApiCultureResponseModel>(await this.CultureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCultureServerResponseModel> response = ValidationResponseFactory<ApiCultureServerResponseModel>.CreateResponse(await this.CultureModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCultureMapper.MapModelToBO(default(string), model);
@@ -83,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCultureResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCultureServerResponseModel>> Update(
 			string cultureID,
-			ApiCultureRequestModel model)
+			ApiCultureServerRequestModel model)
 		{
 			var validationResult = await this.CultureModelValidator.ValidateUpdateAsync(cultureID, model);
 
@@ -96,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CultureRepository.Get(cultureID);
 
-				return new UpdateResponse<ApiCultureResponseModel>(this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCultureServerResponseModel>.UpdateResponse(this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCultureResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCultureServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			string cultureID)
 		{
-			ActionResponse response = new ActionResponse(await this.CultureModelValidator.ValidateDeleteAsync(cultureID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CultureModelValidator.ValidateDeleteAsync(cultureID));
+
 			if (response.Success)
 			{
 				await this.CultureRepository.Delete(cultureID);
@@ -116,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiCultureResponseModel> ByName(string name)
+		public async virtual Task<ApiCultureServerResponseModel> ByName(string name)
 		{
 			Culture record = await this.CultureRepository.ByName(name);
 
@@ -129,16 +118,9 @@ namespace AdventureWorksNS.Api.Services
 				return this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(record));
 			}
 		}
-
-		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCulturesByCultureID(string cultureID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ProductModelProductDescriptionCulture> records = await this.CultureRepository.ProductModelProductDescriptionCulturesByCultureID(cultureID, limit, offset);
-
-			return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f532723efd8cf0d01a70d21543323fc</Hash>
+    <Hash>f11ab71cf1abb3f3ef7e1b15335d08d4</Hash>
 </Codenesium>*/

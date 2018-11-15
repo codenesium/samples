@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			var record = new ApiLinkLogResponseModel();
-			var records = new List<ApiLinkLogResponseModel>();
+			var record = new ApiLinkLogServerResponseModel();
+			var records = new List<ApiLinkLogServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLinkLogResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLinkLogServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLinkLogResponseModel>>(new List<ApiLinkLogResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLinkLogServerResponseModel>>(new List<ApiLinkLogServerResponseModel>()));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLinkLogResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLinkLogServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogServerResponseModel()));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiLinkLogResponseModel;
+			var record = (response as OkObjectResult).Value as ApiLinkLogServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogServerResponseModel>(null));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLinkLogResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLinkLogResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLinkLogServerResponseModel>.CreateResponse(null as ApiLinkLogServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLinkLogServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogServerResponseModel>>(mockResponse));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLinkLogRequestModel>();
-			records.Add(new ApiLinkLogRequestModel());
+			var records = new List<ApiLinkLogServerRequestModel>();
+			records.Add(new ApiLinkLogServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiLinkLogResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiLinkLogServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLinkLogResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiLinkLogServerResponseModel>>(null as ApiLinkLogServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogServerResponseModel>>(mockResponse.Object));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLinkLogRequestModel>();
-			records.Add(new ApiLinkLogRequestModel());
+			var records = new List<ApiLinkLogServerRequestModel>();
+			records.Add(new ApiLinkLogServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLinkLogResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLinkLogResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLinkLogServerResponseModel>.CreateResponse(null as ApiLinkLogServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLinkLogServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogServerResponseModel>>(mockResponse));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLinkLogRequestModel());
+			IActionResult response = await controller.Create(new ApiLinkLogServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLinkLogResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLinkLogServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLinkLogResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiLinkLogResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiLinkLogServerResponseModel>>(null as ApiLinkLogServerResponseModel);
+			var mockRecord = new ApiLinkLogServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkLogServerResponseModel>>(mockResponse.Object));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLinkLogRequestModel());
+			IActionResult response = await controller.Create(new ApiLinkLogServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()))
-			.Callback<int, ApiLinkLogRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>()))
+			.Callback<int, ApiLinkLogServerRequestModel>(
 				(id, model) => model.DateEntered.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiLinkLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogResponseModel>(new ApiLinkLogResponseModel()));
-			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiLinkLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogServerResponseModel>(new ApiLinkLogServerResponseModel()));
+			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLinkLogRequestModel>();
+			var patch = new JsonPatchDocument<ApiLinkLogServerRequestModel>();
 			patch.Replace(x => x.DateEntered, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogServerResponseModel>(null));
 			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLinkLogRequestModel>();
+			var patch = new JsonPatchDocument<ApiLinkLogServerRequestModel>();
 			patch.Replace(x => x.DateEntered, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogResponseModel()));
-			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogServerResponseModel()));
+			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkLogServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogResponseModel()));
-			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkLogServerResponseModel()));
+			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkLogServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			LinkLogControllerMockFacade mock = new LinkLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogResponseModel>(null));
-			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkLogServerResponseModel>(null));
+			LinkLogController controller = new LinkLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkLogServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<ILinkLogService> ServiceMock { get; set; } = new Mock<ILinkLogService>();
 
-		public Mock<IApiLinkLogModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLinkLogModelMapper>();
+		public Mock<IApiLinkLogServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLinkLogServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>fee827d0581dbc1a5e5a6637a34a67c3</Hash>
+    <Hash>4f774f03ff76a4f8cd9dba3639df554d</Hash>
 </Codenesium>*/

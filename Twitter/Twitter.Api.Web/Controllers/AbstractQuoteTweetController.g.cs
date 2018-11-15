@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected IQuoteTweetService QuoteTweetService { get; private set; }
 
-		protected IApiQuoteTweetModelMapper QuoteTweetModelMapper { get; private set; }
+		protected IApiQuoteTweetServerModelMapper QuoteTweetModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractQuoteTweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IQuoteTweetService quoteTweetService,
-			IApiQuoteTweetModelMapper quoteTweetModelMapper
+			IApiQuoteTweetServerModelMapper quoteTweetModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiQuoteTweetServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiQuoteTweetResponseModel> response = await this.QuoteTweetService.All(query.Limit, query.Offset);
+			List<ApiQuoteTweetServerResponseModel> response = await this.QuoteTweetService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiQuoteTweetResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiQuoteTweetServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiQuoteTweetResponseModel response = await this.QuoteTweetService.Get(id);
+			ApiQuoteTweetServerResponseModel response = await this.QuoteTweetService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiQuoteTweetServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiQuoteTweetRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiQuoteTweetServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiQuoteTweetResponseModel> records = new List<ApiQuoteTweetResponseModel>();
+			List<ApiQuoteTweetServerResponseModel> records = new List<ApiQuoteTweetServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiQuoteTweetResponseModel> result = await this.QuoteTweetService.Create(model);
+				CreateResponse<ApiQuoteTweetServerResponseModel> result = await this.QuoteTweetService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiQuoteTweetServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiQuoteTweetResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiQuoteTweetServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiQuoteTweetRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiQuoteTweetServerRequestModel model)
 		{
-			CreateResponse<ApiQuoteTweetResponseModel> result = await this.QuoteTweetService.Create(model);
+			CreateResponse<ApiQuoteTweetServerResponseModel> result = await this.QuoteTweetService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiQuoteTweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiQuoteTweetRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiQuoteTweetServerRequestModel> patch)
 		{
-			ApiQuoteTweetResponseModel record = await this.QuoteTweetService.Get(id);
+			ApiQuoteTweetServerResponseModel record = await this.QuoteTweetService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiQuoteTweetRequestModel model = await this.PatchModel(id, patch);
+				ApiQuoteTweetServerRequestModel model = await this.PatchModel(id, patch) as ApiQuoteTweetServerRequestModel;
 
-				UpdateResponse<ApiQuoteTweetResponseModel> result = await this.QuoteTweetService.Update(id, model);
+				UpdateResponse<ApiQuoteTweetServerResponseModel> result = await this.QuoteTweetService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiQuoteTweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiQuoteTweetRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiQuoteTweetServerRequestModel model)
 		{
-			ApiQuoteTweetRequestModel request = await this.PatchModel(id, this.QuoteTweetModelMapper.CreatePatch(model));
+			ApiQuoteTweetServerRequestModel request = await this.PatchModel(id, this.QuoteTweetModelMapper.CreatePatch(model)) as ApiQuoteTweetServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiQuoteTweetResponseModel> result = await this.QuoteTweetService.Update(id, request);
+				UpdateResponse<ApiQuoteTweetServerResponseModel> result = await this.QuoteTweetService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.QuoteTweetService.Delete(id);
@@ -209,7 +219,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("byRetweeterUserId/{retweeterUserId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiQuoteTweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByRetweeterUserId(int retweeterUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiQuoteTweetResponseModel> response = await this.QuoteTweetService.ByRetweeterUserId(retweeterUserId, query.Limit, query.Offset);
+			List<ApiQuoteTweetServerResponseModel> response = await this.QuoteTweetService.ByRetweeterUserId(retweeterUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("bySourceTweetId/{sourceTweetId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiQuoteTweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> BySourceTweetId(int sourceTweetId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiQuoteTweetResponseModel> response = await this.QuoteTweetService.BySourceTweetId(sourceTweetId, query.Limit, query.Offset);
+			List<ApiQuoteTweetServerResponseModel> response = await this.QuoteTweetService.BySourceTweetId(sourceTweetId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiQuoteTweetRequestModel> PatchModel(int id, JsonPatchDocument<ApiQuoteTweetRequestModel> patch)
+		private async Task<ApiQuoteTweetServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiQuoteTweetServerRequestModel> patch)
 		{
 			var record = await this.QuoteTweetService.Get(id);
 
@@ -250,7 +260,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiQuoteTweetRequestModel request = this.QuoteTweetModelMapper.MapResponseToRequest(record);
+				ApiQuoteTweetServerRequestModel request = this.QuoteTweetModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>15c2c6259c425936870aa25b76fdab83</Hash>
+    <Hash>55e732238a32b8e65dfddf243c38e40c</Hash>
 </Codenesium>*/

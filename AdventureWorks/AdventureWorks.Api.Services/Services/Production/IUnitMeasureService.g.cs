@@ -2,35 +2,34 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IUnitMeasureService
 	{
-		Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
-			ApiUnitMeasureRequestModel model);
+		Task<CreateResponse<ApiUnitMeasureServerResponseModel>> Create(
+			ApiUnitMeasureServerRequestModel model);
 
-		Task<UpdateResponse<ApiUnitMeasureResponseModel>> Update(string unitMeasureCode,
-		                                                          ApiUnitMeasureRequestModel model);
+		Task<UpdateResponse<ApiUnitMeasureServerResponseModel>> Update(string unitMeasureCode,
+		                                                                ApiUnitMeasureServerRequestModel model);
 
 		Task<ActionResponse> Delete(string unitMeasureCode);
 
-		Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode);
+		Task<ApiUnitMeasureServerResponseModel> Get(string unitMeasureCode);
 
-		Task<List<ApiUnitMeasureResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiUnitMeasureResponseModel> ByName(string name);
+		Task<ApiUnitMeasureServerResponseModel> ByName(string name);
 
-		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductServerResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductServerResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c32e43b739702981f80e9de80bf593c9</Hash>
+    <Hash>4be86d91cce676052f2e2ee41db8a29b</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ISalesPersonRepository SalesPersonRepository { get; private set; }
 
-		protected IApiSalesPersonRequestModelValidator SalesPersonModelValidator { get; private set; }
+		protected IApiSalesPersonServerRequestModelValidator SalesPersonModelValidator { get; private set; }
 
 		protected IBOLSalesPersonMapper BolSalesPersonMapper { get; private set; }
 
@@ -25,14 +20,6 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
-
-		protected IBOLSalesPersonQuotaHistoryMapper BolSalesPersonQuotaHistoryMapper { get; private set; }
-
-		protected IDALSalesPersonQuotaHistoryMapper DalSalesPersonQuotaHistoryMapper { get; private set; }
-
-		protected IBOLSalesTerritoryHistoryMapper BolSalesTerritoryHistoryMapper { get; private set; }
-
-		protected IDALSalesTerritoryHistoryMapper DalSalesTerritoryHistoryMapper { get; private set; }
 
 		protected IBOLStoreMapper BolStoreMapper { get; private set; }
 
@@ -43,15 +30,11 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractSalesPersonService(
 			ILogger logger,
 			ISalesPersonRepository salesPersonRepository,
-			IApiSalesPersonRequestModelValidator salesPersonModelValidator,
+			IApiSalesPersonServerRequestModelValidator salesPersonModelValidator,
 			IBOLSalesPersonMapper bolSalesPersonMapper,
 			IDALSalesPersonMapper dalSalesPersonMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
-			IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper,
-			IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper,
-			IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
-			IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper,
 			IBOLStoreMapper bolStoreMapper,
 			IDALStoreMapper dalStoreMapper)
 			: base()
@@ -62,23 +45,19 @@ namespace AdventureWorksNS.Api.Services
 			this.DalSalesPersonMapper = dalSalesPersonMapper;
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
-			this.BolSalesPersonQuotaHistoryMapper = bolSalesPersonQuotaHistoryMapper;
-			this.DalSalesPersonQuotaHistoryMapper = dalSalesPersonQuotaHistoryMapper;
-			this.BolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
-			this.DalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
 			this.BolStoreMapper = bolStoreMapper;
 			this.DalStoreMapper = dalStoreMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSalesPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SalesPersonRepository.All(limit, offset);
 
 			return this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSalesPersonResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiSalesPersonServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.SalesPersonRepository.Get(businessEntityID);
 
@@ -92,10 +71,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
-			ApiSalesPersonRequestModel model)
+		public virtual async Task<CreateResponse<ApiSalesPersonServerResponseModel>> Create(
+			ApiSalesPersonServerRequestModel model)
 		{
-			CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.SalesPersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesPersonServerResponseModel> response = ValidationResponseFactory<ApiSalesPersonServerResponseModel>.CreateResponse(await this.SalesPersonModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSalesPersonMapper.MapModelToBO(default(int), model);
@@ -107,9 +87,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSalesPersonResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSalesPersonServerResponseModel>> Update(
 			int businessEntityID,
-			ApiSalesPersonRequestModel model)
+			ApiSalesPersonServerRequestModel model)
 		{
 			var validationResult = await this.SalesPersonModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -120,18 +100,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesPersonRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiSalesPersonResponseModel>(this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSalesPersonServerResponseModel>.UpdateResponse(this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSalesPersonResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSalesPersonServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.SalesPersonModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SalesPersonModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.SalesPersonRepository.Delete(businessEntityID);
@@ -140,28 +121,28 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiSalesPersonServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			SalesPerson record = await this.SalesPersonRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.SalesPersonRepository.SalesOrderHeadersBySalesPersonID(salesPersonID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesPersonQuotaHistory> records = await this.SalesPersonRepository.SalesPersonQuotaHistoriesByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesTerritoryHistory> records = await this.SalesPersonRepository.SalesTerritoryHistoriesByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiStoreResponseModel>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStoreServerResponseModel>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Store> records = await this.SalesPersonRepository.StoresBySalesPersonID(salesPersonID, limit, offset);
 
@@ -171,5 +152,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5fafcdec341a29e520d02a622de28b61</Hash>
+    <Hash>5e7d2191c688a3449a36898b7eced1d6</Hash>
 </Codenesium>*/

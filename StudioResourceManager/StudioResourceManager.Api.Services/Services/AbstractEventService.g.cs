@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected IEventRepository EventRepository { get; private set; }
 
-		protected IApiEventRequestModelValidator EventModelValidator { get; private set; }
+		protected IApiEventServerRequestModelValidator EventModelValidator { get; private set; }
 
 		protected IBOLEventMapper BolEventMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractEventService(
 			ILogger logger,
 			IEventRepository eventRepository,
-			IApiEventRequestModelValidator eventModelValidator,
+			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiEventResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiEventServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.EventRepository.All(limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEventResponseModel> Get(int id)
+		public virtual async Task<ApiEventServerResponseModel> Get(int id)
 		{
 			var record = await this.EventRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiEventResponseModel>> Create(
-			ApiEventRequestModel model)
+		public virtual async Task<CreateResponse<ApiEventServerResponseModel>> Create(
+			ApiEventServerRequestModel model)
 		{
-			CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.EventModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEventServerResponseModel> response = ValidationResponseFactory<ApiEventServerResponseModel>.CreateResponse(await this.EventModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiEventResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiEventServerResponseModel>> Update(
 			int id,
-			ApiEventRequestModel model)
+			ApiEventServerRequestModel model)
 		{
 			var validationResult = await this.EventModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.EventRepository.Get(id);
 
-				return new UpdateResponse<ApiEventResponseModel>(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiEventResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.EventModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EventModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.EventRepository.Delete(id);
@@ -108,9 +105,23 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventResponseModel>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventServerResponseModel>> ByEventStatusId(int eventStatusId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Event> records = await this.EventRepository.ByEventStatusId(eventStatusId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiEventServerResponseModel>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Event> records = await this.EventRepository.ByStudentId(studentId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiEventServerResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.EventRepository.ByTeacherId(teacherId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
@@ -118,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6087abc484d301ca0fd4786d87116d6d</Hash>
+    <Hash>f9157ccde6dba3c682b9a2a13f2bd841</Hash>
 </Codenesium>*/

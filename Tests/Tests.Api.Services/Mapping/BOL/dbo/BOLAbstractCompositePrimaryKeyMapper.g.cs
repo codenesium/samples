@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOCompositePrimaryKey MapModelToBO(
 			int id,
-			ApiCompositePrimaryKeyRequestModel model
+			ApiCompositePrimaryKeyServerRequestModel model
 			)
 		{
 			BOCompositePrimaryKey boCompositePrimaryKey = new BOCompositePrimaryKey();
@@ -19,20 +18,20 @@ namespace TestsNS.Api.Services
 			return boCompositePrimaryKey;
 		}
 
-		public virtual ApiCompositePrimaryKeyResponseModel MapBOToModel(
+		public virtual ApiCompositePrimaryKeyServerResponseModel MapBOToModel(
 			BOCompositePrimaryKey boCompositePrimaryKey)
 		{
-			var model = new ApiCompositePrimaryKeyResponseModel();
+			var model = new ApiCompositePrimaryKeyServerResponseModel();
 
 			model.SetProperties(boCompositePrimaryKey.Id, boCompositePrimaryKey.Id2);
 
 			return model;
 		}
 
-		public virtual List<ApiCompositePrimaryKeyResponseModel> MapBOToModel(
+		public virtual List<ApiCompositePrimaryKeyServerResponseModel> MapBOToModel(
 			List<BOCompositePrimaryKey> items)
 		{
-			List<ApiCompositePrimaryKeyResponseModel> response = new List<ApiCompositePrimaryKeyResponseModel>();
+			List<ApiCompositePrimaryKeyServerResponseModel> response = new List<ApiCompositePrimaryKeyServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>635bcf69f90de8701877c3e1c7c3e99c</Hash>
+    <Hash>618c9d4dbcb0277440ab83f3fc651b02</Hash>
 </Codenesium>*/

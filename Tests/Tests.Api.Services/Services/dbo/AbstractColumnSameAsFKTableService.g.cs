@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IColumnSameAsFKTableRepository ColumnSameAsFKTableRepository { get; private set; }
 
-		protected IApiColumnSameAsFKTableRequestModelValidator ColumnSameAsFKTableModelValidator { get; private set; }
+		protected IApiColumnSameAsFKTableServerRequestModelValidator ColumnSameAsFKTableModelValidator { get; private set; }
 
 		protected IBOLColumnSameAsFKTableMapper BolColumnSameAsFKTableMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractColumnSameAsFKTableService(
 			ILogger logger,
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
-			IApiColumnSameAsFKTableRequestModelValidator columnSameAsFKTableModelValidator,
+			IApiColumnSameAsFKTableServerRequestModelValidator columnSameAsFKTableModelValidator,
 			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiColumnSameAsFKTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ColumnSameAsFKTableRepository.All(limit, offset);
 
 			return this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiColumnSameAsFKTableResponseModel> Get(int id)
+		public virtual async Task<ApiColumnSameAsFKTableServerResponseModel> Get(int id)
 		{
 			var record = await this.ColumnSameAsFKTableRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiColumnSameAsFKTableResponseModel>> Create(
-			ApiColumnSameAsFKTableRequestModel model)
+		public virtual async Task<CreateResponse<ApiColumnSameAsFKTableServerResponseModel>> Create(
+			ApiColumnSameAsFKTableServerRequestModel model)
 		{
-			CreateResponse<ApiColumnSameAsFKTableResponseModel> response = new CreateResponse<ApiColumnSameAsFKTableResponseModel>(await this.ColumnSameAsFKTableModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiColumnSameAsFKTableServerResponseModel> response = ValidationResponseFactory<ApiColumnSameAsFKTableServerResponseModel>.CreateResponse(await this.ColumnSameAsFKTableModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolColumnSameAsFKTableMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiColumnSameAsFKTableResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiColumnSameAsFKTableServerResponseModel>> Update(
 			int id,
-			ApiColumnSameAsFKTableRequestModel model)
+			ApiColumnSameAsFKTableServerRequestModel model)
 		{
 			var validationResult = await this.ColumnSameAsFKTableModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.ColumnSameAsFKTableRepository.Get(id);
 
-				return new UpdateResponse<ApiColumnSameAsFKTableResponseModel>(this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiColumnSameAsFKTableServerResponseModel>.UpdateResponse(this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiColumnSameAsFKTableResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiColumnSameAsFKTableServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.ColumnSameAsFKTableModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ColumnSameAsFKTableModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.ColumnSameAsFKTableRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ff167a81396765d4b94470a6ba63016</Hash>
+    <Hash>cc09dc2b90aa0ddb495cab993e00c2a7</Hash>
 </Codenesium>*/

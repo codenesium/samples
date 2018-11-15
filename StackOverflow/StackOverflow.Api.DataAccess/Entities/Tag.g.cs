@@ -28,24 +28,24 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("Count")]
-		public int Count { get; private set; }
+		public virtual int Count { get; private set; }
 
 		[Column("ExcerptPostId")]
-		public int ExcerptPostId { get; private set; }
+		public virtual int ExcerptPostId { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(150)]
 		[Column("TagName")]
-		public string TagName { get; private set; }
+		public virtual string TagName { get; private set; }
 
 		[Column("WikiPostId")]
-		public int WikiPostId { get; private set; }
+		public virtual int WikiPostId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b984a2b7bddcc5611e0809a3994ca6fe</Hash>
+    <Hash>0cc19e3d40aaa7e660752bad3ce2582d</Hash>
 </Codenesium>*/

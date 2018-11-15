@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
@@ -16,7 +11,7 @@ namespace NebulaNS.Api.Services
 	{
 		protected ILinkStatusRepository LinkStatusRepository { get; private set; }
 
-		protected IApiLinkStatusRequestModelValidator LinkStatusModelValidator { get; private set; }
+		protected IApiLinkStatusServerRequestModelValidator LinkStatusModelValidator { get; private set; }
 
 		protected IBOLLinkStatusMapper BolLinkStatusMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace NebulaNS.Api.Services
 		public AbstractLinkStatusService(
 			ILogger logger,
 			ILinkStatusRepository linkStatusRepository,
-			IApiLinkStatusRequestModelValidator linkStatusModelValidator,
+			IApiLinkStatusServerRequestModelValidator linkStatusModelValidator,
 			IBOLLinkStatusMapper bolLinkStatusMapper,
 			IDALLinkStatusMapper dalLinkStatusMapper,
 			IBOLLinkMapper bolLinkMapper,
@@ -47,14 +42,14 @@ namespace NebulaNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiLinkStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLinkStatusServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.LinkStatusRepository.All(limit, offset);
 
 			return this.BolLinkStatusMapper.MapBOToModel(this.DalLinkStatusMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiLinkStatusResponseModel> Get(int id)
+		public virtual async Task<ApiLinkStatusServerResponseModel> Get(int id)
 		{
 			var record = await this.LinkStatusRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkStatusResponseModel>> Create(
-			ApiLinkStatusRequestModel model)
+		public virtual async Task<CreateResponse<ApiLinkStatusServerResponseModel>> Create(
+			ApiLinkStatusServerRequestModel model)
 		{
-			CreateResponse<ApiLinkStatusResponseModel> response = new CreateResponse<ApiLinkStatusResponseModel>(await this.LinkStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkStatusServerResponseModel> response = ValidationResponseFactory<ApiLinkStatusServerResponseModel>.CreateResponse(await this.LinkStatusModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolLinkStatusMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkStatusResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiLinkStatusServerResponseModel>> Update(
 			int id,
-			ApiLinkStatusRequestModel model)
+			ApiLinkStatusServerRequestModel model)
 		{
 			var validationResult = await this.LinkStatusModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.LinkStatusRepository.Get(id);
 
-				return new UpdateResponse<ApiLinkStatusResponseModel>(this.BolLinkStatusMapper.MapBOToModel(this.DalLinkStatusMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiLinkStatusServerResponseModel>.UpdateResponse(this.BolLinkStatusMapper.MapBOToModel(this.DalLinkStatusMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiLinkStatusResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiLinkStatusServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.LinkStatusModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.LinkStatusModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.LinkStatusRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiLinkStatusResponseModel> ByName(string name)
+		public async virtual Task<ApiLinkStatusServerResponseModel> ByName(string name)
 		{
 			LinkStatus record = await this.LinkStatusRepository.ByName(name);
 
@@ -130,7 +127,7 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiLinkResponseModel>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiLinkServerResponseModel>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Link> records = await this.LinkStatusRepository.LinksByLinkStatusId(linkStatusId, limit, offset);
 
@@ -140,5 +137,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa34b86aabfd315c77f4af2bdf3f4a5b</Hash>
+    <Hash>63a00e2a8dcae8196b3c05e8b3378c8c</Hash>
 </Codenesium>*/

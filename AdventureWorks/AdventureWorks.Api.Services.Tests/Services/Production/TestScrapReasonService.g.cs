@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiScrapReasonResponseModel> response = await service.All();
+			List<ApiScrapReasonServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiScrapReasonResponseModel response = await service.Get(default(short));
+			ApiScrapReasonServerResponseModel response = await service.Get(default(short));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<short>()));
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiScrapReasonResponseModel response = await service.Get(default(short));
+			ApiScrapReasonServerResponseModel response = await service.Get(default(short));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<short>()));
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
-			var model = new ApiScrapReasonRequestModel();
+			var model = new ApiScrapReasonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ScrapReason>())).Returns(Task.FromResult(new ScrapReason()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			CreateResponse<ApiScrapReasonResponseModel> response = await service.Create(model);
+			CreateResponse<ApiScrapReasonServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiScrapReasonRequestModel>()));
+			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiScrapReasonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ScrapReason>()));
 		}
 
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
-			var model = new ApiScrapReasonRequestModel();
+			var model = new ApiScrapReasonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ScrapReason>())).Returns(Task.FromResult(new ScrapReason()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			UpdateResponse<ApiScrapReasonResponseModel> response = await service.Update(default(short), model);
+			UpdateResponse<ApiScrapReasonServerResponseModel> response = await service.Update(default(short), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonRequestModel>()));
+			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ScrapReason>()));
 		}
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
-			var model = new ApiScrapReasonRequestModel();
+			var model = new ApiScrapReasonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.CompletedTask);
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiScrapReasonResponseModel response = await service.ByName(default(string));
+			ApiScrapReasonServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -175,7 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			ApiScrapReasonResponseModel response = await service.ByName(default(string));
+			ApiScrapReasonServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -196,7 +196,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
+			List<ApiWorkOrderServerResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
+			List<ApiWorkOrderServerResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>()));
@@ -224,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a4774ad2e39d5427c482dc90ca91a83f</Hash>
+    <Hash>05e239ff6c914796f79b653b86b18cff</Hash>
 </Codenesium>*/

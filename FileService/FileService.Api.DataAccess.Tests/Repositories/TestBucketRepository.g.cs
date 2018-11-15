@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FileServiceNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace FileServiceNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
+			var repository = new BucketRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6be7d3466056a8f6036b51957fa404d0</Hash>
+    <Hash>cc0e3db9e309585f0fbf443dcddf25fd</Hash>
 </Codenesium>*/

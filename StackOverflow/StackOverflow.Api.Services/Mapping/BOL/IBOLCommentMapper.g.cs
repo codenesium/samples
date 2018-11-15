@@ -9,16 +9,16 @@ namespace StackOverflowNS.Api.Services
 	{
 		BOComment MapModelToBO(
 			int id,
-			ApiCommentRequestModel model);
+			ApiCommentServerRequestModel model);
 
-		ApiCommentResponseModel MapBOToModel(
+		ApiCommentServerResponseModel MapBOToModel(
 			BOComment boComment);
 
-		List<ApiCommentResponseModel> MapBOToModel(
+		List<ApiCommentServerResponseModel> MapBOToModel(
 			List<BOComment> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe454bbfba3ed4d3ca6a5cace437f30b</Hash>
+    <Hash>e1190a5062cfb01cd78314f85ddae7c2</Hash>
 </Codenesium>*/

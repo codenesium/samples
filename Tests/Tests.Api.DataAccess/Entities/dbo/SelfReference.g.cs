@@ -25,16 +25,16 @@ namespace TestsNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("selfReferenceId")]
-		public int? SelfReferenceId { get; private set; }
+		public virtual int? SelfReferenceId { get; private set; }
 
 		[Column("selfReferenceId2")]
-		public int? SelfReferenceId2 { get; private set; }
+		public virtual int? SelfReferenceId2 { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a6154da530c438c37e7ad09afde8071</Hash>
+    <Hash>b0996bdbb6c35cd9e3394fee09c5f8f6</Hash>
 </Codenesium>*/

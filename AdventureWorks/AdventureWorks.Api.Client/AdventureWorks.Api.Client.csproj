@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0;net461</TargetFrameworks>
 	<RootNamespace>AdventureWorksNS.Api.Client</RootNamespace>
+	<NuspecFile>AdventureWorks.Api.Client.nuspec</NuspecFile>
   </PropertyGroup>
 
  <ItemGroup>

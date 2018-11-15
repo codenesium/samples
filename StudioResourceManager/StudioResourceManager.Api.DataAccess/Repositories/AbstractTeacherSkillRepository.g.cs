@@ -90,26 +90,33 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select teacherSkills).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<Rate> CreateRate(Rate item)
+		{
+			this.Context.Set<Rate>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteRate(Rate item)
+		{
+			this.Context.Set<Rate>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<TeacherSkill>> Where(
 			Expression<Func<TeacherSkill, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TeacherSkill, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TeacherSkill, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
-			}
-			else
-			{
-				return await this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
-			}
+			return await this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
 		}
 
 		private async Task<TeacherSkill> GetById(int id)
@@ -122,5 +129,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8ee115507b3428096106611b2342d055</Hash>
+    <Hash>4b6ce70d1f0f87b21d7db325ea713c6f</Hash>
 </Codenesium>*/

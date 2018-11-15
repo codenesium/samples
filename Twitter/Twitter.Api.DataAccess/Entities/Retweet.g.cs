@@ -28,29 +28,39 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		[Column("date")]
-		public DateTime? Date { get; private set; }
+		public virtual DateTime? Date { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("retwitter_user_id")]
-		public int? RetwitterUserId { get; private set; }
+		public virtual int? RetwitterUserId { get; private set; }
 
 		[Column("time")]
-		public TimeSpan? Time { get; private set; }
+		public virtual TimeSpan? Time { get; private set; }
 
 		[Column("tweet_tweet_id")]
-		public int TweetTweetId { get; private set; }
+		public virtual int TweetTweetId { get; private set; }
 
 		[ForeignKey("RetwitterUserId")]
 		public virtual User UserNavigation { get; private set; }
 
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
+
 		[ForeignKey("TweetTweetId")]
 		public virtual Tweet TweetNavigation { get; private set; }
+
+		public void SetTweetNavigation(Tweet item)
+		{
+			this.TweetNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>769a8a36cbcb6bd7841877657a19c6d3</Hash>
+    <Hash>d82e17a85327636966d3daf0f99e5984</Hash>
 </Codenesium>*/

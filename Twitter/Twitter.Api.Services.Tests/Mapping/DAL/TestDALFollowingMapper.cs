@@ -17,13 +17,13 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowingMapper();
 			var bo = new BOFollowing();
-			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
 			Following response = mapper.MapBOToEF(bo);
 
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Muted.Should().Be("A");
-			response.UserId.Should().Be("A");
+			response.UserId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,13 +31,13 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowingMapper();
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
 			BOFollowing response = mapper.MapEFToBO(entity);
 
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Muted.Should().Be("A");
-			response.UserId.Should().Be("A");
+			response.UserId.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowingMapper();
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
 			List<BOFollowing> response = mapper.MapEFToBO(new List<Following>() { entity });
 
@@ -55,5 +55,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2167088afce36b5abd0b7c80177c8f2d</Hash>
+    <Hash>6ab6d4b454c03d732e604128d5d1ca39</Hash>
 </Codenesium>*/

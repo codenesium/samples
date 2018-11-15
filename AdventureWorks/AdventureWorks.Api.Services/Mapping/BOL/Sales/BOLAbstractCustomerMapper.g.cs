@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOCustomer MapModelToBO(
 			int customerID,
-			ApiCustomerRequestModel model
+			ApiCustomerServerRequestModel model
 			)
 		{
 			BOCustomer boCustomer = new BOCustomer();
@@ -24,20 +23,20 @@ namespace AdventureWorksNS.Api.Services
 			return boCustomer;
 		}
 
-		public virtual ApiCustomerResponseModel MapBOToModel(
+		public virtual ApiCustomerServerResponseModel MapBOToModel(
 			BOCustomer boCustomer)
 		{
-			var model = new ApiCustomerResponseModel();
+			var model = new ApiCustomerServerResponseModel();
 
 			model.SetProperties(boCustomer.CustomerID, boCustomer.AccountNumber, boCustomer.ModifiedDate, boCustomer.PersonID, boCustomer.Rowguid, boCustomer.StoreID, boCustomer.TerritoryID);
 
 			return model;
 		}
 
-		public virtual List<ApiCustomerResponseModel> MapBOToModel(
+		public virtual List<ApiCustomerServerResponseModel> MapBOToModel(
 			List<BOCustomer> items)
 		{
-			List<ApiCustomerResponseModel> response = new List<ApiCustomerResponseModel>();
+			List<ApiCustomerServerResponseModel> response = new List<ApiCustomerServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7403319ebccecf7178f68e08a4028d4</Hash>
+    <Hash>f4ce123686dafc2c5cf871490e2232f3</Hash>
 </Codenesium>*/

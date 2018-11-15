@@ -85,22 +85,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			Expression<Func<Country, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Country, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Country, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
-			}
-			else
-			{
-				return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
-			}
+			return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
 		}
 
 		private async Task<Country> GetById(int id)
@@ -113,5 +105,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>06c78ab32545eb84230410ca43014f33</Hash>
+    <Hash>ee23c3c31206c7158a849820d4ccbffd</Hash>
 </Codenesium>*/

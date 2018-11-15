@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TestsNS.Api.Services
 		public CompositePrimaryKeyService(
 			ILogger<ICompositePrimaryKeyRepository> logger,
 			ICompositePrimaryKeyRepository compositePrimaryKeyRepository,
-			IApiCompositePrimaryKeyRequestModelValidator compositePrimaryKeyModelValidator,
-			IBOLCompositePrimaryKeyMapper bolcompositePrimaryKeyMapper,
-			IDALCompositePrimaryKeyMapper dalcompositePrimaryKeyMapper)
+			IApiCompositePrimaryKeyServerRequestModelValidator compositePrimaryKeyModelValidator,
+			IBOLCompositePrimaryKeyMapper bolCompositePrimaryKeyMapper,
+			IDALCompositePrimaryKeyMapper dalCompositePrimaryKeyMapper)
 			: base(logger,
 			       compositePrimaryKeyRepository,
 			       compositePrimaryKeyModelValidator,
-			       bolcompositePrimaryKeyMapper,
-			       dalcompositePrimaryKeyMapper)
+			       bolCompositePrimaryKeyMapper,
+			       dalCompositePrimaryKeyMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e86e56d6f3884ceaa6fdd8f898be99b1</Hash>
+    <Hash>ac2723d51871d1b6aabaa41073210136</Hash>
 </Codenesium>*/

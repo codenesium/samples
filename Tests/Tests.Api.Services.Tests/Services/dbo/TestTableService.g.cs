@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
-			List<ApiTableResponseModel> response = await service.All();
+			List<ApiTableServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
-			ApiTableResponseModel response = await service.Get(default(int));
+			ApiTableServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
-			ApiTableResponseModel response = await service.Get(default(int));
+			ApiTableServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITableRepository>();
-			var model = new ApiTableRequestModel();
+			var model = new ApiTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Table>())).Returns(Task.FromResult(new Table()));
 			var service = new TableService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
-			CreateResponse<ApiTableResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTableServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTableRequestModel>()));
+			mock.ModelValidatorMockFactory.TableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Table>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITableRepository>();
-			var model = new ApiTableRequestModel();
+			var model = new ApiTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Table>())).Returns(Task.FromResult(new Table()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Table()));
 			var service = new TableService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
-			UpdateResponse<ApiTableResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTableServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTableRequestModel>()));
+			mock.ModelValidatorMockFactory.TableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Table>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITableRepository>();
-			var model = new ApiTableRequestModel();
+			var model = new ApiTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TableService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d928b7c41e84c00e882558575c302f0b</Hash>
+    <Hash>aef68d14b3fff9da408a6d633e752110</Hash>
 </Codenesium>*/

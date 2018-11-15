@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -9,24 +8,24 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IMessageService
 	{
-		Task<CreateResponse<ApiMessageResponseModel>> Create(
-			ApiMessageRequestModel model);
+		Task<CreateResponse<ApiMessageServerResponseModel>> Create(
+			ApiMessageServerRequestModel model);
 
-		Task<UpdateResponse<ApiMessageResponseModel>> Update(int messageId,
-		                                                      ApiMessageRequestModel model);
+		Task<UpdateResponse<ApiMessageServerResponseModel>> Update(int messageId,
+		                                                            ApiMessageServerRequestModel model);
 
 		Task<ActionResponse> Delete(int messageId);
 
-		Task<ApiMessageResponseModel> Get(int messageId);
+		Task<ApiMessageServerResponseModel> Get(int messageId);
 
-		Task<List<ApiMessageResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessageServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiMessageResponseModel>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessageServerResponseModel>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiMessengerResponseModel>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessengerServerResponseModel>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>abd003227543d71d251877646c7356ca</Hash>
+    <Hash>1dbb3d6179e171adc5572fe82de333e3</Hash>
 </Codenesium>*/

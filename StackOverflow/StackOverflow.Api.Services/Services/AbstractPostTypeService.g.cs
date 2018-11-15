@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IPostTypeRepository PostTypeRepository { get; private set; }
 
-		protected IApiPostTypeRequestModelValidator PostTypeModelValidator { get; private set; }
+		protected IApiPostTypeServerRequestModelValidator PostTypeModelValidator { get; private set; }
 
 		protected IBOLPostTypeMapper BolPostTypeMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractPostTypeService(
 			ILogger logger,
 			IPostTypeRepository postTypeRepository,
-			IApiPostTypeRequestModelValidator postTypeModelValidator,
+			IApiPostTypeServerRequestModelValidator postTypeModelValidator,
 			IBOLPostTypeMapper bolPostTypeMapper,
 			IDALPostTypeMapper dalPostTypeMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPostTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PostTypeRepository.All(limit, offset);
 
 			return this.BolPostTypeMapper.MapBOToModel(this.DalPostTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPostTypeResponseModel> Get(int id)
+		public virtual async Task<ApiPostTypeServerResponseModel> Get(int id)
 		{
 			var record = await this.PostTypeRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPostTypeResponseModel>> Create(
-			ApiPostTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiPostTypeServerResponseModel>> Create(
+			ApiPostTypeServerRequestModel model)
 		{
-			CreateResponse<ApiPostTypeResponseModel> response = new CreateResponse<ApiPostTypeResponseModel>(await this.PostTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPostTypeServerResponseModel> response = ValidationResponseFactory<ApiPostTypeServerResponseModel>.CreateResponse(await this.PostTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPostTypeMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPostTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPostTypeServerResponseModel>> Update(
 			int id,
-			ApiPostTypeRequestModel model)
+			ApiPostTypeServerRequestModel model)
 		{
 			var validationResult = await this.PostTypeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiPostTypeResponseModel>(this.BolPostTypeMapper.MapBOToModel(this.DalPostTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPostTypeServerResponseModel>.UpdateResponse(this.BolPostTypeMapper.MapBOToModel(this.DalPostTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPostTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPostTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PostTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PostTypeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PostTypeRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6457dbf4b6dde188ef201a062223bc64</Hash>
+    <Hash>1b4506e2acd47a34ebf71b03e379b18d</Hash>
 </Codenesium>*/

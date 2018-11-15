@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using NebulaNS.Api.Client;
 using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,64 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Team")]
 	[Trait("Area", "Integration")]
-	public class TeamIntegrationTests
+	public partial class TeamIntegrationTests
 	{
 		public TeamIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.TeamDeleteAsync(1);
+			var model = new ApiTeamClientRequestModel();
+			model.SetProperties("B", 1);
+			var model2 = new ApiTeamClientRequestModel();
+			model2.SetProperties("C", 1);
+			var request = new List<ApiTeamClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiTeamClientResponseModel>> result = await client.TeamBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Team>().ToList()[1].Name.Should().Be("B");
+			context.Set<Team>().ToList()[1].OrganizationId.Should().Be(1);
+
+			context.Set<Team>().ToList()[2].Name.Should().Be("C");
+			context.Set<Team>().ToList()[2].OrganizationId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiTeamClientRequestModel();
+			model.SetProperties("B", 1);
+			CreateResponse<ApiTeamClientResponseModel> result = await client.TeamCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Team>().ToList()[1].Name.Should().Be("B");
+			context.Set<Team>().ToList()[1].OrganizationId.Should().Be(1);
+
+			result.Record.Name.Should().Be("B");
+			result.Record.OrganizationId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +83,55 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiTeamServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ITeamService service = testServer.Host.Services.GetService(typeof(ITeamService)) as ITeamService;
+			ApiTeamServerResponseModel model = await service.Get(1);
 
-			ApiTeamResponseModel model = await client.TeamGetAsync(1);
+			ApiTeamClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", 1);
 
-			ApiTeamModelMapper mapper = new ApiTeamModelMapper();
+			UpdateResponse<ApiTeamClientResponseModel> updateResponse = await client.TeamUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiTeamResponseModel> updateResponse = await client.TeamUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Team>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Team>().ToList()[0].Name.Should().Be("B");
+			context.Set<Team>().ToList()[0].OrganizationId.Should().Be(1);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
+			updateResponse.Record.OrganizationId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiTeamRequestModel();
-			createModel.SetProperties("B", 1);
-			CreateResponse<ApiTeamResponseModel> createResult = await client.TeamCreateAsync(createModel);
+			ITeamService service = testServer.Host.Services.GetService(typeof(ITeamService)) as ITeamService;
+			var model = new ApiTeamServerRequestModel();
+			model.SetProperties("B", 1);
+			CreateResponse<ApiTeamServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiTeamResponseModel getResponse = await client.TeamGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.TeamDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiTeamResponseModel verifyResponse = await client.TeamGetAsync(2);
+			ApiTeamServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +139,32 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiTeamResponseModel response = await client.TeamGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiTeamClientResponseModel response = await client.TeamGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.OrganizationId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTeamClientResponseModel response = await client.TeamGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +173,68 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiTeamResponseModel> response = await client.TeamAllAsync();
+			List<ApiTeamClientResponseModel> response = await client.TeamAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+			response[0].OrganizationId.Should().Be(1);
 		}
 
-		private async Task<ApiTeamResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByNameFound()
 		{
-			var model = new ApiTeamRequestModel();
-			model.SetProperties("B", 1);
-			CreateResponse<ApiTeamResponseModel> result = await client.TeamCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTeamClientResponseModel response = await client.ByTeamByName("A");
+
+			response.Should().NotBeNull();
+
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.OrganizationId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestByNameNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTeamClientResponseModel response = await client.ByTeamByName("test_value");
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.TeamAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dcaa393893e73941b096726f97927ee8</Hash>
+    <Hash>5df1a6401979218eaebc8fe8e7c7b8e6</Hash>
 </Codenesium>*/

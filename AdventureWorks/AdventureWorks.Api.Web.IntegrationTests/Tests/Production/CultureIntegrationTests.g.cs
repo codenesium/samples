@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Client;
 using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,74 +18,153 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Culture")]
 	[Trait("Area", "Integration")]
-	public class CultureIntegrationTests
+	public partial class CultureIntegrationTests
 	{
 		public CultureIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.CultureDeleteAsync("A");
-
-			var response = await this.CreateRecord(client);
-
-			response.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void TestUpdate()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiCultureResponseModel model = await client.CultureGetAsync("A");
-
-			ApiCultureModelMapper mapper = new ApiCultureModelMapper();
-
-			UpdateResponse<ApiCultureResponseModel> updateResponse = await client.CultureUpdateAsync(model.CultureID, mapper.MapResponseToRequest(model));
-
-			updateResponse.Record.Should().NotBeNull();
-			updateResponse.Success.Should().BeTrue();
-		}
-
-		[Fact]
-		public async void TestDelete()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiCultureResponseModel response = await client.CultureGetAsync("A");
-
-			response.Should().NotBeNull();
-
-			ActionResponse result = await client.CultureDeleteAsync("A");
+			var model = new ApiCultureClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			var model2 = new ApiCultureClientRequestModel();
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			var request = new List<ApiCultureClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiCultureClientResponseModel>> result = await client.CultureBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response = await client.CultureGetAsync("A");
+			context.Set<Culture>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Culture>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<Culture>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<Culture>().ToList()[2].Name.Should().Be("C");
+		}
+
+		[Fact]
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiCultureClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiCultureClientResponseModel> result = await client.CultureCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Culture>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Culture>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiCultureServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ICultureService service = testServer.Host.Services.GetService(typeof(ICultureService)) as ICultureService;
+			ApiCultureServerResponseModel model = await service.Get("A");
+
+			ApiCultureClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+
+			UpdateResponse<ApiCultureClientResponseModel> updateResponse = await client.CultureUpdateAsync(model.CultureID, request);
+
+			context.Entry(context.Set<Culture>().ToList()[0]).Reload();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.CultureID.Should().Be("A");
+			context.Set<Culture>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Culture>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.CultureID.Should().Be("A");
+			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestDelete()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ICultureService service = testServer.Host.Services.GetService(typeof(ICultureService)) as ICultureService;
+			var model = new ApiCultureServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiCultureServerResponseModel> createdResponse = await service.Create(model);
+
+			createdResponse.Success.Should().BeTrue();
+
+			ActionResponse deleteResult = await client.CultureDeleteAsync("B");
+
+			deleteResult.Success.Should().BeTrue();
+			ApiCultureServerResponseModel verifyResponse = await service.Get("B");
+
+			verifyResponse.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestGetFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiCultureClientResponseModel response = await client.CultureGetAsync("A");
+
+			response.Should().NotBeNull();
+			response.CultureID.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+		}
+
+		[Fact]
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCultureClientResponseModel response = await client.CultureGetAsync("test_value");
 
 			response.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -90,13 +172,17 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiCultureResponseModel response = await client.CultureGetAsync("A");
 
-			response.Should().NotBeNull();
+			List<ApiCultureClientResponseModel> response = await client.CultureAllAsync();
+
+			response.Count.Should().BeGreaterThan(0);
+			response[0].CultureID.Should().Be("A");
+			response[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestByNameFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -104,24 +190,51 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			ApiCultureClientResponseModel response = await client.ByCultureByName("A");
 
-			List<ApiCultureResponseModel> response = await client.CultureAllAsync();
+			response.Should().NotBeNull();
 
-			response.Count.Should().BeGreaterThan(0);
+			response.CultureID.Should().Be("A");
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
 		}
 
-		private async Task<ApiCultureResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByNameNotFound()
 		{
-			var model = new ApiCultureRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiCultureResponseModel> result = await client.CultureCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCultureClientResponseModel response = await client.ByCultureByName("test_value");
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.CultureAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>79cf6f13b94f497633400670f23cf35c</Hash>
+    <Hash>2df744ccf9bcd3e5c0463ac06b9a8235</Hash>
 </Codenesium>*/

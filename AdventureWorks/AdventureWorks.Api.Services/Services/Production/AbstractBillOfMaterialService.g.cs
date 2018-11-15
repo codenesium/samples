@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IBillOfMaterialRepository BillOfMaterialRepository { get; private set; }
 
-		protected IApiBillOfMaterialRequestModelValidator BillOfMaterialModelValidator { get; private set; }
+		protected IApiBillOfMaterialServerRequestModelValidator BillOfMaterialModelValidator { get; private set; }
 
 		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractBillOfMaterialService(
 			ILogger logger,
 			IBillOfMaterialRepository billOfMaterialRepository,
-			IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator,
+			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiBillOfMaterialResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.BillOfMaterialRepository.All(limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiBillOfMaterialResponseModel> Get(int billOfMaterialsID)
+		public virtual async Task<ApiBillOfMaterialServerResponseModel> Get(int billOfMaterialsID)
 		{
 			var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
-			ApiBillOfMaterialRequestModel model)
+		public virtual async Task<CreateResponse<ApiBillOfMaterialServerResponseModel>> Create(
+			ApiBillOfMaterialServerRequestModel model)
 		{
-			CreateResponse<ApiBillOfMaterialResponseModel> response = new CreateResponse<ApiBillOfMaterialResponseModel>(await this.BillOfMaterialModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBillOfMaterialServerResponseModel> response = ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.CreateResponse(await this.BillOfMaterialModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolBillOfMaterialMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiBillOfMaterialResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiBillOfMaterialServerResponseModel>> Update(
 			int billOfMaterialsID,
-			ApiBillOfMaterialRequestModel model)
+			ApiBillOfMaterialServerRequestModel model)
 		{
 			var validationResult = await this.BillOfMaterialModelValidator.ValidateUpdateAsync(billOfMaterialsID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
-				return new UpdateResponse<ApiBillOfMaterialResponseModel>(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiBillOfMaterialResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int billOfMaterialsID)
 		{
-			ActionResponse response = new ActionResponse(await this.BillOfMaterialModelValidator.ValidateDeleteAsync(billOfMaterialsID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.BillOfMaterialModelValidator.ValidateDeleteAsync(billOfMaterialsID));
+
 			if (response.Success)
 			{
 				await this.BillOfMaterialRepository.Delete(billOfMaterialsID);
@@ -108,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiBillOfMaterialServerResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = 0, int offset = int.MaxValue)
 		{
 			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode, limit, offset);
 
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>556e078b2a6e806570c5b609e425d84d</Hash>
+    <Hash>d76d34f9fd200ee3df69dcdce00434b1</Hash>
 </Codenesium>*/

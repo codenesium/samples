@@ -29,9 +29,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
-			List<ApiDestinationResponseModel> response = await service.All();
+			List<ApiDestinationServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -47,9 +49,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
-			ApiDestinationResponseModel response = await service.Get(default(int));
+			ApiDestinationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -64,9 +68,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
-			ApiDestinationResponseModel response = await service.Get(default(int));
+			ApiDestinationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,18 +82,20 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IDestinationRepository>();
-			var model = new ApiDestinationRequestModel();
+			var model = new ApiDestinationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Destination>())).Returns(Task.FromResult(new Destination()));
 			var service = new DestinationService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
-			CreateResponse<ApiDestinationResponseModel> response = await service.Create(model);
+			CreateResponse<ApiDestinationServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDestinationRequestModel>()));
+			mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDestinationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Destination>()));
 		}
 
@@ -95,19 +103,21 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IDestinationRepository>();
-			var model = new ApiDestinationRequestModel();
+			var model = new ApiDestinationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Destination>())).Returns(Task.FromResult(new Destination()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 			var service = new DestinationService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
-			UpdateResponse<ApiDestinationResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiDestinationServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDestinationRequestModel>()));
+			mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDestinationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Destination>()));
 		}
 
@@ -115,13 +125,15 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IDestinationRepository>();
-			var model = new ApiDestinationRequestModel();
+			var model = new ApiDestinationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DestinationService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
-			                                     mock.DALMapperMockFactory.DALDestinationMapperMock);
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -129,9 +141,49 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void PipelineStepDestinationsByDestinationId_Exists()
+		{
+			var mock = new ServiceMockFacade<IDestinationRepository>();
+			var records = new List<PipelineStepDestination>();
+			records.Add(new PipelineStepDestination());
+			mock.RepositoryMock.Setup(x => x.PipelineStepDestinationsByDestinationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new DestinationService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
+
+			List<ApiPipelineStepDestinationServerResponseModel> response = await service.PipelineStepDestinationsByDestinationId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.PipelineStepDestinationsByDestinationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void PipelineStepDestinationsByDestinationId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IDestinationRepository>();
+			mock.RepositoryMock.Setup(x => x.PipelineStepDestinationsByDestinationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PipelineStepDestination>>(new List<PipelineStepDestination>()));
+			var service = new DestinationService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     mock.ModelValidatorMockFactory.DestinationModelValidatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALDestinationMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
+			                                     mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock);
+
+			List<ApiPipelineStepDestinationServerResponseModel> response = await service.PipelineStepDestinationsByDestinationId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.PipelineStepDestinationsByDestinationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e547323b0fa6f1f8c24f0ec5ccc79c1</Hash>
+    <Hash>f3ec3f1e798fbfde5b51b9d10ab17415</Hash>
 </Codenesium>*/

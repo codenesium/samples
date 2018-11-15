@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			var record = new ApiDocumentResponseModel();
-			var records = new List<ApiDocumentResponseModel>();
+			var record = new ApiDocumentServerResponseModel();
+			var records = new List<ApiDocumentServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDocumentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDocumentServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDocumentResponseModel>>(new List<ApiDocumentResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDocumentServerResponseModel>>(new List<ApiDocumentServerResponseModel>()));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDocumentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDocumentServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentServerResponseModel()));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiDocumentResponseModel;
+			var record = (response as OkObjectResult).Value as ApiDocumentServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<Guid>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentServerResponseModel>(null));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDocumentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDocumentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDocumentServerResponseModel>.CreateResponse(null as ApiDocumentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDocumentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentServerResponseModel>>(mockResponse));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDocumentRequestModel>();
-			records.Add(new ApiDocumentRequestModel());
+			var records = new List<ApiDocumentServerRequestModel>();
+			records.Add(new ApiDocumentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiDocumentResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiDocumentServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDocumentResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiDocumentServerResponseModel>>(null as ApiDocumentServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentServerResponseModel>>(mockResponse.Object));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDocumentRequestModel>();
-			records.Add(new ApiDocumentRequestModel());
+			var records = new List<ApiDocumentServerRequestModel>();
+			records.Add(new ApiDocumentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDocumentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDocumentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDocumentServerResponseModel>.CreateResponse(null as ApiDocumentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDocumentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentServerResponseModel>>(mockResponse));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDocumentRequestModel());
+			IActionResult response = await controller.Create(new ApiDocumentServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDocumentResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDocumentServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDocumentResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiDocumentResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiDocumentServerResponseModel>>(null as ApiDocumentServerResponseModel);
+			var mockRecord = new ApiDocumentServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDocumentServerResponseModel>>(mockResponse.Object));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDocumentRequestModel());
+			IActionResult response = await controller.Create(new ApiDocumentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDocumentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDocumentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()))
-			.Callback<Guid, ApiDocumentRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>()))
+			.Callback<Guid, ApiDocumentServerRequestModel>(
 				(id, model) => model.ChangeNumber.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiDocumentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(new ApiDocumentResponseModel()));
-			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiDocumentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentServerResponseModel>(new ApiDocumentServerResponseModel()));
+			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+			var patch = new JsonPatchDocument<ApiDocumentServerRequestModel>();
 			patch.Replace(x => x.ChangeNumber, 1);
 
 			IActionResult response = await controller.Patch(default(Guid), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentServerResponseModel>(null));
 			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+			var patch = new JsonPatchDocument<ApiDocumentServerRequestModel>();
 			patch.Replace(x => x.ChangeNumber, 1);
 
 			IActionResult response = await controller.Patch(default(Guid), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDocumentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDocumentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentResponseModel()));
-			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentServerResponseModel()));
+			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(Guid), new ApiDocumentRequestModel());
+			IActionResult response = await controller.Update(default(Guid), new ApiDocumentServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDocumentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDocumentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentResponseModel()));
-			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new ApiDocumentServerResponseModel()));
+			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(Guid), new ApiDocumentRequestModel());
+			IActionResult response = await controller.Update(default(Guid), new ApiDocumentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDocumentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDocumentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(null));
-			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDocumentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentServerResponseModel>(null));
+			DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDocumentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(Guid), new ApiDocumentRequestModel());
+			IActionResult response = await controller.Update(default(Guid), new ApiDocumentServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IDocumentService> ServiceMock { get; set; } = new Mock<IDocumentService>();
 
-		public Mock<IApiDocumentModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDocumentModelMapper>();
+		public Mock<IApiDocumentServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDocumentServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>29343afe13ce116db474c1c631fc50f9</Hash>
+    <Hash>8c35c08047dc451efc7182b36b54a5a2</Hash>
 </Codenesium>*/

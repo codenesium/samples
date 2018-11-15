@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected ICountryRequirementRepository CountryRequirementRepository { get; private set; }
 
-		protected IApiCountryRequirementRequestModelValidator CountryRequirementModelValidator { get; private set; }
+		protected IApiCountryRequirementServerRequestModelValidator CountryRequirementModelValidator { get; private set; }
 
 		protected IBOLCountryRequirementMapper BolCountryRequirementMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractCountryRequirementService(
 			ILogger logger,
 			ICountryRequirementRepository countryRequirementRepository,
-			IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
+			IApiCountryRequirementServerRequestModelValidator countryRequirementModelValidator,
 			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCountryRequirementResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCountryRequirementServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CountryRequirementRepository.All(limit, offset);
 
 			return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCountryRequirementResponseModel> Get(int id)
+		public virtual async Task<ApiCountryRequirementServerResponseModel> Get(int id)
 		{
 			var record = await this.CountryRequirementRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCountryRequirementResponseModel>> Create(
-			ApiCountryRequirementRequestModel model)
+		public virtual async Task<CreateResponse<ApiCountryRequirementServerResponseModel>> Create(
+			ApiCountryRequirementServerRequestModel model)
 		{
-			CreateResponse<ApiCountryRequirementResponseModel> response = new CreateResponse<ApiCountryRequirementResponseModel>(await this.CountryRequirementModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryRequirementServerResponseModel> response = ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.CreateResponse(await this.CountryRequirementModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCountryRequirementMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCountryRequirementResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCountryRequirementServerResponseModel>> Update(
 			int id,
-			ApiCountryRequirementRequestModel model)
+			ApiCountryRequirementServerRequestModel model)
 		{
 			var validationResult = await this.CountryRequirementModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CountryRequirementRepository.Get(id);
 
-				return new UpdateResponse<ApiCountryRequirementResponseModel>(this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.UpdateResponse(this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCountryRequirementResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.CountryRequirementModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CountryRequirementModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.CountryRequirementRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>060719504988627f3c55e430c1266352</Hash>
+    <Hash>de57e01000e79454c200d1e32d0f76f4</Hash>
 </Codenesium>*/

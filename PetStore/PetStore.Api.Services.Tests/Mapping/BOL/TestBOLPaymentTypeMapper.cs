@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPaymentTypeMapper();
-			ApiPaymentTypeRequestModel model = new ApiPaymentTypeRequestModel();
+			ApiPaymentTypeServerRequestModel model = new ApiPaymentTypeServerRequestModel();
 			model.SetProperties("A");
 			BOPaymentType response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPaymentTypeMapper();
 			BOPaymentType bo = new BOPaymentType();
 			bo.SetProperties(1, "A");
-			ApiPaymentTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiPaymentTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPaymentTypeMapper();
 			BOPaymentType bo = new BOPaymentType();
 			bo.SetProperties(1, "A");
-			List<ApiPaymentTypeResponseModel> response = mapper.MapBOToModel(new List<BOPaymentType>() { { bo } });
+			List<ApiPaymentTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOPaymentType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d7b2730a052852864038327739457a43</Hash>
+    <Hash>03be66dd107cab18e22d9e40fc8a9976</Hash>
 </Codenesium>*/

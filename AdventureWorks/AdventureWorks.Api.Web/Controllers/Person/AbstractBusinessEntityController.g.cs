@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IBusinessEntityService BusinessEntityService { get; private set; }
 
-		protected IApiBusinessEntityModelMapper BusinessEntityModelMapper { get; private set; }
+		protected IApiBusinessEntityServerModelMapper BusinessEntityModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractBusinessEntityController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBusinessEntityService businessEntityService,
-			IApiBusinessEntityModelMapper businessEntityModelMapper
+			IApiBusinessEntityServerModelMapper businessEntityModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBusinessEntityResponseModel> response = await this.BusinessEntityService.All(query.Limit, query.Offset);
+			List<ApiBusinessEntityServerResponseModel> response = await this.BusinessEntityService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBusinessEntityServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiBusinessEntityResponseModel response = await this.BusinessEntityService.Get(id);
+			ApiBusinessEntityServerResponseModel response = await this.BusinessEntityService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiBusinessEntityServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiBusinessEntityResponseModel> records = new List<ApiBusinessEntityResponseModel>();
+			List<ApiBusinessEntityServerResponseModel> records = new List<ApiBusinessEntityServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Create(model);
+				CreateResponse<ApiBusinessEntityServerResponseModel> result = await this.BusinessEntityService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiBusinessEntityServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiBusinessEntityResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiBusinessEntityServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityServerRequestModel model)
 		{
-			CreateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Create(model);
+			CreateResponse<ApiBusinessEntityServerResponseModel> result = await this.BusinessEntityService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBusinessEntityRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBusinessEntityServerRequestModel> patch)
 		{
-			ApiBusinessEntityResponseModel record = await this.BusinessEntityService.Get(id);
+			ApiBusinessEntityServerResponseModel record = await this.BusinessEntityService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiBusinessEntityRequestModel model = await this.PatchModel(id, patch);
+				ApiBusinessEntityServerRequestModel model = await this.PatchModel(id, patch) as ApiBusinessEntityServerRequestModel;
 
-				UpdateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Update(id, model);
+				UpdateResponse<ApiBusinessEntityServerResponseModel> result = await this.BusinessEntityService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBusinessEntityServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityServerRequestModel model)
 		{
-			ApiBusinessEntityRequestModel request = await this.PatchModel(id, this.BusinessEntityModelMapper.CreatePatch(model));
+			ApiBusinessEntityServerRequestModel request = await this.PatchModel(id, this.BusinessEntityModelMapper.CreatePatch(model)) as ApiBusinessEntityServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiBusinessEntityResponseModel> result = await this.BusinessEntityService.Update(id, request);
+				UpdateResponse<ApiBusinessEntityServerResponseModel> result = await this.BusinessEntityService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.BusinessEntityService.Delete(id);
@@ -207,43 +217,28 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/BusinessEntityAddressesByBusinessEntityID")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityAddressesByBusinessEntityID(int businessEntityID, int? limit, int? offset)
+		[ProducesResponseType(typeof(ApiBusinessEntityServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			ApiBusinessEntityServerResponseModel response = await this.BusinessEntityService.ByRowguid(rowguid);
+
+			if (response == null)
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
-
-			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityService.BusinessEntityAddressesByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
-
-			return this.Ok(response);
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/BusinessEntityContactsByBusinessEntityID")]
+		[Route("{businessEntityID}/People")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityContactsByBusinessEntityID(int businessEntityID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityService.BusinessEntityContactsByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{businessEntityID}/PeopleByBusinessEntityID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PeopleByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -252,12 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPersonResponseModel> response = await this.BusinessEntityService.PeopleByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
+			List<ApiPersonServerResponseModel> response = await this.BusinessEntityService.PeopleByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiBusinessEntityRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityRequestModel> patch)
+		private async Task<ApiBusinessEntityServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBusinessEntityServerRequestModel> patch)
 		{
 			var record = await this.BusinessEntityService.Get(id);
 
@@ -267,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiBusinessEntityRequestModel request = this.BusinessEntityModelMapper.MapResponseToRequest(record);
+				ApiBusinessEntityServerRequestModel request = this.BusinessEntityModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -276,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b90c9bf859dadb9be59484c4be9d06eb</Hash>
+    <Hash>3b104a53f4eb84437e9b7073bf67f60c</Hash>
 </Codenesium>*/

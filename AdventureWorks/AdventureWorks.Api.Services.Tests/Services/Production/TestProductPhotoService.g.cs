@@ -29,11 +29,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
-			List<ApiProductPhotoResponseModel> response = await service.All();
+			List<ApiProductPhotoServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,11 +47,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
-			ApiProductPhotoResponseModel response = await service.Get(default(int));
+			ApiProductPhotoServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -68,11 +64,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
-			ApiProductPhotoResponseModel response = await service.Get(default(int));
+			ApiProductPhotoServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,20 +76,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
-			var model = new ApiProductPhotoRequestModel();
+			var model = new ApiProductPhotoServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductPhoto>())).Returns(Task.FromResult(new ProductPhoto()));
 			var service = new ProductPhotoService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
-			CreateResponse<ApiProductPhotoResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProductPhotoServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductPhotoRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductPhotoServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductPhoto>()));
 		}
 
@@ -103,21 +95,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
-			var model = new ApiProductPhotoRequestModel();
+			var model = new ApiProductPhotoServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductPhoto>())).Returns(Task.FromResult(new ProductPhoto()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 			var service = new ProductPhotoService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
-			UpdateResponse<ApiProductPhotoResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiProductPhotoServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductPhotoRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductPhotoServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductPhoto>()));
 		}
 
@@ -125,15 +115,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
-			var model = new ApiProductPhotoRequestModel();
+			var model = new ApiProductPhotoServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ProductPhotoService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void ProductProductPhotoesByProductPhotoID_Exists()
-		{
-			var mock = new ServiceMockFacade<IProductPhotoRepository>();
-			var records = new List<ProductProductPhoto>();
-			records.Add(new ProductProductPhoto());
-			mock.RepositoryMock.Setup(x => x.ProductProductPhotoesByProductPhotoID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new ProductPhotoService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
-
-			List<ApiProductProductPhotoResponseModel> response = await service.ProductProductPhotoesByProductPhotoID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductProductPhotoesByProductPhotoID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ProductProductPhotoesByProductPhotoID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IProductPhotoRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductProductPhotoesByProductPhotoID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductProductPhoto>>(new List<ProductProductPhoto>()));
-			var service = new ProductPhotoService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductProductPhotoMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductProductPhotoMapperMock);
-
-			List<ApiProductProductPhotoResponseModel> response = await service.ProductProductPhotoesByProductPhotoID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductProductPhotoesByProductPhotoID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1cec9ecb156ba88e0a4cfe06e63886a9</Hash>
+    <Hash>a2a5c3943bec6f6d047e1df189bdc448</Hash>
 </Codenesium>*/

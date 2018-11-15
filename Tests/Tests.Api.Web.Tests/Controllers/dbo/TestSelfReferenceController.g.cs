@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			var record = new ApiSelfReferenceResponseModel();
-			var records = new List<ApiSelfReferenceResponseModel>();
+			var record = new ApiSelfReferenceServerResponseModel();
+			var records = new List<ApiSelfReferenceServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSelfReferenceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSelfReferenceServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSelfReferenceResponseModel>>(new List<ApiSelfReferenceResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSelfReferenceServerResponseModel>>(new List<ApiSelfReferenceServerResponseModel>()));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSelfReferenceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSelfReferenceServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceServerResponseModel()));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSelfReferenceResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSelfReferenceServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceServerResponseModel>(null));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSelfReferenceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSelfReferenceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.CreateResponse(null as ApiSelfReferenceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSelfReferenceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceServerResponseModel>>(mockResponse));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSelfReferenceRequestModel>();
-			records.Add(new ApiSelfReferenceRequestModel());
+			var records = new List<ApiSelfReferenceServerRequestModel>();
+			records.Add(new ApiSelfReferenceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSelfReferenceResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSelfReferenceServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSelfReferenceResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSelfReferenceServerResponseModel>>(null as ApiSelfReferenceServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceServerResponseModel>>(mockResponse.Object));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSelfReferenceRequestModel>();
-			records.Add(new ApiSelfReferenceRequestModel());
+			var records = new List<ApiSelfReferenceServerRequestModel>();
+			records.Add(new ApiSelfReferenceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSelfReferenceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSelfReferenceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.CreateResponse(null as ApiSelfReferenceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSelfReferenceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceServerResponseModel>>(mockResponse));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSelfReferenceRequestModel());
+			IActionResult response = await controller.Create(new ApiSelfReferenceServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSelfReferenceResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSelfReferenceServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSelfReferenceResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSelfReferenceResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSelfReferenceServerResponseModel>>(null as ApiSelfReferenceServerResponseModel);
+			var mockRecord = new ApiSelfReferenceServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSelfReferenceServerResponseModel>>(mockResponse.Object));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSelfReferenceRequestModel());
+			IActionResult response = await controller.Create(new ApiSelfReferenceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>()))
-			.Callback<int, ApiSelfReferenceRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>()))
+			.Callback<int, ApiSelfReferenceServerRequestModel>(
 				(id, model) => model.SelfReferenceId.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceResponseModel>(new ApiSelfReferenceResponseModel()));
-			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceServerResponseModel>(new ApiSelfReferenceServerResponseModel()));
+			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSelfReferenceRequestModel>();
+			var patch = new JsonPatchDocument<ApiSelfReferenceServerRequestModel>();
 			patch.Replace(x => x.SelfReferenceId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceServerResponseModel>(null));
 			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSelfReferenceRequestModel>();
+			var patch = new JsonPatchDocument<ApiSelfReferenceServerRequestModel>();
 			patch.Replace(x => x.SelfReferenceId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceResponseModel()));
-			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceServerResponseModel()));
+			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceResponseModel()));
-			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSelfReferenceServerResponseModel()));
+			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SelfReferenceControllerMockFacade mock = new SelfReferenceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSelfReferenceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceResponseModel>(null));
-			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSelfReferenceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSelfReferenceServerResponseModel>(null));
+			SelfReferenceController controller = new SelfReferenceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSelfReferenceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSelfReferenceServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<ISelfReferenceService> ServiceMock { get; set; } = new Mock<ISelfReferenceService>();
 
-		public Mock<IApiSelfReferenceModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSelfReferenceModelMapper>();
+		public Mock<IApiSelfReferenceServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSelfReferenceServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc18372fa0542445fbe0ddb35e5f513d</Hash>
+    <Hash>e4994103f1aae7560fda97c904183de5</Hash>
 </Codenesium>*/

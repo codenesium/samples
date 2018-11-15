@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			var record = new ApiSpecialOfferResponseModel();
-			var records = new List<ApiSpecialOfferResponseModel>();
+			var record = new ApiSpecialOfferServerResponseModel();
+			var records = new List<ApiSpecialOfferServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpecialOfferResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpecialOfferServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpecialOfferResponseModel>>(new List<ApiSpecialOfferResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpecialOfferServerResponseModel>>(new List<ApiSpecialOfferServerResponseModel>()));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpecialOfferResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpecialOfferServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferServerResponseModel()));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSpecialOfferResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSpecialOfferServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferServerResponseModel>(null));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpecialOfferResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpecialOfferResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.CreateResponse(null as ApiSpecialOfferServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpecialOfferServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferServerResponseModel>>(mockResponse));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpecialOfferRequestModel>();
-			records.Add(new ApiSpecialOfferRequestModel());
+			var records = new List<ApiSpecialOfferServerRequestModel>();
+			records.Add(new ApiSpecialOfferServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSpecialOfferResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSpecialOfferServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpecialOfferResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSpecialOfferServerResponseModel>>(null as ApiSpecialOfferServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferServerResponseModel>>(mockResponse.Object));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpecialOfferRequestModel>();
-			records.Add(new ApiSpecialOfferRequestModel());
+			var records = new List<ApiSpecialOfferServerRequestModel>();
+			records.Add(new ApiSpecialOfferServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpecialOfferResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpecialOfferResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.CreateResponse(null as ApiSpecialOfferServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpecialOfferServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferServerResponseModel>>(mockResponse));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpecialOfferRequestModel());
+			IActionResult response = await controller.Create(new ApiSpecialOfferServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpecialOfferResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpecialOfferServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpecialOfferResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSpecialOfferResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSpecialOfferServerResponseModel>>(null as ApiSpecialOfferServerResponseModel);
+			var mockRecord = new ApiSpecialOfferServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpecialOfferServerResponseModel>>(mockResponse.Object));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpecialOfferRequestModel());
+			IActionResult response = await controller.Create(new ApiSpecialOfferServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()))
-			.Callback<int, ApiSpecialOfferRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>()))
+			.Callback<int, ApiSpecialOfferServerRequestModel>(
 				(id, model) => model.Category.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferResponseModel>(new ApiSpecialOfferResponseModel()));
-			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferServerResponseModel>(new ApiSpecialOfferServerResponseModel()));
+			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpecialOfferRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpecialOfferServerRequestModel>();
 			patch.Replace(x => x.Category, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferServerResponseModel>(null));
 			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpecialOfferRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpecialOfferServerRequestModel>();
 			patch.Replace(x => x.Category, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferResponseModel()));
-			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferServerResponseModel()));
+			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferResponseModel()));
-			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpecialOfferServerResponseModel()));
+			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SpecialOfferControllerMockFacade mock = new SpecialOfferControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpecialOfferServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferResponseModel>(null));
-			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpecialOfferServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpecialOfferServerResponseModel>(null));
+			SpecialOfferController controller = new SpecialOfferController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpecialOfferServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpecialOfferServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ISpecialOfferService> ServiceMock { get; set; } = new Mock<ISpecialOfferService>();
 
-		public Mock<IApiSpecialOfferModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpecialOfferModelMapper>();
+		public Mock<IApiSpecialOfferServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpecialOfferServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>46b1ac6ac8195f9b69f454c3a103677b</Hash>
+    <Hash>1cdd3d532cf07bf00095fef989956b52</Hash>
 </Codenesium>*/

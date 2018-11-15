@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOVPerson MapModelToBO(
 			int personId,
-			ApiVPersonRequestModel model
+			ApiVPersonServerRequestModel model
 			)
 		{
 			BOVPerson boVPerson = new BOVPerson();
@@ -19,20 +18,20 @@ namespace TestsNS.Api.Services
 			return boVPerson;
 		}
 
-		public virtual ApiVPersonResponseModel MapBOToModel(
+		public virtual ApiVPersonServerResponseModel MapBOToModel(
 			BOVPerson boVPerson)
 		{
-			var model = new ApiVPersonResponseModel();
+			var model = new ApiVPersonServerResponseModel();
 
 			model.SetProperties(boVPerson.PersonId, boVPerson.PersonName);
 
 			return model;
 		}
 
-		public virtual List<ApiVPersonResponseModel> MapBOToModel(
+		public virtual List<ApiVPersonServerResponseModel> MapBOToModel(
 			List<BOVPerson> items)
 		{
-			List<ApiVPersonResponseModel> response = new List<ApiVPersonResponseModel>();
+			List<ApiVPersonServerResponseModel> response = new List<ApiVPersonServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e9b4bb398bff3dcfd679f139dff110c</Hash>
+    <Hash>8299f6bb5182fc693813cb864b9e2d03</Hash>
 </Codenesium>*/

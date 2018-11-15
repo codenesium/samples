@@ -9,16 +9,16 @@ namespace PetShippingNS.Api.Services
 	{
 		BOCountry MapModelToBO(
 			int id,
-			ApiCountryRequestModel model);
+			ApiCountryServerRequestModel model);
 
-		ApiCountryResponseModel MapBOToModel(
+		ApiCountryServerResponseModel MapBOToModel(
 			BOCountry boCountry);
 
-		List<ApiCountryResponseModel> MapBOToModel(
+		List<ApiCountryServerResponseModel> MapBOToModel(
 			List<BOCountry> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3cb9c7763d96ba143baaf948a424a504</Hash>
+    <Hash>a6dcdb39deab77c4bed1272fcb174e2c</Hash>
 </Codenesium>*/

@@ -84,15 +84,6 @@ namespace TestsNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -293,5 +284,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce8d3ee30d3244bc63f33b07e422fd3a</Hash>
+    <Hash>94333c1348f891a0ba6a550e4a900139</Hash>
 </Codenesium>*/

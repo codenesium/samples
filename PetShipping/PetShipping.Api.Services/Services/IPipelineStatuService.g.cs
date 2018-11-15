@@ -2,29 +2,28 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IPipelineStatuService
 	{
-		Task<CreateResponse<ApiPipelineStatuResponseModel>> Create(
-			ApiPipelineStatuRequestModel model);
+		Task<CreateResponse<ApiPipelineStatuServerResponseModel>> Create(
+			ApiPipelineStatuServerRequestModel model);
 
-		Task<UpdateResponse<ApiPipelineStatuResponseModel>> Update(int id,
-		                                                            ApiPipelineStatuRequestModel model);
+		Task<UpdateResponse<ApiPipelineStatuServerResponseModel>> Update(int id,
+		                                                                  ApiPipelineStatuServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPipelineStatuResponseModel> Get(int id);
+		Task<ApiPipelineStatuServerResponseModel> Get(int id);
 
-		Task<List<ApiPipelineStatuResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStatuServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPipelineResponseModel>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineServerResponseModel>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eaad1f0ef159da07d7e602e38577e8c6</Hash>
+    <Hash>ba1bccb85b5d82af4af80109e858b422</Hash>
 </Codenesium>*/

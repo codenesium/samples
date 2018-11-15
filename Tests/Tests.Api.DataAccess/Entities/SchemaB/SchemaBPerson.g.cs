@@ -23,14 +23,14 @@ namespace TestsNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(50)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4956033a7b3050c5009c3661088920d</Hash>
+    <Hash>ae5c24e1456f972f6ec8c932cd63e854</Hash>
 </Codenesium>*/

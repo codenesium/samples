@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +12,10 @@ namespace AdventureWorksNS.Api.Services
 		{
 			SalesTerritory efSalesTerritory = new SalesTerritory();
 			efSalesTerritory.SetProperties(
+				bo.@Group,
 				bo.CostLastYear,
 				bo.CostYTD,
 				bo.CountryRegionCode,
-				bo.@Group,
 				bo.ModifiedDate,
 				bo.Name,
 				bo.Rowguid,
@@ -33,10 +32,10 @@ namespace AdventureWorksNS.Api.Services
 
 			bo.SetProperties(
 				ef.TerritoryID,
+				ef.@Group,
 				ef.CostLastYear,
 				ef.CostYTD,
 				ef.CountryRegionCode,
-				ef.@Group,
 				ef.ModifiedDate,
 				ef.Name,
 				ef.Rowguid,
@@ -61,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4a6f505f992bca874f9eaaa1190c770</Hash>
+    <Hash>d5e7c6a2e3609356f97ec617416df3a5</Hash>
 </Codenesium>*/

@@ -20,11 +20,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<Shift> ByName(string name);
 
 		Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
-
-		Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a9f6fb8424ece3480928dd7a4471919</Hash>
+    <Hash>3a4f293e6b4e4fbc97c0857d851e9158</Hash>
 </Codenesium>*/

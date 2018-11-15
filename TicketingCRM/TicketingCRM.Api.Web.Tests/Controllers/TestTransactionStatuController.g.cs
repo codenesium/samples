@@ -24,8 +24,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			var record = new ApiTransactionStatuResponseModel();
-			var records = new List<ApiTransactionStatuResponseModel>();
+			var record = new ApiTransactionStatuServerResponseModel();
+			var records = new List<ApiTransactionStatuServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTransactionStatuResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTransactionStatuServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTransactionStatuResponseModel>>(new List<ApiTransactionStatuResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTransactionStatuServerResponseModel>>(new List<ApiTransactionStatuServerResponseModel>()));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTransactionStatuResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTransactionStatuServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuServerResponseModel()));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTransactionStatuResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTransactionStatuServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuServerResponseModel>(null));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTransactionStatuResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTransactionStatuResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.CreateResponse(null as ApiTransactionStatuServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTransactionStatuServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuServerResponseModel>>(mockResponse));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTransactionStatuRequestModel>();
-			records.Add(new ApiTransactionStatuRequestModel());
+			var records = new List<ApiTransactionStatuServerRequestModel>();
+			records.Add(new ApiTransactionStatuServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTransactionStatuResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTransactionStatuServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTransactionStatuResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTransactionStatuServerResponseModel>>(null as ApiTransactionStatuServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuServerResponseModel>>(mockResponse.Object));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTransactionStatuRequestModel>();
-			records.Add(new ApiTransactionStatuRequestModel());
+			var records = new List<ApiTransactionStatuServerRequestModel>();
+			records.Add(new ApiTransactionStatuServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTransactionStatuResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTransactionStatuResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.CreateResponse(null as ApiTransactionStatuServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTransactionStatuServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuServerResponseModel>>(mockResponse));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTransactionStatuRequestModel());
+			IActionResult response = await controller.Create(new ApiTransactionStatuServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTransactionStatuResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTransactionStatuServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTransactionStatuResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTransactionStatuResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTransactionStatuServerResponseModel>>(null as ApiTransactionStatuServerResponseModel);
+			var mockRecord = new ApiTransactionStatuServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionStatuServerResponseModel>>(mockResponse.Object));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTransactionStatuRequestModel());
+			IActionResult response = await controller.Create(new ApiTransactionStatuServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>()))
-			.Callback<int, ApiTransactionStatuRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>()))
+			.Callback<int, ApiTransactionStatuServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuResponseModel>(new ApiTransactionStatuResponseModel()));
-			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuServerResponseModel>(new ApiTransactionStatuServerResponseModel()));
+			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTransactionStatuRequestModel>();
+			var patch = new JsonPatchDocument<ApiTransactionStatuServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuServerResponseModel>(null));
 			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTransactionStatuRequestModel>();
+			var patch = new JsonPatchDocument<ApiTransactionStatuServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuResponseModel()));
-			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuServerResponseModel()));
+			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuResponseModel()));
-			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionStatuServerResponseModel()));
+			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TransactionStatuControllerMockFacade mock = new TransactionStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuResponseModel>(null));
-			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionStatuServerResponseModel>(null));
+			TransactionStatuController controller = new TransactionStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionStatuServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 		public Mock<ITransactionStatuService> ServiceMock { get; set; } = new Mock<ITransactionStatuService>();
 
-		public Mock<IApiTransactionStatuModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTransactionStatuModelMapper>();
+		public Mock<IApiTransactionStatuServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTransactionStatuServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad1fd37892522ba3731829991ef74b24</Hash>
+    <Hash>36242af323b0d14ee8738eab8c9c9894</Hash>
 </Codenesium>*/

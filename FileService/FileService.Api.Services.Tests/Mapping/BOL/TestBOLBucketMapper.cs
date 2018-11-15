@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLBucketMapper();
-			ApiBucketRequestModel model = new ApiBucketRequestModel();
+			ApiBucketServerRequestModel model = new ApiBucketServerRequestModel();
 			model.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			BOBucket response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mapper = new BOLBucketMapper();
 			BOBucket bo = new BOBucket();
 			bo.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-			ApiBucketResponseModel response = mapper.MapBOToModel(bo);
+			ApiBucketServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.Id.Should().Be(1);
@@ -44,7 +44,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mapper = new BOLBucketMapper();
 			BOBucket bo = new BOBucket();
 			bo.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-			List<ApiBucketResponseModel> response = mapper.MapBOToModel(new List<BOBucket>() { { bo } });
+			List<ApiBucketServerResponseModel> response = mapper.MapBOToModel(new List<BOBucket>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7794c5d8e52974896efe4d06f82e2903</Hash>
+    <Hash>7bba28d362d9644fa70fb9af4c7d6131</Hash>
 </Codenesium>*/

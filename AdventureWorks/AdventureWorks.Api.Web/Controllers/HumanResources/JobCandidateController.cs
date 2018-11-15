@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class JobCandidateController : AbstractJobCandidateController
 	{
 		public JobCandidateController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<JobCandidateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IJobCandidateService jobCandidateService,
-			IApiJobCandidateModelMapper jobCandidateModelMapper
+			IApiJobCandidateServerModelMapper jobCandidateModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c2d4fbcb5e9d3bc18339012102ae5b72</Hash>
+    <Hash>b72a7b84066aae405c3e69f1ca16fa39</Hash>
 </Codenesium>*/

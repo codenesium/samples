@@ -17,13 +17,13 @@ namespace ESPIOTNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLDeviceActionMapper();
-			ApiDeviceActionRequestModel model = new ApiDeviceActionRequestModel();
-			model.SetProperties(1, "A", "A");
+			ApiDeviceActionServerRequestModel model = new ApiDeviceActionServerRequestModel();
+			model.SetProperties("A", 1, "A");
 			BODeviceAction response = mapper.MapModelToBO(1, model);
 
+			response.@Value.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.@Value.Should().Be("A");
 		}
 
 		[Fact]
@@ -31,13 +31,13 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 			var mapper = new BOLDeviceActionMapper();
 			BODeviceAction bo = new BODeviceAction();
-			bo.SetProperties(1, 1, "A", "A");
-			ApiDeviceActionResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, "A", 1, "A");
+			ApiDeviceActionServerResponseModel response = mapper.MapBOToModel(bo);
 
+			response.@Value.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.@Value.Should().Be("A");
 		}
 
 		[Fact]
@@ -45,8 +45,8 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 			var mapper = new BOLDeviceActionMapper();
 			BODeviceAction bo = new BODeviceAction();
-			bo.SetProperties(1, 1, "A", "A");
-			List<ApiDeviceActionResponseModel> response = mapper.MapBOToModel(new List<BODeviceAction>() { { bo } });
+			bo.SetProperties(1, "A", 1, "A");
+			List<ApiDeviceActionServerResponseModel> response = mapper.MapBOToModel(new List<BODeviceAction>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0482984f9296cfb150e63e55814fdb1a</Hash>
+    <Hash>cf959ce73ef2524f2132e33ed1c67f13</Hash>
 </Codenesium>*/

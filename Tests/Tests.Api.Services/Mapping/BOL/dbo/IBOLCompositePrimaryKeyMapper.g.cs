@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOCompositePrimaryKey MapModelToBO(
 			int id,
-			ApiCompositePrimaryKeyRequestModel model);
+			ApiCompositePrimaryKeyServerRequestModel model);
 
-		ApiCompositePrimaryKeyResponseModel MapBOToModel(
+		ApiCompositePrimaryKeyServerResponseModel MapBOToModel(
 			BOCompositePrimaryKey boCompositePrimaryKey);
 
-		List<ApiCompositePrimaryKeyResponseModel> MapBOToModel(
+		List<ApiCompositePrimaryKeyServerResponseModel> MapBOToModel(
 			List<BOCompositePrimaryKey> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d09154170e9b94589fe9a22399e985e4</Hash>
+    <Hash>338535b175aef8b7de0a37436906740a</Hash>
 </Codenesium>*/

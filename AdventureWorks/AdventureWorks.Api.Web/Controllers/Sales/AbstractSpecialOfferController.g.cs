@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ISpecialOfferService SpecialOfferService { get; private set; }
 
-		protected IApiSpecialOfferModelMapper SpecialOfferModelMapper { get; private set; }
+		protected IApiSpecialOfferServerModelMapper SpecialOfferModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractSpecialOfferController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpecialOfferService specialOfferService,
-			IApiSpecialOfferModelMapper specialOfferModelMapper
+			IApiSpecialOfferServerModelMapper specialOfferModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpecialOfferResponseModel> response = await this.SpecialOfferService.All(query.Limit, query.Offset);
+			List<ApiSpecialOfferServerResponseModel> response = await this.SpecialOfferService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSpecialOfferResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSpecialOfferServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSpecialOfferResponseModel response = await this.SpecialOfferService.Get(id);
+			ApiSpecialOfferServerResponseModel response = await this.SpecialOfferService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSpecialOfferServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSpecialOfferResponseModel> records = new List<ApiSpecialOfferResponseModel>();
+			List<ApiSpecialOfferServerResponseModel> records = new List<ApiSpecialOfferServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSpecialOfferResponseModel> result = await this.SpecialOfferService.Create(model);
+				CreateResponse<ApiSpecialOfferServerResponseModel> result = await this.SpecialOfferService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSpecialOfferServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSpecialOfferResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSpecialOfferServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferServerRequestModel model)
 		{
-			CreateResponse<ApiSpecialOfferResponseModel> result = await this.SpecialOfferService.Create(model);
+			CreateResponse<ApiSpecialOfferServerResponseModel> result = await this.SpecialOfferService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpecialOfferRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpecialOfferServerRequestModel> patch)
 		{
-			ApiSpecialOfferResponseModel record = await this.SpecialOfferService.Get(id);
+			ApiSpecialOfferServerResponseModel record = await this.SpecialOfferService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSpecialOfferRequestModel model = await this.PatchModel(id, patch);
+				ApiSpecialOfferServerRequestModel model = await this.PatchModel(id, patch) as ApiSpecialOfferServerRequestModel;
 
-				UpdateResponse<ApiSpecialOfferResponseModel> result = await this.SpecialOfferService.Update(id, model);
+				UpdateResponse<ApiSpecialOfferServerResponseModel> result = await this.SpecialOfferService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpecialOfferServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferServerRequestModel model)
 		{
-			ApiSpecialOfferRequestModel request = await this.PatchModel(id, this.SpecialOfferModelMapper.CreatePatch(model));
+			ApiSpecialOfferServerRequestModel request = await this.PatchModel(id, this.SpecialOfferModelMapper.CreatePatch(model)) as ApiSpecialOfferServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSpecialOfferResponseModel> result = await this.SpecialOfferService.Update(id, request);
+				UpdateResponse<ApiSpecialOfferServerResponseModel> result = await this.SpecialOfferService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SpecialOfferService.Delete(id);
@@ -206,7 +216,26 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiSpecialOfferRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferRequestModel> patch)
+		[HttpGet]
+		[Route("byRowguid/{rowguid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiSpecialOfferServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiSpecialOfferServerResponseModel response = await this.SpecialOfferService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		private async Task<ApiSpecialOfferServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferServerRequestModel> patch)
 		{
 			var record = await this.SpecialOfferService.Get(id);
 
@@ -216,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSpecialOfferRequestModel request = this.SpecialOfferModelMapper.MapResponseToRequest(record);
+				ApiSpecialOfferServerRequestModel request = this.SpecialOfferModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c036fe2fa53b51feda48fbdcc0f09e94</Hash>
+    <Hash>ac4437defcc50f06a383c3e75a8abaf3</Hash>
 </Codenesium>*/

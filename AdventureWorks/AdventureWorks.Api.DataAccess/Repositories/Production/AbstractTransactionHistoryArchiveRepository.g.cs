@@ -76,12 +76,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<TransactionHistoryArchive>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TransactionHistoryArchive>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
-		public async Task<List<TransactionHistoryArchive>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TransactionHistoryArchive>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID, limit, offset);
 		}
@@ -90,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<TransactionHistoryArchive, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TransactionHistoryArchive, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TransactionHistoryArchive, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.TransactionID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
-			}
-			else
-			{
-				return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
-			}
+			return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
 		}
 
 		private async Task<TransactionHistoryArchive> GetById(int transactionID)
@@ -118,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d84ef80de50699467e34e4cb3aa22cb8</Hash>
+    <Hash>23410e2f0076534431d8dbf3006852f5</Hash>
 </Codenesium>*/

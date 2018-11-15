@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			var record = new ApiUserResponseModel();
-			var records = new List<ApiUserResponseModel>();
+			var record = new ApiUserServerResponseModel();
+			var records = new List<ApiUserServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiUserResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiUserServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiUserResponseModel>>(new List<ApiUserResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiUserServerResponseModel>>(new List<ApiUserServerResponseModel>()));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiUserResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiUserServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserServerResponseModel()));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiUserResponseModel;
+			var record = (response as OkObjectResult).Value as ApiUserServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserServerResponseModel>(null));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiUserResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiUserResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiUserServerResponseModel>.CreateResponse(null as ApiUserServerResponseModel);
+
+			mockResponse.SetRecord(new ApiUserServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserServerResponseModel>>(mockResponse));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiUserRequestModel>();
-			records.Add(new ApiUserRequestModel());
+			var records = new List<ApiUserServerRequestModel>();
+			records.Add(new ApiUserServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiUserResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiUserServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiUserResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiUserServerResponseModel>>(null as ApiUserServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserServerResponseModel>>(mockResponse.Object));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiUserRequestModel>();
-			records.Add(new ApiUserRequestModel());
+			var records = new List<ApiUserServerRequestModel>();
+			records.Add(new ApiUserServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiUserResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiUserResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiUserServerResponseModel>.CreateResponse(null as ApiUserServerResponseModel);
+
+			mockResponse.SetRecord(new ApiUserServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserServerResponseModel>>(mockResponse));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiUserRequestModel());
+			IActionResult response = await controller.Create(new ApiUserServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiUserResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiUserServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiUserResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiUserResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiUserServerResponseModel>>(null as ApiUserServerResponseModel);
+			var mockRecord = new ApiUserServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiUserServerResponseModel>>(mockResponse.Object));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiUserRequestModel());
+			IActionResult response = await controller.Create(new ApiUserServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiUserResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiUserServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()))
-			.Callback<int, ApiUserRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()))
+			.Callback<int, ApiUserServerRequestModel>(
 				(id, model) => model.BioImgUrl.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiUserResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserResponseModel>(new ApiUserResponseModel()));
-			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiUserServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserServerResponseModel>(new ApiUserServerResponseModel()));
+			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiUserRequestModel>();
+			var patch = new JsonPatchDocument<ApiUserServerRequestModel>();
 			patch.Replace(x => x.BioImgUrl, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserServerResponseModel>(null));
 			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiUserRequestModel>();
+			var patch = new JsonPatchDocument<ApiUserServerRequestModel>();
 			patch.Replace(x => x.BioImgUrl, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiUserResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiUserServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserResponseModel()));
-			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserServerResponseModel()));
+			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiUserRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiUserServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiUserResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiUserServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserResponseModel()));
-			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiUserServerResponseModel()));
+			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiUserRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiUserServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			UserControllerMockFacade mock = new UserControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiUserResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiUserServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserResponseModel>(null));
-			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiUserServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiUserServerResponseModel>(null));
+			UserController controller = new UserController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiUserServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiUserRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiUserServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<IUserService> ServiceMock { get; set; } = new Mock<IUserService>();
 
-		public Mock<IApiUserModelMapper> ModelMapperMock { get; set; } = new Mock<IApiUserModelMapper>();
+		public Mock<IApiUserServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiUserServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5799b4075758cc4777a9097dd931584</Hash>
+    <Hash>86b4cce47916a70f273bf04fd3e1f67d</Hash>
 </Codenesium>*/

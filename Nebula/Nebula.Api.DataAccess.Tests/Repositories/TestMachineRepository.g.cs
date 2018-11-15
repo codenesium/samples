@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace NebulaNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace NebulaNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
+			var repository = new MachineRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>050d1c4f6892120d2f2366dfc4d4d702</Hash>
+    <Hash>6dfc81d558fddf557bc226a438661d0a</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected IRateRepository RateRepository { get; private set; }
 
-		protected IApiRateRequestModelValidator RateModelValidator { get; private set; }
+		protected IApiRateServerRequestModelValidator RateModelValidator { get; private set; }
 
 		protected IBOLRateMapper BolRateMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractRateService(
 			ILogger logger,
 			IRateRepository rateRepository,
-			IApiRateRequestModelValidator rateModelValidator,
+			IApiRateServerRequestModelValidator rateModelValidator,
 			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiRateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.RateRepository.All(limit, offset);
 
 			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiRateResponseModel> Get(int id)
+		public virtual async Task<ApiRateServerResponseModel> Get(int id)
 		{
 			var record = await this.RateRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
-			ApiRateRequestModel model)
+		public virtual async Task<CreateResponse<ApiRateServerResponseModel>> Create(
+			ApiRateServerRequestModel model)
 		{
-			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.RateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRateServerResponseModel> response = ValidationResponseFactory<ApiRateServerResponseModel>.CreateResponse(await this.RateModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolRateMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiRateResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiRateServerResponseModel>> Update(
 			int id,
-			ApiRateRequestModel model)
+			ApiRateServerRequestModel model)
 		{
 			var validationResult = await this.RateModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.RateRepository.Get(id);
 
-				return new UpdateResponse<ApiRateResponseModel>(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiRateResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.RateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.RateModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.RateRepository.Delete(id);
@@ -107,9 +104,23 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiRateServerResponseModel>> ByTeacherId(int teacherId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Rate> records = await this.RateRepository.ByTeacherId(teacherId, limit, offset);
+
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiRateServerResponseModel>> ByTeacherSkillId(int teacherSkillId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Rate> records = await this.RateRepository.ByTeacherSkillId(teacherSkillId, limit, offset);
+
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>486b8947a5ba132614bbf46ec2f40f43</Hash>
+    <Hash>4c5007f786f286998c1ba35eecb9e6e1</Hash>
 </Codenesium>*/

@@ -1,0 +1,23 @@
+{
+  "$id": "1",
+  "ApiSettings": {
+    "NamespacePrefix": "",
+    "IsMultiTenant": false,
+    "UseSoftDeletes": false
+  },
+  "TableParameterSettings": [],
+  "ColumnParameterSettings": [],
+  "VirtualForeignKeys": [],
+  "ForeignKeyParameterSettings": [],
+  "VirtualConstraints": [],
+  "ConstraintParameterSettings": [
+    {
+      "$id": "2",
+      "SchemaName": "Sales",
+      "TableName": "SpecialOfferProduct",
+      "Name": "IX_SpecialOfferProduct_ProductID",
+      "AppDoNotProcess": true,
+      "AppShowInController": true
+    }
+  ]
+}

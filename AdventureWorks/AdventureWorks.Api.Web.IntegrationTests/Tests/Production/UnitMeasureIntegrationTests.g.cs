@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Client;
 using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,74 +18,153 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "UnitMeasure")]
 	[Trait("Area", "Integration")]
-	public class UnitMeasureIntegrationTests
+	public partial class UnitMeasureIntegrationTests
 	{
 		public UnitMeasureIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.UnitMeasureDeleteAsync("A");
-
-			var response = await this.CreateRecord(client);
-
-			response.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void TestUpdate()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiUnitMeasureResponseModel model = await client.UnitMeasureGetAsync("A");
-
-			ApiUnitMeasureModelMapper mapper = new ApiUnitMeasureModelMapper();
-
-			UpdateResponse<ApiUnitMeasureResponseModel> updateResponse = await client.UnitMeasureUpdateAsync(model.UnitMeasureCode, mapper.MapResponseToRequest(model));
-
-			updateResponse.Record.Should().NotBeNull();
-			updateResponse.Success.Should().BeTrue();
-		}
-
-		[Fact]
-		public async void TestDelete()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiUnitMeasureResponseModel response = await client.UnitMeasureGetAsync("A");
-
-			response.Should().NotBeNull();
-
-			ActionResponse result = await client.UnitMeasureDeleteAsync("A");
+			var model = new ApiUnitMeasureClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			var model2 = new ApiUnitMeasureClientRequestModel();
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			var request = new List<ApiUnitMeasureClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiUnitMeasureClientResponseModel>> result = await client.UnitMeasureBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response = await client.UnitMeasureGetAsync("A");
+			context.Set<UnitMeasure>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<UnitMeasure>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<UnitMeasure>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<UnitMeasure>().ToList()[2].Name.Should().Be("C");
+		}
+
+		[Fact]
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiUnitMeasureClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiUnitMeasureClientResponseModel> result = await client.UnitMeasureCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<UnitMeasure>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<UnitMeasure>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiUnitMeasureServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IUnitMeasureService service = testServer.Host.Services.GetService(typeof(IUnitMeasureService)) as IUnitMeasureService;
+			ApiUnitMeasureServerResponseModel model = await service.Get("A");
+
+			ApiUnitMeasureClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+
+			UpdateResponse<ApiUnitMeasureClientResponseModel> updateResponse = await client.UnitMeasureUpdateAsync(model.UnitMeasureCode, request);
+
+			context.Entry(context.Set<UnitMeasure>().ToList()[0]).Reload();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.UnitMeasureCode.Should().Be("A");
+			context.Set<UnitMeasure>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<UnitMeasure>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.UnitMeasureCode.Should().Be("A");
+			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestDelete()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			IUnitMeasureService service = testServer.Host.Services.GetService(typeof(IUnitMeasureService)) as IUnitMeasureService;
+			var model = new ApiUnitMeasureServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiUnitMeasureServerResponseModel> createdResponse = await service.Create(model);
+
+			createdResponse.Success.Should().BeTrue();
+
+			ActionResponse deleteResult = await client.UnitMeasureDeleteAsync("B");
+
+			deleteResult.Success.Should().BeTrue();
+			ApiUnitMeasureServerResponseModel verifyResponse = await service.Get("B");
+
+			verifyResponse.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestGetFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiUnitMeasureClientResponseModel response = await client.UnitMeasureGetAsync("A");
+
+			response.Should().NotBeNull();
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.UnitMeasureCode.Should().Be("A");
+		}
+
+		[Fact]
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiUnitMeasureClientResponseModel response = await client.UnitMeasureGetAsync("test_value");
 
 			response.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -90,13 +172,17 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiUnitMeasureResponseModel response = await client.UnitMeasureGetAsync("A");
 
-			response.Should().NotBeNull();
+			List<ApiUnitMeasureClientResponseModel> response = await client.UnitMeasureAllAsync();
+
+			response.Count.Should().BeGreaterThan(0);
+			response[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Name.Should().Be("A");
+			response[0].UnitMeasureCode.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestByNameFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -104,24 +190,135 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			ApiUnitMeasureClientResponseModel response = await client.ByUnitMeasureByName("A");
 
-			List<ApiUnitMeasureResponseModel> response = await client.UnitMeasureAllAsync();
+			response.Should().NotBeNull();
 
-			response.Count.Should().BeGreaterThan(0);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.UnitMeasureCode.Should().Be("A");
 		}
 
-		private async Task<ApiUnitMeasureResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByNameNotFound()
 		{
-			var model = new ApiUnitMeasureRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiUnitMeasureResponseModel> result = await client.UnitMeasureCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			ApiUnitMeasureClientResponseModel response = await client.ByUnitMeasureByName("test_value");
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyBillOfMaterialsByUnitMeasureCodeFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiBillOfMaterialClientResponseModel> response = await client.BillOfMaterialsByUnitMeasureCode("A");
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyBillOfMaterialsByUnitMeasureCodeNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiBillOfMaterialClientResponseModel> response = await client.BillOfMaterialsByUnitMeasureCode("test_value");
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyProductsBySizeUnitMeasureCodeFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProductClientResponseModel> response = await client.ProductsBySizeUnitMeasureCode("A");
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyProductsBySizeUnitMeasureCodeNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProductClientResponseModel> response = await client.ProductsBySizeUnitMeasureCode("test_value");
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyProductsByWeightUnitMeasureCodeFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProductClientResponseModel> response = await client.ProductsByWeightUnitMeasureCode("A");
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyProductsByWeightUnitMeasureCodeNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProductClientResponseModel> response = await client.ProductsByWeightUnitMeasureCode("test_value");
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.UnitMeasureAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8a16492da2eac439f004811b00a26fa</Hash>
+    <Hash>1deca48bc3f6185b2205678bad936b8a</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOScrapReason MapModelToBO(
 			short scrapReasonID,
-			ApiScrapReasonRequestModel model
+			ApiScrapReasonServerRequestModel model
 			)
 		{
 			BOScrapReason boScrapReason = new BOScrapReason();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boScrapReason;
 		}
 
-		public virtual ApiScrapReasonResponseModel MapBOToModel(
+		public virtual ApiScrapReasonServerResponseModel MapBOToModel(
 			BOScrapReason boScrapReason)
 		{
-			var model = new ApiScrapReasonResponseModel();
+			var model = new ApiScrapReasonServerResponseModel();
 
 			model.SetProperties(boScrapReason.ScrapReasonID, boScrapReason.ModifiedDate, boScrapReason.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiScrapReasonResponseModel> MapBOToModel(
+		public virtual List<ApiScrapReasonServerResponseModel> MapBOToModel(
 			List<BOScrapReason> items)
 		{
-			List<ApiScrapReasonResponseModel> response = new List<ApiScrapReasonResponseModel>();
+			List<ApiScrapReasonServerResponseModel> response = new List<ApiScrapReasonServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>265c2a0ea7dd39559afc22e4f0fdcb7b</Hash>
+    <Hash>9966d68762595ed9d307796f999952e2</Hash>
 </Codenesium>*/

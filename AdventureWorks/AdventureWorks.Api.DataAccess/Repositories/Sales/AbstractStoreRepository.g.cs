@@ -76,12 +76,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Store>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<Store> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
+		public async virtual Task<List<Store>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
 		}
 
-		public async Task<List<Store>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Store>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.Demographic == demographic, limit, offset);
 		}
@@ -100,22 +105,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<Store, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Store, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Store, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Store>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Store>();
-			}
-			else
-			{
-				return await this.Context.Set<Store>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Store>();
-			}
+			return await this.Context.Set<Store>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Store>();
 		}
 
 		private async Task<Store> GetById(int businessEntityID)
@@ -128,5 +125,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d3515d1d1591dcfb8cfc2460a4159fa</Hash>
+    <Hash>59e9b1ed953560fdf4b0295ef0fce6e5</Hash>
 </Codenesium>*/

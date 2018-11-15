@@ -76,36 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<ContactType> ByName(string name)
+		public async virtual Task<ContactType> ByName(string name)
 		{
 			return await this.Context.Set<ContactType>().SingleOrDefaultAsync(x => x.Name == name);
-		}
-
-		public async virtual Task<List<BusinessEntityContact>> BusinessEntityContactsByContactTypeID(int contactTypeID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<BusinessEntityContact>().Where(x => x.ContactTypeID == contactTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
 		}
 
 		protected async Task<List<ContactType>> Where(
 			Expression<Func<ContactType, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ContactType, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ContactType, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ContactTypeID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
-			}
-			else
-			{
-				return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
-			}
+			return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
 		}
 
 		private async Task<ContactType> GetById(int contactTypeID)
@@ -118,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4214ccf9d419c6d7e17ef345e2f70dd2</Hash>
+    <Hash>bb243515cc3e1358e12e25709275ba9a</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -8,8 +7,8 @@ namespace TwitterNS.Api.Services
 	public abstract class BOLAbstractFollowingMapper
 	{
 		public virtual BOFollowing MapModelToBO(
-			string userId,
-			ApiFollowingRequestModel model
+			int userId,
+			ApiFollowingServerRequestModel model
 			)
 		{
 			BOFollowing boFollowing = new BOFollowing();
@@ -20,20 +19,20 @@ namespace TwitterNS.Api.Services
 			return boFollowing;
 		}
 
-		public virtual ApiFollowingResponseModel MapBOToModel(
+		public virtual ApiFollowingServerResponseModel MapBOToModel(
 			BOFollowing boFollowing)
 		{
-			var model = new ApiFollowingResponseModel();
+			var model = new ApiFollowingServerResponseModel();
 
 			model.SetProperties(boFollowing.UserId, boFollowing.DateFollowed, boFollowing.Muted);
 
 			return model;
 		}
 
-		public virtual List<ApiFollowingResponseModel> MapBOToModel(
+		public virtual List<ApiFollowingServerResponseModel> MapBOToModel(
 			List<BOFollowing> items)
 		{
-			List<ApiFollowingResponseModel> response = new List<ApiFollowingResponseModel>();
+			List<ApiFollowingServerResponseModel> response = new List<ApiFollowingServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e2f4440bd3e79212e5dddf12cf448f7</Hash>
+    <Hash>615a2586f7a3e49e733d1d9420ce34e3</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLLinkTypeMapper();
-			ApiLinkTypeRequestModel model = new ApiLinkTypeRequestModel();
+			ApiLinkTypeServerRequestModel model = new ApiLinkTypeServerRequestModel();
 			model.SetProperties("A");
 			BOLinkType response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLLinkTypeMapper();
 			BOLinkType bo = new BOLinkType();
 			bo.SetProperties(1, "A");
-			ApiLinkTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiLinkTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Type.Should().Be("A");
@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLLinkTypeMapper();
 			BOLinkType bo = new BOLinkType();
 			bo.SetProperties(1, "A");
-			List<ApiLinkTypeResponseModel> response = mapper.MapBOToModel(new List<BOLinkType>() { { bo } });
+			List<ApiLinkTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOLinkType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b332cca1bb6b6202db476f0507f77ef</Hash>
+    <Hash>0812d0772a02081dc8b28c6de4258744</Hash>
 </Codenesium>*/

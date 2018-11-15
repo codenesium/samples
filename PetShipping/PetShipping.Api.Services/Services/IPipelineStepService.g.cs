@@ -2,33 +2,36 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IPipelineStepService
 	{
-		Task<CreateResponse<ApiPipelineStepResponseModel>> Create(
-			ApiPipelineStepRequestModel model);
+		Task<CreateResponse<ApiPipelineStepServerResponseModel>> Create(
+			ApiPipelineStepServerRequestModel model);
 
-		Task<UpdateResponse<ApiPipelineStepResponseModel>> Update(int id,
-		                                                           ApiPipelineStepRequestModel model);
+		Task<UpdateResponse<ApiPipelineStepServerResponseModel>> Update(int id,
+		                                                                 ApiPipelineStepServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPipelineStepResponseModel> Get(int id);
+		Task<ApiPipelineStepServerResponseModel> Get(int id);
 
-		Task<List<ApiPipelineStepResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStepServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiHandlerPipelineStepServerResponseModel>> HandlerPipelineStepsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiOtherTransportServerResponseModel>> OtherTransportsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPipelineStepResponseModel>> ByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStepDestinationServerResponseModel>> PipelineStepDestinationsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiPipelineStepNoteServerResponseModel>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiPipelineStepStepRequirementServerResponseModel>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6425225defcf68838634e17494f72f35</Hash>
+    <Hash>1f8d461e0f22b3ec3b97f6ec533945ad</Hash>
 </Codenesium>*/

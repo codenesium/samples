@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			var record = new ApiStudioResponseModel();
-			var records = new List<ApiStudioResponseModel>();
+			var record = new ApiStudioServerResponseModel();
+			var records = new List<ApiStudioServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiStudioResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiStudioServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiStudioResponseModel>>(new List<ApiStudioResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiStudioServerResponseModel>>(new List<ApiStudioServerResponseModel>()));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiStudioResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiStudioServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioServerResponseModel()));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiStudioResponseModel;
+			var record = (response as OkObjectResult).Value as ApiStudioServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioServerResponseModel>(null));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiStudioResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiStudioResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiStudioServerResponseModel>.CreateResponse(null as ApiStudioServerResponseModel);
+
+			mockResponse.SetRecord(new ApiStudioServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioServerResponseModel>>(mockResponse));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiStudioRequestModel>();
-			records.Add(new ApiStudioRequestModel());
+			var records = new List<ApiStudioServerRequestModel>();
+			records.Add(new ApiStudioServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiStudioResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiStudioServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiStudioResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiStudioServerResponseModel>>(null as ApiStudioServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioServerResponseModel>>(mockResponse.Object));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiStudioRequestModel>();
-			records.Add(new ApiStudioRequestModel());
+			var records = new List<ApiStudioServerRequestModel>();
+			records.Add(new ApiStudioServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiStudioResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiStudioResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiStudioServerResponseModel>.CreateResponse(null as ApiStudioServerResponseModel);
+
+			mockResponse.SetRecord(new ApiStudioServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioServerResponseModel>>(mockResponse));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiStudioRequestModel());
+			IActionResult response = await controller.Create(new ApiStudioServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiStudioResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiStudioServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiStudioResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiStudioResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiStudioServerResponseModel>>(null as ApiStudioServerResponseModel);
+			var mockRecord = new ApiStudioServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiStudioServerResponseModel>>(mockResponse.Object));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiStudioRequestModel());
+			IActionResult response = await controller.Create(new ApiStudioServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudioResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudioServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>()))
-			.Callback<int, ApiStudioRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()))
+			.Callback<int, ApiStudioServerRequestModel>(
 				(id, model) => model.Address1.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiStudioResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioResponseModel>(new ApiStudioResponseModel()));
-			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiStudioServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioServerResponseModel>(new ApiStudioServerResponseModel()));
+			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiStudioRequestModel>();
+			var patch = new JsonPatchDocument<ApiStudioServerRequestModel>();
 			patch.Replace(x => x.Address1, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioServerResponseModel>(null));
 			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiStudioRequestModel>();
+			var patch = new JsonPatchDocument<ApiStudioServerRequestModel>();
 			patch.Replace(x => x.Address1, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudioResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudioServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioResponseModel()));
-			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioServerResponseModel()));
+			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudioRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudioServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudioResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudioServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioResponseModel()));
-			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiStudioServerResponseModel()));
+			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudioRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudioServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			StudioControllerMockFacade mock = new StudioControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiStudioResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiStudioServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioResponseModel>(null));
-			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiStudioServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiStudioServerResponseModel>(null));
+			StudioController controller = new StudioController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiStudioServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiStudioRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiStudioServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<IStudioService> ServiceMock { get; set; } = new Mock<IStudioService>();
 
-		public Mock<IApiStudioModelMapper> ModelMapperMock { get; set; } = new Mock<IApiStudioModelMapper>();
+		public Mock<IApiStudioServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiStudioServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>e98318dcd65acebfed96401401fdf018</Hash>
+    <Hash>3ae70527c585134b26edc932f0faa896</Hash>
 </Codenesium>*/

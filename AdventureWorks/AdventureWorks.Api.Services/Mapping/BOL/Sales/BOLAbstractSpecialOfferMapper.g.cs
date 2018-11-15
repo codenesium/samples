@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOSpecialOffer MapModelToBO(
 			int specialOfferID,
-			ApiSpecialOfferRequestModel model
+			ApiSpecialOfferServerRequestModel model
 			)
 		{
 			BOSpecialOffer boSpecialOffer = new BOSpecialOffer();
@@ -28,20 +27,20 @@ namespace AdventureWorksNS.Api.Services
 			return boSpecialOffer;
 		}
 
-		public virtual ApiSpecialOfferResponseModel MapBOToModel(
+		public virtual ApiSpecialOfferServerResponseModel MapBOToModel(
 			BOSpecialOffer boSpecialOffer)
 		{
-			var model = new ApiSpecialOfferResponseModel();
+			var model = new ApiSpecialOfferServerResponseModel();
 
 			model.SetProperties(boSpecialOffer.SpecialOfferID, boSpecialOffer.Category, boSpecialOffer.Description, boSpecialOffer.DiscountPct, boSpecialOffer.EndDate, boSpecialOffer.MaxQty, boSpecialOffer.MinQty, boSpecialOffer.ModifiedDate, boSpecialOffer.Rowguid, boSpecialOffer.StartDate, boSpecialOffer.Type);
 
 			return model;
 		}
 
-		public virtual List<ApiSpecialOfferResponseModel> MapBOToModel(
+		public virtual List<ApiSpecialOfferServerResponseModel> MapBOToModel(
 			List<BOSpecialOffer> items)
 		{
-			List<ApiSpecialOfferResponseModel> response = new List<ApiSpecialOfferResponseModel>();
+			List<ApiSpecialOfferServerResponseModel> response = new List<ApiSpecialOfferServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24e62d3cfcaf239746b07b5a9d567afd</Hash>
+    <Hash>dcb3354b4cd87204928edac87481487c</Hash>
 </Codenesium>*/

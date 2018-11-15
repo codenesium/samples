@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace TicketingCRMNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
+			var repository = new VenueRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>331bda0350384fa82cd49726925999d8</Hash>
+    <Hash>2890808ea3c9f2cb9f3cc9e31a6ee6d0</Hash>
 </Codenesium>*/

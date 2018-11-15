@@ -76,7 +76,7 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Device> ByPublicId(Guid publicId)
+		public async virtual Task<Device> ByPublicId(Guid publicId)
 		{
 			return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.PublicId == publicId);
 		}
@@ -90,22 +90,14 @@ namespace ESPIOTNS.Api.DataAccess
 			Expression<Func<Device, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Device, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Device, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
-			}
-			else
-			{
-				return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
-			}
+			return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
 		}
 
 		private async Task<Device> GetById(int id)
@@ -118,5 +110,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2db6b3f2463c51d67d7d1d0052476250</Hash>
+    <Hash>54ea6329c353ec144eab4202133c4a50</Hash>
 </Codenesium>*/

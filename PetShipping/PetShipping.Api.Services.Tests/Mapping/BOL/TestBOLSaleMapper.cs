@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSaleMapper();
-			ApiSaleRequestModel model = new ApiSaleRequestModel();
+			ApiSaleServerRequestModel model = new ApiSaleServerRequestModel();
 			model.SetProperties(1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			BOSale response = mapper.MapModelToBO(1, model);
 
 			response.Amount.Should().Be(1m);
-			response.ClientId.Should().Be(1);
+			response.CutomerId.Should().Be(1);
 			response.Note.Should().Be("A");
 			response.PetId.Should().Be(1);
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -35,10 +35,10 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			ApiSaleResponseModel response = mapper.MapBOToModel(bo);
+			ApiSaleServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Amount.Should().Be(1m);
-			response.ClientId.Should().Be(1);
+			response.CutomerId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Note.Should().Be("A");
 			response.PetId.Should().Be(1);
@@ -52,7 +52,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, 1m, 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			List<ApiSaleResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
+			List<ApiSaleServerResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bbbfb334f0ba29b1a2f9127ac0550f6e</Hash>
+    <Hash>ecbbe419803777262bdf58fb5ea8415e</Hash>
 </Codenesium>*/

@@ -2,51 +2,42 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IProductService
 	{
-		Task<CreateResponse<ApiProductResponseModel>> Create(
-			ApiProductRequestModel model);
+		Task<CreateResponse<ApiProductServerResponseModel>> Create(
+			ApiProductServerRequestModel model);
 
-		Task<UpdateResponse<ApiProductResponseModel>> Update(int productID,
-		                                                      ApiProductRequestModel model);
+		Task<UpdateResponse<ApiProductServerResponseModel>> Update(int productID,
+		                                                            ApiProductServerRequestModel model);
 
 		Task<ActionResponse> Delete(int productID);
 
-		Task<ApiProductResponseModel> Get(int productID);
+		Task<ApiProductServerResponseModel> Get(int productID);
 
-		Task<List<ApiProductResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiProductResponseModel> ByName(string name);
+		Task<ApiProductServerResponseModel> ByName(string name);
 
-		Task<ApiProductResponseModel> ByProductNumber(string productNumber);
+		Task<ApiProductServerResponseModel> ByProductNumber(string productNumber);
 
-		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiProductServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductInventoryResponseModel>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductReviewServerResponseModel>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTransactionHistoryServerResponseModel>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiProductReviewResponseModel>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTransactionHistoryResponseModel>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiWorkOrderResponseModel>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiProductResponseModel>> ByDocumentNode(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiWorkOrderServerResponseModel>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c6aeb0bfdcf014219c8c6bbe8e292f8</Hash>
+    <Hash>4d124fc8e9abd969243fd8886e223b21</Hash>
 </Codenesium>*/

@@ -17,13 +17,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLDatabaseLogMapper();
-			ApiDatabaseLogRequestModel model = new ApiDatabaseLogRequestModel();
+			ApiDatabaseLogServerRequestModel model = new ApiDatabaseLogServerRequestModel();
 			model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 			BODatabaseLog response = mapper.MapModelToBO(1, model);
 
-			response.DatabaseUser.Should().Be("A");
 			response.@Event.Should().Be("A");
 			response.@Object.Should().Be("A");
+			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
 			response.Tsql.Should().Be("A");
@@ -36,12 +36,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLDatabaseLogMapper();
 			BODatabaseLog bo = new BODatabaseLog();
 			bo.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
-			ApiDatabaseLogResponseModel response = mapper.MapBOToModel(bo);
+			ApiDatabaseLogServerResponseModel response = mapper.MapBOToModel(bo);
 
-			response.DatabaseLogID.Should().Be(1);
-			response.DatabaseUser.Should().Be("A");
 			response.@Event.Should().Be("A");
 			response.@Object.Should().Be("A");
+			response.DatabaseLogID.Should().Be(1);
+			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
 			response.Tsql.Should().Be("A");
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLDatabaseLogMapper();
 			BODatabaseLog bo = new BODatabaseLog();
 			bo.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
-			List<ApiDatabaseLogResponseModel> response = mapper.MapBOToModel(new List<BODatabaseLog>() { { bo } });
+			List<ApiDatabaseLogServerResponseModel> response = mapper.MapBOToModel(new List<BODatabaseLog>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f38fbbf84879d15c324770588845235a</Hash>
+    <Hash>a8ebb6cfba4fdac336f3eeabe07e2dea</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IDALEventMapper DALEventMapperMock { get; set; } = new DALEventMapper();
 
-		public IDALEventStatusMapper DALEventStatusMapperMock { get; set; } = new DALEventStatusMapper();
+		public IDALEventStatuMapper DALEventStatuMapperMock { get; set; } = new DALEventStatuMapper();
 
 		public IDALFamilyMapper DALFamilyMapperMock { get; set; } = new DALFamilyMapper();
 
@@ -30,11 +30,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IDALTeacherSkillMapper DALTeacherSkillMapperMock { get; set; } = new DALTeacherSkillMapper();
 
-		public IDALTenantMapper DALTenantMapperMock { get; set; } = new DALTenantMapper();
-
 		public IDALUserMapper DALUserMapperMock { get; set; } = new DALUserMapper();
-
-		public IDALVEventMapper DALVEventMapperMock { get; set; } = new DALVEventMapper();
 
 		public DALMapperMockFactory()
 		{
@@ -43,5 +39,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a284a927b12619047b4400ad8705816a</Hash>
+    <Hash>77190261982c538b990cd9c9848009dc</Hash>
 </Codenesium>*/

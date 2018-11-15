@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BOSpaceFeature MapModelToBO(
 			int id,
-			ApiSpaceFeatureRequestModel model);
+			ApiSpaceFeatureServerRequestModel model);
 
-		ApiSpaceFeatureResponseModel MapBOToModel(
+		ApiSpaceFeatureServerResponseModel MapBOToModel(
 			BOSpaceFeature boSpaceFeature);
 
-		List<ApiSpaceFeatureResponseModel> MapBOToModel(
+		List<ApiSpaceFeatureServerResponseModel> MapBOToModel(
 			List<BOSpaceFeature> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5354e698b1a259c4be50760e61106f08</Hash>
+    <Hash>9e02943dd576dee379d32954b0f3cf2c</Hash>
 </Codenesium>*/

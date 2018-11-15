@@ -80,22 +80,14 @@ namespace NebulaNS.Api.DataAccess
 			Expression<Func<VersionInfo, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<VersionInfo, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<VersionInfo, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Version;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
-			}
-			else
-			{
-				return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
-			}
+			return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
 		}
 
 		private async Task<VersionInfo> GetById(long version)
@@ -108,5 +100,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9070c768861d35658652c1947d396fef</Hash>
+    <Hash>73adb626e0d736f2ef8dfa598c1aaa4e</Hash>
 </Codenesium>*/

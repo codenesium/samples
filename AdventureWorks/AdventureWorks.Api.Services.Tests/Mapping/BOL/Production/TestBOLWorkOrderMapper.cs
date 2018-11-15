@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLWorkOrderMapper();
-			ApiWorkOrderRequestModel model = new ApiWorkOrderRequestModel();
+			ApiWorkOrderServerRequestModel model = new ApiWorkOrderServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			BOWorkOrder response = mapper.MapModelToBO(1, model);
 
@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLWorkOrderMapper();
 			BOWorkOrder bo = new BOWorkOrder();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			ApiWorkOrderResponseModel response = mapper.MapBOToModel(bo);
+			ApiWorkOrderServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLWorkOrderMapper();
 			BOWorkOrder bo = new BOWorkOrder();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			List<ApiWorkOrderResponseModel> response = mapper.MapBOToModel(new List<BOWorkOrder>() { { bo } });
+			List<ApiWorkOrderServerResponseModel> response = mapper.MapBOToModel(new List<BOWorkOrder>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b9668921c847a7b3363e398b93d64143</Hash>
+    <Hash>50f5f2c5f083c3811e62aee25619442f</Hash>
 </Codenesium>*/

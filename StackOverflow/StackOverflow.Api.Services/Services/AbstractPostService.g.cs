@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IPostRepository PostRepository { get; private set; }
 
-		protected IApiPostRequestModelValidator PostModelValidator { get; private set; }
+		protected IApiPostServerRequestModelValidator PostModelValidator { get; private set; }
 
 		protected IBOLPostMapper BolPostMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractPostService(
 			ILogger logger,
 			IPostRepository postRepository,
-			IApiPostRequestModelValidator postModelValidator,
+			IApiPostServerRequestModelValidator postModelValidator,
 			IBOLPostMapper bolPostMapper,
 			IDALPostMapper dalPostMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPostResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PostRepository.All(limit, offset);
 
 			return this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPostResponseModel> Get(int id)
+		public virtual async Task<ApiPostServerResponseModel> Get(int id)
 		{
 			var record = await this.PostRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPostResponseModel>> Create(
-			ApiPostRequestModel model)
+		public virtual async Task<CreateResponse<ApiPostServerResponseModel>> Create(
+			ApiPostServerRequestModel model)
 		{
-			CreateResponse<ApiPostResponseModel> response = new CreateResponse<ApiPostResponseModel>(await this.PostModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPostServerResponseModel> response = ValidationResponseFactory<ApiPostServerResponseModel>.CreateResponse(await this.PostModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPostMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPostResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPostServerResponseModel>> Update(
 			int id,
-			ApiPostRequestModel model)
+			ApiPostServerRequestModel model)
 		{
 			var validationResult = await this.PostModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostRepository.Get(id);
 
-				return new UpdateResponse<ApiPostResponseModel>(this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPostServerResponseModel>.UpdateResponse(this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPostResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPostServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PostModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PostModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PostRepository.Delete(id);
@@ -108,7 +105,7 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiPostResponseModel>> ByOwnerUserId(int? ownerUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiPostServerResponseModel>> ByOwnerUserId(int? ownerUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Post> records = await this.PostRepository.ByOwnerUserId(ownerUserId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>767b6504b0f12daeac5e378f549efad6</Hash>
+    <Hash>14b8fe45abbee567c526920a99b7a6f5</Hash>
 </Codenesium>*/

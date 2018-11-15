@@ -80,22 +80,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ErrorLog, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ErrorLog, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ErrorLog, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ErrorLogID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
-			}
-			else
-			{
-				return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
-			}
+			return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
 		}
 
 		private async Task<ErrorLog> GetById(int errorLogID)
@@ -108,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>df1aacfacc1f015cb87b0166dac2e98b</Hash>
+    <Hash>63b526c8ba23c577a1fe081c437510b3</Hash>
 </Codenesium>*/

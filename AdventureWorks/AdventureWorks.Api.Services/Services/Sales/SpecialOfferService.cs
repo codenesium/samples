@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public SpecialOfferService(
 			ILogger<ISpecialOfferRepository> logger,
 			ISpecialOfferRepository specialOfferRepository,
-			IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
-			IBOLSpecialOfferMapper bolspecialOfferMapper,
-			IDALSpecialOfferMapper dalspecialOfferMapper)
+			IApiSpecialOfferServerRequestModelValidator specialOfferModelValidator,
+			IBOLSpecialOfferMapper bolSpecialOfferMapper,
+			IDALSpecialOfferMapper dalSpecialOfferMapper)
 			: base(logger,
 			       specialOfferRepository,
 			       specialOfferModelValidator,
-			       bolspecialOfferMapper,
-			       dalspecialOfferMapper)
+			       bolSpecialOfferMapper,
+			       dalSpecialOfferMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>03a3176bdde87145374c7a35889ead26</Hash>
+    <Hash>9976368e6eed0ec170a6cc567f508b44</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected ISpaceFeatureRepository SpaceFeatureRepository { get; private set; }
 
-		protected IApiSpaceFeatureRequestModelValidator SpaceFeatureModelValidator { get; private set; }
+		protected IApiSpaceFeatureServerRequestModelValidator SpaceFeatureModelValidator { get; private set; }
 
 		protected IBOLSpaceFeatureMapper BolSpaceFeatureMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractSpaceFeatureService(
 			ILogger logger,
 			ISpaceFeatureRepository spaceFeatureRepository,
-			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
+			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSpaceFeatureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSpaceFeatureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SpaceFeatureRepository.All(limit, offset);
 
 			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSpaceFeatureResponseModel> Get(int id)
+		public virtual async Task<ApiSpaceFeatureServerResponseModel> Get(int id)
 		{
 			var record = await this.SpaceFeatureRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
-			ApiSpaceFeatureRequestModel model)
+		public virtual async Task<CreateResponse<ApiSpaceFeatureServerResponseModel>> Create(
+			ApiSpaceFeatureServerRequestModel model)
 		{
-			CreateResponse<ApiSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceFeatureResponseModel>(await this.SpaceFeatureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpaceFeatureServerResponseModel> response = ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.CreateResponse(await this.SpaceFeatureModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSpaceFeatureMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSpaceFeatureResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSpaceFeatureServerResponseModel>> Update(
 			int id,
-			ApiSpaceFeatureRequestModel model)
+			ApiSpaceFeatureServerRequestModel model)
 		{
 			var validationResult = await this.SpaceFeatureModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.SpaceFeatureRepository.Get(id);
 
-				return new UpdateResponse<ApiSpaceFeatureResponseModel>(this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSpaceFeatureResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.SpaceFeatureModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SpaceFeatureModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.SpaceFeatureRepository.Delete(id);
@@ -108,7 +105,7 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSpaceFeatureResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceFeatureServerResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SpaceFeature> records = await this.SpaceFeatureRepository.BySpaceId(spaceId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89b9597c481fd0116eb3c4e4d6d32da4</Hash>
+    <Hash>4ff36ad7703241a6d2e99873e52f0be8</Hash>
 </Codenesium>*/

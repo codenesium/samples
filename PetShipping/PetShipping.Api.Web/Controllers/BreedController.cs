@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BreedController : AbstractBreedController
 	{
 		public BreedController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<BreedController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBreedService breedService,
-			IApiBreedModelMapper breedModelMapper
+			IApiBreedServerModelMapper breedModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a161a04b3a0345545c45c50d636c56d4</Hash>
+    <Hash>2529f7bc6ba1ffc7bc495cf867a99428</Hash>
 </Codenesium>*/

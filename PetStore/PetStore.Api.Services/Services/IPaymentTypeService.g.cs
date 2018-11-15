@@ -2,29 +2,28 @@ using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
 	public partial interface IPaymentTypeService
 	{
-		Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
-			ApiPaymentTypeRequestModel model);
+		Task<CreateResponse<ApiPaymentTypeServerResponseModel>> Create(
+			ApiPaymentTypeServerRequestModel model);
 
-		Task<UpdateResponse<ApiPaymentTypeResponseModel>> Update(int id,
-		                                                          ApiPaymentTypeRequestModel model);
+		Task<UpdateResponse<ApiPaymentTypeServerResponseModel>> Update(int id,
+		                                                                ApiPaymentTypeServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPaymentTypeResponseModel> Get(int id);
+		Task<ApiPaymentTypeServerResponseModel> Get(int id);
 
-		Task<List<ApiPaymentTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPaymentTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleServerResponseModel>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3432848d37f88bcf9de143c59090e9a0</Hash>
+    <Hash>9035ae1e23c6d241feb08c17666088be</Hash>
 </Codenesium>*/

@@ -17,13 +17,13 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLRetweetMapper();
-			ApiRetweetRequestModel model = new ApiRetweetRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
+			ApiRetweetServerRequestModel model = new ApiRetweetServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
 			BORetweet response = mapper.MapModelToBO(1, model);
 
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.RetwitterUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.TweetTweetId.Should().Be(1);
 		}
 
@@ -32,13 +32,13 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLRetweetMapper();
 			BORetweet bo = new BORetweet();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
-			ApiRetweetResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
+			ApiRetweetServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
 			response.RetwitterUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.TweetTweetId.Should().Be(1);
 		}
 
@@ -47,8 +47,8 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLRetweetMapper();
 			BORetweet bo = new BORetweet();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
-			List<ApiRetweetResponseModel> response = mapper.MapBOToModel(new List<BORetweet>() { { bo } });
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
+			List<ApiRetweetServerResponseModel> response = mapper.MapBOToModel(new List<BORetweet>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>77bafa48f13b7fd75e959f38081f6b81</Hash>
+    <Hash>f4481faac56cc1277df5130c1de4aa4f</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BadgeController : AbstractBadgeController
 	{
 		public BadgeController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<BadgeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBadgeService badgeService,
-			IApiBadgeModelMapper badgeModelMapper
+			IApiBadgeServerModelMapper badgeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>18215957b1e4c91db961027a2b3dfbfc</Hash>
+    <Hash>ce7d369bb91ee07fabe1f766818c1419</Hash>
 </Codenesium>*/

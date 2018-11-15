@@ -76,31 +76,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductProductPhoto>().Where(x => x.ProductPhotoID == productPhotoID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
-		}
-
 		protected async Task<List<ProductPhoto>> Where(
 			Expression<Func<ProductPhoto, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ProductPhoto, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ProductPhoto, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ProductPhotoID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
-			}
-			else
-			{
-				return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
-			}
+			return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
 		}
 
 		private async Task<ProductPhoto> GetById(int productPhotoID)
@@ -113,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d59302cb9c0eb8c2881dc3bf3fbe563</Hash>
+    <Hash>1fefa2e972b747d3556dff47e7b87957</Hash>
 </Codenesium>*/

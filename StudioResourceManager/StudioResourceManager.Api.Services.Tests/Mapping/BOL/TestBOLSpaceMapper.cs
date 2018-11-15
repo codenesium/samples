@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSpaceMapper();
-			ApiSpaceRequestModel model = new ApiSpaceRequestModel();
+			ApiSpaceServerRequestModel model = new ApiSpaceServerRequestModel();
 			model.SetProperties("A", "A");
 			BOSpace response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLSpaceMapper();
 			BOSpace bo = new BOSpace();
 			bo.SetProperties(1, "A", "A");
-			ApiSpaceResponseModel response = mapper.MapBOToModel(bo);
+			ApiSpaceServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
@@ -44,7 +44,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLSpaceMapper();
 			BOSpace bo = new BOSpace();
 			bo.SetProperties(1, "A", "A");
-			List<ApiSpaceResponseModel> response = mapper.MapBOToModel(new List<BOSpace>() { { bo } });
+			List<ApiSpaceServerResponseModel> response = mapper.MapBOToModel(new List<BOSpace>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>40200f20e30f48d6213d583f347c7fd3</Hash>
+    <Hash>893227942228122741578e6e0de7f213</Hash>
 </Codenesium>*/

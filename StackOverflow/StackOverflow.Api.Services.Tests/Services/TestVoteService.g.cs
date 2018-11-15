@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			List<ApiVoteResponseModel> response = await service.All();
+			List<ApiVoteServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			ApiVoteResponseModel response = await service.Get(default(int));
+			ApiVoteServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			ApiVoteResponseModel response = await service.Get(default(int));
+			ApiVoteServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IVoteRepository>();
-			var model = new ApiVoteRequestModel();
+			var model = new ApiVoteServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vote>())).Returns(Task.FromResult(new Vote()));
 			var service = new VoteService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			CreateResponse<ApiVoteResponseModel> response = await service.Create(model);
+			CreateResponse<ApiVoteServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VoteModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVoteRequestModel>()));
+			mock.ModelValidatorMockFactory.VoteModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVoteServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Vote>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IVoteRepository>();
-			var model = new ApiVoteRequestModel();
+			var model = new ApiVoteServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vote>())).Returns(Task.FromResult(new Vote()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vote()));
 			var service = new VoteService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			UpdateResponse<ApiVoteResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiVoteServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VoteModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteRequestModel>()));
+			mock.ModelValidatorMockFactory.VoteModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Vote>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IVoteRepository>();
-			var model = new ApiVoteRequestModel();
+			var model = new ApiVoteServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new VoteService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			List<ApiVoteResponseModel> response = await service.ByUserId(default(int?));
+			List<ApiVoteServerResponseModel> response = await service.ByUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLVoteMapperMock,
 			                              mock.DALMapperMockFactory.DALVoteMapperMock);
 
-			List<ApiVoteResponseModel> response = await service.ByUserId(default(int?));
+			List<ApiVoteServerResponseModel> response = await service.ByUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4684fb2d9472e90aeedeb7090ff862ec</Hash>
+    <Hash>87812b7d4a8a954a1b2cd6de209fa9d4</Hash>
 </Codenesium>*/

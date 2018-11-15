@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,45 +11,37 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IAddressRepository AddressRepository { get; private set; }
 
-		protected IApiAddressRequestModelValidator AddressModelValidator { get; private set; }
+		protected IApiAddressServerRequestModelValidator AddressModelValidator { get; private set; }
 
 		protected IBOLAddressMapper BolAddressMapper { get; private set; }
 
 		protected IDALAddressMapper DalAddressMapper { get; private set; }
-
-		protected IBOLBusinessEntityAddressMapper BolBusinessEntityAddressMapper { get; private set; }
-
-		protected IDALBusinessEntityAddressMapper DalBusinessEntityAddressMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractAddressService(
 			ILogger logger,
 			IAddressRepository addressRepository,
-			IApiAddressRequestModelValidator addressModelValidator,
+			IApiAddressServerRequestModelValidator addressModelValidator,
 			IBOLAddressMapper bolAddressMapper,
-			IDALAddressMapper dalAddressMapper,
-			IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
+			IDALAddressMapper dalAddressMapper)
 			: base()
 		{
 			this.AddressRepository = addressRepository;
 			this.AddressModelValidator = addressModelValidator;
 			this.BolAddressMapper = bolAddressMapper;
 			this.DalAddressMapper = dalAddressMapper;
-			this.BolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
-			this.DalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAddressServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.AddressRepository.All(limit, offset);
 
 			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiAddressResponseModel> Get(int addressID)
+		public virtual async Task<ApiAddressServerResponseModel> Get(int addressID)
 		{
 			var record = await this.AddressRepository.Get(addressID);
 
@@ -68,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiAddressResponseModel>> Create(
-			ApiAddressRequestModel model)
+		public virtual async Task<CreateResponse<ApiAddressServerResponseModel>> Create(
+			ApiAddressServerRequestModel model)
 		{
-			CreateResponse<ApiAddressResponseModel> response = new CreateResponse<ApiAddressResponseModel>(await this.AddressModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAddressServerResponseModel> response = ValidationResponseFactory<ApiAddressServerResponseModel>.CreateResponse(await this.AddressModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolAddressMapper.MapModelToBO(default(int), model);
@@ -83,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiAddressResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiAddressServerResponseModel>> Update(
 			int addressID,
-			ApiAddressRequestModel model)
+			ApiAddressServerRequestModel model)
 		{
 			var validationResult = await this.AddressModelValidator.ValidateUpdateAsync(addressID, model);
 
@@ -96,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.AddressRepository.Get(addressID);
 
-				return new UpdateResponse<ApiAddressResponseModel>(this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiAddressResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int addressID)
 		{
-			ActionResponse response = new ActionResponse(await this.AddressModelValidator.ValidateDeleteAsync(addressID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AddressModelValidator.ValidateDeleteAsync(addressID));
+
 			if (response.Success)
 			{
 				await this.AddressRepository.Delete(addressID);
@@ -116,7 +105,21 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiAddressResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+		public async virtual Task<ApiAddressServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			Address record = await this.AddressRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<ApiAddressServerResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
 			Address record = await this.AddressRepository.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
 
@@ -130,22 +133,15 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiAddressServerResponseModel>> ByStateProvinceID(int stateProvinceID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Address> records = await this.AddressRepository.ByStateProvinceID(stateProvinceID, limit, offset);
 
 			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<BusinessEntityAddress> records = await this.AddressRepository.BusinessEntityAddressesByAddressID(addressID, limit, offset);
-
-			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d021a975f5ffbd0f49600b49701356a</Hash>
+    <Hash>c5550d2ab1820546c652482138557d2f</Hash>
 </Codenesium>*/

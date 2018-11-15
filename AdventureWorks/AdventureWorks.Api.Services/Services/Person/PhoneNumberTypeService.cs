@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public PhoneNumberTypeService(
 			ILogger<IPhoneNumberTypeRepository> logger,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
-			IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
-			IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper,
-			IBOLPersonPhoneMapper bolPersonPhoneMapper,
-			IDALPersonPhoneMapper dalPersonPhoneMapper)
+			IApiPhoneNumberTypeServerRequestModelValidator phoneNumberTypeModelValidator,
+			IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper,
+			IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper)
 			: base(logger,
 			       phoneNumberTypeRepository,
 			       phoneNumberTypeModelValidator,
-			       bolphoneNumberTypeMapper,
-			       dalphoneNumberTypeMapper,
-			       bolPersonPhoneMapper,
-			       dalPersonPhoneMapper)
+			       bolPhoneNumberTypeMapper,
+			       dalPhoneNumberTypeMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ad1709f314b10bac6e1dcc2c8c5dffe</Hash>
+    <Hash>25b97eb979a85f5e0342aaf218df0675</Hash>
 </Codenesium>*/

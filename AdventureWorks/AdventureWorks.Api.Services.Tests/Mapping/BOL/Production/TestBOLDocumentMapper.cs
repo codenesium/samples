@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLDocumentMapper();
-			ApiDocumentRequestModel model = new ApiDocumentRequestModel();
+			ApiDocumentServerRequestModel model = new ApiDocumentServerRequestModel();
 			model.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
 			BODocument response = mapper.MapModelToBO(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), model);
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLDocumentMapper();
 			BODocument bo = new BODocument();
 			bo.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
-			ApiDocumentResponseModel response = mapper.MapBOToModel(bo);
+			ApiDocumentServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ChangeNumber.Should().Be(1);
 			response.Document1.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLDocumentMapper();
 			BODocument bo = new BODocument();
 			bo.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
-			List<ApiDocumentResponseModel> response = mapper.MapBOToModel(new List<BODocument>() { { bo } });
+			List<ApiDocumentServerResponseModel> response = mapper.MapBOToModel(new List<BODocument>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7581a05914bcce474fed9478206c41cb</Hash>
+    <Hash>7b403bfdb09d0447cf854a50285adaec</Hash>
 </Codenesium>*/

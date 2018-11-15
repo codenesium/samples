@@ -24,8 +24,8 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			var record = new ApiPaymentTypeResponseModel();
-			var records = new List<ApiPaymentTypeResponseModel>();
+			var record = new ApiPaymentTypeServerResponseModel();
+			var records = new List<ApiPaymentTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPaymentTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPaymentTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPaymentTypeResponseModel>>(new List<ApiPaymentTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPaymentTypeServerResponseModel>>(new List<ApiPaymentTypeServerResponseModel>()));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPaymentTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPaymentTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeServerResponseModel()));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPaymentTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPaymentTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeServerResponseModel>(null));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPaymentTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPaymentTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPaymentTypeServerResponseModel>.CreateResponse(null as ApiPaymentTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPaymentTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeServerResponseModel>>(mockResponse));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPaymentTypeRequestModel>();
-			records.Add(new ApiPaymentTypeRequestModel());
+			var records = new List<ApiPaymentTypeServerRequestModel>();
+			records.Add(new ApiPaymentTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPaymentTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPaymentTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPaymentTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPaymentTypeServerResponseModel>>(null as ApiPaymentTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeServerResponseModel>>(mockResponse.Object));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPaymentTypeRequestModel>();
-			records.Add(new ApiPaymentTypeRequestModel());
+			var records = new List<ApiPaymentTypeServerRequestModel>();
+			records.Add(new ApiPaymentTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPaymentTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPaymentTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPaymentTypeServerResponseModel>.CreateResponse(null as ApiPaymentTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPaymentTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeServerResponseModel>>(mockResponse));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPaymentTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPaymentTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPaymentTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPaymentTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPaymentTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPaymentTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPaymentTypeServerResponseModel>>(null as ApiPaymentTypeServerResponseModel);
+			var mockRecord = new ApiPaymentTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPaymentTypeServerResponseModel>>(mockResponse.Object));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPaymentTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPaymentTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()))
-			.Callback<int, ApiPaymentTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()))
+			.Callback<int, ApiPaymentTypeServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(new ApiPaymentTypeResponseModel()));
-			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeServerResponseModel>(new ApiPaymentTypeServerResponseModel()));
+			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPaymentTypeServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeServerResponseModel>(null));
 			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPaymentTypeServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeResponseModel()));
-			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeServerResponseModel()));
+			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeResponseModel()));
-			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPaymentTypeServerResponseModel()));
+			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPaymentTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(null));
-			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPaymentTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeServerResponseModel>(null));
+			PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPaymentTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPaymentTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetStoreNS.Api.Web.Tests
 
 		public Mock<IPaymentTypeService> ServiceMock { get; set; } = new Mock<IPaymentTypeService>();
 
-		public Mock<IApiPaymentTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPaymentTypeModelMapper>();
+		public Mock<IApiPaymentTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPaymentTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6853d44424c7ac617be7b331eaef7ca6</Hash>
+    <Hash>52aa8b77a8a5e1baa3477cf4627d4ff3</Hash>
 </Codenesium>*/

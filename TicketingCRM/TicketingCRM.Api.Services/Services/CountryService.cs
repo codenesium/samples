@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 		public CountryService(
 			ILogger<ICountryRepository> logger,
 			ICountryRepository countryRepository,
-			IApiCountryRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolcountryMapper,
-			IDALCountryMapper dalcountryMapper,
+			IApiCountryServerRequestModelValidator countryModelValidator,
+			IBOLCountryMapper bolCountryMapper,
+			IDALCountryMapper dalCountryMapper,
 			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper)
 			: base(logger,
 			       countryRepository,
 			       countryModelValidator,
-			       bolcountryMapper,
-			       dalcountryMapper,
+			       bolCountryMapper,
+			       dalCountryMapper,
 			       bolProvinceMapper,
 			       dalProvinceMapper)
 		{
@@ -34,5 +27,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>287f5288d962a25cf11d120870be2093</Hash>
+    <Hash>6dfc9bd285c89d32900e38302ae0cb8e</Hash>
 </Codenesium>*/

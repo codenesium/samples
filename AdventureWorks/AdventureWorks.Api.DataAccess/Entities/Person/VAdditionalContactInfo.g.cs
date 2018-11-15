@@ -52,69 +52,69 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(50)]
 		[Column("City")]
-		public string City { get; private set; }
+		public virtual string City { get; private set; }
 
 		[MaxLength(50)]
 		[Column("CountryRegion")]
-		public string CountryRegion { get; private set; }
+		public virtual string CountryRegion { get; private set; }
 
 		[MaxLength(128)]
 		[Column("EMailAddress")]
-		public string EMailAddress { get; private set; }
+		public virtual string EMailAddress { get; private set; }
 
 		[Column("EMailSpecialInstructions")]
-		public string EMailSpecialInstruction { get; private set; }
+		public virtual string EMailSpecialInstruction { get; private set; }
 
 		[MaxLength(50)]
 		[Column("EMailTelephoneNumber")]
-		public string EMailTelephoneNumber { get; private set; }
+		public virtual string EMailTelephoneNumber { get; private set; }
 
 		[MaxLength(50)]
 		[Column("FirstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Column("HomeAddressSpecialInstructions")]
-		public string HomeAddressSpecialInstruction { get; private set; }
+		public virtual string HomeAddressSpecialInstruction { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("MiddleName")]
-		public string MiddleName { get; private set; }
+		public virtual string MiddleName { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("PostalCode")]
-		public string PostalCode { get; private set; }
+		public virtual string PostalCode { get; private set; }
 
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[MaxLength(50)]
 		[Column("StateProvince")]
-		public string StateProvince { get; private set; }
+		public virtual string StateProvince { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Street")]
-		public string Street { get; private set; }
+		public virtual string Street { get; private set; }
 
 		[MaxLength(50)]
 		[Column("TelephoneNumber")]
-		public string TelephoneNumber { get; private set; }
+		public virtual string TelephoneNumber { get; private set; }
 
 		[Column("TelephoneSpecialInstructions")]
-		public string TelephoneSpecialInstruction { get; private set; }
+		public virtual string TelephoneSpecialInstruction { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>27d47f52608cac6003814b0112a4ddf0</Hash>
+    <Hash>c6ab2f48b5b493cd3f85048e7b8206db</Hash>
 </Codenesium>*/

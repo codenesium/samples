@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PipelineStepNoteController : AbstractPipelineStepNoteController
 	{
 		public PipelineStepNoteController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<PipelineStepNoteController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPipelineStepNoteService pipelineStepNoteService,
-			IApiPipelineStepNoteModelMapper pipelineStepNoteModelMapper
+			IApiPipelineStepNoteServerModelMapper pipelineStepNoteModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>648c28b631916c30628fa6eb4341f29f</Hash>
+    <Hash>89331ea900a8e5abbaf7f98c65bc009b</Hash>
 </Codenesium>*/

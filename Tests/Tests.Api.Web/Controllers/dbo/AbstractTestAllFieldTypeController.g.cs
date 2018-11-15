@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ITestAllFieldTypeService TestAllFieldTypeService { get; private set; }
 
-		protected IApiTestAllFieldTypeModelMapper TestAllFieldTypeModelMapper { get; private set; }
+		protected IApiTestAllFieldTypeServerModelMapper TestAllFieldTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractTestAllFieldTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITestAllFieldTypeService testAllFieldTypeService,
-			IApiTestAllFieldTypeModelMapper testAllFieldTypeModelMapper
+			IApiTestAllFieldTypeServerModelMapper testAllFieldTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTestAllFieldTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTestAllFieldTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTestAllFieldTypeResponseModel> response = await this.TestAllFieldTypeService.All(query.Limit, query.Offset);
+			List<ApiTestAllFieldTypeServerResponseModel> response = await this.TestAllFieldTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTestAllFieldTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTestAllFieldTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTestAllFieldTypeResponseModel response = await this.TestAllFieldTypeService.Get(id);
+			ApiTestAllFieldTypeServerResponseModel response = await this.TestAllFieldTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTestAllFieldTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTestAllFieldTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTestAllFieldTypeResponseModel> records = new List<ApiTestAllFieldTypeResponseModel>();
+			List<ApiTestAllFieldTypeServerResponseModel> records = new List<ApiTestAllFieldTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTestAllFieldTypeResponseModel> result = await this.TestAllFieldTypeService.Create(model);
+				CreateResponse<ApiTestAllFieldTypeServerResponseModel> result = await this.TestAllFieldTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTestAllFieldTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypeServerRequestModel model)
 		{
-			CreateResponse<ApiTestAllFieldTypeResponseModel> result = await this.TestAllFieldTypeService.Create(model);
+			CreateResponse<ApiTestAllFieldTypeServerResponseModel> result = await this.TestAllFieldTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypeServerRequestModel> patch)
 		{
-			ApiTestAllFieldTypeResponseModel record = await this.TestAllFieldTypeService.Get(id);
+			ApiTestAllFieldTypeServerResponseModel record = await this.TestAllFieldTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTestAllFieldTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiTestAllFieldTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiTestAllFieldTypeServerRequestModel;
 
-				UpdateResponse<ApiTestAllFieldTypeResponseModel> result = await this.TestAllFieldTypeService.Update(id, model);
+				UpdateResponse<ApiTestAllFieldTypeServerResponseModel> result = await this.TestAllFieldTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypeServerRequestModel model)
 		{
-			ApiTestAllFieldTypeRequestModel request = await this.PatchModel(id, this.TestAllFieldTypeModelMapper.CreatePatch(model));
+			ApiTestAllFieldTypeServerRequestModel request = await this.PatchModel(id, this.TestAllFieldTypeModelMapper.CreatePatch(model)) as ApiTestAllFieldTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTestAllFieldTypeResponseModel> result = await this.TestAllFieldTypeService.Update(id, request);
+				UpdateResponse<ApiTestAllFieldTypeServerResponseModel> result = await this.TestAllFieldTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TestAllFieldTypeService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiTestAllFieldTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypeRequestModel> patch)
+		private async Task<ApiTestAllFieldTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypeServerRequestModel> patch)
 		{
 			var record = await this.TestAllFieldTypeService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTestAllFieldTypeRequestModel request = this.TestAllFieldTypeModelMapper.MapResponseToRequest(record);
+				ApiTestAllFieldTypeServerRequestModel request = this.TestAllFieldTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2fb1a211cdba732a2ebbb49f3f225f45</Hash>
+    <Hash>83815f20e69541f7a8896f4c69fcc6bb</Hash>
 </Codenesium>*/

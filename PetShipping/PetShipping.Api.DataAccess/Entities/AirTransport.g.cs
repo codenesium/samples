@@ -33,32 +33,37 @@ namespace PetShippingNS.Api.DataAccess
 
 		[Key]
 		[Column("airlineId")]
-		public int AirlineId { get; private set; }
+		public virtual int AirlineId { get; private set; }
 
 		[MaxLength(12)]
 		[Column("flightNumber")]
-		public string FlightNumber { get; private set; }
+		public virtual string FlightNumber { get; private set; }
 
 		[Column("handlerId")]
-		public int HandlerId { get; private set; }
+		public virtual int HandlerId { get; private set; }
 
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("landDate")]
-		public DateTime LandDate { get; private set; }
+		public virtual DateTime LandDate { get; private set; }
 
 		[Column("pipelineStepId")]
-		public int PipelineStepId { get; private set; }
+		public virtual int PipelineStepId { get; private set; }
 
 		[Column("takeoffDate")]
-		public DateTime TakeoffDate { get; private set; }
+		public virtual DateTime TakeoffDate { get; private set; }
 
 		[ForeignKey("HandlerId")]
 		public virtual Handler HandlerNavigation { get; private set; }
+
+		public void SetHandlerNavigation(Handler item)
+		{
+			this.HandlerNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a4cb7e8c5b1d60c4a06657e6d190042</Hash>
+    <Hash>4c9a9776c58611ae3db4144dffcf0d5b</Hash>
 </Codenesium>*/

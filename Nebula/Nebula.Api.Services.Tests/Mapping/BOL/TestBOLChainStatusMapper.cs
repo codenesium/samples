@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLChainStatusMapper();
-			ApiChainStatusRequestModel model = new ApiChainStatusRequestModel();
+			ApiChainStatusServerRequestModel model = new ApiChainStatusServerRequestModel();
 			model.SetProperties("A");
 			BOChainStatus response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLChainStatusMapper();
 			BOChainStatus bo = new BOChainStatus();
 			bo.SetProperties(1, "A");
-			ApiChainStatusResponseModel response = mapper.MapBOToModel(bo);
+			ApiChainStatusServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLChainStatusMapper();
 			BOChainStatus bo = new BOChainStatus();
 			bo.SetProperties(1, "A");
-			List<ApiChainStatusResponseModel> response = mapper.MapBOToModel(new List<BOChainStatus>() { { bo } });
+			List<ApiChainStatusServerResponseModel> response = mapper.MapBOToModel(new List<BOChainStatus>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fed25982c8b3223e9a7f07af754bd1a7</Hash>
+    <Hash>c88288fb19469c834b2bf3fcaeb58f2e</Hash>
 </Codenesium>*/

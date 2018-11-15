@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLLinkMapper();
-			ApiLinkRequestModel model = new ApiLinkRequestModel();
+			ApiLinkServerRequestModel model = new ApiLinkServerRequestModel();
 			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
 			BOLink response = mapper.MapModelToBO(1, model);
 
@@ -41,7 +41,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLLinkMapper();
 			BOLink bo = new BOLink();
 			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
-			ApiLinkResponseModel response = mapper.MapBOToModel(bo);
+			ApiLinkServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AssignedMachineId.Should().Be(1);
 			response.ChainId.Should().Be(1);
@@ -64,7 +64,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLLinkMapper();
 			BOLink bo = new BOLink();
 			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
-			List<ApiLinkResponseModel> response = mapper.MapBOToModel(new List<BOLink>() { { bo } });
+			List<ApiLinkServerResponseModel> response = mapper.MapBOToModel(new List<BOLink>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -72,5 +72,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>11f924f52d9a98447549b2de5daf3561</Hash>
+    <Hash>055f9387a3cca4c27d0915f591b53942</Hash>
 </Codenesium>*/

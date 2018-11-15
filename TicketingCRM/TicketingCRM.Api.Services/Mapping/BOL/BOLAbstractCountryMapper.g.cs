@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -9,7 +8,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public virtual BOCountry MapModelToBO(
 			int id,
-			ApiCountryRequestModel model
+			ApiCountryServerRequestModel model
 			)
 		{
 			BOCountry boCountry = new BOCountry();
@@ -19,20 +18,20 @@ namespace TicketingCRMNS.Api.Services
 			return boCountry;
 		}
 
-		public virtual ApiCountryResponseModel MapBOToModel(
+		public virtual ApiCountryServerResponseModel MapBOToModel(
 			BOCountry boCountry)
 		{
-			var model = new ApiCountryResponseModel();
+			var model = new ApiCountryServerResponseModel();
 
 			model.SetProperties(boCountry.Id, boCountry.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCountryResponseModel> MapBOToModel(
+		public virtual List<ApiCountryServerResponseModel> MapBOToModel(
 			List<BOCountry> items)
 		{
-			List<ApiCountryResponseModel> response = new List<ApiCountryResponseModel>();
+			List<ApiCountryServerResponseModel> response = new List<ApiCountryServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4dc326c712e8873240722293d0b6d0b2</Hash>
+    <Hash>58ba2f47356f619cadd541d491065112</Hash>
 </Codenesium>*/

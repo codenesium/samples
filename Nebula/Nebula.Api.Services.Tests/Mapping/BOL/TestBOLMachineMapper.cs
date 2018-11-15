@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLMachineMapper();
-			ApiMachineRequestModel model = new ApiMachineRequestModel();
+			ApiMachineServerRequestModel model = new ApiMachineServerRequestModel();
 			model.SetProperties("A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			BOMachine response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLMachineMapper();
 			BOMachine bo = new BOMachine();
 			bo.SetProperties(1, "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-			ApiMachineResponseModel response = mapper.MapBOToModel(bo);
+			ApiMachineServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
@@ -50,7 +50,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLMachineMapper();
 			BOMachine bo = new BOMachine();
 			bo.SetProperties(1, "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
-			List<ApiMachineResponseModel> response = mapper.MapBOToModel(new List<BOMachine>() { { bo } });
+			List<ApiMachineServerResponseModel> response = mapper.MapBOToModel(new List<BOMachine>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>11f30d06146f4da385c283a3fc62c2dc</Hash>
+    <Hash>50fc300f247a28ec6c9b519801efd874</Hash>
 </Codenesium>*/

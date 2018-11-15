@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../TicketingCRM.Api.Contracts/TicketingCRM.Api.Contracts.csproj" />
+    <ProjectReference Include="../TicketingCRM.Api.Client/TicketingCRM.Api.Client.csproj" />
     <ProjectReference Include="../TicketingCRM.Api.DataAccess/TicketingCRM.Api.DataAccess.csproj" />
   </ItemGroup>
 

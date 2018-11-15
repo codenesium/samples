@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public TagService(
 			ILogger<ITagRepository> logger,
 			ITagRepository tagRepository,
-			IApiTagRequestModelValidator tagModelValidator,
-			IBOLTagMapper boltagMapper,
-			IDALTagMapper daltagMapper)
+			IApiTagServerRequestModelValidator tagModelValidator,
+			IBOLTagMapper bolTagMapper,
+			IDALTagMapper dalTagMapper)
 			: base(logger,
 			       tagRepository,
 			       tagModelValidator,
-			       boltagMapper,
-			       daltagMapper)
+			       bolTagMapper,
+			       dalTagMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>129da4407ee6677d7b8c315bfa21762b</Hash>
+    <Hash>64f49853e14aa03a774dcd7651a9ad3b</Hash>
 </Codenesium>*/

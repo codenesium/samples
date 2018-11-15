@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public ShoppingCartItemService(
 			ILogger<IShoppingCartItemRepository> logger,
 			IShoppingCartItemRepository shoppingCartItemRepository,
-			IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
-			IBOLShoppingCartItemMapper bolshoppingCartItemMapper,
-			IDALShoppingCartItemMapper dalshoppingCartItemMapper)
+			IApiShoppingCartItemServerRequestModelValidator shoppingCartItemModelValidator,
+			IBOLShoppingCartItemMapper bolShoppingCartItemMapper,
+			IDALShoppingCartItemMapper dalShoppingCartItemMapper)
 			: base(logger,
 			       shoppingCartItemRepository,
 			       shoppingCartItemModelValidator,
-			       bolshoppingCartItemMapper,
-			       dalshoppingCartItemMapper)
+			       bolShoppingCartItemMapper,
+			       dalShoppingCartItemMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9bc67c1bef345250fa3faffbe8955d4</Hash>
+    <Hash>5b4beeaaabb8fc83975a3690b4eb5823</Hash>
 </Codenesium>*/

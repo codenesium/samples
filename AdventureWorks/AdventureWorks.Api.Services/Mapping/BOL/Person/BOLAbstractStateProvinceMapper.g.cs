@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOStateProvince MapModelToBO(
 			int stateProvinceID,
-			ApiStateProvinceRequestModel model
+			ApiStateProvinceServerRequestModel model
 			)
 		{
 			BOStateProvince boStateProvince = new BOStateProvince();
@@ -25,20 +24,20 @@ namespace AdventureWorksNS.Api.Services
 			return boStateProvince;
 		}
 
-		public virtual ApiStateProvinceResponseModel MapBOToModel(
+		public virtual ApiStateProvinceServerResponseModel MapBOToModel(
 			BOStateProvince boStateProvince)
 		{
-			var model = new ApiStateProvinceResponseModel();
+			var model = new ApiStateProvinceServerResponseModel();
 
 			model.SetProperties(boStateProvince.StateProvinceID, boStateProvince.CountryRegionCode, boStateProvince.IsOnlyStateProvinceFlag, boStateProvince.ModifiedDate, boStateProvince.Name, boStateProvince.Rowguid, boStateProvince.StateProvinceCode, boStateProvince.TerritoryID);
 
 			return model;
 		}
 
-		public virtual List<ApiStateProvinceResponseModel> MapBOToModel(
+		public virtual List<ApiStateProvinceServerResponseModel> MapBOToModel(
 			List<BOStateProvince> items)
 		{
-			List<ApiStateProvinceResponseModel> response = new List<ApiStateProvinceResponseModel>();
+			List<ApiStateProvinceServerResponseModel> response = new List<ApiStateProvinceServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0cdcaeab18e98d0eb13bb1d3c99035b5</Hash>
+    <Hash>7bad05cf7a3f8034e1e80840a796c72a</Hash>
 </Codenesium>*/

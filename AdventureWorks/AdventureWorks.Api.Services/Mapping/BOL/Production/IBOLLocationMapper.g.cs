@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOLocation MapModelToBO(
 			short locationID,
-			ApiLocationRequestModel model);
+			ApiLocationServerRequestModel model);
 
-		ApiLocationResponseModel MapBOToModel(
+		ApiLocationServerResponseModel MapBOToModel(
 			BOLocation boLocation);
 
-		List<ApiLocationResponseModel> MapBOToModel(
+		List<ApiLocationServerResponseModel> MapBOToModel(
 			List<BOLocation> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a453e108c20ed7df9903fe7b07f226d1</Hash>
+    <Hash>7f8098f04f6e779558dd18d3fd4ac542</Hash>
 </Codenesium>*/

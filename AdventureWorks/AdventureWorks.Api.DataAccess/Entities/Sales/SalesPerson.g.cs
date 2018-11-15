@@ -36,39 +36,43 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Bonus")]
-		public decimal Bonus { get; private set; }
+		public virtual decimal Bonus { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("CommissionPct")]
-		public decimal CommissionPct { get; private set; }
+		public virtual decimal CommissionPct { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("SalesLastYear")]
-		public decimal SalesLastYear { get; private set; }
+		public virtual decimal SalesLastYear { get; private set; }
 
 		[Column("SalesQuota")]
-		public decimal? SalesQuota { get; private set; }
+		public virtual decimal? SalesQuota { get; private set; }
 
 		[Column("SalesYTD")]
-		public decimal SalesYTD { get; private set; }
+		public virtual decimal SalesYTD { get; private set; }
 
 		[Column("TerritoryID")]
-		public int? TerritoryID { get; private set; }
+		public virtual int? TerritoryID { get; private set; }
 
 		[ForeignKey("TerritoryID")]
 		public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
+
+		public void SetSalesTerritoryNavigation(SalesTerritory item)
+		{
+			this.SalesTerritoryNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a560fe78fd45262186442873b47a5ad0</Hash>
+    <Hash>1b39673adbafb240a9eb427cf99487c9</Hash>
 </Codenesium>*/

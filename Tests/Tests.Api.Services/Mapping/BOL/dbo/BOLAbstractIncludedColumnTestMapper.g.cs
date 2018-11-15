@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOIncludedColumnTest MapModelToBO(
 			int id,
-			ApiIncludedColumnTestRequestModel model
+			ApiIncludedColumnTestServerRequestModel model
 			)
 		{
 			BOIncludedColumnTest boIncludedColumnTest = new BOIncludedColumnTest();
@@ -20,20 +19,20 @@ namespace TestsNS.Api.Services
 			return boIncludedColumnTest;
 		}
 
-		public virtual ApiIncludedColumnTestResponseModel MapBOToModel(
+		public virtual ApiIncludedColumnTestServerResponseModel MapBOToModel(
 			BOIncludedColumnTest boIncludedColumnTest)
 		{
-			var model = new ApiIncludedColumnTestResponseModel();
+			var model = new ApiIncludedColumnTestServerResponseModel();
 
 			model.SetProperties(boIncludedColumnTest.Id, boIncludedColumnTest.Name, boIncludedColumnTest.Name2);
 
 			return model;
 		}
 
-		public virtual List<ApiIncludedColumnTestResponseModel> MapBOToModel(
+		public virtual List<ApiIncludedColumnTestServerResponseModel> MapBOToModel(
 			List<BOIncludedColumnTest> items)
 		{
-			List<ApiIncludedColumnTestResponseModel> response = new List<ApiIncludedColumnTestResponseModel>();
+			List<ApiIncludedColumnTestServerResponseModel> response = new List<ApiIncludedColumnTestServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93df3b8df9603fb150e7c0915b2e4ceb</Hash>
+    <Hash>b5f0efcda9c33a4cbe795b39132e3429</Hash>
 </Codenesium>*/

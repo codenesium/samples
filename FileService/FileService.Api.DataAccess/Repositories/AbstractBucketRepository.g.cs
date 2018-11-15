@@ -76,12 +76,12 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Bucket> ByExternalId(Guid externalId)
+		public async virtual Task<Bucket> ByExternalId(Guid externalId)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
-		public async Task<Bucket> ByName(string name)
+		public async virtual Task<Bucket> ByName(string name)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Name == name);
 		}
@@ -95,22 +95,14 @@ namespace FileServiceNS.Api.DataAccess
 			Expression<Func<Bucket, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Bucket, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Bucket, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Bucket>();
-			}
-			else
-			{
-				return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Bucket>();
-			}
+			return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Bucket>();
 		}
 
 		private async Task<Bucket> GetById(int id)
@@ -123,5 +115,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0415aa30a23657e188654e88e8176f2a</Hash>
+    <Hash>e2eb1c98bc25dd320bcae423fba1cf08</Hash>
 </Codenesium>*/

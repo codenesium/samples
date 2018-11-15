@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Sale>> ByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Sale>> ByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TransactionId == transactionId, limit, offset);
 		}
@@ -95,26 +95,33 @@ namespace TicketingCRMNS.Api.DataAccess
 			              select sales).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<SaleTicket> CreateSaleTicket(SaleTicket item)
+		{
+			this.Context.Set<SaleTicket>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteSaleTicket(SaleTicket item)
+		{
+			this.Context.Set<SaleTicket>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Sale>> Where(
 			Expression<Func<Sale, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Sale, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Sale, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
-			}
-			else
-			{
-				return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
-			}
+			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		private async Task<Sale> GetById(int id)
@@ -127,5 +134,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6eaa7bec7c201374f9eb4445f01af026</Hash>
+    <Hash>3f4e7eb01dce9ce1b018216b79233954</Hash>
 </Codenesium>*/

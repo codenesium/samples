@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace PetShippingNS.Api.Services
 		public PipelineStepNoteService(
 			ILogger<IPipelineStepNoteRepository> logger,
 			IPipelineStepNoteRepository pipelineStepNoteRepository,
-			IApiPipelineStepNoteRequestModelValidator pipelineStepNoteModelValidator,
-			IBOLPipelineStepNoteMapper bolpipelineStepNoteMapper,
-			IDALPipelineStepNoteMapper dalpipelineStepNoteMapper)
+			IApiPipelineStepNoteServerRequestModelValidator pipelineStepNoteModelValidator,
+			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base(logger,
 			       pipelineStepNoteRepository,
 			       pipelineStepNoteModelValidator,
-			       bolpipelineStepNoteMapper,
-			       dalpipelineStepNoteMapper)
+			       bolPipelineStepNoteMapper,
+			       dalPipelineStepNoteMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69889dc9286675861e78dcdcd80e7527</Hash>
+    <Hash>8938da994e0db4ccd258aff033339805</Hash>
 </Codenesium>*/

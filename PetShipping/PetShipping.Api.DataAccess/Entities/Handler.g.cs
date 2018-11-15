@@ -30,30 +30,30 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("countryId")]
-		public int CountryId { get; private set; }
+		public virtual int CountryId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[MaxLength(128)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(10)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>11c1718204503686df97f7b74dc8fd80</Hash>
+    <Hash>991be93f9e6acffc38f58e3d4d42def0</Hash>
 </Codenesium>*/

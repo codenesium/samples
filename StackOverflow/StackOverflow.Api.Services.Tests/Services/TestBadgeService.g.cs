@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
-			List<ApiBadgeResponseModel> response = await service.All();
+			List<ApiBadgeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
-			ApiBadgeResponseModel response = await service.Get(default(int));
+			ApiBadgeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
-			ApiBadgeResponseModel response = await service.Get(default(int));
+			ApiBadgeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
-			var model = new ApiBadgeRequestModel();
+			var model = new ApiBadgeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Badge>())).Returns(Task.FromResult(new Badge()));
 			var service = new BadgeService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
-			CreateResponse<ApiBadgeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiBadgeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeRequestModel>()));
+			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Badge>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
-			var model = new ApiBadgeRequestModel();
+			var model = new ApiBadgeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Badge>())).Returns(Task.FromResult(new Badge()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badge()));
 			var service = new BadgeService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
-			UpdateResponse<ApiBadgeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiBadgeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>()));
+			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Badge>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
-			var model = new ApiBadgeRequestModel();
+			var model = new ApiBadgeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BadgeService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7640c1f0f302b07a30177ea46bd48b63</Hash>
+    <Hash>5ae008434479ed58be5581144976f642</Hash>
 </Codenesium>*/

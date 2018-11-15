@@ -2,27 +2,26 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IErrorLogService
 	{
-		Task<CreateResponse<ApiErrorLogResponseModel>> Create(
-			ApiErrorLogRequestModel model);
+		Task<CreateResponse<ApiErrorLogServerResponseModel>> Create(
+			ApiErrorLogServerRequestModel model);
 
-		Task<UpdateResponse<ApiErrorLogResponseModel>> Update(int errorLogID,
-		                                                       ApiErrorLogRequestModel model);
+		Task<UpdateResponse<ApiErrorLogServerResponseModel>> Update(int errorLogID,
+		                                                             ApiErrorLogServerRequestModel model);
 
 		Task<ActionResponse> Delete(int errorLogID);
 
-		Task<ApiErrorLogResponseModel> Get(int errorLogID);
+		Task<ApiErrorLogServerResponseModel> Get(int errorLogID);
 
-		Task<List<ApiErrorLogResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiErrorLogServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>380eb06b640cb6e1f84817d4d2e776cc</Hash>
+    <Hash>5534019d244c28c5765549a55ed88676</Hash>
 </Codenesium>*/

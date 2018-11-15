@@ -13,16 +13,16 @@ namespace TwitterNS.Api.Services
 		public virtual void SetProperties(int id,
 		                                  string blocked,
 		                                  DateTime dateFollowed,
-		                                  string followRequestStatu,
 		                                  int followedUserId,
 		                                  int followingUserId,
+		                                  string followRequestStatu,
 		                                  string muted)
 		{
 			this.Blocked = blocked;
 			this.DateFollowed = dateFollowed;
-			this.FollowRequestStatu = followRequestStatu;
 			this.FollowedUserId = followedUserId;
 			this.FollowingUserId = followingUserId;
+			this.FollowRequestStatu = followRequestStatu;
 			this.Id = id;
 			this.Muted = muted;
 		}
@@ -44,5 +44,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84d60778c59d8eb28c7876c66eb534f3</Hash>
+    <Hash>bb6baad4bee2b60c5331faff4bc0f55c</Hash>
 </Codenesium>*/

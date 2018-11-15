@@ -80,22 +80,14 @@ namespace StackOverflowNS.Api.DataAccess
 			Expression<Func<VoteType, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<VoteType, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<VoteType, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<VoteType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VoteType>();
-			}
-			else
-			{
-				return await this.Context.Set<VoteType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VoteType>();
-			}
+			return await this.Context.Set<VoteType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VoteType>();
 		}
 
 		private async Task<VoteType> GetById(int id)
@@ -108,5 +100,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>52e42bae00133e0841200b5837ee1f7b</Hash>
+    <Hash>ed2dd4f37b66ddfc18a283c7775faaec</Hash>
 </Codenesium>*/

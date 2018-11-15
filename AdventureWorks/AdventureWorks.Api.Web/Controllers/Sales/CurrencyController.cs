@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CurrencyController : AbstractCurrencyController
 	{
 		public CurrencyController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<CurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICurrencyService currencyService,
-			IApiCurrencyModelMapper currencyModelMapper
+			IApiCurrencyServerModelMapper currencyModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b805f112fe67d7366acfda27e795a3d0</Hash>
+    <Hash>be5280f312998ff519c8c6ec4e5bf6a4</Hash>
 </Codenesium>*/

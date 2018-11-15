@@ -2,33 +2,34 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IStateProvinceService
 	{
-		Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
-			ApiStateProvinceRequestModel model);
+		Task<CreateResponse<ApiStateProvinceServerResponseModel>> Create(
+			ApiStateProvinceServerRequestModel model);
 
-		Task<UpdateResponse<ApiStateProvinceResponseModel>> Update(int stateProvinceID,
-		                                                            ApiStateProvinceRequestModel model);
+		Task<UpdateResponse<ApiStateProvinceServerResponseModel>> Update(int stateProvinceID,
+		                                                                  ApiStateProvinceServerRequestModel model);
 
 		Task<ActionResponse> Delete(int stateProvinceID);
 
-		Task<ApiStateProvinceResponseModel> Get(int stateProvinceID);
+		Task<ApiStateProvinceServerResponseModel> Get(int stateProvinceID);
 
-		Task<List<ApiStateProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiStateProvinceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiStateProvinceResponseModel> ByName(string name);
+		Task<ApiStateProvinceServerResponseModel> ByName(string name);
 
-		Task<ApiStateProvinceResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
+		Task<ApiStateProvinceServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiAddressResponseModel>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiStateProvinceServerResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
+
+		Task<List<ApiAddressServerResponseModel>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c2a8e63349b739a00d12cfc00eb84a55</Hash>
+    <Hash>a5b9864f3d519464f5080bf5afb3e556</Hash>
 </Codenesium>*/

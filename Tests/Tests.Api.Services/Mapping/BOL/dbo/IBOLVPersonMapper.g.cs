@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOVPerson MapModelToBO(
 			int personId,
-			ApiVPersonRequestModel model);
+			ApiVPersonServerRequestModel model);
 
-		ApiVPersonResponseModel MapBOToModel(
+		ApiVPersonServerResponseModel MapBOToModel(
 			BOVPerson boVPerson);
 
-		List<ApiVPersonResponseModel> MapBOToModel(
+		List<ApiVPersonServerResponseModel> MapBOToModel(
 			List<BOVPerson> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>86262fba777f04a8e77afd5d276f0572</Hash>
+    <Hash>0a6b5f833c7abaab61d87752d1b967e8</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ICreditCardService CreditCardService { get; private set; }
 
-		protected IApiCreditCardModelMapper CreditCardModelMapper { get; private set; }
+		protected IApiCreditCardServerModelMapper CreditCardModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractCreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICreditCardService creditCardService,
-			IApiCreditCardModelMapper creditCardModelMapper
+			IApiCreditCardServerModelMapper creditCardModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCreditCardServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCreditCardResponseModel> response = await this.CreditCardService.All(query.Limit, query.Offset);
+			List<ApiCreditCardServerResponseModel> response = await this.CreditCardService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCreditCardServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
+			ApiCreditCardServerResponseModel response = await this.CreditCardService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCreditCardServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCreditCardRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCreditCardServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCreditCardResponseModel> records = new List<ApiCreditCardResponseModel>();
+			List<ApiCreditCardServerResponseModel> records = new List<ApiCreditCardServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Create(model);
+				CreateResponse<ApiCreditCardServerResponseModel> result = await this.CreditCardService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCreditCardServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCreditCardResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCreditCardServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardServerRequestModel model)
 		{
-			CreateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Create(model);
+			CreateResponse<ApiCreditCardServerResponseModel> result = await this.CreditCardService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCreditCardServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCreditCardRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCreditCardServerRequestModel> patch)
 		{
-			ApiCreditCardResponseModel record = await this.CreditCardService.Get(id);
+			ApiCreditCardServerResponseModel record = await this.CreditCardService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCreditCardRequestModel model = await this.PatchModel(id, patch);
+				ApiCreditCardServerRequestModel model = await this.PatchModel(id, patch) as ApiCreditCardServerRequestModel;
 
-				UpdateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Update(id, model);
+				UpdateResponse<ApiCreditCardServerResponseModel> result = await this.CreditCardService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCreditCardResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCreditCardServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardServerRequestModel model)
 		{
-			ApiCreditCardRequestModel request = await this.PatchModel(id, this.CreditCardModelMapper.CreatePatch(model));
+			ApiCreditCardServerRequestModel request = await this.PatchModel(id, this.CreditCardModelMapper.CreatePatch(model)) as ApiCreditCardServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Update(id, request);
+				UpdateResponse<ApiCreditCardServerResponseModel> result = await this.CreditCardService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CreditCardService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byCardNumber/{cardNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCreditCardServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByCardNumber(string cardNumber)
 		{
-			ApiCreditCardResponseModel response = await this.CreditCardService.ByCardNumber(cardNumber);
+			ApiCreditCardServerResponseModel response = await this.CreditCardService.ByCardNumber(cardNumber);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{creditCardID}/SalesOrderHeadersByCreditCardID")]
+		[Route("{creditCardID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeadersByCreditCardID(int creditCardID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,29 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.CreditCardService.SalesOrderHeadersByCreditCardID(creditCardID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.CreditCardService.SalesOrderHeadersByCreditCardID(creditCardID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("byBusinessEntityID/{businessEntityID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByBusinessEntityID(int businessEntityID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiCreditCardResponseModel> response = await this.CreditCardService.ByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiCreditCardRequestModel> PatchModel(int id, JsonPatchDocument<ApiCreditCardRequestModel> patch)
+		private async Task<ApiCreditCardServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCreditCardServerRequestModel> patch)
 		{
 			var record = await this.CreditCardService.Get(id);
 
@@ -269,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCreditCardRequestModel request = this.CreditCardModelMapper.MapResponseToRequest(record);
+				ApiCreditCardServerRequestModel request = this.CreditCardModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -278,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c811d738e19969f39537aac33f987077</Hash>
+    <Hash>e32a682253dba5e9705b71cf23386f93</Hash>
 </Codenesium>*/

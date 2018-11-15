@@ -42,49 +42,49 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AnnualRevenue")]
-		public decimal? AnnualRevenue { get; private set; }
+		public virtual decimal? AnnualRevenue { get; private set; }
 
 		[Column("AnnualSales")]
-		public decimal? AnnualSale { get; private set; }
+		public virtual decimal? AnnualSale { get; private set; }
 
 		[MaxLength(50)]
 		[Column("BankName")]
-		public string BankName { get; private set; }
+		public virtual string BankName { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Brands")]
-		public string Brand { get; private set; }
+		public virtual string Brand { get; private set; }
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(5)]
 		[Column("BusinessType")]
-		public string BusinessType { get; private set; }
+		public virtual string BusinessType { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Internet")]
-		public string Internet { get; private set; }
+		public virtual string Internet { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("NumberEmployees")]
-		public int? NumberEmployee { get; private set; }
+		public virtual int? NumberEmployee { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Specialty")]
-		public string Specialty { get; private set; }
+		public virtual string Specialty { get; private set; }
 
 		[Column("SquareFeet")]
-		public int? SquareFoot { get; private set; }
+		public virtual int? SquareFoot { get; private set; }
 
 		[Column("YearOpened")]
-		public int? YearOpened { get; private set; }
+		public virtual int? YearOpened { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>648ca73000c8d572c7d5a2dc2abd5bbd</Hash>
+    <Hash>5b6d7ec5e3b6f23c50ac79e1dcd3e128</Hash>
 </Codenesium>*/

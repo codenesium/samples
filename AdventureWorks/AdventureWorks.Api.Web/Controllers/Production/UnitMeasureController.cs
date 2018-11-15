@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class UnitMeasureController : AbstractUnitMeasureController
 	{
 		public UnitMeasureController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<UnitMeasureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUnitMeasureService unitMeasureService,
-			IApiUnitMeasureModelMapper unitMeasureModelMapper
+			IApiUnitMeasureServerModelMapper unitMeasureModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3f8e0a009834ba4c822fb590a8694f45</Hash>
+    <Hash>7b99db3fc4fc35834db1a9d14467cc83</Hash>
 </Codenesium>*/

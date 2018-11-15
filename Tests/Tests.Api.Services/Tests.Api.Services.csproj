@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Tests.Api.Contracts/Tests.Api.Contracts.csproj" />
+    <ProjectReference Include="../Tests.Api.Client/Tests.Api.Client.csproj" />
     <ProjectReference Include="../Tests.Api.DataAccess/Tests.Api.DataAccess.csproj" />
   </ItemGroup>
 

@@ -24,18 +24,18 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		[Column("externalId")]
-		public Guid ExternalId { get; private set; }
+		public virtual Guid ExternalId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(255)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b5581ec04e9e69f052950f6816707c9</Hash>
+    <Hash>fc62f625bd608220b8c6c1fe8113b99b</Hash>
 </Codenesium>*/

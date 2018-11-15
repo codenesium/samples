@@ -16,11 +16,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<ProductPhoto> Get(int productPhotoID);
 
 		Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ProductProductPhoto>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1fbe301c386eee6db11da200594f6677</Hash>
+    <Hash>870d327346f5a3d54cfbe6b3ec353254</Hash>
 </Codenesium>*/

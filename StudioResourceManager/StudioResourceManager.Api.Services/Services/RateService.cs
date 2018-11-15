@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public RateService(
 			ILogger<IRateRepository> logger,
 			IRateRepository rateRepository,
-			IApiRateRequestModelValidator rateModelValidator,
-			IBOLRateMapper bolrateMapper,
-			IDALRateMapper dalrateMapper)
+			IApiRateServerRequestModelValidator rateModelValidator,
+			IBOLRateMapper bolRateMapper,
+			IDALRateMapper dalRateMapper)
 			: base(logger,
 			       rateRepository,
 			       rateModelValidator,
-			       bolrateMapper,
-			       dalrateMapper)
+			       bolRateMapper,
+			       dalRateMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0844a7e06ee27284ef7e8bf22d10d58c</Hash>
+    <Hash>fe55702441b6df326b0dd5aadbc9ed10</Hash>
 </Codenesium>*/

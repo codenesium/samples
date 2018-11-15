@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLRateMapper();
-			ApiRateRequestModel model = new ApiRateRequestModel();
+			ApiRateServerRequestModel model = new ApiRateServerRequestModel();
 			model.SetProperties(1m, 1, 1);
 			BORate response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
 			bo.SetProperties(1, 1m, 1, 1);
-			ApiRateResponseModel response = mapper.MapBOToModel(bo);
+			ApiRateServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.Id.Should().Be(1);
@@ -46,7 +46,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
 			bo.SetProperties(1, 1m, 1, 1);
-			List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
+			List<ApiRateServerResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4ba8f9c0ca1426e7c56f4d12f8eb8da0</Hash>
+    <Hash>90637842901b53b88ec109f38694488c</Hash>
 </Codenesium>*/

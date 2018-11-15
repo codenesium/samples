@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLShoppingCartItemMapper();
-			ApiShoppingCartItemRequestModel model = new ApiShoppingCartItemRequestModel();
+			ApiShoppingCartItemServerRequestModel model = new ApiShoppingCartItemServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 			BOShoppingCartItem response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLShoppingCartItemMapper();
 			BOShoppingCartItem bo = new BOShoppingCartItem();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			ApiShoppingCartItemResponseModel response = mapper.MapBOToModel(bo);
+			ApiShoppingCartItemServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLShoppingCartItemMapper();
 			BOShoppingCartItem bo = new BOShoppingCartItem();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			List<ApiShoppingCartItemResponseModel> response = mapper.MapBOToModel(new List<BOShoppingCartItem>() { { bo } });
+			List<ApiShoppingCartItemServerResponseModel> response = mapper.MapBOToModel(new List<BOShoppingCartItem>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>37fbedc7d15856783602f8e319456de8</Hash>
+    <Hash>d6d3c4882c0e55de04d0e753c54ef16b</Hash>
 </Codenesium>*/

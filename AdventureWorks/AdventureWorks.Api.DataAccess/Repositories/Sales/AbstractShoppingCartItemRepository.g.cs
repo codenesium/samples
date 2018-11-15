@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ShoppingCartItem, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ShoppingCartItem, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ShoppingCartItem, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ShoppingCartItemID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
-			}
-			else
-			{
-				return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
-			}
+			return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
 		}
 
 		private async Task<ShoppingCartItem> GetById(int shoppingCartItemID)
@@ -113,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18d7fd6a63a89b1c6ad38f28cabf168a</Hash>
+    <Hash>6b1b297de04e5d87b37b7dcd912a7846</Hash>
 </Codenesium>*/

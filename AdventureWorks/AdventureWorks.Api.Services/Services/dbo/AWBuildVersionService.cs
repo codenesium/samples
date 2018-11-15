@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public AWBuildVersionService(
 			ILogger<IAWBuildVersionRepository> logger,
 			IAWBuildVersionRepository aWBuildVersionRepository,
-			IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
-			IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
-			IDALAWBuildVersionMapper dalaWBuildVersionMapper)
+			IApiAWBuildVersionServerRequestModelValidator aWBuildVersionModelValidator,
+			IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
+			IDALAWBuildVersionMapper dalAWBuildVersionMapper)
 			: base(logger,
 			       aWBuildVersionRepository,
 			       aWBuildVersionModelValidator,
-			       bolaWBuildVersionMapper,
-			       dalaWBuildVersionMapper)
+			       bolAWBuildVersionMapper,
+			       dalAWBuildVersionMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4e209942f04bc1d7adf6854c16292b4</Hash>
+    <Hash>d4c5b50132fba2098e7f939d37feb3b1</Hash>
 </Codenesium>*/

@@ -39,50 +39,60 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("address1")]
-		public string Address1 { get; private set; }
+		public virtual string Address1 { get; private set; }
 
 		[MaxLength(128)]
 		[Column("address2")]
-		public string Address2 { get; private set; }
+		public virtual string Address2 { get; private set; }
 
 		[Column("adminId")]
-		public int AdminId { get; private set; }
+		public virtual int AdminId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[MaxLength(128)]
 		[Column("facebook")]
-		public string Facebook { get; private set; }
+		public virtual string Facebook { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(128)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 
 		[Column("provinceId")]
-		public int ProvinceId { get; private set; }
+		public virtual int ProvinceId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("website")]
-		public string Website { get; private set; }
+		public virtual string Website { get; private set; }
 
 		[ForeignKey("AdminId")]
 		public virtual Admin AdminNavigation { get; private set; }
 
+		public void SetAdminNavigation(Admin item)
+		{
+			this.AdminNavigation = item;
+		}
+
 		[ForeignKey("ProvinceId")]
 		public virtual Province ProvinceNavigation { get; private set; }
+
+		public void SetProvinceNavigation(Province item)
+		{
+			this.ProvinceNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fb02d91168a90bfd17514b3c8fd3b84</Hash>
+    <Hash>50573f9b9b4cad68e23d64645e09ca85</Hash>
 </Codenesium>*/

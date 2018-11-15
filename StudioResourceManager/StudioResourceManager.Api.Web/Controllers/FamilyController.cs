@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class FamilyController : AbstractFamilyController
 	{
 		public FamilyController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<FamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFamilyService familyService,
-			IApiFamilyModelMapper familyModelMapper
+			IApiFamilyServerModelMapper familyModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8c163769671df44fc21e660f3cc82f1f</Hash>
+    <Hash>e7ca682a9dbcc3cd0a5609fdd4c4e9e6</Hash>
 </Codenesium>*/

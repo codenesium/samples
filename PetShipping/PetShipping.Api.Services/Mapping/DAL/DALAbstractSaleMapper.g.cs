@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace PetShippingNS.Api.Services
 			Sale efSale = new Sale();
 			efSale.SetProperties(
 				bo.Amount,
-				bo.ClientId,
+				bo.CutomerId,
 				bo.Id,
 				bo.Note,
 				bo.PetId,
@@ -31,7 +30,7 @@ namespace PetShippingNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.Amount,
-				ef.ClientId,
+				ef.CutomerId,
 				ef.Note,
 				ef.PetId,
 				ef.SaleDate,
@@ -55,5 +54,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>770f995eaae93d0e5e14c046caeea306</Hash>
+    <Hash>65f94867258b3e62d6085d6e2a6ee417</Hash>
 </Codenesium>*/

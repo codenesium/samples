@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IProductReviewService ProductReviewService { get; private set; }
 
-		protected IApiProductReviewModelMapper ProductReviewModelMapper { get; private set; }
+		protected IApiProductReviewServerModelMapper ProductReviewModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractProductReviewController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductReviewService productReviewService,
-			IApiProductReviewModelMapper productReviewModelMapper
+			IApiProductReviewServerModelMapper productReviewModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductReviewResponseModel> response = await this.ProductReviewService.All(query.Limit, query.Offset);
+			List<ApiProductReviewServerResponseModel> response = await this.ProductReviewService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiProductReviewResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiProductReviewServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiProductReviewResponseModel response = await this.ProductReviewService.Get(id);
+			ApiProductReviewServerResponseModel response = await this.ProductReviewService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiProductReviewServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductReviewRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductReviewServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiProductReviewResponseModel> records = new List<ApiProductReviewResponseModel>();
+			List<ApiProductReviewServerResponseModel> records = new List<ApiProductReviewServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Create(model);
+				CreateResponse<ApiProductReviewServerResponseModel> result = await this.ProductReviewService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiProductReviewServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiProductReviewResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiProductReviewServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductReviewRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductReviewServerRequestModel model)
 		{
-			CreateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Create(model);
+			CreateResponse<ApiProductReviewServerResponseModel> result = await this.ProductReviewService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProductReviewResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProductReviewServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductReviewRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductReviewServerRequestModel> patch)
 		{
-			ApiProductReviewResponseModel record = await this.ProductReviewService.Get(id);
+			ApiProductReviewServerResponseModel record = await this.ProductReviewService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiProductReviewRequestModel model = await this.PatchModel(id, patch);
+				ApiProductReviewServerRequestModel model = await this.PatchModel(id, patch) as ApiProductReviewServerRequestModel;
 
-				UpdateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Update(id, model);
+				UpdateResponse<ApiProductReviewServerResponseModel> result = await this.ProductReviewService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProductReviewResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProductReviewServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewServerRequestModel model)
 		{
-			ApiProductReviewRequestModel request = await this.PatchModel(id, this.ProductReviewModelMapper.CreatePatch(model));
+			ApiProductReviewServerRequestModel request = await this.PatchModel(id, this.ProductReviewModelMapper.CreatePatch(model)) as ApiProductReviewServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiProductReviewResponseModel> result = await this.ProductReviewService.Update(id, request);
+				UpdateResponse<ApiProductReviewServerResponseModel> result = await this.ProductReviewService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ProductReviewService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byProductIDReviewerName/{productID}/{reviewerName}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByProductIDReviewerName(int productID, string reviewerName, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByProductIDReviewerName(productID, reviewerName, query.Limit, query.Offset);
+			List<ApiProductReviewServerResponseModel> response = await this.ProductReviewService.ByProductIDReviewerName(productID, reviewerName, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiProductReviewRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductReviewRequestModel> patch)
+		private async Task<ApiProductReviewServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductReviewServerRequestModel> patch)
 		{
 			var record = await this.ProductReviewService.Get(id);
 
@@ -233,7 +243,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiProductReviewRequestModel request = this.ProductReviewModelMapper.MapResponseToRequest(record);
+				ApiProductReviewServerRequestModel request = this.ProductReviewModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2cf530289588b570ad5fb91924aba4ca</Hash>
+    <Hash>402a3eced7d275a2b1a31bf184620c10</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 		public ScrapReasonService(
 			ILogger<IScrapReasonRepository> logger,
 			IScrapReasonRepository scrapReasonRepository,
-			IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
-			IBOLScrapReasonMapper bolscrapReasonMapper,
-			IDALScrapReasonMapper dalscrapReasonMapper,
+			IApiScrapReasonServerRequestModelValidator scrapReasonModelValidator,
+			IBOLScrapReasonMapper bolScrapReasonMapper,
+			IDALScrapReasonMapper dalScrapReasonMapper,
 			IBOLWorkOrderMapper bolWorkOrderMapper,
 			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base(logger,
 			       scrapReasonRepository,
 			       scrapReasonModelValidator,
-			       bolscrapReasonMapper,
-			       dalscrapReasonMapper,
+			       bolScrapReasonMapper,
+			       dalScrapReasonMapper,
 			       bolWorkOrderMapper,
 			       dalWorkOrderMapper)
 		{
@@ -34,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cd4c0e2dcfaac2787354ab993d51fb2</Hash>
+    <Hash>73ad0848a17918b14011f5f5cdff0279</Hash>
 </Codenesium>*/

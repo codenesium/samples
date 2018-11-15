@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IPostService PostService { get; private set; }
 
-		protected IApiPostModelMapper PostModelMapper { get; private set; }
+		protected IApiPostServerModelMapper PostModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractPostController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostService postService,
-			IApiPostModelMapper postModelMapper
+			IApiPostServerModelMapper postModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPostResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPostServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPostResponseModel> response = await this.PostService.All(query.Limit, query.Offset);
+			List<ApiPostServerResponseModel> response = await this.PostService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPostResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPostServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPostResponseModel response = await this.PostService.Get(id);
+			ApiPostServerResponseModel response = await this.PostService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPostResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPostServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPostResponseModel> records = new List<ApiPostResponseModel>();
+			List<ApiPostServerResponseModel> records = new List<ApiPostServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPostResponseModel> result = await this.PostService.Create(model);
+				CreateResponse<ApiPostServerResponseModel> result = await this.PostService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPostServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPostResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPostServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPostRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPostServerRequestModel model)
 		{
-			CreateResponse<ApiPostResponseModel> result = await this.PostService.Create(model);
+			CreateResponse<ApiPostServerResponseModel> result = await this.PostService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostServerRequestModel> patch)
 		{
-			ApiPostResponseModel record = await this.PostService.Get(id);
+			ApiPostServerResponseModel record = await this.PostService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostRequestModel model = await this.PatchModel(id, patch);
+				ApiPostServerRequestModel model = await this.PatchModel(id, patch) as ApiPostServerRequestModel;
 
-				UpdateResponse<ApiPostResponseModel> result = await this.PostService.Update(id, model);
+				UpdateResponse<ApiPostServerResponseModel> result = await this.PostService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostServerRequestModel model)
 		{
-			ApiPostRequestModel request = await this.PatchModel(id, this.PostModelMapper.CreatePatch(model));
+			ApiPostServerRequestModel request = await this.PatchModel(id, this.PostModelMapper.CreatePatch(model)) as ApiPostServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPostResponseModel> result = await this.PostService.Update(id, request);
+				UpdateResponse<ApiPostServerResponseModel> result = await this.PostService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PostService.Delete(id);
@@ -209,7 +219,7 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("byOwnerUserId/{ownerUserId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPostResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPostServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByOwnerUserId(int? ownerUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPostResponseModel> response = await this.PostService.ByOwnerUserId(ownerUserId, query.Limit, query.Offset);
+			List<ApiPostServerResponseModel> response = await this.PostService.ByOwnerUserId(ownerUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiPostRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostRequestModel> patch)
+		private async Task<ApiPostServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostServerRequestModel> patch)
 		{
 			var record = await this.PostService.Get(id);
 
@@ -233,7 +243,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostRequestModel request = this.PostModelMapper.MapResponseToRequest(record);
+				ApiPostServerRequestModel request = this.PostModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>04ab899379395e52fa564d202248e62e</Hash>
+    <Hash>18af4c7680bbb77aec30cee8f779e24f</Hash>
 </Codenesium>*/

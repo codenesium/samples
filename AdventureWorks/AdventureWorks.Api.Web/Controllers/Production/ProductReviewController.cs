@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ProductReviewController : AbstractProductReviewController
 	{
 		public ProductReviewController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ProductReviewController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductReviewService productReviewService,
-			IApiProductReviewModelMapper productReviewModelMapper
+			IApiProductReviewServerModelMapper productReviewModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>097831a5e1a2c8e9270524bfe332d61e</Hash>
+    <Hash>b6b857e1a71e912a1dde0a63d9884d7e</Hash>
 </Codenesium>*/

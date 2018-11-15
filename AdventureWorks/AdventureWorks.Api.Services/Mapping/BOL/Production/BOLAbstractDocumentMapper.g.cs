@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BODocument MapModelToBO(
 			Guid rowguid,
-			ApiDocumentRequestModel model
+			ApiDocumentServerRequestModel model
 			)
 		{
 			BODocument boDocument = new BODocument();
@@ -30,20 +29,20 @@ namespace AdventureWorksNS.Api.Services
 			return boDocument;
 		}
 
-		public virtual ApiDocumentResponseModel MapBOToModel(
+		public virtual ApiDocumentServerResponseModel MapBOToModel(
 			BODocument boDocument)
 		{
-			var model = new ApiDocumentResponseModel();
+			var model = new ApiDocumentServerResponseModel();
 
 			model.SetProperties(boDocument.Rowguid, boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Status, boDocument.Title);
 
 			return model;
 		}
 
-		public virtual List<ApiDocumentResponseModel> MapBOToModel(
+		public virtual List<ApiDocumentServerResponseModel> MapBOToModel(
 			List<BODocument> items)
 		{
-			List<ApiDocumentResponseModel> response = new List<ApiDocumentResponseModel>();
+			List<ApiDocumentServerResponseModel> response = new List<ApiDocumentServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c917d68f6ae1a906ebcb030e0389ba96</Hash>
+    <Hash>3eff321fafb29a32fbee59b9790df192</Hash>
 </Codenesium>*/

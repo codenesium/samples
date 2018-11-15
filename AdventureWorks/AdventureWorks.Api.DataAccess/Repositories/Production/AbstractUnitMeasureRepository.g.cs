@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<UnitMeasure> ByName(string name)
+		public async virtual Task<UnitMeasure> ByName(string name)
 		{
 			return await this.Context.Set<UnitMeasure>().SingleOrDefaultAsync(x => x.Name == name);
 		}
@@ -100,22 +100,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<UnitMeasure, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<UnitMeasure, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<UnitMeasure, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.UnitMeasureCode;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
-			}
-			else
-			{
-				return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
-			}
+			return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
 		}
 
 		private async Task<UnitMeasure> GetById(string unitMeasureCode)
@@ -128,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb89b69ff4819703e27c34bf0f4bb7f4</Hash>
+    <Hash>14a8e7c7c19feefb089ffaf65c3c7699</Hash>
 </Codenesium>*/

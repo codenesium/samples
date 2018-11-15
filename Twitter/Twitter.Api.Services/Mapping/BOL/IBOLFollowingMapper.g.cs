@@ -8,17 +8,17 @@ namespace TwitterNS.Api.Services
 	public partial interface IBOLFollowingMapper
 	{
 		BOFollowing MapModelToBO(
-			string userId,
-			ApiFollowingRequestModel model);
+			int userId,
+			ApiFollowingServerRequestModel model);
 
-		ApiFollowingResponseModel MapBOToModel(
+		ApiFollowingServerResponseModel MapBOToModel(
 			BOFollowing boFollowing);
 
-		List<ApiFollowingResponseModel> MapBOToModel(
+		List<ApiFollowingServerResponseModel> MapBOToModel(
 			List<BOFollowing> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>479aa01694b713808bb343531c18e4b8</Hash>
+    <Hash>885cca9a1f2170c800e1b63c5cd295d6</Hash>
 </Codenesium>*/

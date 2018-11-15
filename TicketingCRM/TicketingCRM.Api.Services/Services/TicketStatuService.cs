@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 		public TicketStatuService(
 			ILogger<ITicketStatuRepository> logger,
 			ITicketStatuRepository ticketStatuRepository,
-			IApiTicketStatuRequestModelValidator ticketStatuModelValidator,
-			IBOLTicketStatuMapper bolticketStatuMapper,
-			IDALTicketStatuMapper dalticketStatuMapper,
+			IApiTicketStatuServerRequestModelValidator ticketStatuModelValidator,
+			IBOLTicketStatuMapper bolTicketStatuMapper,
+			IDALTicketStatuMapper dalTicketStatuMapper,
 			IBOLTicketMapper bolTicketMapper,
 			IDALTicketMapper dalTicketMapper)
 			: base(logger,
 			       ticketStatuRepository,
 			       ticketStatuModelValidator,
-			       bolticketStatuMapper,
-			       dalticketStatuMapper,
+			       bolTicketStatuMapper,
+			       dalTicketStatuMapper,
 			       bolTicketMapper,
 			       dalTicketMapper)
 		{
@@ -34,5 +27,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>196667d94f85bed740d7a02b69711749</Hash>
+    <Hash>94bfda7e1ba0afda36967833b6575928</Hash>
 </Codenesium>*/

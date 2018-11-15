@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BusinessEntityController : AbstractBusinessEntityController
 	{
 		public BusinessEntityController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<BusinessEntityController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBusinessEntityService businessEntityService,
-			IApiBusinessEntityModelMapper businessEntityModelMapper
+			IApiBusinessEntityServerModelMapper businessEntityModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>97b37086c48f4a126af889d6e1a99ad4</Hash>
+    <Hash>9a3ed5401168de75dae6135803054e34</Hash>
 </Codenesium>*/

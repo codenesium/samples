@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public PostHistoryService(
 			ILogger<IPostHistoryRepository> logger,
 			IPostHistoryRepository postHistoryRepository,
-			IApiPostHistoryRequestModelValidator postHistoryModelValidator,
-			IBOLPostHistoryMapper bolpostHistoryMapper,
-			IDALPostHistoryMapper dalpostHistoryMapper)
+			IApiPostHistoryServerRequestModelValidator postHistoryModelValidator,
+			IBOLPostHistoryMapper bolPostHistoryMapper,
+			IDALPostHistoryMapper dalPostHistoryMapper)
 			: base(logger,
 			       postHistoryRepository,
 			       postHistoryModelValidator,
-			       bolpostHistoryMapper,
-			       dalpostHistoryMapper)
+			       bolPostHistoryMapper,
+			       dalPostHistoryMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73154d069f034a4c6cc65ecaadc20ae3</Hash>
+    <Hash>ac12683ca5449a211eac2cf29fdbd3a1</Hash>
 </Codenesium>*/

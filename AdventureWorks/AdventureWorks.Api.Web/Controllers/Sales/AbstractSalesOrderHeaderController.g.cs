@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ISalesOrderHeaderService SalesOrderHeaderService { get; private set; }
 
-		protected IApiSalesOrderHeaderModelMapper SalesOrderHeaderModelMapper { get; private set; }
+		protected IApiSalesOrderHeaderServerModelMapper SalesOrderHeaderModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractSalesOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesOrderHeaderService salesOrderHeaderService,
-			IApiSalesOrderHeaderModelMapper salesOrderHeaderModelMapper
+			IApiSalesOrderHeaderServerModelMapper salesOrderHeaderModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.All(query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.SalesOrderHeaderService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.Get(id);
+			ApiSalesOrderHeaderServerResponseModel response = await this.SalesOrderHeaderService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSalesOrderHeaderServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesOrderHeaderRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesOrderHeaderServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> records = new List<ApiSalesOrderHeaderResponseModel>();
+			List<ApiSalesOrderHeaderServerResponseModel> records = new List<ApiSalesOrderHeaderServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Create(model);
+				CreateResponse<ApiSalesOrderHeaderServerResponseModel> result = await this.SalesOrderHeaderService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSalesOrderHeaderServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSalesOrderHeaderResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSalesOrderHeaderServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderServerRequestModel model)
 		{
-			CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Create(model);
+			CreateResponse<ApiSalesOrderHeaderServerResponseModel> result = await this.SalesOrderHeaderService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderHeaderRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderHeaderServerRequestModel> patch)
 		{
-			ApiSalesOrderHeaderResponseModel record = await this.SalesOrderHeaderService.Get(id);
+			ApiSalesOrderHeaderServerResponseModel record = await this.SalesOrderHeaderService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesOrderHeaderRequestModel model = await this.PatchModel(id, patch);
+				ApiSalesOrderHeaderServerRequestModel model = await this.PatchModel(id, patch) as ApiSalesOrderHeaderServerRequestModel;
 
-				UpdateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Update(id, model);
+				UpdateResponse<ApiSalesOrderHeaderServerResponseModel> result = await this.SalesOrderHeaderService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderServerRequestModel model)
 		{
-			ApiSalesOrderHeaderRequestModel request = await this.PatchModel(id, this.SalesOrderHeaderModelMapper.CreatePatch(model));
+			ApiSalesOrderHeaderServerRequestModel request = await this.PatchModel(id, this.SalesOrderHeaderModelMapper.CreatePatch(model)) as ApiSalesOrderHeaderServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Update(id, request);
+				UpdateResponse<ApiSalesOrderHeaderServerResponseModel> result = await this.SalesOrderHeaderService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SalesOrderHeaderService.Delete(id);
@@ -207,13 +217,32 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byRowguid/{rowguid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiSalesOrderHeaderServerResponseModel response = await this.SalesOrderHeaderService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("bySalesOrderNumber/{salesOrderNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> BySalesOrderNumber(string salesOrderNumber)
 		{
-			ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.BySalesOrderNumber(salesOrderNumber);
+			ApiSalesOrderHeaderServerResponseModel response = await this.SalesOrderHeaderService.BySalesOrderNumber(salesOrderNumber);
 
 			if (response == null)
 			{
@@ -228,7 +257,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byCustomerID/{customerID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByCustomerID(int customerID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,7 +266,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.ByCustomerID(customerID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.SalesOrderHeaderService.ByCustomerID(customerID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -245,7 +274,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("bySalesPersonID/{salesPersonID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> BySalesPersonID(int? salesPersonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -254,46 +283,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesPersonID(salesPersonID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.SalesOrderHeaderService.BySalesPersonID(salesPersonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("{salesOrderID}/SalesOrderDetailsBySalesOrderID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderDetailResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderDetailsBySalesOrderID(int salesOrderID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderHeaderService.SalesOrderDetailsBySalesOrderID(salesOrderID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("bySalesReasonID/{salesReasonID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySalesReasonID(int salesReasonID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesReasonID(salesReasonID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiSalesOrderHeaderRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderHeaderRequestModel> patch)
+		private async Task<ApiSalesOrderHeaderServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesOrderHeaderServerRequestModel> patch)
 		{
 			var record = await this.SalesOrderHeaderService.Get(id);
 
@@ -303,7 +298,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesOrderHeaderRequestModel request = this.SalesOrderHeaderModelMapper.MapResponseToRequest(record);
+				ApiSalesOrderHeaderServerRequestModel request = this.SalesOrderHeaderModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -312,5 +307,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>874e8450d1be507ec3cba125e9ae9983</Hash>
+    <Hash>c25a53e2cfa32cae24fd49249198337a</Hash>
 </Codenesium>*/

@@ -76,41 +76,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Shift> ByName(string name)
+		public async virtual Task<Shift> ByName(string name)
 		{
 			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+		public async virtual Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
 		{
 			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
-		}
-
-		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.ShiftID == shiftID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
 		}
 
 		protected async Task<List<Shift>> Where(
 			Expression<Func<Shift, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Shift, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Shift, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ShiftID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Shift>();
-			}
-			else
-			{
-				return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Shift>();
-			}
+			return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Shift>();
 		}
 
 		private async Task<Shift> GetById(int shiftID)
@@ -123,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>21aa251ba99bebabb5f16c25a77247f9</Hash>
+    <Hash>0c9f232479683c3942e63e845fd6eba3</Hash>
 </Codenesium>*/

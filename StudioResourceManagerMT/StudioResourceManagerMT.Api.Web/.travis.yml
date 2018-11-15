@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.1
+script:
+   -  dotnet build StudioResourceManagerMT.Api.Web.csproj
+   -  dotnet test StudioResourceManagerMT.Api.DataAccess.csproj
+   -  dotnet test StudioResourceManagerMT.Api.Servicea.csproj
+   -  dotnet test StudioResourceManagerMT.Api.Client.csproj
+   -  dotnet test StudioResourceManagerMT.Api.Web.csproj

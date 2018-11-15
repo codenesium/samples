@@ -12,14 +12,14 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void SetProperties(int id,
 		                                  decimal amount,
-		                                  int clientId,
+		                                  int cutomerId,
 		                                  string note,
 		                                  int petId,
 		                                  DateTime saleDate,
 		                                  int salesPersonId)
 		{
 			this.Amount = amount;
-			this.ClientId = clientId;
+			this.CutomerId = cutomerId;
 			this.Id = id;
 			this.Note = note;
 			this.PetId = petId;
@@ -29,7 +29,7 @@ namespace PetShippingNS.Api.Services
 
 		public decimal Amount { get; private set; }
 
-		public int ClientId { get; private set; }
+		public int CutomerId { get; private set; }
 
 		public int Id { get; private set; }
 
@@ -44,5 +44,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d35e1fa8d15487412f66467ef2b77ee2</Hash>
+    <Hash>97577803fb7dd01718a2e249282ad9ab</Hash>
 </Codenesium>*/

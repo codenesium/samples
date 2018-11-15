@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../StackOverflow.Api.Contracts/StackOverflow.Api.Contracts.csproj" />
+    <ProjectReference Include="../StackOverflow.Api.Client/StackOverflow.Api.Client.csproj" />
     <ProjectReference Include="../StackOverflow.Api.DataAccess/StackOverflow.Api.DataAccess.csproj" />
   </ItemGroup>
 

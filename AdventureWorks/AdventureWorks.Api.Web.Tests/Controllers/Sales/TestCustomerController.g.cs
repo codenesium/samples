@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			var record = new ApiCustomerResponseModel();
-			var records = new List<ApiCustomerResponseModel>();
+			var record = new ApiCustomerServerResponseModel();
+			var records = new List<ApiCustomerServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCustomerResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCustomerServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCustomerResponseModel>>(new List<ApiCustomerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCustomerServerResponseModel>>(new List<ApiCustomerServerResponseModel>()));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCustomerResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCustomerServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerServerResponseModel()));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCustomerResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCustomerServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerServerResponseModel>(null));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCustomerResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCustomerResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCustomerServerResponseModel>.CreateResponse(null as ApiCustomerServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCustomerServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerServerResponseModel>>(mockResponse));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCustomerRequestModel>();
-			records.Add(new ApiCustomerRequestModel());
+			var records = new List<ApiCustomerServerRequestModel>();
+			records.Add(new ApiCustomerServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCustomerResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCustomerServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCustomerResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCustomerServerResponseModel>>(null as ApiCustomerServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerServerResponseModel>>(mockResponse.Object));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCustomerRequestModel>();
-			records.Add(new ApiCustomerRequestModel());
+			var records = new List<ApiCustomerServerRequestModel>();
+			records.Add(new ApiCustomerServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCustomerResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCustomerResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCustomerServerResponseModel>.CreateResponse(null as ApiCustomerServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCustomerServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerServerResponseModel>>(mockResponse));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCustomerRequestModel());
+			IActionResult response = await controller.Create(new ApiCustomerServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCustomerResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCustomerServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCustomerResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCustomerResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCustomerServerResponseModel>>(null as ApiCustomerServerResponseModel);
+			var mockRecord = new ApiCustomerServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCustomerServerResponseModel>>(mockResponse.Object));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCustomerRequestModel());
+			IActionResult response = await controller.Create(new ApiCustomerServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCustomerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCustomerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()))
-			.Callback<int, ApiCustomerRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()))
+			.Callback<int, ApiCustomerServerRequestModel>(
 				(id, model) => model.AccountNumber.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCustomerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerResponseModel>(new ApiCustomerResponseModel()));
-			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCustomerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerServerResponseModel>(new ApiCustomerServerResponseModel()));
+			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCustomerRequestModel>();
+			var patch = new JsonPatchDocument<ApiCustomerServerRequestModel>();
 			patch.Replace(x => x.AccountNumber, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerServerResponseModel>(null));
 			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCustomerRequestModel>();
+			var patch = new JsonPatchDocument<ApiCustomerServerRequestModel>();
 			patch.Replace(x => x.AccountNumber, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCustomerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCustomerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerResponseModel()));
-			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerServerResponseModel()));
+			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCustomerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCustomerServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCustomerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCustomerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerResponseModel()));
-			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCustomerServerResponseModel()));
+			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCustomerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCustomerServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CustomerControllerMockFacade mock = new CustomerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCustomerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCustomerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerResponseModel>(null));
-			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCustomerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCustomerServerResponseModel>(null));
+			CustomerController controller = new CustomerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCustomerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCustomerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCustomerServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ICustomerService> ServiceMock { get; set; } = new Mock<ICustomerService>();
 
-		public Mock<IApiCustomerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCustomerModelMapper>();
+		public Mock<IApiCustomerServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCustomerServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9a62d9009ee7ce78696f21b636c1657</Hash>
+    <Hash>ec4e1784941e889d787dc1a3be229949</Hash>
 </Codenesium>*/

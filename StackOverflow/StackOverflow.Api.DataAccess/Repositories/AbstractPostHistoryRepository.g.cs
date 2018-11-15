@@ -80,22 +80,14 @@ namespace StackOverflowNS.Api.DataAccess
 			Expression<Func<PostHistory, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PostHistory, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PostHistory, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PostHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistory>();
-			}
-			else
-			{
-				return await this.Context.Set<PostHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistory>();
-			}
+			return await this.Context.Set<PostHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistory>();
 		}
 
 		private async Task<PostHistory> GetById(int id)
@@ -108,5 +100,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8500e026a6d56ffc2e9a65369088f22</Hash>
+    <Hash>dd9db0ad8a3d81961be06f186d27e7d7</Hash>
 </Codenesium>*/

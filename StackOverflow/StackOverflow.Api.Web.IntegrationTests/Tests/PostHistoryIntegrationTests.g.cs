@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,88 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PostHistory")]
 	[Trait("Area", "Integration")]
-	public class PostHistoryIntegrationTests
+	public partial class PostHistoryIntegrationTests
 	{
 		public PostHistoryIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.PostHistoryDeleteAsync(1);
+			var model = new ApiPostHistoryClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			var model2 = new ApiPostHistoryClientRequestModel();
+			model2.SetProperties("C", DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, "C", "C", "C", 3);
+			var request = new List<ApiPostHistoryClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiPostHistoryClientResponseModel>> result = await client.PostHistoryBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<PostHistory>().ToList()[1].Comment.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<PostHistory>().ToList()[1].PostHistoryTypeId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[1].PostId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[1].RevisionGUID.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].Text.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].UserDisplayName.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].UserId.Should().Be(2);
+
+			context.Set<PostHistory>().ToList()[2].Comment.Should().Be("C");
+			context.Set<PostHistory>().ToList()[2].CreationDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<PostHistory>().ToList()[2].PostHistoryTypeId.Should().Be(3);
+			context.Set<PostHistory>().ToList()[2].PostId.Should().Be(3);
+			context.Set<PostHistory>().ToList()[2].RevisionGUID.Should().Be("C");
+			context.Set<PostHistory>().ToList()[2].Text.Should().Be("C");
+			context.Set<PostHistory>().ToList()[2].UserDisplayName.Should().Be("C");
+			context.Set<PostHistory>().ToList()[2].UserId.Should().Be(3);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiPostHistoryClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			CreateResponse<ApiPostHistoryClientResponseModel> result = await client.PostHistoryCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<PostHistory>().ToList()[1].Comment.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<PostHistory>().ToList()[1].PostHistoryTypeId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[1].PostId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[1].RevisionGUID.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].Text.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].UserDisplayName.Should().Be("B");
+			context.Set<PostHistory>().ToList()[1].UserId.Should().Be(2);
+
+			result.Record.Comment.Should().Be("B");
+			result.Record.CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.PostHistoryTypeId.Should().Be(2);
+			result.Record.PostId.Should().Be(2);
+			result.Record.RevisionGUID.Should().Be("B");
+			result.Record.Text.Should().Be("B");
+			result.Record.UserDisplayName.Should().Be("B");
+			result.Record.UserId.Should().Be(2);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +107,67 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiPostHistoryServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IPostHistoryService service = testServer.Host.Services.GetService(typeof(IPostHistoryService)) as IPostHistoryService;
+			ApiPostHistoryServerResponseModel model = await service.Get(1);
 
-			ApiPostHistoryResponseModel model = await client.PostHistoryGetAsync(1);
+			ApiPostHistoryClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
 
-			ApiPostHistoryModelMapper mapper = new ApiPostHistoryModelMapper();
+			UpdateResponse<ApiPostHistoryClientResponseModel> updateResponse = await client.PostHistoryUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiPostHistoryResponseModel> updateResponse = await client.PostHistoryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<PostHistory>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<PostHistory>().ToList()[0].Comment.Should().Be("B");
+			context.Set<PostHistory>().ToList()[0].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<PostHistory>().ToList()[0].PostHistoryTypeId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[0].PostId.Should().Be(2);
+			context.Set<PostHistory>().ToList()[0].RevisionGUID.Should().Be("B");
+			context.Set<PostHistory>().ToList()[0].Text.Should().Be("B");
+			context.Set<PostHistory>().ToList()[0].UserDisplayName.Should().Be("B");
+			context.Set<PostHistory>().ToList()[0].UserId.Should().Be(2);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Comment.Should().Be("B");
+			updateResponse.Record.CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.PostHistoryTypeId.Should().Be(2);
+			updateResponse.Record.PostId.Should().Be(2);
+			updateResponse.Record.RevisionGUID.Should().Be("B");
+			updateResponse.Record.Text.Should().Be("B");
+			updateResponse.Record.UserDisplayName.Should().Be("B");
+			updateResponse.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiPostHistoryRequestModel();
-			createModel.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
-			CreateResponse<ApiPostHistoryResponseModel> createResult = await client.PostHistoryCreateAsync(createModel);
+			IPostHistoryService service = testServer.Host.Services.GetService(typeof(IPostHistoryService)) as IPostHistoryService;
+			var model = new ApiPostHistoryServerRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
+			CreateResponse<ApiPostHistoryServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiPostHistoryResponseModel getResponse = await client.PostHistoryGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.PostHistoryDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiPostHistoryResponseModel verifyResponse = await client.PostHistoryGetAsync(2);
+			ApiPostHistoryServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +175,38 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiPostHistoryResponseModel response = await client.PostHistoryGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiPostHistoryClientResponseModel response = await client.PostHistoryGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Comment.Should().Be("A");
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Id.Should().Be(1);
+			response.PostHistoryTypeId.Should().Be(1);
+			response.PostId.Should().Be(1);
+			response.RevisionGUID.Should().Be("A");
+			response.Text.Should().Be("A");
+			response.UserDisplayName.Should().Be("A");
+			response.UserId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPostHistoryClientResponseModel response = await client.PostHistoryGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +215,42 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiPostHistoryResponseModel> response = await client.PostHistoryAllAsync();
+			List<ApiPostHistoryClientResponseModel> response = await client.PostHistoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Comment.Should().Be("A");
+			response[0].CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Id.Should().Be(1);
+			response[0].PostHistoryTypeId.Should().Be(1);
+			response[0].PostId.Should().Be(1);
+			response[0].RevisionGUID.Should().Be("A");
+			response[0].Text.Should().Be("A");
+			response[0].UserDisplayName.Should().Be("A");
+			response[0].UserId.Should().Be(1);
 		}
 
-		private async Task<ApiPostHistoryResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiPostHistoryRequestModel();
-			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", "B", "B", 2);
-			CreateResponse<ApiPostHistoryResponseModel> result = await client.PostHistoryCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.PostHistoryAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3df57826a5e802b2e817853add40ef83</Hash>
+    <Hash>fbf66d73d399b77311e5a22855cc9613</Hash>
 </Codenesium>*/

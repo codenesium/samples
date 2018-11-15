@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
@@ -16,7 +11,7 @@ namespace NebulaNS.Api.Services
 	{
 		protected IMachineRepository MachineRepository { get; private set; }
 
-		protected IApiMachineRequestModelValidator MachineModelValidator { get; private set; }
+		protected IApiMachineServerRequestModelValidator MachineModelValidator { get; private set; }
 
 		protected IBOLMachineMapper BolMachineMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace NebulaNS.Api.Services
 		public AbstractMachineService(
 			ILogger logger,
 			IMachineRepository machineRepository,
-			IApiMachineRequestModelValidator machineModelValidator,
+			IApiMachineServerRequestModelValidator machineModelValidator,
 			IBOLMachineMapper bolMachineMapper,
 			IDALMachineMapper dalMachineMapper,
 			IBOLLinkMapper bolLinkMapper,
@@ -47,14 +42,14 @@ namespace NebulaNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiMachineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.MachineRepository.All(limit, offset);
 
 			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiMachineResponseModel> Get(int id)
+		public virtual async Task<ApiMachineServerResponseModel> Get(int id)
 		{
 			var record = await this.MachineRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
-			ApiMachineRequestModel model)
+		public virtual async Task<CreateResponse<ApiMachineServerResponseModel>> Create(
+			ApiMachineServerRequestModel model)
 		{
-			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.MachineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachineServerResponseModel> response = ValidationResponseFactory<ApiMachineServerResponseModel>.CreateResponse(await this.MachineModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolMachineMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiMachineResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiMachineServerResponseModel>> Update(
 			int id,
-			ApiMachineRequestModel model)
+			ApiMachineServerRequestModel model)
 		{
 			var validationResult = await this.MachineModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.MachineRepository.Get(id);
 
-				return new UpdateResponse<ApiMachineResponseModel>(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiMachineServerResponseModel>.UpdateResponse(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiMachineResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiMachineServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.MachineModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.MachineModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.MachineRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiMachineResponseModel> ByMachineGuid(Guid machineGuid)
+		public async virtual Task<ApiMachineServerResponseModel> ByMachineGuid(Guid machineGuid)
 		{
 			Machine record = await this.MachineRepository.ByMachineGuid(machineGuid);
 
@@ -130,22 +127,15 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiLinkResponseModel>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiLinkServerResponseModel>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Link> records = await this.MachineRepository.LinksByAssignedMachineId(assignedMachineId, limit, offset);
 
 			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiMachineResponseModel>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Machine> records = await this.MachineRepository.ByTeamId(teamId, limit, offset);
-
-			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e85d87bfbefd54665057e0057f17163a</Hash>
+    <Hash>dae6dc6ce54f1e8c72670b3aaa5eb5d2</Hash>
 </Codenesium>*/

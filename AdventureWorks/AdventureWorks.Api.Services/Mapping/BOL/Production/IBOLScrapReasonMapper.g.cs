@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOScrapReason MapModelToBO(
 			short scrapReasonID,
-			ApiScrapReasonRequestModel model);
+			ApiScrapReasonServerRequestModel model);
 
-		ApiScrapReasonResponseModel MapBOToModel(
+		ApiScrapReasonServerResponseModel MapBOToModel(
 			BOScrapReason boScrapReason);
 
-		List<ApiScrapReasonResponseModel> MapBOToModel(
+		List<ApiScrapReasonServerResponseModel> MapBOToModel(
 			List<BOScrapReason> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c054ba3de8cb1c4608c1e5eb25c3222</Hash>
+    <Hash>dfa06d76b06c94a67324cd7b05f164c1</Hash>
 </Codenesium>*/

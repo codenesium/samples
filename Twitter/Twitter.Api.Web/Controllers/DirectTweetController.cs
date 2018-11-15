@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class DirectTweetController : AbstractDirectTweetController
 	{
 		public DirectTweetController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<DirectTweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDirectTweetService directTweetService,
-			IApiDirectTweetModelMapper directTweetModelMapper
+			IApiDirectTweetServerModelMapper directTweetModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8ea4319982697b54e02abc673ee54296</Hash>
+    <Hash>02fb2442701cddf31830b80f18d16e8b</Hash>
 </Codenesium>*/

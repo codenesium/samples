@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLColumnSameAsFKTableMapper();
-			ApiColumnSameAsFKTableRequestModel model = new ApiColumnSameAsFKTableRequestModel();
+			ApiColumnSameAsFKTableServerRequestModel model = new ApiColumnSameAsFKTableServerRequestModel();
 			model.SetProperties(1, 1);
 			BOColumnSameAsFKTable response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLColumnSameAsFKTableMapper();
 			BOColumnSameAsFKTable bo = new BOColumnSameAsFKTable();
 			bo.SetProperties(1, 1, 1);
-			ApiColumnSameAsFKTableResponseModel response = mapper.MapBOToModel(bo);
+			ApiColumnSameAsFKTableServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Person.Should().Be(1);
@@ -44,7 +44,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLColumnSameAsFKTableMapper();
 			BOColumnSameAsFKTable bo = new BOColumnSameAsFKTable();
 			bo.SetProperties(1, 1, 1);
-			List<ApiColumnSameAsFKTableResponseModel> response = mapper.MapBOToModel(new List<BOColumnSameAsFKTable>() { { bo } });
+			List<ApiColumnSameAsFKTableServerResponseModel> response = mapper.MapBOToModel(new List<BOColumnSameAsFKTable>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>70fc5567349394d89fc2a8ac542dd414</Hash>
+    <Hash>ce0bd8538424ba4e2fa5a8ecec575ee6</Hash>
 </Codenesium>*/

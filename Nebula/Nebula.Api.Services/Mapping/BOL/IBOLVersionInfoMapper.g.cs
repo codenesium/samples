@@ -9,16 +9,16 @@ namespace NebulaNS.Api.Services
 	{
 		BOVersionInfo MapModelToBO(
 			long version,
-			ApiVersionInfoRequestModel model);
+			ApiVersionInfoServerRequestModel model);
 
-		ApiVersionInfoResponseModel MapBOToModel(
+		ApiVersionInfoServerResponseModel MapBOToModel(
 			BOVersionInfo boVersionInfo);
 
-		List<ApiVersionInfoResponseModel> MapBOToModel(
+		List<ApiVersionInfoServerResponseModel> MapBOToModel(
 			List<BOVersionInfo> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bbb89cc48aa5398839541b2dfe7a20a3</Hash>
+    <Hash>7cb82c38ab61d142ef5a2fef0adf8c4b</Hash>
 </Codenesium>*/

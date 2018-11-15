@@ -37,41 +37,41 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(60)]
 		[Column("AddressLine1")]
-		public string AddressLine1 { get; private set; }
+		public virtual string AddressLine1 { get; private set; }
 
 		[MaxLength(60)]
 		[Column("AddressLine2")]
-		public string AddressLine2 { get; private set; }
+		public virtual string AddressLine2 { get; private set; }
 
 		[MaxLength(50)]
 		[Column("AddressType")]
-		public string AddressType { get; private set; }
+		public virtual string AddressType { get; private set; }
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(30)]
 		[Column("City")]
-		public string City { get; private set; }
+		public virtual string City { get; private set; }
 
 		[MaxLength(50)]
 		[Column("CountryRegionName")]
-		public string CountryRegionName { get; private set; }
+		public virtual string CountryRegionName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(15)]
 		[Column("PostalCode")]
-		public string PostalCode { get; private set; }
+		public virtual string PostalCode { get; private set; }
 
 		[MaxLength(50)]
 		[Column("StateProvinceName")]
-		public string StateProvinceName { get; private set; }
+		public virtual string StateProvinceName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>576d738b83b3b1d41afdcf6c2ef89aac</Hash>
+    <Hash>45f2862101fba7f4aa01979040a7fafa</Hash>
 </Codenesium>*/

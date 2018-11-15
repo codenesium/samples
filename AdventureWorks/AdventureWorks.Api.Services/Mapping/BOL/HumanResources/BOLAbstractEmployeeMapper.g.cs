@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOEmployee MapModelToBO(
 			int businessEntityID,
-			ApiEmployeeRequestModel model
+			ApiEmployeeServerRequestModel model
 			)
 		{
 			BOEmployee boEmployee = new BOEmployee();
@@ -32,20 +31,20 @@ namespace AdventureWorksNS.Api.Services
 			return boEmployee;
 		}
 
-		public virtual ApiEmployeeResponseModel MapBOToModel(
+		public virtual ApiEmployeeServerResponseModel MapBOToModel(
 			BOEmployee boEmployee)
 		{
-			var model = new ApiEmployeeResponseModel();
+			var model = new ApiEmployeeServerResponseModel();
 
 			model.SetProperties(boEmployee.BusinessEntityID, boEmployee.BirthDate, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatu, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHour, boEmployee.VacationHour);
 
 			return model;
 		}
 
-		public virtual List<ApiEmployeeResponseModel> MapBOToModel(
+		public virtual List<ApiEmployeeServerResponseModel> MapBOToModel(
 			List<BOEmployee> items)
 		{
-			List<ApiEmployeeResponseModel> response = new List<ApiEmployeeResponseModel>();
+			List<ApiEmployeeServerResponseModel> response = new List<ApiEmployeeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3edddddb131fc2125577b0802ab98155</Hash>
+    <Hash>e9b13c2e908cf3b56492526b2a23c8ec</Hash>
 </Codenesium>*/

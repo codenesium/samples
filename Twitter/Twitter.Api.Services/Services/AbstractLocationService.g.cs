@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected ILocationRepository LocationRepository { get; private set; }
 
-		protected IApiLocationRequestModelValidator LocationModelValidator { get; private set; }
+		protected IApiLocationServerRequestModelValidator LocationModelValidator { get; private set; }
 
 		protected IBOLLocationMapper BolLocationMapper { get; private set; }
 
@@ -35,7 +30,7 @@ namespace TwitterNS.Api.Services
 		public AbstractLocationService(
 			ILogger logger,
 			ILocationRepository locationRepository,
-			IApiLocationRequestModelValidator locationModelValidator,
+			IApiLocationServerRequestModelValidator locationModelValidator,
 			IBOLLocationMapper bolLocationMapper,
 			IDALLocationMapper dalLocationMapper,
 			IBOLTweetMapper bolTweetMapper,
@@ -55,14 +50,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiLocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.LocationRepository.All(limit, offset);
 
 			return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiLocationResponseModel> Get(int locationId)
+		public virtual async Task<ApiLocationServerResponseModel> Get(int locationId)
 		{
 			var record = await this.LocationRepository.Get(locationId);
 
@@ -76,10 +71,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
-			ApiLocationRequestModel model)
+		public virtual async Task<CreateResponse<ApiLocationServerResponseModel>> Create(
+			ApiLocationServerRequestModel model)
 		{
-			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.LocationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLocationServerResponseModel> response = ValidationResponseFactory<ApiLocationServerResponseModel>.CreateResponse(await this.LocationModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolLocationMapper.MapModelToBO(default(int), model);
@@ -91,9 +87,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiLocationResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiLocationServerResponseModel>> Update(
 			int locationId,
-			ApiLocationRequestModel model)
+			ApiLocationServerRequestModel model)
 		{
 			var validationResult = await this.LocationModelValidator.ValidateUpdateAsync(locationId, model);
 
@@ -104,18 +100,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.LocationRepository.Get(locationId);
 
-				return new UpdateResponse<ApiLocationResponseModel>(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiLocationResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int locationId)
 		{
-			ActionResponse response = new ActionResponse(await this.LocationModelValidator.ValidateDeleteAsync(locationId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.LocationModelValidator.ValidateDeleteAsync(locationId));
+
 			if (response.Success)
 			{
 				await this.LocationRepository.Delete(locationId);
@@ -124,22 +121,29 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiTweetResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTweetServerResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Tweet> records = await this.LocationRepository.TweetsByLocationId(locationId, limit, offset);
 
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiUserResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUserServerResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<User> records = await this.LocationRepository.UsersByLocationLocationId(locationLocationId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiLocationServerResponseModel>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Location> records = await this.LocationRepository.ByUserUserId(userUserId, limit, offset);
+
+			return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df3c4d6d6ad25c6cf706faa9db9ce2f7</Hash>
+    <Hash>2e64e33a492b233b5741661601ca20d8</Hash>
 </Codenesium>*/

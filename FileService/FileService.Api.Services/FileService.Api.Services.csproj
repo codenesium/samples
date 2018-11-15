@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../FileService.Api.Contracts/FileService.Api.Contracts.csproj" />
+    <ProjectReference Include="../FileService.Api.Client/FileService.Api.Client.csproj" />
     <ProjectReference Include="../FileService.Api.DataAccess/FileService.Api.DataAccess.csproj" />
   </ItemGroup>
 

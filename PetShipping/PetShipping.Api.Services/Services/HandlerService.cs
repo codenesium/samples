@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,23 +9,31 @@ namespace PetShippingNS.Api.Services
 		public HandlerService(
 			ILogger<IHandlerRepository> logger,
 			IHandlerRepository handlerRepository,
-			IApiHandlerRequestModelValidator handlerModelValidator,
-			IBOLHandlerMapper bolhandlerMapper,
-			IDALHandlerMapper dalhandlerMapper,
+			IApiHandlerServerRequestModelValidator handlerModelValidator,
+			IBOLHandlerMapper bolHandlerMapper,
+			IDALHandlerMapper dalHandlerMapper,
 			IBOLAirTransportMapper bolAirTransportMapper,
-			IDALAirTransportMapper dalAirTransportMapper)
+			IDALAirTransportMapper dalAirTransportMapper,
+			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
+			IBOLOtherTransportMapper bolOtherTransportMapper,
+			IDALOtherTransportMapper dalOtherTransportMapper)
 			: base(logger,
 			       handlerRepository,
 			       handlerModelValidator,
-			       bolhandlerMapper,
-			       dalhandlerMapper,
+			       bolHandlerMapper,
+			       dalHandlerMapper,
 			       bolAirTransportMapper,
-			       dalAirTransportMapper)
+			       dalAirTransportMapper,
+			       bolHandlerPipelineStepMapper,
+			       dalHandlerPipelineStepMapper,
+			       bolOtherTransportMapper,
+			       dalOtherTransportMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22898a4e540648cf104f89eb0d116b22</Hash>
+    <Hash>aed15c6baf23ab2d4a7bae26c9644bd2</Hash>
 </Codenesium>*/

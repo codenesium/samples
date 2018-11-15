@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BORate MapModelToBO(
 			int id,
-			ApiRateRequestModel model);
+			ApiRateServerRequestModel model);
 
-		ApiRateResponseModel MapBOToModel(
+		ApiRateServerResponseModel MapBOToModel(
 			BORate boRate);
 
-		List<ApiRateResponseModel> MapBOToModel(
+		List<ApiRateServerResponseModel> MapBOToModel(
 			List<BORate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f424fc5a4d2624939423832bfcdac35</Hash>
+    <Hash>f18b0b213157811330316f73e0284bd6</Hash>
 </Codenesium>*/

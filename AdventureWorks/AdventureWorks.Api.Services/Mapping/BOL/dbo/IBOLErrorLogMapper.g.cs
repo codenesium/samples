@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOErrorLog MapModelToBO(
 			int errorLogID,
-			ApiErrorLogRequestModel model);
+			ApiErrorLogServerRequestModel model);
 
-		ApiErrorLogResponseModel MapBOToModel(
+		ApiErrorLogServerResponseModel MapBOToModel(
 			BOErrorLog boErrorLog);
 
-		List<ApiErrorLogResponseModel> MapBOToModel(
+		List<ApiErrorLogServerResponseModel> MapBOToModel(
 			List<BOErrorLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9f5ec02a88369a8a0d0759ffdb5380f</Hash>
+    <Hash>4021851cc0526bc0a27aaf50c84de9d4</Hash>
 </Codenesium>*/

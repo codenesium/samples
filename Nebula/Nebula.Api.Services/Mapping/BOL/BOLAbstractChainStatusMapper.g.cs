@@ -1,4 +1,3 @@
-using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace NebulaNS.Api.Services
 	{
 		public virtual BOChainStatus MapModelToBO(
 			int id,
-			ApiChainStatusRequestModel model
+			ApiChainStatusServerRequestModel model
 			)
 		{
 			BOChainStatus boChainStatus = new BOChainStatus();
@@ -19,20 +18,20 @@ namespace NebulaNS.Api.Services
 			return boChainStatus;
 		}
 
-		public virtual ApiChainStatusResponseModel MapBOToModel(
+		public virtual ApiChainStatusServerResponseModel MapBOToModel(
 			BOChainStatus boChainStatus)
 		{
-			var model = new ApiChainStatusResponseModel();
+			var model = new ApiChainStatusServerResponseModel();
 
 			model.SetProperties(boChainStatus.Id, boChainStatus.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiChainStatusResponseModel> MapBOToModel(
+		public virtual List<ApiChainStatusServerResponseModel> MapBOToModel(
 			List<BOChainStatus> items)
 		{
-			List<ApiChainStatusResponseModel> response = new List<ApiChainStatusResponseModel>();
+			List<ApiChainStatusServerResponseModel> response = new List<ApiChainStatusServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9cd9b66fa587b79a41046579ce23d2b8</Hash>
+    <Hash>bead37be05f8c4456485712ceccf2604</Hash>
 </Codenesium>*/

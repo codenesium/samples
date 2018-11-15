@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOPostHistoryType MapModelToBO(
 			int id,
-			ApiPostHistoryTypeRequestModel model
+			ApiPostHistoryTypeServerRequestModel model
 			)
 		{
 			BOPostHistoryType boPostHistoryType = new BOPostHistoryType();
@@ -19,20 +18,20 @@ namespace StackOverflowNS.Api.Services
 			return boPostHistoryType;
 		}
 
-		public virtual ApiPostHistoryTypeResponseModel MapBOToModel(
+		public virtual ApiPostHistoryTypeServerResponseModel MapBOToModel(
 			BOPostHistoryType boPostHistoryType)
 		{
-			var model = new ApiPostHistoryTypeResponseModel();
+			var model = new ApiPostHistoryTypeServerResponseModel();
 
 			model.SetProperties(boPostHistoryType.Id, boPostHistoryType.Type);
 
 			return model;
 		}
 
-		public virtual List<ApiPostHistoryTypeResponseModel> MapBOToModel(
+		public virtual List<ApiPostHistoryTypeServerResponseModel> MapBOToModel(
 			List<BOPostHistoryType> items)
 		{
-			List<ApiPostHistoryTypeResponseModel> response = new List<ApiPostHistoryTypeResponseModel>();
+			List<ApiPostHistoryTypeServerResponseModel> response = new List<ApiPostHistoryTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10b14ce88f0622920bb6c07b28af37dc</Hash>
+    <Hash>96de3eae54bd8413b99a4c3759e91bcd</Hash>
 </Codenesium>*/

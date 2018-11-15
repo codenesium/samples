@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOAddressType MapModelToBO(
 			int addressTypeID,
-			ApiAddressTypeRequestModel model);
+			ApiAddressTypeServerRequestModel model);
 
-		ApiAddressTypeResponseModel MapBOToModel(
+		ApiAddressTypeServerResponseModel MapBOToModel(
 			BOAddressType boAddressType);
 
-		List<ApiAddressTypeResponseModel> MapBOToModel(
+		List<ApiAddressTypeServerResponseModel> MapBOToModel(
 			List<BOAddressType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>374e880cf9ed64a92fc51b1a01f0dd42</Hash>
+    <Hash>e15cdf71c3018db5004b9a7abe6811bb</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IHandlerRepository HandlerRepository { get; private set; }
 
-		protected IApiHandlerRequestModelValidator HandlerModelValidator { get; private set; }
+		protected IApiHandlerServerRequestModelValidator HandlerModelValidator { get; private set; }
 
 		protected IBOLHandlerMapper BolHandlerMapper { get; private set; }
 
@@ -26,16 +21,28 @@ namespace PetShippingNS.Api.Services
 
 		protected IDALAirTransportMapper DalAirTransportMapper { get; private set; }
 
+		protected IBOLHandlerPipelineStepMapper BolHandlerPipelineStepMapper { get; private set; }
+
+		protected IDALHandlerPipelineStepMapper DalHandlerPipelineStepMapper { get; private set; }
+
+		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
+
+		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractHandlerService(
 			ILogger logger,
 			IHandlerRepository handlerRepository,
-			IApiHandlerRequestModelValidator handlerModelValidator,
+			IApiHandlerServerRequestModelValidator handlerModelValidator,
 			IBOLHandlerMapper bolHandlerMapper,
 			IDALHandlerMapper dalHandlerMapper,
 			IBOLAirTransportMapper bolAirTransportMapper,
-			IDALAirTransportMapper dalAirTransportMapper)
+			IDALAirTransportMapper dalAirTransportMapper,
+			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
+			IBOLOtherTransportMapper bolOtherTransportMapper,
+			IDALOtherTransportMapper dalOtherTransportMapper)
 			: base()
 		{
 			this.HandlerRepository = handlerRepository;
@@ -44,17 +51,21 @@ namespace PetShippingNS.Api.Services
 			this.DalHandlerMapper = dalHandlerMapper;
 			this.BolAirTransportMapper = bolAirTransportMapper;
 			this.DalAirTransportMapper = dalAirTransportMapper;
+			this.BolHandlerPipelineStepMapper = bolHandlerPipelineStepMapper;
+			this.DalHandlerPipelineStepMapper = dalHandlerPipelineStepMapper;
+			this.BolOtherTransportMapper = bolOtherTransportMapper;
+			this.DalOtherTransportMapper = dalOtherTransportMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiHandlerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiHandlerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.HandlerRepository.All(limit, offset);
 
 			return this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiHandlerResponseModel> Get(int id)
+		public virtual async Task<ApiHandlerServerResponseModel> Get(int id)
 		{
 			var record = await this.HandlerRepository.Get(id);
 
@@ -68,10 +79,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiHandlerResponseModel>> Create(
-			ApiHandlerRequestModel model)
+		public virtual async Task<CreateResponse<ApiHandlerServerResponseModel>> Create(
+			ApiHandlerServerRequestModel model)
 		{
-			CreateResponse<ApiHandlerResponseModel> response = new CreateResponse<ApiHandlerResponseModel>(await this.HandlerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiHandlerServerResponseModel> response = ValidationResponseFactory<ApiHandlerServerResponseModel>.CreateResponse(await this.HandlerModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolHandlerMapper.MapModelToBO(default(int), model);
@@ -83,9 +95,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiHandlerResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiHandlerServerResponseModel>> Update(
 			int id,
-			ApiHandlerRequestModel model)
+			ApiHandlerServerRequestModel model)
 		{
 			var validationResult = await this.HandlerModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +108,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.HandlerRepository.Get(id);
 
-				return new UpdateResponse<ApiHandlerResponseModel>(this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiHandlerServerResponseModel>.UpdateResponse(this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiHandlerResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiHandlerServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.HandlerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.HandlerModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.HandlerRepository.Delete(id);
@@ -116,22 +129,29 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiAirTransportResponseModel>> AirTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAirTransportServerResponseModel>> AirTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<AirTransport> records = await this.HandlerRepository.AirTransportsByHandlerId(handlerId, limit, offset);
 
 			return this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiHandlerResponseModel>> ByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiHandlerPipelineStepServerResponseModel>> HandlerPipelineStepsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Handler> records = await this.HandlerRepository.ByHandlerId(handlerId, limit, offset);
+			List<HandlerPipelineStep> records = await this.HandlerRepository.HandlerPipelineStepsByHandlerId(handlerId, limit, offset);
 
-			return this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(records));
+			return this.BolHandlerPipelineStepMapper.MapBOToModel(this.DalHandlerPipelineStepMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiOtherTransportServerResponseModel>> OtherTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<OtherTransport> records = await this.HandlerRepository.OtherTransportsByHandlerId(handlerId, limit, offset);
+
+			return this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4d95ed3dda122d2fe2c158f4bb08eb7</Hash>
+    <Hash>fc9cfab6608c5ca460723df840967afa</Hash>
 </Codenesium>*/

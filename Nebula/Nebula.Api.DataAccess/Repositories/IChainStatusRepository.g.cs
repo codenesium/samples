@@ -19,10 +19,14 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<ChainStatus> ByName(string name);
 
-		Task<List<Chain>> ChainsByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ChainStatus>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
+
+		Task<Chain> CreateChain(Chain item);
+
+		Task DeleteChain(Chain item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>da6fe4271d124d2728f8055b6c7b9703</Hash>
+    <Hash>43ededd03f8c07c14da58211d4a130cb</Hash>
 </Codenesium>*/

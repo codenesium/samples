@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPostLinkMapperMock,
 			                                  mock.DALMapperMockFactory.DALPostLinkMapperMock);
 
-			List<ApiPostLinkResponseModel> response = await service.All();
+			List<ApiPostLinkServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPostLinkMapperMock,
 			                                  mock.DALMapperMockFactory.DALPostLinkMapperMock);
 
-			ApiPostLinkResponseModel response = await service.Get(default(int));
+			ApiPostLinkServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPostLinkMapperMock,
 			                                  mock.DALMapperMockFactory.DALPostLinkMapperMock);
 
-			ApiPostLinkResponseModel response = await service.Get(default(int));
+			ApiPostLinkServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPostLinkRepository>();
-			var model = new ApiPostLinkRequestModel();
+			var model = new ApiPostLinkServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostLink>())).Returns(Task.FromResult(new PostLink()));
 			var service = new PostLinkService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPostLinkMapperMock,
 			                                  mock.DALMapperMockFactory.DALPostLinkMapperMock);
 
-			CreateResponse<ApiPostLinkResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPostLinkServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostLinkModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ModelValidatorMockFactory.PostLinkModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PostLink>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPostLinkRepository>();
-			var model = new ApiPostLinkRequestModel();
+			var model = new ApiPostLinkServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostLink>())).Returns(Task.FromResult(new PostLink()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostLink()));
 			var service = new PostLinkService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPostLinkMapperMock,
 			                                  mock.DALMapperMockFactory.DALPostLinkMapperMock);
 
-			UpdateResponse<ApiPostLinkResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPostLinkServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostLinkModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostLinkRequestModel>()));
+			mock.ModelValidatorMockFactory.PostLinkModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PostLink>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPostLinkRepository>();
-			var model = new ApiPostLinkRequestModel();
+			var model = new ApiPostLinkServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PostLinkService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f9179fbce6514d1f7f40db1eb17aced1</Hash>
+    <Hash>6de52ede034a29023022ff280c073be4</Hash>
 </Codenesium>*/

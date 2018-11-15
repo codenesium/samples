@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOSalesTaxRate MapModelToBO(
 			int salesTaxRateID,
-			ApiSalesTaxRateRequestModel model
+			ApiSalesTaxRateServerRequestModel model
 			)
 		{
 			BOSalesTaxRate boSalesTaxRate = new BOSalesTaxRate();
@@ -24,20 +23,20 @@ namespace AdventureWorksNS.Api.Services
 			return boSalesTaxRate;
 		}
 
-		public virtual ApiSalesTaxRateResponseModel MapBOToModel(
+		public virtual ApiSalesTaxRateServerResponseModel MapBOToModel(
 			BOSalesTaxRate boSalesTaxRate)
 		{
-			var model = new ApiSalesTaxRateResponseModel();
+			var model = new ApiSalesTaxRateServerResponseModel();
 
 			model.SetProperties(boSalesTaxRate.SalesTaxRateID, boSalesTaxRate.ModifiedDate, boSalesTaxRate.Name, boSalesTaxRate.Rowguid, boSalesTaxRate.StateProvinceID, boSalesTaxRate.TaxRate, boSalesTaxRate.TaxType);
 
 			return model;
 		}
 
-		public virtual List<ApiSalesTaxRateResponseModel> MapBOToModel(
+		public virtual List<ApiSalesTaxRateServerResponseModel> MapBOToModel(
 			List<BOSalesTaxRate> items)
 		{
-			List<ApiSalesTaxRateResponseModel> response = new List<ApiSalesTaxRateResponseModel>();
+			List<ApiSalesTaxRateServerResponseModel> response = new List<ApiSalesTaxRateServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71ca4f2b0b073ad07017a7d954a4d916</Hash>
+    <Hash>3af4650e490ec5365b45c6332fecc7b2</Hash>
 </Codenesium>*/

@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLPostHistoryTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPostHistoryTypeMapperMock);
 
-			List<ApiPostHistoryTypeResponseModel> response = await service.All();
+			List<ApiPostHistoryTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLPostHistoryTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPostHistoryTypeMapperMock);
 
-			ApiPostHistoryTypeResponseModel response = await service.Get(default(int));
+			ApiPostHistoryTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLPostHistoryTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPostHistoryTypeMapperMock);
 
-			ApiPostHistoryTypeResponseModel response = await service.Get(default(int));
+			ApiPostHistoryTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPostHistoryTypeRepository>();
-			var model = new ApiPostHistoryTypeRequestModel();
+			var model = new ApiPostHistoryTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostHistoryType>())).Returns(Task.FromResult(new PostHistoryType()));
 			var service = new PostHistoryTypeService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLPostHistoryTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPostHistoryTypeMapperMock);
 
-			CreateResponse<ApiPostHistoryTypeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPostHistoryTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostHistoryTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.PostHistoryTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PostHistoryType>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPostHistoryTypeRepository>();
-			var model = new ApiPostHistoryTypeRequestModel();
+			var model = new ApiPostHistoryTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostHistoryType>())).Returns(Task.FromResult(new PostHistoryType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistoryType()));
 			var service = new PostHistoryTypeService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLPostHistoryTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPostHistoryTypeMapperMock);
 
-			UpdateResponse<ApiPostHistoryTypeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPostHistoryTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PostHistoryTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.PostHistoryTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PostHistoryType>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPostHistoryTypeRepository>();
-			var model = new ApiPostHistoryTypeRequestModel();
+			var model = new ApiPostHistoryTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PostHistoryTypeService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>235ae6e8a4a63fc8a1bf8127fc1e8ffd</Hash>
+    <Hash>e338bb5efb6b30fd0338d0f29022239d</Hash>
 </Codenesium>*/

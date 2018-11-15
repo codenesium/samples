@@ -31,7 +31,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceActionResponseModel> response = await service.All();
+			List<ApiDeviceActionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceActionResponseModel response = await service.Get(default(int));
+			ApiDeviceActionServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceActionResponseModel response = await service.Get(default(int));
+			ApiDeviceActionServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
-			var model = new ApiDeviceActionRequestModel();
+			var model = new ApiDeviceActionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeviceAction>())).Returns(Task.FromResult(new DeviceAction()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			CreateResponse<ApiDeviceActionResponseModel> response = await service.Create(model);
+			CreateResponse<ApiDeviceActionServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionRequestModel>()));
+			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DeviceAction>()));
 		}
 
@@ -95,7 +95,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
-			var model = new ApiDeviceActionRequestModel();
+			var model = new ApiDeviceActionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeviceAction>())).Returns(Task.FromResult(new DeviceAction()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			UpdateResponse<ApiDeviceActionResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiDeviceActionServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionRequestModel>()));
+			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DeviceAction>()));
 		}
 
@@ -115,7 +115,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
-			var model = new ApiDeviceActionRequestModel();
+			var model = new ApiDeviceActionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DeviceActionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceActionResponseModel> response = await service.ByDeviceId(default(int));
+			List<ApiDeviceActionServerResponseModel> response = await service.ByDeviceId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceActionResponseModel> response = await service.ByDeviceId(default(int));
+			List<ApiDeviceActionServerResponseModel> response = await service.ByDeviceId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>03097d345a932666220b189e443f84df</Hash>
+    <Hash>6d74ce772375e9a505b7a7f012c663c1</Hash>
 </Codenesium>*/

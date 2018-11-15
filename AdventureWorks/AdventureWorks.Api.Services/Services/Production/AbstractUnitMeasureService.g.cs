@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IUnitMeasureRepository UnitMeasureRepository { get; private set; }
 
-		protected IApiUnitMeasureRequestModelValidator UnitMeasureModelValidator { get; private set; }
+		protected IApiUnitMeasureServerRequestModelValidator UnitMeasureModelValidator { get; private set; }
 
 		protected IBOLUnitMeasureMapper BolUnitMeasureMapper { get; private set; }
 
@@ -35,7 +30,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractUnitMeasureService(
 			ILogger logger,
 			IUnitMeasureRepository unitMeasureRepository,
-			IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
+			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
 			IBOLUnitMeasureMapper bolUnitMeasureMapper,
 			IDALUnitMeasureMapper dalUnitMeasureMapper,
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
@@ -55,14 +50,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.UnitMeasureRepository.All(limit, offset);
 
 			return this.BolUnitMeasureMapper.MapBOToModel(this.DalUnitMeasureMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode)
+		public virtual async Task<ApiUnitMeasureServerResponseModel> Get(string unitMeasureCode)
 		{
 			var record = await this.UnitMeasureRepository.Get(unitMeasureCode);
 
@@ -76,10 +71,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
-			ApiUnitMeasureRequestModel model)
+		public virtual async Task<CreateResponse<ApiUnitMeasureServerResponseModel>> Create(
+			ApiUnitMeasureServerRequestModel model)
 		{
-			CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.UnitMeasureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUnitMeasureServerResponseModel> response = ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.CreateResponse(await this.UnitMeasureModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolUnitMeasureMapper.MapModelToBO(default(string), model);
@@ -91,9 +87,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiUnitMeasureResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiUnitMeasureServerResponseModel>> Update(
 			string unitMeasureCode,
-			ApiUnitMeasureRequestModel model)
+			ApiUnitMeasureServerRequestModel model)
 		{
 			var validationResult = await this.UnitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model);
 
@@ -104,18 +100,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.UnitMeasureRepository.Get(unitMeasureCode);
 
-				return new UpdateResponse<ApiUnitMeasureResponseModel>(this.BolUnitMeasureMapper.MapBOToModel(this.DalUnitMeasureMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.UpdateResponse(this.BolUnitMeasureMapper.MapBOToModel(this.DalUnitMeasureMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiUnitMeasureResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			string unitMeasureCode)
 		{
-			ActionResponse response = new ActionResponse(await this.UnitMeasureModelValidator.ValidateDeleteAsync(unitMeasureCode));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.UnitMeasureModelValidator.ValidateDeleteAsync(unitMeasureCode));
+
 			if (response.Success)
 			{
 				await this.UnitMeasureRepository.Delete(unitMeasureCode);
@@ -124,7 +121,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiUnitMeasureResponseModel> ByName(string name)
+		public async virtual Task<ApiUnitMeasureServerResponseModel> ByName(string name)
 		{
 			UnitMeasure record = await this.UnitMeasureRepository.ByName(name);
 
@@ -138,21 +135,21 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBillOfMaterialServerResponseModel>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<BillOfMaterial> records = await this.UnitMeasureRepository.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductServerResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Product> records = await this.UnitMeasureRepository.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, limit, offset);
 
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductServerResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Product> records = await this.UnitMeasureRepository.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, limit, offset);
 
@@ -162,5 +159,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d4af6e14ec7070fb64d44eaeba5d848</Hash>
+    <Hash>b230dcd9c96e2e6bf32627b71898ebf6</Hash>
 </Codenesium>*/

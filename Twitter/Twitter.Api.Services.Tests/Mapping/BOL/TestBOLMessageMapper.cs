@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLMessageMapper();
-			ApiMessageRequestModel model = new ApiMessageRequestModel();
+			ApiMessageServerRequestModel model = new ApiMessageServerRequestModel();
 			model.SetProperties("A", 1);
 			BOMessage response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLMessageMapper();
 			BOMessage bo = new BOMessage();
 			bo.SetProperties(1, "A", 1);
-			ApiMessageResponseModel response = mapper.MapBOToModel(bo);
+			ApiMessageServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Content.Should().Be("A");
 			response.MessageId.Should().Be(1);
@@ -44,7 +44,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLMessageMapper();
 			BOMessage bo = new BOMessage();
 			bo.SetProperties(1, "A", 1);
-			List<ApiMessageResponseModel> response = mapper.MapBOToModel(new List<BOMessage>() { { bo } });
+			List<ApiMessageServerResponseModel> response = mapper.MapBOToModel(new List<BOMessage>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1617b1665a55289b89adb95061a1a9f2</Hash>
+    <Hash>92b7918aa7320a696e1729f94850cbe0</Hash>
 </Codenesium>*/

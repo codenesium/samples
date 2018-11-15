@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace NebulaNS.Api.Services
 		public OrganizationService(
 			ILogger<IOrganizationRepository> logger,
 			IOrganizationRepository organizationRepository,
-			IApiOrganizationRequestModelValidator organizationModelValidator,
-			IBOLOrganizationMapper bolorganizationMapper,
-			IDALOrganizationMapper dalorganizationMapper,
+			IApiOrganizationServerRequestModelValidator organizationModelValidator,
+			IBOLOrganizationMapper bolOrganizationMapper,
+			IDALOrganizationMapper dalOrganizationMapper,
 			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper)
 			: base(logger,
 			       organizationRepository,
 			       organizationModelValidator,
-			       bolorganizationMapper,
-			       dalorganizationMapper,
+			       bolOrganizationMapper,
+			       dalOrganizationMapper,
 			       bolTeamMapper,
 			       dalTeamMapper)
 		{
@@ -34,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac0f21646725f6fb08ace4c9fee802f7</Hash>
+    <Hash>a0137a57c621bbffd9805c97883f6a90</Hash>
 </Codenesium>*/

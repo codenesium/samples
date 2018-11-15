@@ -76,14 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Vendor> ByAccountNumber(string accountNumber)
+		public async virtual Task<Vendor> ByAccountNumber(string accountNumber)
 		{
 			return await this.Context.Set<Vendor>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
-		}
-
-		public async virtual Task<List<ProductVendor>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductVendor>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductVendor>();
 		}
 
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
@@ -95,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<Vendor, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Vendor, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Vendor, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
-			}
-			else
-			{
-				return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
-			}
+			return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
 		}
 
 		private async Task<Vendor> GetById(int businessEntityID)
@@ -123,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9d9e773660af435f6b5ff2b48307f34</Hash>
+    <Hash>9039af93e1d3f40233ddac8b726d3387</Hash>
 </Codenesium>*/

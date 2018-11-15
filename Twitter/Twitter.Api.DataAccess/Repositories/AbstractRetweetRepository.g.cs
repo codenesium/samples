@@ -76,12 +76,12 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Retweet>> ByRetwitterUserId(int? retwitterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Retweet>> ByRetwitterUserId(int? retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.RetwitterUserId == retwitterUserId, limit, offset);
 		}
 
-		public async Task<List<Retweet>> ByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Retweet>> ByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TweetTweetId == tweetTweetId, limit, offset);
 		}
@@ -100,22 +100,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<Retweet, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Retweet, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Retweet, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Retweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Retweet>();
-			}
-			else
-			{
-				return await this.Context.Set<Retweet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Retweet>();
-			}
+			return await this.Context.Set<Retweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
 		private async Task<Retweet> GetById(int id)
@@ -128,5 +120,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34a746a58e924fa5ca42d036a3bce633</Hash>
+    <Hash>62951b8b8d6cc65fecc98b06e5ea8ae9</Hash>
 </Codenesium>*/

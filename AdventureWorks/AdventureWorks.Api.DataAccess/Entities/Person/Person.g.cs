@@ -44,54 +44,53 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AdditionalContactInfo")]
-		public string AdditionalContactInfo { get; private set; }
+		public virtual string AdditionalContactInfo { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("Demographics")]
-		public string Demographic { get; private set; }
+		public virtual string Demographic { get; private set; }
 
 		[Column("EmailPromotion")]
-		public int EmailPromotion { get; private set; }
+		public virtual int EmailPromotion { get; private set; }
 
 		[MaxLength(50)]
 		[Column("FirstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("MiddleName")]
-		public string MiddleName { get; private set; }
+		public virtual string MiddleName { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("NameStyle")]
-		public bool NameStyle { get; private set; }
+		public virtual bool NameStyle { get; private set; }
 
 		[MaxLength(2)]
 		[Column("PersonType")]
-		public string PersonType { get; private set; }
+		public virtual string PersonType { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[MaxLength(10)]
 		[Column("Suffix")]
-		public string Suffix { get; private set; }
+		public virtual string Suffix { get; private set; }
 
 		[MaxLength(8)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f56db013076b4884b4c04a101b319b3c</Hash>
+    <Hash>1e6a013afb0ccc2e14f99819dd805bab</Hash>
 </Codenesium>*/

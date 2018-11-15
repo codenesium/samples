@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace PetStoreNS.Api.Services
 		public PetService(
 			ILogger<IPetRepository> logger,
 			IPetRepository petRepository,
-			IApiPetRequestModelValidator petModelValidator,
-			IBOLPetMapper bolpetMapper,
-			IDALPetMapper dalpetMapper,
+			IApiPetServerRequestModelValidator petModelValidator,
+			IBOLPetMapper bolPetMapper,
+			IDALPetMapper dalPetMapper,
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       petRepository,
 			       petModelValidator,
-			       bolpetMapper,
-			       dalpetMapper,
+			       bolPetMapper,
+			       dalPetMapper,
 			       bolSaleMapper,
 			       dalSaleMapper)
 		{
@@ -34,5 +27,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd0ddbcd5573e959179b2cf2b2dac52b</Hash>
+    <Hash>17b16551b3de391df3522e4464c8ed33</Hash>
 </Codenesium>*/

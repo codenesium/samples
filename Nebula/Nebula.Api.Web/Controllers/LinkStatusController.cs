@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class LinkStatusController : AbstractLinkStatusController
 	{
 		public LinkStatusController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<LinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkStatusService linkStatusService,
-			IApiLinkStatusModelMapper linkStatusModelMapper
+			IApiLinkStatusServerModelMapper linkStatusModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4cb931307a16346db61aecc7cca87d17</Hash>
+    <Hash>43253b4cde8770eabdcd99c72e103b1c</Hash>
 </Codenesium>*/

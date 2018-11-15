@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
 			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
 
-			List<ApiCompositePrimaryKeyResponseModel> response = await service.All();
+			List<ApiCompositePrimaryKeyServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
 			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
 
-			ApiCompositePrimaryKeyResponseModel response = await service.Get(default(int));
+			ApiCompositePrimaryKeyServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
 			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
 
-			ApiCompositePrimaryKeyResponseModel response = await service.Get(default(int));
+			ApiCompositePrimaryKeyServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
-			var model = new ApiCompositePrimaryKeyRequestModel();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CompositePrimaryKey>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
 			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
 
-			CreateResponse<ApiCompositePrimaryKeyResponseModel> response = await service.Create(model);
+			CreateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyRequestModel>()));
+			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CompositePrimaryKey>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
-			var model = new ApiCompositePrimaryKeyRequestModel();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CompositePrimaryKey>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
 			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
 
-			UpdateResponse<ApiCompositePrimaryKeyResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyRequestModel>()));
+			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CompositePrimaryKey>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
-			var model = new ApiCompositePrimaryKeyRequestModel();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>380deb4ed3123029b101181d4da435cb</Hash>
+    <Hash>191d39e5133b5e83725048933d5fa826</Hash>
 </Codenesium>*/

@@ -86,31 +86,18 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<Breed>().SingleOrDefaultAsync(x => x.Id == breedId);
 		}
 
-		public async virtual Task<Client> ClientByClientId(int clientId)
-		{
-			return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
-		}
-
 		protected async Task<List<Pet>> Where(
 			Expression<Func<Pet, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Pet, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Pet, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Pet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pet>();
-			}
-			else
-			{
-				return await this.Context.Set<Pet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Pet>();
-			}
+			return await this.Context.Set<Pet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
 		private async Task<Pet> GetById(int id)
@@ -123,5 +110,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ec2048e9b1e73fb1d67dc4d375538b3</Hash>
+    <Hash>33d51f63829af13f256495189dc8aa4b</Hash>
 </Codenesium>*/

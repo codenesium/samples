@@ -10,7 +10,7 @@ namespace TwitterNS.Api.Services
 		{
 		}
 
-		public virtual void SetProperties(string userId,
+		public virtual void SetProperties(int userId,
 		                                  DateTime? dateFollowed,
 		                                  string muted)
 		{
@@ -23,10 +23,10 @@ namespace TwitterNS.Api.Services
 
 		public string Muted { get; private set; }
 
-		public string UserId { get; private set; }
+		public int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d227e272fac35c60b101444f8b7567d</Hash>
+    <Hash>677fb11be9975770e64f5c523b4c58f7</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			var record = new ApiSpaceResponseModel();
-			var records = new List<ApiSpaceResponseModel>();
+			var record = new ApiSpaceServerResponseModel();
+			var records = new List<ApiSpaceServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpaceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpaceServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpaceResponseModel>>(new List<ApiSpaceResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpaceServerResponseModel>>(new List<ApiSpaceServerResponseModel>()));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpaceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpaceServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceServerResponseModel()));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSpaceResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSpaceServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceServerResponseModel>(null));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpaceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpaceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpaceServerResponseModel>.CreateResponse(null as ApiSpaceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpaceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceServerResponseModel>>(mockResponse));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpaceRequestModel>();
-			records.Add(new ApiSpaceRequestModel());
+			var records = new List<ApiSpaceServerRequestModel>();
+			records.Add(new ApiSpaceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSpaceResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSpaceServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpaceResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSpaceServerResponseModel>>(null as ApiSpaceServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceServerResponseModel>>(mockResponse.Object));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpaceRequestModel>();
-			records.Add(new ApiSpaceRequestModel());
+			var records = new List<ApiSpaceServerRequestModel>();
+			records.Add(new ApiSpaceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpaceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpaceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpaceServerResponseModel>.CreateResponse(null as ApiSpaceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpaceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceServerResponseModel>>(mockResponse));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpaceRequestModel());
+			IActionResult response = await controller.Create(new ApiSpaceServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpaceResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpaceServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpaceResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSpaceResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSpaceServerResponseModel>>(null as ApiSpaceServerResponseModel);
+			var mockRecord = new ApiSpaceServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpaceServerResponseModel>>(mockResponse.Object));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpaceRequestModel());
+			IActionResult response = await controller.Create(new ApiSpaceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpaceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpaceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()))
-			.Callback<int, ApiSpaceRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>()))
+			.Callback<int, ApiSpaceServerRequestModel>(
 				(id, model) => model.Description.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSpaceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceResponseModel>(new ApiSpaceResponseModel()));
-			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSpaceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceServerResponseModel>(new ApiSpaceServerResponseModel()));
+			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpaceRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpaceServerRequestModel>();
 			patch.Replace(x => x.Description, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceServerResponseModel>(null));
 			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpaceRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpaceServerRequestModel>();
 			patch.Replace(x => x.Description, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpaceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpaceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceResponseModel()));
-			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceServerResponseModel()));
+			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpaceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpaceServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpaceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpaceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceResponseModel()));
-			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpaceServerResponseModel()));
+			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpaceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpaceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SpaceControllerMockFacade mock = new SpaceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpaceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpaceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceResponseModel>(null));
-			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpaceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpaceServerResponseModel>(null));
+			SpaceController controller = new SpaceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpaceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpaceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpaceServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<ISpaceService> ServiceMock { get; set; } = new Mock<ISpaceService>();
 
-		public Mock<IApiSpaceModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpaceModelMapper>();
+		public Mock<IApiSpaceServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpaceServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a3dfefd0b2242cf98d32dadb2bdee51</Hash>
+    <Hash>0f6eea28ad8e3ac06b86078255951cfb</Hash>
 </Codenesium>*/

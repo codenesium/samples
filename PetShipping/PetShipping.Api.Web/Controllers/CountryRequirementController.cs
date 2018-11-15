@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CountryRequirementController : AbstractCountryRequirementController
 	{
 		public CountryRequirementController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<CountryRequirementController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRequirementService countryRequirementService,
-			IApiCountryRequirementModelMapper countryRequirementModelMapper
+			IApiCountryRequirementServerModelMapper countryRequirementModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee14fa4ae9e01a59483a662ec7ea6095</Hash>
+    <Hash>6b2e5f272aa208786cf054d6d63552de</Hash>
 </Codenesium>*/

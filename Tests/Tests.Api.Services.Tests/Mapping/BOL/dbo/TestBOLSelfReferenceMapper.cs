@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSelfReferenceMapper();
-			ApiSelfReferenceRequestModel model = new ApiSelfReferenceRequestModel();
+			ApiSelfReferenceServerRequestModel model = new ApiSelfReferenceServerRequestModel();
 			model.SetProperties(1, 1);
 			BOSelfReference response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLSelfReferenceMapper();
 			BOSelfReference bo = new BOSelfReference();
 			bo.SetProperties(1, 1, 1);
-			ApiSelfReferenceResponseModel response = mapper.MapBOToModel(bo);
+			ApiSelfReferenceServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.SelfReferenceId.Should().Be(1);
@@ -44,7 +44,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLSelfReferenceMapper();
 			BOSelfReference bo = new BOSelfReference();
 			bo.SetProperties(1, 1, 1);
-			List<ApiSelfReferenceResponseModel> response = mapper.MapBOToModel(new List<BOSelfReference>() { { bo } });
+			List<ApiSelfReferenceServerResponseModel> response = mapper.MapBOToModel(new List<BOSelfReference>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>45b8e855e6a4152d4798076eace334fc</Hash>
+    <Hash>59a7f2cca00a26ef6d3e61eed3245ee7</Hash>
 </Codenesium>*/

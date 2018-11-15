@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IStateProvinceService StateProvinceService { get; private set; }
 
-		protected IApiStateProvinceModelMapper StateProvinceModelMapper { get; private set; }
+		protected IApiStateProvinceServerModelMapper StateProvinceModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractStateProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStateProvinceService stateProvinceService,
-			IApiStateProvinceModelMapper stateProvinceModelMapper
+			IApiStateProvinceServerModelMapper stateProvinceModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateProvinceServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStateProvinceResponseModel> response = await this.StateProvinceService.All(query.Limit, query.Offset);
+			List<ApiStateProvinceServerResponseModel> response = await this.StateProvinceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiStateProvinceResponseModel response = await this.StateProvinceService.Get(id);
+			ApiStateProvinceServerResponseModel response = await this.StateProvinceService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiStateProvinceServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateProvinceRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateProvinceServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiStateProvinceResponseModel> records = new List<ApiStateProvinceResponseModel>();
+			List<ApiStateProvinceServerResponseModel> records = new List<ApiStateProvinceServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Create(model);
+				CreateResponse<ApiStateProvinceServerResponseModel> result = await this.StateProvinceService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiStateProvinceServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiStateProvinceResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiStateProvinceServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceServerRequestModel model)
 		{
-			CreateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Create(model);
+			CreateResponse<ApiStateProvinceServerResponseModel> result = await this.StateProvinceService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStateProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStateProvinceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStateProvinceRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStateProvinceServerRequestModel> patch)
 		{
-			ApiStateProvinceResponseModel record = await this.StateProvinceService.Get(id);
+			ApiStateProvinceServerResponseModel record = await this.StateProvinceService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiStateProvinceRequestModel model = await this.PatchModel(id, patch);
+				ApiStateProvinceServerRequestModel model = await this.PatchModel(id, patch) as ApiStateProvinceServerRequestModel;
 
-				UpdateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Update(id, model);
+				UpdateResponse<ApiStateProvinceServerResponseModel> result = await this.StateProvinceService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStateProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStateProvinceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateProvinceRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateProvinceServerRequestModel model)
 		{
-			ApiStateProvinceRequestModel request = await this.PatchModel(id, this.StateProvinceModelMapper.CreatePatch(model));
+			ApiStateProvinceServerRequestModel request = await this.PatchModel(id, this.StateProvinceModelMapper.CreatePatch(model)) as ApiStateProvinceServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Update(id, request);
+				UpdateResponse<ApiStateProvinceServerResponseModel> result = await this.StateProvinceService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.StateProvinceService.Delete(id);
@@ -209,11 +219,30 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiStateProvinceResponseModel response = await this.StateProvinceService.ByName(name);
+			ApiStateProvinceServerResponseModel response = await this.StateProvinceService.ByName(name);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
+		[Route("byRowguid/{rowguid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiStateProvinceServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiStateProvinceServerResponseModel response = await this.StateProvinceService.ByRowguid(rowguid);
 
 			if (response == null)
 			{
@@ -228,11 +257,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
-			ApiStateProvinceResponseModel response = await this.StateProvinceService.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
+			ApiStateProvinceServerResponseModel response = await this.StateProvinceService.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
 
 			if (response == null)
 			{
@@ -245,9 +274,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{stateProvinceID}/AddressesByStateProvinceID")]
+		[Route("{stateProvinceID}/Addresses")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> AddressesByStateProvinceID(int stateProvinceID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -256,12 +285,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAddressResponseModel> response = await this.StateProvinceService.AddressesByStateProvinceID(stateProvinceID, query.Limit, query.Offset);
+			List<ApiAddressServerResponseModel> response = await this.StateProvinceService.AddressesByStateProvinceID(stateProvinceID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiStateProvinceRequestModel> PatchModel(int id, JsonPatchDocument<ApiStateProvinceRequestModel> patch)
+		private async Task<ApiStateProvinceServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiStateProvinceServerRequestModel> patch)
 		{
 			var record = await this.StateProvinceService.Get(id);
 
@@ -271,7 +300,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiStateProvinceRequestModel request = this.StateProvinceModelMapper.MapResponseToRequest(record);
+				ApiStateProvinceServerRequestModel request = this.StateProvinceModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -280,5 +309,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ddb1b893002aceb6c04aa0fc96ad909d</Hash>
+    <Hash>f0024062b7ed7688aaa328bf8a1245a9</Hash>
 </Codenesium>*/

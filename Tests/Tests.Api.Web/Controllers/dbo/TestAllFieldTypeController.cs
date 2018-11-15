@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TestAllFieldTypeController : AbstractTestAllFieldTypeController
 	{
 		public TestAllFieldTypeController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<TestAllFieldTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITestAllFieldTypeService testAllFieldTypeService,
-			IApiTestAllFieldTypeModelMapper testAllFieldTypeModelMapper
+			IApiTestAllFieldTypeServerModelMapper testAllFieldTypeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>28e6a0c73006a04c9135c8c4e7c32848</Hash>
+    <Hash>14b9566b24dd387c7051ed4ee98f0d6f</Hash>
 </Codenesium>*/

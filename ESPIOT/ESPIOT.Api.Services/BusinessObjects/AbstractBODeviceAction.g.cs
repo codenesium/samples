@@ -11,14 +11,14 @@ namespace ESPIOTNS.Api.Services
 		}
 
 		public virtual void SetProperties(int id,
+		                                  string @value,
 		                                  int deviceId,
-		                                  string name,
-		                                  string @value)
+		                                  string name)
 		{
+			this.@Value = @value;
 			this.DeviceId = deviceId;
 			this.Id = id;
 			this.Name = name;
-			this.@Value = @value;
 		}
 
 		public int DeviceId { get; private set; }
@@ -32,5 +32,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8763f18e52d4b80e8ec348dc642b809e</Hash>
+    <Hash>6c93531289037c1ce38f330346e3f18a</Hash>
 </Codenesium>*/

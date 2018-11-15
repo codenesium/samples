@@ -9,16 +9,16 @@ namespace NebulaNS.Api.Services
 	{
 		BOChainStatus MapModelToBO(
 			int id,
-			ApiChainStatusRequestModel model);
+			ApiChainStatusServerRequestModel model);
 
-		ApiChainStatusResponseModel MapBOToModel(
+		ApiChainStatusServerResponseModel MapBOToModel(
 			BOChainStatus boChainStatus);
 
-		List<ApiChainStatusResponseModel> MapBOToModel(
+		List<ApiChainStatusServerResponseModel> MapBOToModel(
 			List<BOChainStatus> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b1288e55a85486519d7f50a3d2a24c9</Hash>
+    <Hash>24f330640b687d274e3d9d88157ccf8a</Hash>
 </Codenesium>*/

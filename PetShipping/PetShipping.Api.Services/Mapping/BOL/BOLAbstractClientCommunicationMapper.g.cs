@@ -1,4 +1,3 @@
-using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public virtual BOClientCommunication MapModelToBO(
 			int id,
-			ApiClientCommunicationRequestModel model
+			ApiClientCommunicationServerRequestModel model
 			)
 		{
 			BOClientCommunication boClientCommunication = new BOClientCommunication();
@@ -22,20 +21,20 @@ namespace PetShippingNS.Api.Services
 			return boClientCommunication;
 		}
 
-		public virtual ApiClientCommunicationResponseModel MapBOToModel(
+		public virtual ApiClientCommunicationServerResponseModel MapBOToModel(
 			BOClientCommunication boClientCommunication)
 		{
-			var model = new ApiClientCommunicationResponseModel();
+			var model = new ApiClientCommunicationServerResponseModel();
 
 			model.SetProperties(boClientCommunication.Id, boClientCommunication.ClientId, boClientCommunication.DateCreated, boClientCommunication.EmployeeId, boClientCommunication.Note);
 
 			return model;
 		}
 
-		public virtual List<ApiClientCommunicationResponseModel> MapBOToModel(
+		public virtual List<ApiClientCommunicationServerResponseModel> MapBOToModel(
 			List<BOClientCommunication> items)
 		{
-			List<ApiClientCommunicationResponseModel> response = new List<ApiClientCommunicationResponseModel>();
+			List<ApiClientCommunicationServerResponseModel> response = new List<ApiClientCommunicationServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2230875dca47e0913ddc0c374812143a</Hash>
+    <Hash>d59902abc11ee7c7212336a16c29942b</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
-		protected IApiCustomerRequestModelValidator CustomerModelValidator { get; private set; }
+		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
 
 		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractCustomerService(
 			ILogger logger,
 			ICustomerRepository customerRepository,
-			IApiCustomerRequestModelValidator customerModelValidator,
+			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
@@ -47,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCustomerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CustomerRepository.All(limit, offset);
 
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCustomerResponseModel> Get(int customerID)
+		public virtual async Task<ApiCustomerServerResponseModel> Get(int customerID)
 		{
 			var record = await this.CustomerRepository.Get(customerID);
 
@@ -68,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCustomerResponseModel>> Create(
-			ApiCustomerRequestModel model)
+		public virtual async Task<CreateResponse<ApiCustomerServerResponseModel>> Create(
+			ApiCustomerServerRequestModel model)
 		{
-			CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.CustomerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCustomerServerResponseModel> response = ValidationResponseFactory<ApiCustomerServerResponseModel>.CreateResponse(await this.CustomerModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCustomerResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCustomerServerResponseModel>> Update(
 			int customerID,
-			ApiCustomerRequestModel model)
+			ApiCustomerServerRequestModel model)
 		{
 			var validationResult = await this.CustomerModelValidator.ValidateUpdateAsync(customerID, model);
 
@@ -96,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CustomerRepository.Get(customerID);
 
-				return new UpdateResponse<ApiCustomerResponseModel>(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCustomerResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int customerID)
 		{
-			ActionResponse response = new ActionResponse(await this.CustomerModelValidator.ValidateDeleteAsync(customerID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CustomerModelValidator.ValidateDeleteAsync(customerID));
+
 			if (response.Success)
 			{
 				await this.CustomerRepository.Delete(customerID);
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiCustomerResponseModel> ByAccountNumber(string accountNumber)
+		public async virtual Task<ApiCustomerServerResponseModel> ByAccountNumber(string accountNumber)
 		{
 			Customer record = await this.CustomerRepository.ByAccountNumber(accountNumber);
 
@@ -130,14 +127,28 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<ApiCustomerServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			Customer record = await this.CustomerRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<List<ApiCustomerServerResponseModel>> ByTerritoryID(int? territoryID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Customer> records = await this.CustomerRepository.ByTerritoryID(territoryID, limit, offset);
 
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.CustomerRepository.SalesOrderHeadersByCustomerID(customerID, limit, offset);
 
@@ -147,5 +158,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>64d4f618d37cd907ff3a73a60628cc80</Hash>
+    <Hash>7cee0b64e6cb3cc047e2f1d0f2afd820</Hash>
 </Codenesium>*/

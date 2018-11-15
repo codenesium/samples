@@ -42,53 +42,53 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(50)]
 		[Column("ContactType")]
-		public string ContactType { get; private set; }
+		public virtual string ContactType { get; private set; }
 
 		[MaxLength(50)]
 		[Column("EmailAddress")]
-		public string EmailAddress { get; private set; }
+		public virtual string EmailAddress { get; private set; }
 
 		[Column("EmailPromotion")]
-		public int EmailPromotion { get; private set; }
+		public virtual int EmailPromotion { get; private set; }
 
 		[MaxLength(50)]
 		[Column("FirstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("MiddleName")]
-		public string MiddleName { get; private set; }
+		public virtual string MiddleName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(25)]
 		[Column("PhoneNumber")]
-		public string PhoneNumber { get; private set; }
+		public virtual string PhoneNumber { get; private set; }
 
 		[MaxLength(50)]
 		[Column("PhoneNumberType")]
-		public string PhoneNumberType { get; private set; }
+		public virtual string PhoneNumberType { get; private set; }
 
 		[MaxLength(10)]
 		[Column("Suffix")]
-		public string Suffix { get; private set; }
+		public virtual string Suffix { get; private set; }
 
 		[MaxLength(8)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>13cdd00d20882093e437ca0731317b54</Hash>
+    <Hash>cc89d5cdcf5798d82f2217e055042464</Hash>
 </Codenesium>*/

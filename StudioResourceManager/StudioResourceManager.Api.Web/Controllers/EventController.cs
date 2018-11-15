@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class EventController : AbstractEventController
 	{
 		public EventController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<EventController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEventService eventService,
-			IApiEventModelMapper eventModelMapper
+			IApiEventServerModelMapper eventModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4aca8dfd50c52a7f1254a2cda83b7310</Hash>
+    <Hash>9a90ef7e4a71d4601c40e56c8a9f1be5</Hash>
 </Codenesium>*/

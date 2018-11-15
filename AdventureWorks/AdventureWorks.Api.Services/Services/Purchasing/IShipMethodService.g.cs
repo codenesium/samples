@@ -2,31 +2,32 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IShipMethodService
 	{
-		Task<CreateResponse<ApiShipMethodResponseModel>> Create(
-			ApiShipMethodRequestModel model);
+		Task<CreateResponse<ApiShipMethodServerResponseModel>> Create(
+			ApiShipMethodServerRequestModel model);
 
-		Task<UpdateResponse<ApiShipMethodResponseModel>> Update(int shipMethodID,
-		                                                         ApiShipMethodRequestModel model);
+		Task<UpdateResponse<ApiShipMethodServerResponseModel>> Update(int shipMethodID,
+		                                                               ApiShipMethodServerRequestModel model);
 
 		Task<ActionResponse> Delete(int shipMethodID);
 
-		Task<ApiShipMethodResponseModel> Get(int shipMethodID);
+		Task<ApiShipMethodServerResponseModel> Get(int shipMethodID);
 
-		Task<List<ApiShipMethodResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiShipMethodServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiShipMethodResponseModel> ByName(string name);
+		Task<ApiShipMethodServerResponseModel> ByName(string name);
 
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiShipMethodServerResponseModel> ByRowguid(Guid rowguid);
+
+		Task<List<ApiPurchaseOrderHeaderServerResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f93af2fcf3987c0222d0d8e61fd4584</Hash>
+    <Hash>6820c27190633459d9bb947c0947ac6b</Hash>
 </Codenesium>*/

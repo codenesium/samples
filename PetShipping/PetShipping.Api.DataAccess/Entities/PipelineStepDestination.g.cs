@@ -24,23 +24,33 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("destinationId")]
-		public int DestinationId { get; private set; }
+		public virtual int DestinationId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("pipelineStepId")]
-		public int PipelineStepId { get; private set; }
+		public virtual int PipelineStepId { get; private set; }
 
 		[ForeignKey("DestinationId")]
 		public virtual Destination DestinationNavigation { get; private set; }
 
+		public void SetDestinationNavigation(Destination item)
+		{
+			this.DestinationNavigation = item;
+		}
+
 		[ForeignKey("PipelineStepId")]
 		public virtual PipelineStep PipelineStepNavigation { get; private set; }
+
+		public void SetPipelineStepNavigation(PipelineStep item)
+		{
+			this.PipelineStepNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>63c4e0a2ae9d2261f0c093884c784de0</Hash>
+    <Hash>4cb0a51a973b8dae9e07c197f35caafd</Hash>
 </Codenesium>*/

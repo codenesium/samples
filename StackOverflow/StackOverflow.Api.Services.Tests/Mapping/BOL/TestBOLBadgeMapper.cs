@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLBadgeMapper();
-			ApiBadgeRequestModel model = new ApiBadgeRequestModel();
+			ApiBadgeServerRequestModel model = new ApiBadgeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 			BOBadge response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLBadgeMapper();
 			BOBadge bo = new BOBadge();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-			ApiBadgeResponseModel response = mapper.MapBOToModel(bo);
+			ApiBadgeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
@@ -46,7 +46,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLBadgeMapper();
 			BOBadge bo = new BOBadge();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-			List<ApiBadgeResponseModel> response = mapper.MapBOToModel(new List<BOBadge>() { { bo } });
+			List<ApiBadgeServerResponseModel> response = mapper.MapBOToModel(new List<BOBadge>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>286e25994a42bda7a559fa61453bd0cd</Hash>
+    <Hash>8c992fb7528dbb37fadf5569285ba0f1</Hash>
 </Codenesium>*/

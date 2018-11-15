@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class AWBuildVersionController : AbstractAWBuildVersionController
 	{
 		public AWBuildVersionController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AWBuildVersionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAWBuildVersionService aWBuildVersionService,
-			IApiAWBuildVersionModelMapper aWBuildVersionModelMapper
+			IApiAWBuildVersionServerModelMapper aWBuildVersionModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3dbbc514fdd84fd5084191a5923b23ca</Hash>
+    <Hash>dca8bc451b7fc7b29744c81c43208ae8</Hash>
 </Codenesium>*/

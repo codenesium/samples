@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPenMapper();
-			ApiPenRequestModel model = new ApiPenRequestModel();
+			ApiPenServerRequestModel model = new ApiPenServerRequestModel();
 			model.SetProperties("A");
 			BOPen response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPenMapper();
 			BOPen bo = new BOPen();
 			bo.SetProperties(1, "A");
-			ApiPenResponseModel response = mapper.MapBOToModel(bo);
+			ApiPenServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPenMapper();
 			BOPen bo = new BOPen();
 			bo.SetProperties(1, "A");
-			List<ApiPenResponseModel> response = mapper.MapBOToModel(new List<BOPen>() { { bo } });
+			List<ApiPenServerResponseModel> response = mapper.MapBOToModel(new List<BOPen>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a868a4aca449cffe057b4f4579a1329</Hash>
+    <Hash>95e18ff06f1932c280fa9677b2215278</Hash>
 </Codenesium>*/

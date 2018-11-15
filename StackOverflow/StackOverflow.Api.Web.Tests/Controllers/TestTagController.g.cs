@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			var record = new ApiTagResponseModel();
-			var records = new List<ApiTagResponseModel>();
+			var record = new ApiTagServerResponseModel();
+			var records = new List<ApiTagServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTagResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTagServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTagResponseModel>>(new List<ApiTagResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTagServerResponseModel>>(new List<ApiTagServerResponseModel>()));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTagResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTagServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagServerResponseModel()));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTagResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTagServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagServerResponseModel>(null));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTagResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTagResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTagServerResponseModel>.CreateResponse(null as ApiTagServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTagServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagServerResponseModel>>(mockResponse));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTagRequestModel>();
-			records.Add(new ApiTagRequestModel());
+			var records = new List<ApiTagServerRequestModel>();
+			records.Add(new ApiTagServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTagResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTagServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTagResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTagServerResponseModel>>(null as ApiTagServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagServerResponseModel>>(mockResponse.Object));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTagRequestModel>();
-			records.Add(new ApiTagRequestModel());
+			var records = new List<ApiTagServerRequestModel>();
+			records.Add(new ApiTagServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTagResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTagResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTagServerResponseModel>.CreateResponse(null as ApiTagServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTagServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagServerResponseModel>>(mockResponse));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTagRequestModel());
+			IActionResult response = await controller.Create(new ApiTagServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTagResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTagServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTagResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTagResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTagServerResponseModel>>(null as ApiTagServerResponseModel);
+			var mockRecord = new ApiTagServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTagServerResponseModel>>(mockResponse.Object));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTagRequestModel());
+			IActionResult response = await controller.Create(new ApiTagServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTagResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTagServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>()))
-			.Callback<int, ApiTagRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>()))
+			.Callback<int, ApiTagServerRequestModel>(
 				(id, model) => model.Count.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTagResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagResponseModel>(new ApiTagResponseModel()));
-			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTagServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagServerResponseModel>(new ApiTagServerResponseModel()));
+			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTagRequestModel>();
+			var patch = new JsonPatchDocument<ApiTagServerRequestModel>();
 			patch.Replace(x => x.Count, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagServerResponseModel>(null));
 			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTagRequestModel>();
+			var patch = new JsonPatchDocument<ApiTagServerRequestModel>();
 			patch.Replace(x => x.Count, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTagResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTagServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagResponseModel()));
-			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagServerResponseModel()));
+			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTagRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTagServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTagResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTagServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagResponseModel()));
-			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTagServerResponseModel()));
+			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTagRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTagServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TagControllerMockFacade mock = new TagControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTagResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTagServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagResponseModel>(null));
-			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTagServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTagServerResponseModel>(null));
+			TagController controller = new TagController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTagServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTagRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTagServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<ITagService> ServiceMock { get; set; } = new Mock<ITagService>();
 
-		public Mock<IApiTagModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTagModelMapper>();
+		public Mock<IApiTagServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTagServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>df2d320059fec2c115ae27c77bae1897</Hash>
+    <Hash>250cdfba424ed2fccdd8a605954bd6e8</Hash>
 </Codenesium>*/

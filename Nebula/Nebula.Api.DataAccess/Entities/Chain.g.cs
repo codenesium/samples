@@ -28,30 +28,40 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		[Column("chainStatusId")]
-		public int ChainStatusId { get; private set; }
+		public virtual int ChainStatusId { get; private set; }
 
 		[Column("externalId")]
-		public Guid ExternalId { get; private set; }
+		public virtual Guid ExternalId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("teamId")]
-		public int TeamId { get; private set; }
+		public virtual int TeamId { get; private set; }
 
 		[ForeignKey("ChainStatusId")]
 		public virtual ChainStatus ChainStatusNavigation { get; private set; }
 
+		public void SetChainStatusNavigation(ChainStatus item)
+		{
+			this.ChainStatusNavigation = item;
+		}
+
 		[ForeignKey("TeamId")]
 		public virtual Team TeamNavigation { get; private set; }
+
+		public void SetTeamNavigation(Team item)
+		{
+			this.TeamNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35cbbc446a5e0b2cd5bad2249a3ca9ad</Hash>
+    <Hash>a70dc457218a03a284e97202612605af</Hash>
 </Codenesium>*/

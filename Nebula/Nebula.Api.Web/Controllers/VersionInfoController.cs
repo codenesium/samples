@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class VersionInfoController : AbstractVersionInfoController
 	{
 		public VersionInfoController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<VersionInfoController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVersionInfoService versionInfoService,
-			IApiVersionInfoModelMapper versionInfoModelMapper
+			IApiVersionInfoServerModelMapper versionInfoModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>197da64184ea86f588c096754ac48960</Hash>
+    <Hash>84ff93ad3599ff1b045c1f2654da6fbc</Hash>
 </Codenesium>*/

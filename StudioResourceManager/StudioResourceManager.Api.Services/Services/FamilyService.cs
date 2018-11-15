@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 		public FamilyService(
 			ILogger<IFamilyRepository> logger,
 			IFamilyRepository familyRepository,
-			IApiFamilyRequestModelValidator familyModelValidator,
-			IBOLFamilyMapper bolfamilyMapper,
-			IDALFamilyMapper dalfamilyMapper,
+			IApiFamilyServerRequestModelValidator familyModelValidator,
+			IBOLFamilyMapper bolFamilyMapper,
+			IDALFamilyMapper dalFamilyMapper,
 			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       familyRepository,
 			       familyModelValidator,
-			       bolfamilyMapper,
-			       dalfamilyMapper,
+			       bolFamilyMapper,
+			       dalFamilyMapper,
 			       bolStudentMapper,
 			       dalStudentMapper)
 		{
@@ -34,5 +27,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3948951bb8021cad1888b51056b83c0e</Hash>
+    <Hash>e0a139670c6ff5390456267a1d669541</Hash>
 </Codenesium>*/

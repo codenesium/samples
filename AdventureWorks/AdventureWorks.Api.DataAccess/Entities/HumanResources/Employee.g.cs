@@ -48,60 +48,58 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BirthDate")]
-		public DateTime BirthDate { get; private set; }
+		public virtual DateTime BirthDate { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("CurrentFlag")]
-		public bool CurrentFlag { get; private set; }
+		public virtual bool CurrentFlag { get; private set; }
 
 		[MaxLength(1)]
 		[Column("Gender")]
-		public string Gender { get; private set; }
+		public virtual string Gender { get; private set; }
 
 		[Column("HireDate")]
-		public DateTime HireDate { get; private set; }
+		public virtual DateTime HireDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("JobTitle")]
-		public string JobTitle { get; private set; }
+		public virtual string JobTitle { get; private set; }
 
 		[MaxLength(256)]
 		[Column("LoginID")]
-		public string LoginID { get; private set; }
+		public virtual string LoginID { get; private set; }
 
 		[MaxLength(1)]
 		[Column("MaritalStatus")]
-		public string MaritalStatu { get; private set; }
+		public virtual string MaritalStatu { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(15)]
 		[Column("NationalIDNumber")]
-		public string NationalIDNumber { get; private set; }
+		public virtual string NationalIDNumber { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("OrganizationLevel")]
-		public short? OrganizationLevel { get; private set; }
+		public virtual short? OrganizationLevel { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("SalariedFlag")]
-		public bool SalariedFlag { get; private set; }
+		public virtual bool SalariedFlag { get; private set; }
 
 		[Column("SickLeaveHours")]
-		public short SickLeaveHour { get; private set; }
+		public virtual short SickLeaveHour { get; private set; }
 
 		[Column("VacationHours")]
-		public short VacationHour { get; private set; }
+		public virtual short VacationHour { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a5759f32401f28ff4c1dddda0ba2e62</Hash>
+    <Hash>386d5c9bf977f46644b394f76bc61e0d</Hash>
 </Codenesium>*/

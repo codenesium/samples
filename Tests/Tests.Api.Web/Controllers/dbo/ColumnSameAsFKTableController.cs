@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ColumnSameAsFKTableController : AbstractColumnSameAsFKTableController
 	{
 		public ColumnSameAsFKTableController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<ColumnSameAsFKTableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IColumnSameAsFKTableService columnSameAsFKTableService,
-			IApiColumnSameAsFKTableModelMapper columnSameAsFKTableModelMapper
+			IApiColumnSameAsFKTableServerModelMapper columnSameAsFKTableModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b7504aed59e11c2cee646a1165413594</Hash>
+    <Hash>008f61ef401aece19261c0c2ab173c54</Hash>
 </Codenesium>*/

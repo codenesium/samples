@@ -76,41 +76,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<WorkOrder>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<WorkOrder>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
-		public async Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ScrapReasonID == scrapReasonID, limit, offset);
-		}
-
-		public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutingsByWorkOrderID(int workOrderID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<WorkOrderRouting>().Where(x => x.WorkOrderID == workOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
 		}
 
 		protected async Task<List<WorkOrder>> Where(
 			Expression<Func<WorkOrder, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<WorkOrder, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<WorkOrder, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.WorkOrderID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
-			}
-			else
-			{
-				return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
-			}
+			return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
 		private async Task<WorkOrder> GetById(int workOrderID)
@@ -123,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa6a66bffe20f266a9b8f68969b4a485</Hash>
+    <Hash>5c498fabd6baf3aa5d197f5b1cd82635</Hash>
 </Codenesium>*/

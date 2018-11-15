@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class StudioController : AbstractStudioController
 	{
 		public StudioController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<StudioController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStudioService studioService,
-			IApiStudioModelMapper studioModelMapper
+			IApiStudioServerModelMapper studioModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4d50b73c2210440f398a3ecefe462dbb</Hash>
+    <Hash>de6f5d619c6a5840bba062acaf979d5a</Hash>
 </Codenesium>*/

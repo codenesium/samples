@@ -85,22 +85,14 @@ namespace PetShippingNS.Api.DataAccess
 			Expression<Func<PipelineStepStatu, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PipelineStepStatu, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PipelineStepStatu, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PipelineStepStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStatu>();
-			}
-			else
-			{
-				return await this.Context.Set<PipelineStepStatu>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStatu>();
-			}
+			return await this.Context.Set<PipelineStepStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStatu>();
 		}
 
 		private async Task<PipelineStepStatu> GetById(int id)
@@ -113,5 +105,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfbf57727fbc46c041019edee531ef2d</Hash>
+    <Hash>26d9b7314e0d7e3c11e10db3949b947d</Hash>
 </Codenesium>*/

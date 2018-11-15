@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class LocationController : AbstractLocationController
 	{
 		public LocationController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<LocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILocationService locationService,
-			IApiLocationModelMapper locationModelMapper
+			IApiLocationServerModelMapper locationModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>01b2035a3b63cc4bab507331cf9862c8</Hash>
+    <Hash>2c4758993d77060240f2ce2d28fba1ee</Hash>
 </Codenesium>*/

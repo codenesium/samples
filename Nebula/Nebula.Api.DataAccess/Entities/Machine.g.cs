@@ -31,29 +31,29 @@ namespace NebulaNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("description")]
-		public string Description { get; private set; }
+		public virtual string Description { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("jwtKey")]
-		public string JwtKey { get; private set; }
+		public virtual string JwtKey { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastIpAddress")]
-		public string LastIpAddress { get; private set; }
+		public virtual string LastIpAddress { get; private set; }
 
 		[Column("machineGuid")]
-		public Guid MachineGuid { get; private set; }
+		public virtual Guid MachineGuid { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>49256a85b82d017f243485ee260fbfd4</Hash>
+    <Hash>686bf1c0d5aadd0908818184e3d99896</Hash>
 </Codenesium>*/

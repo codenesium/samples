@@ -31,7 +31,7 @@ namespace TwitterNS.Api.DataAccess
 			return this.Where(x => true, limit, offset);
 		}
 
-		public async virtual Task<Following> Get(string userId)
+		public async virtual Task<Following> Get(int userId)
 		{
 			return await this.GetById(userId);
 		}
@@ -61,7 +61,7 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			string userId)
+			int userId)
 		{
 			Following record = await this.GetById(userId);
 
@@ -80,25 +80,17 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<Following, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Following, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Following, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.UserId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Following>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Following>();
-			}
-			else
-			{
-				return await this.Context.Set<Following>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Following>();
-			}
+			return await this.Context.Set<Following>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Following>();
 		}
 
-		private async Task<Following> GetById(string userId)
+		private async Task<Following> GetById(int userId)
 		{
 			List<Following> records = await this.Where(x => x.UserId == userId);
 
@@ -108,5 +100,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8156590c5aeecd836e50f668110a2ddc</Hash>
+    <Hash>a95e17f3f44e98343bf55357a5ac7043</Hash>
 </Codenesium>*/

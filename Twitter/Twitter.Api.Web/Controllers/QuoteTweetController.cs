@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class QuoteTweetController : AbstractQuoteTweetController
 	{
 		public QuoteTweetController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<QuoteTweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IQuoteTweetService quoteTweetService,
-			IApiQuoteTweetModelMapper quoteTweetModelMapper
+			IApiQuoteTweetServerModelMapper quoteTweetModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>62d10de3160296c8a999dc6fcbc83199</Hash>
+    <Hash>ec9e15cc3931f724f03104754adce94d</Hash>
 </Codenesium>*/

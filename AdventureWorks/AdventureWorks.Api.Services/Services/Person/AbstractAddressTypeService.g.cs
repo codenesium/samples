@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,45 +11,37 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IAddressTypeRepository AddressTypeRepository { get; private set; }
 
-		protected IApiAddressTypeRequestModelValidator AddressTypeModelValidator { get; private set; }
+		protected IApiAddressTypeServerRequestModelValidator AddressTypeModelValidator { get; private set; }
 
 		protected IBOLAddressTypeMapper BolAddressTypeMapper { get; private set; }
 
 		protected IDALAddressTypeMapper DalAddressTypeMapper { get; private set; }
-
-		protected IBOLBusinessEntityAddressMapper BolBusinessEntityAddressMapper { get; private set; }
-
-		protected IDALBusinessEntityAddressMapper DalBusinessEntityAddressMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractAddressTypeService(
 			ILogger logger,
 			IAddressTypeRepository addressTypeRepository,
-			IApiAddressTypeRequestModelValidator addressTypeModelValidator,
+			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
 			IBOLAddressTypeMapper bolAddressTypeMapper,
-			IDALAddressTypeMapper dalAddressTypeMapper,
-			IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
+			IDALAddressTypeMapper dalAddressTypeMapper)
 			: base()
 		{
 			this.AddressTypeRepository = addressTypeRepository;
 			this.AddressTypeModelValidator = addressTypeModelValidator;
 			this.BolAddressTypeMapper = bolAddressTypeMapper;
 			this.DalAddressTypeMapper = dalAddressTypeMapper;
-			this.BolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
-			this.DalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiAddressTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAddressTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.AddressTypeRepository.All(limit, offset);
 
 			return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiAddressTypeResponseModel> Get(int addressTypeID)
+		public virtual async Task<ApiAddressTypeServerResponseModel> Get(int addressTypeID)
 		{
 			var record = await this.AddressTypeRepository.Get(addressTypeID);
 
@@ -68,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
-			ApiAddressTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiAddressTypeServerResponseModel>> Create(
+			ApiAddressTypeServerRequestModel model)
 		{
-			CreateResponse<ApiAddressTypeResponseModel> response = new CreateResponse<ApiAddressTypeResponseModel>(await this.AddressTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAddressTypeServerResponseModel> response = ValidationResponseFactory<ApiAddressTypeServerResponseModel>.CreateResponse(await this.AddressTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolAddressTypeMapper.MapModelToBO(default(int), model);
@@ -83,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiAddressTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiAddressTypeServerResponseModel>> Update(
 			int addressTypeID,
-			ApiAddressTypeRequestModel model)
+			ApiAddressTypeServerRequestModel model)
 		{
 			var validationResult = await this.AddressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model);
 
@@ -96,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.AddressTypeRepository.Get(addressTypeID);
 
-				return new UpdateResponse<ApiAddressTypeResponseModel>(this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiAddressTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int addressTypeID)
 		{
-			ActionResponse response = new ActionResponse(await this.AddressTypeModelValidator.ValidateDeleteAsync(addressTypeID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AddressTypeModelValidator.ValidateDeleteAsync(addressTypeID));
+
 			if (response.Success)
 			{
 				await this.AddressTypeRepository.Delete(addressTypeID);
@@ -116,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiAddressTypeResponseModel> ByName(string name)
+		public async virtual Task<ApiAddressTypeServerResponseModel> ByName(string name)
 		{
 			AddressType record = await this.AddressTypeRepository.ByName(name);
 
@@ -130,15 +119,22 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByAddressTypeID(int addressTypeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiAddressTypeServerResponseModel> ByRowguid(Guid rowguid)
 		{
-			List<BusinessEntityAddress> records = await this.AddressTypeRepository.BusinessEntityAddressesByAddressTypeID(addressTypeID, limit, offset);
+			AddressType record = await this.AddressTypeRepository.ByRowguid(rowguid);
 
-			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record));
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9822eb0966a07d3e71a62ec542a4b71c</Hash>
+    <Hash>595b7c3d8d0fe6d3bf26fe1dfbacac12</Hash>
 </Codenesium>*/

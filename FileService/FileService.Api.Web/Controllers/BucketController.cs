@@ -18,6 +18,7 @@ namespace FileServiceNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BucketController : AbstractBucketController
 	{
 		public BucketController(
@@ -25,7 +26,7 @@ namespace FileServiceNS.Api.Web
 			ILogger<BucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBucketService bucketService,
-			IApiBucketModelMapper bucketModelMapper
+			IApiBucketServerModelMapper bucketModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>82da6135ad93c006e3f536c4fd169cef</Hash>
+    <Hash>7304ae1458fe4da67e9a6cafe1979ca6</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLStudioMapper();
-			ApiStudioRequestModel model = new ApiStudioRequestModel();
+			ApiStudioServerRequestModel model = new ApiStudioServerRequestModel();
 			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 			BOStudio response = mapper.MapModelToBO(1, model);
 
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
 			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
-			ApiStudioResponseModel response = mapper.MapBOToModel(bo);
+			ApiStudioServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
 			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
-			List<ApiStudioResponseModel> response = mapper.MapBOToModel(new List<BOStudio>() { { bo } });
+			List<ApiStudioServerResponseModel> response = mapper.MapBOToModel(new List<BOStudio>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -62,5 +62,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a958e748e9b47946c8b41fef1094b726</Hash>
+    <Hash>620d2a656e278a1f0674a1e21eed0cd3</Hash>
 </Codenesium>*/

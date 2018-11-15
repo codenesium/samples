@@ -35,38 +35,38 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("address1")]
-		public string Address1 { get; private set; }
+		public virtual string Address1 { get; private set; }
 
 		[MaxLength(128)]
 		[Column("address2")]
-		public string Address2 { get; private set; }
+		public virtual string Address2 { get; private set; }
 
 		[MaxLength(128)]
 		[Column("city")]
-		public string City { get; private set; }
+		public virtual string City { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(90)]
 		[Column("province")]
-		public string Province { get; private set; }
+		public virtual string Province { get; private set; }
 
 		[MaxLength(128)]
 		[Column("website")]
-		public string Website { get; private set; }
+		public virtual string Website { get; private set; }
 
 		[MaxLength(128)]
 		[Column("zip")]
-		public string Zip { get; private set; }
+		public virtual string Zip { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd360e395818566ac4670db6a4de5633</Hash>
+    <Hash>dc5351d31560401d65eb257603f6b49c</Hash>
 </Codenesium>*/

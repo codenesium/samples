@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOUnitMeasure MapModelToBO(
 			string unitMeasureCode,
-			ApiUnitMeasureRequestModel model
+			ApiUnitMeasureServerRequestModel model
 			)
 		{
 			BOUnitMeasure boUnitMeasure = new BOUnitMeasure();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boUnitMeasure;
 		}
 
-		public virtual ApiUnitMeasureResponseModel MapBOToModel(
+		public virtual ApiUnitMeasureServerResponseModel MapBOToModel(
 			BOUnitMeasure boUnitMeasure)
 		{
-			var model = new ApiUnitMeasureResponseModel();
+			var model = new ApiUnitMeasureServerResponseModel();
 
 			model.SetProperties(boUnitMeasure.UnitMeasureCode, boUnitMeasure.ModifiedDate, boUnitMeasure.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiUnitMeasureResponseModel> MapBOToModel(
+		public virtual List<ApiUnitMeasureServerResponseModel> MapBOToModel(
 			List<BOUnitMeasure> items)
 		{
-			List<ApiUnitMeasureResponseModel> response = new List<ApiUnitMeasureResponseModel>();
+			List<ApiUnitMeasureServerResponseModel> response = new List<ApiUnitMeasureServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29486f06529690b6485d0acb22abacec</Hash>
+    <Hash>6e97e671ceac68ea0d9e7c3b97982c55</Hash>
 </Codenesium>*/

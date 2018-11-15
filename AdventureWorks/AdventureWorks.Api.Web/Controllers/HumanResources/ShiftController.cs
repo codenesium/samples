@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ShiftController : AbstractShiftController
 	{
 		public ShiftController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShiftService shiftService,
-			IApiShiftModelMapper shiftModelMapper
+			IApiShiftServerModelMapper shiftModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5d34e1d423eb50acac8bfdbe037dad20</Hash>
+    <Hash>7ed8a517f1b99bd33bce4d6ad220cc97</Hash>
 </Codenesium>*/

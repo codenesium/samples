@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOAWBuildVersion MapModelToBO(
 			int systemInformationID,
-			ApiAWBuildVersionRequestModel model
+			ApiAWBuildVersionServerRequestModel model
 			)
 		{
 			BOAWBuildVersion boAWBuildVersion = new BOAWBuildVersion();
@@ -21,20 +20,20 @@ namespace AdventureWorksNS.Api.Services
 			return boAWBuildVersion;
 		}
 
-		public virtual ApiAWBuildVersionResponseModel MapBOToModel(
+		public virtual ApiAWBuildVersionServerResponseModel MapBOToModel(
 			BOAWBuildVersion boAWBuildVersion)
 		{
-			var model = new ApiAWBuildVersionResponseModel();
+			var model = new ApiAWBuildVersionServerResponseModel();
 
 			model.SetProperties(boAWBuildVersion.SystemInformationID, boAWBuildVersion.Database_Version, boAWBuildVersion.ModifiedDate, boAWBuildVersion.VersionDate);
 
 			return model;
 		}
 
-		public virtual List<ApiAWBuildVersionResponseModel> MapBOToModel(
+		public virtual List<ApiAWBuildVersionServerResponseModel> MapBOToModel(
 			List<BOAWBuildVersion> items)
 		{
-			List<ApiAWBuildVersionResponseModel> response = new List<ApiAWBuildVersionResponseModel>();
+			List<ApiAWBuildVersionServerResponseModel> response = new List<ApiAWBuildVersionServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4acdd14e5a6a85f96e1fe319182cbff8</Hash>
+    <Hash>ada52f2fb0835dcb1d72668377e01ac6</Hash>
 </Codenesium>*/

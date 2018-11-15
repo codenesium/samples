@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected ITeacherSkillRepository TeacherSkillRepository { get; private set; }
 
-		protected IApiTeacherSkillRequestModelValidator TeacherSkillModelValidator { get; private set; }
+		protected IApiTeacherSkillServerRequestModelValidator TeacherSkillModelValidator { get; private set; }
 
 		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractTeacherSkillService(
 			ILogger logger,
 			ITeacherSkillRepository teacherSkillRepository,
-			IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
+			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
 			IBOLTeacherSkillMapper bolTeacherSkillMapper,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
 			IBOLRateMapper bolRateMapper,
@@ -47,14 +42,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TeacherSkillRepository.All(limit, offset);
 
 			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTeacherSkillResponseModel> Get(int id)
+		public virtual async Task<ApiTeacherSkillServerResponseModel> Get(int id)
 		{
 			var record = await this.TeacherSkillRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTeacherSkillResponseModel>> Create(
-			ApiTeacherSkillRequestModel model)
+		public virtual async Task<CreateResponse<ApiTeacherSkillServerResponseModel>> Create(
+			ApiTeacherSkillServerRequestModel model)
 		{
-			CreateResponse<ApiTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherSkillResponseModel>(await this.TeacherSkillModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeacherSkillServerResponseModel> response = ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.CreateResponse(await this.TeacherSkillModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTeacherSkillMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTeacherSkillResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTeacherSkillServerResponseModel>> Update(
 			int id,
-			ApiTeacherSkillRequestModel model)
+			ApiTeacherSkillServerRequestModel model)
 		{
 			var validationResult = await this.TeacherSkillModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.TeacherSkillRepository.Get(id);
 
-				return new UpdateResponse<ApiTeacherSkillResponseModel>(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.UpdateResponse(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTeacherSkillResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TeacherSkillModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TeacherSkillModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TeacherSkillRepository.Delete(id);
@@ -116,14 +113,14 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiRateResponseModel>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiRateServerResponseModel>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Rate> records = await this.TeacherSkillRepository.RatesByTeacherSkillId(teacherSkillId, limit, offset);
 
 			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherSkillResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherSkillServerResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<TeacherSkill> records = await this.TeacherSkillRepository.ByTeacherId(teacherId, limit, offset);
 
@@ -133,5 +130,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c07f0f965724a789fedcc549c6af8240</Hash>
+    <Hash>a3d6181fd139f12e94ccea774a329145</Hash>
 </Codenesium>*/

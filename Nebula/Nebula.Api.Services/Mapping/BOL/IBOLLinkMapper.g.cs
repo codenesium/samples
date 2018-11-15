@@ -9,16 +9,16 @@ namespace NebulaNS.Api.Services
 	{
 		BOLink MapModelToBO(
 			int id,
-			ApiLinkRequestModel model);
+			ApiLinkServerRequestModel model);
 
-		ApiLinkResponseModel MapBOToModel(
+		ApiLinkServerResponseModel MapBOToModel(
 			BOLink boLink);
 
-		List<ApiLinkResponseModel> MapBOToModel(
+		List<ApiLinkServerResponseModel> MapBOToModel(
 			List<BOLink> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2cdb459b638246669d1cda1ed9b98ba1</Hash>
+    <Hash>c1fd86e2bf30aa25f58fb446006ecea2</Hash>
 </Codenesium>*/

@@ -17,11 +17,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesPerson>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<SalesPerson> ByRowguid(Guid rowguid);
+
 		Task<List<SalesOrderHeader>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<SalesTerritoryHistory>> SalesTerritoryHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Store>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0);
 
@@ -30,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a97e87b9a267451ca7449b35341d20a6</Hash>
+    <Hash>fdc0317c13da757cd5795fcc969feffe</Hash>
 </Codenesium>*/

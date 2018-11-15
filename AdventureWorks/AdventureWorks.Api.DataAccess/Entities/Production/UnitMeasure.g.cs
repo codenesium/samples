@@ -24,19 +24,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Key]
 		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
-		public string UnitMeasureCode { get; private set; }
+		public virtual string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd8328f551dde1e1304beec0d2f5da79</Hash>
+    <Hash>99edb217c170fd944d9c07097b726605</Hash>
 </Codenesium>*/

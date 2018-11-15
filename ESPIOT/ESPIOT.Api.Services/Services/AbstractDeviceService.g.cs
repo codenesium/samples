@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
@@ -16,7 +11,7 @@ namespace ESPIOTNS.Api.Services
 	{
 		protected IDeviceRepository DeviceRepository { get; private set; }
 
-		protected IApiDeviceRequestModelValidator DeviceModelValidator { get; private set; }
+		protected IApiDeviceServerRequestModelValidator DeviceModelValidator { get; private set; }
 
 		protected IBOLDeviceMapper BolDeviceMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace ESPIOTNS.Api.Services
 		public AbstractDeviceService(
 			ILogger logger,
 			IDeviceRepository deviceRepository,
-			IApiDeviceRequestModelValidator deviceModelValidator,
+			IApiDeviceServerRequestModelValidator deviceModelValidator,
 			IBOLDeviceMapper bolDeviceMapper,
 			IDALDeviceMapper dalDeviceMapper,
 			IBOLDeviceActionMapper bolDeviceActionMapper,
@@ -47,14 +42,14 @@ namespace ESPIOTNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiDeviceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDeviceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.DeviceRepository.All(limit, offset);
 
 			return this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiDeviceResponseModel> Get(int id)
+		public virtual async Task<ApiDeviceServerResponseModel> Get(int id)
 		{
 			var record = await this.DeviceRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace ESPIOTNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiDeviceResponseModel>> Create(
-			ApiDeviceRequestModel model)
+		public virtual async Task<CreateResponse<ApiDeviceServerResponseModel>> Create(
+			ApiDeviceServerRequestModel model)
 		{
-			CreateResponse<ApiDeviceResponseModel> response = new CreateResponse<ApiDeviceResponseModel>(await this.DeviceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeviceServerResponseModel> response = ValidationResponseFactory<ApiDeviceServerResponseModel>.CreateResponse(await this.DeviceModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolDeviceMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace ESPIOTNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiDeviceResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiDeviceServerResponseModel>> Update(
 			int id,
-			ApiDeviceRequestModel model)
+			ApiDeviceServerRequestModel model)
 		{
 			var validationResult = await this.DeviceModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace ESPIOTNS.Api.Services
 
 				var record = await this.DeviceRepository.Get(id);
 
-				return new UpdateResponse<ApiDeviceResponseModel>(this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiDeviceServerResponseModel>.UpdateResponse(this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiDeviceResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiDeviceServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.DeviceModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DeviceModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.DeviceRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace ESPIOTNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiDeviceResponseModel> ByPublicId(Guid publicId)
+		public async virtual Task<ApiDeviceServerResponseModel> ByPublicId(Guid publicId)
 		{
 			Device record = await this.DeviceRepository.ByPublicId(publicId);
 
@@ -130,7 +127,7 @@ namespace ESPIOTNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiDeviceActionResponseModel>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDeviceActionServerResponseModel>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<DeviceAction> records = await this.DeviceRepository.DeviceActionsByDeviceId(deviceId, limit, offset);
 
@@ -140,5 +137,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82d6d10494c7a080ee07527c595ff694</Hash>
+    <Hash>d3c92b091c4bc51982d5423d36f1100c</Hash>
 </Codenesium>*/

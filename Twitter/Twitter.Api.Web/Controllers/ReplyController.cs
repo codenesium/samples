@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ReplyController : AbstractReplyController
 	{
 		public ReplyController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<ReplyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IReplyService replyService,
-			IApiReplyModelMapper replyModelMapper
+			IApiReplyServerModelMapper replyModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7a92e59e6721dd07d2c89dca764611f2</Hash>
+    <Hash>338a56f00e14e6e8ad5eb9b46e53750a</Hash>
 </Codenesium>*/

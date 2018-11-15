@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CountryRegionController : AbstractCountryRegionController
 	{
 		public CountryRegionController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<CountryRegionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionService countryRegionService,
-			IApiCountryRegionModelMapper countryRegionModelMapper
+			IApiCountryRegionServerModelMapper countryRegionModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>84788cc2c0301c5dc4ca9f11be1ed6a6</Hash>
+    <Hash>f3d147fe13117b3625bc5e0d547aaec8</Hash>
 </Codenesium>*/

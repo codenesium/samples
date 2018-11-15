@@ -1,4 +1,3 @@
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual BOEvent MapModelToBO(
 			int id,
-			ApiEventRequestModel model
+			ApiEventServerRequestModel model
 			)
 		{
 			BOEvent boEvent = new BOEvent();
@@ -26,20 +25,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return boEvent;
 		}
 
-		public virtual ApiEventResponseModel MapBOToModel(
+		public virtual ApiEventServerResponseModel MapBOToModel(
 			BOEvent boEvent)
 		{
-			var model = new ApiEventResponseModel();
+			var model = new ApiEventServerResponseModel();
 
 			model.SetProperties(boEvent.Id, boEvent.ActualEndDate, boEvent.ActualStartDate, boEvent.BillAmount, boEvent.EventStatusId, boEvent.ScheduledEndDate, boEvent.ScheduledStartDate, boEvent.StudentNote, boEvent.TeacherNote);
 
 			return model;
 		}
 
-		public virtual List<ApiEventResponseModel> MapBOToModel(
+		public virtual List<ApiEventServerResponseModel> MapBOToModel(
 			List<BOEvent> items)
 		{
-			List<ApiEventResponseModel> response = new List<ApiEventResponseModel>();
+			List<ApiEventServerResponseModel> response = new List<ApiEventServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -52,5 +51,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b1e629459efdf92fa1d454424ec1cb0</Hash>
+    <Hash>f90a30d55a7be675b36b5b366c74a31b</Hash>
 </Codenesium>*/

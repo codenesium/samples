@@ -63,89 +63,89 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(60)]
 		[Column("AddressLine1")]
-		public string AddressLine1 { get; private set; }
+		public virtual string AddressLine1 { get; private set; }
 
 		[MaxLength(60)]
 		[Column("AddressLine2")]
-		public string AddressLine2 { get; private set; }
+		public virtual string AddressLine2 { get; private set; }
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(30)]
 		[Column("City")]
-		public string City { get; private set; }
+		public virtual string City { get; private set; }
 
 		[MaxLength(50)]
 		[Column("CountryRegionName")]
-		public string CountryRegionName { get; private set; }
+		public virtual string CountryRegionName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("EmailAddress")]
-		public string EmailAddress { get; private set; }
+		public virtual string EmailAddress { get; private set; }
 
 		[Column("EmailPromotion")]
-		public int EmailPromotion { get; private set; }
+		public virtual int EmailPromotion { get; private set; }
 
 		[MaxLength(50)]
 		[Column("FirstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("JobTitle")]
-		public string JobTitle { get; private set; }
+		public virtual string JobTitle { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("MiddleName")]
-		public string MiddleName { get; private set; }
+		public virtual string MiddleName { get; private set; }
 
 		[MaxLength(25)]
 		[Column("PhoneNumber")]
-		public string PhoneNumber { get; private set; }
+		public virtual string PhoneNumber { get; private set; }
 
 		[MaxLength(50)]
 		[Column("PhoneNumberType")]
-		public string PhoneNumberType { get; private set; }
+		public virtual string PhoneNumberType { get; private set; }
 
 		[MaxLength(15)]
 		[Column("PostalCode")]
-		public string PostalCode { get; private set; }
+		public virtual string PostalCode { get; private set; }
 
 		[Column("SalesLastYear")]
-		public decimal SalesLastYear { get; private set; }
+		public virtual decimal SalesLastYear { get; private set; }
 
 		[Column("SalesQuota")]
-		public decimal? SalesQuota { get; private set; }
+		public virtual decimal? SalesQuota { get; private set; }
 
 		[Column("SalesYTD")]
-		public decimal SalesYTD { get; private set; }
+		public virtual decimal SalesYTD { get; private set; }
 
 		[MaxLength(50)]
 		[Column("StateProvinceName")]
-		public string StateProvinceName { get; private set; }
+		public virtual string StateProvinceName { get; private set; }
 
 		[MaxLength(10)]
 		[Column("Suffix")]
-		public string Suffix { get; private set; }
+		public virtual string Suffix { get; private set; }
 
 		[MaxLength(50)]
 		[Column("TerritoryGroup")]
-		public string TerritoryGroup { get; private set; }
+		public virtual string TerritoryGroup { get; private set; }
 
 		[MaxLength(50)]
 		[Column("TerritoryName")]
-		public string TerritoryName { get; private set; }
+		public virtual string TerritoryName { get; private set; }
 
 		[MaxLength(8)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2c7a58e64cec221e645e9f3c9a096ae</Hash>
+    <Hash>a1260d0016bdb83a738dbd26afe0cb97</Hash>
 </Codenesium>*/

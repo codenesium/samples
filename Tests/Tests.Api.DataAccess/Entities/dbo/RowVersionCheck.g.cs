@@ -25,18 +25,17 @@ namespace TestsNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(50)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowVersion")]
-		public Guid RowVersion { get; private set; }
+		public virtual Guid RowVersion { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8711e05e423acf7e7a89f0cd71b09598</Hash>
+    <Hash>e392e41dc4218ee4071824921aa8c511</Hash>
 </Codenesium>*/

@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TicketingCRMNS.Api.Services
 		public VenueService(
 			ILogger<IVenueRepository> logger,
 			IVenueRepository venueRepository,
-			IApiVenueRequestModelValidator venueModelValidator,
-			IBOLVenueMapper bolvenueMapper,
-			IDALVenueMapper dalvenueMapper)
+			IApiVenueServerRequestModelValidator venueModelValidator,
+			IBOLVenueMapper bolVenueMapper,
+			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       venueRepository,
 			       venueModelValidator,
-			       bolvenueMapper,
-			       dalvenueMapper)
+			       bolVenueMapper,
+			       dalVenueMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0adeac76a2394ec29335e9c38367bdd6</Hash>
+    <Hash>4f971d8364b86b126658dd78955d3b08</Hash>
 </Codenesium>*/

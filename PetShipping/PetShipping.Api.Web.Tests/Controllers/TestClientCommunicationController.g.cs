@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			var record = new ApiClientCommunicationResponseModel();
-			var records = new List<ApiClientCommunicationResponseModel>();
+			var record = new ApiClientCommunicationServerResponseModel();
+			var records = new List<ApiClientCommunicationServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiClientCommunicationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiClientCommunicationServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiClientCommunicationResponseModel>>(new List<ApiClientCommunicationResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiClientCommunicationServerResponseModel>>(new List<ApiClientCommunicationServerResponseModel>()));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiClientCommunicationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiClientCommunicationServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationServerResponseModel()));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiClientCommunicationResponseModel;
+			var record = (response as OkObjectResult).Value as ApiClientCommunicationServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationServerResponseModel>(null));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiClientCommunicationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiClientCommunicationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiClientCommunicationServerResponseModel>.CreateResponse(null as ApiClientCommunicationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiClientCommunicationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationServerResponseModel>>(mockResponse));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiClientCommunicationRequestModel>();
-			records.Add(new ApiClientCommunicationRequestModel());
+			var records = new List<ApiClientCommunicationServerRequestModel>();
+			records.Add(new ApiClientCommunicationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiClientCommunicationResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiClientCommunicationServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiClientCommunicationResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiClientCommunicationServerResponseModel>>(null as ApiClientCommunicationServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationServerResponseModel>>(mockResponse.Object));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiClientCommunicationRequestModel>();
-			records.Add(new ApiClientCommunicationRequestModel());
+			var records = new List<ApiClientCommunicationServerRequestModel>();
+			records.Add(new ApiClientCommunicationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiClientCommunicationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiClientCommunicationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiClientCommunicationServerResponseModel>.CreateResponse(null as ApiClientCommunicationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiClientCommunicationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationServerResponseModel>>(mockResponse));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiClientCommunicationRequestModel());
+			IActionResult response = await controller.Create(new ApiClientCommunicationServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiClientCommunicationResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiClientCommunicationServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiClientCommunicationResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiClientCommunicationResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiClientCommunicationServerResponseModel>>(null as ApiClientCommunicationServerResponseModel);
+			var mockRecord = new ApiClientCommunicationServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiClientCommunicationServerResponseModel>>(mockResponse.Object));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiClientCommunicationRequestModel());
+			IActionResult response = await controller.Create(new ApiClientCommunicationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>()))
-			.Callback<int, ApiClientCommunicationRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>()))
+			.Callback<int, ApiClientCommunicationServerRequestModel>(
 				(id, model) => model.ClientId.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationResponseModel>(new ApiClientCommunicationResponseModel()));
-			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationServerResponseModel>(new ApiClientCommunicationServerResponseModel()));
+			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
+			var patch = new JsonPatchDocument<ApiClientCommunicationServerRequestModel>();
 			patch.Replace(x => x.ClientId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationServerResponseModel>(null));
 			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiClientCommunicationRequestModel>();
+			var patch = new JsonPatchDocument<ApiClientCommunicationServerRequestModel>();
 			patch.Replace(x => x.ClientId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationResponseModel()));
-			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationServerResponseModel()));
+			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationResponseModel()));
-			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiClientCommunicationServerResponseModel()));
+			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ClientCommunicationControllerMockFacade mock = new ClientCommunicationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiClientCommunicationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationResponseModel>(null));
-			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiClientCommunicationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiClientCommunicationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiClientCommunicationServerResponseModel>(null));
+			ClientCommunicationController controller = new ClientCommunicationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiClientCommunicationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiClientCommunicationServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<IClientCommunicationService> ServiceMock { get; set; } = new Mock<IClientCommunicationService>();
 
-		public Mock<IApiClientCommunicationModelMapper> ModelMapperMock { get; set; } = new Mock<IApiClientCommunicationModelMapper>();
+		public Mock<IApiClientCommunicationServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiClientCommunicationServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>95a78c688ea5ef829326e3bc1371e178</Hash>
+    <Hash>67274fe07f091e39bdd0776346314753</Hash>
 </Codenesium>*/

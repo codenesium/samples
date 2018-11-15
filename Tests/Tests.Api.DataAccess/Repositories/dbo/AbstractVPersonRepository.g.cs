@@ -36,26 +36,58 @@ namespace TestsNS.Api.DataAccess
 			return await this.GetById(personId);
 		}
 
+		public async virtual Task<VPerson> Create(VPerson item)
+		{
+			this.Context.Set<VPerson>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task Update(VPerson item)
+		{
+			var entity = this.Context.Set<VPerson>().Local.FirstOrDefault(x => x.PersonId == item.PersonId);
+			if (entity == null)
+			{
+				this.Context.Set<VPerson>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
+
+			await this.Context.SaveChangesAsync();
+		}
+
+		public async virtual Task Delete(
+			int personId)
+		{
+			VPerson record = await this.GetById(personId);
+
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<VPerson>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
+
 		protected async Task<List<VPerson>> Where(
 			Expression<Func<VPerson, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<VPerson, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<VPerson, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.PersonId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<VPerson>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VPerson>();
-			}
-			else
-			{
-				return await this.Context.Set<VPerson>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VPerson>();
-			}
+			return await this.Context.Set<VPerson>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VPerson>();
 		}
 
 		private async Task<VPerson> GetById(int personId)
@@ -68,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ffbe13e7c219574f460c6a3083778c63</Hash>
+    <Hash>cfc7c500cd464c1fc16b9fa8c0fa8a84</Hash>
 </Codenesium>*/

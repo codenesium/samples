@@ -76,19 +76,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<SalesPerson> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-		}
-
-		public async virtual Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SalesPersonQuotaHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPersonQuotaHistory>();
-		}
-
-		public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
 		}
 
 		public async virtual Task<List<Store>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
@@ -105,22 +100,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<SalesPerson, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<SalesPerson, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<SalesPerson, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesPerson>();
-			}
-			else
-			{
-				return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesPerson>();
-			}
+			return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesPerson>();
 		}
 
 		private async Task<SalesPerson> GetById(int businessEntityID)
@@ -133,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>719358d81ec6fb4d73aad41722250281</Hash>
+    <Hash>bb52c5cf5871023f5edca3deefaf8a53</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CommentController : AbstractCommentController
 	{
 		public CommentController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<CommentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICommentService commentService,
-			IApiCommentModelMapper commentModelMapper
+			IApiCommentServerModelMapper commentModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>74625f547c62053bb13a03fabab47a19</Hash>
+    <Hash>05b7928b657f52da12018f318fd6373c</Hash>
 </Codenesium>*/

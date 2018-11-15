@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected IAdminRepository AdminRepository { get; private set; }
 
-		protected IApiAdminRequestModelValidator AdminModelValidator { get; private set; }
+		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
 
 		protected IBOLAdminMapper BolAdminMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractAdminService(
 			ILogger logger,
 			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
+			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.AdminRepository.All(limit, offset);
 
 			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiAdminResponseModel> Get(int id)
+		public virtual async Task<ApiAdminServerResponseModel> Get(int id)
 		{
 			var record = await this.AdminRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
-			ApiAdminRequestModel model)
+		public virtual async Task<CreateResponse<ApiAdminServerResponseModel>> Create(
+			ApiAdminServerRequestModel model)
 		{
-			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.AdminModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAdminServerResponseModel> response = ValidationResponseFactory<ApiAdminServerResponseModel>.CreateResponse(await this.AdminModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiAdminResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiAdminServerResponseModel>> Update(
 			int id,
-			ApiAdminRequestModel model)
+			ApiAdminServerRequestModel model)
 		{
 			var validationResult = await this.AdminModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.AdminRepository.Get(id);
 
-				return new UpdateResponse<ApiAdminResponseModel>(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiAdminResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.AdminModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AdminModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.AdminRepository.Delete(id);
@@ -107,9 +104,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiAdminServerResponseModel>> ByUserId(int userId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Admin> records = await this.AdminRepository.ByUserId(userId, limit, offset);
+
+			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>726f5abe7f5468851ed9552420750b82</Hash>
+    <Hash>4b6ade91fc82e9990f97b18d00d60f21</Hash>
 </Codenesium>*/

@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TicketingCRMNS.Api.Services
 		public CustomerService(
 			ILogger<ICustomerRepository> logger,
 			ICustomerRepository customerRepository,
-			IApiCustomerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolcustomerMapper,
-			IDALCustomerMapper dalcustomerMapper)
+			IApiCustomerServerRequestModelValidator customerModelValidator,
+			IBOLCustomerMapper bolCustomerMapper,
+			IDALCustomerMapper dalCustomerMapper)
 			: base(logger,
 			       customerRepository,
 			       customerModelValidator,
-			       bolcustomerMapper,
-			       dalcustomerMapper)
+			       bolCustomerMapper,
+			       dalCustomerMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9f424aea8c7eb3cfec7220e55736c3c</Hash>
+    <Hash>48cbdad8c6397faf93610ee4fe08f81b</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public EventService(
 			ILogger<IEventRepository> logger,
 			IEventRepository eventRepository,
-			IApiEventRequestModelValidator eventModelValidator,
-			IBOLEventMapper boleventMapper,
-			IDALEventMapper daleventMapper)
+			IApiEventServerRequestModelValidator eventModelValidator,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       eventRepository,
 			       eventModelValidator,
-			       boleventMapper,
-			       daleventMapper)
+			       bolEventMapper,
+			       dalEventMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>52f8321ed3ade2803e3ebb43cd541e57</Hash>
+    <Hash>a20dfdca7e842974f3757198b0d205d0</Hash>
 </Codenesium>*/

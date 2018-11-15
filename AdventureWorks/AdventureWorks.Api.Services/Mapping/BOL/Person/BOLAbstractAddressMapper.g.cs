@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOAddress MapModelToBO(
 			int addressID,
-			ApiAddressRequestModel model
+			ApiAddressServerRequestModel model
 			)
 		{
 			BOAddress boAddress = new BOAddress();
@@ -25,20 +24,20 @@ namespace AdventureWorksNS.Api.Services
 			return boAddress;
 		}
 
-		public virtual ApiAddressResponseModel MapBOToModel(
+		public virtual ApiAddressServerResponseModel MapBOToModel(
 			BOAddress boAddress)
 		{
-			var model = new ApiAddressResponseModel();
+			var model = new ApiAddressServerResponseModel();
 
 			model.SetProperties(boAddress.AddressID, boAddress.AddressLine1, boAddress.AddressLine2, boAddress.City, boAddress.ModifiedDate, boAddress.PostalCode, boAddress.Rowguid, boAddress.StateProvinceID);
 
 			return model;
 		}
 
-		public virtual List<ApiAddressResponseModel> MapBOToModel(
+		public virtual List<ApiAddressServerResponseModel> MapBOToModel(
 			List<BOAddress> items)
 		{
-			List<ApiAddressResponseModel> response = new List<ApiAddressResponseModel>();
+			List<ApiAddressServerResponseModel> response = new List<ApiAddressServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c8d06faf587ae8cb3dbd4aa4b3bc4c9</Hash>
+    <Hash>eca9fbdf10d88258cdb2eea28739845e</Hash>
 </Codenesium>*/

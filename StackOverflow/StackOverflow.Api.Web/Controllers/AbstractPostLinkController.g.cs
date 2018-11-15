@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IPostLinkService PostLinkService { get; private set; }
 
-		protected IApiPostLinkModelMapper PostLinkModelMapper { get; private set; }
+		protected IApiPostLinkServerModelMapper PostLinkModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractPostLinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostLinkService postLinkService,
-			IApiPostLinkModelMapper postLinkModelMapper
+			IApiPostLinkServerModelMapper postLinkModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPostLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPostLinkServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPostLinkResponseModel> response = await this.PostLinkService.All(query.Limit, query.Offset);
+			List<ApiPostLinkServerResponseModel> response = await this.PostLinkService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPostLinkResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPostLinkServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPostLinkResponseModel response = await this.PostLinkService.Get(id);
+			ApiPostLinkServerResponseModel response = await this.PostLinkService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPostLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPostLinkServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostLinkRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostLinkServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPostLinkResponseModel> records = new List<ApiPostLinkResponseModel>();
+			List<ApiPostLinkServerResponseModel> records = new List<ApiPostLinkServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPostLinkResponseModel> result = await this.PostLinkService.Create(model);
+				CreateResponse<ApiPostLinkServerResponseModel> result = await this.PostLinkService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPostLinkServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPostLinkResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPostLinkServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPostLinkRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPostLinkServerRequestModel model)
 		{
-			CreateResponse<ApiPostLinkResponseModel> result = await this.PostLinkService.Create(model);
+			CreateResponse<ApiPostLinkServerResponseModel> result = await this.PostLinkService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostLinkServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostLinkRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostLinkServerRequestModel> patch)
 		{
-			ApiPostLinkResponseModel record = await this.PostLinkService.Get(id);
+			ApiPostLinkServerResponseModel record = await this.PostLinkService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostLinkRequestModel model = await this.PatchModel(id, patch);
+				ApiPostLinkServerRequestModel model = await this.PatchModel(id, patch) as ApiPostLinkServerRequestModel;
 
-				UpdateResponse<ApiPostLinkResponseModel> result = await this.PostLinkService.Update(id, model);
+				UpdateResponse<ApiPostLinkServerResponseModel> result = await this.PostLinkService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostLinkServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostLinkRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostLinkServerRequestModel model)
 		{
-			ApiPostLinkRequestModel request = await this.PatchModel(id, this.PostLinkModelMapper.CreatePatch(model));
+			ApiPostLinkServerRequestModel request = await this.PatchModel(id, this.PostLinkModelMapper.CreatePatch(model)) as ApiPostLinkServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPostLinkResponseModel> result = await this.PostLinkService.Update(id, request);
+				UpdateResponse<ApiPostLinkServerResponseModel> result = await this.PostLinkService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PostLinkService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiPostLinkRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostLinkRequestModel> patch)
+		private async Task<ApiPostLinkServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostLinkServerRequestModel> patch)
 		{
 			var record = await this.PostLinkService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostLinkRequestModel request = this.PostLinkModelMapper.MapResponseToRequest(record);
+				ApiPostLinkServerRequestModel request = this.PostLinkModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e765439228b6c7a5b4e17c1f60b6e2a2</Hash>
+    <Hash>7e15930c75a406d1975322f68189105e</Hash>
 </Codenesium>*/

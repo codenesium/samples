@@ -29,24 +29,24 @@ namespace NebulaNS.Api.DataAccess
 
 		[MaxLength(1)]
 		[Column("definition")]
-		public byte[] Definition { get; private set; }
+		public virtual byte[] Definition { get; private set; }
 
 		[Key]
 		[Column("diagram_id")]
-		public int DiagramId { get; private set; }
+		public virtual int DiagramId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("principal_id")]
-		public int PrincipalId { get; private set; }
+		public virtual int PrincipalId { get; private set; }
 
 		[Column("version")]
-		public int? Version { get; private set; }
+		public virtual int? Version { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2056b7148bf2b67012943b0de399e197</Hash>
+    <Hash>bd814ab08386935679c77c4904d2d465</Hash>
 </Codenesium>*/

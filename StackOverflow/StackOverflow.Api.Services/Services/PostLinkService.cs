@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public PostLinkService(
 			ILogger<IPostLinkRepository> logger,
 			IPostLinkRepository postLinkRepository,
-			IApiPostLinkRequestModelValidator postLinkModelValidator,
-			IBOLPostLinkMapper bolpostLinkMapper,
-			IDALPostLinkMapper dalpostLinkMapper)
+			IApiPostLinkServerRequestModelValidator postLinkModelValidator,
+			IBOLPostLinkMapper bolPostLinkMapper,
+			IDALPostLinkMapper dalPostLinkMapper)
 			: base(logger,
 			       postLinkRepository,
 			       postLinkModelValidator,
-			       bolpostLinkMapper,
-			       dalpostLinkMapper)
+			       bolPostLinkMapper,
+			       dalPostLinkMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>17d7cd9072afca013650a2308e356a2c</Hash>
+    <Hash>9c3aaaadc99ac3446689fcc4971e5f5a</Hash>
 </Codenesium>*/

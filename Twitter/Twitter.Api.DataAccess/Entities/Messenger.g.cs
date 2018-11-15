@@ -32,38 +32,53 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		[Column("date")]
-		public DateTime? Date { get; private set; }
+		public virtual DateTime? Date { get; private set; }
 
 		[Column("from_user_id")]
-		public int? FromUserId { get; private set; }
+		public virtual int? FromUserId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("message_id")]
-		public int? MessageId { get; private set; }
+		public virtual int? MessageId { get; private set; }
 
 		[Column("time")]
-		public TimeSpan? Time { get; private set; }
+		public virtual TimeSpan? Time { get; private set; }
 
 		[Column("to_user_id")]
-		public int ToUserId { get; private set; }
+		public virtual int ToUserId { get; private set; }
 
 		[Column("user_id")]
-		public int? UserId { get; private set; }
+		public virtual int? UserId { get; private set; }
 
 		[ForeignKey("MessageId")]
 		public virtual Message MessageNavigation { get; private set; }
 
+		public void SetMessageNavigation(Message item)
+		{
+			this.MessageNavigation = item;
+		}
+
 		[ForeignKey("ToUserId")]
 		public virtual User UserNavigation { get; private set; }
 
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
+
 		[ForeignKey("UserId")]
 		public virtual User User1Navigation { get; private set; }
+
+		public void SetUser1Navigation(User item)
+		{
+			this.User1Navigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>65becfca390aaa3f308fd2d0d3abcb1d</Hash>
+    <Hash>9053f062fc8af7e60394d941c8563e56</Hash>
 </Codenesium>*/

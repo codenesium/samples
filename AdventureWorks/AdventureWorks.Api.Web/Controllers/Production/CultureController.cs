@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CultureController : AbstractCultureController
 	{
 		public CultureController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<CultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICultureService cultureService,
-			IApiCultureModelMapper cultureModelMapper
+			IApiCultureServerModelMapper cultureModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cd9f6307dc46f01205d7befd4b11a641</Hash>
+    <Hash>c52a258715d6964469a876f2f05f16f9</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			var record = new ApiCountryResponseModel();
-			var records = new List<ApiCountryResponseModel>();
+			var record = new ApiCountryServerResponseModel();
+			var records = new List<ApiCountryServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCountryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCountryServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCountryResponseModel>>(new List<ApiCountryResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCountryServerResponseModel>>(new List<ApiCountryServerResponseModel>()));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCountryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCountryServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryServerResponseModel()));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCountryResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCountryServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryServerResponseModel>(null));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCountryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCountryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCountryServerResponseModel>.CreateResponse(null as ApiCountryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCountryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryServerResponseModel>>(mockResponse));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCountryRequestModel>();
-			records.Add(new ApiCountryRequestModel());
+			var records = new List<ApiCountryServerRequestModel>();
+			records.Add(new ApiCountryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCountryResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCountryServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCountryResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCountryServerResponseModel>>(null as ApiCountryServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryServerResponseModel>>(mockResponse.Object));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCountryRequestModel>();
-			records.Add(new ApiCountryRequestModel());
+			var records = new List<ApiCountryServerRequestModel>();
+			records.Add(new ApiCountryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCountryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCountryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCountryServerResponseModel>.CreateResponse(null as ApiCountryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCountryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryServerResponseModel>>(mockResponse));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCountryRequestModel());
+			IActionResult response = await controller.Create(new ApiCountryServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCountryResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCountryServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCountryResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCountryResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCountryServerResponseModel>>(null as ApiCountryServerResponseModel);
+			var mockRecord = new ApiCountryServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryServerResponseModel>>(mockResponse.Object));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCountryRequestModel());
+			IActionResult response = await controller.Create(new ApiCountryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()))
-			.Callback<int, ApiCountryRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()))
+			.Callback<int, ApiCountryServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCountryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryResponseModel>(new ApiCountryResponseModel()));
-			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCountryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryServerResponseModel>(new ApiCountryServerResponseModel()));
+			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCountryRequestModel>();
+			var patch = new JsonPatchDocument<ApiCountryServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryServerResponseModel>(null));
 			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCountryRequestModel>();
+			var patch = new JsonPatchDocument<ApiCountryServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryResponseModel()));
-			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryServerResponseModel()));
+			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCountryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCountryServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryResponseModel()));
-			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCountryServerResponseModel()));
+			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCountryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCountryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CountryControllerMockFacade mock = new CountryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryResponseModel>(null));
-			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCountryServerResponseModel>(null));
+			CountryController controller = new CountryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCountryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCountryServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<ICountryService> ServiceMock { get; set; } = new Mock<ICountryService>();
 
-		public Mock<IApiCountryModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCountryModelMapper>();
+		public Mock<IApiCountryServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCountryServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>5094968e8034a2b266d9b0122ac3a1a7</Hash>
+    <Hash>1623bbc6226577439abf8c5207eea09a</Hash>
 </Codenesium>*/

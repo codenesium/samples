@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			var record = new ApiTransactionHistoryResponseModel();
-			var records = new List<ApiTransactionHistoryResponseModel>();
+			var record = new ApiTransactionHistoryServerResponseModel();
+			var records = new List<ApiTransactionHistoryServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTransactionHistoryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTransactionHistoryServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTransactionHistoryResponseModel>>(new List<ApiTransactionHistoryResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTransactionHistoryServerResponseModel>>(new List<ApiTransactionHistoryServerResponseModel>()));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTransactionHistoryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTransactionHistoryServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryServerResponseModel()));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTransactionHistoryResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTransactionHistoryServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryServerResponseModel>(null));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTransactionHistoryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTransactionHistoryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTransactionHistoryServerResponseModel>.CreateResponse(null as ApiTransactionHistoryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTransactionHistoryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryServerResponseModel>>(mockResponse));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTransactionHistoryRequestModel>();
-			records.Add(new ApiTransactionHistoryRequestModel());
+			var records = new List<ApiTransactionHistoryServerRequestModel>();
+			records.Add(new ApiTransactionHistoryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTransactionHistoryResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTransactionHistoryServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTransactionHistoryResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTransactionHistoryServerResponseModel>>(null as ApiTransactionHistoryServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryServerResponseModel>>(mockResponse.Object));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTransactionHistoryRequestModel>();
-			records.Add(new ApiTransactionHistoryRequestModel());
+			var records = new List<ApiTransactionHistoryServerRequestModel>();
+			records.Add(new ApiTransactionHistoryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTransactionHistoryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTransactionHistoryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTransactionHistoryServerResponseModel>.CreateResponse(null as ApiTransactionHistoryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTransactionHistoryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryServerResponseModel>>(mockResponse));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTransactionHistoryRequestModel());
+			IActionResult response = await controller.Create(new ApiTransactionHistoryServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTransactionHistoryResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTransactionHistoryServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTransactionHistoryResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTransactionHistoryResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTransactionHistoryServerResponseModel>>(null as ApiTransactionHistoryServerResponseModel);
+			var mockRecord = new ApiTransactionHistoryServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTransactionHistoryServerResponseModel>>(mockResponse.Object));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTransactionHistoryRequestModel());
+			IActionResult response = await controller.Create(new ApiTransactionHistoryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>()))
-			.Callback<int, ApiTransactionHistoryRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>()))
+			.Callback<int, ApiTransactionHistoryServerRequestModel>(
 				(id, model) => model.ActualCost.Should().Be(1m)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryResponseModel>(new ApiTransactionHistoryResponseModel()));
-			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryServerResponseModel>(new ApiTransactionHistoryServerResponseModel()));
+			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTransactionHistoryRequestModel>();
+			var patch = new JsonPatchDocument<ApiTransactionHistoryServerRequestModel>();
 			patch.Replace(x => x.ActualCost, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryServerResponseModel>(null));
 			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTransactionHistoryRequestModel>();
+			var patch = new JsonPatchDocument<ApiTransactionHistoryServerRequestModel>();
 			patch.Replace(x => x.ActualCost, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryResponseModel()));
-			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryServerResponseModel()));
+			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryResponseModel()));
-			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTransactionHistoryServerResponseModel()));
+			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TransactionHistoryControllerMockFacade mock = new TransactionHistoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTransactionHistoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryResponseModel>(null));
-			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTransactionHistoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTransactionHistoryServerResponseModel>(null));
+			TransactionHistoryController controller = new TransactionHistoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTransactionHistoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTransactionHistoryServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ITransactionHistoryService> ServiceMock { get; set; } = new Mock<ITransactionHistoryService>();
 
-		public Mock<IApiTransactionHistoryModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTransactionHistoryModelMapper>();
+		public Mock<IApiTransactionHistoryServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTransactionHistoryServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>287efe9c248bfe78b1930083d70f05cb</Hash>
+    <Hash>23c423731ed3c447a8f8d106631e4746</Hash>
 </Codenesium>*/

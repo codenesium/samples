@@ -76,9 +76,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<ProductCategory> ByName(string name)
+		public async virtual Task<ProductCategory> ByName(string name)
 		{
 			return await this.Context.Set<ProductCategory>().SingleOrDefaultAsync(x => x.Name == name);
+		}
+
+		public async virtual Task<ProductCategory> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<ProductCategory>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<ProductSubcategory>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
@@ -90,22 +95,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ProductCategory, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ProductCategory, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ProductCategory, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ProductCategoryID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductCategory>();
-			}
-			else
-			{
-				return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductCategory>();
-			}
+			return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductCategory>();
 		}
 
 		private async Task<ProductCategory> GetById(int productCategoryID)
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3cca9a5100ecf2c910c79d126ee9c96b</Hash>
+    <Hash>f05330c2e6c6440fb3074279bbf531b7</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTransactionMapper();
-			ApiTransactionRequestModel model = new ApiTransactionRequestModel();
+			ApiTransactionServerRequestModel model = new ApiTransactionServerRequestModel();
 			model.SetProperties(1m, "A", 1);
 			BOTransaction response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLTransactionMapper();
 			BOTransaction bo = new BOTransaction();
 			bo.SetProperties(1, 1m, "A", 1);
-			ApiTransactionResponseModel response = mapper.MapBOToModel(bo);
+			ApiTransactionServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Amount.Should().Be(1m);
 			response.GatewayConfirmationNumber.Should().Be("A");
@@ -46,7 +46,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLTransactionMapper();
 			BOTransaction bo = new BOTransaction();
 			bo.SetProperties(1, 1m, "A", 1);
-			List<ApiTransactionResponseModel> response = mapper.MapBOToModel(new List<BOTransaction>() { { bo } });
+			List<ApiTransactionServerResponseModel> response = mapper.MapBOToModel(new List<BOTransaction>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dba1ec9edfc567e13fa827cb0f4758ea</Hash>
+    <Hash>7e8ad60a492a057b8a1324182f81c50b</Hash>
 </Codenesium>*/

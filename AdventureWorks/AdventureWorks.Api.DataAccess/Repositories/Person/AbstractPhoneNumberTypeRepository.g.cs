@@ -76,31 +76,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<PersonPhone>> PersonPhonesByPhoneNumberTypeID(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<PersonPhone>().Where(x => x.PhoneNumberTypeID == phoneNumberTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
-		}
-
 		protected async Task<List<PhoneNumberType>> Where(
 			Expression<Func<PhoneNumberType, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PhoneNumberType, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PhoneNumberType, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.PhoneNumberTypeID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
-			}
-			else
-			{
-				return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
-			}
+			return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
 		}
 
 		private async Task<PhoneNumberType> GetById(int phoneNumberTypeID)
@@ -113,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b560a69602a29fbcfc46b829235e413c</Hash>
+    <Hash>7efb2fc795c84daf7f2a2e41a1837a36</Hash>
 </Codenesium>*/

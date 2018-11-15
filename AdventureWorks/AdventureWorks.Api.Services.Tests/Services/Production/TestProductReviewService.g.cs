@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			List<ApiProductReviewResponseModel> response = await service.All();
+			List<ApiProductReviewServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			ApiProductReviewResponseModel response = await service.Get(default(int));
+			ApiProductReviewServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			ApiProductReviewResponseModel response = await service.Get(default(int));
+			ApiProductReviewServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
-			var model = new ApiProductReviewRequestModel();
+			var model = new ApiProductReviewServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductReview>())).Returns(Task.FromResult(new ProductReview()));
 			var service = new ProductReviewService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			CreateResponse<ApiProductReviewResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProductReviewServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductReviewRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductReviewServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductReview>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
-			var model = new ApiProductReviewRequestModel();
+			var model = new ApiProductReviewServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductReview>())).Returns(Task.FromResult(new ProductReview()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
 			var service = new ProductReviewService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			UpdateResponse<ApiProductReviewResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiProductReviewServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductReview>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
-			var model = new ApiProductReviewRequestModel();
+			var model = new ApiProductReviewServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ProductReviewService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
+			List<ApiProductReviewServerResponseModel> response = await service.ByProductIDReviewerName(default(int), "test_value");
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
 			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
 
-			List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
+			List<ApiProductReviewServerResponseModel> response = await service.ByProductIDReviewerName(default(int), "test_value");
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>096f49ff88e29b17946e744707e29938</Hash>
+    <Hash>42bcd351928f3d84544b2afcd09a1fb4</Hash>
 </Codenesium>*/

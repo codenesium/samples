@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLVenueMapper();
-			ApiVenueRequestModel model = new ApiVenueRequestModel();
+			ApiVenueServerRequestModel model = new ApiVenueServerRequestModel();
 			model.SetProperties("A", "A", 1, "A", "A", "A", "A", 1, "A");
 			BOVenue response = mapper.MapModelToBO(1, model);
 
@@ -38,7 +38,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLVenueMapper();
 			BOVenue bo = new BOVenue();
 			bo.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
-			ApiVenueResponseModel response = mapper.MapBOToModel(bo);
+			ApiVenueServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
@@ -58,7 +58,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLVenueMapper();
 			BOVenue bo = new BOVenue();
 			bo.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
-			List<ApiVenueResponseModel> response = mapper.MapBOToModel(new List<BOVenue>() { { bo } });
+			List<ApiVenueServerResponseModel> response = mapper.MapBOToModel(new List<BOVenue>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -66,5 +66,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f621b0769f1c2df948a71f3d0f574199</Hash>
+    <Hash>eb073cd188134dd46253ee00d8947a3c</Hash>
 </Codenesium>*/

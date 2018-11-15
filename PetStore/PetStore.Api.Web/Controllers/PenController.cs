@@ -18,6 +18,7 @@ namespace PetStoreNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PenController : AbstractPenController
 	{
 		public PenController(
@@ -25,7 +26,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<PenController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPenService penService,
-			IApiPenModelMapper penModelMapper
+			IApiPenServerModelMapper penModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b4ee9b136edeea5d0bd45cf5a641e0e5</Hash>
+    <Hash>931a28f4b00e7c34dcdf45264520f40c</Hash>
 </Codenesium>*/

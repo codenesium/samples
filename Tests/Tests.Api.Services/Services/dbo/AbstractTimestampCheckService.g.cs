@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ITimestampCheckRepository TimestampCheckRepository { get; private set; }
 
-		protected IApiTimestampCheckRequestModelValidator TimestampCheckModelValidator { get; private set; }
+		protected IApiTimestampCheckServerRequestModelValidator TimestampCheckModelValidator { get; private set; }
 
 		protected IBOLTimestampCheckMapper BolTimestampCheckMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractTimestampCheckService(
 			ILogger logger,
 			ITimestampCheckRepository timestampCheckRepository,
-			IApiTimestampCheckRequestModelValidator timestampCheckModelValidator,
+			IApiTimestampCheckServerRequestModelValidator timestampCheckModelValidator,
 			IBOLTimestampCheckMapper bolTimestampCheckMapper,
 			IDALTimestampCheckMapper dalTimestampCheckMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTimestampCheckResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTimestampCheckServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TimestampCheckRepository.All(limit, offset);
 
 			return this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTimestampCheckResponseModel> Get(int id)
+		public virtual async Task<ApiTimestampCheckServerResponseModel> Get(int id)
 		{
 			var record = await this.TimestampCheckRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTimestampCheckResponseModel>> Create(
-			ApiTimestampCheckRequestModel model)
+		public virtual async Task<CreateResponse<ApiTimestampCheckServerResponseModel>> Create(
+			ApiTimestampCheckServerRequestModel model)
 		{
-			CreateResponse<ApiTimestampCheckResponseModel> response = new CreateResponse<ApiTimestampCheckResponseModel>(await this.TimestampCheckModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTimestampCheckServerResponseModel> response = ValidationResponseFactory<ApiTimestampCheckServerResponseModel>.CreateResponse(await this.TimestampCheckModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTimestampCheckMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTimestampCheckResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTimestampCheckServerResponseModel>> Update(
 			int id,
-			ApiTimestampCheckRequestModel model)
+			ApiTimestampCheckServerRequestModel model)
 		{
 			var validationResult = await this.TimestampCheckModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TimestampCheckRepository.Get(id);
 
-				return new UpdateResponse<ApiTimestampCheckResponseModel>(this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTimestampCheckServerResponseModel>.UpdateResponse(this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTimestampCheckResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTimestampCheckServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TimestampCheckModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TimestampCheckModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TimestampCheckRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d90ef3870d7a0c3bc09b96f409c3ee85</Hash>
+    <Hash>7f2bdd8fb253647a9d060c0c8061f8bc</Hash>
 </Codenesium>*/

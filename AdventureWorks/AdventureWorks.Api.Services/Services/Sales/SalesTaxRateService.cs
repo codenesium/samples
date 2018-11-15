@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public SalesTaxRateService(
 			ILogger<ISalesTaxRateRepository> logger,
 			ISalesTaxRateRepository salesTaxRateRepository,
-			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
-			IBOLSalesTaxRateMapper bolsalesTaxRateMapper,
-			IDALSalesTaxRateMapper dalsalesTaxRateMapper)
+			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
+			IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
+			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
 			: base(logger,
 			       salesTaxRateRepository,
 			       salesTaxRateModelValidator,
-			       bolsalesTaxRateMapper,
-			       dalsalesTaxRateMapper)
+			       bolSalesTaxRateMapper,
+			       dalSalesTaxRateMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>80975c687ac72110836c545aba0b0414</Hash>
+    <Hash>12d515a531db27ccdb186d6f31a6951f</Hash>
 </Codenesium>*/

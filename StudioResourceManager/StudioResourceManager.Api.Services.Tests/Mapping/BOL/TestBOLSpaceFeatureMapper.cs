@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSpaceFeatureMapper();
-			ApiSpaceFeatureRequestModel model = new ApiSpaceFeatureRequestModel();
+			ApiSpaceFeatureServerRequestModel model = new ApiSpaceFeatureServerRequestModel();
 			model.SetProperties("A");
 			BOSpaceFeature response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLSpaceFeatureMapper();
 			BOSpaceFeature bo = new BOSpaceFeature();
 			bo.SetProperties(1, "A");
-			ApiSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
+			ApiSpaceFeatureServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLSpaceFeatureMapper();
 			BOSpaceFeature bo = new BOSpaceFeature();
 			bo.SetProperties(1, "A");
-			List<ApiSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceFeature>() { { bo } });
+			List<ApiSpaceFeatureServerResponseModel> response = mapper.MapBOToModel(new List<BOSpaceFeature>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cae646fbd2cd9c1610480eb5f3bee410</Hash>
+    <Hash>1a4d718b181f34aed6e3f2c39d90158a</Hash>
 </Codenesium>*/

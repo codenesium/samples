@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class DepartmentController : AbstractDepartmentController
 	{
 		public DepartmentController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<DepartmentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDepartmentService departmentService,
-			IApiDepartmentModelMapper departmentModelMapper
+			IApiDepartmentServerModelMapper departmentModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7d038e64e583bc8bf485100ac6643c2c</Hash>
+    <Hash>425e3e27c2cc76ca2fa53185e02a5451</Hash>
 </Codenesium>*/

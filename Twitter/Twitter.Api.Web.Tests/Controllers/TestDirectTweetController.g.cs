@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			var record = new ApiDirectTweetResponseModel();
-			var records = new List<ApiDirectTweetResponseModel>();
+			var record = new ApiDirectTweetServerResponseModel();
+			var records = new List<ApiDirectTweetServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDirectTweetResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDirectTweetServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDirectTweetResponseModel>>(new List<ApiDirectTweetResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDirectTweetServerResponseModel>>(new List<ApiDirectTweetServerResponseModel>()));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDirectTweetResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDirectTweetServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetServerResponseModel()));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiDirectTweetResponseModel;
+			var record = (response as OkObjectResult).Value as ApiDirectTweetServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetServerResponseModel>(null));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDirectTweetResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDirectTweetResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDirectTweetServerResponseModel>.CreateResponse(null as ApiDirectTweetServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDirectTweetServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetServerResponseModel>>(mockResponse));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDirectTweetRequestModel>();
-			records.Add(new ApiDirectTweetRequestModel());
+			var records = new List<ApiDirectTweetServerRequestModel>();
+			records.Add(new ApiDirectTweetServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiDirectTweetResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiDirectTweetServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDirectTweetResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiDirectTweetServerResponseModel>>(null as ApiDirectTweetServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetServerResponseModel>>(mockResponse.Object));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDirectTweetRequestModel>();
-			records.Add(new ApiDirectTweetRequestModel());
+			var records = new List<ApiDirectTweetServerRequestModel>();
+			records.Add(new ApiDirectTweetServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDirectTweetResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDirectTweetResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDirectTweetServerResponseModel>.CreateResponse(null as ApiDirectTweetServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDirectTweetServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetServerResponseModel>>(mockResponse));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDirectTweetRequestModel());
+			IActionResult response = await controller.Create(new ApiDirectTweetServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDirectTweetResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDirectTweetServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDirectTweetResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiDirectTweetResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiDirectTweetServerResponseModel>>(null as ApiDirectTweetServerResponseModel);
+			var mockRecord = new ApiDirectTweetServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDirectTweetServerResponseModel>>(mockResponse.Object));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDirectTweetRequestModel());
+			IActionResult response = await controller.Create(new ApiDirectTweetServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDirectTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDirectTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>()))
-			.Callback<int, ApiDirectTweetRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()))
+			.Callback<int, ApiDirectTweetServerRequestModel>(
 				(id, model) => model.Content.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiDirectTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetResponseModel>(new ApiDirectTweetResponseModel()));
-			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiDirectTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetServerResponseModel>(new ApiDirectTweetServerResponseModel()));
+			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDirectTweetRequestModel>();
+			var patch = new JsonPatchDocument<ApiDirectTweetServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetServerResponseModel>(null));
 			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDirectTweetRequestModel>();
+			var patch = new JsonPatchDocument<ApiDirectTweetServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDirectTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDirectTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetResponseModel()));
-			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetServerResponseModel()));
+			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDirectTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDirectTweetServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDirectTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDirectTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetResponseModel()));
-			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDirectTweetServerResponseModel()));
+			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDirectTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDirectTweetServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			DirectTweetControllerMockFacade mock = new DirectTweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDirectTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDirectTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetResponseModel>(null));
-			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDirectTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDirectTweetServerResponseModel>(null));
+			DirectTweetController controller = new DirectTweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDirectTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDirectTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDirectTweetServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<IDirectTweetService> ServiceMock { get; set; } = new Mock<IDirectTweetService>();
 
-		public Mock<IApiDirectTweetModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDirectTweetModelMapper>();
+		public Mock<IApiDirectTweetServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDirectTweetServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>28861fe31e3fb8eb6f2f829ab394c6db</Hash>
+    <Hash>4b560c7682a07a2727f4781e3a2e53f6</Hash>
 </Codenesium>*/

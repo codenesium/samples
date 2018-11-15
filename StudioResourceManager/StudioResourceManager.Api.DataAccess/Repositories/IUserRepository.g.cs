@@ -24,9 +24,13 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<User>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
+
+		Task<Student> CreateStudent(Student item);
+
+		Task DeleteStudent(Student item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8de3bea6d5e391d0f809003f0567f40b</Hash>
+    <Hash>bbf41f00bcf8e610d90aabdaaec6c5a9</Hash>
 </Codenesium>*/

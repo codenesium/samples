@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 		public StateProvinceService(
 			ILogger<IStateProvinceRepository> logger,
 			IStateProvinceRepository stateProvinceRepository,
-			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
-			IBOLStateProvinceMapper bolstateProvinceMapper,
-			IDALStateProvinceMapper dalstateProvinceMapper,
+			IApiStateProvinceServerRequestModelValidator stateProvinceModelValidator,
+			IBOLStateProvinceMapper bolStateProvinceMapper,
+			IDALStateProvinceMapper dalStateProvinceMapper,
 			IBOLAddressMapper bolAddressMapper,
 			IDALAddressMapper dalAddressMapper)
 			: base(logger,
 			       stateProvinceRepository,
 			       stateProvinceModelValidator,
-			       bolstateProvinceMapper,
-			       dalstateProvinceMapper,
+			       bolStateProvinceMapper,
+			       dalStateProvinceMapper,
 			       bolAddressMapper,
 			       dalAddressMapper)
 		{
@@ -34,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c438fa9bebb5c985b32110cdc045abfb</Hash>
+    <Hash>86175aa05e43cfcf39ab7e9e1fafc3ad</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ISalesTaxRateRepository SalesTaxRateRepository { get; private set; }
 
-		protected IApiSalesTaxRateRequestModelValidator SalesTaxRateModelValidator { get; private set; }
+		protected IApiSalesTaxRateServerRequestModelValidator SalesTaxRateModelValidator { get; private set; }
 
 		protected IBOLSalesTaxRateMapper BolSalesTaxRateMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractSalesTaxRateService(
 			ILogger logger,
 			ISalesTaxRateRepository salesTaxRateRepository,
-			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
+			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
 			IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
 			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSalesTaxRateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesTaxRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SalesTaxRateRepository.All(limit, offset);
 
 			return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID)
+		public virtual async Task<ApiSalesTaxRateServerResponseModel> Get(int salesTaxRateID)
 		{
 			var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSalesTaxRateResponseModel>> Create(
-			ApiSalesTaxRateRequestModel model)
+		public virtual async Task<CreateResponse<ApiSalesTaxRateServerResponseModel>> Create(
+			ApiSalesTaxRateServerRequestModel model)
 		{
-			CreateResponse<ApiSalesTaxRateResponseModel> response = new CreateResponse<ApiSalesTaxRateResponseModel>(await this.SalesTaxRateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTaxRateServerResponseModel> response = ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.CreateResponse(await this.SalesTaxRateModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSalesTaxRateMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSalesTaxRateResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSalesTaxRateServerResponseModel>> Update(
 			int salesTaxRateID,
-			ApiSalesTaxRateRequestModel model)
+			ApiSalesTaxRateServerRequestModel model)
 		{
 			var validationResult = await this.SalesTaxRateModelValidator.ValidateUpdateAsync(salesTaxRateID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
-				return new UpdateResponse<ApiSalesTaxRateResponseModel>(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSalesTaxRateResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int salesTaxRateID)
 		{
-			ActionResponse response = new ActionResponse(await this.SalesTaxRateModelValidator.ValidateDeleteAsync(salesTaxRateID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SalesTaxRateModelValidator.ValidateDeleteAsync(salesTaxRateID));
+
 			if (response.Success)
 			{
 				await this.SalesTaxRateRepository.Delete(salesTaxRateID);
@@ -108,7 +105,21 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiSalesTaxRateResponseModel> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
+		public async virtual Task<ApiSalesTaxRateServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			SalesTaxRate record = await this.SalesTaxRateRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<ApiSalesTaxRateServerResponseModel> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
 			SalesTaxRate record = await this.SalesTaxRateRepository.ByStateProvinceIDTaxType(stateProvinceID, taxType);
 
@@ -125,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3eff3b9d7466a73c056188895774cd6</Hash>
+    <Hash>2584aa1b5020741cc6a5ed9c5595570b</Hash>
 </Codenesium>*/

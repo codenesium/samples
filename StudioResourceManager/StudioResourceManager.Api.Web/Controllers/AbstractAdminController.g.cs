@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected IAdminService AdminService { get; private set; }
 
-		protected IApiAdminModelMapper AdminModelMapper { get; private set; }
+		protected IApiAdminServerModelMapper AdminModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractAdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAdminService adminService,
-			IApiAdminModelMapper adminModelMapper
+			IApiAdminServerModelMapper adminModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAdminServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAdminResponseModel> response = await this.AdminService.All(query.Limit, query.Offset);
+			List<ApiAdminServerResponseModel> response = await this.AdminService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiAdminServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiAdminResponseModel response = await this.AdminService.Get(id);
+			ApiAdminServerResponseModel response = await this.AdminService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiAdminServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAdminRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAdminServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiAdminResponseModel> records = new List<ApiAdminResponseModel>();
+			List<ApiAdminServerResponseModel> records = new List<ApiAdminServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiAdminResponseModel> result = await this.AdminService.Create(model);
+				CreateResponse<ApiAdminServerResponseModel> result = await this.AdminService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiAdminServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiAdminResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiAdminServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAdminRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiAdminServerRequestModel model)
 		{
-			CreateResponse<ApiAdminResponseModel> result = await this.AdminService.Create(model);
+			CreateResponse<ApiAdminServerResponseModel> result = await this.AdminService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAdminServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAdminRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAdminServerRequestModel> patch)
 		{
-			ApiAdminResponseModel record = await this.AdminService.Get(id);
+			ApiAdminServerResponseModel record = await this.AdminService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiAdminRequestModel model = await this.PatchModel(id, patch);
+				ApiAdminServerRequestModel model = await this.PatchModel(id, patch) as ApiAdminServerRequestModel;
 
-				UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, model);
+				UpdateResponse<ApiAdminServerResponseModel> result = await this.AdminService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAdminResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAdminServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminServerRequestModel model)
 		{
-			ApiAdminRequestModel request = await this.PatchModel(id, this.AdminModelMapper.CreatePatch(model));
+			ApiAdminServerRequestModel request = await this.PatchModel(id, this.AdminModelMapper.CreatePatch(model)) as ApiAdminServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiAdminResponseModel> result = await this.AdminService.Update(id, request);
+				UpdateResponse<ApiAdminServerResponseModel> result = await this.AdminService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.AdminService.Delete(id);
@@ -206,7 +216,24 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		private async Task<ApiAdminRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminRequestModel> patch)
+		[HttpGet]
+		[Route("byUserId/{userId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiAdminServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiAdminServerResponseModel> response = await this.AdminService.ByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		private async Task<ApiAdminServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiAdminServerRequestModel> patch)
 		{
 			var record = await this.AdminService.Get(id);
 
@@ -216,7 +243,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiAdminRequestModel request = this.AdminModelMapper.MapResponseToRequest(record);
+				ApiAdminServerRequestModel request = this.AdminModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +252,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c6ef95aedb7c3a845dc9f5a297dae86d</Hash>
+    <Hash>2fbe318bb1200456778b5e6ebb0afda9</Hash>
 </Codenesium>*/

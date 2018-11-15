@@ -80,22 +80,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<DatabaseLog, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<DatabaseLog, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<DatabaseLog, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.DatabaseLogID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
-			}
-			else
-			{
-				return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
-			}
+			return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
 		}
 
 		private async Task<DatabaseLog> GetById(int databaseLogID)
@@ -108,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f5d80282734eed56750e61cd240ec51</Hash>
+    <Hash>4b3b852cf6ec937200902b4a90b3c666</Hash>
 </Codenesium>*/

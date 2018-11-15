@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public SalesOrderHeaderService(
 			ILogger<ISalesOrderHeaderRepository> logger,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
-			IBOLSalesOrderHeaderMapper bolsalesOrderHeaderMapper,
-			IDALSalesOrderHeaderMapper dalsalesOrderHeaderMapper,
-			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
+			IApiSalesOrderHeaderServerRequestModelValidator salesOrderHeaderModelValidator,
+			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       salesOrderHeaderRepository,
 			       salesOrderHeaderModelValidator,
-			       bolsalesOrderHeaderMapper,
-			       dalsalesOrderHeaderMapper,
-			       bolSalesOrderDetailMapper,
-			       dalSalesOrderDetailMapper)
+			       bolSalesOrderHeaderMapper,
+			       dalSalesOrderHeaderMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2560f9d083922ac2889318aebe0fb04</Hash>
+    <Hash>fa3dce4ebe29b9b88d59ed6ce6fc0ad9</Hash>
 </Codenesium>*/

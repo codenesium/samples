@@ -24,21 +24,26 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		[Column("countryId")]
-		public int CountryId { get; private set; }
+		public virtual int CountryId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[ForeignKey("CountryId")]
 		public virtual Country CountryNavigation { get; private set; }
+
+		public void SetCountryNavigation(Country item)
+		{
+			this.CountryNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad90a478e8d4c1c6e4eb94ef98df2c36</Hash>
+    <Hash>e074a84e9f51d953507962b67d09063f</Hash>
 </Codenesium>*/

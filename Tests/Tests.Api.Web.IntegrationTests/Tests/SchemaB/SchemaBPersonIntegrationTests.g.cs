@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Client;
 using TestsNS.Api.Contracts;
+using TestsNS.Api.DataAccess;
 using TestsNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SchemaBPerson")]
 	[Trait("Area", "Integration")]
-	public class SchemaBPersonIntegrationTests
+	public partial class SchemaBPersonIntegrationTests
 	{
 		public SchemaBPersonIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.SchemaBPersonDeleteAsync(1);
+			var model = new ApiSchemaBPersonClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiSchemaBPersonClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiSchemaBPersonClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiSchemaBPersonClientResponseModel>> result = await client.SchemaBPersonBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<SchemaBPerson>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<SchemaBPerson>().ToList()[2].Name.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiSchemaBPersonClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiSchemaBPersonClientResponseModel> result = await client.SchemaBPersonCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<SchemaBPerson>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace TestsNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiSchemaBPersonServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ISchemaBPersonService service = testServer.Host.Services.GetService(typeof(ISchemaBPersonService)) as ISchemaBPersonService;
+			ApiSchemaBPersonServerResponseModel model = await service.Get(1);
 
-			ApiSchemaBPersonResponseModel model = await client.SchemaBPersonGetAsync(1);
+			ApiSchemaBPersonClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiSchemaBPersonModelMapper mapper = new ApiSchemaBPersonModelMapper();
+			UpdateResponse<ApiSchemaBPersonClientResponseModel> updateResponse = await client.SchemaBPersonUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiSchemaBPersonResponseModel> updateResponse = await client.SchemaBPersonUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<SchemaBPerson>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<SchemaBPerson>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiSchemaBPersonRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiSchemaBPersonResponseModel> createResult = await client.SchemaBPersonCreateAsync(createModel);
+			ISchemaBPersonService service = testServer.Host.Services.GetService(typeof(ISchemaBPersonService)) as ISchemaBPersonService;
+			var model = new ApiSchemaBPersonServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiSchemaBPersonServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiSchemaBPersonResponseModel getResponse = await client.SchemaBPersonGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.SchemaBPersonDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiSchemaBPersonResponseModel verifyResponse = await client.SchemaBPersonGetAsync(2);
+			ApiSchemaBPersonServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace TestsNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiSchemaBPersonResponseModel response = await client.SchemaBPersonGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiSchemaBPersonClientResponseModel response = await client.SchemaBPersonGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSchemaBPersonClientResponseModel response = await client.SchemaBPersonGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,35 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiSchemaBPersonResponseModel> response = await client.SchemaBPersonAllAsync();
+			List<ApiSchemaBPersonClientResponseModel> response = await client.SchemaBPersonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
 		}
 
-		private async Task<ApiSchemaBPersonResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiSchemaBPersonRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiSchemaBPersonResponseModel> result = await client.SchemaBPersonCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.SchemaBPersonAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7821c33b3160038b995108735f7ff090</Hash>
+    <Hash>904e7af600a277d7f1b58af829139c16</Hash>
 </Codenesium>*/

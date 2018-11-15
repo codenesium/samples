@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLProductPhotoMapper();
-			ApiProductPhotoRequestModel model = new ApiProductPhotoRequestModel();
+			ApiProductPhotoServerRequestModel model = new ApiProductPhotoServerRequestModel();
 			model.SetProperties(BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
 			BOProductPhoto response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductPhotoMapper();
 			BOProductPhoto bo = new BOProductPhoto();
 			bo.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
-			ApiProductPhotoResponseModel response = mapper.MapBOToModel(bo);
+			ApiProductPhotoServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.LargePhoto.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.LargePhotoFileName.Should().Be("A");
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductPhotoMapper();
 			BOProductPhoto bo = new BOProductPhoto();
 			bo.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
-			List<ApiProductPhotoResponseModel> response = mapper.MapBOToModel(new List<BOProductPhoto>() { { bo } });
+			List<ApiProductPhotoServerResponseModel> response = mapper.MapBOToModel(new List<BOProductPhoto>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>33c4b1f35ba29903b56aa434a267bd1c</Hash>
+    <Hash>9408ec5a5a4e918bda12ca1f01c88d2a</Hash>
 </Codenesium>*/

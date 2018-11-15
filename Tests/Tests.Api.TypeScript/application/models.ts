@@ -1,4 +1,4 @@
-export class ApiColumnSameAsFKTableRequestModel {
+export class ApiColumnSameAsFKTableServerRequestModel {
 				id:number;
 person:number;
 personId:number;
@@ -13,7 +13,7 @@ this.personId = 0;
 				}
 			}
 
-			export class ApiColumnSameAsFKTableResponseModel {
+			export class ApiColumnSameAsFKTableServerResponseModel {
 				id:number;
 person:number;
 personId:number;
@@ -27,7 +27,7 @@ this.personId = 0;
 		
 				}
 			}
-			export class ApiCompositePrimaryKeyRequestModel {
+			export class ApiCompositePrimaryKeyServerRequestModel {
 				id:number;
 id2:number;
 
@@ -40,7 +40,7 @@ this.id2 = 0;
 				}
 			}
 
-			export class ApiCompositePrimaryKeyResponseModel {
+			export class ApiCompositePrimaryKeyServerResponseModel {
 				id:number;
 id2:number;
 
@@ -52,7 +52,7 @@ this.id2 = 0;
 		
 				}
 			}
-			export class ApiIncludedColumnTestRequestModel {
+			export class ApiIncludedColumnTestServerRequestModel {
 				id:number;
 name:string;
 name2:string;
@@ -67,7 +67,7 @@ this.name2 = '';
 				}
 			}
 
-			export class ApiIncludedColumnTestResponseModel {
+			export class ApiIncludedColumnTestServerResponseModel {
 				id:number;
 name:string;
 name2:string;
@@ -81,7 +81,7 @@ this.name2 = '';
 		
 				}
 			}
-			export class ApiPersonRequestModel {
+			export class ApiPersonServerRequestModel {
 				personId:number;
 personName:string;
 
@@ -94,7 +94,7 @@ this.personName = '';
 				}
 			}
 
-			export class ApiPersonResponseModel {
+			export class ApiPersonServerResponseModel {
 				personId:number;
 personName:string;
 
@@ -106,7 +106,7 @@ this.personName = '';
 		
 				}
 			}
-			export class ApiRowVersionCheckRequestModel {
+			export class ApiRowVersionCheckServerRequestModel {
 				id:number;
 name:string;
 rowVersion:string;
@@ -121,7 +121,7 @@ this.rowVersion = '';
 				}
 			}
 
-			export class ApiRowVersionCheckResponseModel {
+			export class ApiRowVersionCheckServerResponseModel {
 				id:number;
 name:string;
 rowVersion:string;
@@ -135,7 +135,7 @@ this.rowVersion = '';
 		
 				}
 			}
-			export class ApiSelfReferenceRequestModel {
+			export class ApiSelfReferenceServerRequestModel {
 				id:number;
 selfReferenceId:number;
 selfReferenceId2:number;
@@ -150,7 +150,7 @@ this.selfReferenceId2 = 0;
 				}
 			}
 
-			export class ApiSelfReferenceResponseModel {
+			export class ApiSelfReferenceServerResponseModel {
 				id:number;
 selfReferenceId:number;
 selfReferenceId2:number;
@@ -164,7 +164,7 @@ this.selfReferenceId2 = 0;
 		
 				}
 			}
-			export class ApiTableRequestModel {
+			export class ApiTableServerRequestModel {
 				id:number;
 name:string;
 
@@ -177,7 +177,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiTableResponseModel {
+			export class ApiTableServerResponseModel {
 				id:number;
 name:string;
 
@@ -189,7 +189,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiTestAllFieldTypeRequestModel {
+			export class ApiTestAllFieldTypeServerRequestModel {
 				fieldBigInt:number;
 fieldBinary:string;
 fieldBit:boolean;
@@ -256,7 +256,7 @@ this.id = 0;
 				}
 			}
 
-			export class ApiTestAllFieldTypeResponseModel {
+			export class ApiTestAllFieldTypeServerResponseModel {
 				fieldBigInt:number;
 fieldBinary:string;
 fieldBit:boolean;
@@ -322,7 +322,7 @@ this.id = 0;
 		
 				}
 			}
-			export class ApiTestAllFieldTypesNullableRequestModel {
+			export class ApiTestAllFieldTypesNullableServerRequestModel {
 				fieldBigInt:number;
 fieldBinary:string;
 fieldBit:boolean;
@@ -389,7 +389,7 @@ this.id = 0;
 				}
 			}
 
-			export class ApiTestAllFieldTypesNullableResponseModel {
+			export class ApiTestAllFieldTypesNullableServerResponseModel {
 				fieldBigInt:number;
 fieldBinary:string;
 fieldBit:boolean;
@@ -455,7 +455,7 @@ this.id = 0;
 		
 				}
 			}
-			export class ApiTimestampCheckRequestModel {
+			export class ApiTimestampCheckServerRequestModel {
 				id:number;
 name:string;
 timestamp:MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
@@ -470,7 +470,7 @@ this.timestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping ti
 				}
 			}
 
-			export class ApiTimestampCheckResponseModel {
+			export class ApiTimestampCheckServerResponseModel {
 				id:number;
 name:string;
 timestamp:MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
@@ -484,7 +484,7 @@ this.timestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping ti
 		
 				}
 			}
-			export class ApiVPersonRequestModel {
+			export class ApiVPersonServerRequestModel {
 				personId:number;
 personName:string;
 
@@ -497,7 +497,7 @@ this.personName = '';
 				}
 			}
 
-			export class ApiVPersonResponseModel {
+			export class ApiVPersonServerResponseModel {
 				personId:number;
 personName:string;
 
@@ -509,7 +509,7 @@ this.personName = '';
 		
 				}
 			}
-			export class ApiSchemaAPersonRequestModel {
+			export class ApiSchemaAPersonServerRequestModel {
 				id:number;
 name:string;
 
@@ -522,7 +522,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiSchemaAPersonResponseModel {
+			export class ApiSchemaAPersonServerResponseModel {
 				id:number;
 name:string;
 
@@ -534,7 +534,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiSchemaBPersonRequestModel {
+			export class ApiSchemaBPersonServerRequestModel {
 				id:number;
 name:string;
 
@@ -547,7 +547,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiSchemaBPersonResponseModel {
+			export class ApiSchemaBPersonServerResponseModel {
 				id:number;
 name:string;
 
@@ -559,7 +559,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiPersonRefRequestModel {
+			export class ApiPersonRefServerRequestModel {
 				id:number;
 personAId:number;
 personBId:number;
@@ -574,7 +574,7 @@ this.personBId = 0;
 				}
 			}
 
-			export class ApiPersonRefResponseModel {
+			export class ApiPersonRefServerResponseModel {
 				id:number;
 personAId:number;
 personBId:number;

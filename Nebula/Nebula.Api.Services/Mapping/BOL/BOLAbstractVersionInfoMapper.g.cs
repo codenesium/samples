@@ -1,4 +1,3 @@
-using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace NebulaNS.Api.Services
 	{
 		public virtual BOVersionInfo MapModelToBO(
 			long version,
-			ApiVersionInfoRequestModel model
+			ApiVersionInfoServerRequestModel model
 			)
 		{
 			BOVersionInfo boVersionInfo = new BOVersionInfo();
@@ -20,20 +19,20 @@ namespace NebulaNS.Api.Services
 			return boVersionInfo;
 		}
 
-		public virtual ApiVersionInfoResponseModel MapBOToModel(
+		public virtual ApiVersionInfoServerResponseModel MapBOToModel(
 			BOVersionInfo boVersionInfo)
 		{
-			var model = new ApiVersionInfoResponseModel();
+			var model = new ApiVersionInfoServerResponseModel();
 
 			model.SetProperties(boVersionInfo.Version, boVersionInfo.AppliedOn, boVersionInfo.Description);
 
 			return model;
 		}
 
-		public virtual List<ApiVersionInfoResponseModel> MapBOToModel(
+		public virtual List<ApiVersionInfoServerResponseModel> MapBOToModel(
 			List<BOVersionInfo> items)
 		{
-			List<ApiVersionInfoResponseModel> response = new List<ApiVersionInfoResponseModel>();
+			List<ApiVersionInfoServerResponseModel> response = new List<ApiVersionInfoServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0a37ddc0f7c2f075ca8734833aa702b</Hash>
+    <Hash>adb5ce7b9b6890f2bb68dbdceb62d1d8</Hash>
 </Codenesium>*/

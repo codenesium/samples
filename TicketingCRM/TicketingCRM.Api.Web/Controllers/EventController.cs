@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class EventController : AbstractEventController
 	{
 		public EventController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<EventController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEventService eventService,
-			IApiEventModelMapper eventModelMapper
+			IApiEventServerModelMapper eventModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>50a854df947e964b503ab2753366ef29</Hash>
+    <Hash>f492caf5503b5572bde48c41293f7c8c</Hash>
 </Codenesium>*/

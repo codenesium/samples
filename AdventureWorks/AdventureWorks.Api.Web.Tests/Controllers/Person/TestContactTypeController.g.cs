@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			var record = new ApiContactTypeResponseModel();
-			var records = new List<ApiContactTypeResponseModel>();
+			var record = new ApiContactTypeServerResponseModel();
+			var records = new List<ApiContactTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiContactTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiContactTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiContactTypeResponseModel>>(new List<ApiContactTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiContactTypeServerResponseModel>>(new List<ApiContactTypeServerResponseModel>()));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiContactTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiContactTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeServerResponseModel()));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiContactTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiContactTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeServerResponseModel>(null));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiContactTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiContactTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiContactTypeServerResponseModel>.CreateResponse(null as ApiContactTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiContactTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeServerResponseModel>>(mockResponse));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiContactTypeRequestModel>();
-			records.Add(new ApiContactTypeRequestModel());
+			var records = new List<ApiContactTypeServerRequestModel>();
+			records.Add(new ApiContactTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiContactTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiContactTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiContactTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiContactTypeServerResponseModel>>(null as ApiContactTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeServerResponseModel>>(mockResponse.Object));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiContactTypeRequestModel>();
-			records.Add(new ApiContactTypeRequestModel());
+			var records = new List<ApiContactTypeServerRequestModel>();
+			records.Add(new ApiContactTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiContactTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiContactTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiContactTypeServerResponseModel>.CreateResponse(null as ApiContactTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiContactTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeServerResponseModel>>(mockResponse));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiContactTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiContactTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiContactTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiContactTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiContactTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiContactTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiContactTypeServerResponseModel>>(null as ApiContactTypeServerResponseModel);
+			var mockRecord = new ApiContactTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiContactTypeServerResponseModel>>(mockResponse.Object));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiContactTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiContactTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiContactTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiContactTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()))
-			.Callback<int, ApiContactTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>()))
+			.Callback<int, ApiContactTypeServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiContactTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeResponseModel>(new ApiContactTypeResponseModel()));
-			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiContactTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeServerResponseModel>(new ApiContactTypeServerResponseModel()));
+			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiContactTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiContactTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeServerResponseModel>(null));
 			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiContactTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiContactTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiContactTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiContactTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeResponseModel()));
-			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeServerResponseModel()));
+			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiContactTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiContactTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiContactTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiContactTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeResponseModel()));
-			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiContactTypeServerResponseModel()));
+			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiContactTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiContactTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ContactTypeControllerMockFacade mock = new ContactTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiContactTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiContactTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeResponseModel>(null));
-			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiContactTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiContactTypeServerResponseModel>(null));
+			ContactTypeController controller = new ContactTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiContactTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiContactTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiContactTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IContactTypeService> ServiceMock { get; set; } = new Mock<IContactTypeService>();
 
-		public Mock<IApiContactTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiContactTypeModelMapper>();
+		public Mock<IApiContactTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiContactTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c01b2b8eabbf8457ada59dd64bd68442</Hash>
+    <Hash>2f03a55cd0c166e390622c99cff9317d</Hash>
 </Codenesium>*/

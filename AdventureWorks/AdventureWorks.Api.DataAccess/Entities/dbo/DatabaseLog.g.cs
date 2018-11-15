@@ -14,19 +14,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int databaseLogID,
-			string databaseUser,
 			string @event,
 			string @object,
+			int databaseLogID,
+			string databaseUser,
 			DateTime postTime,
 			string schema,
 			string tsql,
 			string xmlEvent)
 		{
-			this.DatabaseLogID = databaseLogID;
-			this.DatabaseUser = databaseUser;
 			this.@Event = @event;
 			this.@Object = @object;
+			this.DatabaseLogID = databaseLogID;
+			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
 			this.Schema = schema;
 			this.Tsql = tsql;
@@ -35,35 +35,35 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("DatabaseLogID")]
-		public int DatabaseLogID { get; private set; }
+		public virtual int DatabaseLogID { get; private set; }
 
 		[MaxLength(128)]
 		[Column("DatabaseUser")]
-		public string DatabaseUser { get; private set; }
+		public virtual string DatabaseUser { get; private set; }
 
 		[MaxLength(128)]
 		[Column("Event")]
-		public string @Event { get; private set; }
+		public virtual string @Event { get; private set; }
 
 		[MaxLength(128)]
 		[Column("Object")]
-		public string @Object { get; private set; }
+		public virtual string @Object { get; private set; }
 
 		[Column("PostTime")]
-		public DateTime PostTime { get; private set; }
+		public virtual DateTime PostTime { get; private set; }
 
 		[MaxLength(128)]
 		[Column("Schema")]
-		public string Schema { get; private set; }
+		public virtual string Schema { get; private set; }
 
 		[Column("TSQL")]
-		public string Tsql { get; private set; }
+		public virtual string Tsql { get; private set; }
 
 		[Column("XmlEvent")]
-		public string XmlEvent { get; private set; }
+		public virtual string XmlEvent { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e08b5416f88ad1531e4057b250437b4c</Hash>
+    <Hash>52b773cd25419d48a3cdd4d4dc266525</Hash>
 </Codenesium>*/

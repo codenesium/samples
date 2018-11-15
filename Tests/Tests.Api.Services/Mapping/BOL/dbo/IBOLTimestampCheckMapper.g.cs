@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOTimestampCheck MapModelToBO(
 			int id,
-			ApiTimestampCheckRequestModel model);
+			ApiTimestampCheckServerRequestModel model);
 
-		ApiTimestampCheckResponseModel MapBOToModel(
+		ApiTimestampCheckServerResponseModel MapBOToModel(
 			BOTimestampCheck boTimestampCheck);
 
-		List<ApiTimestampCheckResponseModel> MapBOToModel(
+		List<ApiTimestampCheckServerResponseModel> MapBOToModel(
 			List<BOTimestampCheck> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc86487161658cdf0fdaae725960d30d</Hash>
+    <Hash>622a96a52dc45e1b68947a545bdd451d</Hash>
 </Codenesium>*/

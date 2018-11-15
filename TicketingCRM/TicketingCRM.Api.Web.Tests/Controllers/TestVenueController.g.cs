@@ -24,8 +24,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			var record = new ApiVenueResponseModel();
-			var records = new List<ApiVenueResponseModel>();
+			var record = new ApiVenueServerResponseModel();
+			var records = new List<ApiVenueServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVenueResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVenueServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVenueResponseModel>>(new List<ApiVenueResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVenueServerResponseModel>>(new List<ApiVenueServerResponseModel>()));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVenueResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVenueServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueServerResponseModel()));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiVenueResponseModel;
+			var record = (response as OkObjectResult).Value as ApiVenueServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueServerResponseModel>(null));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVenueResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVenueResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVenueServerResponseModel>.CreateResponse(null as ApiVenueServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVenueServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueServerResponseModel>>(mockResponse));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVenueRequestModel>();
-			records.Add(new ApiVenueRequestModel());
+			var records = new List<ApiVenueServerRequestModel>();
+			records.Add(new ApiVenueServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiVenueResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiVenueServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVenueResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiVenueServerResponseModel>>(null as ApiVenueServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueServerResponseModel>>(mockResponse.Object));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVenueRequestModel>();
-			records.Add(new ApiVenueRequestModel());
+			var records = new List<ApiVenueServerRequestModel>();
+			records.Add(new ApiVenueServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVenueResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVenueResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVenueServerResponseModel>.CreateResponse(null as ApiVenueServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVenueServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueServerResponseModel>>(mockResponse));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVenueRequestModel());
+			IActionResult response = await controller.Create(new ApiVenueServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVenueResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVenueServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVenueResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiVenueResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiVenueServerResponseModel>>(null as ApiVenueServerResponseModel);
+			var mockRecord = new ApiVenueServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVenueServerResponseModel>>(mockResponse.Object));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVenueRequestModel());
+			IActionResult response = await controller.Create(new ApiVenueServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVenueResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVenueServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()))
-			.Callback<int, ApiVenueRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>()))
+			.Callback<int, ApiVenueServerRequestModel>(
 				(id, model) => model.Address1.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiVenueResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueResponseModel>(new ApiVenueResponseModel()));
-			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiVenueServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueServerResponseModel>(new ApiVenueServerResponseModel()));
+			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVenueRequestModel>();
+			var patch = new JsonPatchDocument<ApiVenueServerRequestModel>();
 			patch.Replace(x => x.Address1, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueServerResponseModel>(null));
 			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVenueRequestModel>();
+			var patch = new JsonPatchDocument<ApiVenueServerRequestModel>();
 			patch.Replace(x => x.Address1, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVenueResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVenueServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueResponseModel()));
-			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueServerResponseModel()));
+			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVenueRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVenueServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVenueResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVenueServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueResponseModel()));
-			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVenueServerResponseModel()));
+			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVenueRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVenueServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			VenueControllerMockFacade mock = new VenueControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVenueResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVenueServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueResponseModel>(null));
-			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVenueServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVenueServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVenueServerResponseModel>(null));
+			VenueController controller = new VenueController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVenueServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVenueRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVenueServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 		public Mock<IVenueService> ServiceMock { get; set; } = new Mock<IVenueService>();
 
-		public Mock<IApiVenueModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVenueModelMapper>();
+		public Mock<IApiVenueServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVenueServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2b5c81b994c061c90b834d9609fe5b8</Hash>
+    <Hash>d6758d7a520dbde6ebdf3ad9361993ec</Hash>
 </Codenesium>*/

@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BODepartment MapModelToBO(
 			short departmentID,
-			ApiDepartmentRequestModel model);
+			ApiDepartmentServerRequestModel model);
 
-		ApiDepartmentResponseModel MapBOToModel(
+		ApiDepartmentServerResponseModel MapBOToModel(
 			BODepartment boDepartment);
 
-		List<ApiDepartmentResponseModel> MapBOToModel(
+		List<ApiDepartmentServerResponseModel> MapBOToModel(
 			List<BODepartment> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>06e7046ebf372645bec65f850203e45e</Hash>
+    <Hash>53c639f0f419fe7d0fece3ee822c9524</Hash>
 </Codenesium>*/

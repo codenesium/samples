@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALQuoteTweetMapper();
 			var bo = new BOQuoteTweet();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
 
 			QuoteTweet response = mapper.MapBOToEF(bo);
 
@@ -26,7 +26,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.QuoteTweetId.Should().Be(1);
 			response.RetweeterUserId.Should().Be(1);
 			response.SourceTweetId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -34,7 +34,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALQuoteTweetMapper();
 			QuoteTweet entity = new QuoteTweet();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"));
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"));
 
 			BOQuoteTweet response = mapper.MapEFToBO(entity);
 
@@ -43,7 +43,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.QuoteTweetId.Should().Be(1);
 			response.RetweeterUserId.Should().Be(1);
 			response.SourceTweetId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -51,7 +51,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALQuoteTweetMapper();
 			QuoteTweet entity = new QuoteTweet();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"));
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"));
 
 			List<BOQuoteTweet> response = mapper.MapEFToBO(new List<QuoteTweet>() { entity });
 
@@ -61,5 +61,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>25ea2dd5709144048830d087e3b83d60</Hash>
+    <Hash>dd476ea074037cde29e9c8e336b3a1ba</Hash>
 </Codenesium>*/

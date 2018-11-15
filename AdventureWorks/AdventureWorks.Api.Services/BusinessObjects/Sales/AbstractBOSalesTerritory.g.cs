@@ -11,20 +11,20 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		public virtual void SetProperties(int territoryID,
+		                                  string @group,
 		                                  decimal costLastYear,
 		                                  decimal costYTD,
 		                                  string countryRegionCode,
-		                                  string @group,
 		                                  DateTime modifiedDate,
 		                                  string name,
 		                                  Guid rowguid,
 		                                  decimal salesLastYear,
 		                                  decimal salesYTD)
 		{
+			this.@Group = @group;
 			this.CostLastYear = costLastYear;
 			this.CostYTD = costYTD;
 			this.CountryRegionCode = countryRegionCode;
-			this.@Group = @group;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
 			this.Rowguid = rowguid;
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70695b350db6a6b23491841a9f8e558d</Hash>
+    <Hash>7f02bd17f40105e5a05c6d2faf4d56a6</Hash>
 </Codenesium>*/

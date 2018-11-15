@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
@@ -16,7 +11,7 @@ namespace NebulaNS.Api.Services
 	{
 		protected ILinkLogRepository LinkLogRepository { get; private set; }
 
-		protected IApiLinkLogRequestModelValidator LinkLogModelValidator { get; private set; }
+		protected IApiLinkLogServerRequestModelValidator LinkLogModelValidator { get; private set; }
 
 		protected IBOLLinkLogMapper BolLinkLogMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace NebulaNS.Api.Services
 		public AbstractLinkLogService(
 			ILogger logger,
 			ILinkLogRepository linkLogRepository,
-			IApiLinkLogRequestModelValidator linkLogModelValidator,
+			IApiLinkLogServerRequestModelValidator linkLogModelValidator,
 			IBOLLinkLogMapper bolLinkLogMapper,
 			IDALLinkLogMapper dalLinkLogMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace NebulaNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLinkLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.LinkLogRepository.All(limit, offset);
 
 			return this.BolLinkLogMapper.MapBOToModel(this.DalLinkLogMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiLinkLogResponseModel> Get(int id)
+		public virtual async Task<ApiLinkLogServerResponseModel> Get(int id)
 		{
 			var record = await this.LinkLogRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
-			ApiLinkLogRequestModel model)
+		public virtual async Task<CreateResponse<ApiLinkLogServerResponseModel>> Create(
+			ApiLinkLogServerRequestModel model)
 		{
-			CreateResponse<ApiLinkLogResponseModel> response = new CreateResponse<ApiLinkLogResponseModel>(await this.LinkLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkLogServerResponseModel> response = ValidationResponseFactory<ApiLinkLogServerResponseModel>.CreateResponse(await this.LinkLogModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolLinkLogMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkLogResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiLinkLogServerResponseModel>> Update(
 			int id,
-			ApiLinkLogRequestModel model)
+			ApiLinkLogServerRequestModel model)
 		{
 			var validationResult = await this.LinkLogModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.LinkLogRepository.Get(id);
 
-				return new UpdateResponse<ApiLinkLogResponseModel>(this.BolLinkLogMapper.MapBOToModel(this.DalLinkLogMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiLinkLogServerResponseModel>.UpdateResponse(this.BolLinkLogMapper.MapBOToModel(this.DalLinkLogMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiLinkLogResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiLinkLogServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.LinkLogModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.LinkLogModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.LinkLogRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eae22d3838e1777b8deb25cacf318360</Hash>
+    <Hash>78435b372ebdb21101b2855b22f48ccf</Hash>
 </Codenesium>*/

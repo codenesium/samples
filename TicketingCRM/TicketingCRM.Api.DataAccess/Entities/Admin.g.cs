@@ -33,34 +33,34 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[MaxLength(128)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(128)]
 		[Column("password")]
-		public string Password { get; private set; }
+		public virtual string Password { get; private set; }
 
 		[MaxLength(128)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 
 		[MaxLength(128)]
 		[Column("username")]
-		public string Username { get; private set; }
+		public virtual string Username { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c47ec2cae32d74ff8774d03e11e55fb5</Hash>
+    <Hash>5b08d697f247718517d9a189c30c0081</Hash>
 </Codenesium>*/

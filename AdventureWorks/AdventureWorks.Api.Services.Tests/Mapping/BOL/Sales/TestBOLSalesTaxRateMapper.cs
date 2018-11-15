@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSalesTaxRateMapper();
-			ApiSalesTaxRateRequestModel model = new ApiSalesTaxRateRequestModel();
+			ApiSalesTaxRateServerRequestModel model = new ApiSalesTaxRateServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
 			BOSalesTaxRate response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSalesTaxRateMapper();
 			BOSalesTaxRate bo = new BOSalesTaxRate();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
-			ApiSalesTaxRateResponseModel response = mapper.MapBOToModel(bo);
+			ApiSalesTaxRateServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSalesTaxRateMapper();
 			BOSalesTaxRate bo = new BOSalesTaxRate();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1m, 1);
-			List<ApiSalesTaxRateResponseModel> response = mapper.MapBOToModel(new List<BOSalesTaxRate>() { { bo } });
+			List<ApiSalesTaxRateServerResponseModel> response = mapper.MapBOToModel(new List<BOSalesTaxRate>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c74d94306a420e5eea92e97c3d81ff21</Hash>
+    <Hash>237724f9e83756794ab30562357af26e</Hash>
 </Codenesium>*/

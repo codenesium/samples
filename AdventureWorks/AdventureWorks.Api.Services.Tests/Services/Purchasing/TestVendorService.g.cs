@@ -30,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiVendorResponseModel> response = await service.All();
+			List<ApiVendorServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -52,12 +50,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			ApiVendorResponseModel response = await service.Get(default(int));
+			ApiVendorServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,12 +69,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			ApiVendorResponseModel response = await service.Get(default(int));
+			ApiVendorServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -88,22 +82,20 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
-			var model = new ApiVendorRequestModel();
+			var model = new ApiVendorServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vendor>())).Returns(Task.FromResult(new Vendor()));
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			CreateResponse<ApiVendorResponseModel> response = await service.Create(model);
+			CreateResponse<ApiVendorServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVendorRequestModel>()));
+			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVendorServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Vendor>()));
 		}
 
@@ -111,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
-			var model = new ApiVendorRequestModel();
+			var model = new ApiVendorServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vendor>())).Returns(Task.FromResult(new Vendor()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 			var service = new VendorService(mock.LoggerMock.Object,
@@ -119,15 +111,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			UpdateResponse<ApiVendorResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiVendorServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorRequestModel>()));
+			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Vendor>()));
 		}
 
@@ -135,15 +125,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
-			var model = new ApiVendorRequestModel();
+			var model = new ApiVendorServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
@@ -165,12 +153,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			ApiVendorResponseModel response = await service.ByAccountNumber(default(string));
+			ApiVendorServerResponseModel response = await service.ByAccountNumber("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByAccountNumber(It.IsAny<string>()));
@@ -186,59 +172,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			ApiVendorResponseModel response = await service.ByAccountNumber(default(string));
+			ApiVendorServerResponseModel response = await service.ByAccountNumber("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByAccountNumber(It.IsAny<string>()));
-		}
-
-		[Fact]
-		public async void ProductVendorsByBusinessEntityID_Exists()
-		{
-			var mock = new ServiceMockFacade<IVendorRepository>();
-			var records = new List<ProductVendor>();
-			records.Add(new ProductVendor());
-			mock.RepositoryMock.Setup(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new VendorService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
-			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
-
-			List<ApiProductVendorResponseModel> response = await service.ProductVendorsByBusinessEntityID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ProductVendorsByBusinessEntityID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IVendorRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
-			var service = new VendorService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
-			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
-
-			List<ApiProductVendorResponseModel> response = await service.ProductVendorsByBusinessEntityID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -253,12 +193,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -274,12 +212,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
 			                                mock.DALMapperMockFactory.DALVendorMapperMock,
-			                                mock.BOLMapperMockFactory.BOLProductVendorMapperMock,
-			                                mock.DALMapperMockFactory.DALProductVendorMapperMock,
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -288,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a6f26590158463e7f304d8f2dc70e056</Hash>
+    <Hash>2abcb3f81685921294282ddca8857da9</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace TwitterNS.Api.DataAccess
 		public virtual void SetProperties(
 			DateTime? dateFollowed,
 			string muted,
-			string userId)
+			int userId)
 		{
 			this.DateFollowed = dateFollowed;
 			this.Muted = muted;
@@ -24,19 +24,18 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		[Column("date_followed")]
-		public DateTime? DateFollowed { get; private set; }
+		public virtual DateTime? DateFollowed { get; private set; }
 
 		[MaxLength(1)]
 		[Column("muted")]
-		public string Muted { get; private set; }
+		public virtual string Muted { get; private set; }
 
 		[Key]
-		[MaxLength(64)]
 		[Column("user_id")]
-		public string UserId { get; private set; }
+		public virtual int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>98122b438a6c697bb8a5b4cd5d34de83</Hash>
+    <Hash>c1e7918efa58a4445ba078d27f8d211e</Hash>
 </Codenesium>*/

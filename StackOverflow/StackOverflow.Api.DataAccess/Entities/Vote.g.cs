@@ -30,26 +30,26 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("BountyAmount")]
-		public int? BountyAmount { get; private set; }
+		public virtual int? BountyAmount { get; private set; }
 
 		[Column("CreationDate")]
-		public DateTime CreationDate { get; private set; }
+		public virtual DateTime CreationDate { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("PostId")]
-		public int PostId { get; private set; }
+		public virtual int PostId { get; private set; }
 
 		[Column("UserId")]
-		public int? UserId { get; private set; }
+		public virtual int? UserId { get; private set; }
 
 		[Column("VoteTypeId")]
-		public int VoteTypeId { get; private set; }
+		public virtual int VoteTypeId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4468959b0834284195e7728d4b6ea4f4</Hash>
+    <Hash>58d0c2c9cc20ce3a9c4569fadef78b53</Hash>
 </Codenesium>*/

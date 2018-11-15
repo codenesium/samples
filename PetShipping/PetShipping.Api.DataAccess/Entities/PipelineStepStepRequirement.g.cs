@@ -27,23 +27,28 @@ namespace PetShippingNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("details")]
-		public string Detail { get; private set; }
+		public virtual string Detail { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("pipelineStepId")]
-		public int PipelineStepId { get; private set; }
+		public virtual int PipelineStepId { get; private set; }
 
 		[Column("requirementMet")]
-		public bool RequirementMet { get; private set; }
+		public virtual bool RequirementMet { get; private set; }
 
 		[ForeignKey("PipelineStepId")]
 		public virtual PipelineStep PipelineStepNavigation { get; private set; }
+
+		public void SetPipelineStepNavigation(PipelineStep item)
+		{
+			this.PipelineStepNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7659b4699f033676ab8a50fc7a21d6d</Hash>
+    <Hash>60b5cce2c29c667acc57bf56c096250b</Hash>
 </Codenesium>*/

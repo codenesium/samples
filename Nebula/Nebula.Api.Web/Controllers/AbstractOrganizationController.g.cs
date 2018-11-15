@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected IOrganizationService OrganizationService { get; private set; }
 
-		protected IApiOrganizationModelMapper OrganizationModelMapper { get; private set; }
+		protected IApiOrganizationServerModelMapper OrganizationModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractOrganizationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IOrganizationService organizationService,
-			IApiOrganizationModelMapper organizationModelMapper
+			IApiOrganizationServerModelMapper organizationModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiOrganizationServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiOrganizationResponseModel> response = await this.OrganizationService.All(query.Limit, query.Offset);
+			List<ApiOrganizationServerResponseModel> response = await this.OrganizationService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiOrganizationServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiOrganizationResponseModel response = await this.OrganizationService.Get(id);
+			ApiOrganizationServerResponseModel response = await this.OrganizationService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiOrganizationServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOrganizationRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOrganizationServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiOrganizationResponseModel> records = new List<ApiOrganizationResponseModel>();
+			List<ApiOrganizationServerResponseModel> records = new List<ApiOrganizationServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Create(model);
+				CreateResponse<ApiOrganizationServerResponseModel> result = await this.OrganizationService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiOrganizationServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiOrganizationResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiOrganizationServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationServerRequestModel model)
 		{
-			CreateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Create(model);
+			CreateResponse<ApiOrganizationServerResponseModel> result = await this.OrganizationService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiOrganizationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiOrganizationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiOrganizationRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiOrganizationServerRequestModel> patch)
 		{
-			ApiOrganizationResponseModel record = await this.OrganizationService.Get(id);
+			ApiOrganizationServerResponseModel record = await this.OrganizationService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiOrganizationRequestModel model = await this.PatchModel(id, patch);
+				ApiOrganizationServerRequestModel model = await this.PatchModel(id, patch) as ApiOrganizationServerRequestModel;
 
-				UpdateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Update(id, model);
+				UpdateResponse<ApiOrganizationServerResponseModel> result = await this.OrganizationService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiOrganizationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiOrganizationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationServerRequestModel model)
 		{
-			ApiOrganizationRequestModel request = await this.PatchModel(id, this.OrganizationModelMapper.CreatePatch(model));
+			ApiOrganizationServerRequestModel request = await this.PatchModel(id, this.OrganizationModelMapper.CreatePatch(model)) as ApiOrganizationServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiOrganizationResponseModel> result = await this.OrganizationService.Update(id, request);
+				UpdateResponse<ApiOrganizationServerResponseModel> result = await this.OrganizationService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.OrganizationService.Delete(id);
@@ -209,11 +219,11 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiOrganizationServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiOrganizationResponseModel response = await this.OrganizationService.ByName(name);
+			ApiOrganizationServerResponseModel response = await this.OrganizationService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{organizationId}/TeamsByOrganizationId")]
+		[Route("{organizationId}/Teams")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeamServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> TeamsByOrganizationId(int organizationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +247,12 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeamResponseModel> response = await this.OrganizationService.TeamsByOrganizationId(organizationId, query.Limit, query.Offset);
+			List<ApiTeamServerResponseModel> response = await this.OrganizationService.TeamsByOrganizationId(organizationId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiOrganizationRequestModel> PatchModel(int id, JsonPatchDocument<ApiOrganizationRequestModel> patch)
+		private async Task<ApiOrganizationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiOrganizationServerRequestModel> patch)
 		{
 			var record = await this.OrganizationService.Get(id);
 
@@ -252,7 +262,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiOrganizationRequestModel request = this.OrganizationModelMapper.MapResponseToRequest(record);
+				ApiOrganizationServerRequestModel request = this.OrganizationModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a31bfad93634a86c403b08dc0b3390d9</Hash>
+    <Hash>16310edba8f3973ee028781a6d72f5bb</Hash>
 </Codenesium>*/

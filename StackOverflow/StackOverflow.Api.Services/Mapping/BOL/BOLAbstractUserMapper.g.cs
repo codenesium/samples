@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOUser MapModelToBO(
 			int id,
-			ApiUserRequestModel model
+			ApiUserServerRequestModel model
 			)
 		{
 			BOUser boUser = new BOUser();
@@ -31,20 +30,20 @@ namespace StackOverflowNS.Api.Services
 			return boUser;
 		}
 
-		public virtual ApiUserResponseModel MapBOToModel(
+		public virtual ApiUserServerResponseModel MapBOToModel(
 			BOUser boUser)
 		{
-			var model = new ApiUserResponseModel();
+			var model = new ApiUserServerResponseModel();
 
 			model.SetProperties(boUser.Id, boUser.AboutMe, boUser.AccountId, boUser.Age, boUser.CreationDate, boUser.DisplayName, boUser.DownVote, boUser.EmailHash, boUser.LastAccessDate, boUser.Location, boUser.Reputation, boUser.UpVote, boUser.View, boUser.WebsiteUrl);
 
 			return model;
 		}
 
-		public virtual List<ApiUserResponseModel> MapBOToModel(
+		public virtual List<ApiUserServerResponseModel> MapBOToModel(
 			List<BOUser> items)
 		{
-			List<ApiUserResponseModel> response = new List<ApiUserResponseModel>();
+			List<ApiUserServerResponseModel> response = new List<ApiUserServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -57,5 +56,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee1285ce87aa0016185cab6d41d628eb</Hash>
+    <Hash>0af088050793c511c8336be9a888d906</Hash>
 </Codenesium>*/

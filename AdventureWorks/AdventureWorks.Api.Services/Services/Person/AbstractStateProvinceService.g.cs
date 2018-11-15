@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IStateProvinceRepository StateProvinceRepository { get; private set; }
 
-		protected IApiStateProvinceRequestModelValidator StateProvinceModelValidator { get; private set; }
+		protected IApiStateProvinceServerRequestModelValidator StateProvinceModelValidator { get; private set; }
 
 		protected IBOLStateProvinceMapper BolStateProvinceMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractStateProvinceService(
 			ILogger logger,
 			IStateProvinceRepository stateProvinceRepository,
-			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
+			IApiStateProvinceServerRequestModelValidator stateProvinceModelValidator,
 			IBOLStateProvinceMapper bolStateProvinceMapper,
 			IDALStateProvinceMapper dalStateProvinceMapper,
 			IBOLAddressMapper bolAddressMapper,
@@ -47,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiStateProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiStateProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.StateProvinceRepository.All(limit, offset);
 
 			return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiStateProvinceResponseModel> Get(int stateProvinceID)
+		public virtual async Task<ApiStateProvinceServerResponseModel> Get(int stateProvinceID)
 		{
 			var record = await this.StateProvinceRepository.Get(stateProvinceID);
 
@@ -68,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
-			ApiStateProvinceRequestModel model)
+		public virtual async Task<CreateResponse<ApiStateProvinceServerResponseModel>> Create(
+			ApiStateProvinceServerRequestModel model)
 		{
-			CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.StateProvinceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStateProvinceServerResponseModel> response = ValidationResponseFactory<ApiStateProvinceServerResponseModel>.CreateResponse(await this.StateProvinceModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolStateProvinceMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiStateProvinceResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiStateProvinceServerResponseModel>> Update(
 			int stateProvinceID,
-			ApiStateProvinceRequestModel model)
+			ApiStateProvinceServerRequestModel model)
 		{
 			var validationResult = await this.StateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model);
 
@@ -96,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.StateProvinceRepository.Get(stateProvinceID);
 
-				return new UpdateResponse<ApiStateProvinceResponseModel>(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiStateProvinceServerResponseModel>.UpdateResponse(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiStateProvinceResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiStateProvinceServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int stateProvinceID)
 		{
-			ActionResponse response = new ActionResponse(await this.StateProvinceModelValidator.ValidateDeleteAsync(stateProvinceID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.StateProvinceModelValidator.ValidateDeleteAsync(stateProvinceID));
+
 			if (response.Success)
 			{
 				await this.StateProvinceRepository.Delete(stateProvinceID);
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiStateProvinceResponseModel> ByName(string name)
+		public async virtual Task<ApiStateProvinceServerResponseModel> ByName(string name)
 		{
 			StateProvince record = await this.StateProvinceRepository.ByName(name);
 
@@ -130,7 +127,21 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<ApiStateProvinceResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+		public async virtual Task<ApiStateProvinceServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			StateProvince record = await this.StateProvinceRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<ApiStateProvinceServerResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
 			StateProvince record = await this.StateProvinceRepository.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
 
@@ -144,7 +155,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiAddressResponseModel>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAddressServerResponseModel>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Address> records = await this.StateProvinceRepository.AddressesByStateProvinceID(stateProvinceID, limit, offset);
 
@@ -154,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1910809563c6db21a743cf0a2b58a319</Hash>
+    <Hash>83dab6718fa809e9ca42869e0c814f38</Hash>
 </Codenesium>*/

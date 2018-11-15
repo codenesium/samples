@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IPostHistoryTypeService PostHistoryTypeService { get; private set; }
 
-		protected IApiPostHistoryTypeModelMapper PostHistoryTypeModelMapper { get; private set; }
+		protected IApiPostHistoryTypeServerModelMapper PostHistoryTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractPostHistoryTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostHistoryTypeService postHistoryTypeService,
-			IApiPostHistoryTypeModelMapper postHistoryTypeModelMapper
+			IApiPostHistoryTypeServerModelMapper postHistoryTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPostHistoryTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPostHistoryTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPostHistoryTypeResponseModel> response = await this.PostHistoryTypeService.All(query.Limit, query.Offset);
+			List<ApiPostHistoryTypeServerResponseModel> response = await this.PostHistoryTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPostHistoryTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPostHistoryTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPostHistoryTypeResponseModel response = await this.PostHistoryTypeService.Get(id);
+			ApiPostHistoryTypeServerResponseModel response = await this.PostHistoryTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPostHistoryTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPostHistoryTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostHistoryTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPostHistoryTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPostHistoryTypeResponseModel> records = new List<ApiPostHistoryTypeResponseModel>();
+			List<ApiPostHistoryTypeServerResponseModel> records = new List<ApiPostHistoryTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPostHistoryTypeResponseModel> result = await this.PostHistoryTypeService.Create(model);
+				CreateResponse<ApiPostHistoryTypeServerResponseModel> result = await this.PostHistoryTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPostHistoryTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPostHistoryTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPostHistoryTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPostHistoryTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPostHistoryTypeServerRequestModel model)
 		{
-			CreateResponse<ApiPostHistoryTypeResponseModel> result = await this.PostHistoryTypeService.Create(model);
+			CreateResponse<ApiPostHistoryTypeServerResponseModel> result = await this.PostHistoryTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostHistoryTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostHistoryTypeServerRequestModel> patch)
 		{
-			ApiPostHistoryTypeResponseModel record = await this.PostHistoryTypeService.Get(id);
+			ApiPostHistoryTypeServerResponseModel record = await this.PostHistoryTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostHistoryTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiPostHistoryTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiPostHistoryTypeServerRequestModel;
 
-				UpdateResponse<ApiPostHistoryTypeResponseModel> result = await this.PostHistoryTypeService.Update(id, model);
+				UpdateResponse<ApiPostHistoryTypeServerResponseModel> result = await this.PostHistoryTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPostHistoryTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostHistoryTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPostHistoryTypeServerRequestModel model)
 		{
-			ApiPostHistoryTypeRequestModel request = await this.PatchModel(id, this.PostHistoryTypeModelMapper.CreatePatch(model));
+			ApiPostHistoryTypeServerRequestModel request = await this.PatchModel(id, this.PostHistoryTypeModelMapper.CreatePatch(model)) as ApiPostHistoryTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPostHistoryTypeResponseModel> result = await this.PostHistoryTypeService.Update(id, request);
+				UpdateResponse<ApiPostHistoryTypeServerResponseModel> result = await this.PostHistoryTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PostHistoryTypeService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiPostHistoryTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostHistoryTypeRequestModel> patch)
+		private async Task<ApiPostHistoryTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPostHistoryTypeServerRequestModel> patch)
 		{
 			var record = await this.PostHistoryTypeService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiPostHistoryTypeRequestModel request = this.PostHistoryTypeModelMapper.MapResponseToRequest(record);
+				ApiPostHistoryTypeServerRequestModel request = this.PostHistoryTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f7f390e16771aed7e462a99e45afffa4</Hash>
+    <Hash>0faf8ce539cce38bacd5bca1da8a26a9</Hash>
 </Codenesium>*/

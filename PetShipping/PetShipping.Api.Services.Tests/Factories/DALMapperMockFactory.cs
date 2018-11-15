@@ -14,9 +14,9 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IDALBreedMapper DALBreedMapperMock { get; set; } = new DALBreedMapper();
 
-		public IDALClientMapper DALClientMapperMock { get; set; } = new DALClientMapper();
+		public IDALCustomerMapper DALCustomerMapperMock { get; set; } = new DALCustomerMapper();
 
-		public IDALClientCommunicationMapper DALClientCommunicationMapperMock { get; set; } = new DALClientCommunicationMapper();
+		public IDALCustomerCommunicationMapper DALCustomerCommunicationMapperMock { get; set; } = new DALCustomerCommunicationMapper();
 
 		public IDALCountryMapper DALCountryMapperMock { get; set; } = new DALCountryMapper();
 
@@ -28,6 +28,10 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IDALHandlerMapper DALHandlerMapperMock { get; set; } = new DALHandlerMapper();
 
+		public IDALHandlerPipelineStepMapper DALHandlerPipelineStepMapperMock { get; set; } = new DALHandlerPipelineStepMapper();
+
+		public IDALOtherTransportMapper DALOtherTransportMapperMock { get; set; } = new DALOtherTransportMapper();
+
 		public IDALPetMapper DALPetMapperMock { get; set; } = new DALPetMapper();
 
 		public IDALPipelineMapper DALPipelineMapperMock { get; set; } = new DALPipelineMapper();
@@ -35,6 +39,8 @@ namespace PetShippingNS.Api.Services.Tests
 		public IDALPipelineStatuMapper DALPipelineStatuMapperMock { get; set; } = new DALPipelineStatuMapper();
 
 		public IDALPipelineStepMapper DALPipelineStepMapperMock { get; set; } = new DALPipelineStepMapper();
+
+		public IDALPipelineStepDestinationMapper DALPipelineStepDestinationMapperMock { get; set; } = new DALPipelineStepDestinationMapper();
 
 		public IDALPipelineStepNoteMapper DALPipelineStepNoteMapperMock { get; set; } = new DALPipelineStepNoteMapper();
 
@@ -53,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>82db8b8c6b42f1458043ad16f05b72eb</Hash>
+    <Hash>d2380626da4b46b20a8d14f4eb62b0de</Hash>
 </Codenesium>*/

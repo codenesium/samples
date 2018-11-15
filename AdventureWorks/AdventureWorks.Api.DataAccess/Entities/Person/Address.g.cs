@@ -35,36 +35,35 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("AddressID")]
-		public int AddressID { get; private set; }
+		public virtual int AddressID { get; private set; }
 
 		[MaxLength(60)]
 		[Column("AddressLine1")]
-		public string AddressLine1 { get; private set; }
+		public virtual string AddressLine1 { get; private set; }
 
 		[MaxLength(60)]
 		[Column("AddressLine2")]
-		public string AddressLine2 { get; private set; }
+		public virtual string AddressLine2 { get; private set; }
 
 		[MaxLength(30)]
 		[Column("City")]
-		public string City { get; private set; }
+		public virtual string City { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(15)]
 		[Column("PostalCode")]
-		public string PostalCode { get; private set; }
+		public virtual string PostalCode { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("StateProvinceID")]
-		public int StateProvinceID { get; private set; }
+		public virtual int StateProvinceID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>47e954ff2c5857f6d05ca3a46982bcda</Hash>
+    <Hash>b3e428eb3d8a7a6b3072b62c65dc8ee5</Hash>
 </Codenesium>*/

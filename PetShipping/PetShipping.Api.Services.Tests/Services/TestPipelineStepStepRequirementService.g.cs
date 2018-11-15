@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                                     mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-			List<ApiPipelineStepStepRequirementResponseModel> response = await service.All();
+			List<ApiPipelineStepStepRequirementServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                                     mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-			ApiPipelineStepStepRequirementResponseModel response = await service.Get(default(int));
+			ApiPipelineStepStepRequirementServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                                     mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-			ApiPipelineStepStepRequirementResponseModel response = await service.Get(default(int));
+			ApiPipelineStepStepRequirementServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
-			var model = new ApiPipelineStepStepRequirementRequestModel();
+			var model = new ApiPipelineStepStepRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
 			                                                     mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                                     mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-			CreateResponse<ApiPipelineStepStepRequirementResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPipelineStepStepRequirementServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementRequestModel>()));
+			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PipelineStepStepRequirement>()));
 		}
 
@@ -95,7 +95,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
-			var model = new ApiPipelineStepStepRequirementRequestModel();
+			var model = new ApiPipelineStepStepRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                                     mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-			UpdateResponse<ApiPipelineStepStepRequirementResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPipelineStepStepRequirementServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementRequestModel>()));
+			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PipelineStepStepRequirement>()));
 		}
 
@@ -115,7 +115,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
-			var model = new ApiPipelineStepStepRequirementRequestModel();
+			var model = new ApiPipelineStepStepRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
 			                                                     mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>93ab60477738738eb60d1cee5711d1d5</Hash>
+    <Hash>7bb2cacb2cf10ac14a202325a2e065f9</Hash>
 </Codenesium>*/

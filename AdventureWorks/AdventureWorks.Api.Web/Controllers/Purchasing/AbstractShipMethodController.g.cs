@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IShipMethodService ShipMethodService { get; private set; }
 
-		protected IApiShipMethodModelMapper ShipMethodModelMapper { get; private set; }
+		protected IApiShipMethodServerModelMapper ShipMethodModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShipMethodService shipMethodService,
-			IApiShipMethodModelMapper shipMethodModelMapper
+			IApiShipMethodServerModelMapper shipMethodModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiShipMethodServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiShipMethodResponseModel> response = await this.ShipMethodService.All(query.Limit, query.Offset);
+			List<ApiShipMethodServerResponseModel> response = await this.ShipMethodService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiShipMethodResponseModel response = await this.ShipMethodService.Get(id);
+			ApiShipMethodServerResponseModel response = await this.ShipMethodService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiShipMethodServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShipMethodRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShipMethodServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiShipMethodResponseModel> records = new List<ApiShipMethodResponseModel>();
+			List<ApiShipMethodServerResponseModel> records = new List<ApiShipMethodServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Create(model);
+				CreateResponse<ApiShipMethodServerResponseModel> result = await this.ShipMethodService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiShipMethodServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiShipMethodResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiShipMethodServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShipMethodRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiShipMethodServerRequestModel model)
 		{
-			CreateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Create(model);
+			CreateResponse<ApiShipMethodServerResponseModel> result = await this.ShipMethodService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShipMethodResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShipMethodServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShipMethodRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShipMethodServerRequestModel> patch)
 		{
-			ApiShipMethodResponseModel record = await this.ShipMethodService.Get(id);
+			ApiShipMethodServerResponseModel record = await this.ShipMethodService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShipMethodRequestModel model = await this.PatchModel(id, patch);
+				ApiShipMethodServerRequestModel model = await this.PatchModel(id, patch) as ApiShipMethodServerRequestModel;
 
-				UpdateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Update(id, model);
+				UpdateResponse<ApiShipMethodServerResponseModel> result = await this.ShipMethodService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShipMethodResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShipMethodServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodServerRequestModel model)
 		{
-			ApiShipMethodRequestModel request = await this.PatchModel(id, this.ShipMethodModelMapper.CreatePatch(model));
+			ApiShipMethodServerRequestModel request = await this.PatchModel(id, this.ShipMethodModelMapper.CreatePatch(model)) as ApiShipMethodServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiShipMethodResponseModel> result = await this.ShipMethodService.Update(id, request);
+				UpdateResponse<ApiShipMethodServerResponseModel> result = await this.ShipMethodService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ShipMethodService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiShipMethodResponseModel response = await this.ShipMethodService.ByName(name);
+			ApiShipMethodServerResponseModel response = await this.ShipMethodService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,28 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{shipMethodID}/PurchaseOrderHeadersByShipMethodID")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiShipMethodServerResponseModel response = await this.ShipMethodService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
+		[Route("{shipMethodID}/PurchaseOrderHeaders")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +266,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await this.ShipMethodService.PurchaseOrderHeadersByShipMethodID(shipMethodID, query.Limit, query.Offset);
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = await this.ShipMethodService.PurchaseOrderHeadersByShipMethodID(shipMethodID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiShipMethodRequestModel> PatchModel(int id, JsonPatchDocument<ApiShipMethodRequestModel> patch)
+		private async Task<ApiShipMethodServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiShipMethodServerRequestModel> patch)
 		{
 			var record = await this.ShipMethodService.Get(id);
 
@@ -252,7 +281,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShipMethodRequestModel request = this.ShipMethodModelMapper.MapResponseToRequest(record);
+				ApiShipMethodServerRequestModel request = this.ShipMethodModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +290,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>33c873c73c21d8708cb2aa6f918ae0f4</Hash>
+    <Hash>a238c74d6517e1005732a1681ba48437</Hash>
 </Codenesium>*/

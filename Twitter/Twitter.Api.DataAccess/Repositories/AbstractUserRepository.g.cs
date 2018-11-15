@@ -76,7 +76,7 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<User>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<User>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.LocationLocationId == locationLocationId, limit, offset);
 		}
@@ -136,35 +136,66 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
 		}
 
-		public async virtual Task<List<User>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<User>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.Likes
+			return await (from refTable in this.Context.Tweets
 			              join users in this.Context.Users on
-			              refTable.LikerUserId equals users.UserId
-			              where refTable.LikerUserId == likerUserId
+			              refTable.UserUserId equals users.UserId
+			              where refTable.LocationId == locationId
 			              select users).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<Tweet> CreateTweet(Tweet item)
+		{
+			this.Context.Set<Tweet>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteTweet(Tweet item)
+		{
+			this.Context.Set<Tweet>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
+		public async virtual Task<List<User>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.QuoteTweets
+			              join users in this.Context.Users on
+			              refTable.RetweeterUserId equals users.UserId
+			              where refTable.SourceTweetId == sourceTweetId
+			              select users).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<QuoteTweet> CreateQuoteTweet(QuoteTweet item)
+		{
+			this.Context.Set<QuoteTweet>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteQuoteTweet(QuoteTweet item)
+		{
+			this.Context.Set<QuoteTweet>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<User>> Where(
 			Expression<Func<User, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<User, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<User, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.UserId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
-			}
-			else
-			{
-				return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
-			}
+			return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
 		private async Task<User> GetById(int userId)
@@ -177,5 +208,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34b2f9f9aed45507429a120378f3e747</Hash>
+    <Hash>c0ea157fea82d95f5a86232e753adf82</Hash>
 </Codenesium>*/

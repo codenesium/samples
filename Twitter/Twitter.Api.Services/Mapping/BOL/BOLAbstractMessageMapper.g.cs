@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -9,7 +8,7 @@ namespace TwitterNS.Api.Services
 	{
 		public virtual BOMessage MapModelToBO(
 			int messageId,
-			ApiMessageRequestModel model
+			ApiMessageServerRequestModel model
 			)
 		{
 			BOMessage boMessage = new BOMessage();
@@ -20,20 +19,20 @@ namespace TwitterNS.Api.Services
 			return boMessage;
 		}
 
-		public virtual ApiMessageResponseModel MapBOToModel(
+		public virtual ApiMessageServerResponseModel MapBOToModel(
 			BOMessage boMessage)
 		{
-			var model = new ApiMessageResponseModel();
+			var model = new ApiMessageServerResponseModel();
 
 			model.SetProperties(boMessage.MessageId, boMessage.Content, boMessage.SenderUserId);
 
 			return model;
 		}
 
-		public virtual List<ApiMessageResponseModel> MapBOToModel(
+		public virtual List<ApiMessageServerResponseModel> MapBOToModel(
 			List<BOMessage> items)
 		{
-			List<ApiMessageResponseModel> response = new List<ApiMessageResponseModel>();
+			List<ApiMessageServerResponseModel> response = new List<ApiMessageServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2a95d2ee9b303a7833b124ea8c88fca</Hash>
+    <Hash>ea9ded2cb00f9f626095db636b728a19</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TimestampCheckController : AbstractTimestampCheckController
 	{
 		public TimestampCheckController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<TimestampCheckController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITimestampCheckService timestampCheckService,
-			IApiTimestampCheckModelMapper timestampCheckModelMapper
+			IApiTimestampCheckServerModelMapper timestampCheckModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a8ba963b6b744f2db9c3cf85a6544a55</Hash>
+    <Hash>3a44d807c1a69cc20357d1ef4a0fefda</Hash>
 </Codenesium>*/

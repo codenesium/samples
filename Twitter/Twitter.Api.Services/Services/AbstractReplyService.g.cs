@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IReplyRepository ReplyRepository { get; private set; }
 
-		protected IApiReplyRequestModelValidator ReplyModelValidator { get; private set; }
+		protected IApiReplyServerRequestModelValidator ReplyModelValidator { get; private set; }
 
 		protected IBOLReplyMapper BolReplyMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractReplyService(
 			ILogger logger,
 			IReplyRepository replyRepository,
-			IApiReplyRequestModelValidator replyModelValidator,
+			IApiReplyServerRequestModelValidator replyModelValidator,
 			IBOLReplyMapper bolReplyMapper,
 			IDALReplyMapper dalReplyMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiReplyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiReplyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ReplyRepository.All(limit, offset);
 
 			return this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiReplyResponseModel> Get(int replyId)
+		public virtual async Task<ApiReplyServerResponseModel> Get(int replyId)
 		{
 			var record = await this.ReplyRepository.Get(replyId);
 
@@ -60,10 +55,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiReplyResponseModel>> Create(
-			ApiReplyRequestModel model)
+		public virtual async Task<CreateResponse<ApiReplyServerResponseModel>> Create(
+			ApiReplyServerRequestModel model)
 		{
-			CreateResponse<ApiReplyResponseModel> response = new CreateResponse<ApiReplyResponseModel>(await this.ReplyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiReplyServerResponseModel> response = ValidationResponseFactory<ApiReplyServerResponseModel>.CreateResponse(await this.ReplyModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolReplyMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiReplyResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiReplyServerResponseModel>> Update(
 			int replyId,
-			ApiReplyRequestModel model)
+			ApiReplyServerRequestModel model)
 		{
 			var validationResult = await this.ReplyModelValidator.ValidateUpdateAsync(replyId, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.ReplyRepository.Get(replyId);
 
-				return new UpdateResponse<ApiReplyResponseModel>(this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiReplyServerResponseModel>.UpdateResponse(this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiReplyResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiReplyServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int replyId)
 		{
-			ActionResponse response = new ActionResponse(await this.ReplyModelValidator.ValidateDeleteAsync(replyId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ReplyModelValidator.ValidateDeleteAsync(replyId));
+
 			if (response.Success)
 			{
 				await this.ReplyRepository.Delete(replyId);
@@ -108,7 +105,7 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiReplyResponseModel>> ByReplierUserId(int replierUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiReplyServerResponseModel>> ByReplierUserId(int replierUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Reply> records = await this.ReplyRepository.ByReplierUserId(replierUserId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc33190daf03f924091b6158151bc9a4</Hash>
+    <Hash>1e30062a2b5f59f6d48087b7cd95381f</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected ITagService TagService { get; private set; }
 
-		protected IApiTagModelMapper TagModelMapper { get; private set; }
+		protected IApiTagServerModelMapper TagModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractTagController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITagService tagService,
-			IApiTagModelMapper tagModelMapper
+			IApiTagServerModelMapper tagModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTagResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTagServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTagResponseModel> response = await this.TagService.All(query.Limit, query.Offset);
+			List<ApiTagServerResponseModel> response = await this.TagService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTagResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTagServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTagResponseModel response = await this.TagService.Get(id);
+			ApiTagServerResponseModel response = await this.TagService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTagResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTagServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTagRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTagServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTagResponseModel> records = new List<ApiTagResponseModel>();
+			List<ApiTagServerResponseModel> records = new List<ApiTagServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTagResponseModel> result = await this.TagService.Create(model);
+				CreateResponse<ApiTagServerResponseModel> result = await this.TagService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTagServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTagResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTagServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTagRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTagServerRequestModel model)
 		{
-			CreateResponse<ApiTagResponseModel> result = await this.TagService.Create(model);
+			CreateResponse<ApiTagServerResponseModel> result = await this.TagService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTagResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTagServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTagRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTagServerRequestModel> patch)
 		{
-			ApiTagResponseModel record = await this.TagService.Get(id);
+			ApiTagServerResponseModel record = await this.TagService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiTagRequestModel model = await this.PatchModel(id, patch);
+				ApiTagServerRequestModel model = await this.PatchModel(id, patch) as ApiTagServerRequestModel;
 
-				UpdateResponse<ApiTagResponseModel> result = await this.TagService.Update(id, model);
+				UpdateResponse<ApiTagServerResponseModel> result = await this.TagService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTagResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTagServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTagRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTagServerRequestModel model)
 		{
-			ApiTagRequestModel request = await this.PatchModel(id, this.TagModelMapper.CreatePatch(model));
+			ApiTagServerRequestModel request = await this.PatchModel(id, this.TagModelMapper.CreatePatch(model)) as ApiTagServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTagResponseModel> result = await this.TagService.Update(id, request);
+				UpdateResponse<ApiTagServerResponseModel> result = await this.TagService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TagService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiTagRequestModel> PatchModel(int id, JsonPatchDocument<ApiTagRequestModel> patch)
+		private async Task<ApiTagServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTagServerRequestModel> patch)
 		{
 			var record = await this.TagService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiTagRequestModel request = this.TagModelMapper.MapResponseToRequest(record);
+				ApiTagServerRequestModel request = this.TagModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0d5746e4dfe59f509233896de91852f8</Hash>
+    <Hash>1f668f8090b40c1941b0e044baccd65b</Hash>
 </Codenesium>*/

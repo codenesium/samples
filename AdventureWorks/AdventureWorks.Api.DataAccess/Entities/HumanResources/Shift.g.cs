@@ -28,24 +28,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("EndTime")]
-		public TimeSpan EndTime { get; private set; }
+		public virtual TimeSpan EndTime { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Key]
 		[Column("ShiftID")]
-		public int ShiftID { get; private set; }
+		public virtual int ShiftID { get; private set; }
 
 		[Column("StartTime")]
-		public TimeSpan StartTime { get; private set; }
+		public virtual TimeSpan StartTime { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb78e75d9d4c490d931fbba256e76e70</Hash>
+    <Hash>abb3a57e5b1d40511a2a114d18a2aa54</Hash>
 </Codenesium>*/

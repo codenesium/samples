@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace StackOverflowNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<BadgeRepository>> loggerMoc = BadgeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace StackOverflowNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<BadgeRepository>> loggerMoc = BadgeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
+			var repository = new BadgeRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8dc14668043393ae0f059c8cdf77605</Hash>
+    <Hash>3c55310664de133d7f291914f0a44a3f</Hash>
 </Codenesium>*/

@@ -85,22 +85,14 @@ namespace PetShippingNS.Api.DataAccess
 			Expression<Func<AirTransport, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<AirTransport, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<AirTransport, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.AirlineId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
-			}
-			else
-			{
-				return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
-			}
+			return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
 		private async Task<AirTransport> GetById(int airlineId)
@@ -113,5 +105,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67ad04b98c344eab1b0cce05ed6c2960</Hash>
+    <Hash>103f93048af692f576ac97dfbc8f6a26</Hash>
 </Codenesium>*/

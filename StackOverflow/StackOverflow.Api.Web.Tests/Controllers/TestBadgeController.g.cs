@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			var record = new ApiBadgeResponseModel();
-			var records = new List<ApiBadgeResponseModel>();
+			var record = new ApiBadgeServerResponseModel();
+			var records = new List<ApiBadgeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBadgeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBadgeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBadgeResponseModel>>(new List<ApiBadgeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBadgeServerResponseModel>>(new List<ApiBadgeServerResponseModel>()));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBadgeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBadgeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeServerResponseModel()));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiBadgeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiBadgeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeServerResponseModel>(null));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBadgeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBadgeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBadgeServerResponseModel>.CreateResponse(null as ApiBadgeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBadgeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeServerResponseModel>>(mockResponse));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBadgeRequestModel>();
-			records.Add(new ApiBadgeRequestModel());
+			var records = new List<ApiBadgeServerRequestModel>();
+			records.Add(new ApiBadgeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiBadgeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiBadgeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBadgeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiBadgeServerResponseModel>>(null as ApiBadgeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeServerResponseModel>>(mockResponse.Object));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBadgeRequestModel>();
-			records.Add(new ApiBadgeRequestModel());
+			var records = new List<ApiBadgeServerRequestModel>();
+			records.Add(new ApiBadgeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBadgeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBadgeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBadgeServerResponseModel>.CreateResponse(null as ApiBadgeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBadgeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeServerResponseModel>>(mockResponse));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBadgeRequestModel());
+			IActionResult response = await controller.Create(new ApiBadgeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBadgeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBadgeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBadgeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiBadgeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiBadgeServerResponseModel>>(null as ApiBadgeServerResponseModel);
+			var mockRecord = new ApiBadgeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBadgeServerResponseModel>>(mockResponse.Object));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBadgeRequestModel());
+			IActionResult response = await controller.Create(new ApiBadgeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBadgeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBadgeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>()))
-			.Callback<int, ApiBadgeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()))
+			.Callback<int, ApiBadgeServerRequestModel>(
 				(id, model) => model.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiBadgeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeResponseModel>(new ApiBadgeResponseModel()));
-			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiBadgeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeServerResponseModel>(new ApiBadgeServerResponseModel()));
+			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBadgeRequestModel>();
+			var patch = new JsonPatchDocument<ApiBadgeServerRequestModel>();
 			patch.Replace(x => x.Date, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeServerResponseModel>(null));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBadgeRequestModel>();
+			var patch = new JsonPatchDocument<ApiBadgeServerRequestModel>();
 			patch.Replace(x => x.Date, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBadgeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBadgeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeResponseModel()));
-			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeServerResponseModel()));
+			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBadgeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBadgeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBadgeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBadgeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeResponseModel()));
-			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBadgeServerResponseModel()));
+			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBadgeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBadgeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBadgeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBadgeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeResponseModel>(null));
-			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBadgeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBadgeServerResponseModel>(null));
+			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBadgeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBadgeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBadgeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<IBadgeService> ServiceMock { get; set; } = new Mock<IBadgeService>();
 
-		public Mock<IApiBadgeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBadgeModelMapper>();
+		public Mock<IApiBadgeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBadgeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>341a24c515e491d2de6ef582502e1fc7</Hash>
+    <Hash>42c3051f91073b1d87c287db8bc3b44b</Hash>
 </Codenesium>*/

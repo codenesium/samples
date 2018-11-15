@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class StoreController : AbstractStoreController
 	{
 		public StoreController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<StoreController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStoreService storeService,
-			IApiStoreModelMapper storeModelMapper
+			IApiStoreServerModelMapper storeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb5a1d782e2d943ee9f8acb65109998f</Hash>
+    <Hash>147a492090d5fb34ee2e7d381b2cac14</Hash>
 </Codenesium>*/

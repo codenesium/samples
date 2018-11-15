@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			var record = new ApiVersionInfoResponseModel();
-			var records = new List<ApiVersionInfoResponseModel>();
+			var record = new ApiVersionInfoServerResponseModel();
+			var records = new List<ApiVersionInfoServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVersionInfoResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVersionInfoServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVersionInfoResponseModel>>(new List<ApiVersionInfoResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVersionInfoServerResponseModel>>(new List<ApiVersionInfoServerResponseModel>()));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVersionInfoResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVersionInfoServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoServerResponseModel()));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiVersionInfoResponseModel;
+			var record = (response as OkObjectResult).Value as ApiVersionInfoServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<long>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoServerResponseModel>(null));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVersionInfoResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVersionInfoResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVersionInfoServerResponseModel>.CreateResponse(null as ApiVersionInfoServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVersionInfoServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoServerResponseModel>>(mockResponse));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVersionInfoRequestModel>();
-			records.Add(new ApiVersionInfoRequestModel());
+			var records = new List<ApiVersionInfoServerRequestModel>();
+			records.Add(new ApiVersionInfoServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiVersionInfoResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiVersionInfoServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVersionInfoResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiVersionInfoServerResponseModel>>(null as ApiVersionInfoServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoServerResponseModel>>(mockResponse.Object));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVersionInfoRequestModel>();
-			records.Add(new ApiVersionInfoRequestModel());
+			var records = new List<ApiVersionInfoServerRequestModel>();
+			records.Add(new ApiVersionInfoServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVersionInfoResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVersionInfoResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVersionInfoServerResponseModel>.CreateResponse(null as ApiVersionInfoServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVersionInfoServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoServerResponseModel>>(mockResponse));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVersionInfoRequestModel());
+			IActionResult response = await controller.Create(new ApiVersionInfoServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVersionInfoResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVersionInfoServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVersionInfoResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiVersionInfoResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiVersionInfoServerResponseModel>>(null as ApiVersionInfoServerResponseModel);
+			var mockRecord = new ApiVersionInfoServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVersionInfoServerResponseModel>>(mockResponse.Object));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVersionInfoRequestModel());
+			IActionResult response = await controller.Create(new ApiVersionInfoServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVersionInfoResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVersionInfoServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()))
-			.Callback<long, ApiVersionInfoRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>()))
+			.Callback<long, ApiVersionInfoServerRequestModel>(
 				(id, model) => model.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiVersionInfoResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoResponseModel>(new ApiVersionInfoResponseModel()));
-			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiVersionInfoServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoServerResponseModel>(new ApiVersionInfoServerResponseModel()));
+			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVersionInfoRequestModel>();
+			var patch = new JsonPatchDocument<ApiVersionInfoServerRequestModel>();
 			patch.Replace(x => x.AppliedOn, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(long), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoServerResponseModel>(null));
 			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVersionInfoRequestModel>();
+			var patch = new JsonPatchDocument<ApiVersionInfoServerRequestModel>();
 			patch.Replace(x => x.AppliedOn, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(long), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVersionInfoResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVersionInfoServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoResponseModel()));
-			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoServerResponseModel()));
+			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(long), new ApiVersionInfoRequestModel());
+			IActionResult response = await controller.Update(default(long), new ApiVersionInfoServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVersionInfoResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVersionInfoServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoResponseModel()));
-			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new ApiVersionInfoServerResponseModel()));
+			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(long), new ApiVersionInfoRequestModel());
+			IActionResult response = await controller.Update(default(long), new ApiVersionInfoServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			VersionInfoControllerMockFacade mock = new VersionInfoControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVersionInfoResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVersionInfoServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoResponseModel>(null));
-			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<ApiVersionInfoServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVersionInfoServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult<ApiVersionInfoServerResponseModel>(null));
+			VersionInfoController controller = new VersionInfoController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVersionInfoServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(long), new ApiVersionInfoRequestModel());
+			IActionResult response = await controller.Update(default(long), new ApiVersionInfoServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<IVersionInfoService> ServiceMock { get; set; } = new Mock<IVersionInfoService>();
 
-		public Mock<IApiVersionInfoModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVersionInfoModelMapper>();
+		public Mock<IApiVersionInfoServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVersionInfoServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9569123c1c6921e94efb241b0c33def</Hash>
+    <Hash>eb83d8b8503e90143507d32ee37ef1a5</Hash>
 </Codenesium>*/

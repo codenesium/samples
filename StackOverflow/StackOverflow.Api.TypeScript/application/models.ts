@@ -1,4 +1,4 @@
-export class ApiBadgeRequestModel {
+export class ApiBadgeServerRequestModel {
 				date:string;
 id:number;
 name:string;
@@ -15,7 +15,7 @@ this.userId = 0;
 				}
 			}
 
-			export class ApiBadgeResponseModel {
+			export class ApiBadgeServerResponseModel {
 				date:string;
 id:number;
 name:string;
@@ -31,7 +31,7 @@ this.userId = 0;
 		
 				}
 			}
-			export class ApiCommentRequestModel {
+			export class ApiCommentServerRequestModel {
 				creationDate:string;
 id:number;
 postId:number;
@@ -52,7 +52,7 @@ this.userId = 0;
 				}
 			}
 
-			export class ApiCommentResponseModel {
+			export class ApiCommentServerResponseModel {
 				creationDate:string;
 id:number;
 postId:number;
@@ -72,7 +72,7 @@ this.userId = 0;
 		
 				}
 			}
-			export class ApiLinkTypeRequestModel {
+			export class ApiLinkTypeServerRequestModel {
 				id:number;
 type:string;
 
@@ -85,7 +85,7 @@ this.type = '';
 				}
 			}
 
-			export class ApiLinkTypeResponseModel {
+			export class ApiLinkTypeServerResponseModel {
 				id:number;
 type:string;
 
@@ -97,7 +97,7 @@ this.type = '';
 		
 				}
 			}
-			export class ApiPostHistoryRequestModel {
+			export class ApiPostHistoryServerRequestModel {
 				comment:string;
 creationDate:string;
 id:number;
@@ -124,7 +124,7 @@ this.userId = 0;
 				}
 			}
 
-			export class ApiPostHistoryResponseModel {
+			export class ApiPostHistoryServerResponseModel {
 				comment:string;
 creationDate:string;
 id:number;
@@ -150,7 +150,7 @@ this.userId = 0;
 		
 				}
 			}
-			export class ApiPostHistoryTypeRequestModel {
+			export class ApiPostHistoryTypeServerRequestModel {
 				id:number;
 type:string;
 
@@ -163,7 +163,7 @@ this.type = '';
 				}
 			}
 
-			export class ApiPostHistoryTypeResponseModel {
+			export class ApiPostHistoryTypeServerResponseModel {
 				id:number;
 type:string;
 
@@ -175,7 +175,7 @@ this.type = '';
 		
 				}
 			}
-			export class ApiPostLinkRequestModel {
+			export class ApiPostLinkServerRequestModel {
 				creationDate:string;
 id:number;
 linkTypeId:number;
@@ -194,7 +194,7 @@ this.relatedPostId = 0;
 				}
 			}
 
-			export class ApiPostLinkResponseModel {
+			export class ApiPostLinkServerResponseModel {
 				creationDate:string;
 id:number;
 linkTypeId:number;
@@ -212,7 +212,7 @@ this.relatedPostId = 0;
 		
 				}
 			}
-			export class ApiPostRequestModel {
+			export class ApiPostServerRequestModel {
 				acceptedAnswerId:number;
 answerCount:number;
 body:string;
@@ -261,7 +261,7 @@ this.viewCount = 0;
 				}
 			}
 
-			export class ApiPostResponseModel {
+			export class ApiPostServerResponseModel {
 				acceptedAnswerId:number;
 answerCount:number;
 body:string;
@@ -309,7 +309,7 @@ this.viewCount = 0;
 		
 				}
 			}
-			export class ApiPostTypeRequestModel {
+			export class ApiPostTypeServerRequestModel {
 				id:number;
 type:string;
 
@@ -322,7 +322,7 @@ this.type = '';
 				}
 			}
 
-			export class ApiPostTypeResponseModel {
+			export class ApiPostTypeServerResponseModel {
 				id:number;
 type:string;
 
@@ -334,7 +334,7 @@ this.type = '';
 		
 				}
 			}
-			export class ApiTagRequestModel {
+			export class ApiTagServerRequestModel {
 				count:number;
 excerptPostId:number;
 id:number;
@@ -353,7 +353,7 @@ this.wikiPostId = 0;
 				}
 			}
 
-			export class ApiTagResponseModel {
+			export class ApiTagServerResponseModel {
 				count:number;
 excerptPostId:number;
 id:number;
@@ -371,7 +371,7 @@ this.wikiPostId = 0;
 		
 				}
 			}
-			export class ApiUserRequestModel {
+			export class ApiUserServerRequestModel {
 				aboutMe:string;
 accountId:number;
 age:number;
@@ -408,7 +408,7 @@ this.websiteUrl = '';
 				}
 			}
 
-			export class ApiUserResponseModel {
+			export class ApiUserServerResponseModel {
 				aboutMe:string;
 accountId:number;
 age:number;
@@ -444,7 +444,7 @@ this.websiteUrl = '';
 		
 				}
 			}
-			export class ApiVoteRequestModel {
+			export class ApiVoteServerRequestModel {
 				bountyAmount:number;
 creationDate:string;
 id:number;
@@ -465,7 +465,7 @@ this.voteTypeId = 0;
 				}
 			}
 
-			export class ApiVoteResponseModel {
+			export class ApiVoteServerResponseModel {
 				bountyAmount:number;
 creationDate:string;
 id:number;
@@ -485,7 +485,7 @@ this.voteTypeId = 0;
 		
 				}
 			}
-			export class ApiVoteTypeRequestModel {
+			export class ApiVoteTypeServerRequestModel {
 				id:number;
 name:string;
 
@@ -498,7 +498,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiVoteTypeResponseModel {
+			export class ApiVoteTypeServerResponseModel {
 				id:number;
 name:string;
 

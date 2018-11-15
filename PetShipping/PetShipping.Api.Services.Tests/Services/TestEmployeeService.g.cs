@@ -30,14 +30,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			List<ApiEmployeeResponseModel> response = await service.All();
+			List<ApiEmployeeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -54,14 +54,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			ApiEmployeeResponseModel response = await service.Get(default(int));
+			ApiEmployeeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -77,14 +77,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			ApiEmployeeResponseModel response = await service.Get(default(int));
+			ApiEmployeeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -94,24 +94,24 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Employee>())).Returns(Task.FromResult(new Employee()));
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			CreateResponse<ApiEmployeeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiEmployeeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEmployeeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Employee>()));
 		}
 
@@ -119,7 +119,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Employee>())).Returns(Task.FromResult(new Employee()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 			var service = new EmployeeService(mock.LoggerMock.Object,
@@ -127,17 +127,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			UpdateResponse<ApiEmployeeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiEmployeeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Employee>()));
 		}
 
@@ -145,73 +145,25 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ClientCommunicationsByEmployeeId_Exists()
-		{
-			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var records = new List<ClientCommunication>();
-			records.Add(new ClientCommunication());
-			mock.RepositoryMock.Setup(x => x.ClientCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new EmployeeService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
-
-			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunicationsByEmployeeId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ClientCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ClientCommunicationsByEmployeeId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			mock.RepositoryMock.Setup(x => x.ClientCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ClientCommunication>>(new List<ClientCommunication>()));
-			var service = new EmployeeService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
-
-			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunicationsByEmployeeId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ClientCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -226,14 +178,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			List<ApiPipelineStepResponseModel> response = await service.PipelineStepsByShipperId(default(int));
+			List<ApiPipelineStepServerResponseModel> response = await service.PipelineStepsByShipperId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.PipelineStepsByShipperId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -249,14 +201,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			List<ApiPipelineStepResponseModel> response = await service.PipelineStepsByShipperId(default(int));
+			List<ApiPipelineStepServerResponseModel> response = await service.PipelineStepsByShipperId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.PipelineStepsByShipperId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -274,14 +226,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			List<ApiPipelineStepNoteResponseModel> response = await service.PipelineStepNotesByEmployeeId(default(int));
+			List<ApiPipelineStepNoteServerResponseModel> response = await service.PipelineStepNotesByEmployeeId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.PipelineStepNotesByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -297,21 +249,69 @@ namespace PetShippingNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLClientCommunicationMapperMock,
-			                                  mock.DALMapperMockFactory.DALClientCommunicationMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
 
-			List<ApiPipelineStepNoteResponseModel> response = await service.PipelineStepNotesByEmployeeId(default(int));
+			List<ApiPipelineStepNoteServerResponseModel> response = await service.PipelineStepNotesByEmployeeId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.PipelineStepNotesByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void CustomerCommunicationsByEmployeeId_Exists()
+		{
+			var mock = new ServiceMockFacade<IEmployeeRepository>();
+			var records = new List<CustomerCommunication>();
+			records.Add(new CustomerCommunication());
+			mock.RepositoryMock.Setup(x => x.CustomerCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new EmployeeService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
+			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
+			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
+
+			List<ApiCustomerCommunicationServerResponseModel> response = await service.CustomerCommunicationsByEmployeeId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.CustomerCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void CustomerCommunicationsByEmployeeId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IEmployeeRepository>();
+			mock.RepositoryMock.Setup(x => x.CustomerCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CustomerCommunication>>(new List<CustomerCommunication>()));
+			var service = new EmployeeService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
+			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
+			                                  mock.DALMapperMockFactory.DALPipelineStepMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
+			                                  mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
+
+			List<ApiCustomerCommunicationServerResponseModel> response = await service.CustomerCommunicationsByEmployeeId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.CustomerCommunicationsByEmployeeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>394a619d2d3f0988e484aad7f4aa6668</Hash>
+    <Hash>89c8914534151954c4620ac02b29f72e</Hash>
 </Codenesium>*/

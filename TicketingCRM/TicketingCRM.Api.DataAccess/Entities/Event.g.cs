@@ -41,49 +41,54 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("address1")]
-		public string Address1 { get; private set; }
+		public virtual string Address1 { get; private set; }
 
 		[MaxLength(128)]
 		[Column("address2")]
-		public string Address2 { get; private set; }
+		public virtual string Address2 { get; private set; }
 
 		[Column("cityId")]
-		public int CityId { get; private set; }
+		public virtual int CityId { get; private set; }
 
 		[Column("date")]
-		public DateTime Date { get; private set; }
+		public virtual DateTime Date { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("description")]
-		public string Description { get; private set; }
+		public virtual string Description { get; private set; }
 
 		[Column("endDate")]
-		public DateTime EndDate { get; private set; }
+		public virtual DateTime EndDate { get; private set; }
 
 		[MaxLength(128)]
 		[Column("facebook")]
-		public string Facebook { get; private set; }
+		public virtual string Facebook { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("startDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
 		[MaxLength(128)]
 		[Column("website")]
-		public string Website { get; private set; }
+		public virtual string Website { get; private set; }
 
 		[ForeignKey("CityId")]
 		public virtual City CityNavigation { get; private set; }
+
+		public void SetCityNavigation(City item)
+		{
+			this.CityNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fb6acf12f61a3a85ba0c7537ce2345aa</Hash>
+    <Hash>bba9fc40a7d5a67997302d201483a32e</Hash>
 </Codenesium>*/

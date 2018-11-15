@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Web
 	{
 		protected IClientService ClientService { get; private set; }
 
-		protected IApiClientModelMapper ClientModelMapper { get; private set; }
+		protected IApiClientServerModelMapper ClientModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AbstractClientController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IClientService clientService,
-			IApiClientModelMapper clientModelMapper
+			IApiClientServerModelMapper clientModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiClientServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiClientResponseModel> response = await this.ClientService.All(query.Limit, query.Offset);
+			List<ApiClientServerResponseModel> response = await this.ClientService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiClientResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiClientServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiClientResponseModel response = await this.ClientService.Get(id);
+			ApiClientServerResponseModel response = await this.ClientService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetShippingNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiClientServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClientRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClientServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiClientResponseModel> records = new List<ApiClientResponseModel>();
+			List<ApiClientServerResponseModel> records = new List<ApiClientServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiClientResponseModel> result = await this.ClientService.Create(model);
+				CreateResponse<ApiClientServerResponseModel> result = await this.ClientService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetShippingNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiClientServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiClientResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiClientServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiClientRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiClientServerRequestModel model)
 		{
-			CreateResponse<ApiClientResponseModel> result = await this.ClientService.Create(model);
+			CreateResponse<ApiClientServerResponseModel> result = await this.ClientService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiClientServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClientRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClientServerRequestModel> patch)
 		{
-			ApiClientResponseModel record = await this.ClientService.Get(id);
+			ApiClientServerResponseModel record = await this.ClientService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiClientRequestModel model = await this.PatchModel(id, patch);
+				ApiClientServerRequestModel model = await this.PatchModel(id, patch) as ApiClientServerRequestModel;
 
-				UpdateResponse<ApiClientResponseModel> result = await this.ClientService.Update(id, model);
+				UpdateResponse<ApiClientServerResponseModel> result = await this.ClientService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiClientResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiClientServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientServerRequestModel model)
 		{
-			ApiClientRequestModel request = await this.PatchModel(id, this.ClientModelMapper.CreatePatch(model));
+			ApiClientServerRequestModel request = await this.PatchModel(id, this.ClientModelMapper.CreatePatch(model)) as ApiClientServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiClientResponseModel> result = await this.ClientService.Update(id, request);
+				UpdateResponse<ApiClientServerResponseModel> result = await this.ClientService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetShippingNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ClientService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{clientId}/ClientCommunicationsByClientId")]
+		[Route("{clientId}/ClientCommunications")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientCommunicationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiClientCommunicationServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ClientCommunicationsByClientId(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,15 +228,15 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiClientCommunicationResponseModel> response = await this.ClientService.ClientCommunicationsByClientId(clientId, query.Limit, query.Offset);
+			List<ApiClientCommunicationServerResponseModel> response = await this.ClientService.ClientCommunicationsByClientId(clientId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{clientId}/PetsByClientId")]
+		[Route("{clientId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PetsByClientId(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,15 +245,15 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetResponseModel> response = await this.ClientService.PetsByClientId(clientId, query.Limit, query.Offset);
+			List<ApiPetServerResponseModel> response = await this.ClientService.PetsByClientId(clientId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{clientId}/SalesByClientId")]
+		[Route("{clientId}/Sales")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesByClientId(int clientId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -252,12 +262,12 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSaleResponseModel> response = await this.ClientService.SalesByClientId(clientId, query.Limit, query.Offset);
+			List<ApiSaleServerResponseModel> response = await this.ClientService.SalesByClientId(clientId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiClientRequestModel> PatchModel(int id, JsonPatchDocument<ApiClientRequestModel> patch)
+		private async Task<ApiClientServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiClientServerRequestModel> patch)
 		{
 			var record = await this.ClientService.Get(id);
 
@@ -267,7 +277,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiClientRequestModel request = this.ClientModelMapper.MapResponseToRequest(record);
+				ApiClientServerRequestModel request = this.ClientModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -276,5 +286,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2c446013d68993eeddb0499442d8424b</Hash>
+    <Hash>dde4edcea22e7d2d9942a90ea6b31586</Hash>
 </Codenesium>*/

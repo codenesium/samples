@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOCountryRegion MapModelToBO(
 			string countryRegionCode,
-			ApiCountryRegionRequestModel model
+			ApiCountryRegionServerRequestModel model
 			)
 		{
 			BOCountryRegion boCountryRegion = new BOCountryRegion();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boCountryRegion;
 		}
 
-		public virtual ApiCountryRegionResponseModel MapBOToModel(
+		public virtual ApiCountryRegionServerResponseModel MapBOToModel(
 			BOCountryRegion boCountryRegion)
 		{
-			var model = new ApiCountryRegionResponseModel();
+			var model = new ApiCountryRegionServerResponseModel();
 
 			model.SetProperties(boCountryRegion.CountryRegionCode, boCountryRegion.ModifiedDate, boCountryRegion.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCountryRegionResponseModel> MapBOToModel(
+		public virtual List<ApiCountryRegionServerResponseModel> MapBOToModel(
 			List<BOCountryRegion> items)
 		{
-			List<ApiCountryRegionResponseModel> response = new List<ApiCountryRegionResponseModel>();
+			List<ApiCountryRegionServerResponseModel> response = new List<ApiCountryRegionServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82dfa9fb9dcc9710680e6b5c9387ec91</Hash>
+    <Hash>7592b0df7e97ebe52954e6e8c70bcf9f</Hash>
 </Codenesium>*/

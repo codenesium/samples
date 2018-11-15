@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -9,7 +8,7 @@ namespace TwitterNS.Api.Services
 	{
 		public virtual BOLocation MapModelToBO(
 			int locationId,
-			ApiLocationRequestModel model
+			ApiLocationServerRequestModel model
 			)
 		{
 			BOLocation boLocation = new BOLocation();
@@ -21,20 +20,20 @@ namespace TwitterNS.Api.Services
 			return boLocation;
 		}
 
-		public virtual ApiLocationResponseModel MapBOToModel(
+		public virtual ApiLocationServerResponseModel MapBOToModel(
 			BOLocation boLocation)
 		{
-			var model = new ApiLocationResponseModel();
+			var model = new ApiLocationServerResponseModel();
 
 			model.SetProperties(boLocation.LocationId, boLocation.GpsLat, boLocation.GpsLong, boLocation.LocationName);
 
 			return model;
 		}
 
-		public virtual List<ApiLocationResponseModel> MapBOToModel(
+		public virtual List<ApiLocationServerResponseModel> MapBOToModel(
 			List<BOLocation> items)
 		{
-			List<ApiLocationResponseModel> response = new List<ApiLocationResponseModel>();
+			List<ApiLocationServerResponseModel> response = new List<ApiLocationServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e93cf755acf32f7024f5fd5ccdd8e6e</Hash>
+    <Hash>7c9638a9e8ae28b1c50686e14edfd210</Hash>
 </Codenesium>*/

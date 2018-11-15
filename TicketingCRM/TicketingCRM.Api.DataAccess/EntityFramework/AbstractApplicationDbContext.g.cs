@@ -82,15 +82,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -284,5 +275,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6efa951fc4333017929da993c9eddcc</Hash>
+    <Hash>fa0d568ee681f7992e6b3b6ba2e29cca</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,31 +9,31 @@ namespace PetShippingNS.Api.Services
 		public EmployeeService(
 			ILogger<IEmployeeRepository> logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
-			IBOLEmployeeMapper bolemployeeMapper,
-			IDALEmployeeMapper dalemployeeMapper,
-			IBOLClientCommunicationMapper bolClientCommunicationMapper,
-			IDALClientCommunicationMapper dalClientCommunicationMapper,
+			IApiEmployeeServerRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper bolEmployeeMapper,
+			IDALEmployeeMapper dalEmployeeMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
+			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
+			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base(logger,
 			       employeeRepository,
 			       employeeModelValidator,
-			       bolemployeeMapper,
-			       dalemployeeMapper,
-			       bolClientCommunicationMapper,
-			       dalClientCommunicationMapper,
+			       bolEmployeeMapper,
+			       dalEmployeeMapper,
 			       bolPipelineStepMapper,
 			       dalPipelineStepMapper,
 			       bolPipelineStepNoteMapper,
-			       dalPipelineStepNoteMapper)
+			       dalPipelineStepNoteMapper,
+			       bolCustomerCommunicationMapper,
+			       dalCustomerCommunicationMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a33a83992888ee7d35bcd55552f6773</Hash>
+    <Hash>6098789b39297be3ff8bff849afa8fca</Hash>
 </Codenesium>*/

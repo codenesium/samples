@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<City>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<City>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProvinceId == provinceId, limit, offset);
 		}
@@ -95,22 +95,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			Expression<Func<City, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<City, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<City, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<City>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<City>();
-			}
-			else
-			{
-				return await this.Context.Set<City>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<City>();
-			}
+			return await this.Context.Set<City>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<City>();
 		}
 
 		private async Task<City> GetById(int id)
@@ -123,5 +115,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>312c2f71fdf3c5daa206f54c186cca8c</Hash>
+    <Hash>8f155be3301fe586415c1c2aa1104e57</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -9,20 +8,20 @@ namespace TestsNS.Api.Services
 {
 	public partial interface ITimestampCheckService
 	{
-		Task<CreateResponse<ApiTimestampCheckResponseModel>> Create(
-			ApiTimestampCheckRequestModel model);
+		Task<CreateResponse<ApiTimestampCheckServerResponseModel>> Create(
+			ApiTimestampCheckServerRequestModel model);
 
-		Task<UpdateResponse<ApiTimestampCheckResponseModel>> Update(int id,
-		                                                             ApiTimestampCheckRequestModel model);
+		Task<UpdateResponse<ApiTimestampCheckServerResponseModel>> Update(int id,
+		                                                                   ApiTimestampCheckServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiTimestampCheckResponseModel> Get(int id);
+		Task<ApiTimestampCheckServerResponseModel> Get(int id);
 
-		Task<List<ApiTimestampCheckResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTimestampCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d342bcb60b387079c9e8d59ee1965c3</Hash>
+    <Hash>d4c91198cebba66c20b26e45be12f4fc</Hash>
 </Codenesium>*/

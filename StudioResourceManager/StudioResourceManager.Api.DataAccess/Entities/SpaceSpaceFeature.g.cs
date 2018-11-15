@@ -23,20 +23,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Key]
 		[Column("spaceFeatureId")]
-		public int SpaceFeatureId { get; private set; }
+		public virtual int SpaceFeatureId { get; private set; }
 
 		[Key]
 		[Column("spaceId")]
-		public int SpaceId { get; private set; }
-
-		[ForeignKey("SpaceFeatureId")]
-		public virtual SpaceFeature SpaceFeatureNavigation { get; private set; }
-
-		[ForeignKey("SpaceId")]
-		public virtual Space SpaceNavigation { get; private set; }
+		public virtual int SpaceId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d907a7142e3a55f5156b7bae3e1e5ac9</Hash>
+    <Hash>30841939af21dd1398efa9a2b8f72f04</Hash>
 </Codenesium>*/

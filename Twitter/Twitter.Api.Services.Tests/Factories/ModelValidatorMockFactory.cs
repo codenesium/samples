@@ -9,77 +9,77 @@ namespace TwitterNS.Api.Services.Tests
 {
 	public class ModelValidatorMockFactory
 	{
-		public Mock<IApiDirectTweetRequestModelValidator> DirectTweetModelValidatorMock { get; set; } = new Mock<IApiDirectTweetRequestModelValidator>();
+		public Mock<IApiDirectTweetServerRequestModelValidator> DirectTweetModelValidatorMock { get; set; } = new Mock<IApiDirectTweetServerRequestModelValidator>();
 
-		public Mock<IApiFollowerRequestModelValidator> FollowerModelValidatorMock { get; set; } = new Mock<IApiFollowerRequestModelValidator>();
+		public Mock<IApiFollowerServerRequestModelValidator> FollowerModelValidatorMock { get; set; } = new Mock<IApiFollowerServerRequestModelValidator>();
 
-		public Mock<IApiFollowingRequestModelValidator> FollowingModelValidatorMock { get; set; } = new Mock<IApiFollowingRequestModelValidator>();
+		public Mock<IApiFollowingServerRequestModelValidator> FollowingModelValidatorMock { get; set; } = new Mock<IApiFollowingServerRequestModelValidator>();
 
-		public Mock<IApiLocationRequestModelValidator> LocationModelValidatorMock { get; set; } = new Mock<IApiLocationRequestModelValidator>();
+		public Mock<IApiLocationServerRequestModelValidator> LocationModelValidatorMock { get; set; } = new Mock<IApiLocationServerRequestModelValidator>();
 
-		public Mock<IApiMessageRequestModelValidator> MessageModelValidatorMock { get; set; } = new Mock<IApiMessageRequestModelValidator>();
+		public Mock<IApiMessageServerRequestModelValidator> MessageModelValidatorMock { get; set; } = new Mock<IApiMessageServerRequestModelValidator>();
 
-		public Mock<IApiMessengerRequestModelValidator> MessengerModelValidatorMock { get; set; } = new Mock<IApiMessengerRequestModelValidator>();
+		public Mock<IApiMessengerServerRequestModelValidator> MessengerModelValidatorMock { get; set; } = new Mock<IApiMessengerServerRequestModelValidator>();
 
-		public Mock<IApiQuoteTweetRequestModelValidator> QuoteTweetModelValidatorMock { get; set; } = new Mock<IApiQuoteTweetRequestModelValidator>();
+		public Mock<IApiQuoteTweetServerRequestModelValidator> QuoteTweetModelValidatorMock { get; set; } = new Mock<IApiQuoteTweetServerRequestModelValidator>();
 
-		public Mock<IApiReplyRequestModelValidator> ReplyModelValidatorMock { get; set; } = new Mock<IApiReplyRequestModelValidator>();
+		public Mock<IApiReplyServerRequestModelValidator> ReplyModelValidatorMock { get; set; } = new Mock<IApiReplyServerRequestModelValidator>();
 
-		public Mock<IApiRetweetRequestModelValidator> RetweetModelValidatorMock { get; set; } = new Mock<IApiRetweetRequestModelValidator>();
+		public Mock<IApiRetweetServerRequestModelValidator> RetweetModelValidatorMock { get; set; } = new Mock<IApiRetweetServerRequestModelValidator>();
 
-		public Mock<IApiTweetRequestModelValidator> TweetModelValidatorMock { get; set; } = new Mock<IApiTweetRequestModelValidator>();
+		public Mock<IApiTweetServerRequestModelValidator> TweetModelValidatorMock { get; set; } = new Mock<IApiTweetServerRequestModelValidator>();
 
-		public Mock<IApiUserRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserRequestModelValidator>();
+		public Mock<IApiUserServerRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
 		{
-			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.FollowerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.FollowerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FollowerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.FollowingModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.FollowingModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiFollowingRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.FollowingModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowingModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowingModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowingServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowingModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.LocationModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LocationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LocationModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LocationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.LocationModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.MessageModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMessageRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.MessageModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.MessageModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMessageServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.MessageModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.MessageModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.MessengerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMessengerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.MessengerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessengerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.MessengerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMessengerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.MessengerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessengerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.MessengerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.QuoteTweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiQuoteTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.QuoteTweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiQuoteTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.QuoteTweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiQuoteTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.QuoteTweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiQuoteTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.QuoteTweetModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.ReplyModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.ReplyModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ReplyModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ReplyModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ReplyModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.RetweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRetweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.RetweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRetweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.RetweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRetweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.RetweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRetweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.RetweetModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.TweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TweetModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.TweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TweetModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d06656b353e87b9ad1c7edbcd845308a</Hash>
+    <Hash>5943eb7d9df766146b8658861e0aa8f3</Hash>
 </Codenesium>*/

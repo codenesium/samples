@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			List<ApiProductCategoryResponseModel> response = await service.All();
+			List<ApiProductCategoryServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			ApiProductCategoryResponseModel response = await service.Get(default(int));
+			ApiProductCategoryServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			ApiProductCategoryResponseModel response = await service.Get(default(int));
+			ApiProductCategoryServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IProductCategoryRepository>();
-			var model = new ApiProductCategoryRequestModel();
+			var model = new ApiProductCategoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCategory>())).Returns(Task.FromResult(new ProductCategory()));
 			var service = new ProductCategoryService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			CreateResponse<ApiProductCategoryResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProductCategoryServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductCategoryRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductCategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductCategory>()));
 		}
 
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IProductCategoryRepository>();
-			var model = new ApiProductCategoryRequestModel();
+			var model = new ApiProductCategoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductCategory>())).Returns(Task.FromResult(new ProductCategory()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductCategory()));
 			var service = new ProductCategoryService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			UpdateResponse<ApiProductCategoryResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiProductCategoryServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductCategoryRequestModel>()));
+			mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductCategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductCategory>()));
 		}
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IProductCategoryRepository>();
-			var model = new ApiProductCategoryRequestModel();
+			var model = new ApiProductCategoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ProductCategoryService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			ApiProductCategoryResponseModel response = await service.ByName(default(string));
+			ApiProductCategoryServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -175,10 +175,49 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			ApiProductCategoryResponseModel response = await service.ByName(default(string));
+			ApiProductCategoryServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Exists()
+		{
+			var mock = new ServiceMockFacade<IProductCategoryRepository>();
+			var record = new ProductCategory();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new ProductCategoryService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLProductCategoryMapperMock,
+			                                         mock.DALMapperMockFactory.DALProductCategoryMapperMock,
+			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
+			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
+
+			ApiProductCategoryServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IProductCategoryRepository>();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<ProductCategory>(null));
+			var service = new ProductCategoryService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLProductCategoryMapperMock,
+			                                         mock.DALMapperMockFactory.DALProductCategoryMapperMock,
+			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
+			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
+
+			ApiProductCategoryServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
 		}
 
 		[Fact]
@@ -196,7 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
+			List<ApiProductSubcategoryServerResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +254,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
+			List<ApiProductSubcategoryServerResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -224,5 +263,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b2fb7e6ea7432917ec60e409b3e81ee5</Hash>
+    <Hash>8e4650547c202b29d8979d380a12a4a9</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,9 +9,9 @@ namespace PetShippingNS.Api.Services
 		public CountryService(
 			ILogger<ICountryRepository> logger,
 			ICountryRepository countryRepository,
-			IApiCountryRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolcountryMapper,
-			IDALCountryMapper dalcountryMapper,
+			IApiCountryServerRequestModelValidator countryModelValidator,
+			IBOLCountryMapper bolCountryMapper,
+			IDALCountryMapper dalCountryMapper,
 			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper,
 			IBOLDestinationMapper bolDestinationMapper,
@@ -26,8 +19,8 @@ namespace PetShippingNS.Api.Services
 			: base(logger,
 			       countryRepository,
 			       countryModelValidator,
-			       bolcountryMapper,
-			       dalcountryMapper,
+			       bolCountryMapper,
+			       dalCountryMapper,
 			       bolCountryRequirementMapper,
 			       dalCountryRequirementMapper,
 			       bolDestinationMapper,
@@ -38,5 +31,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>446a6f552e30e7fc823e0a6d59c95b4c</Hash>
+    <Hash>5af8494634115f1049207fb284e48a66</Hash>
 </Codenesium>*/

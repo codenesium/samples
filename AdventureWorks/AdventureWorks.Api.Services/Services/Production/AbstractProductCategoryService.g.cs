@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IProductCategoryRepository ProductCategoryRepository { get; private set; }
 
-		protected IApiProductCategoryRequestModelValidator ProductCategoryModelValidator { get; private set; }
+		protected IApiProductCategoryServerRequestModelValidator ProductCategoryModelValidator { get; private set; }
 
 		protected IBOLProductCategoryMapper BolProductCategoryMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractProductCategoryService(
 			ILogger logger,
 			IProductCategoryRepository productCategoryRepository,
-			IApiProductCategoryRequestModelValidator productCategoryModelValidator,
+			IApiProductCategoryServerRequestModelValidator productCategoryModelValidator,
 			IBOLProductCategoryMapper bolProductCategoryMapper,
 			IDALProductCategoryMapper dalProductCategoryMapper,
 			IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
@@ -47,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiProductCategoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductCategoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ProductCategoryRepository.All(limit, offset);
 
 			return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiProductCategoryResponseModel> Get(int productCategoryID)
+		public virtual async Task<ApiProductCategoryServerResponseModel> Get(int productCategoryID)
 		{
 			var record = await this.ProductCategoryRepository.Get(productCategoryID);
 
@@ -68,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiProductCategoryResponseModel>> Create(
-			ApiProductCategoryRequestModel model)
+		public virtual async Task<CreateResponse<ApiProductCategoryServerResponseModel>> Create(
+			ApiProductCategoryServerRequestModel model)
 		{
-			CreateResponse<ApiProductCategoryResponseModel> response = new CreateResponse<ApiProductCategoryResponseModel>(await this.ProductCategoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductCategoryServerResponseModel> response = ValidationResponseFactory<ApiProductCategoryServerResponseModel>.CreateResponse(await this.ProductCategoryModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolProductCategoryMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiProductCategoryResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiProductCategoryServerResponseModel>> Update(
 			int productCategoryID,
-			ApiProductCategoryRequestModel model)
+			ApiProductCategoryServerRequestModel model)
 		{
 			var validationResult = await this.ProductCategoryModelValidator.ValidateUpdateAsync(productCategoryID, model);
 
@@ -96,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductCategoryRepository.Get(productCategoryID);
 
-				return new UpdateResponse<ApiProductCategoryResponseModel>(this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiProductCategoryResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int productCategoryID)
 		{
-			ActionResponse response = new ActionResponse(await this.ProductCategoryModelValidator.ValidateDeleteAsync(productCategoryID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ProductCategoryModelValidator.ValidateDeleteAsync(productCategoryID));
+
 			if (response.Success)
 			{
 				await this.ProductCategoryRepository.Delete(productCategoryID);
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiProductCategoryResponseModel> ByName(string name)
+		public async virtual Task<ApiProductCategoryServerResponseModel> ByName(string name)
 		{
 			ProductCategory record = await this.ProductCategoryRepository.ByName(name);
 
@@ -130,7 +127,21 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductSubcategoryResponseModel>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiProductCategoryServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			ProductCategory record = await this.ProductCategoryRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<List<ApiProductSubcategoryServerResponseModel>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<ProductSubcategory> records = await this.ProductCategoryRepository.ProductSubcategoriesByProductCategoryID(productCategoryID, limit, offset);
 
@@ -140,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>164e82e3eca0e6a0228b5dd141710888</Hash>
+    <Hash>eb8ee775b0f928b90960c38223f574e0</Hash>
 </Codenesium>*/

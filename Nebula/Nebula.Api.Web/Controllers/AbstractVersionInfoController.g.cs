@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected IVersionInfoService VersionInfoService { get; private set; }
 
-		protected IApiVersionInfoModelMapper VersionInfoModelMapper { get; private set; }
+		protected IApiVersionInfoServerModelMapper VersionInfoModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractVersionInfoController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVersionInfoService versionInfoService,
-			IApiVersionInfoModelMapper versionInfoModelMapper
+			IApiVersionInfoServerModelMapper versionInfoModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVersionInfoResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVersionInfoServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVersionInfoResponseModel> response = await this.VersionInfoService.All(query.Limit, query.Offset);
+			List<ApiVersionInfoServerResponseModel> response = await this.VersionInfoService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiVersionInfoServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(long id)
 		{
-			ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
+			ApiVersionInfoServerResponseModel response = await this.VersionInfoService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiVersionInfoResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiVersionInfoServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVersionInfoRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVersionInfoServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiVersionInfoResponseModel> records = new List<ApiVersionInfoResponseModel>();
+			List<ApiVersionInfoServerResponseModel> records = new List<ApiVersionInfoServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Create(model);
+				CreateResponse<ApiVersionInfoServerResponseModel> result = await this.VersionInfoService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiVersionInfoServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiVersionInfoResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiVersionInfoServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoServerRequestModel model)
 		{
-			CreateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Create(model);
+			CreateResponse<ApiVersionInfoServerResponseModel> result = await this.VersionInfoService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(long id, [FromBody] JsonPatchDocument<ApiVersionInfoRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(long id, [FromBody] JsonPatchDocument<ApiVersionInfoServerRequestModel> patch)
 		{
-			ApiVersionInfoResponseModel record = await this.VersionInfoService.Get(id);
+			ApiVersionInfoServerResponseModel record = await this.VersionInfoService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiVersionInfoRequestModel model = await this.PatchModel(id, patch);
+				ApiVersionInfoServerRequestModel model = await this.PatchModel(id, patch) as ApiVersionInfoServerRequestModel;
 
-				UpdateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Update(id, model);
+				UpdateResponse<ApiVersionInfoServerResponseModel> result = await this.VersionInfoService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVersionInfoServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoRequestModel model)
+
+		public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoServerRequestModel model)
 		{
-			ApiVersionInfoRequestModel request = await this.PatchModel(id, this.VersionInfoModelMapper.CreatePatch(model));
+			ApiVersionInfoServerRequestModel request = await this.PatchModel(id, this.VersionInfoModelMapper.CreatePatch(model)) as ApiVersionInfoServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Update(id, request);
+				UpdateResponse<ApiVersionInfoServerResponseModel> result = await this.VersionInfoService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(long id)
 		{
 			ActionResponse result = await this.VersionInfoService.Delete(id);
@@ -206,7 +216,7 @@ namespace NebulaNS.Api.Web
 			}
 		}
 
-		private async Task<ApiVersionInfoRequestModel> PatchModel(long id, JsonPatchDocument<ApiVersionInfoRequestModel> patch)
+		private async Task<ApiVersionInfoServerRequestModel> PatchModel(long id, JsonPatchDocument<ApiVersionInfoServerRequestModel> patch)
 		{
 			var record = await this.VersionInfoService.Get(id);
 
@@ -216,7 +226,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiVersionInfoRequestModel request = this.VersionInfoModelMapper.MapResponseToRequest(record);
+				ApiVersionInfoServerRequestModel request = this.VersionInfoModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>509ab18d1198e65869a70681ded5dd94</Hash>
+    <Hash>ed83658fc1ba7c04bffa86f9233c70aa</Hash>
 </Codenesium>*/

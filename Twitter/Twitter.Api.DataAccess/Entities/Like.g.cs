@@ -23,20 +23,30 @@ namespace TwitterNS.Api.DataAccess
 
 		[Key]
 		[Column("liker_user_id")]
-		public int LikerUserId { get; private set; }
+		public virtual int LikerUserId { get; private set; }
 
 		[Key]
 		[Column("tweet_id")]
-		public int TweetId { get; private set; }
+		public virtual int TweetId { get; private set; }
 
 		[ForeignKey("LikerUserId")]
 		public virtual User UserNavigation { get; private set; }
 
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
+
 		[ForeignKey("TweetId")]
 		public virtual Tweet TweetNavigation { get; private set; }
+
+		public void SetTweetNavigation(Tweet item)
+		{
+			this.TweetNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef8c5ea4e35bb3bbeaa87a52c7b72ad5</Hash>
+    <Hash>436f030a51266a9be3b6915a5e6739ec</Hash>
 </Codenesium>*/

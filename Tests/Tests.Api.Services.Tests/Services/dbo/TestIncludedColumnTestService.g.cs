@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
-			List<ApiIncludedColumnTestResponseModel> response = await service.All();
+			List<ApiIncludedColumnTestServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
-			ApiIncludedColumnTestResponseModel response = await service.Get(default(int));
+			ApiIncludedColumnTestServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
-			ApiIncludedColumnTestResponseModel response = await service.Get(default(int));
+			ApiIncludedColumnTestServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IIncludedColumnTestRepository>();
-			var model = new ApiIncludedColumnTestRequestModel();
+			var model = new ApiIncludedColumnTestServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<IncludedColumnTest>())).Returns(Task.FromResult(new IncludedColumnTest()));
 			var service = new IncludedColumnTestService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
-			CreateResponse<ApiIncludedColumnTestResponseModel> response = await service.Create(model);
+			CreateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<IncludedColumnTest>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IIncludedColumnTestRepository>();
-			var model = new ApiIncludedColumnTestRequestModel();
+			var model = new ApiIncludedColumnTestServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<IncludedColumnTest>())).Returns(Task.FromResult(new IncludedColumnTest()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new IncludedColumnTest()));
 			var service = new IncludedColumnTestService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
-			UpdateResponse<ApiIncludedColumnTestResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<IncludedColumnTest>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IIncludedColumnTestRepository>();
-			var model = new ApiIncludedColumnTestRequestModel();
+			var model = new ApiIncludedColumnTestServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new IncludedColumnTestService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>edbdfa85903dcb84c514780b7767c19f</Hash>
+    <Hash>95efefa841dcb71a002b6ac5323bde4c</Hash>
 </Codenesium>*/

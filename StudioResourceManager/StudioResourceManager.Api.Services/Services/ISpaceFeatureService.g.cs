@@ -2,29 +2,28 @@ using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface ISpaceFeatureService
 	{
-		Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
-			ApiSpaceFeatureRequestModel model);
+		Task<CreateResponse<ApiSpaceFeatureServerResponseModel>> Create(
+			ApiSpaceFeatureServerRequestModel model);
 
-		Task<UpdateResponse<ApiSpaceFeatureResponseModel>> Update(int id,
-		                                                           ApiSpaceFeatureRequestModel model);
+		Task<UpdateResponse<ApiSpaceFeatureServerResponseModel>> Update(int id,
+		                                                                 ApiSpaceFeatureServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiSpaceFeatureResponseModel> Get(int id);
+		Task<ApiSpaceFeatureServerResponseModel> Get(int id);
 
-		Task<List<ApiSpaceFeatureResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpaceFeatureServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSpaceFeatureResponseModel>> BySpaceId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpaceFeatureServerResponseModel>> BySpaceId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f637310689ad757519fb19e3b6b57eab</Hash>
+    <Hash>f80d5b4e462e1df1d2c074c960ce935b</Hash>
 </Codenesium>*/

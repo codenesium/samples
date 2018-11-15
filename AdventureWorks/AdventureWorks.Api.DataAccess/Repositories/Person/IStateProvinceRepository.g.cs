@@ -19,6 +19,8 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<StateProvince> ByName(string name);
 
+		Task<StateProvince> ByRowguid(Guid rowguid);
+
 		Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
 
 		Task<List<Address>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
@@ -26,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b4d390ac62cec7f549bf57417b2635e</Hash>
+    <Hash>553facaa06ef6d2f618bf85d8f1d58ca</Hash>
 </Codenesium>*/

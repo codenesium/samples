@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,27 +9,23 @@ namespace AdventureWorksNS.Api.Services
 		public ProductModelService(
 			ILogger<IProductModelRepository> logger,
 			IProductModelRepository productModelRepository,
-			IApiProductModelRequestModelValidator productModelModelValidator,
-			IBOLProductModelMapper bolproductModelMapper,
-			IDALProductModelMapper dalproductModelMapper,
+			IApiProductModelServerRequestModelValidator productModelModelValidator,
+			IBOLProductModelMapper bolProductModelMapper,
+			IDALProductModelMapper dalProductModelMapper,
 			IBOLProductMapper bolProductMapper,
-			IDALProductMapper dalProductMapper,
-			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
+			IDALProductMapper dalProductMapper)
 			: base(logger,
 			       productModelRepository,
 			       productModelModelValidator,
-			       bolproductModelMapper,
-			       dalproductModelMapper,
+			       bolProductModelMapper,
+			       dalProductModelMapper,
 			       bolProductMapper,
-			       dalProductMapper,
-			       bolProductModelProductDescriptionCultureMapper,
-			       dalProductModelProductDescriptionCultureMapper)
+			       dalProductMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c676e354f532cbf71fd5eff3b261196f</Hash>
+    <Hash>a4860a52b2244d741d60640e6c391df0</Hash>
 </Codenesium>*/

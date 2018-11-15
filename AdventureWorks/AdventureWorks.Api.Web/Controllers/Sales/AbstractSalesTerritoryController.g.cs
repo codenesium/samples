@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ISalesTerritoryService SalesTerritoryService { get; private set; }
 
-		protected IApiSalesTerritoryModelMapper SalesTerritoryModelMapper { get; private set; }
+		protected IApiSalesTerritoryServerModelMapper SalesTerritoryModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractSalesTerritoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTerritoryService salesTerritoryService,
-			IApiSalesTerritoryModelMapper salesTerritoryModelMapper
+			IApiSalesTerritoryServerModelMapper salesTerritoryModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesTerritoryResponseModel> response = await this.SalesTerritoryService.All(query.Limit, query.Offset);
+			List<ApiSalesTerritoryServerResponseModel> response = await this.SalesTerritoryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.Get(id);
+			ApiSalesTerritoryServerResponseModel response = await this.SalesTerritoryService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSalesTerritoryServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSalesTerritoryResponseModel> records = new List<ApiSalesTerritoryResponseModel>();
+			List<ApiSalesTerritoryServerResponseModel> records = new List<ApiSalesTerritoryServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSalesTerritoryResponseModel> result = await this.SalesTerritoryService.Create(model);
+				CreateResponse<ApiSalesTerritoryServerResponseModel> result = await this.SalesTerritoryService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSalesTerritoryServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSalesTerritoryResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSalesTerritoryServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryServerRequestModel model)
 		{
-			CreateResponse<ApiSalesTerritoryResponseModel> result = await this.SalesTerritoryService.Create(model);
+			CreateResponse<ApiSalesTerritoryServerResponseModel> result = await this.SalesTerritoryService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTerritoryRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTerritoryServerRequestModel> patch)
 		{
-			ApiSalesTerritoryResponseModel record = await this.SalesTerritoryService.Get(id);
+			ApiSalesTerritoryServerResponseModel record = await this.SalesTerritoryService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesTerritoryRequestModel model = await this.PatchModel(id, patch);
+				ApiSalesTerritoryServerRequestModel model = await this.PatchModel(id, patch) as ApiSalesTerritoryServerRequestModel;
 
-				UpdateResponse<ApiSalesTerritoryResponseModel> result = await this.SalesTerritoryService.Update(id, model);
+				UpdateResponse<ApiSalesTerritoryServerResponseModel> result = await this.SalesTerritoryService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTerritoryServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryServerRequestModel model)
 		{
-			ApiSalesTerritoryRequestModel request = await this.PatchModel(id, this.SalesTerritoryModelMapper.CreatePatch(model));
+			ApiSalesTerritoryServerRequestModel request = await this.PatchModel(id, this.SalesTerritoryModelMapper.CreatePatch(model)) as ApiSalesTerritoryServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSalesTerritoryResponseModel> result = await this.SalesTerritoryService.Update(id, request);
+				UpdateResponse<ApiSalesTerritoryServerResponseModel> result = await this.SalesTerritoryService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SalesTerritoryService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.ByName(name);
+			ApiSalesTerritoryServerResponseModel response = await this.SalesTerritoryService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,28 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/CustomersByTerritoryID")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiSalesTerritoryServerResponseModel response = await this.SalesTerritoryService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
+		[Route("{territoryID}/Customers")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCustomerServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> CustomersByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,15 +266,15 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCustomerResponseModel> response = await this.SalesTerritoryService.CustomersByTerritoryID(territoryID, query.Limit, query.Offset);
+			List<ApiCustomerServerResponseModel> response = await this.SalesTerritoryService.CustomersByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/SalesOrderHeadersByTerritoryID")]
+		[Route("{territoryID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeadersByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -254,15 +283,15 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesTerritoryService.SalesOrderHeadersByTerritoryID(territoryID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.SalesTerritoryService.SalesOrderHeadersByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/SalesPersonsByTerritoryID")]
+		[Route("{territoryID}/SalesPersons")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesPersonsByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -271,29 +300,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesPersonResponseModel> response = await this.SalesTerritoryService.SalesPersonsByTerritoryID(territoryID, query.Limit, query.Offset);
+			List<ApiSalesPersonServerResponseModel> response = await this.SalesTerritoryService.SalesPersonsByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("{territoryID}/SalesTerritoryHistoriesByTerritoryID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesTerritoryHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesTerritoryHistoriesByTerritoryID(int territoryID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesTerritoryService.SalesTerritoryHistoriesByTerritoryID(territoryID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiSalesTerritoryRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTerritoryRequestModel> patch)
+		private async Task<ApiSalesTerritoryServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTerritoryServerRequestModel> patch)
 		{
 			var record = await this.SalesTerritoryService.Get(id);
 
@@ -303,7 +315,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesTerritoryRequestModel request = this.SalesTerritoryModelMapper.MapResponseToRequest(record);
+				ApiSalesTerritoryServerRequestModel request = this.SalesTerritoryModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -312,5 +324,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>82df25a3c65d4cfe6cff8c17e1de05b9</Hash>
+    <Hash>63e5841d202899ee9f5e774c61ca89ab</Hash>
 </Codenesium>*/

@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IUserRepository UserRepository { get; private set; }
 
-		protected IApiUserRequestModelValidator UserModelValidator { get; private set; }
+		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
 
 		protected IBOLUserMapper BolUserMapper { get; private set; }
 
@@ -59,7 +54,7 @@ namespace TwitterNS.Api.Services
 		public AbstractUserService(
 			ILogger logger,
 			IUserRepository userRepository,
-			IApiUserRequestModelValidator userModelValidator,
+			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper,
 			IBOLDirectTweetMapper bolDirectTweetMapper,
@@ -103,14 +98,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.UserRepository.All(limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiUserResponseModel> Get(int userId)
+		public virtual async Task<ApiUserServerResponseModel> Get(int userId)
 		{
 			var record = await this.UserRepository.Get(userId);
 
@@ -124,10 +119,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiUserResponseModel>> Create(
-			ApiUserRequestModel model)
+		public virtual async Task<CreateResponse<ApiUserServerResponseModel>> Create(
+			ApiUserServerRequestModel model)
 		{
-			CreateResponse<ApiUserResponseModel> response = new CreateResponse<ApiUserResponseModel>(await this.UserModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUserServerResponseModel> response = ValidationResponseFactory<ApiUserServerResponseModel>.CreateResponse(await this.UserModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
@@ -139,9 +135,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiUserResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiUserServerResponseModel>> Update(
 			int userId,
-			ApiUserRequestModel model)
+			ApiUserServerRequestModel model)
 		{
 			var validationResult = await this.UserModelValidator.ValidateUpdateAsync(userId, model);
 
@@ -152,18 +148,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.UserRepository.Get(userId);
 
-				return new UpdateResponse<ApiUserResponseModel>(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiUserResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int userId)
 		{
-			ActionResponse response = new ActionResponse(await this.UserModelValidator.ValidateDeleteAsync(userId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.UserModelValidator.ValidateDeleteAsync(userId));
+
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(userId);
@@ -172,86 +169,93 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiUserResponseModel>> ByLocationLocationId(int locationLocationId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiUserServerResponseModel>> ByLocationLocationId(int locationLocationId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<User> records = await this.UserRepository.ByLocationLocationId(locationLocationId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiDirectTweetResponseModel>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDirectTweetServerResponseModel>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<DirectTweet> records = await this.UserRepository.DirectTweetsByTaggedUserId(taggedUserId, limit, offset);
 
 			return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiFollowerResponseModel>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFollowerServerResponseModel>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Follower> records = await this.UserRepository.FollowersByFollowedUserId(followedUserId, limit, offset);
 
 			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiFollowerResponseModel>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFollowerServerResponseModel>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Follower> records = await this.UserRepository.FollowersByFollowingUserId(followingUserId, limit, offset);
 
 			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiMessageResponseModel>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiMessageServerResponseModel>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Message> records = await this.UserRepository.MessagesBySenderUserId(senderUserId, limit, offset);
 
 			return this.BolMessageMapper.MapBOToModel(this.DalMessageMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiMessengerResponseModel>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiMessengerServerResponseModel>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Messenger> records = await this.UserRepository.MessengersByToUserId(toUserId, limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiMessengerResponseModel>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiMessengerServerResponseModel>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Messenger> records = await this.UserRepository.MessengersByUserId(userId, limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiQuoteTweetResponseModel>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiQuoteTweetServerResponseModel>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<QuoteTweet> records = await this.UserRepository.QuoteTweetsByRetweeterUserId(retweeterUserId, limit, offset);
 
 			return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiReplyResponseModel>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiReplyServerResponseModel>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Reply> records = await this.UserRepository.RepliesByReplierUserId(replierUserId, limit, offset);
 
 			return this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiRetweetResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiRetweetServerResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Retweet> records = await this.UserRepository.RetweetsByRetwitterUserId(retwitterUserId, limit, offset);
 
 			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTweetResponseModel>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTweetServerResponseModel>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Tweet> records = await this.UserRepository.TweetsByUserUserId(userUserId, limit, offset);
 
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiUserResponseModel>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUserServerResponseModel>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<User> records = await this.UserRepository.ByLikerUserId(likerUserId, limit, offset);
+			List<User> records = await this.UserRepository.ByLocationId(locationId, limit, offset);
+
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiUserServerResponseModel>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<User> records = await this.UserRepository.BySourceTweetId(sourceTweetId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
@@ -259,5 +263,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>313fca733ac1021eec11562015c8b031</Hash>
+    <Hash>48d7d01d800ee14ab1555e65a593e535</Hash>
 </Codenesium>*/

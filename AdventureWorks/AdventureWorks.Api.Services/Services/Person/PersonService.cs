@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,35 +9,23 @@ namespace AdventureWorksNS.Api.Services
 		public PersonService(
 			ILogger<IPersonRepository> logger,
 			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolpersonMapper,
-			IDALPersonMapper dalpersonMapper,
-			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
-			IBOLEmailAddressMapper bolEmailAddressMapper,
-			IDALEmailAddressMapper dalEmailAddressMapper,
+			IApiPersonServerRequestModelValidator personModelValidator,
+			IBOLPersonMapper bolPersonMapper,
+			IDALPersonMapper dalPersonMapper,
 			IBOLPasswordMapper bolPasswordMapper,
-			IDALPasswordMapper dalPasswordMapper,
-			IBOLPersonPhoneMapper bolPersonPhoneMapper,
-			IDALPersonPhoneMapper dalPersonPhoneMapper)
+			IDALPasswordMapper dalPasswordMapper)
 			: base(logger,
 			       personRepository,
 			       personModelValidator,
-			       bolpersonMapper,
-			       dalpersonMapper,
-			       bolBusinessEntityContactMapper,
-			       dalBusinessEntityContactMapper,
-			       bolEmailAddressMapper,
-			       dalEmailAddressMapper,
+			       bolPersonMapper,
+			       dalPersonMapper,
 			       bolPasswordMapper,
-			       dalPasswordMapper,
-			       bolPersonPhoneMapper,
-			       dalPersonPhoneMapper)
+			       dalPasswordMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6297566ab5519c39639e0fa9a39ee464</Hash>
+    <Hash>df0afcfedbeb604c8d8b3cb2af824b43</Hash>
 </Codenesium>*/

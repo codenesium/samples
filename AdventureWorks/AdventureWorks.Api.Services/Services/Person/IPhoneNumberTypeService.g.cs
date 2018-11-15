@@ -2,29 +2,26 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IPhoneNumberTypeService
 	{
-		Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
-			ApiPhoneNumberTypeRequestModel model);
+		Task<CreateResponse<ApiPhoneNumberTypeServerResponseModel>> Create(
+			ApiPhoneNumberTypeServerRequestModel model);
 
-		Task<UpdateResponse<ApiPhoneNumberTypeResponseModel>> Update(int phoneNumberTypeID,
-		                                                              ApiPhoneNumberTypeRequestModel model);
+		Task<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>> Update(int phoneNumberTypeID,
+		                                                                    ApiPhoneNumberTypeServerRequestModel model);
 
 		Task<ActionResponse> Delete(int phoneNumberTypeID);
 
-		Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID);
+		Task<ApiPhoneNumberTypeServerResponseModel> Get(int phoneNumberTypeID);
 
-		Task<List<ApiPhoneNumberTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiPersonPhoneResponseModel>> PersonPhonesByPhoneNumberTypeID(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPhoneNumberTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>565309202e8d088157312d77023c8328</Hash>
+    <Hash>55a8c53b13853620d579e9c9bd4ae20e</Hash>
 </Codenesium>*/

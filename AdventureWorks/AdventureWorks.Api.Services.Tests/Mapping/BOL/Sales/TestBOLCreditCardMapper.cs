@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCreditCardMapper();
-			ApiCreditCardRequestModel model = new ApiCreditCardRequestModel();
+			ApiCreditCardServerRequestModel model = new ApiCreditCardServerRequestModel();
 			model.SetProperties("A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			BOCreditCard response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCreditCardMapper();
 			BOCreditCard bo = new BOCreditCard();
 			bo.SetProperties(1, "A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
-			ApiCreditCardResponseModel response = mapper.MapBOToModel(bo);
+			ApiCreditCardServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CardNumber.Should().Be("A");
 			response.CardType.Should().Be("A");
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCreditCardMapper();
 			BOCreditCard bo = new BOCreditCard();
 			bo.SetProperties(1, "A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
-			List<ApiCreditCardResponseModel> response = mapper.MapBOToModel(new List<BOCreditCard>() { { bo } });
+			List<ApiCreditCardServerResponseModel> response = mapper.MapBOToModel(new List<BOCreditCard>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c3a49e6a4f1d0e49a40f41ee16bc78fa</Hash>
+    <Hash>6d70e409263a0d84b24d963f50015e57</Hash>
 </Codenesium>*/

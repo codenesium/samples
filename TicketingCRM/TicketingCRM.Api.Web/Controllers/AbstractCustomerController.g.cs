@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.Web
 	{
 		protected ICustomerService CustomerService { get; private set; }
 
-		protected IApiCustomerModelMapper CustomerModelMapper { get; private set; }
+		protected IApiCustomerServerModelMapper CustomerModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AbstractCustomerController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICustomerService customerService,
-			IApiCustomerModelMapper customerModelMapper
+			IApiCustomerServerModelMapper customerModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCustomerResponseModel> response = await this.CustomerService.All(query.Limit, query.Offset);
+			List<ApiCustomerServerResponseModel> response = await this.CustomerService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCustomerServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCustomerResponseModel response = await this.CustomerService.Get(id);
+			ApiCustomerServerResponseModel response = await this.CustomerService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCustomerServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCustomerRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCustomerServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCustomerResponseModel> records = new List<ApiCustomerResponseModel>();
+			List<ApiCustomerServerResponseModel> records = new List<ApiCustomerServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Create(model);
+				CreateResponse<ApiCustomerServerResponseModel> result = await this.CustomerService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TicketingCRMNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCustomerServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCustomerResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCustomerServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCustomerRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCustomerServerRequestModel model)
 		{
-			CreateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Create(model);
+			CreateResponse<ApiCustomerServerResponseModel> result = await this.CustomerService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCustomerServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCustomerRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCustomerServerRequestModel> patch)
 		{
-			ApiCustomerResponseModel record = await this.CustomerService.Get(id);
+			ApiCustomerServerResponseModel record = await this.CustomerService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiCustomerRequestModel model = await this.PatchModel(id, patch);
+				ApiCustomerServerRequestModel model = await this.PatchModel(id, patch) as ApiCustomerServerRequestModel;
 
-				UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, model);
+				UpdateResponse<ApiCustomerServerResponseModel> result = await this.CustomerService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCustomerServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerServerRequestModel model)
 		{
-			ApiCustomerRequestModel request = await this.PatchModel(id, this.CustomerModelMapper.CreatePatch(model));
+			ApiCustomerServerRequestModel request = await this.PatchModel(id, this.CustomerModelMapper.CreatePatch(model)) as ApiCustomerServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCustomerResponseModel> result = await this.CustomerService.Update(id, request);
+				UpdateResponse<ApiCustomerServerResponseModel> result = await this.CustomerService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TicketingCRMNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CustomerService.Delete(id);
@@ -206,7 +216,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 		}
 
-		private async Task<ApiCustomerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCustomerRequestModel> patch)
+		private async Task<ApiCustomerServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCustomerServerRequestModel> patch)
 		{
 			var record = await this.CustomerService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiCustomerRequestModel request = this.CustomerModelMapper.MapResponseToRequest(record);
+				ApiCustomerServerRequestModel request = this.CustomerModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>190cdc8720df9b2bb040f17ed8b3c266</Hash>
+    <Hash>9e66a84eaa917c0c3eb684ae6158af56</Hash>
 </Codenesium>*/

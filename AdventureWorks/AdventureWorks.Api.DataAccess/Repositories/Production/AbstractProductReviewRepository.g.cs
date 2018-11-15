@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ProductReview, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ProductReview, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ProductReview, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ProductReviewID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
-			}
-			else
-			{
-				return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
-			}
+			return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
 		}
 
 		private async Task<ProductReview> GetById(int productReviewID)
@@ -113,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca37e529631be1c9c19fa26b9bb22453</Hash>
+    <Hash>81840dbe8de08c18aa5adc355661d160</Hash>
 </Codenesium>*/

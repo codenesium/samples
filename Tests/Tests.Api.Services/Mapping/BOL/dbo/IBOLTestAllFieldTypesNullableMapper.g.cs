@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOTestAllFieldTypesNullable MapModelToBO(
 			int id,
-			ApiTestAllFieldTypesNullableRequestModel model);
+			ApiTestAllFieldTypesNullableServerRequestModel model);
 
-		ApiTestAllFieldTypesNullableResponseModel MapBOToModel(
+		ApiTestAllFieldTypesNullableServerResponseModel MapBOToModel(
 			BOTestAllFieldTypesNullable boTestAllFieldTypesNullable);
 
-		List<ApiTestAllFieldTypesNullableResponseModel> MapBOToModel(
+		List<ApiTestAllFieldTypesNullableServerResponseModel> MapBOToModel(
 			List<BOTestAllFieldTypesNullable> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b895fca516f278ac60d6435ffaf4e2ac</Hash>
+    <Hash>0c8d4115c4fc1655246a4cafdf743e0d</Hash>
 </Codenesium>*/

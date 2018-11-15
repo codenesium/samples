@@ -9,16 +9,16 @@ namespace NebulaNS.Api.Services
 	{
 		BOMachine MapModelToBO(
 			int id,
-			ApiMachineRequestModel model);
+			ApiMachineServerRequestModel model);
 
-		ApiMachineResponseModel MapBOToModel(
+		ApiMachineServerResponseModel MapBOToModel(
 			BOMachine boMachine);
 
-		List<ApiMachineResponseModel> MapBOToModel(
+		List<ApiMachineServerResponseModel> MapBOToModel(
 			List<BOMachine> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f64ac5b4aef17d17b7a51fb66e2029e</Hash>
+    <Hash>abc2643ed996cf1b534572a5975b8f77</Hash>
 </Codenesium>*/

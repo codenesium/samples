@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -9,20 +8,20 @@ namespace TestsNS.Api.Services
 {
 	public partial interface ITestAllFieldTypesNullableService
 	{
-		Task<CreateResponse<ApiTestAllFieldTypesNullableResponseModel>> Create(
-			ApiTestAllFieldTypesNullableRequestModel model);
+		Task<CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel>> Create(
+			ApiTestAllFieldTypesNullableServerRequestModel model);
 
-		Task<UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>> Update(int id,
-		                                                                        ApiTestAllFieldTypesNullableRequestModel model);
+		Task<UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>> Update(int id,
+		                                                                              ApiTestAllFieldTypesNullableServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiTestAllFieldTypesNullableResponseModel> Get(int id);
+		Task<ApiTestAllFieldTypesNullableServerResponseModel> Get(int id);
 
-		Task<List<ApiTestAllFieldTypesNullableResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTestAllFieldTypesNullableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>65f6d81d621d164267a3c833a6754f47</Hash>
+    <Hash>98095720032a82754d2c9e4f11f13c9f</Hash>
 </Codenesium>*/

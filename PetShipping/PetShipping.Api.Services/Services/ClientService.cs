@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,9 +9,9 @@ namespace PetShippingNS.Api.Services
 		public ClientService(
 			ILogger<IClientRepository> logger,
 			IClientRepository clientRepository,
-			IApiClientRequestModelValidator clientModelValidator,
-			IBOLClientMapper bolclientMapper,
-			IDALClientMapper dalclientMapper,
+			IApiClientServerRequestModelValidator clientModelValidator,
+			IBOLClientMapper bolClientMapper,
+			IDALClientMapper dalClientMapper,
 			IBOLClientCommunicationMapper bolClientCommunicationMapper,
 			IDALClientCommunicationMapper dalClientCommunicationMapper,
 			IBOLPetMapper bolPetMapper,
@@ -28,8 +21,8 @@ namespace PetShippingNS.Api.Services
 			: base(logger,
 			       clientRepository,
 			       clientModelValidator,
-			       bolclientMapper,
-			       dalclientMapper,
+			       bolClientMapper,
+			       dalClientMapper,
 			       bolClientCommunicationMapper,
 			       dalClientCommunicationMapper,
 			       bolPetMapper,
@@ -42,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47e8f0d988d0e59aadfd7dac2ec5f50b</Hash>
+    <Hash>538a05c569cf02b54ddc97a4b3c5db42</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			var record = new ApiTeacherResponseModel();
-			var records = new List<ApiTeacherResponseModel>();
+			var record = new ApiTeacherServerResponseModel();
+			var records = new List<ApiTeacherServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTeacherResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTeacherServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTeacherResponseModel>>(new List<ApiTeacherResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTeacherServerResponseModel>>(new List<ApiTeacherServerResponseModel>()));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTeacherResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTeacherServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherServerResponseModel()));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTeacherResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTeacherServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherServerResponseModel>(null));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTeacherResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTeacherResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTeacherServerResponseModel>.CreateResponse(null as ApiTeacherServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTeacherServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherServerResponseModel>>(mockResponse));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTeacherRequestModel>();
-			records.Add(new ApiTeacherRequestModel());
+			var records = new List<ApiTeacherServerRequestModel>();
+			records.Add(new ApiTeacherServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTeacherResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTeacherServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTeacherResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTeacherServerResponseModel>>(null as ApiTeacherServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherServerResponseModel>>(mockResponse.Object));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTeacherRequestModel>();
-			records.Add(new ApiTeacherRequestModel());
+			var records = new List<ApiTeacherServerRequestModel>();
+			records.Add(new ApiTeacherServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTeacherResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTeacherResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTeacherServerResponseModel>.CreateResponse(null as ApiTeacherServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTeacherServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherServerResponseModel>>(mockResponse));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTeacherRequestModel());
+			IActionResult response = await controller.Create(new ApiTeacherServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTeacherResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTeacherServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTeacherResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTeacherResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTeacherServerResponseModel>>(null as ApiTeacherServerResponseModel);
+			var mockRecord = new ApiTeacherServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeacherServerResponseModel>>(mockResponse.Object));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTeacherRequestModel());
+			IActionResult response = await controller.Create(new ApiTeacherServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeacherResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeacherServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>()))
-			.Callback<int, ApiTeacherRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()))
+			.Callback<int, ApiTeacherServerRequestModel>(
 				(id, model) => model.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTeacherResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherResponseModel>(new ApiTeacherResponseModel()));
-			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTeacherServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherServerResponseModel>(new ApiTeacherServerResponseModel()));
+			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTeacherRequestModel>();
+			var patch = new JsonPatchDocument<ApiTeacherServerRequestModel>();
 			patch.Replace(x => x.Birthday, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherServerResponseModel>(null));
 			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTeacherRequestModel>();
+			var patch = new JsonPatchDocument<ApiTeacherServerRequestModel>();
 			patch.Replace(x => x.Birthday, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeacherResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeacherServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherResponseModel()));
-			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherServerResponseModel()));
+			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeacherRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeacherServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeacherResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeacherServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherResponseModel()));
-			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeacherServerResponseModel()));
+			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeacherRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeacherServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TeacherControllerMockFacade mock = new TeacherControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeacherResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeacherServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherResponseModel>(null));
-			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeacherServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeacherServerResponseModel>(null));
+			TeacherController controller = new TeacherController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeacherServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeacherRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeacherServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<ITeacherService> ServiceMock { get; set; } = new Mock<ITeacherService>();
 
-		public Mock<IApiTeacherModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTeacherModelMapper>();
+		public Mock<IApiTeacherServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTeacherServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c04bb46fac64d0f1d8192365ccb3c53e</Hash>
+    <Hash>25e0ee0ca064b10403f94ea8103cf008</Hash>
 </Codenesium>*/

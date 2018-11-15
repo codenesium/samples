@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public SpaceFeatureService(
 			ILogger<ISpaceFeatureRepository> logger,
 			ISpaceFeatureRepository spaceFeatureRepository,
-			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
-			IBOLSpaceFeatureMapper bolspaceFeatureMapper,
-			IDALSpaceFeatureMapper dalspaceFeatureMapper)
+			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
+			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
+			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base(logger,
 			       spaceFeatureRepository,
 			       spaceFeatureModelValidator,
-			       bolspaceFeatureMapper,
-			       dalspaceFeatureMapper)
+			       bolSpaceFeatureMapper,
+			       dalSpaceFeatureMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d93463851803b94cb46a86f6b2fe4bb</Hash>
+    <Hash>b1bd17a9a18beda1bdceae4999406811</Hash>
 </Codenesium>*/

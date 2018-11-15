@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b2396d367d17531b789bb354c7e0dd73</Hash>
+    <Hash>1fe020a983aa6cf587d6d893cbf84cd1</Hash>
 </Codenesium>*/

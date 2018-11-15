@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<ColumnSameAsFKTable, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ColumnSameAsFKTable, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ColumnSameAsFKTable, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ColumnSameAsFKTable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
-			}
-			else
-			{
-				return await this.Context.Set<ColumnSameAsFKTable>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
-			}
+			return await this.Context.Set<ColumnSameAsFKTable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
 		private async Task<ColumnSameAsFKTable> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1ef76330a7fda771aa8d601f1a5f849</Hash>
+    <Hash>d49ec1adca811414c72ac298740f9c0c</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected IFamilyService FamilyService { get; private set; }
 
-		protected IApiFamilyModelMapper FamilyModelMapper { get; private set; }
+		protected IApiFamilyServerModelMapper FamilyModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractFamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFamilyService familyService,
-			IApiFamilyModelMapper familyModelMapper
+			IApiFamilyServerModelMapper familyModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFamilyServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFamilyResponseModel> response = await this.FamilyService.All(query.Limit, query.Offset);
+			List<ApiFamilyServerResponseModel> response = await this.FamilyService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiFamilyResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiFamilyServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiFamilyResponseModel response = await this.FamilyService.Get(id);
+			ApiFamilyServerResponseModel response = await this.FamilyService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiFamilyServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFamilyRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFamilyServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiFamilyResponseModel> records = new List<ApiFamilyResponseModel>();
+			List<ApiFamilyServerResponseModel> records = new List<ApiFamilyServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiFamilyResponseModel> result = await this.FamilyService.Create(model);
+				CreateResponse<ApiFamilyServerResponseModel> result = await this.FamilyService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiFamilyServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiFamilyResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiFamilyServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiFamilyRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiFamilyServerRequestModel model)
 		{
-			CreateResponse<ApiFamilyResponseModel> result = await this.FamilyService.Create(model);
+			CreateResponse<ApiFamilyServerResponseModel> result = await this.FamilyService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFamilyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFamilyRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFamilyServerRequestModel> patch)
 		{
-			ApiFamilyResponseModel record = await this.FamilyService.Get(id);
+			ApiFamilyServerResponseModel record = await this.FamilyService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiFamilyRequestModel model = await this.PatchModel(id, patch);
+				ApiFamilyServerRequestModel model = await this.PatchModel(id, patch) as ApiFamilyServerRequestModel;
 
-				UpdateResponse<ApiFamilyResponseModel> result = await this.FamilyService.Update(id, model);
+				UpdateResponse<ApiFamilyServerResponseModel> result = await this.FamilyService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFamilyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyServerRequestModel model)
 		{
-			ApiFamilyRequestModel request = await this.PatchModel(id, this.FamilyModelMapper.CreatePatch(model));
+			ApiFamilyServerRequestModel request = await this.PatchModel(id, this.FamilyModelMapper.CreatePatch(model)) as ApiFamilyServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiFamilyResponseModel> result = await this.FamilyService.Update(id, request);
+				UpdateResponse<ApiFamilyServerResponseModel> result = await this.FamilyService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.FamilyService.Delete(id);
@@ -207,9 +217,9 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{familyId}/StudentsByFamilyId")]
+		[Route("{familyId}/Students")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> StudentsByFamilyId(int familyId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStudentResponseModel> response = await this.FamilyService.StudentsByFamilyId(familyId, query.Limit, query.Offset);
+			List<ApiStudentServerResponseModel> response = await this.FamilyService.StudentsByFamilyId(familyId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("byUserId/{userId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFamilyServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFamilyResponseModel> response = await this.FamilyService.ByUserId(userId, query.Limit, query.Offset);
+			List<ApiFamilyServerResponseModel> response = await this.FamilyService.ByUserId(userId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiFamilyRequestModel> PatchModel(int id, JsonPatchDocument<ApiFamilyRequestModel> patch)
+		private async Task<ApiFamilyServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiFamilyServerRequestModel> patch)
 		{
 			var record = await this.FamilyService.Get(id);
 
@@ -250,7 +260,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiFamilyRequestModel request = this.FamilyModelMapper.MapResponseToRequest(record);
+				ApiFamilyServerRequestModel request = this.FamilyModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2ae03c0773496a7d1e37c6ef1fe12cfb</Hash>
+    <Hash>21e07ade414b21c14a9e77f63a18ea11</Hash>
 </Codenesium>*/

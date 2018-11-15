@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ISelfReferenceService SelfReferenceService { get; private set; }
 
-		protected IApiSelfReferenceModelMapper SelfReferenceModelMapper { get; private set; }
+		protected IApiSelfReferenceServerModelMapper SelfReferenceModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractSelfReferenceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISelfReferenceService selfReferenceService,
-			IApiSelfReferenceModelMapper selfReferenceModelMapper
+			IApiSelfReferenceServerModelMapper selfReferenceModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSelfReferenceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSelfReferenceServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSelfReferenceResponseModel> response = await this.SelfReferenceService.All(query.Limit, query.Offset);
+			List<ApiSelfReferenceServerResponseModel> response = await this.SelfReferenceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSelfReferenceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSelfReferenceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSelfReferenceResponseModel response = await this.SelfReferenceService.Get(id);
+			ApiSelfReferenceServerResponseModel response = await this.SelfReferenceService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSelfReferenceResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSelfReferenceServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSelfReferenceRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSelfReferenceServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSelfReferenceResponseModel> records = new List<ApiSelfReferenceResponseModel>();
+			List<ApiSelfReferenceServerResponseModel> records = new List<ApiSelfReferenceServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSelfReferenceResponseModel> result = await this.SelfReferenceService.Create(model);
+				CreateResponse<ApiSelfReferenceServerResponseModel> result = await this.SelfReferenceService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSelfReferenceServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSelfReferenceResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSelfReferenceServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSelfReferenceRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSelfReferenceServerRequestModel model)
 		{
-			CreateResponse<ApiSelfReferenceResponseModel> result = await this.SelfReferenceService.Create(model);
+			CreateResponse<ApiSelfReferenceServerResponseModel> result = await this.SelfReferenceService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSelfReferenceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSelfReferenceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSelfReferenceRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSelfReferenceServerRequestModel> patch)
 		{
-			ApiSelfReferenceResponseModel record = await this.SelfReferenceService.Get(id);
+			ApiSelfReferenceServerResponseModel record = await this.SelfReferenceService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiSelfReferenceRequestModel model = await this.PatchModel(id, patch);
+				ApiSelfReferenceServerRequestModel model = await this.PatchModel(id, patch) as ApiSelfReferenceServerRequestModel;
 
-				UpdateResponse<ApiSelfReferenceResponseModel> result = await this.SelfReferenceService.Update(id, model);
+				UpdateResponse<ApiSelfReferenceServerResponseModel> result = await this.SelfReferenceService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSelfReferenceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSelfReferenceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSelfReferenceRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSelfReferenceServerRequestModel model)
 		{
-			ApiSelfReferenceRequestModel request = await this.PatchModel(id, this.SelfReferenceModelMapper.CreatePatch(model));
+			ApiSelfReferenceServerRequestModel request = await this.PatchModel(id, this.SelfReferenceModelMapper.CreatePatch(model)) as ApiSelfReferenceServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSelfReferenceResponseModel> result = await this.SelfReferenceService.Update(id, request);
+				UpdateResponse<ApiSelfReferenceServerResponseModel> result = await this.SelfReferenceService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SelfReferenceService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiSelfReferenceRequestModel> PatchModel(int id, JsonPatchDocument<ApiSelfReferenceRequestModel> patch)
+		private async Task<ApiSelfReferenceServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSelfReferenceServerRequestModel> patch)
 		{
 			var record = await this.SelfReferenceService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiSelfReferenceRequestModel request = this.SelfReferenceModelMapper.MapResponseToRequest(record);
+				ApiSelfReferenceServerRequestModel request = this.SelfReferenceModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b9568d111e50a1de1797696e3dfc1b63</Hash>
+    <Hash>b97118e908d26a26761cd050266c1d0a</Hash>
 </Codenesium>*/

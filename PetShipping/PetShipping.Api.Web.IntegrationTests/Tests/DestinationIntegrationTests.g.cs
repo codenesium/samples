@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using PetShippingNS.Api.Client;
 using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,68 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Destination")]
 	[Trait("Area", "Integration")]
-	public class DestinationIntegrationTests
+	public partial class DestinationIntegrationTests
 	{
 		public DestinationIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.DestinationDeleteAsync(1);
+			var model = new ApiDestinationClientRequestModel();
+			model.SetProperties(1, "B", 2);
+			var model2 = new ApiDestinationClientRequestModel();
+			model2.SetProperties(1, "C", 3);
+			var request = new List<ApiDestinationClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiDestinationClientResponseModel>> result = await client.DestinationBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Destination>().ToList()[1].CountryId.Should().Be(1);
+			context.Set<Destination>().ToList()[1].Name.Should().Be("B");
+			context.Set<Destination>().ToList()[1].Order.Should().Be(2);
+
+			context.Set<Destination>().ToList()[2].CountryId.Should().Be(1);
+			context.Set<Destination>().ToList()[2].Name.Should().Be("C");
+			context.Set<Destination>().ToList()[2].Order.Should().Be(3);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiDestinationClientRequestModel();
+			model.SetProperties(1, "B", 2);
+			CreateResponse<ApiDestinationClientResponseModel> result = await client.DestinationCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Destination>().ToList()[1].CountryId.Should().Be(1);
+			context.Set<Destination>().ToList()[1].Name.Should().Be("B");
+			context.Set<Destination>().ToList()[1].Order.Should().Be(2);
+
+			result.Record.CountryId.Should().Be(1);
+			result.Record.Name.Should().Be("B");
+			result.Record.Order.Should().Be(2);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +87,57 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiDestinationServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IDestinationService service = testServer.Host.Services.GetService(typeof(IDestinationService)) as IDestinationService;
+			ApiDestinationServerResponseModel model = await service.Get(1);
 
-			ApiDestinationResponseModel model = await client.DestinationGetAsync(1);
+			ApiDestinationClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(1, "B", 2);
 
-			ApiDestinationModelMapper mapper = new ApiDestinationModelMapper();
+			UpdateResponse<ApiDestinationClientResponseModel> updateResponse = await client.DestinationUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiDestinationResponseModel> updateResponse = await client.DestinationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Destination>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Destination>().ToList()[0].CountryId.Should().Be(1);
+			context.Set<Destination>().ToList()[0].Name.Should().Be("B");
+			context.Set<Destination>().ToList()[0].Order.Should().Be(2);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.CountryId.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
+			updateResponse.Record.Order.Should().Be(2);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiDestinationRequestModel();
-			createModel.SetProperties(1, "B", 2);
-			CreateResponse<ApiDestinationResponseModel> createResult = await client.DestinationCreateAsync(createModel);
+			IDestinationService service = testServer.Host.Services.GetService(typeof(IDestinationService)) as IDestinationService;
+			var model = new ApiDestinationServerRequestModel();
+			model.SetProperties(1, "B", 2);
+			CreateResponse<ApiDestinationServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiDestinationResponseModel getResponse = await client.DestinationGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.DestinationDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiDestinationResponseModel verifyResponse = await client.DestinationGetAsync(2);
+			ApiDestinationServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +145,33 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiDestinationResponseModel response = await client.DestinationGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiDestinationClientResponseModel response = await client.DestinationGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.CountryId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.Order.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDestinationClientResponseModel response = await client.DestinationGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +180,65 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiDestinationResponseModel> response = await client.DestinationAllAsync();
+			List<ApiDestinationClientResponseModel> response = await client.DestinationAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].CountryId.Should().Be(1);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+			response[0].Order.Should().Be(1);
 		}
 
-		private async Task<ApiDestinationResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestForeignKeyPipelineStepDestinationsByDestinationIdFound()
 		{
-			var model = new ApiDestinationRequestModel();
-			model.SetProperties(1, "B", 2);
-			CreateResponse<ApiDestinationResponseModel> result = await client.DestinationCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiPipelineStepDestinationClientResponseModel> response = await client.PipelineStepDestinationsByDestinationId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyPipelineStepDestinationsByDestinationIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiPipelineStepDestinationClientResponseModel> response = await client.PipelineStepDestinationsByDestinationId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.DestinationAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce051503e71a978c1ecbcc4fc942c80a</Hash>
+    <Hash>5cb93b0a94dd84bf832dba16e3b0cd59</Hash>
 </Codenesium>*/

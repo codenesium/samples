@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOIllustration MapModelToBO(
 			int illustrationID,
-			ApiIllustrationRequestModel model
+			ApiIllustrationServerRequestModel model
 			)
 		{
 			BOIllustration boIllustration = new BOIllustration();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boIllustration;
 		}
 
-		public virtual ApiIllustrationResponseModel MapBOToModel(
+		public virtual ApiIllustrationServerResponseModel MapBOToModel(
 			BOIllustration boIllustration)
 		{
-			var model = new ApiIllustrationResponseModel();
+			var model = new ApiIllustrationServerResponseModel();
 
 			model.SetProperties(boIllustration.IllustrationID, boIllustration.Diagram, boIllustration.ModifiedDate);
 
 			return model;
 		}
 
-		public virtual List<ApiIllustrationResponseModel> MapBOToModel(
+		public virtual List<ApiIllustrationServerResponseModel> MapBOToModel(
 			List<BOIllustration> items)
 		{
-			List<ApiIllustrationResponseModel> response = new List<ApiIllustrationResponseModel>();
+			List<ApiIllustrationServerResponseModel> response = new List<ApiIllustrationServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7aeb730c9e415d962db0a45212cee317</Hash>
+    <Hash>c34edac507ef5bc9f943e153f9c504ab</Hash>
 </Codenesium>*/

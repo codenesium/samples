@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IShoppingCartItemRepository ShoppingCartItemRepository { get; private set; }
 
-		protected IApiShoppingCartItemRequestModelValidator ShoppingCartItemModelValidator { get; private set; }
+		protected IApiShoppingCartItemServerRequestModelValidator ShoppingCartItemModelValidator { get; private set; }
 
 		protected IBOLShoppingCartItemMapper BolShoppingCartItemMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractShoppingCartItemService(
 			ILogger logger,
 			IShoppingCartItemRepository shoppingCartItemRepository,
-			IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
+			IApiShoppingCartItemServerRequestModelValidator shoppingCartItemModelValidator,
 			IBOLShoppingCartItemMapper bolShoppingCartItemMapper,
 			IDALShoppingCartItemMapper dalShoppingCartItemMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiShoppingCartItemResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiShoppingCartItemServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ShoppingCartItemRepository.All(limit, offset);
 
 			return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiShoppingCartItemResponseModel> Get(int shoppingCartItemID)
+		public virtual async Task<ApiShoppingCartItemServerResponseModel> Get(int shoppingCartItemID)
 		{
 			var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
-			ApiShoppingCartItemRequestModel model)
+		public virtual async Task<CreateResponse<ApiShoppingCartItemServerResponseModel>> Create(
+			ApiShoppingCartItemServerRequestModel model)
 		{
-			CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.ShoppingCartItemModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShoppingCartItemServerResponseModel> response = ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.CreateResponse(await this.ShoppingCartItemModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolShoppingCartItemMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiShoppingCartItemResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiShoppingCartItemServerResponseModel>> Update(
 			int shoppingCartItemID,
-			ApiShoppingCartItemRequestModel model)
+			ApiShoppingCartItemServerRequestModel model)
 		{
 			var validationResult = await this.ShoppingCartItemModelValidator.ValidateUpdateAsync(shoppingCartItemID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
-				return new UpdateResponse<ApiShoppingCartItemResponseModel>(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiShoppingCartItemResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int shoppingCartItemID)
 		{
-			ActionResponse response = new ActionResponse(await this.ShoppingCartItemModelValidator.ValidateDeleteAsync(shoppingCartItemID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ShoppingCartItemModelValidator.ValidateDeleteAsync(shoppingCartItemID));
+
 			if (response.Success)
 			{
 				await this.ShoppingCartItemRepository.Delete(shoppingCartItemID);
@@ -108,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiShoppingCartItemResponseModel>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiShoppingCartItemServerResponseModel>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<ShoppingCartItem> records = await this.ShoppingCartItemRepository.ByShoppingCartIDProductID(shoppingCartID, productID, limit, offset);
 
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f770b42d23bb836955c27193a1f11e9</Hash>
+    <Hash>918f4d575d581c9f8046db3e82f22d06</Hash>
 </Codenesium>*/

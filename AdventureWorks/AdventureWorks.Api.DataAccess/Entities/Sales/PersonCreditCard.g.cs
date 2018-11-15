@@ -25,20 +25,25 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Key]
 		[Column("CreditCardID")]
-		public int CreditCardID { get; private set; }
+		public virtual int CreditCardID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[ForeignKey("CreditCardID")]
 		public virtual CreditCard CreditCardNavigation { get; private set; }
+
+		public void SetCreditCardNavigation(CreditCard item)
+		{
+			this.CreditCardNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e38a6496d4fa659da5b83e3cc6fff7e5</Hash>
+    <Hash>40d7984f6631e0982ed9f1f419f3ab84</Hash>
 </Codenesium>*/

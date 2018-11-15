@@ -30,28 +30,27 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("CatalogDescription")]
-		public string CatalogDescription { get; private set; }
+		public virtual string CatalogDescription { get; private set; }
 
 		[Column("Instructions")]
-		public string Instruction { get; private set; }
+		public virtual string Instruction { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Key]
 		[Column("ProductModelID")]
-		public int ProductModelID { get; private set; }
+		public virtual int ProductModelID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5de57abd1636fc4e7b17a632019182db</Hash>
+    <Hash>1a438a53e767b220b074598e4801bce0</Hash>
 </Codenesium>*/

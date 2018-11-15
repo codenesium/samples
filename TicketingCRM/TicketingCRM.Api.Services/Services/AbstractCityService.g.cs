@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		protected ICityRepository CityRepository { get; private set; }
 
-		protected IApiCityRequestModelValidator CityModelValidator { get; private set; }
+		protected IApiCityServerRequestModelValidator CityModelValidator { get; private set; }
 
 		protected IBOLCityMapper BolCityMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace TicketingCRMNS.Api.Services
 		public AbstractCityService(
 			ILogger logger,
 			ICityRepository cityRepository,
-			IApiCityRequestModelValidator cityModelValidator,
+			IApiCityServerRequestModelValidator cityModelValidator,
 			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
 			IBOLEventMapper bolEventMapper,
@@ -47,14 +42,14 @@ namespace TicketingCRMNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCityResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CityRepository.All(limit, offset);
 
 			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCityResponseModel> Get(int id)
+		public virtual async Task<ApiCityServerResponseModel> Get(int id)
 		{
 			var record = await this.CityRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace TicketingCRMNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCityResponseModel>> Create(
-			ApiCityRequestModel model)
+		public virtual async Task<CreateResponse<ApiCityServerResponseModel>> Create(
+			ApiCityServerRequestModel model)
 		{
-			CreateResponse<ApiCityResponseModel> response = new CreateResponse<ApiCityResponseModel>(await this.CityModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCityServerResponseModel> response = ValidationResponseFactory<ApiCityServerResponseModel>.CreateResponse(await this.CityModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCityMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCityResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCityServerResponseModel>> Update(
 			int id,
-			ApiCityRequestModel model)
+			ApiCityServerRequestModel model)
 		{
 			var validationResult = await this.CityModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.CityRepository.Get(id);
 
-				return new UpdateResponse<ApiCityResponseModel>(this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCityServerResponseModel>.UpdateResponse(this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCityResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCityServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.CityModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CityModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.CityRepository.Delete(id);
@@ -116,14 +113,14 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiCityResponseModel>> ByProvinceId(int provinceId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiCityServerResponseModel>> ByProvinceId(int provinceId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<City> records = await this.CityRepository.ByProvinceId(provinceId, limit, offset);
 
 			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventResponseModel>> EventsByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventServerResponseModel>> EventsByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Event> records = await this.CityRepository.EventsByCityId(cityId, limit, offset);
 
@@ -133,5 +130,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c0fa697a1fdd5956e0af2fb4b44e5e5</Hash>
+    <Hash>3944492de3aaa81412686c2f66d05a15</Hash>
 </Codenesium>*/

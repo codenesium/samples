@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IDatabaseLogService DatabaseLogService { get; private set; }
 
-		protected IApiDatabaseLogModelMapper DatabaseLogModelMapper { get; private set; }
+		protected IApiDatabaseLogServerModelMapper DatabaseLogModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractDatabaseLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDatabaseLogService databaseLogService,
-			IApiDatabaseLogModelMapper databaseLogModelMapper
+			IApiDatabaseLogServerModelMapper databaseLogModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDatabaseLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDatabaseLogServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDatabaseLogResponseModel> response = await this.DatabaseLogService.All(query.Limit, query.Offset);
+			List<ApiDatabaseLogServerResponseModel> response = await this.DatabaseLogService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDatabaseLogServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiDatabaseLogResponseModel response = await this.DatabaseLogService.Get(id);
+			ApiDatabaseLogServerResponseModel response = await this.DatabaseLogService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiDatabaseLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiDatabaseLogServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDatabaseLogRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDatabaseLogServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiDatabaseLogResponseModel> records = new List<ApiDatabaseLogResponseModel>();
+			List<ApiDatabaseLogServerResponseModel> records = new List<ApiDatabaseLogServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Create(model);
+				CreateResponse<ApiDatabaseLogServerResponseModel> result = await this.DatabaseLogService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiDatabaseLogServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiDatabaseLogResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiDatabaseLogServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDatabaseLogRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiDatabaseLogServerRequestModel model)
 		{
-			CreateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Create(model);
+			CreateResponse<ApiDatabaseLogServerResponseModel> result = await this.DatabaseLogService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDatabaseLogRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDatabaseLogServerRequestModel> patch)
 		{
-			ApiDatabaseLogResponseModel record = await this.DatabaseLogService.Get(id);
+			ApiDatabaseLogServerResponseModel record = await this.DatabaseLogService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDatabaseLogRequestModel model = await this.PatchModel(id, patch);
+				ApiDatabaseLogServerRequestModel model = await this.PatchModel(id, patch) as ApiDatabaseLogServerRequestModel;
 
-				UpdateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Update(id, model);
+				UpdateResponse<ApiDatabaseLogServerResponseModel> result = await this.DatabaseLogService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDatabaseLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogServerRequestModel model)
 		{
-			ApiDatabaseLogRequestModel request = await this.PatchModel(id, this.DatabaseLogModelMapper.CreatePatch(model));
+			ApiDatabaseLogServerRequestModel request = await this.PatchModel(id, this.DatabaseLogModelMapper.CreatePatch(model)) as ApiDatabaseLogServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiDatabaseLogResponseModel> result = await this.DatabaseLogService.Update(id, request);
+				UpdateResponse<ApiDatabaseLogServerResponseModel> result = await this.DatabaseLogService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.DatabaseLogService.Delete(id);
@@ -206,7 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiDatabaseLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiDatabaseLogRequestModel> patch)
+		private async Task<ApiDatabaseLogServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiDatabaseLogServerRequestModel> patch)
 		{
 			var record = await this.DatabaseLogService.Get(id);
 
@@ -216,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDatabaseLogRequestModel request = this.DatabaseLogModelMapper.MapResponseToRequest(record);
+				ApiDatabaseLogServerRequestModel request = this.DatabaseLogModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5f6f35a3ffcf98d00f42f9998ae870f9</Hash>
+    <Hash>3e74b33df646b6594b812bb073987371</Hash>
 </Codenesium>*/

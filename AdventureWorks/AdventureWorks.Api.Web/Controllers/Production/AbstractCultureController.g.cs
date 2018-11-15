@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ICultureService CultureService { get; private set; }
 
-		protected IApiCultureModelMapper CultureModelMapper { get; private set; }
+		protected IApiCultureServerModelMapper CultureModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractCultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICultureService cultureService,
-			IApiCultureModelMapper cultureModelMapper
+			IApiCultureServerModelMapper cultureModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCultureResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCultureServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCultureResponseModel> response = await this.CultureService.All(query.Limit, query.Offset);
+			List<ApiCultureServerResponseModel> response = await this.CultureService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCultureServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			ApiCultureResponseModel response = await this.CultureService.Get(id);
+			ApiCultureServerResponseModel response = await this.CultureService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCultureResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCultureServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCultureRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCultureServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCultureResponseModel> records = new List<ApiCultureResponseModel>();
+			List<ApiCultureServerResponseModel> records = new List<ApiCultureServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCultureResponseModel> result = await this.CultureService.Create(model);
+				CreateResponse<ApiCultureServerResponseModel> result = await this.CultureService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCultureServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCultureResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCultureServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCultureRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCultureServerRequestModel model)
 		{
-			CreateResponse<ApiCultureResponseModel> result = await this.CultureService.Create(model);
+			CreateResponse<ApiCultureServerResponseModel> result = await this.CultureService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCultureResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCultureServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCultureRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCultureServerRequestModel> patch)
 		{
-			ApiCultureResponseModel record = await this.CultureService.Get(id);
+			ApiCultureServerResponseModel record = await this.CultureService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCultureRequestModel model = await this.PatchModel(id, patch);
+				ApiCultureServerRequestModel model = await this.PatchModel(id, patch) as ApiCultureServerRequestModel;
 
-				UpdateResponse<ApiCultureResponseModel> result = await this.CultureService.Update(id, model);
+				UpdateResponse<ApiCultureServerResponseModel> result = await this.CultureService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCultureResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCultureServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureRequestModel model)
+
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureServerRequestModel model)
 		{
-			ApiCultureRequestModel request = await this.PatchModel(id, this.CultureModelMapper.CreatePatch(model));
+			ApiCultureServerRequestModel request = await this.PatchModel(id, this.CultureModelMapper.CreatePatch(model)) as ApiCultureServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCultureResponseModel> result = await this.CultureService.Update(id, request);
+				UpdateResponse<ApiCultureServerResponseModel> result = await this.CultureService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(string id)
 		{
 			ActionResponse result = await this.CultureService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCultureServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiCultureResponseModel response = await this.CultureService.ByName(name);
+			ApiCultureServerResponseModel response = await this.CultureService.ByName(name);
 
 			if (response == null)
 			{
@@ -225,24 +235,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{cultureID}/ProductModelProductDescriptionCulturesByCultureID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductModelProductDescriptionCulturesByCultureID(string cultureID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.CultureService.ProductModelProductDescriptionCulturesByCultureID(cultureID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiCultureRequestModel> PatchModel(string id, JsonPatchDocument<ApiCultureRequestModel> patch)
+		private async Task<ApiCultureServerRequestModel> PatchModel(string id, JsonPatchDocument<ApiCultureServerRequestModel> patch)
 		{
 			var record = await this.CultureService.Get(id);
 
@@ -252,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCultureRequestModel request = this.CultureModelMapper.MapResponseToRequest(record);
+				ApiCultureServerRequestModel request = this.CultureModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>db816560d3d9e4a0d0e4a06aa2c96c59</Hash>
+    <Hash>a76c1fd20cbcad19bf3db4153cc6480c</Hash>
 </Codenesium>*/

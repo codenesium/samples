@@ -85,22 +85,14 @@ namespace PetStoreNS.Api.DataAccess
 			Expression<Func<PaymentType, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PaymentType, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PaymentType, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
-			}
-			else
-			{
-				return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
-			}
+			return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
 		}
 
 		private async Task<PaymentType> GetById(int id)
@@ -113,5 +105,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22d00f7f0bce30358d88def659dc83bb</Hash>
+    <Hash>906da389d80d5044ec4a4952a1b28783</Hash>
 </Codenesium>*/

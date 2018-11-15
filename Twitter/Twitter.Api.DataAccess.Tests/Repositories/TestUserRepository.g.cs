@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace TwitterNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace TwitterNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRepositoryMoc.GetContext();
+			var repository = new UserRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>733d960f7701e5ff13dfd39d38c04164</Hash>
+    <Hash>bf83567a5b0b47b56027451ccc490982</Hash>
 </Codenesium>*/

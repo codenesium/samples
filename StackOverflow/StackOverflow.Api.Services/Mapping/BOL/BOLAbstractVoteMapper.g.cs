@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOVote MapModelToBO(
 			int id,
-			ApiVoteRequestModel model
+			ApiVoteServerRequestModel model
 			)
 		{
 			BOVote boVote = new BOVote();
@@ -23,20 +22,20 @@ namespace StackOverflowNS.Api.Services
 			return boVote;
 		}
 
-		public virtual ApiVoteResponseModel MapBOToModel(
+		public virtual ApiVoteServerResponseModel MapBOToModel(
 			BOVote boVote)
 		{
-			var model = new ApiVoteResponseModel();
+			var model = new ApiVoteServerResponseModel();
 
 			model.SetProperties(boVote.Id, boVote.BountyAmount, boVote.CreationDate, boVote.PostId, boVote.UserId, boVote.VoteTypeId);
 
 			return model;
 		}
 
-		public virtual List<ApiVoteResponseModel> MapBOToModel(
+		public virtual List<ApiVoteServerResponseModel> MapBOToModel(
 			List<BOVote> items)
 		{
-			List<ApiVoteResponseModel> response = new List<ApiVoteResponseModel>();
+			List<ApiVoteServerResponseModel> response = new List<ApiVoteServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -49,5 +48,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd3ea7654dd69166cadec72efd95187e</Hash>
+    <Hash>dd224201df24455a194e5b729cf46f27</Hash>
 </Codenesium>*/

@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOAWBuildVersion MapModelToBO(
 			int systemInformationID,
-			ApiAWBuildVersionRequestModel model);
+			ApiAWBuildVersionServerRequestModel model);
 
-		ApiAWBuildVersionResponseModel MapBOToModel(
+		ApiAWBuildVersionServerResponseModel MapBOToModel(
 			BOAWBuildVersion boAWBuildVersion);
 
-		List<ApiAWBuildVersionResponseModel> MapBOToModel(
+		List<ApiAWBuildVersionServerResponseModel> MapBOToModel(
 			List<BOAWBuildVersion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>19a1f8d4ae9a894bf55dcc95258be3ce</Hash>
+    <Hash>b812ead06f7af353f327ac6bf38a5fde</Hash>
 </Codenesium>*/

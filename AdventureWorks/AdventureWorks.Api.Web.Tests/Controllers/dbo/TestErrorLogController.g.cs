@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			var record = new ApiErrorLogResponseModel();
-			var records = new List<ApiErrorLogResponseModel>();
+			var record = new ApiErrorLogServerResponseModel();
+			var records = new List<ApiErrorLogServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiErrorLogResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiErrorLogServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiErrorLogResponseModel>>(new List<ApiErrorLogResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiErrorLogServerResponseModel>>(new List<ApiErrorLogServerResponseModel>()));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiErrorLogResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiErrorLogServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogServerResponseModel()));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiErrorLogResponseModel;
+			var record = (response as OkObjectResult).Value as ApiErrorLogServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogServerResponseModel>(null));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiErrorLogResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiErrorLogResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiErrorLogServerResponseModel>.CreateResponse(null as ApiErrorLogServerResponseModel);
+
+			mockResponse.SetRecord(new ApiErrorLogServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogServerResponseModel>>(mockResponse));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiErrorLogRequestModel>();
-			records.Add(new ApiErrorLogRequestModel());
+			var records = new List<ApiErrorLogServerRequestModel>();
+			records.Add(new ApiErrorLogServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiErrorLogResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiErrorLogServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiErrorLogResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiErrorLogServerResponseModel>>(null as ApiErrorLogServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogServerResponseModel>>(mockResponse.Object));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiErrorLogRequestModel>();
-			records.Add(new ApiErrorLogRequestModel());
+			var records = new List<ApiErrorLogServerRequestModel>();
+			records.Add(new ApiErrorLogServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiErrorLogResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiErrorLogResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiErrorLogServerResponseModel>.CreateResponse(null as ApiErrorLogServerResponseModel);
+
+			mockResponse.SetRecord(new ApiErrorLogServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogServerResponseModel>>(mockResponse));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiErrorLogRequestModel());
+			IActionResult response = await controller.Create(new ApiErrorLogServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiErrorLogResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiErrorLogServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiErrorLogResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiErrorLogResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiErrorLogServerResponseModel>>(null as ApiErrorLogServerResponseModel);
+			var mockRecord = new ApiErrorLogServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiErrorLogServerResponseModel>>(mockResponse.Object));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiErrorLogRequestModel());
+			IActionResult response = await controller.Create(new ApiErrorLogServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiErrorLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiErrorLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()))
-			.Callback<int, ApiErrorLogRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>()))
+			.Callback<int, ApiErrorLogServerRequestModel>(
 				(id, model) => model.ErrorLine.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiErrorLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogResponseModel>(new ApiErrorLogResponseModel()));
-			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiErrorLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogServerResponseModel>(new ApiErrorLogServerResponseModel()));
+			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiErrorLogRequestModel>();
+			var patch = new JsonPatchDocument<ApiErrorLogServerRequestModel>();
 			patch.Replace(x => x.ErrorLine, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogServerResponseModel>(null));
 			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiErrorLogRequestModel>();
+			var patch = new JsonPatchDocument<ApiErrorLogServerRequestModel>();
 			patch.Replace(x => x.ErrorLine, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiErrorLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiErrorLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogResponseModel()));
-			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogServerResponseModel()));
+			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiErrorLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiErrorLogServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiErrorLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiErrorLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogResponseModel()));
-			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiErrorLogServerResponseModel()));
+			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiErrorLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiErrorLogServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ErrorLogControllerMockFacade mock = new ErrorLogControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiErrorLogResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiErrorLogServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogResponseModel>(null));
-			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiErrorLogServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiErrorLogServerResponseModel>(null));
+			ErrorLogController controller = new ErrorLogController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiErrorLogServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiErrorLogRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiErrorLogServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IErrorLogService> ServiceMock { get; set; } = new Mock<IErrorLogService>();
 
-		public Mock<IApiErrorLogModelMapper> ModelMapperMock { get; set; } = new Mock<IApiErrorLogModelMapper>();
+		public Mock<IApiErrorLogServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiErrorLogServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>3952b61e8a0cb8d7ea896a6ece90d456</Hash>
+    <Hash>6ed1d9dca11f2c9636141160a5c09daa</Hash>
 </Codenesium>*/

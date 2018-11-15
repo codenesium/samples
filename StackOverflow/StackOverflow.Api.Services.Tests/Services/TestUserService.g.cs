@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiUserResponseModel> response = await service.All();
+			List<ApiUserServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
-			ApiUserResponseModel response = await service.Get(default(int));
+			ApiUserServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
-			ApiUserResponseModel response = await service.Get(default(int));
+			ApiUserServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
-			CreateResponse<ApiUserResponseModel> response = await service.Create(model);
+			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserRequestModel>()));
+			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
-			UpdateResponse<ApiUserResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()));
+			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<User>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>84f6ba9d61526319ce233bcf67866fd2</Hash>
+    <Hash>fc9e8e5042ef4563a3c6497591057779</Hash>
 </Codenesium>*/

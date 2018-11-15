@@ -76,6 +76,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Teacher>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.UserId == userId, limit, offset);
+		}
+
 		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Rate>().Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
@@ -84,6 +89,30 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
+		}
+
+		public async virtual Task<List<Teacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventTeachers
+			              join teachers in this.Context.Teachers on
+			              refTable.TeacherId equals teachers.Id
+			              where refTable.EventId == eventId
+			              select teachers).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<EventTeacher> CreateEventTeacher(EventTeacher item)
+		{
+			this.Context.Set<EventTeacher>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteEventTeacher(EventTeacher item)
+		{
+			this.Context.Set<EventTeacher>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task<List<Teacher>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
@@ -95,26 +124,33 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select teachers).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<Rate> CreateRate(Rate item)
+		{
+			this.Context.Set<Rate>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteRate(Rate item)
+		{
+			this.Context.Set<Rate>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Teacher>> Where(
 			Expression<Func<Teacher, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Teacher, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Teacher, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Teacher>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
-			}
-			else
-			{
-				return await this.Context.Set<Teacher>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
-			}
+			return await this.Context.Set<Teacher>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
 
 		private async Task<Teacher> GetById(int id)
@@ -127,5 +163,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f50499ac61c9aa883117f788f496241d</Hash>
+    <Hash>e8843d59f40482555177b63c7b59ba21</Hash>
 </Codenesium>*/

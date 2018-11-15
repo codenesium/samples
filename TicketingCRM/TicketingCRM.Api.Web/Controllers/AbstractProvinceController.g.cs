@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.Web
 	{
 		protected IProvinceService ProvinceService { get; private set; }
 
-		protected IApiProvinceModelMapper ProvinceModelMapper { get; private set; }
+		protected IApiProvinceServerModelMapper ProvinceModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AbstractProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProvinceService provinceService,
-			IApiProvinceModelMapper provinceModelMapper
+			IApiProvinceServerModelMapper provinceModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProvinceServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProvinceResponseModel> response = await this.ProvinceService.All(query.Limit, query.Offset);
+			List<ApiProvinceServerResponseModel> response = await this.ProvinceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiProvinceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiProvinceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiProvinceResponseModel response = await this.ProvinceService.Get(id);
+			ApiProvinceServerResponseModel response = await this.ProvinceService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiProvinceServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProvinceRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProvinceServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiProvinceResponseModel> records = new List<ApiProvinceResponseModel>();
+			List<ApiProvinceServerResponseModel> records = new List<ApiProvinceServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Create(model);
+				CreateResponse<ApiProvinceServerResponseModel> result = await this.ProvinceService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TicketingCRMNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiProvinceServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiProvinceResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiProvinceServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProvinceRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiProvinceServerRequestModel model)
 		{
-			CreateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Create(model);
+			CreateResponse<ApiProvinceServerResponseModel> result = await this.ProvinceService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProvinceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProvinceRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProvinceServerRequestModel> patch)
 		{
-			ApiProvinceResponseModel record = await this.ProvinceService.Get(id);
+			ApiProvinceServerResponseModel record = await this.ProvinceService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiProvinceRequestModel model = await this.PatchModel(id, patch);
+				ApiProvinceServerRequestModel model = await this.PatchModel(id, patch) as ApiProvinceServerRequestModel;
 
-				UpdateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Update(id, model);
+				UpdateResponse<ApiProvinceServerResponseModel> result = await this.ProvinceService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiProvinceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProvinceRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProvinceServerRequestModel model)
 		{
-			ApiProvinceRequestModel request = await this.PatchModel(id, this.ProvinceModelMapper.CreatePatch(model));
+			ApiProvinceServerRequestModel request = await this.PatchModel(id, this.ProvinceModelMapper.CreatePatch(model)) as ApiProvinceServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiProvinceResponseModel> result = await this.ProvinceService.Update(id, request);
+				UpdateResponse<ApiProvinceServerResponseModel> result = await this.ProvinceService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TicketingCRMNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ProvinceService.Delete(id);
@@ -209,7 +219,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("byCountryId/{countryId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProvinceServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,15 +228,15 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProvinceResponseModel> response = await this.ProvinceService.ByCountryId(countryId, query.Limit, query.Offset);
+			List<ApiProvinceServerResponseModel> response = await this.ProvinceService.ByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{provinceId}/CitiesByProvinceId")]
+		[Route("{provinceId}/Cities")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCityResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCityServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> CitiesByProvinceId(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,15 +245,15 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCityResponseModel> response = await this.ProvinceService.CitiesByProvinceId(provinceId, query.Limit, query.Offset);
+			List<ApiCityServerResponseModel> response = await this.ProvinceService.CitiesByProvinceId(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{provinceId}/VenuesByProvinceId")]
+		[Route("{provinceId}/Venues")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> VenuesByProvinceId(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -252,12 +262,12 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVenueResponseModel> response = await this.ProvinceService.VenuesByProvinceId(provinceId, query.Limit, query.Offset);
+			List<ApiVenueServerResponseModel> response = await this.ProvinceService.VenuesByProvinceId(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiProvinceRequestModel> PatchModel(int id, JsonPatchDocument<ApiProvinceRequestModel> patch)
+		private async Task<ApiProvinceServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiProvinceServerRequestModel> patch)
 		{
 			var record = await this.ProvinceService.Get(id);
 
@@ -267,7 +277,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiProvinceRequestModel request = this.ProvinceModelMapper.MapResponseToRequest(record);
+				ApiProvinceServerRequestModel request = this.ProvinceModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -276,5 +286,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb4e139317d0ee099e56e15e725535e1</Hash>
+    <Hash>c0919e9cd152a1d7681679dcc8bd0897</Hash>
 </Codenesium>*/

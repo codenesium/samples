@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
+			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(short));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06978b4d3070fc320086b8392c6267f6</Hash>
+    <Hash>84a8cbf7a8956152958df6c98de5ed8f</Hash>
 </Codenesium>*/

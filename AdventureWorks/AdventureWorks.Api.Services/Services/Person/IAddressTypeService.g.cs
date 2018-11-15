@@ -2,31 +2,30 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IAddressTypeService
 	{
-		Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
-			ApiAddressTypeRequestModel model);
+		Task<CreateResponse<ApiAddressTypeServerResponseModel>> Create(
+			ApiAddressTypeServerRequestModel model);
 
-		Task<UpdateResponse<ApiAddressTypeResponseModel>> Update(int addressTypeID,
-		                                                          ApiAddressTypeRequestModel model);
+		Task<UpdateResponse<ApiAddressTypeServerResponseModel>> Update(int addressTypeID,
+		                                                                ApiAddressTypeServerRequestModel model);
 
 		Task<ActionResponse> Delete(int addressTypeID);
 
-		Task<ApiAddressTypeResponseModel> Get(int addressTypeID);
+		Task<ApiAddressTypeServerResponseModel> Get(int addressTypeID);
 
-		Task<List<ApiAddressTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAddressTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiAddressTypeResponseModel> ByName(string name);
+		Task<ApiAddressTypeServerResponseModel> ByName(string name);
 
-		Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByAddressTypeID(int addressTypeID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiAddressTypeServerResponseModel> ByRowguid(Guid rowguid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c43a499127efd3bc941d7833094a4a48</Hash>
+    <Hash>15d5c8deb9647072387ba3809a579ecc</Hash>
 </Codenesium>*/

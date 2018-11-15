@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			var record = new ApiDepartmentResponseModel();
-			var records = new List<ApiDepartmentResponseModel>();
+			var record = new ApiDepartmentServerResponseModel();
+			var records = new List<ApiDepartmentServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDepartmentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDepartmentServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDepartmentResponseModel>>(new List<ApiDepartmentResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDepartmentServerResponseModel>>(new List<ApiDepartmentServerResponseModel>()));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDepartmentResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDepartmentServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentServerResponseModel()));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiDepartmentResponseModel;
+			var record = (response as OkObjectResult).Value as ApiDepartmentServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<short>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentServerResponseModel>(null));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDepartmentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDepartmentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDepartmentServerResponseModel>.CreateResponse(null as ApiDepartmentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDepartmentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentServerResponseModel>>(mockResponse));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDepartmentRequestModel>();
-			records.Add(new ApiDepartmentRequestModel());
+			var records = new List<ApiDepartmentServerRequestModel>();
+			records.Add(new ApiDepartmentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiDepartmentResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiDepartmentServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDepartmentResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiDepartmentServerResponseModel>>(null as ApiDepartmentServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentServerResponseModel>>(mockResponse.Object));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDepartmentRequestModel>();
-			records.Add(new ApiDepartmentRequestModel());
+			var records = new List<ApiDepartmentServerRequestModel>();
+			records.Add(new ApiDepartmentServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDepartmentResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDepartmentResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDepartmentServerResponseModel>.CreateResponse(null as ApiDepartmentServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDepartmentServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentServerResponseModel>>(mockResponse));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDepartmentRequestModel());
+			IActionResult response = await controller.Create(new ApiDepartmentServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDepartmentResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDepartmentServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDepartmentResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiDepartmentResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiDepartmentServerResponseModel>>(null as ApiDepartmentServerResponseModel);
+			var mockRecord = new ApiDepartmentServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDepartmentServerResponseModel>>(mockResponse.Object));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDepartmentRequestModel());
+			IActionResult response = await controller.Create(new ApiDepartmentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDepartmentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDepartmentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>()))
-			.Callback<short, ApiDepartmentRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()))
+			.Callback<short, ApiDepartmentServerRequestModel>(
 				(id, model) => model.GroupName.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiDepartmentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentResponseModel>(new ApiDepartmentResponseModel()));
-			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiDepartmentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentServerResponseModel>(new ApiDepartmentServerResponseModel()));
+			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDepartmentRequestModel>();
+			var patch = new JsonPatchDocument<ApiDepartmentServerRequestModel>();
 			patch.Replace(x => x.GroupName, "A");
 
 			IActionResult response = await controller.Patch(default(short), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentServerResponseModel>(null));
 			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDepartmentRequestModel>();
+			var patch = new JsonPatchDocument<ApiDepartmentServerRequestModel>();
 			patch.Replace(x => x.GroupName, "A");
 
 			IActionResult response = await controller.Patch(default(short), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDepartmentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDepartmentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentResponseModel()));
-			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentServerResponseModel()));
+			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(short), new ApiDepartmentRequestModel());
+			IActionResult response = await controller.Update(default(short), new ApiDepartmentServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDepartmentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDepartmentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentResponseModel()));
-			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ApiDepartmentServerResponseModel()));
+			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(short), new ApiDepartmentRequestModel());
+			IActionResult response = await controller.Update(default(short), new ApiDepartmentServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			DepartmentControllerMockFacade mock = new DepartmentControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDepartmentResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDepartmentServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentResponseModel>(null));
-			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDepartmentServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ApiDepartmentServerResponseModel>(null));
+			DepartmentController controller = new DepartmentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDepartmentServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(short), new ApiDepartmentRequestModel());
+			IActionResult response = await controller.Update(default(short), new ApiDepartmentServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IDepartmentService> ServiceMock { get; set; } = new Mock<IDepartmentService>();
 
-		public Mock<IApiDepartmentModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDepartmentModelMapper>();
+		public Mock<IApiDepartmentServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDepartmentServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c365448e8da187bcbcf44694c359777f</Hash>
+    <Hash>57ed904f45baf1ece8102b7ad1788800</Hash>
 </Codenesium>*/

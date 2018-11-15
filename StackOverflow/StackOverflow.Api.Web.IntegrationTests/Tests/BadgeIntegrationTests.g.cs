@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,68 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Badge")]
 	[Trait("Area", "Integration")]
-	public class BadgeIntegrationTests
+	public partial class BadgeIntegrationTests
 	{
 		public BadgeIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.BadgeDeleteAsync(1);
+			var model = new ApiBadgeClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			var model2 = new ApiBadgeClientRequestModel();
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C", 3);
+			var request = new List<ApiBadgeClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiBadgeClientResponseModel>> result = await client.BadgeBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Badge>().ToList()[1].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Badge>().ToList()[1].Name.Should().Be("B");
+			context.Set<Badge>().ToList()[1].UserId.Should().Be(2);
+
+			context.Set<Badge>().ToList()[2].Date.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<Badge>().ToList()[2].Name.Should().Be("C");
+			context.Set<Badge>().ToList()[2].UserId.Should().Be(3);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiBadgeClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			CreateResponse<ApiBadgeClientResponseModel> result = await client.BadgeCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Badge>().ToList()[1].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Badge>().ToList()[1].Name.Should().Be("B");
+			context.Set<Badge>().ToList()[1].UserId.Should().Be(2);
+
+			result.Record.Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Name.Should().Be("B");
+			result.Record.UserId.Should().Be(2);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +87,57 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiBadgeServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IBadgeService service = testServer.Host.Services.GetService(typeof(IBadgeService)) as IBadgeService;
+			ApiBadgeServerResponseModel model = await service.Get(1);
 
-			ApiBadgeResponseModel model = await client.BadgeGetAsync(1);
+			ApiBadgeClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 
-			ApiBadgeModelMapper mapper = new ApiBadgeModelMapper();
+			UpdateResponse<ApiBadgeClientResponseModel> updateResponse = await client.BadgeUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiBadgeResponseModel> updateResponse = await client.BadgeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Badge>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Badge>().ToList()[0].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Badge>().ToList()[0].Name.Should().Be("B");
+			context.Set<Badge>().ToList()[0].UserId.Should().Be(2);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Name.Should().Be("B");
+			updateResponse.Record.UserId.Should().Be(2);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiBadgeRequestModel();
-			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
-			CreateResponse<ApiBadgeResponseModel> createResult = await client.BadgeCreateAsync(createModel);
+			IBadgeService service = testServer.Host.Services.GetService(typeof(IBadgeService)) as IBadgeService;
+			var model = new ApiBadgeServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			CreateResponse<ApiBadgeServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiBadgeResponseModel getResponse = await client.BadgeGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.BadgeDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiBadgeResponseModel verifyResponse = await client.BadgeGetAsync(2);
+			ApiBadgeServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +145,33 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiBadgeResponseModel response = await client.BadgeGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiBadgeClientResponseModel response = await client.BadgeGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
+			response.UserId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBadgeClientResponseModel response = await client.BadgeGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +180,37 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiBadgeResponseModel> response = await client.BadgeAllAsync();
+			List<ApiBadgeClientResponseModel> response = await client.BadgeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+			response[0].UserId.Should().Be(1);
 		}
 
-		private async Task<ApiBadgeResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiBadgeRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
-			CreateResponse<ApiBadgeResponseModel> result = await client.BadgeCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.BadgeAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>86a55cfc418ca088c9daa52dca1d8a67</Hash>
+    <Hash>ecf62723ba9c36810920166bceb3bf2f</Hash>
 </Codenesium>*/

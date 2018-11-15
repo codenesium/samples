@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected ILocationService LocationService { get; private set; }
 
-		protected IApiLocationModelMapper LocationModelMapper { get; private set; }
+		protected IApiLocationServerModelMapper LocationModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractLocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILocationService locationService,
-			IApiLocationModelMapper locationModelMapper
+			IApiLocationServerModelMapper locationModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLocationServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLocationResponseModel> response = await this.LocationService.All(query.Limit, query.Offset);
+			List<ApiLocationServerResponseModel> response = await this.LocationService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiLocationServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiLocationResponseModel response = await this.LocationService.Get(id);
+			ApiLocationServerResponseModel response = await this.LocationService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiLocationServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLocationRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLocationServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiLocationResponseModel> records = new List<ApiLocationResponseModel>();
+			List<ApiLocationServerResponseModel> records = new List<ApiLocationServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiLocationResponseModel> result = await this.LocationService.Create(model);
+				CreateResponse<ApiLocationServerResponseModel> result = await this.LocationService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiLocationServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiLocationResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiLocationServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLocationRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiLocationServerRequestModel model)
 		{
-			CreateResponse<ApiLocationResponseModel> result = await this.LocationService.Create(model);
+			CreateResponse<ApiLocationServerResponseModel> result = await this.LocationService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLocationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLocationRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLocationServerRequestModel> patch)
 		{
-			ApiLocationResponseModel record = await this.LocationService.Get(id);
+			ApiLocationServerResponseModel record = await this.LocationService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiLocationRequestModel model = await this.PatchModel(id, patch);
+				ApiLocationServerRequestModel model = await this.PatchModel(id, patch) as ApiLocationServerRequestModel;
 
-				UpdateResponse<ApiLocationResponseModel> result = await this.LocationService.Update(id, model);
+				UpdateResponse<ApiLocationServerResponseModel> result = await this.LocationService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLocationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLocationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLocationRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLocationServerRequestModel model)
 		{
-			ApiLocationRequestModel request = await this.PatchModel(id, this.LocationModelMapper.CreatePatch(model));
+			ApiLocationServerRequestModel request = await this.PatchModel(id, this.LocationModelMapper.CreatePatch(model)) as ApiLocationServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiLocationResponseModel> result = await this.LocationService.Update(id, request);
+				UpdateResponse<ApiLocationServerResponseModel> result = await this.LocationService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.LocationService.Delete(id);
@@ -207,9 +217,9 @@ namespace TwitterNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{locationId}/TweetsByLocationId")]
+		[Route("{locationId}/Tweets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> TweetsByLocationId(int locationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,15 +228,15 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTweetResponseModel> response = await this.LocationService.TweetsByLocationId(locationId, query.Limit, query.Offset);
+			List<ApiTweetServerResponseModel> response = await this.LocationService.TweetsByLocationId(locationId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{locationLocationId}/UsersByLocationLocationId")]
+		[Route("{locationLocationId}/Users")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiUserServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> UsersByLocationLocationId(int locationLocationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,29 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiUserResponseModel> response = await this.LocationService.UsersByLocationLocationId(locationLocationId, query.Limit, query.Offset);
+			List<ApiUserServerResponseModel> response = await this.LocationService.UsersByLocationLocationId(locationLocationId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiLocationRequestModel> PatchModel(int id, JsonPatchDocument<ApiLocationRequestModel> patch)
+		[HttpGet]
+		[Route("byUserUserId/{userUserId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiLocationServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUserUserId(int userUserId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiLocationServerResponseModel> response = await this.LocationService.ByUserUserId(userUserId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		private async Task<ApiLocationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiLocationServerRequestModel> patch)
 		{
 			var record = await this.LocationService.Get(id);
 
@@ -250,7 +277,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiLocationRequestModel request = this.LocationModelMapper.MapResponseToRequest(record);
+				ApiLocationServerRequestModel request = this.LocationModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +286,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3c56fe2ef99fa415e619292f7e1a852d</Hash>
+    <Hash>3de166617ddb8e15f4c3a495a6004304</Hash>
 </Codenesium>*/

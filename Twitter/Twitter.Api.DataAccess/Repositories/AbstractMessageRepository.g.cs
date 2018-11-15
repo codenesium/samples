@@ -76,7 +76,7 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Message>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Message>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SenderUserId == senderUserId, limit, offset);
 		}
@@ -95,22 +95,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<Message, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Message, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Message, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.MessageId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Message>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Message>();
-			}
-			else
-			{
-				return await this.Context.Set<Message>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Message>();
-			}
+			return await this.Context.Set<Message>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
 		private async Task<Message> GetById(int messageId)
@@ -123,5 +115,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ca37f472fd423bacb68f268afca508b</Hash>
+    <Hash>f6cc2f589f4728e81d1435aa75babb7f</Hash>
 </Codenesium>*/

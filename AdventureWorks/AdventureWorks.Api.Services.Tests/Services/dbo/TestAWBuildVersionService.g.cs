@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-			List<ApiAWBuildVersionResponseModel> response = await service.All();
+			List<ApiAWBuildVersionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-			ApiAWBuildVersionResponseModel response = await service.Get(default(int));
+			ApiAWBuildVersionServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-			ApiAWBuildVersionResponseModel response = await service.Get(default(int));
+			ApiAWBuildVersionServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
-			var model = new ApiAWBuildVersionRequestModel();
+			var model = new ApiAWBuildVersionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AWBuildVersion>())).Returns(Task.FromResult(new AWBuildVersion()));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-			CreateResponse<ApiAWBuildVersionResponseModel> response = await service.Create(model);
+			CreateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAWBuildVersionRequestModel>()));
+			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAWBuildVersionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<AWBuildVersion>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
-			var model = new ApiAWBuildVersionRequestModel();
+			var model = new ApiAWBuildVersionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AWBuildVersion>())).Returns(Task.FromResult(new AWBuildVersion()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
-			UpdateResponse<ApiAWBuildVersionResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionRequestModel>()));
+			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<AWBuildVersion>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
-			var model = new ApiAWBuildVersionRequestModel();
+			var model = new ApiAWBuildVersionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d4b2eae75b132d9112d2dd64a8825737</Hash>
+    <Hash>db86ae17bc54d341f9171a29b0177798</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Client;
 using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,74 +18,153 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ScrapReason")]
 	[Trait("Area", "Integration")]
-	public class ScrapReasonIntegrationTests
+	public partial class ScrapReasonIntegrationTests
 	{
 		public ScrapReasonIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.ScrapReasonDeleteAsync(1);
-
-			var response = await this.CreateRecord(client);
-
-			response.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void TestUpdate()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiScrapReasonResponseModel model = await client.ScrapReasonGetAsync(1);
-
-			ApiScrapReasonModelMapper mapper = new ApiScrapReasonModelMapper();
-
-			UpdateResponse<ApiScrapReasonResponseModel> updateResponse = await client.ScrapReasonUpdateAsync(model.ScrapReasonID, mapper.MapResponseToRequest(model));
-
-			updateResponse.Record.Should().NotBeNull();
-			updateResponse.Success.Should().BeTrue();
-		}
-
-		[Fact]
-		public async void TestDelete()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-
-			ApiScrapReasonResponseModel response = await client.ScrapReasonGetAsync(1);
-
-			response.Should().NotBeNull();
-
-			ActionResponse result = await client.ScrapReasonDeleteAsync(1);
+			var model = new ApiScrapReasonClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			var model2 = new ApiScrapReasonClientRequestModel();
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			var request = new List<ApiScrapReasonClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiScrapReasonClientResponseModel>> result = await client.ScrapReasonBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response = await client.ScrapReasonGetAsync(1);
+			context.Set<ScrapReason>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<ScrapReason>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<ScrapReason>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<ScrapReason>().ToList()[2].Name.Should().Be("C");
+		}
+
+		[Fact]
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiScrapReasonClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiScrapReasonClientResponseModel> result = await client.ScrapReasonCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<ScrapReason>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<ScrapReason>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiScrapReasonServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IScrapReasonService service = testServer.Host.Services.GetService(typeof(IScrapReasonService)) as IScrapReasonService;
+			ApiScrapReasonServerResponseModel model = await service.Get(1);
+
+			ApiScrapReasonClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+
+			UpdateResponse<ApiScrapReasonClientResponseModel> updateResponse = await client.ScrapReasonUpdateAsync(model.ScrapReasonID, request);
+
+			context.Entry(context.Set<ScrapReason>().ToList()[0]).Reload();
+			updateResponse.Record.Should().NotBeNull();
+			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.ScrapReasonID.Should().Be(1);
+			context.Set<ScrapReason>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<ScrapReason>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.ScrapReasonID.Should().Be(1);
+			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestDelete()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			IScrapReasonService service = testServer.Host.Services.GetService(typeof(IScrapReasonService)) as IScrapReasonService;
+			var model = new ApiScrapReasonServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiScrapReasonServerResponseModel> createdResponse = await service.Create(model);
+
+			createdResponse.Success.Should().BeTrue();
+
+			ActionResponse deleteResult = await client.ScrapReasonDeleteAsync(2);
+
+			deleteResult.Success.Should().BeTrue();
+			ApiScrapReasonServerResponseModel verifyResponse = await service.Get(2);
+
+			verifyResponse.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestGetFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiScrapReasonClientResponseModel response = await client.ScrapReasonGetAsync(1);
+
+			response.Should().NotBeNull();
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.ScrapReasonID.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiScrapReasonClientResponseModel response = await client.ScrapReasonGetAsync(default(short));
 
 			response.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -90,13 +172,17 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiScrapReasonResponseModel response = await client.ScrapReasonGetAsync(1);
 
-			response.Should().NotBeNull();
+			List<ApiScrapReasonClientResponseModel> response = await client.ScrapReasonAllAsync();
+
+			response.Count.Should().BeGreaterThan(0);
+			response[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Name.Should().Be("A");
+			response[0].ScrapReasonID.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestByNameFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -104,24 +190,79 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			ApiScrapReasonClientResponseModel response = await client.ByScrapReasonByName("A");
 
-			List<ApiScrapReasonResponseModel> response = await client.ScrapReasonAllAsync();
+			response.Should().NotBeNull();
 
-			response.Count.Should().BeGreaterThan(0);
+			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Name.Should().Be("A");
+			response.ScrapReasonID.Should().Be(1);
 		}
 
-		private async Task<ApiScrapReasonResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByNameNotFound()
 		{
-			var model = new ApiScrapReasonRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiScrapReasonResponseModel> result = await client.ScrapReasonCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			ApiScrapReasonClientResponseModel response = await client.ByScrapReasonByName("test_value");
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyWorkOrdersByScrapReasonIDFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiWorkOrderClientResponseModel> response = await client.WorkOrdersByScrapReasonID(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyWorkOrdersByScrapReasonIDNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiWorkOrderClientResponseModel> response = await client.WorkOrdersByScrapReasonID(default(short));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.ScrapReasonAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a955ef6c83761a16328ab47eb8a46cd4</Hash>
+    <Hash>8ad203787b88086b0a2615814e3d5c9c</Hash>
 </Codenesium>*/

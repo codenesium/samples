@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class RateController : AbstractRateController
 	{
 		public RateController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<RateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRateService rateService,
-			IApiRateModelMapper rateModelMapper
+			IApiRateServerModelMapper rateModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>db10a9ddbbeb8f08a3d810da3fa56768</Hash>
+    <Hash>56c9fb703d7aefefb794455f0160424e</Hash>
 </Codenesium>*/

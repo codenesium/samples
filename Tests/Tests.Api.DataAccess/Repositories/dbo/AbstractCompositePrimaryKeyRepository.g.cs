@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<CompositePrimaryKey, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<CompositePrimaryKey, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<CompositePrimaryKey, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<CompositePrimaryKey>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CompositePrimaryKey>();
-			}
-			else
-			{
-				return await this.Context.Set<CompositePrimaryKey>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CompositePrimaryKey>();
-			}
+			return await this.Context.Set<CompositePrimaryKey>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CompositePrimaryKey>();
 		}
 
 		private async Task<CompositePrimaryKey> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>78001bb4e9972dd923c9752e05d39f2c</Hash>
+    <Hash>750ff3b4f226b50d559ccdb71dcb5a9b</Hash>
 </Codenesium>*/

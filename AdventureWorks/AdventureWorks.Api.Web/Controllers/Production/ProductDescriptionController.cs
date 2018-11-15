@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ProductDescriptionController : AbstractProductDescriptionController
 	{
 		public ProductDescriptionController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ProductDescriptionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductDescriptionService productDescriptionService,
-			IApiProductDescriptionModelMapper productDescriptionModelMapper
+			IApiProductDescriptionServerModelMapper productDescriptionModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1536117f25d1b55aad5b7c4018faee4f</Hash>
+    <Hash>1eef57e8bfe4fb99a02496342925fb34</Hash>
 </Codenesium>*/

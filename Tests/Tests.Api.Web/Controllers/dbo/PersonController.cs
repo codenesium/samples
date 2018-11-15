@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PersonController : AbstractPersonController
 	{
 		public PersonController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<PersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPersonService personService,
-			IApiPersonModelMapper personModelMapper
+			IApiPersonServerModelMapper personModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>69fd7cf6d4330ace8108c81957fb12ab</Hash>
+    <Hash>20276b0ca7ebda97e400271baa507e03</Hash>
 </Codenesium>*/

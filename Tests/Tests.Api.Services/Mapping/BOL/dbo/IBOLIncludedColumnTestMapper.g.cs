@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOIncludedColumnTest MapModelToBO(
 			int id,
-			ApiIncludedColumnTestRequestModel model);
+			ApiIncludedColumnTestServerRequestModel model);
 
-		ApiIncludedColumnTestResponseModel MapBOToModel(
+		ApiIncludedColumnTestServerResponseModel MapBOToModel(
 			BOIncludedColumnTest boIncludedColumnTest);
 
-		List<ApiIncludedColumnTestResponseModel> MapBOToModel(
+		List<ApiIncludedColumnTestServerResponseModel> MapBOToModel(
 			List<BOIncludedColumnTest> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>65cc8902afffa82d1aaa9ff5f51b1c74</Hash>
+    <Hash>f98e2948ea4f41b586f6a2f80fd6b781</Hash>
 </Codenesium>*/

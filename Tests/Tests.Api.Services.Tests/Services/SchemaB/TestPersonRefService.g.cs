@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
 			                                   mock.DALMapperMockFactory.DALPersonRefMapperMock);
 
-			List<ApiPersonRefResponseModel> response = await service.All();
+			List<ApiPersonRefServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
 			                                   mock.DALMapperMockFactory.DALPersonRefMapperMock);
 
-			ApiPersonRefResponseModel response = await service.Get(default(int));
+			ApiPersonRefServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
 			                                   mock.DALMapperMockFactory.DALPersonRefMapperMock);
 
-			ApiPersonRefResponseModel response = await service.Get(default(int));
+			ApiPersonRefServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPersonRefRepository>();
-			var model = new ApiPersonRefRequestModel();
+			var model = new ApiPersonRefServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PersonRef>())).Returns(Task.FromResult(new PersonRef()));
 			var service = new PersonRefService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
 			                                   mock.DALMapperMockFactory.DALPersonRefMapperMock);
 
-			CreateResponse<ApiPersonRefResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPersonRefServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PersonRefModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPersonRefRequestModel>()));
+			mock.ModelValidatorMockFactory.PersonRefModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPersonRefServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PersonRef>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPersonRefRepository>();
-			var model = new ApiPersonRefRequestModel();
+			var model = new ApiPersonRefServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PersonRef>())).Returns(Task.FromResult(new PersonRef()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonRef()));
 			var service = new PersonRefService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
 			                                   mock.DALMapperMockFactory.DALPersonRefMapperMock);
 
-			UpdateResponse<ApiPersonRefResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPersonRefServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PersonRefModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonRefRequestModel>()));
+			mock.ModelValidatorMockFactory.PersonRefModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonRefServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PersonRef>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPersonRefRepository>();
-			var model = new ApiPersonRefRequestModel();
+			var model = new ApiPersonRefServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PersonRefService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>36b3f7b841232ccd4baff8f66ec79aad</Hash>
+    <Hash>0d203b1ea1d276c807f6a343a4db07b8</Hash>
 </Codenesium>*/

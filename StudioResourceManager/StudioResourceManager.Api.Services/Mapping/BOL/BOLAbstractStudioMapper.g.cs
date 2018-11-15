@@ -1,4 +1,3 @@
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual BOStudio MapModelToBO(
 			int id,
-			ApiStudioRequestModel model
+			ApiStudioServerRequestModel model
 			)
 		{
 			BOStudio boStudio = new BOStudio();
@@ -25,20 +24,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return boStudio;
 		}
 
-		public virtual ApiStudioResponseModel MapBOToModel(
+		public virtual ApiStudioServerResponseModel MapBOToModel(
 			BOStudio boStudio)
 		{
-			var model = new ApiStudioResponseModel();
+			var model = new ApiStudioServerResponseModel();
 
 			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.Province, boStudio.Website, boStudio.Zip);
 
 			return model;
 		}
 
-		public virtual List<ApiStudioResponseModel> MapBOToModel(
+		public virtual List<ApiStudioServerResponseModel> MapBOToModel(
 			List<BOStudio> items)
 		{
-			List<ApiStudioResponseModel> response = new List<ApiStudioResponseModel>();
+			List<ApiStudioServerResponseModel> response = new List<ApiStudioServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -51,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8a97c6bdbdc74a716b7296297a1c78c</Hash>
+    <Hash>690b3f240b65260f826b21b783bdeba9</Hash>
 </Codenesium>*/

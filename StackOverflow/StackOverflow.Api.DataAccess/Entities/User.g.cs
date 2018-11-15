@@ -46,54 +46,54 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("AboutMe")]
-		public string AboutMe { get; private set; }
+		public virtual string AboutMe { get; private set; }
 
 		[Column("AccountId")]
-		public int? AccountId { get; private set; }
+		public virtual int? AccountId { get; private set; }
 
 		[Column("Age")]
-		public int? Age { get; private set; }
+		public virtual int? Age { get; private set; }
 
 		[Column("CreationDate")]
-		public DateTime CreationDate { get; private set; }
+		public virtual DateTime CreationDate { get; private set; }
 
 		[MaxLength(40)]
 		[Column("DisplayName")]
-		public string DisplayName { get; private set; }
+		public virtual string DisplayName { get; private set; }
 
 		[Column("DownVotes")]
-		public int DownVote { get; private set; }
+		public virtual int DownVote { get; private set; }
 
 		[MaxLength(40)]
 		[Column("EmailHash")]
-		public string EmailHash { get; private set; }
+		public virtual string EmailHash { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("LastAccessDate")]
-		public DateTime LastAccessDate { get; private set; }
+		public virtual DateTime LastAccessDate { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Location")]
-		public string Location { get; private set; }
+		public virtual string Location { get; private set; }
 
 		[Column("Reputation")]
-		public int Reputation { get; private set; }
+		public virtual int Reputation { get; private set; }
 
 		[Column("UpVotes")]
-		public int UpVote { get; private set; }
+		public virtual int UpVote { get; private set; }
 
 		[Column("Views")]
-		public int View { get; private set; }
+		public virtual int View { get; private set; }
 
 		[MaxLength(200)]
 		[Column("WebsiteUrl")]
-		public string WebsiteUrl { get; private set; }
+		public virtual string WebsiteUrl { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>51d62ba153cbad3e83ffa9c327ee900b</Hash>
+    <Hash>e2afd139102a332513d64812c170e1a6</Hash>
 </Codenesium>*/

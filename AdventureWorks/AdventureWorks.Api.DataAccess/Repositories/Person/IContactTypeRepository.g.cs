@@ -18,11 +18,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<ContactType>> All(int limit = int.MaxValue, int offset = 0);
 
 		Task<ContactType> ByName(string name);
-
-		Task<List<BusinessEntityContact>> BusinessEntityContactsByContactTypeID(int contactTypeID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b95b07cfcdea50de3f38e911de7c3f40</Hash>
+    <Hash>d440d20c2b4936cb8b3ab97dde1e3559</Hash>
 </Codenesium>*/

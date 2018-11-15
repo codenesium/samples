@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
 			                                     mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-			List<ApiDatabaseLogResponseModel> response = await service.All();
+			List<ApiDatabaseLogServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
 			                                     mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-			ApiDatabaseLogResponseModel response = await service.Get(default(int));
+			ApiDatabaseLogServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
 			                                     mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-			ApiDatabaseLogResponseModel response = await service.Get(default(int));
+			ApiDatabaseLogServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IDatabaseLogRepository>();
-			var model = new ApiDatabaseLogRequestModel();
+			var model = new ApiDatabaseLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DatabaseLog>())).Returns(Task.FromResult(new DatabaseLog()));
 			var service = new DatabaseLogService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
 			                                     mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-			CreateResponse<ApiDatabaseLogResponseModel> response = await service.Create(model);
+			CreateResponse<ApiDatabaseLogServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDatabaseLogRequestModel>()));
+			mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDatabaseLogServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DatabaseLog>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IDatabaseLogRepository>();
-			var model = new ApiDatabaseLogRequestModel();
+			var model = new ApiDatabaseLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DatabaseLog>())).Returns(Task.FromResult(new DatabaseLog()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 			var service = new DatabaseLogService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDatabaseLogMapperMock,
 			                                     mock.DALMapperMockFactory.DALDatabaseLogMapperMock);
 
-			UpdateResponse<ApiDatabaseLogResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiDatabaseLogServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDatabaseLogRequestModel>()));
+			mock.ModelValidatorMockFactory.DatabaseLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDatabaseLogServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DatabaseLog>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IDatabaseLogRepository>();
-			var model = new ApiDatabaseLogRequestModel();
+			var model = new ApiDatabaseLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DatabaseLogService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f840ca0b23efae02d1e0d84f96b28a41</Hash>
+    <Hash>153a0a30980fd7ab7de0e966e82dac3e</Hash>
 </Codenesium>*/

@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BODocument MapModelToBO(
 			Guid rowguid,
-			ApiDocumentRequestModel model);
+			ApiDocumentServerRequestModel model);
 
-		ApiDocumentResponseModel MapBOToModel(
+		ApiDocumentServerResponseModel MapBOToModel(
 			BODocument boDocument);
 
-		List<ApiDocumentResponseModel> MapBOToModel(
+		List<ApiDocumentServerResponseModel> MapBOToModel(
 			List<BODocument> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d780b270b13ffab186ca5b82b899d1fb</Hash>
+    <Hash>b36d75c5196a7e9e1784c4da2598252d</Hash>
 </Codenesium>*/

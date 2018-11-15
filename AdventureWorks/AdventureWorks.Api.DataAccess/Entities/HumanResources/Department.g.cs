@@ -27,21 +27,21 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("DepartmentID")]
-		public short DepartmentID { get; private set; }
+		public virtual short DepartmentID { get; private set; }
 
 		[MaxLength(50)]
 		[Column("GroupName")]
-		public string GroupName { get; private set; }
+		public virtual string GroupName { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>31ec622c1fbabb4019b0c02518cd0826</Hash>
+    <Hash>bda38d997a1cc05deffac45055483c11</Hash>
 </Codenesium>*/

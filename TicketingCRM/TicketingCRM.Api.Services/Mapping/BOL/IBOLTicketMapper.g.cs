@@ -9,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 	{
 		BOTicket MapModelToBO(
 			int id,
-			ApiTicketRequestModel model);
+			ApiTicketServerRequestModel model);
 
-		ApiTicketResponseModel MapBOToModel(
+		ApiTicketServerResponseModel MapBOToModel(
 			BOTicket boTicket);
 
-		List<ApiTicketResponseModel> MapBOToModel(
+		List<ApiTicketServerResponseModel> MapBOToModel(
 			List<BOTicket> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ee43cab1b96659865a71adc68b7a2a5</Hash>
+    <Hash>e98f634d7ffee5e01a89e184b3ecd9f6</Hash>
 </Codenesium>*/

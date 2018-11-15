@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PipelineStatuController : AbstractPipelineStatuController
 	{
 		public PipelineStatuController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<PipelineStatuController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPipelineStatuService pipelineStatuService,
-			IApiPipelineStatuModelMapper pipelineStatuModelMapper
+			IApiPipelineStatuServerModelMapper pipelineStatuModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e7d4c3d191d3560fc112824165ada0c</Hash>
+    <Hash>b48a2b2c1637ad54ecd6dc5e1864cf6e</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace NebulaNS.Api.Services
 		public VersionInfoService(
 			ILogger<IVersionInfoRepository> logger,
 			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-			IBOLVersionInfoMapper bolversionInfoMapper,
-			IDALVersionInfoMapper dalversionInfoMapper)
+			IApiVersionInfoServerRequestModelValidator versionInfoModelValidator,
+			IBOLVersionInfoMapper bolVersionInfoMapper,
+			IDALVersionInfoMapper dalVersionInfoMapper)
 			: base(logger,
 			       versionInfoRepository,
 			       versionInfoModelValidator,
-			       bolversionInfoMapper,
-			       dalversionInfoMapper)
+			       bolVersionInfoMapper,
+			       dalVersionInfoMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c9f0d3e8cc23ccf52e31fa8a6981972</Hash>
+    <Hash>7f992f6e445fc2f6f3fb3a3eb1a67cc7</Hash>
 </Codenesium>*/

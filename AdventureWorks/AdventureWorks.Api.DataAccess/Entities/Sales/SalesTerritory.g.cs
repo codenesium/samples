@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			string @group,
 			decimal costLastYear,
 			decimal costYTD,
 			string countryRegionCode,
-			string @group,
 			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
@@ -25,10 +25,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal salesYTD,
 			int territoryID)
 		{
+			this.@Group = @group;
 			this.CostLastYear = costLastYear;
 			this.CostYTD = costYTD;
 			this.CountryRegionCode = countryRegionCode;
-			this.@Group = @group;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
 			this.Rowguid = rowguid;
@@ -38,42 +38,41 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("CostLastYear")]
-		public decimal CostLastYear { get; private set; }
+		public virtual decimal CostLastYear { get; private set; }
 
 		[Column("CostYTD")]
-		public decimal CostYTD { get; private set; }
+		public virtual decimal CostYTD { get; private set; }
 
 		[MaxLength(3)]
 		[Column("CountryRegionCode")]
-		public string CountryRegionCode { get; private set; }
+		public virtual string CountryRegionCode { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Group")]
-		public string @Group { get; private set; }
+		public virtual string @Group { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("SalesLastYear")]
-		public decimal SalesLastYear { get; private set; }
+		public virtual decimal SalesLastYear { get; private set; }
 
 		[Column("SalesYTD")]
-		public decimal SalesYTD { get; private set; }
+		public virtual decimal SalesYTD { get; private set; }
 
 		[Key]
 		[Column("TerritoryID")]
-		public int TerritoryID { get; private set; }
+		public virtual int TerritoryID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd94be965cd67907dedf7eb165528352</Hash>
+    <Hash>604c56c349acac72db5ec9708da8af4f</Hash>
 </Codenesium>*/

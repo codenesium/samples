@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			var record = new ApiAddressTypeResponseModel();
-			var records = new List<ApiAddressTypeResponseModel>();
+			var record = new ApiAddressTypeServerResponseModel();
+			var records = new List<ApiAddressTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiAddressTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiAddressTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiAddressTypeResponseModel>>(new List<ApiAddressTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiAddressTypeServerResponseModel>>(new List<ApiAddressTypeServerResponseModel>()));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiAddressTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiAddressTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeServerResponseModel()));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiAddressTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiAddressTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeServerResponseModel>(null));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiAddressTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiAddressTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiAddressTypeServerResponseModel>.CreateResponse(null as ApiAddressTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiAddressTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeServerResponseModel>>(mockResponse));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiAddressTypeRequestModel>();
-			records.Add(new ApiAddressTypeRequestModel());
+			var records = new List<ApiAddressTypeServerRequestModel>();
+			records.Add(new ApiAddressTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiAddressTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiAddressTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiAddressTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiAddressTypeServerResponseModel>>(null as ApiAddressTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeServerResponseModel>>(mockResponse.Object));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiAddressTypeRequestModel>();
-			records.Add(new ApiAddressTypeRequestModel());
+			var records = new List<ApiAddressTypeServerRequestModel>();
+			records.Add(new ApiAddressTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiAddressTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiAddressTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiAddressTypeServerResponseModel>.CreateResponse(null as ApiAddressTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiAddressTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeServerResponseModel>>(mockResponse));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiAddressTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiAddressTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiAddressTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiAddressTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiAddressTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiAddressTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiAddressTypeServerResponseModel>>(null as ApiAddressTypeServerResponseModel);
+			var mockRecord = new ApiAddressTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAddressTypeServerResponseModel>>(mockResponse.Object));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiAddressTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiAddressTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAddressTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAddressTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>()))
-			.Callback<int, ApiAddressTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>()))
+			.Callback<int, ApiAddressTypeServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiAddressTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeResponseModel>(new ApiAddressTypeResponseModel()));
-			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiAddressTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeServerResponseModel>(new ApiAddressTypeServerResponseModel()));
+			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiAddressTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiAddressTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeServerResponseModel>(null));
 			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiAddressTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiAddressTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAddressTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAddressTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeResponseModel()));
-			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeServerResponseModel()));
+			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAddressTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAddressTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAddressTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAddressTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeResponseModel()));
-			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAddressTypeServerResponseModel()));
+			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAddressTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAddressTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			AddressTypeControllerMockFacade mock = new AddressTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAddressTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAddressTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeResponseModel>(null));
-			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAddressTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAddressTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAddressTypeServerResponseModel>(null));
+			AddressTypeController controller = new AddressTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAddressTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAddressTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAddressTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IAddressTypeService> ServiceMock { get; set; } = new Mock<IAddressTypeService>();
 
-		public Mock<IApiAddressTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiAddressTypeModelMapper>();
+		public Mock<IApiAddressTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiAddressTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c2dc268d7fd60f530929d43b9df9a96</Hash>
+    <Hash>3125bfd03543049bca60ac0f54fb97ce</Hash>
 </Codenesium>*/

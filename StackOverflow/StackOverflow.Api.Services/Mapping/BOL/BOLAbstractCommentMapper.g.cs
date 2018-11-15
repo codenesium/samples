@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOComment MapModelToBO(
 			int id,
-			ApiCommentRequestModel model
+			ApiCommentServerRequestModel model
 			)
 		{
 			BOComment boComment = new BOComment();
@@ -23,20 +22,20 @@ namespace StackOverflowNS.Api.Services
 			return boComment;
 		}
 
-		public virtual ApiCommentResponseModel MapBOToModel(
+		public virtual ApiCommentServerResponseModel MapBOToModel(
 			BOComment boComment)
 		{
-			var model = new ApiCommentResponseModel();
+			var model = new ApiCommentServerResponseModel();
 
 			model.SetProperties(boComment.Id, boComment.CreationDate, boComment.PostId, boComment.Score, boComment.Text, boComment.UserId);
 
 			return model;
 		}
 
-		public virtual List<ApiCommentResponseModel> MapBOToModel(
+		public virtual List<ApiCommentServerResponseModel> MapBOToModel(
 			List<BOComment> items)
 		{
-			List<ApiCommentResponseModel> response = new List<ApiCommentResponseModel>();
+			List<ApiCommentServerResponseModel> response = new List<ApiCommentServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -49,5 +48,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2caffd74cd99eabfe5cea16f83edad3</Hash>
+    <Hash>ac9ceadb45d5ee6cc0c71c4eda7d5b0a</Hash>
 </Codenesium>*/

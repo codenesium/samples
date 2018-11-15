@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			var record = new ApiBillOfMaterialResponseModel();
-			var records = new List<ApiBillOfMaterialResponseModel>();
+			var record = new ApiBillOfMaterialServerResponseModel();
+			var records = new List<ApiBillOfMaterialServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBillOfMaterialResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBillOfMaterialServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBillOfMaterialResponseModel>>(new List<ApiBillOfMaterialResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBillOfMaterialServerResponseModel>>(new List<ApiBillOfMaterialServerResponseModel>()));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBillOfMaterialResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBillOfMaterialServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialServerResponseModel()));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiBillOfMaterialResponseModel;
+			var record = (response as OkObjectResult).Value as ApiBillOfMaterialServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialServerResponseModel>(null));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBillOfMaterialResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBillOfMaterialResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.CreateResponse(null as ApiBillOfMaterialServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBillOfMaterialServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialServerResponseModel>>(mockResponse));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBillOfMaterialRequestModel>();
-			records.Add(new ApiBillOfMaterialRequestModel());
+			var records = new List<ApiBillOfMaterialServerRequestModel>();
+			records.Add(new ApiBillOfMaterialServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiBillOfMaterialResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiBillOfMaterialServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBillOfMaterialResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiBillOfMaterialServerResponseModel>>(null as ApiBillOfMaterialServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialServerResponseModel>>(mockResponse.Object));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBillOfMaterialRequestModel>();
-			records.Add(new ApiBillOfMaterialRequestModel());
+			var records = new List<ApiBillOfMaterialServerRequestModel>();
+			records.Add(new ApiBillOfMaterialServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBillOfMaterialResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBillOfMaterialResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.CreateResponse(null as ApiBillOfMaterialServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBillOfMaterialServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialServerResponseModel>>(mockResponse));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBillOfMaterialRequestModel());
+			IActionResult response = await controller.Create(new ApiBillOfMaterialServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBillOfMaterialResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBillOfMaterialServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBillOfMaterialResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiBillOfMaterialResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiBillOfMaterialServerResponseModel>>(null as ApiBillOfMaterialServerResponseModel);
+			var mockRecord = new ApiBillOfMaterialServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBillOfMaterialServerResponseModel>>(mockResponse.Object));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBillOfMaterialRequestModel());
+			IActionResult response = await controller.Create(new ApiBillOfMaterialServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>()))
-			.Callback<int, ApiBillOfMaterialRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()))
+			.Callback<int, ApiBillOfMaterialServerRequestModel>(
 				(id, model) => model.BOMLevel.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialResponseModel>(new ApiBillOfMaterialResponseModel()));
-			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialServerResponseModel>(new ApiBillOfMaterialServerResponseModel()));
+			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBillOfMaterialRequestModel>();
+			var patch = new JsonPatchDocument<ApiBillOfMaterialServerRequestModel>();
 			patch.Replace(x => x.BOMLevel, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialServerResponseModel>(null));
 			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBillOfMaterialRequestModel>();
+			var patch = new JsonPatchDocument<ApiBillOfMaterialServerRequestModel>();
 			patch.Replace(x => x.BOMLevel, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialResponseModel()));
-			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialServerResponseModel()));
+			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialResponseModel()));
-			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBillOfMaterialServerResponseModel()));
+			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			BillOfMaterialControllerMockFacade mock = new BillOfMaterialControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBillOfMaterialServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialResponseModel>(null));
-			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBillOfMaterialServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBillOfMaterialServerResponseModel>(null));
+			BillOfMaterialController controller = new BillOfMaterialController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBillOfMaterialServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBillOfMaterialServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IBillOfMaterialService> ServiceMock { get; set; } = new Mock<IBillOfMaterialService>();
 
-		public Mock<IApiBillOfMaterialModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBillOfMaterialModelMapper>();
+		public Mock<IApiBillOfMaterialServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBillOfMaterialServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab81f23525ae88b85fb742169a52856d</Hash>
+    <Hash>9ce95ce6802f6b42f716bed237f56b12</Hash>
 </Codenesium>*/

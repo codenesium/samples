@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TicketingCRMNS.Api.Services
 		public SaleService(
 			ILogger<ISaleRepository> logger,
 			ISaleRepository saleRepository,
-			IApiSaleRequestModelValidator saleModelValidator,
-			IBOLSaleMapper bolsaleMapper,
-			IDALSaleMapper dalsaleMapper)
+			IApiSaleServerRequestModelValidator saleModelValidator,
+			IBOLSaleMapper bolSaleMapper,
+			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       saleRepository,
 			       saleModelValidator,
-			       bolsaleMapper,
-			       dalsaleMapper)
+			       bolSaleMapper,
+			       dalSaleMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cca0d65159b146244879861de7e70e7a</Hash>
+    <Hash>437c2489a8f46dffaace40c886e26bea</Hash>
 </Codenesium>*/

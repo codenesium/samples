@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected IChainStatusService ChainStatusService { get; private set; }
 
-		protected IApiChainStatusModelMapper ChainStatusModelMapper { get; private set; }
+		protected IApiChainStatusServerModelMapper ChainStatusModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractChainStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IChainStatusService chainStatusService,
-			IApiChainStatusModelMapper chainStatusModelMapper
+			IApiChainStatusServerModelMapper chainStatusModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainStatusServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
+			List<ApiChainStatusServerResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiChainStatusServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiChainStatusResponseModel response = await this.ChainStatusService.Get(id);
+			ApiChainStatusServerResponseModel response = await this.ChainStatusService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiChainStatusServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiChainStatusResponseModel> records = new List<ApiChainStatusResponseModel>();
+			List<ApiChainStatusServerResponseModel> records = new List<ApiChainStatusServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
+				CreateResponse<ApiChainStatusServerResponseModel> result = await this.ChainStatusService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiChainStatusServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiChainStatusResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiChainStatusServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusServerRequestModel model)
 		{
-			CreateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Create(model);
+			CreateResponse<ApiChainStatusServerResponseModel> result = await this.ChainStatusService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiChainStatusRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiChainStatusServerRequestModel> patch)
 		{
-			ApiChainStatusResponseModel record = await this.ChainStatusService.Get(id);
+			ApiChainStatusServerResponseModel record = await this.ChainStatusService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiChainStatusRequestModel model = await this.PatchModel(id, patch);
+				ApiChainStatusServerRequestModel model = await this.PatchModel(id, patch) as ApiChainStatusServerRequestModel;
 
-				UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, model);
+				UpdateResponse<ApiChainStatusServerResponseModel> result = await this.ChainStatusService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiChainStatusServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusServerRequestModel model)
 		{
-			ApiChainStatusRequestModel request = await this.PatchModel(id, this.ChainStatusModelMapper.CreatePatch(model));
+			ApiChainStatusServerRequestModel request = await this.PatchModel(id, this.ChainStatusModelMapper.CreatePatch(model)) as ApiChainStatusServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiChainStatusResponseModel> result = await this.ChainStatusService.Update(id, request);
+				UpdateResponse<ApiChainStatusServerResponseModel> result = await this.ChainStatusService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ChainStatusService.Delete(id);
@@ -209,11 +219,11 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiChainStatusServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiChainStatusResponseModel response = await this.ChainStatusService.ByName(name);
+			ApiChainStatusServerResponseModel response = await this.ChainStatusService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,10 +236,10 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{chainStatusId}/ChainsByChainStatusId")]
+		[Route("byTeamId/{teamId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
-		public async virtual Task<IActionResult> ChainsByChainStatusId(int chainStatusId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiChainStatusServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByTeamId(int teamId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,12 +247,12 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiChainResponseModel> response = await this.ChainStatusService.ChainsByChainStatusId(chainStatusId, query.Limit, query.Offset);
+			List<ApiChainStatusServerResponseModel> response = await this.ChainStatusService.ByTeamId(teamId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiChainStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainStatusRequestModel> patch)
+		private async Task<ApiChainStatusServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiChainStatusServerRequestModel> patch)
 		{
 			var record = await this.ChainStatusService.Get(id);
 
@@ -252,7 +262,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiChainStatusRequestModel request = this.ChainStatusModelMapper.MapResponseToRequest(record);
+				ApiChainStatusServerRequestModel request = this.ChainStatusModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c646c64395e5c1d7854e7fdc4461bc2a</Hash>
+    <Hash>2c132cb5a17f6998322d64424981eeff</Hash>
 </Codenesium>*/

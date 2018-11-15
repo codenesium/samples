@@ -76,14 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<BusinessEntity> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<BusinessEntityAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
-		}
-
-		public async virtual Task<List<BusinessEntityContact>> BusinessEntityContactsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<BusinessEntityContact>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
+			return await this.Context.Set<BusinessEntity>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<Person>> PeopleByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
@@ -95,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<BusinessEntity, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<BusinessEntity, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<BusinessEntity, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BusinessEntity>();
-			}
-			else
-			{
-				return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<BusinessEntity>();
-			}
+			return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BusinessEntity>();
 		}
 
 		private async Task<BusinessEntity> GetById(int businessEntityID)
@@ -123,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c7cf8a952d68b540bc7c9854a929e95a</Hash>
+    <Hash>23e42562208cf3f0d3d913a745a9cc3f</Hash>
 </Codenesium>*/

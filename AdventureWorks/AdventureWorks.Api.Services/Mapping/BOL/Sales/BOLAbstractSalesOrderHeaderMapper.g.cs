@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOSalesOrderHeader MapModelToBO(
 			int salesOrderID,
-			ApiSalesOrderHeaderRequestModel model
+			ApiSalesOrderHeaderServerRequestModel model
 			)
 		{
 			BOSalesOrderHeader boSalesOrderHeader = new BOSalesOrderHeader();
@@ -43,20 +42,20 @@ namespace AdventureWorksNS.Api.Services
 			return boSalesOrderHeader;
 		}
 
-		public virtual ApiSalesOrderHeaderResponseModel MapBOToModel(
+		public virtual ApiSalesOrderHeaderServerResponseModel MapBOToModel(
 			BOSalesOrderHeader boSalesOrderHeader)
 		{
-			var model = new ApiSalesOrderHeaderResponseModel();
+			var model = new ApiSalesOrderHeaderServerResponseModel();
 
 			model.SetProperties(boSalesOrderHeader.SalesOrderID, boSalesOrderHeader.AccountNumber, boSalesOrderHeader.BillToAddressID, boSalesOrderHeader.Comment, boSalesOrderHeader.CreditCardApprovalCode, boSalesOrderHeader.CreditCardID, boSalesOrderHeader.CurrencyRateID, boSalesOrderHeader.CustomerID, boSalesOrderHeader.DueDate, boSalesOrderHeader.Freight, boSalesOrderHeader.ModifiedDate, boSalesOrderHeader.OnlineOrderFlag, boSalesOrderHeader.OrderDate, boSalesOrderHeader.PurchaseOrderNumber, boSalesOrderHeader.RevisionNumber, boSalesOrderHeader.Rowguid, boSalesOrderHeader.SalesOrderNumber, boSalesOrderHeader.SalesPersonID, boSalesOrderHeader.ShipDate, boSalesOrderHeader.ShipMethodID, boSalesOrderHeader.ShipToAddressID, boSalesOrderHeader.Status, boSalesOrderHeader.SubTotal, boSalesOrderHeader.TaxAmt, boSalesOrderHeader.TerritoryID, boSalesOrderHeader.TotalDue);
 
 			return model;
 		}
 
-		public virtual List<ApiSalesOrderHeaderResponseModel> MapBOToModel(
+		public virtual List<ApiSalesOrderHeaderServerResponseModel> MapBOToModel(
 			List<BOSalesOrderHeader> items)
 		{
-			List<ApiSalesOrderHeaderResponseModel> response = new List<ApiSalesOrderHeaderResponseModel>();
+			List<ApiSalesOrderHeaderServerResponseModel> response = new List<ApiSalesOrderHeaderServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -69,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0a7d0d66e02534821c63cc7fcd3c840</Hash>
+    <Hash>a46f1fe5cfa9bf3074b4cb549ad286d4</Hash>
 </Codenesium>*/

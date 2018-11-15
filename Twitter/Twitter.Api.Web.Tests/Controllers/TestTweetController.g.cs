@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			var record = new ApiTweetResponseModel();
-			var records = new List<ApiTweetResponseModel>();
+			var record = new ApiTweetServerResponseModel();
+			var records = new List<ApiTweetServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTweetResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTweetServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTweetResponseModel>>(new List<ApiTweetResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTweetServerResponseModel>>(new List<ApiTweetServerResponseModel>()));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTweetResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTweetServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetServerResponseModel()));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTweetResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTweetServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetServerResponseModel>(null));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTweetResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTweetResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTweetServerResponseModel>.CreateResponse(null as ApiTweetServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTweetServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetServerResponseModel>>(mockResponse));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTweetRequestModel>();
-			records.Add(new ApiTweetRequestModel());
+			var records = new List<ApiTweetServerRequestModel>();
+			records.Add(new ApiTweetServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTweetResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTweetServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTweetResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTweetServerResponseModel>>(null as ApiTweetServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetServerResponseModel>>(mockResponse.Object));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTweetRequestModel>();
-			records.Add(new ApiTweetRequestModel());
+			var records = new List<ApiTweetServerRequestModel>();
+			records.Add(new ApiTweetServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTweetResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTweetResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTweetServerResponseModel>.CreateResponse(null as ApiTweetServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTweetServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetServerResponseModel>>(mockResponse));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTweetRequestModel());
+			IActionResult response = await controller.Create(new ApiTweetServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTweetResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTweetServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTweetResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTweetResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTweetServerResponseModel>>(null as ApiTweetServerResponseModel);
+			var mockRecord = new ApiTweetServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTweetServerResponseModel>>(mockResponse.Object));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTweetRequestModel());
+			IActionResult response = await controller.Create(new ApiTweetServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>()))
-			.Callback<int, ApiTweetRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()))
+			.Callback<int, ApiTweetServerRequestModel>(
 				(id, model) => model.Content.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetResponseModel>(new ApiTweetResponseModel()));
-			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetServerResponseModel>(new ApiTweetServerResponseModel()));
+			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTweetRequestModel>();
+			var patch = new JsonPatchDocument<ApiTweetServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetServerResponseModel>(null));
 			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTweetRequestModel>();
+			var patch = new JsonPatchDocument<ApiTweetServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetResponseModel()));
-			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetServerResponseModel()));
+			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTweetServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetResponseModel()));
-			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTweetServerResponseModel()));
+			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTweetServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TweetControllerMockFacade mock = new TweetControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTweetResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTweetServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetResponseModel>(null));
-			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTweetServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTweetServerResponseModel>(null));
+			TweetController controller = new TweetController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTweetServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTweetRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTweetServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<ITweetService> ServiceMock { get; set; } = new Mock<ITweetService>();
 
-		public Mock<IApiTweetModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTweetModelMapper>();
+		public Mock<IApiTweetServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTweetServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2a2b8446914b9fac00552399fcd46f6</Hash>
+    <Hash>d3c59babbafbb98ffdede1519d2951c3</Hash>
 </Codenesium>*/

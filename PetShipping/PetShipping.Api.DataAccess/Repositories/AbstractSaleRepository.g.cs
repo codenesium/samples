@@ -76,11 +76,6 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Client> ClientByClientId(int clientId)
-		{
-			return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
-		}
-
 		public async virtual Task<Pet> PetByPetId(int petId)
 		{
 			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
@@ -90,22 +85,14 @@ namespace PetShippingNS.Api.DataAccess
 			Expression<Func<Sale, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Sale, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Sale, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
-			}
-			else
-			{
-				return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
-			}
+			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		private async Task<Sale> GetById(int id)
@@ -118,5 +105,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b2d7b7f97c97d5f29222ffba0d60335</Hash>
+    <Hash>72d1dde00311ffc50985b4f9fa75ff75</Hash>
 </Codenesium>*/

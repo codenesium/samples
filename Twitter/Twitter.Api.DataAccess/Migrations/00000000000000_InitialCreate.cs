@@ -189,7 +189,7 @@ CREATE TABLE [dbo].[Follower](
 GO
 
 CREATE TABLE [dbo].[Following](
-[user_id] [varchar]  (64)   NOT NULL,
+[user_id] [int]   IDENTITY(1,1)  NOT NULL,
 [date_followed] [date]     NULL,
 [muted] [char]  (1)   NULL,
 ) ON[PRIMARY]

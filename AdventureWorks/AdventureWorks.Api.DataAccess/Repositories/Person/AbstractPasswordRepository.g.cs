@@ -80,22 +80,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<Password, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Password, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Password, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Password>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
-			}
-			else
-			{
-				return await this.Context.Set<Password>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
-			}
+			return await this.Context.Set<Password>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Password>();
 		}
 
 		private async Task<Password> GetById(int businessEntityID)
@@ -108,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d1f31967bca04dfc24c10e8eee32c67</Hash>
+    <Hash>fc46451250c60c776e988b34a443cb89</Hash>
 </Codenesium>*/

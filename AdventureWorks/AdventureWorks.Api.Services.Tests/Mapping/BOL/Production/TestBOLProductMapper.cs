@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLProductMapper();
-			ApiProductRequestModel model = new ApiProductRequestModel();
+			ApiProductServerRequestModel model = new ApiProductServerRequestModel();
 			model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 			BOProduct response = mapper.MapModelToBO(1, model);
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductMapper();
 			BOProduct bo = new BOProduct();
 			bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
-			ApiProductResponseModel response = mapper.MapBOToModel(bo);
+			ApiProductServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductMapper();
 			BOProduct bo = new BOProduct();
 			bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
-			List<ApiProductResponseModel> response = mapper.MapBOToModel(new List<BOProduct>() { { bo } });
+			List<ApiProductServerResponseModel> response = mapper.MapBOToModel(new List<BOProduct>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -96,5 +96,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>940d6b52fe4fbe881c078e7ae3925cb8</Hash>
+    <Hash>f16f8da21d675898677fc80134cf597f</Hash>
 </Codenesium>*/

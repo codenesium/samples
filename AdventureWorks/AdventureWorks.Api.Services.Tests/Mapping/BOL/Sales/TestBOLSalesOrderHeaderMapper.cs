@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSalesOrderHeaderMapper();
-			ApiSalesOrderHeaderRequestModel model = new ApiSalesOrderHeaderRequestModel();
+			ApiSalesOrderHeaderServerRequestModel model = new ApiSalesOrderHeaderServerRequestModel();
 			model.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
 			BOSalesOrderHeader response = mapper.MapModelToBO(1, model);
 
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSalesOrderHeaderMapper();
 			BOSalesOrderHeader bo = new BOSalesOrderHeader();
 			bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
-			ApiSalesOrderHeaderResponseModel response = mapper.MapBOToModel(bo);
+			ApiSalesOrderHeaderServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AccountNumber.Should().Be("A");
 			response.BillToAddressID.Should().Be(1);
@@ -90,7 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSalesOrderHeaderMapper();
 			BOSalesOrderHeader bo = new BOSalesOrderHeader();
 			bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
-			List<ApiSalesOrderHeaderResponseModel> response = mapper.MapBOToModel(new List<BOSalesOrderHeader>() { { bo } });
+			List<ApiSalesOrderHeaderServerResponseModel> response = mapper.MapBOToModel(new List<BOSalesOrderHeader>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -98,5 +98,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>714d7f5d5c7c3f71cb4e6fa070bbeb6b</Hash>
+    <Hash>5a8d13afd0b0200c76b29d5e2658f1e8</Hash>
 </Codenesium>*/

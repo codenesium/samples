@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,24 +9,16 @@ namespace AdventureWorksNS.Api.Services
 		public EmployeeService(
 			ILogger<IEmployeeRepository> logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
-			IBOLEmployeeMapper bolemployeeMapper,
-			IDALEmployeeMapper dalemployeeMapper,
-			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper,
-			IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
-			IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper,
+			IApiEmployeeServerRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper bolEmployeeMapper,
+			IDALEmployeeMapper dalEmployeeMapper,
 			IBOLJobCandidateMapper bolJobCandidateMapper,
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base(logger,
 			       employeeRepository,
 			       employeeModelValidator,
-			       bolemployeeMapper,
-			       dalemployeeMapper,
-			       bolEmployeeDepartmentHistoryMapper,
-			       dalEmployeeDepartmentHistoryMapper,
-			       bolEmployeePayHistoryMapper,
-			       dalEmployeePayHistoryMapper,
+			       bolEmployeeMapper,
+			       dalEmployeeMapper,
 			       bolJobCandidateMapper,
 			       dalJobCandidateMapper)
 		{
@@ -42,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2514a38029f184b29a311d5a25553455</Hash>
+    <Hash>cd15ab6b4d870228dd7b54d79c13a014</Hash>
 </Codenesium>*/

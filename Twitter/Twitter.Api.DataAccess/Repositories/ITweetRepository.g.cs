@@ -28,9 +28,15 @@ namespace TwitterNS.Api.DataAccess
 		Task<Location> LocationByLocationId(int locationId);
 
 		Task<User> UserByUserUserId(int userUserId);
+
+		Task<List<Tweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<QuoteTweet> CreateQuoteTweet(QuoteTweet item);
+
+		Task DeleteQuoteTweet(QuoteTweet item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7f7e6ce2416222c68738de9ca8057d9</Hash>
+    <Hash>3eecd523f1d681bc1b23ad8ed86d50a7</Hash>
 </Codenesium>*/

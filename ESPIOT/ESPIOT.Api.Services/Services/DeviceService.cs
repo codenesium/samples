@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace ESPIOTNS.Api.Services
 		public DeviceService(
 			ILogger<IDeviceRepository> logger,
 			IDeviceRepository deviceRepository,
-			IApiDeviceRequestModelValidator deviceModelValidator,
-			IBOLDeviceMapper boldeviceMapper,
-			IDALDeviceMapper daldeviceMapper,
+			IApiDeviceServerRequestModelValidator deviceModelValidator,
+			IBOLDeviceMapper bolDeviceMapper,
+			IDALDeviceMapper dalDeviceMapper,
 			IBOLDeviceActionMapper bolDeviceActionMapper,
 			IDALDeviceActionMapper dalDeviceActionMapper)
 			: base(logger,
 			       deviceRepository,
 			       deviceModelValidator,
-			       boldeviceMapper,
-			       daldeviceMapper,
+			       bolDeviceMapper,
+			       dalDeviceMapper,
 			       bolDeviceActionMapper,
 			       dalDeviceActionMapper)
 		{
@@ -34,5 +27,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f46fb75cc17c22434957f570354ab4f</Hash>
+    <Hash>fcaf3102369713d216949d9e53935da8</Hash>
 </Codenesium>*/

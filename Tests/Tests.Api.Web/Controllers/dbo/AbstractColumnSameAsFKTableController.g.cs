@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected IColumnSameAsFKTableService ColumnSameAsFKTableService { get; private set; }
 
-		protected IApiColumnSameAsFKTableModelMapper ColumnSameAsFKTableModelMapper { get; private set; }
+		protected IApiColumnSameAsFKTableServerModelMapper ColumnSameAsFKTableModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractColumnSameAsFKTableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IColumnSameAsFKTableService columnSameAsFKTableService,
-			IApiColumnSameAsFKTableModelMapper columnSameAsFKTableModelMapper
+			IApiColumnSameAsFKTableServerModelMapper columnSameAsFKTableModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiColumnSameAsFKTableResponseModel> response = await this.ColumnSameAsFKTableService.All(query.Limit, query.Offset);
+			List<ApiColumnSameAsFKTableServerResponseModel> response = await this.ColumnSameAsFKTableService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiColumnSameAsFKTableResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiColumnSameAsFKTableServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiColumnSameAsFKTableResponseModel response = await this.ColumnSameAsFKTableService.Get(id);
+			ApiColumnSameAsFKTableServerResponseModel response = await this.ColumnSameAsFKTableService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiColumnSameAsFKTableServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiColumnSameAsFKTableRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiColumnSameAsFKTableServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiColumnSameAsFKTableResponseModel> records = new List<ApiColumnSameAsFKTableResponseModel>();
+			List<ApiColumnSameAsFKTableServerResponseModel> records = new List<ApiColumnSameAsFKTableServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiColumnSameAsFKTableResponseModel> result = await this.ColumnSameAsFKTableService.Create(model);
+				CreateResponse<ApiColumnSameAsFKTableServerResponseModel> result = await this.ColumnSameAsFKTableService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiColumnSameAsFKTableServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiColumnSameAsFKTableResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiColumnSameAsFKTableServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiColumnSameAsFKTableRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiColumnSameAsFKTableServerRequestModel model)
 		{
-			CreateResponse<ApiColumnSameAsFKTableResponseModel> result = await this.ColumnSameAsFKTableService.Create(model);
+			CreateResponse<ApiColumnSameAsFKTableServerResponseModel> result = await this.ColumnSameAsFKTableService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiColumnSameAsFKTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiColumnSameAsFKTableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiColumnSameAsFKTableRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiColumnSameAsFKTableServerRequestModel> patch)
 		{
-			ApiColumnSameAsFKTableResponseModel record = await this.ColumnSameAsFKTableService.Get(id);
+			ApiColumnSameAsFKTableServerResponseModel record = await this.ColumnSameAsFKTableService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiColumnSameAsFKTableRequestModel model = await this.PatchModel(id, patch);
+				ApiColumnSameAsFKTableServerRequestModel model = await this.PatchModel(id, patch) as ApiColumnSameAsFKTableServerRequestModel;
 
-				UpdateResponse<ApiColumnSameAsFKTableResponseModel> result = await this.ColumnSameAsFKTableService.Update(id, model);
+				UpdateResponse<ApiColumnSameAsFKTableServerResponseModel> result = await this.ColumnSameAsFKTableService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiColumnSameAsFKTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiColumnSameAsFKTableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiColumnSameAsFKTableRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiColumnSameAsFKTableServerRequestModel model)
 		{
-			ApiColumnSameAsFKTableRequestModel request = await this.PatchModel(id, this.ColumnSameAsFKTableModelMapper.CreatePatch(model));
+			ApiColumnSameAsFKTableServerRequestModel request = await this.PatchModel(id, this.ColumnSameAsFKTableModelMapper.CreatePatch(model)) as ApiColumnSameAsFKTableServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiColumnSameAsFKTableResponseModel> result = await this.ColumnSameAsFKTableService.Update(id, request);
+				UpdateResponse<ApiColumnSameAsFKTableServerResponseModel> result = await this.ColumnSameAsFKTableService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ColumnSameAsFKTableService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiColumnSameAsFKTableRequestModel> PatchModel(int id, JsonPatchDocument<ApiColumnSameAsFKTableRequestModel> patch)
+		private async Task<ApiColumnSameAsFKTableServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiColumnSameAsFKTableServerRequestModel> patch)
 		{
 			var record = await this.ColumnSameAsFKTableService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiColumnSameAsFKTableRequestModel request = this.ColumnSameAsFKTableModelMapper.MapResponseToRequest(record);
+				ApiColumnSameAsFKTableServerRequestModel request = this.ColumnSameAsFKTableModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eaddf5b838c3944fdc5fcaa18ffb77ea</Hash>
+    <Hash>07cbbba809b56be5a7fb730c93277f1a</Hash>
 </Codenesium>*/

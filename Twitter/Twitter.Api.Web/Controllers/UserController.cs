@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class UserController : AbstractUserController
 	{
 		public UserController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<UserController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUserService userService,
-			IApiUserModelMapper userModelMapper
+			IApiUserServerModelMapper userModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>66578e0fb3a680babc01066521385d96</Hash>
+    <Hash>f2e0d9474cd6cbf895f1a56be2cfca07</Hash>
 </Codenesium>*/

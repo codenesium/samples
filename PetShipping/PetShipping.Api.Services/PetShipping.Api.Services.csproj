@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../PetShipping.Api.Contracts/PetShipping.Api.Contracts.csproj" />
+    <ProjectReference Include="../PetShipping.Api.Client/PetShipping.Api.Client.csproj" />
     <ProjectReference Include="../PetShipping.Api.DataAccess/PetShipping.Api.DataAccess.csproj" />
   </ItemGroup>
 

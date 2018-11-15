@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOCulture MapModelToBO(
 			string cultureID,
-			ApiCultureRequestModel model);
+			ApiCultureServerRequestModel model);
 
-		ApiCultureResponseModel MapBOToModel(
+		ApiCultureServerResponseModel MapBOToModel(
 			BOCulture boCulture);
 
-		List<ApiCultureResponseModel> MapBOToModel(
+		List<ApiCultureServerResponseModel> MapBOToModel(
 			List<BOCulture> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2fd9308d52661c1b273c3c197a056f70</Hash>
+    <Hash>34380cf0a7e0f09d37a6554b9fac23e5</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<BillOfMaterial, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<BillOfMaterial, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<BillOfMaterial, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BillOfMaterialsID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<BillOfMaterial>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
-			}
-			else
-			{
-				return await this.Context.Set<BillOfMaterial>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
-			}
+			return await this.Context.Set<BillOfMaterial>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
 		private async Task<BillOfMaterial> GetById(int billOfMaterialsID)
@@ -113,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6524f48340e1990e4ce668d952a2e10</Hash>
+    <Hash>c2d171ccb549f864412c3b2d87d3b9ab</Hash>
 </Codenesium>*/

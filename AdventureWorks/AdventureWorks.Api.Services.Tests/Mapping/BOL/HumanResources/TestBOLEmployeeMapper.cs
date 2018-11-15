@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLEmployeeMapper();
-			ApiEmployeeRequestModel model = new ApiEmployeeRequestModel();
+			ApiEmployeeServerRequestModel model = new ApiEmployeeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
 			BOEmployee response = mapper.MapModelToBO(1, model);
 
@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLEmployeeMapper();
 			BOEmployee bo = new BOEmployee();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-			ApiEmployeeResponseModel response = mapper.MapBOToModel(bo);
+			ApiEmployeeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.BirthDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BusinessEntityID.Should().Be(1);
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLEmployeeMapper();
 			BOEmployee bo = new BOEmployee();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, 1, 1);
-			List<ApiEmployeeResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
+			List<ApiEmployeeServerResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -76,5 +76,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1a66be0488d44fea9d4a89b975642734</Hash>
+    <Hash>245f61c4336cbe7412d459e5ed50d5c3</Hash>
 </Codenesium>*/

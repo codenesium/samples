@@ -35,34 +35,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(15)]
 		[Column("AccountNumber")]
-		public string AccountNumber { get; private set; }
+		public virtual string AccountNumber { get; private set; }
 
 		[Column("ActiveFlag")]
-		public bool ActiveFlag { get; private set; }
+		public virtual bool ActiveFlag { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("CreditRating")]
-		public int CreditRating { get; private set; }
+		public virtual int CreditRating { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("PreferredVendorStatus")]
-		public bool PreferredVendorStatu { get; private set; }
+		public virtual bool PreferredVendorStatu { get; private set; }
 
 		[MaxLength(1024)]
 		[Column("PurchasingWebServiceURL")]
-		public string PurchasingWebServiceURL { get; private set; }
+		public virtual string PurchasingWebServiceURL { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5f412ca16b374826f54760300b35f102</Hash>
+    <Hash>7889b858c73328b650798e5acd351e14</Hash>
 </Codenesium>*/

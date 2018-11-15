@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -47,5 +46,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88765cd57bd25211c6b4fa4bd16204a5</Hash>
+    <Hash>6143f4413912f4c5b2dea41933a173e8</Hash>
 </Codenesium>*/

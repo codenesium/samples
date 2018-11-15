@@ -76,36 +76,47 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<ChainStatus> ByName(string name)
+		public async virtual Task<ChainStatus> ByName(string name)
 		{
 			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<Chain>> ChainsByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ChainStatus>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Chain>().Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+			return await (from refTable in this.Context.Chains
+			              join chainStatuses in this.Context.ChainStatuses on
+			              refTable.ChainStatusId equals chainStatuses.Id
+			              where refTable.TeamId == teamId
+			              select chainStatuses).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<Chain> CreateChain(Chain item)
+		{
+			this.Context.Set<Chain>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteChain(Chain item)
+		{
+			this.Context.Set<Chain>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<ChainStatus>> Where(
 			Expression<Func<ChainStatus, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ChainStatus, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ChainStatus, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ChainStatus>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ChainStatus>();
-			}
-			else
-			{
-				return await this.Context.Set<ChainStatus>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ChainStatus>();
-			}
+			return await this.Context.Set<ChainStatus>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ChainStatus>();
 		}
 
 		private async Task<ChainStatus> GetById(int id)
@@ -118,5 +129,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>02c2befd9fdeecaeb3920628e0328e96</Hash>
+    <Hash>969fdbfaab71f235988be4c6991eb0f9</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class AirlineController : AbstractAirlineController
 	{
 		public AirlineController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AirlineController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAirlineService airlineService,
-			IApiAirlineModelMapper airlineModelMapper
+			IApiAirlineServerModelMapper airlineModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e654499b64047800257db2297b97fc2</Hash>
+    <Hash>18a7304e3106134ebb1f93cf1bd02320</Hash>
 </Codenesium>*/

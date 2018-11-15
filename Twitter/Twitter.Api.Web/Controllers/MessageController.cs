@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class MessageController : AbstractMessageController
 	{
 		public MessageController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<MessageController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IMessageService messageService,
-			IApiMessageModelMapper messageModelMapper
+			IApiMessageServerModelMapper messageModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bf2939876b079e06af966dcb43767bda</Hash>
+    <Hash>96f34938cfb4643ab1b796dcc72d923b</Hash>
 </Codenesium>*/

@@ -30,28 +30,28 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("LargePhoto")]
-		public byte[] LargePhoto { get; private set; }
+		public virtual byte[] LargePhoto { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LargePhotoFileName")]
-		public string LargePhotoFileName { get; private set; }
+		public virtual string LargePhotoFileName { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductPhotoID")]
-		public int ProductPhotoID { get; private set; }
+		public virtual int ProductPhotoID { get; private set; }
 
 		[Column("ThumbNailPhoto")]
-		public byte[] ThumbNailPhoto { get; private set; }
+		public virtual byte[] ThumbNailPhoto { get; private set; }
 
 		[MaxLength(50)]
 		[Column("ThumbnailPhotoFileName")]
-		public string ThumbnailPhotoFileName { get; private set; }
+		public virtual string ThumbnailPhotoFileName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>960da523d585b8144a09b4e6779e4499</Hash>
+    <Hash>43f4aeaea054b976eb71eb1b32e8162b</Hash>
 </Codenesium>*/

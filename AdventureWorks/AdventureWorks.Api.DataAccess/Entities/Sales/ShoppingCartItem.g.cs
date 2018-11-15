@@ -30,27 +30,27 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("DateCreated")]
-		public DateTime DateCreated { get; private set; }
+		public virtual DateTime DateCreated { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("Quantity")]
-		public int Quantity { get; private set; }
+		public virtual int Quantity { get; private set; }
 
 		[MaxLength(50)]
 		[Column("ShoppingCartID")]
-		public string ShoppingCartID { get; private set; }
+		public virtual string ShoppingCartID { get; private set; }
 
 		[Key]
 		[Column("ShoppingCartItemID")]
-		public int ShoppingCartItemID { get; private set; }
+		public virtual int ShoppingCartItemID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1a22625abdef8e0517f12b09a212a75</Hash>
+    <Hash>b9637067eec932a6db0cea697c8a1064</Hash>
 </Codenesium>*/

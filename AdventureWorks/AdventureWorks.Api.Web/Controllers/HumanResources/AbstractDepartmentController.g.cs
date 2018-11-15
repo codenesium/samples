@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IDepartmentService DepartmentService { get; private set; }
 
-		protected IApiDepartmentModelMapper DepartmentModelMapper { get; private set; }
+		protected IApiDepartmentServerModelMapper DepartmentModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractDepartmentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDepartmentService departmentService,
-			IApiDepartmentModelMapper departmentModelMapper
+			IApiDepartmentServerModelMapper departmentModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDepartmentServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDepartmentResponseModel> response = await this.DepartmentService.All(query.Limit, query.Offset);
+			List<ApiDepartmentServerResponseModel> response = await this.DepartmentService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDepartmentServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(short id)
 		{
-			ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
+			ApiDepartmentServerResponseModel response = await this.DepartmentService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiDepartmentServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDepartmentRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDepartmentServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiDepartmentResponseModel> records = new List<ApiDepartmentResponseModel>();
+			List<ApiDepartmentServerResponseModel> records = new List<ApiDepartmentServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Create(model);
+				CreateResponse<ApiDepartmentServerResponseModel> result = await this.DepartmentService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiDepartmentServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiDepartmentResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiDepartmentServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentServerRequestModel model)
 		{
-			CreateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Create(model);
+			CreateResponse<ApiDepartmentServerResponseModel> result = await this.DepartmentService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDepartmentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDepartmentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiDepartmentRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiDepartmentServerRequestModel> patch)
 		{
-			ApiDepartmentResponseModel record = await this.DepartmentService.Get(id);
+			ApiDepartmentServerResponseModel record = await this.DepartmentService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDepartmentRequestModel model = await this.PatchModel(id, patch);
+				ApiDepartmentServerRequestModel model = await this.PatchModel(id, patch) as ApiDepartmentServerRequestModel;
 
-				UpdateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Update(id, model);
+				UpdateResponse<ApiDepartmentServerResponseModel> result = await this.DepartmentService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDepartmentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDepartmentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentRequestModel model)
+
+		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentServerRequestModel model)
 		{
-			ApiDepartmentRequestModel request = await this.PatchModel(id, this.DepartmentModelMapper.CreatePatch(model));
+			ApiDepartmentServerRequestModel request = await this.PatchModel(id, this.DepartmentModelMapper.CreatePatch(model)) as ApiDepartmentServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Update(id, request);
+				UpdateResponse<ApiDepartmentServerResponseModel> result = await this.DepartmentService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(short id)
 		{
 			ActionResponse result = await this.DepartmentService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDepartmentServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiDepartmentResponseModel response = await this.DepartmentService.ByName(name);
+			ApiDepartmentServerResponseModel response = await this.DepartmentService.ByName(name);
 
 			if (response == null)
 			{
@@ -225,24 +235,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{departmentID}/EmployeeDepartmentHistoriesByDepartmentID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.DepartmentService.EmployeeDepartmentHistoriesByDepartmentID(departmentID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiDepartmentRequestModel> PatchModel(short id, JsonPatchDocument<ApiDepartmentRequestModel> patch)
+		private async Task<ApiDepartmentServerRequestModel> PatchModel(short id, JsonPatchDocument<ApiDepartmentServerRequestModel> patch)
 		{
 			var record = await this.DepartmentService.Get(id);
 
@@ -252,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDepartmentRequestModel request = this.DepartmentModelMapper.MapResponseToRequest(record);
+				ApiDepartmentServerRequestModel request = this.DepartmentModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>485dc67385506399827d89ca04ba3ad4</Hash>
+    <Hash>c5b88ea01046a93b2905bbfd75eac9c8</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IUserRepository UserRepository { get; private set; }
 
-		protected IApiUserRequestModelValidator UserModelValidator { get; private set; }
+		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
 
 		protected IBOLUserMapper BolUserMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractUserService(
 			ILogger logger,
 			IUserRepository userRepository,
-			IApiUserRequestModelValidator userModelValidator,
+			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.UserRepository.All(limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiUserResponseModel> Get(int id)
+		public virtual async Task<ApiUserServerResponseModel> Get(int id)
 		{
 			var record = await this.UserRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiUserResponseModel>> Create(
-			ApiUserRequestModel model)
+		public virtual async Task<CreateResponse<ApiUserServerResponseModel>> Create(
+			ApiUserServerRequestModel model)
 		{
-			CreateResponse<ApiUserResponseModel> response = new CreateResponse<ApiUserResponseModel>(await this.UserModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUserServerResponseModel> response = ValidationResponseFactory<ApiUserServerResponseModel>.CreateResponse(await this.UserModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiUserResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiUserServerResponseModel>> Update(
 			int id,
-			ApiUserRequestModel model)
+			ApiUserServerRequestModel model)
 		{
 			var validationResult = await this.UserModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.UserRepository.Get(id);
 
-				return new UpdateResponse<ApiUserResponseModel>(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiUserResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.UserModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.UserModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70c6c9f551b8b2dc1e18aa5d3f3830b3</Hash>
+    <Hash>a23db4f7f1a3b145f03ae10746568678</Hash>
 </Codenesium>*/

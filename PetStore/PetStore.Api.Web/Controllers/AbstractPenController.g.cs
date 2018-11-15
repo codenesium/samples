@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Web
 	{
 		protected IPenService PenService { get; private set; }
 
-		protected IApiPenModelMapper PenModelMapper { get; private set; }
+		protected IApiPenServerModelMapper PenModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<AbstractPenController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPenService penService,
-			IApiPenModelMapper penModelMapper
+			IApiPenServerModelMapper penModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPenServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPenResponseModel> response = await this.PenService.All(query.Limit, query.Offset);
+			List<ApiPenServerResponseModel> response = await this.PenService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPenResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPenServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPenResponseModel response = await this.PenService.Get(id);
+			ApiPenServerResponseModel response = await this.PenService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetStoreNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPenServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPenRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPenServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPenResponseModel> records = new List<ApiPenResponseModel>();
+			List<ApiPenServerResponseModel> records = new List<ApiPenServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPenResponseModel> result = await this.PenService.Create(model);
+				CreateResponse<ApiPenServerResponseModel> result = await this.PenService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetStoreNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPenServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPenResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPenServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPenRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPenServerRequestModel model)
 		{
-			CreateResponse<ApiPenResponseModel> result = await this.PenService.Create(model);
+			CreateResponse<ApiPenServerResponseModel> result = await this.PenService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPenResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPenServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPenRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPenServerRequestModel> patch)
 		{
-			ApiPenResponseModel record = await this.PenService.Get(id);
+			ApiPenServerResponseModel record = await this.PenService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiPenRequestModel model = await this.PatchModel(id, patch);
+				ApiPenServerRequestModel model = await this.PatchModel(id, patch) as ApiPenServerRequestModel;
 
-				UpdateResponse<ApiPenResponseModel> result = await this.PenService.Update(id, model);
+				UpdateResponse<ApiPenServerResponseModel> result = await this.PenService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPenResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPenServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPenRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPenServerRequestModel model)
 		{
-			ApiPenRequestModel request = await this.PatchModel(id, this.PenModelMapper.CreatePatch(model));
+			ApiPenServerRequestModel request = await this.PatchModel(id, this.PenModelMapper.CreatePatch(model)) as ApiPenServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPenResponseModel> result = await this.PenService.Update(id, request);
+				UpdateResponse<ApiPenServerResponseModel> result = await this.PenService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetStoreNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PenService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{penId}/PetsByPenId")]
+		[Route("{penId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PetsByPenId(int penId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetResponseModel> response = await this.PenService.PetsByPenId(penId, query.Limit, query.Offset);
+			List<ApiPetServerResponseModel> response = await this.PenService.PetsByPenId(penId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiPenRequestModel> PatchModel(int id, JsonPatchDocument<ApiPenRequestModel> patch)
+		private async Task<ApiPenServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPenServerRequestModel> patch)
 		{
 			var record = await this.PenService.Get(id);
 
@@ -233,7 +243,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiPenRequestModel request = this.PenModelMapper.MapResponseToRequest(record);
+				ApiPenServerRequestModel request = this.PenModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4b033d51e610607906dc4587c1cbaf8</Hash>
+    <Hash>dbe02d35b74a57c50d7dc3c3bc15ac3c</Hash>
 </Codenesium>*/

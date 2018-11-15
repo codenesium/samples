@@ -76,24 +76,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Employee> ByLoginID(string loginID)
+		public async virtual Task<Employee> ByLoginID(string loginID)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.LoginID == loginID);
 		}
 
-		public async Task<Employee> ByNationalIDNumber(string nationalIDNumber)
+		public async virtual Task<Employee> ByNationalIDNumber(string nationalIDNumber)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.NationalIDNumber == nationalIDNumber);
 		}
 
-		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<Employee> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
-		}
-
-		public async virtual Task<List<EmployeePayHistory>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EmployeePayHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
+			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<JobCandidate>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
@@ -105,22 +100,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<Employee, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Employee, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Employee, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.BusinessEntityID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
-			}
-			else
-			{
-				return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
-			}
+			return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
 		}
 
 		private async Task<Employee> GetById(int businessEntityID)
@@ -133,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c0b8bddd42d4237a7c6ad0bb9334d0b</Hash>
+    <Hash>011ce2c0e4b7fd27b4dab693e0456924</Hash>
 </Codenesium>*/

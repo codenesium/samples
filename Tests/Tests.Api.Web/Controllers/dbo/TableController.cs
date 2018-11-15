@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TableController : AbstractTableController
 	{
 		public TableController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<TableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITableService tableService,
-			IApiTableModelMapper tableModelMapper
+			IApiTableServerModelMapper tableModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6775cfc3b6e84366dcfc9cbdf1e359cc</Hash>
+    <Hash>6c6f428d60f6a756f8df4912aa0821a7</Hash>
 </Codenesium>*/

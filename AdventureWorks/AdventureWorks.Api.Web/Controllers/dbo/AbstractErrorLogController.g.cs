@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IErrorLogService ErrorLogService { get; private set; }
 
-		protected IApiErrorLogModelMapper ErrorLogModelMapper { get; private set; }
+		protected IApiErrorLogServerModelMapper ErrorLogModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IErrorLogService errorLogService,
-			IApiErrorLogModelMapper errorLogModelMapper
+			IApiErrorLogServerModelMapper errorLogModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiErrorLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiErrorLogServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiErrorLogResponseModel> response = await this.ErrorLogService.All(query.Limit, query.Offset);
+			List<ApiErrorLogServerResponseModel> response = await this.ErrorLogService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiErrorLogServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
+			ApiErrorLogServerResponseModel response = await this.ErrorLogService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiErrorLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiErrorLogServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiErrorLogRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiErrorLogServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiErrorLogResponseModel> records = new List<ApiErrorLogResponseModel>();
+			List<ApiErrorLogServerResponseModel> records = new List<ApiErrorLogServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Create(model);
+				CreateResponse<ApiErrorLogServerResponseModel> result = await this.ErrorLogService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiErrorLogServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiErrorLogResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiErrorLogServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogServerRequestModel model)
 		{
-			CreateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Create(model);
+			CreateResponse<ApiErrorLogServerResponseModel> result = await this.ErrorLogService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiErrorLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiErrorLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiErrorLogRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiErrorLogServerRequestModel> patch)
 		{
-			ApiErrorLogResponseModel record = await this.ErrorLogService.Get(id);
+			ApiErrorLogServerResponseModel record = await this.ErrorLogService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiErrorLogRequestModel model = await this.PatchModel(id, patch);
+				ApiErrorLogServerRequestModel model = await this.PatchModel(id, patch) as ApiErrorLogServerRequestModel;
 
-				UpdateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Update(id, model);
+				UpdateResponse<ApiErrorLogServerResponseModel> result = await this.ErrorLogService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiErrorLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiErrorLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogServerRequestModel model)
 		{
-			ApiErrorLogRequestModel request = await this.PatchModel(id, this.ErrorLogModelMapper.CreatePatch(model));
+			ApiErrorLogServerRequestModel request = await this.PatchModel(id, this.ErrorLogModelMapper.CreatePatch(model)) as ApiErrorLogServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Update(id, request);
+				UpdateResponse<ApiErrorLogServerResponseModel> result = await this.ErrorLogService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ErrorLogService.Delete(id);
@@ -206,7 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiErrorLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiErrorLogRequestModel> patch)
+		private async Task<ApiErrorLogServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiErrorLogServerRequestModel> patch)
 		{
 			var record = await this.ErrorLogService.Get(id);
 
@@ -216,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiErrorLogRequestModel request = this.ErrorLogModelMapper.MapResponseToRequest(record);
+				ApiErrorLogServerRequestModel request = this.ErrorLogModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>62865443282fdfd6f2993c821736cf33</Hash>
+    <Hash>38b944350f341d4182b4ae95dd153215</Hash>
 </Codenesium>*/

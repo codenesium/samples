@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class VoteController : AbstractVoteController
 	{
 		public VoteController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<VoteController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVoteService voteService,
-			IApiVoteModelMapper voteModelMapper
+			IApiVoteServerModelMapper voteModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>64697805f39df18f5f3acf691b3caff3</Hash>
+    <Hash>525b43ca9af1f12ae8c5d5c1ab32149c</Hash>
 </Codenesium>*/

@@ -11,18 +11,18 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		public virtual void SetProperties(int databaseLogID,
-		                                  string databaseUser,
 		                                  string @event,
 		                                  string @object,
+		                                  string databaseUser,
 		                                  DateTime postTime,
 		                                  string schema,
 		                                  string tsql,
 		                                  string xmlEvent)
 		{
-			this.DatabaseLogID = databaseLogID;
-			this.DatabaseUser = databaseUser;
 			this.@Event = @event;
 			this.@Object = @object;
+			this.DatabaseLogID = databaseLogID;
+			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
 			this.Schema = schema;
 			this.Tsql = tsql;
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9217a6b1aa12f1c9e15d71123ba920ef</Hash>
+    <Hash>84868b0752d47f7a32bc2a88a3bfae10</Hash>
 </Codenesium>*/

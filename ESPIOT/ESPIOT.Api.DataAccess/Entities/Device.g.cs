@@ -25,17 +25,17 @@ namespace ESPIOTNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(90)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("publicId")]
-		public Guid PublicId { get; private set; }
+		public virtual Guid PublicId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5673432a76107e64612c9ae73e61f0df</Hash>
+    <Hash>85b2715760a90c9a84c6ab41f6993601</Hash>
 </Codenesium>*/

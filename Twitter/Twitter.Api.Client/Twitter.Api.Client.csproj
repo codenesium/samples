@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0;net461</TargetFrameworks>
 	<RootNamespace>TwitterNS.Api.Client</RootNamespace>
+	<NuspecFile>Twitter.Api.Client.nuspec</NuspecFile>
   </PropertyGroup>
 
  <ItemGroup>

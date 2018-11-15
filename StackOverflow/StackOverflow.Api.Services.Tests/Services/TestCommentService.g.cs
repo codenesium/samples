@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
-			List<ApiCommentResponseModel> response = await service.All();
+			List<ApiCommentServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
-			ApiCommentResponseModel response = await service.Get(default(int));
+			ApiCommentServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
-			ApiCommentResponseModel response = await service.Get(default(int));
+			ApiCommentServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ICommentRepository>();
-			var model = new ApiCommentRequestModel();
+			var model = new ApiCommentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Comment>())).Returns(Task.FromResult(new Comment()));
 			var service = new CommentService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
-			CreateResponse<ApiCommentResponseModel> response = await service.Create(model);
+			CreateResponse<ApiCommentServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CommentModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCommentRequestModel>()));
+			mock.ModelValidatorMockFactory.CommentModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCommentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Comment>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ICommentRepository>();
-			var model = new ApiCommentRequestModel();
+			var model = new ApiCommentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Comment>())).Returns(Task.FromResult(new Comment()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Comment()));
 			var service = new CommentService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
-			UpdateResponse<ApiCommentResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiCommentServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CommentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCommentRequestModel>()));
+			mock.ModelValidatorMockFactory.CommentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCommentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Comment>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ICommentRepository>();
-			var model = new ApiCommentRequestModel();
+			var model = new ApiCommentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CommentService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>78141e7c59eeb9845f7fd40635cb0b38</Hash>
+    <Hash>c356fefdfd1aa45f3ef2dc07da1dd4ee</Hash>
 </Codenesium>*/

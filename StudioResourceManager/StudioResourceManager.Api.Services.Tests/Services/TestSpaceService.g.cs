@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
-			List<ApiSpaceResponseModel> response = await service.All();
+			List<ApiSpaceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
-			ApiSpaceResponseModel response = await service.Get(default(int));
+			ApiSpaceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
-			ApiSpaceResponseModel response = await service.Get(default(int));
+			ApiSpaceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ISpaceRepository>();
-			var model = new ApiSpaceRequestModel();
+			var model = new ApiSpaceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Space>())).Returns(Task.FromResult(new Space()));
 			var service = new SpaceService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
-			CreateResponse<ApiSpaceResponseModel> response = await service.Create(model);
+			CreateResponse<ApiSpaceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceRequestModel>()));
+			mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Space>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ISpaceRepository>();
-			var model = new ApiSpaceRequestModel();
+			var model = new ApiSpaceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Space>())).Returns(Task.FromResult(new Space()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
 			var service = new SpaceService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
-			UpdateResponse<ApiSpaceResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiSpaceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceRequestModel>()));
+			mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Space>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ISpaceRepository>();
-			var model = new ApiSpaceRequestModel();
+			var model = new ApiSpaceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SpaceService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f4163014216d61ac379deb17e87509df</Hash>
+    <Hash>70c1e13d3d183fa12f5ac8b412a0c985</Hash>
 </Codenesium>*/

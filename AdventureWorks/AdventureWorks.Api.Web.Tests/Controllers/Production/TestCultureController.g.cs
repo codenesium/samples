@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			var record = new ApiCultureResponseModel();
-			var records = new List<ApiCultureResponseModel>();
+			var record = new ApiCultureServerResponseModel();
+			var records = new List<ApiCultureServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCultureResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCultureServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCultureResponseModel>>(new List<ApiCultureResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCultureServerResponseModel>>(new List<ApiCultureServerResponseModel>()));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCultureResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCultureServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureServerResponseModel()));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCultureResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCultureServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureServerResponseModel>(null));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCultureResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCultureResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCultureServerResponseModel>.CreateResponse(null as ApiCultureServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCultureServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureServerResponseModel>>(mockResponse));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCultureRequestModel>();
-			records.Add(new ApiCultureRequestModel());
+			var records = new List<ApiCultureServerRequestModel>();
+			records.Add(new ApiCultureServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCultureResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCultureServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCultureResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCultureServerResponseModel>>(null as ApiCultureServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureServerResponseModel>>(mockResponse.Object));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCultureRequestModel>();
-			records.Add(new ApiCultureRequestModel());
+			var records = new List<ApiCultureServerRequestModel>();
+			records.Add(new ApiCultureServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCultureResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCultureResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCultureServerResponseModel>.CreateResponse(null as ApiCultureServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCultureServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureServerResponseModel>>(mockResponse));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCultureRequestModel());
+			IActionResult response = await controller.Create(new ApiCultureServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCultureResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCultureServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCultureResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCultureResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCultureServerResponseModel>>(null as ApiCultureServerResponseModel);
+			var mockRecord = new ApiCultureServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCultureServerResponseModel>>(mockResponse.Object));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCultureRequestModel());
+			IActionResult response = await controller.Create(new ApiCultureServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCultureResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCultureServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>()))
-			.Callback<string, ApiCultureRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>()))
+			.Callback<string, ApiCultureServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCultureResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureResponseModel>(new ApiCultureResponseModel()));
-			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCultureServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureServerResponseModel>(new ApiCultureServerResponseModel()));
+			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCultureRequestModel>();
+			var patch = new JsonPatchDocument<ApiCultureServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(string), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureServerResponseModel>(null));
 			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCultureRequestModel>();
+			var patch = new JsonPatchDocument<ApiCultureServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(string), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCultureResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCultureServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureResponseModel()));
-			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureServerResponseModel()));
+			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCultureRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCultureServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCultureResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCultureServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureResponseModel()));
-			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCultureServerResponseModel()));
+			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCultureRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCultureServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CultureControllerMockFacade mock = new CultureControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCultureResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCultureServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureResponseModel>(null));
-			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCultureServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCultureServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCultureServerResponseModel>(null));
+			CultureController controller = new CultureController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCultureServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCultureRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCultureServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ICultureService> ServiceMock { get; set; } = new Mock<ICultureService>();
 
-		public Mock<IApiCultureModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCultureModelMapper>();
+		public Mock<IApiCultureServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCultureServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>8173594eb2e507468a3c19cf17ca95da</Hash>
+    <Hash>af032f44024f26515c5885da97e9d28d</Hash>
 </Codenesium>*/

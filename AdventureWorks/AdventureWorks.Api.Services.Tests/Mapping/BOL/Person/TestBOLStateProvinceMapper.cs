@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLStateProvinceMapper();
-			ApiStateProvinceRequestModel model = new ApiStateProvinceRequestModel();
+			ApiStateProvinceServerRequestModel model = new ApiStateProvinceServerRequestModel();
 			model.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
 			BOStateProvince response = mapper.MapModelToBO(1, model);
 
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLStateProvinceMapper();
 			BOStateProvince bo = new BOStateProvince();
 			bo.SetProperties(1, "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
-			ApiStateProvinceResponseModel response = mapper.MapBOToModel(bo);
+			ApiStateProvinceServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CountryRegionCode.Should().Be("A");
 			response.IsOnlyStateProvinceFlag.Should().Be(true);
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLStateProvinceMapper();
 			BOStateProvince bo = new BOStateProvince();
 			bo.SetProperties(1, "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
-			List<ApiStateProvinceResponseModel> response = mapper.MapBOToModel(new List<BOStateProvince>() { { bo } });
+			List<ApiStateProvinceServerResponseModel> response = mapper.MapBOToModel(new List<BOStateProvince>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>287de075677b0e1e4101f6eb738c4136</Hash>
+    <Hash>ffba99ae69827a58170cbcd64c5c3f2c</Hash>
 </Codenesium>*/

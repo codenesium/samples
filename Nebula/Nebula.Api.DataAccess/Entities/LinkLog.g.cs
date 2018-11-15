@@ -26,24 +26,29 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		[Column("dateEntered")]
-		public DateTime DateEntered { get; private set; }
+		public virtual DateTime DateEntered { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("linkId")]
-		public int LinkId { get; private set; }
+		public virtual int LinkId { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("log")]
-		public string Log { get; private set; }
+		public virtual string Log { get; private set; }
 
 		[ForeignKey("LinkId")]
 		public virtual Link LinkNavigation { get; private set; }
+
+		public void SetLinkNavigation(Link item)
+		{
+			this.LinkNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>190ceaa86ab686f688e13e4c87e45f2c</Hash>
+    <Hash>59a131106a7353d12adafa8dfd85a3a4</Hash>
 </Codenesium>*/

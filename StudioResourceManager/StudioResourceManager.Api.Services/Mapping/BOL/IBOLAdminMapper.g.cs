@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BOAdmin MapModelToBO(
 			int id,
-			ApiAdminRequestModel model);
+			ApiAdminServerRequestModel model);
 
-		ApiAdminResponseModel MapBOToModel(
+		ApiAdminServerResponseModel MapBOToModel(
 			BOAdmin boAdmin);
 
-		List<ApiAdminResponseModel> MapBOToModel(
+		List<ApiAdminServerResponseModel> MapBOToModel(
 			List<BOAdmin> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b1260a138d8ca06ec688962e8f6acec</Hash>
+    <Hash>78bece7576cfd47c97c24ff08b016843</Hash>
 </Codenesium>*/

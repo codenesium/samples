@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace PetShippingNS.Api.Services
 		public PipelineStepStatuService(
 			ILogger<IPipelineStepStatuRepository> logger,
 			IPipelineStepStatuRepository pipelineStepStatuRepository,
-			IApiPipelineStepStatuRequestModelValidator pipelineStepStatuModelValidator,
-			IBOLPipelineStepStatuMapper bolpipelineStepStatuMapper,
-			IDALPipelineStepStatuMapper dalpipelineStepStatuMapper,
+			IApiPipelineStepStatuServerRequestModelValidator pipelineStepStatuModelValidator,
+			IBOLPipelineStepStatuMapper bolPipelineStepStatuMapper,
+			IDALPipelineStepStatuMapper dalPipelineStepStatuMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper)
 			: base(logger,
 			       pipelineStepStatuRepository,
 			       pipelineStepStatuModelValidator,
-			       bolpipelineStepStatuMapper,
-			       dalpipelineStepStatuMapper,
+			       bolPipelineStepStatuMapper,
+			       dalPipelineStepStatuMapper,
 			       bolPipelineStepMapper,
 			       dalPipelineStepMapper)
 		{
@@ -34,5 +27,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8189004efc36f0a3c7873478a22bad61</Hash>
+    <Hash>ebf133fc21d0d804a2146b0dbbb4ce5f</Hash>
 </Codenesium>*/

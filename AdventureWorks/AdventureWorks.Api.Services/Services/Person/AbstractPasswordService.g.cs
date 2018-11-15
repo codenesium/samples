@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IPasswordRepository PasswordRepository { get; private set; }
 
-		protected IApiPasswordRequestModelValidator PasswordModelValidator { get; private set; }
+		protected IApiPasswordServerRequestModelValidator PasswordModelValidator { get; private set; }
 
 		protected IBOLPasswordMapper BolPasswordMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractPasswordService(
 			ILogger logger,
 			IPasswordRepository passwordRepository,
-			IApiPasswordRequestModelValidator passwordModelValidator,
+			IApiPasswordServerRequestModelValidator passwordModelValidator,
 			IBOLPasswordMapper bolPasswordMapper,
 			IDALPasswordMapper dalPasswordMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPasswordResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPasswordServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PasswordRepository.All(limit, offset);
 
 			return this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPasswordResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiPasswordServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.PasswordRepository.Get(businessEntityID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
-			ApiPasswordRequestModel model)
+		public virtual async Task<CreateResponse<ApiPasswordServerResponseModel>> Create(
+			ApiPasswordServerRequestModel model)
 		{
-			CreateResponse<ApiPasswordResponseModel> response = new CreateResponse<ApiPasswordResponseModel>(await this.PasswordModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPasswordServerResponseModel> response = ValidationResponseFactory<ApiPasswordServerResponseModel>.CreateResponse(await this.PasswordModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPasswordMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPasswordResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPasswordServerResponseModel>> Update(
 			int businessEntityID,
-			ApiPasswordRequestModel model)
+			ApiPasswordServerRequestModel model)
 		{
 			var validationResult = await this.PasswordModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PasswordRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiPasswordResponseModel>(this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPasswordServerResponseModel>.UpdateResponse(this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPasswordResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPasswordServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.PasswordModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PasswordModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.PasswordRepository.Delete(businessEntityID);
@@ -111,5 +108,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d753869dd6b360b5c6a4cd67e6566ab1</Hash>
+    <Hash>da36bca2de87bec1d803b04d128aeaae</Hash>
 </Codenesium>*/

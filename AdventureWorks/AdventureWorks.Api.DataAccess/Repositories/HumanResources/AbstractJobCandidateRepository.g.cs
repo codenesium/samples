@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.BusinessEntityID == businessEntityID, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<JobCandidate, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<JobCandidate, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<JobCandidate, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.JobCandidateID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<JobCandidate>();
-			}
-			else
-			{
-				return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<JobCandidate>();
-			}
+			return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<JobCandidate>();
 		}
 
 		private async Task<JobCandidate> GetById(int jobCandidateID)
@@ -113,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ae17cc07876d074b9207dbf52213faa9</Hash>
+    <Hash>4955923c90be15740d26bccf431e49ba</Hash>
 </Codenesium>*/

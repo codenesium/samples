@@ -2,29 +2,26 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IIllustrationService
 	{
-		Task<CreateResponse<ApiIllustrationResponseModel>> Create(
-			ApiIllustrationRequestModel model);
+		Task<CreateResponse<ApiIllustrationServerResponseModel>> Create(
+			ApiIllustrationServerRequestModel model);
 
-		Task<UpdateResponse<ApiIllustrationResponseModel>> Update(int illustrationID,
-		                                                           ApiIllustrationRequestModel model);
+		Task<UpdateResponse<ApiIllustrationServerResponseModel>> Update(int illustrationID,
+		                                                                 ApiIllustrationServerRequestModel model);
 
 		Task<ActionResponse> Delete(int illustrationID);
 
-		Task<ApiIllustrationResponseModel> Get(int illustrationID);
+		Task<ApiIllustrationServerResponseModel> Get(int illustrationID);
 
-		Task<List<ApiIllustrationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiIllustrationResponseModel>> ByProductModelID(int illustrationID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiIllustrationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd7c4c3a937280e6a6925049e8a6178e</Hash>
+    <Hash>99e6a68cbc68a5394378d499986e85b3</Hash>
 </Codenesium>*/

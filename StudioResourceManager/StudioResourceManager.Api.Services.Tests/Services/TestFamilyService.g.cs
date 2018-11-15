@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			List<ApiFamilyResponseModel> response = await service.All();
+			List<ApiFamilyServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			ApiFamilyResponseModel response = await service.Get(default(int));
+			ApiFamilyServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			ApiFamilyResponseModel response = await service.Get(default(int));
+			ApiFamilyServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IFamilyRepository>();
-			var model = new ApiFamilyRequestModel();
+			var model = new ApiFamilyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Family>())).Returns(Task.FromResult(new Family()));
 			var service = new FamilyService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			CreateResponse<ApiFamilyResponseModel> response = await service.Create(model);
+			CreateResponse<ApiFamilyServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyRequestModel>()));
+			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Family>()));
 		}
 
@@ -103,7 +103,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IFamilyRepository>();
-			var model = new ApiFamilyRequestModel();
+			var model = new ApiFamilyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Family>())).Returns(Task.FromResult(new Family()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
 			var service = new FamilyService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			UpdateResponse<ApiFamilyResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiFamilyServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()));
+			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Family>()));
 		}
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IFamilyRepository>();
-			var model = new ApiFamilyRequestModel();
+			var model = new ApiFamilyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new FamilyService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			List<ApiStudentResponseModel> response = await service.StudentsByFamilyId(default(int));
+			List<ApiStudentServerResponseModel> response = await service.StudentsByFamilyId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock);
 
-			List<ApiStudentResponseModel> response = await service.StudentsByFamilyId(default(int));
+			List<ApiStudentServerResponseModel> response = await service.StudentsByFamilyId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -185,5 +185,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>193bdf3ab17acd40d2e202ce8917211c</Hash>
+    <Hash>21a74906c47146ab46ee66b656f49ebb</Hash>
 </Codenesium>*/

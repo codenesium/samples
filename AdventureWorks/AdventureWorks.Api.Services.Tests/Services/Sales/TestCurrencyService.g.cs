@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyResponseModel> response = await service.All();
+			List<ApiCurrencyServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			ApiCurrencyResponseModel response = await service.Get(default(string));
+			ApiCurrencyServerResponseModel response = await service.Get(default(string));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			ApiCurrencyResponseModel response = await service.Get(default(string));
+			ApiCurrencyServerResponseModel response = await service.Get(default(string));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -82,7 +82,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			var model = new ApiCurrencyRequestModel();
+			var model = new ApiCurrencyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Currency>())).Returns(Task.FromResult(new Currency()));
 			var service = new CurrencyService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			CreateResponse<ApiCurrencyResponseModel> response = await service.Create(model);
+			CreateResponse<ApiCurrencyServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCurrencyRequestModel>()));
+			mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCurrencyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Currency>()));
 		}
 
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			var model = new ApiCurrencyRequestModel();
+			var model = new ApiCurrencyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Currency>())).Returns(Task.FromResult(new Currency()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Currency()));
 			var service = new CurrencyService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			UpdateResponse<ApiCurrencyResponseModel> response = await service.Update(default(string), model);
+			UpdateResponse<ApiCurrencyServerResponseModel> response = await service.Update(default(string), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCurrencyRequestModel>()));
+			mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCurrencyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Currency>()));
 		}
 
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			var model = new ApiCurrencyRequestModel();
+			var model = new ApiCurrencyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
 			var service = new CurrencyService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			ApiCurrencyResponseModel response = await service.ByName(default(string));
+			ApiCurrencyServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -175,7 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			ApiCurrencyResponseModel response = await service.ByName(default(string));
+			ApiCurrencyServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -196,7 +196,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
+			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
+			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -236,7 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
+			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -255,7 +255,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
+			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
@@ -264,5 +264,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07e10afa8ce499c75dfa51b1d0f4614c</Hash>
+    <Hash>d42afc7a0b8647e5e682871d187c0599</Hash>
 </Codenesium>*/

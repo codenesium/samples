@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public DepartmentService(
 			ILogger<IDepartmentRepository> logger,
 			IDepartmentRepository departmentRepository,
-			IApiDepartmentRequestModelValidator departmentModelValidator,
-			IBOLDepartmentMapper boldepartmentMapper,
-			IDALDepartmentMapper daldepartmentMapper,
-			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
+			IApiDepartmentServerRequestModelValidator departmentModelValidator,
+			IBOLDepartmentMapper bolDepartmentMapper,
+			IDALDepartmentMapper dalDepartmentMapper)
 			: base(logger,
 			       departmentRepository,
 			       departmentModelValidator,
-			       boldepartmentMapper,
-			       daldepartmentMapper,
-			       bolEmployeeDepartmentHistoryMapper,
-			       dalEmployeeDepartmentHistoryMapper)
+			       bolDepartmentMapper,
+			       dalDepartmentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9623836e0189419fe435d58e66a80b2</Hash>
+    <Hash>bf3939e82ea9d216d3378f35bbcc7f5d</Hash>
 </Codenesium>*/

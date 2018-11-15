@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiJobCandidateResponseModel> response = await service.All();
+			List<ApiJobCandidateServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiJobCandidateResponseModel response = await service.Get(default(int));
+			ApiJobCandidateServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiJobCandidateResponseModel response = await service.Get(default(int));
+			ApiJobCandidateServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
-			var model = new ApiJobCandidateRequestModel();
+			var model = new ApiJobCandidateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<JobCandidate>())).Returns(Task.FromResult(new JobCandidate()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			CreateResponse<ApiJobCandidateResponseModel> response = await service.Create(model);
+			CreateResponse<ApiJobCandidateServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateRequestModel>()));
+			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<JobCandidate>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
-			var model = new ApiJobCandidateRequestModel();
+			var model = new ApiJobCandidateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<JobCandidate>())).Returns(Task.FromResult(new JobCandidate()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new JobCandidate()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			UpdateResponse<ApiJobCandidateResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiJobCandidateServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateRequestModel>()));
+			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<JobCandidate>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
-			var model = new ApiJobCandidateRequestModel();
+			var model = new ApiJobCandidateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new JobCandidateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(int?));
+			List<ApiJobCandidateServerResponseModel> response = await service.ByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiJobCandidateResponseModel> response = await service.ByBusinessEntityID(default(int?));
+			List<ApiJobCandidateServerResponseModel> response = await service.ByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8176fc5a7381a6a77812b11a0f8f9845</Hash>
+    <Hash>7856864868f46623cd02069aaa4286b5</Hash>
 </Codenesium>*/

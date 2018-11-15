@@ -60,6 +60,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<Shift> Shifts { get; set; }
 
+		public virtual DbSet<VEmployee> VEmployees { get; set; }
+
+		public virtual DbSet<VEmployeeDepartment> VEmployeeDepartments { get; set; }
+
+		public virtual DbSet<VEmployeeDepartmentHistory> VEmployeeDepartmentHistories { get; set; }
+
+		public virtual DbSet<VJobCandidate> VJobCandidates { get; set; }
+
+		public virtual DbSet<VJobCandidateEducation> VJobCandidateEducations { get; set; }
+
+		public virtual DbSet<VJobCandidateEmployment> VJobCandidateEmployments { get; set; }
+
 		public virtual DbSet<Address> Addresses { get; set; }
 
 		public virtual DbSet<AddressType> AddressTypes { get; set; }
@@ -85,6 +97,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual DbSet<PhoneNumberType> PhoneNumberTypes { get; set; }
 
 		public virtual DbSet<StateProvince> StateProvinces { get; set; }
+
+		public virtual DbSet<VAdditionalContactInfo> VAdditionalContactInfoes { get; set; }
 
 		public virtual DbSet<VStateProvinceCountryRegion> VStateProvinceCountryRegions { get; set; }
 
@@ -136,6 +150,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<VProductAndDescription> VProductAndDescriptions { get; set; }
 
+		public virtual DbSet<VProductModelCatalogDescription> VProductModelCatalogDescriptions { get; set; }
+
+		public virtual DbSet<VProductModelInstruction> VProductModelInstructions { get; set; }
+
 		public virtual DbSet<WorkOrder> WorkOrders { get; set; }
 
 		public virtual DbSet<WorkOrderRouting> WorkOrderRoutings { get; set; }
@@ -149,6 +167,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual DbSet<ShipMethod> ShipMethods { get; set; }
 
 		public virtual DbSet<Vendor> Vendors { get; set; }
+
+		public virtual DbSet<VVendorWithAddress> VVendorWithAddresses { get; set; }
+
+		public virtual DbSet<VVendorWithContact> VVendorWithContacts { get; set; }
 
 		public virtual DbSet<CountryRegionCurrency> CountryRegionCurrencies { get; set; }
 
@@ -188,6 +210,20 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<Store> Stores { get; set; }
 
+		public virtual DbSet<VIndividualCustomer> VIndividualCustomers { get; set; }
+
+		public virtual DbSet<VPersonDemographic> VPersonDemographics { get; set; }
+
+		public virtual DbSet<VSalesPerson> VSalesPersons { get; set; }
+
+		public virtual DbSet<VSalesPersonSalesByFiscalYear> VSalesPersonSalesByFiscalYears { get; set; }
+
+		public virtual DbSet<VStoreWithAddress> VStoreWithAddresses { get; set; }
+
+		public virtual DbSet<VStoreWithContact> VStoreWithContacts { get; set; }
+
+		public virtual DbSet<VStoreWithDemographic> VStoreWithDemographics { get; set; }
+
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
 		/// ROWGUID is a very common type of column and it does not work with SQLite.
@@ -199,18 +235,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var createdEntry in entries)
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-
-					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
 					if (tenantEntity != null)
 					{
 						tenantEntity.CurrentValue = this.TenantId;
@@ -315,6 +345,109 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("ShiftID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+			modelBuilder.Entity<VEmployee>()
+			.HasKey(c => new
+			{
+				c.AdditionalContactInfo,
+				c.AddressLine1,
+				c.AddressLine2,
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegionName,
+				c.EmailAddress,
+				c.EmailPromotion,
+				c.FirstName,
+				c.JobTitle,
+				c.LastName,
+				c.MiddleName,
+				c.PhoneNumber,
+				c.PhoneNumberType,
+				c.PostalCode,
+				c.StateProvinceName,
+				c.Suffix,
+				c.Title,
+			});
+			modelBuilder.Entity<VEmployeeDepartment>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.Department,
+				c.FirstName,
+				c.GroupName,
+				c.JobTitle,
+				c.LastName,
+				c.MiddleName,
+				c.StartDate,
+				c.Suffix,
+				c.Title,
+			});
+			modelBuilder.Entity<VEmployeeDepartmentHistory>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.Department,
+				c.EndDate,
+				c.FirstName,
+				c.GroupName,
+				c.LastName,
+				c.MiddleName,
+				c.Shift,
+				c.StartDate,
+				c.Suffix,
+				c.Title,
+			});
+			modelBuilder.Entity<VJobCandidate>()
+			.HasKey(c => new
+			{
+				c.AddrLocCity,
+				c.AddrLocCountryRegion,
+				c.AddrLocState,
+				c.AddrPostalCode,
+				c.AddrType,
+				c.BusinessEntityID,
+				c.EMail,
+				c.JobCandidateID,
+				c.ModifiedDate,
+				c.NameFirst,
+				c.NameLast,
+				c.NameMiddle,
+				c.NamePrefix,
+				c.NameSuffix,
+				c.Skill,
+				c.WebSite,
+			});
+			modelBuilder.Entity<VJobCandidateEducation>()
+			.HasKey(c => new
+			{
+				c.EduDegree,
+				c.EduEndDate,
+				c.EduGPA,
+				c.EduGPAScale,
+				c.EduLevel,
+				c.EduLocCity,
+				c.EduLocCountryRegion,
+				c.EduLocState,
+				c.EduMajor,
+				c.EduMinor,
+				c.EduSchool,
+				c.EduStartDate,
+				c.JobCandidateID,
+			});
+			modelBuilder.Entity<VJobCandidateEmployment>()
+			.HasKey(c => new
+			{
+				c.EmpEndDate,
+				c.EmpFunctionCategory,
+				c.EmpIndustryCategory,
+				c.EmpJobTitle,
+				c.EmpLocCity,
+				c.EmpLocCountryRegion,
+				c.EmpLocState,
+				c.EmpOrgName,
+				c.EmpResponsibility,
+				c.EmpStartDate,
+				c.JobCandidateID,
+			});
 
 			modelBuilder.Entity<Address>()
 			.HasKey(c => new
@@ -435,6 +568,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("StateProvinceID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+			modelBuilder.Entity<VAdditionalContactInfo>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegion,
+				c.EMailAddress,
+				c.EMailSpecialInstruction,
+				c.EMailTelephoneNumber,
+				c.FirstName,
+				c.HomeAddressSpecialInstruction,
+				c.LastName,
+				c.MiddleName,
+				c.ModifiedDate,
+				c.PostalCode,
+				c.Rowguid,
+				c.StateProvince,
+				c.Street,
+				c.TelephoneNumber,
+				c.TelephoneSpecialInstruction,
+			});
 
 			modelBuilder.Entity<VStateProvinceCountryRegion>()
 			.HasKey(c => new
@@ -465,11 +619,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				c.Rowguid,
 			});
-
-			modelBuilder.Entity<Document>()
-			.Property("Rowguid")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Illustration>()
 			.HasKey(c => new
@@ -532,6 +681,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("ProductDescriptionID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+			modelBuilder.Entity<ProductDocument>()
+			.HasKey(c => new
+			{
+				c.ModifiedDate,
+				c.ProductID,
+			});
 
 			modelBuilder.Entity<ProductInventory>()
 			.HasKey(c => new
@@ -654,6 +809,51 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.ProductID,
 			});
 
+			modelBuilder.Entity<VProductModelCatalogDescription>()
+			.HasKey(c => new
+			{
+				c.BikeFrame,
+				c.Color,
+				c.Copyright,
+				c.Crankset,
+				c.MaintenanceDescription,
+				c.Manufacturer,
+				c.Material,
+				c.ModifiedDate,
+				c.Name,
+				c.NoOfYear,
+				c.Pedal,
+				c.PictureAngle,
+				c.PictureSize,
+				c.ProductLine,
+				c.ProductModelID,
+				c.ProductPhotoID,
+				c.ProductURL,
+				c.RiderExperience,
+				c.Rowguid,
+				c.Saddle,
+				c.Style,
+				c.Summary,
+				c.WarrantyDescription,
+				c.WarrantyPeriod,
+				c.Wheel,
+			});
+			modelBuilder.Entity<VProductModelInstruction>()
+			.HasKey(c => new
+			{
+				c.Instruction,
+				c.LaborHour,
+				c.LocationID,
+				c.LotSize,
+				c.MachineHour,
+				c.ModifiedDate,
+				c.Name,
+				c.ProductModelID,
+				c.Rowguid,
+				c.SetupHour,
+				c.Step,
+			});
+
 			modelBuilder.Entity<WorkOrder>()
 			.HasKey(c => new
 			{
@@ -718,6 +918,36 @@ namespace AdventureWorksNS.Api.DataAccess
 			.HasKey(c => new
 			{
 				c.BusinessEntityID,
+			});
+
+			modelBuilder.Entity<VVendorWithAddress>()
+			.HasKey(c => new
+			{
+				c.AddressLine1,
+				c.AddressLine2,
+				c.AddressType,
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegionName,
+				c.Name,
+				c.PostalCode,
+				c.StateProvinceName,
+			});
+			modelBuilder.Entity<VVendorWithContact>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.ContactType,
+				c.EmailAddress,
+				c.EmailPromotion,
+				c.FirstName,
+				c.LastName,
+				c.MiddleName,
+				c.Name,
+				c.PhoneNumber,
+				c.PhoneNumberType,
+				c.Suffix,
+				c.Title,
 			});
 
 			modelBuilder.Entity<CountryRegionCurrency>()
@@ -892,6 +1122,128 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.BusinessEntityID,
 			});
 
+			modelBuilder.Entity<VIndividualCustomer>()
+			.HasKey(c => new
+			{
+				c.AddressLine1,
+				c.AddressLine2,
+				c.AddressType,
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegionName,
+				c.Demographic,
+				c.EmailAddress,
+				c.EmailPromotion,
+				c.FirstName,
+				c.LastName,
+				c.MiddleName,
+				c.PhoneNumber,
+				c.PhoneNumberType,
+				c.PostalCode,
+				c.StateProvinceName,
+				c.Suffix,
+				c.Title,
+			});
+			modelBuilder.Entity<VPersonDemographic>()
+			.HasKey(c => new
+			{
+				c.BirthDate,
+				c.BusinessEntityID,
+				c.DateFirstPurchase,
+				c.Education,
+				c.Gender,
+				c.HomeOwnerFlag,
+				c.MaritalStatu,
+				c.NumberCarsOwned,
+				c.NumberChildrenAtHome,
+				c.Occupation,
+				c.TotalChildren,
+				c.TotalPurchaseYTD,
+				c.YearlyIncome,
+			});
+			modelBuilder.Entity<VSalesPerson>()
+			.HasKey(c => new
+			{
+				c.AddressLine1,
+				c.AddressLine2,
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegionName,
+				c.EmailAddress,
+				c.EmailPromotion,
+				c.FirstName,
+				c.JobTitle,
+				c.LastName,
+				c.MiddleName,
+				c.PhoneNumber,
+				c.PhoneNumberType,
+				c.PostalCode,
+				c.SalesLastYear,
+				c.SalesQuota,
+				c.SalesYTD,
+				c.StateProvinceName,
+				c.Suffix,
+				c.TerritoryGroup,
+				c.TerritoryName,
+				c.Title,
+			});
+			modelBuilder.Entity<VSalesPersonSalesByFiscalYear>()
+			.HasKey(c => new
+			{
+				c.@A2002,
+				c.@A2003,
+				c.@A2004,
+				c.FullName,
+				c.JobTitle,
+				c.SalesPersonID,
+				c.SalesTerritory,
+			});
+			modelBuilder.Entity<VStoreWithAddress>()
+			.HasKey(c => new
+			{
+				c.AddressLine1,
+				c.AddressLine2,
+				c.AddressType,
+				c.BusinessEntityID,
+				c.City,
+				c.CountryRegionName,
+				c.Name,
+				c.PostalCode,
+				c.StateProvinceName,
+			});
+			modelBuilder.Entity<VStoreWithContact>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.ContactType,
+				c.EmailAddress,
+				c.EmailPromotion,
+				c.FirstName,
+				c.LastName,
+				c.MiddleName,
+				c.Name,
+				c.PhoneNumber,
+				c.PhoneNumberType,
+				c.Suffix,
+				c.Title,
+			});
+			modelBuilder.Entity<VStoreWithDemographic>()
+			.HasKey(c => new
+			{
+				c.AnnualRevenue,
+				c.AnnualSale,
+				c.BankName,
+				c.Brand,
+				c.BusinessEntityID,
+				c.BusinessType,
+				c.Internet,
+				c.Name,
+				c.NumberEmployee,
+				c.Specialty,
+				c.SquareFoot,
+				c.YearOpened,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -922,5 +1274,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74bd96761cbb2699e75bed9897a64b68</Hash>
+    <Hash>d02c360e74d738283b5bb054c3ef52a6</Hash>
 </Codenesium>*/

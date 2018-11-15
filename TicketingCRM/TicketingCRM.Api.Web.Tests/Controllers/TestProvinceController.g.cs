@@ -24,8 +24,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			var record = new ApiProvinceResponseModel();
-			var records = new List<ApiProvinceResponseModel>();
+			var record = new ApiProvinceServerResponseModel();
+			var records = new List<ApiProvinceServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiProvinceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiProvinceServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiProvinceResponseModel>>(new List<ApiProvinceResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiProvinceServerResponseModel>>(new List<ApiProvinceServerResponseModel>()));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiProvinceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiProvinceServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceServerResponseModel()));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiProvinceResponseModel;
+			var record = (response as OkObjectResult).Value as ApiProvinceServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceServerResponseModel>(null));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiProvinceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiProvinceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiProvinceServerResponseModel>.CreateResponse(null as ApiProvinceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiProvinceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceServerResponseModel>>(mockResponse));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiProvinceRequestModel>();
-			records.Add(new ApiProvinceRequestModel());
+			var records = new List<ApiProvinceServerRequestModel>();
+			records.Add(new ApiProvinceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiProvinceResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiProvinceServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiProvinceResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiProvinceServerResponseModel>>(null as ApiProvinceServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceServerResponseModel>>(mockResponse.Object));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiProvinceRequestModel>();
-			records.Add(new ApiProvinceRequestModel());
+			var records = new List<ApiProvinceServerRequestModel>();
+			records.Add(new ApiProvinceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiProvinceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiProvinceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiProvinceServerResponseModel>.CreateResponse(null as ApiProvinceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiProvinceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceServerResponseModel>>(mockResponse));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiProvinceRequestModel());
+			IActionResult response = await controller.Create(new ApiProvinceServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProvinceResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiProvinceServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiProvinceResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiProvinceResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiProvinceServerResponseModel>>(null as ApiProvinceServerResponseModel);
+			var mockRecord = new ApiProvinceServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiProvinceServerResponseModel>>(mockResponse.Object));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiProvinceRequestModel());
+			IActionResult response = await controller.Create(new ApiProvinceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiProvinceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiProvinceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()))
-			.Callback<int, ApiProvinceRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()))
+			.Callback<int, ApiProvinceServerRequestModel>(
 				(id, model) => model.CountryId.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiProvinceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceResponseModel>(new ApiProvinceResponseModel()));
-			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiProvinceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceServerResponseModel>(new ApiProvinceServerResponseModel()));
+			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiProvinceRequestModel>();
+			var patch = new JsonPatchDocument<ApiProvinceServerRequestModel>();
 			patch.Replace(x => x.CountryId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceServerResponseModel>(null));
 			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiProvinceRequestModel>();
+			var patch = new JsonPatchDocument<ApiProvinceServerRequestModel>();
 			patch.Replace(x => x.CountryId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiProvinceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiProvinceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceResponseModel()));
-			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceServerResponseModel()));
+			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiProvinceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProvinceServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiProvinceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiProvinceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceResponseModel()));
-			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiProvinceServerResponseModel()));
+			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiProvinceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProvinceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ProvinceControllerMockFacade mock = new ProvinceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiProvinceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiProvinceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceResponseModel>(null));
-			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiProvinceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProvinceServerResponseModel>(null));
+			ProvinceController controller = new ProvinceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiProvinceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiProvinceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiProvinceServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 		public Mock<IProvinceService> ServiceMock { get; set; } = new Mock<IProvinceService>();
 
-		public Mock<IApiProvinceModelMapper> ModelMapperMock { get; set; } = new Mock<IApiProvinceModelMapper>();
+		public Mock<IApiProvinceServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiProvinceServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc9495a42612aa402535732aa888a94c</Hash>
+    <Hash>20a73893a358e56cac5a2b7769d9bb86</Hash>
 </Codenesium>*/

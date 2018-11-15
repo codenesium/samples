@@ -51,64 +51,64 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(100)]
 		[Column("Addr.Loc.City")]
-		public string AddrLocCity { get; private set; }
+		public virtual string AddrLocCity { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Addr.Loc.CountryRegion")]
-		public string AddrLocCountryRegion { get; private set; }
+		public virtual string AddrLocCountryRegion { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Addr.Loc.State")]
-		public string AddrLocState { get; private set; }
+		public virtual string AddrLocState { get; private set; }
 
 		[MaxLength(20)]
 		[Column("Addr.PostalCode")]
-		public string AddrPostalCode { get; private set; }
+		public virtual string AddrPostalCode { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Addr.Type")]
-		public string AddrType { get; private set; }
+		public virtual string AddrType { get; private set; }
 
 		[Column("BusinessEntityID")]
-		public int? BusinessEntityID { get; private set; }
+		public virtual int? BusinessEntityID { get; private set; }
 
 		[Column("EMail")]
-		public string EMail { get; private set; }
+		public virtual string EMail { get; private set; }
 
 		[Column("JobCandidateID")]
-		public int JobCandidateID { get; private set; }
+		public virtual int JobCandidateID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Name.First")]
-		public string NameFirst { get; private set; }
+		public virtual string NameFirst { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Name.Last")]
-		public string NameLast { get; private set; }
+		public virtual string NameLast { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Name.Middle")]
-		public string NameMiddle { get; private set; }
+		public virtual string NameMiddle { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Name.Prefix")]
-		public string NamePrefix { get; private set; }
+		public virtual string NamePrefix { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Name.Suffix")]
-		public string NameSuffix { get; private set; }
+		public virtual string NameSuffix { get; private set; }
 
 		[Column("Skills")]
-		public string Skill { get; private set; }
+		public virtual string Skill { get; private set; }
 
 		[Column("WebSite")]
-		public string WebSite { get; private set; }
+		public virtual string WebSite { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e99ad85ce58633c68f130659a14268f5</Hash>
+    <Hash>88295e6c2d349f4bf573ef8e191bda10</Hash>
 </Codenesium>*/

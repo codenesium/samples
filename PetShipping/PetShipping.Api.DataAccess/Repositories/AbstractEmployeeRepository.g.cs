@@ -76,11 +76,6 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ClientCommunication>> ClientCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ClientCommunication>().Where(x => x.EmployeeId == employeeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
-		}
-
 		public async virtual Task<List<PipelineStep>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStep>().Where(x => x.ShipperId == shipperId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStep>();
@@ -91,26 +86,23 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<PipelineStepNote>().Where(x => x.EmployeeId == employeeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
 		}
 
+		public async virtual Task<List<CustomerCommunication>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<CustomerCommunication>().Where(x => x.EmployeeId == employeeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CustomerCommunication>();
+		}
+
 		protected async Task<List<Employee>> Where(
 			Expression<Func<Employee, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Employee, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Employee, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
-			}
-			else
-			{
-				return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
-			}
+			return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
 		}
 
 		private async Task<Employee> GetById(int id)
@@ -123,5 +115,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1d86502dc48dd666d137a10205152e3</Hash>
+    <Hash>8f3f9b9f7114f5ad3eea315b7f3af7ee</Hash>
 </Codenesium>*/

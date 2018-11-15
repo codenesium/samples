@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected IMachineService MachineService { get; private set; }
 
-		protected IApiMachineModelMapper MachineModelMapper { get; private set; }
+		protected IApiMachineServerModelMapper MachineModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractMachineController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IMachineService machineService,
-			IApiMachineModelMapper machineModelMapper
+			IApiMachineServerModelMapper machineModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiMachineResponseModel> response = await this.MachineService.All(query.Limit, query.Offset);
+			List<ApiMachineServerResponseModel> response = await this.MachineService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiMachineServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiMachineResponseModel response = await this.MachineService.Get(id);
+			ApiMachineServerResponseModel response = await this.MachineService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiMachineServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiMachineResponseModel> records = new List<ApiMachineResponseModel>();
+			List<ApiMachineServerResponseModel> records = new List<ApiMachineServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
+				CreateResponse<ApiMachineServerResponseModel> result = await this.MachineService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiMachineServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiMachineResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiMachineServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiMachineServerRequestModel model)
 		{
-			CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
+			CreateResponse<ApiMachineServerResponseModel> result = await this.MachineService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiMachineServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiMachineRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiMachineServerRequestModel> patch)
 		{
-			ApiMachineResponseModel record = await this.MachineService.Get(id);
+			ApiMachineServerResponseModel record = await this.MachineService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiMachineRequestModel model = await this.PatchModel(id, patch);
+				ApiMachineServerRequestModel model = await this.PatchModel(id, patch) as ApiMachineServerRequestModel;
 
-				UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, model);
+				UpdateResponse<ApiMachineServerResponseModel> result = await this.MachineService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiMachineResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiMachineServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineServerRequestModel model)
 		{
-			ApiMachineRequestModel request = await this.PatchModel(id, this.MachineModelMapper.CreatePatch(model));
+			ApiMachineServerRequestModel request = await this.PatchModel(id, this.MachineModelMapper.CreatePatch(model)) as ApiMachineServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiMachineResponseModel> result = await this.MachineService.Update(id, request);
+				UpdateResponse<ApiMachineServerResponseModel> result = await this.MachineService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.MachineService.Delete(id);
@@ -209,11 +219,11 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("byMachineGuid/{machineGuid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiMachineServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByMachineGuid(Guid machineGuid)
 		{
-			ApiMachineResponseModel response = await this.MachineService.ByMachineGuid(machineGuid);
+			ApiMachineServerResponseModel response = await this.MachineService.ByMachineGuid(machineGuid);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{assignedMachineId}/LinksByAssignedMachineId")]
+		[Route("{assignedMachineId}/Links")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> LinksByAssignedMachineId(int assignedMachineId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,29 +247,12 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkResponseModel> response = await this.MachineService.LinksByAssignedMachineId(assignedMachineId, query.Limit, query.Offset);
+			List<ApiLinkServerResponseModel> response = await this.MachineService.LinksByAssignedMachineId(assignedMachineId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("byTeamId/{teamId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTeamId(int teamId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiMachineResponseModel> response = await this.MachineService.ByTeamId(teamId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiMachineRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineRequestModel> patch)
+		private async Task<ApiMachineServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiMachineServerRequestModel> patch)
 		{
 			var record = await this.MachineService.Get(id);
 
@@ -269,7 +262,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiMachineRequestModel request = this.MachineModelMapper.MapResponseToRequest(record);
+				ApiMachineServerRequestModel request = this.MachineModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -278,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f58f348a86310965d3dd6387994dbec5</Hash>
+    <Hash>6b8448cba2c0c18874da9a28f1a67048</Hash>
 </Codenesium>*/

@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLTimestampCheckMapperMock,
 			                                        mock.DALMapperMockFactory.DALTimestampCheckMapperMock);
 
-			List<ApiTimestampCheckResponseModel> response = await service.All();
+			List<ApiTimestampCheckServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLTimestampCheckMapperMock,
 			                                        mock.DALMapperMockFactory.DALTimestampCheckMapperMock);
 
-			ApiTimestampCheckResponseModel response = await service.Get(default(int));
+			ApiTimestampCheckServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLTimestampCheckMapperMock,
 			                                        mock.DALMapperMockFactory.DALTimestampCheckMapperMock);
 
-			ApiTimestampCheckResponseModel response = await service.Get(default(int));
+			ApiTimestampCheckServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITimestampCheckRepository>();
-			var model = new ApiTimestampCheckRequestModel();
+			var model = new ApiTimestampCheckServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TimestampCheck>())).Returns(Task.FromResult(new TimestampCheck()));
 			var service = new TimestampCheckService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLTimestampCheckMapperMock,
 			                                        mock.DALMapperMockFactory.DALTimestampCheckMapperMock);
 
-			CreateResponse<ApiTimestampCheckResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTimestampCheckServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TimestampCheckModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ModelValidatorMockFactory.TimestampCheckModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTimestampCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TimestampCheck>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITimestampCheckRepository>();
-			var model = new ApiTimestampCheckRequestModel();
+			var model = new ApiTimestampCheckServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TimestampCheck>())).Returns(Task.FromResult(new TimestampCheck()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TimestampCheck()));
 			var service = new TimestampCheckService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLTimestampCheckMapperMock,
 			                                        mock.DALMapperMockFactory.DALTimestampCheckMapperMock);
 
-			UpdateResponse<ApiTimestampCheckResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTimestampCheckServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TimestampCheckModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ModelValidatorMockFactory.TimestampCheckModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TimestampCheck>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITimestampCheckRepository>();
-			var model = new ApiTimestampCheckRequestModel();
+			var model = new ApiTimestampCheckServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TimestampCheckService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>45e1b0b546b9cd3e9185fb4c027c30f1</Hash>
+    <Hash>d9ec003a1fb6e19d25b9e9a21a3a3381</Hash>
 </Codenesium>*/

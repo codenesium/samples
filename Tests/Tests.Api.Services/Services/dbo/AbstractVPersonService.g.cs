@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IVPersonRepository VPersonRepository { get; private set; }
 
-		protected IApiVPersonRequestModelValidator VPersonModelValidator { get; private set; }
+		protected IApiVPersonServerRequestModelValidator VPersonModelValidator { get; private set; }
 
 		protected IBOLVPersonMapper BolVPersonMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractVPersonService(
 			ILogger logger,
 			IVPersonRepository vPersonRepository,
-			IApiVPersonRequestModelValidator vPersonModelValidator,
+			IApiVPersonServerRequestModelValidator vPersonModelValidator,
 			IBOLVPersonMapper bolVPersonMapper,
 			IDALVPersonMapper dalVPersonMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiVPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.VPersonRepository.All(limit, offset);
 
 			return this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiVPersonResponseModel> Get(int personId)
+		public virtual async Task<ApiVPersonServerResponseModel> Get(int personId)
 		{
 			var record = await this.VPersonRepository.Get(personId);
 
@@ -59,9 +54,59 @@ namespace TestsNS.Api.Services
 				return this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record));
 			}
 		}
+
+		public virtual async Task<CreateResponse<ApiVPersonServerResponseModel>> Create(
+			ApiVPersonServerRequestModel model)
+		{
+			CreateResponse<ApiVPersonServerResponseModel> response = ValidationResponseFactory<ApiVPersonServerResponseModel>.CreateResponse(await this.VPersonModelValidator.ValidateCreateAsync(model));
+
+			if (response.Success)
+			{
+				var bo = this.BolVPersonMapper.MapModelToBO(default(int), model);
+				var record = await this.VPersonRepository.Create(this.DalVPersonMapper.MapBOToEF(bo));
+
+				response.SetRecord(this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record)));
+			}
+
+			return response;
+		}
+
+		public virtual async Task<UpdateResponse<ApiVPersonServerResponseModel>> Update(
+			int personId,
+			ApiVPersonServerRequestModel model)
+		{
+			var validationResult = await this.VPersonModelValidator.ValidateUpdateAsync(personId, model);
+
+			if (validationResult.IsValid)
+			{
+				var bo = this.BolVPersonMapper.MapModelToBO(personId, model);
+				await this.VPersonRepository.Update(this.DalVPersonMapper.MapBOToEF(bo));
+
+				var record = await this.VPersonRepository.Get(personId);
+
+				return ValidationResponseFactory<ApiVPersonServerResponseModel>.UpdateResponse(this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record)));
+			}
+			else
+			{
+				return ValidationResponseFactory<ApiVPersonServerResponseModel>.UpdateResponse(validationResult);
+			}
+		}
+
+		public virtual async Task<ActionResponse> Delete(
+			int personId)
+		{
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.VPersonModelValidator.ValidateDeleteAsync(personId));
+
+			if (response.Success)
+			{
+				await this.VPersonRepository.Delete(personId);
+			}
+
+			return response;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>68092f4ea2252184a815fea45fa0f134</Hash>
+    <Hash>e59de247f2dbcf1bcc2e5c9b03814217</Hash>
 </Codenesium>*/

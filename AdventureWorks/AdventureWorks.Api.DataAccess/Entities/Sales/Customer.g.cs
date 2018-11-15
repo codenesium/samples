@@ -31,39 +31,47 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.TerritoryID = territoryID;
 		}
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[MaxLength(10)]
 		[Column("AccountNumber")]
-		public string AccountNumber { get; private set; }
+		public virtual string AccountNumber { get; private set; }
 
 		[Key]
 		[Column("CustomerID")]
-		public int CustomerID { get; private set; }
+		public virtual int CustomerID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("PersonID")]
-		public int? PersonID { get; private set; }
+		public virtual int? PersonID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("StoreID")]
-		public int? StoreID { get; private set; }
+		public virtual int? StoreID { get; private set; }
 
 		[Column("TerritoryID")]
-		public int? TerritoryID { get; private set; }
+		public virtual int? TerritoryID { get; private set; }
 
 		[ForeignKey("StoreID")]
 		public virtual Store StoreNavigation { get; private set; }
 
+		public void SetStoreNavigation(Store item)
+		{
+			this.StoreNavigation = item;
+		}
+
 		[ForeignKey("TerritoryID")]
 		public virtual SalesTerritory SalesTerritoryNavigation { get; private set; }
+
+		public void SetSalesTerritoryNavigation(SalesTerritory item)
+		{
+			this.SalesTerritoryNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>48543886f99407d771f3ec1752374795</Hash>
+    <Hash>89963b2ddfffb7f6d4e21dbb05646900</Hash>
 </Codenesium>*/

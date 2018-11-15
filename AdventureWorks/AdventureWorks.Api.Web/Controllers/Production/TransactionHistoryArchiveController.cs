@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TransactionHistoryArchiveController : AbstractTransactionHistoryArchiveController
 	{
 		public TransactionHistoryArchiveController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<TransactionHistoryArchiveController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITransactionHistoryArchiveService transactionHistoryArchiveService,
-			IApiTransactionHistoryArchiveModelMapper transactionHistoryArchiveModelMapper
+			IApiTransactionHistoryArchiveServerModelMapper transactionHistoryArchiveModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>646d33efa8dc8e98dae990d1ee53b644</Hash>
+    <Hash>52745853ec15095a1e9c55993f5a6660</Hash>
 </Codenesium>*/

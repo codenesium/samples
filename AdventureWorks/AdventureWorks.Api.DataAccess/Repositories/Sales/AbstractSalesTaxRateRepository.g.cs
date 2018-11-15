@@ -76,7 +76,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
+		public async virtual Task<SalesTaxRate> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
+		public async virtual Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
 			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
 		}
@@ -85,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<SalesTaxRate, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<SalesTaxRate, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<SalesTaxRate, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.SalesTaxRateID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
-			}
-			else
-			{
-				return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
-			}
+			return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
 		}
 
 		private async Task<SalesTaxRate> GetById(int salesTaxRateID)
@@ -113,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f67f533d56f443f4f8da72519155ce18</Hash>
+    <Hash>2cee544cc7b7da250261cf963c38da13</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class OrganizationController : AbstractOrganizationController
 	{
 		public OrganizationController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<OrganizationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IOrganizationService organizationService,
-			IApiOrganizationModelMapper organizationModelMapper
+			IApiOrganizationServerModelMapper organizationModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>72e1159f0804564e657f14ccc610466b</Hash>
+    <Hash>9a3131d067bfcfaf42f6e8b942804ffd</Hash>
 </Codenesium>*/

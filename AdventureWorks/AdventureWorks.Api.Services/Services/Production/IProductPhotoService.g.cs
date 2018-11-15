@@ -2,29 +2,26 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IProductPhotoService
 	{
-		Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
-			ApiProductPhotoRequestModel model);
+		Task<CreateResponse<ApiProductPhotoServerResponseModel>> Create(
+			ApiProductPhotoServerRequestModel model);
 
-		Task<UpdateResponse<ApiProductPhotoResponseModel>> Update(int productPhotoID,
-		                                                           ApiProductPhotoRequestModel model);
+		Task<UpdateResponse<ApiProductPhotoServerResponseModel>> Update(int productPhotoID,
+		                                                                 ApiProductPhotoServerRequestModel model);
 
 		Task<ActionResponse> Delete(int productPhotoID);
 
-		Task<ApiProductPhotoResponseModel> Get(int productPhotoID);
+		Task<ApiProductPhotoServerResponseModel> Get(int productPhotoID);
 
-		Task<List<ApiProductPhotoResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductPhotoServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b21fbeb11862aa971e6b366c36e5b395</Hash>
+    <Hash>b5e15d64525a235ecd02c3052eb2a953</Hash>
 </Codenesium>*/

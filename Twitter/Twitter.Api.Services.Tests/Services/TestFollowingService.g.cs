@@ -31,7 +31,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			List<ApiFollowingResponseModel> response = await service.All();
+			List<ApiFollowingServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -42,41 +42,41 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mock = new ServiceMockFacade<IFollowingRepository>();
 			var record = new Following();
-			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			ApiFollowingResponseModel response = await service.Get(default(string));
+			ApiFollowingServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
-			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void Get_null_record()
 		{
 			var mock = new ServiceMockFacade<IFollowingRepository>();
-			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<Following>(null));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Following>(null));
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			ApiFollowingResponseModel response = await service.Get(default(string));
+			ApiFollowingServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
-			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IFollowingRepository>();
-			var model = new ApiFollowingRequestModel();
+			var model = new ApiFollowingServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Following>())).Returns(Task.FromResult(new Following()));
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			CreateResponse<ApiFollowingResponseModel> response = await service.Create(model);
+			CreateResponse<ApiFollowingServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingRequestModel>()));
+			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Following>()));
 		}
 
@@ -95,19 +95,19 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IFollowingRepository>();
-			var model = new ApiFollowingRequestModel();
+			var model = new ApiFollowingServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Following>())).Returns(Task.FromResult(new Following()));
-			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Following()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Following()));
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			UpdateResponse<ApiFollowingResponseModel> response = await service.Update(default(string), model);
+			UpdateResponse<ApiFollowingServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiFollowingRequestModel>()));
+			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowingServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Following>()));
 		}
 
@@ -115,23 +115,23 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IFollowingRepository>();
-			var model = new ApiFollowingRequestModel();
-			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
+			var model = new ApiFollowingServerRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
-			ActionResponse response = await service.Delete(default(string));
+			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
-			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
-			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
+			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>24e45e0b2281e57ba79f9e63398e729e</Hash>
+    <Hash>1f0f589e38731325619ff70aa3c93424</Hash>
 </Codenesium>*/

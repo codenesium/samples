@@ -47,63 +47,68 @@ namespace TwitterNS.Api.DataAccess
 
 		[MaxLength(32)]
 		[Column("bio_img_url")]
-		public string BioImgUrl { get; private set; }
+		public virtual string BioImgUrl { get; private set; }
 
 		[Column("birthday")]
-		public DateTime? Birthday { get; private set; }
+		public virtual DateTime? Birthday { get; private set; }
 
 		[MaxLength(128)]
 		[Column("content_description")]
-		public string ContentDescription { get; private set; }
+		public virtual string ContentDescription { get; private set; }
 
 		[MaxLength(32)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[MaxLength(64)]
 		[Column("full_name")]
-		public string FullName { get; private set; }
+		public virtual string FullName { get; private set; }
 
 		[MaxLength(32)]
 		[Column("header_img_url")]
-		public string HeaderImgUrl { get; private set; }
+		public virtual string HeaderImgUrl { get; private set; }
 
 		[MaxLength(128)]
 		[Column("interest")]
-		public string Interest { get; private set; }
+		public virtual string Interest { get; private set; }
 
 		[Column("location_location_id")]
-		public int LocationLocationId { get; private set; }
+		public virtual int LocationLocationId { get; private set; }
 
 		[MaxLength(32)]
 		[Column("password")]
-		public string Password { get; private set; }
+		public virtual string Password { get; private set; }
 
 		[MaxLength(32)]
 		[Column("phone_number")]
-		public string PhoneNumber { get; private set; }
+		public virtual string PhoneNumber { get; private set; }
 
 		[MaxLength(1)]
 		[Column("privacy")]
-		public string Privacy { get; private set; }
+		public virtual string Privacy { get; private set; }
 
 		[Key]
 		[Column("user_id")]
-		public int UserId { get; private set; }
+		public virtual int UserId { get; private set; }
 
 		[MaxLength(64)]
 		[Column("username")]
-		public string Username { get; private set; }
+		public virtual string Username { get; private set; }
 
 		[MaxLength(32)]
 		[Column("website")]
-		public string Website { get; private set; }
+		public virtual string Website { get; private set; }
 
 		[ForeignKey("LocationLocationId")]
 		public virtual Location LocationNavigation { get; private set; }
+
+		public void SetLocationNavigation(Location item)
+		{
+			this.LocationNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98afe2b76c880ae9fdbdb7110ef1d768</Hash>
+    <Hash>1dfb48526689c0c20522175f54cb27b8</Hash>
 </Codenesium>*/

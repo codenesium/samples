@@ -76,9 +76,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<SalesTerritory> ByName(string name)
+		public async virtual Task<SalesTerritory> ByName(string name)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Name == name);
+		}
+
+		public async virtual Task<SalesTerritory> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<Customer>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
@@ -96,31 +101,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
 		}
 
-		public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistoriesByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
-		}
-
 		protected async Task<List<SalesTerritory>> Where(
 			Expression<Func<SalesTerritory, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<SalesTerritory, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<SalesTerritory, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.TerritoryID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
-			}
-			else
-			{
-				return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
-			}
+			return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
 		}
 
 		private async Task<SalesTerritory> GetById(int territoryID)
@@ -133,5 +125,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f7455f47cd0e64351bdda870aca45e61</Hash>
+    <Hash>c518c1e1651ea1197f66a994f58c2322</Hash>
 </Codenesium>*/

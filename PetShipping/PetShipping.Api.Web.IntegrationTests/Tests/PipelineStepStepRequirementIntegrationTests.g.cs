@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using PetShippingNS.Api.Client;
 using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,68 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PipelineStepStepRequirement")]
 	[Trait("Area", "Integration")]
-	public class PipelineStepStepRequirementIntegrationTests
+	public partial class PipelineStepStepRequirementIntegrationTests
 	{
 		public PipelineStepStepRequirementIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.PipelineStepStepRequirementDeleteAsync(1);
+			var model = new ApiPipelineStepStepRequirementClientRequestModel();
+			model.SetProperties("B", 1, true);
+			var model2 = new ApiPipelineStepStepRequirementClientRequestModel();
+			model2.SetProperties("C", 1, true);
+			var request = new List<ApiPipelineStepStepRequirementClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiPipelineStepStepRequirementClientResponseModel>> result = await client.PipelineStepStepRequirementBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<PipelineStepStepRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[1].PipelineStepId.Should().Be(1);
+			context.Set<PipelineStepStepRequirement>().ToList()[1].RequirementMet.Should().Be(true);
+
+			context.Set<PipelineStepStepRequirement>().ToList()[2].Detail.Should().Be("C");
+			context.Set<PipelineStepStepRequirement>().ToList()[2].PipelineStepId.Should().Be(1);
+			context.Set<PipelineStepStepRequirement>().ToList()[2].RequirementMet.Should().Be(true);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiPipelineStepStepRequirementClientRequestModel();
+			model.SetProperties("B", 1, true);
+			CreateResponse<ApiPipelineStepStepRequirementClientResponseModel> result = await client.PipelineStepStepRequirementCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<PipelineStepStepRequirement>().ToList()[1].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[1].PipelineStepId.Should().Be(1);
+			context.Set<PipelineStepStepRequirement>().ToList()[1].RequirementMet.Should().Be(true);
+
+			result.Record.Detail.Should().Be("B");
+			result.Record.PipelineStepId.Should().Be(1);
+			result.Record.RequirementMet.Should().Be(true);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +87,57 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiPipelineStepStepRequirementServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IPipelineStepStepRequirementService service = testServer.Host.Services.GetService(typeof(IPipelineStepStepRequirementService)) as IPipelineStepStepRequirementService;
+			ApiPipelineStepStepRequirementServerResponseModel model = await service.Get(1);
 
-			ApiPipelineStepStepRequirementResponseModel model = await client.PipelineStepStepRequirementGetAsync(1);
+			ApiPipelineStepStepRequirementClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", 1, true);
 
-			ApiPipelineStepStepRequirementModelMapper mapper = new ApiPipelineStepStepRequirementModelMapper();
+			UpdateResponse<ApiPipelineStepStepRequirementClientResponseModel> updateResponse = await client.PipelineStepStepRequirementUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiPipelineStepStepRequirementResponseModel> updateResponse = await client.PipelineStepStepRequirementUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<PipelineStepStepRequirement>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<PipelineStepStepRequirement>().ToList()[0].Detail.Should().Be("B");
+			context.Set<PipelineStepStepRequirement>().ToList()[0].PipelineStepId.Should().Be(1);
+			context.Set<PipelineStepStepRequirement>().ToList()[0].RequirementMet.Should().Be(true);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Detail.Should().Be("B");
+			updateResponse.Record.PipelineStepId.Should().Be(1);
+			updateResponse.Record.RequirementMet.Should().Be(true);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiPipelineStepStepRequirementRequestModel();
-			createModel.SetProperties("B", 1, true);
-			CreateResponse<ApiPipelineStepStepRequirementResponseModel> createResult = await client.PipelineStepStepRequirementCreateAsync(createModel);
+			IPipelineStepStepRequirementService service = testServer.Host.Services.GetService(typeof(IPipelineStepStepRequirementService)) as IPipelineStepStepRequirementService;
+			var model = new ApiPipelineStepStepRequirementServerRequestModel();
+			model.SetProperties("B", 1, true);
+			CreateResponse<ApiPipelineStepStepRequirementServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiPipelineStepStepRequirementResponseModel getResponse = await client.PipelineStepStepRequirementGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.PipelineStepStepRequirementDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiPipelineStepStepRequirementResponseModel verifyResponse = await client.PipelineStepStepRequirementGetAsync(2);
+			ApiPipelineStepStepRequirementServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +145,33 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiPipelineStepStepRequirementResponseModel response = await client.PipelineStepStepRequirementGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiPipelineStepStepRequirementClientResponseModel response = await client.PipelineStepStepRequirementGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Detail.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.PipelineStepId.Should().Be(1);
+			response.RequirementMet.Should().Be(true);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPipelineStepStepRequirementClientResponseModel response = await client.PipelineStepStepRequirementGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +180,37 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiPipelineStepStepRequirementResponseModel> response = await client.PipelineStepStepRequirementAllAsync();
+			List<ApiPipelineStepStepRequirementClientResponseModel> response = await client.PipelineStepStepRequirementAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Detail.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].PipelineStepId.Should().Be(1);
+			response[0].RequirementMet.Should().Be(true);
 		}
 
-		private async Task<ApiPipelineStepStepRequirementResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiPipelineStepStepRequirementRequestModel();
-			model.SetProperties("B", 1, true);
-			CreateResponse<ApiPipelineStepStepRequirementResponseModel> result = await client.PipelineStepStepRequirementCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.PipelineStepStepRequirementAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec13d1463e95e8dbd903cc48cda9ec5b</Hash>
+    <Hash>882c5c62d8a28e9651cdbd22e9d7d022</Hash>
 </Codenesium>*/

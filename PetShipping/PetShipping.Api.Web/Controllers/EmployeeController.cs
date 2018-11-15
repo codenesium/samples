@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class EmployeeController : AbstractEmployeeController
 	{
 		public EmployeeController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<EmployeeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmployeeService employeeService,
-			IApiEmployeeModelMapper employeeModelMapper
+			IApiEmployeeServerModelMapper employeeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5852fc33aa9a6a38d8dfc20e822e7456</Hash>
+    <Hash>0009f9ae92049adc3cc83d2400d156b1</Hash>
 </Codenesium>*/

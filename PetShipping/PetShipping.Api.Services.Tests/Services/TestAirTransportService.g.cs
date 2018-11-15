@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			List<ApiAirTransportResponseModel> response = await service.All();
+			List<ApiAirTransportServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			ApiAirTransportResponseModel response = await service.Get(default(int));
+			ApiAirTransportServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			ApiAirTransportResponseModel response = await service.Get(default(int));
+			ApiAirTransportServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IAirTransportRepository>();
-			var model = new ApiAirTransportRequestModel();
+			var model = new ApiAirTransportServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AirTransport>())).Returns(Task.FromResult(new AirTransport()));
 			var service = new AirTransportService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			CreateResponse<ApiAirTransportResponseModel> response = await service.Create(model);
+			CreateResponse<ApiAirTransportServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<AirTransport>()));
 		}
 
@@ -95,7 +95,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IAirTransportRepository>();
-			var model = new ApiAirTransportRequestModel();
+			var model = new ApiAirTransportServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AirTransport>())).Returns(Task.FromResult(new AirTransport()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 			var service = new AirTransportService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			UpdateResponse<ApiAirTransportResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiAirTransportServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<AirTransport>()));
 		}
 
@@ -115,7 +115,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IAirTransportRepository>();
-			var model = new ApiAirTransportRequestModel();
+			var model = new ApiAirTransportServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new AirTransportService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9aea6fefed058c294976d4d0ecf0ec98</Hash>
+    <Hash>d4b30085948bbbafe2a57a181696f16a</Hash>
 </Codenesium>*/

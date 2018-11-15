@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IVoteTypeService VoteTypeService { get; private set; }
 
-		protected IApiVoteTypeModelMapper VoteTypeModelMapper { get; private set; }
+		protected IApiVoteTypeServerModelMapper VoteTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractVoteTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVoteTypeService voteTypeService,
-			IApiVoteTypeModelMapper voteTypeModelMapper
+			IApiVoteTypeServerModelMapper voteTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVoteTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVoteTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVoteTypeResponseModel> response = await this.VoteTypeService.All(query.Limit, query.Offset);
+			List<ApiVoteTypeServerResponseModel> response = await this.VoteTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVoteTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiVoteTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiVoteTypeResponseModel response = await this.VoteTypeService.Get(id);
+			ApiVoteTypeServerResponseModel response = await this.VoteTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiVoteTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiVoteTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVoteTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVoteTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiVoteTypeResponseModel> records = new List<ApiVoteTypeResponseModel>();
+			List<ApiVoteTypeServerResponseModel> records = new List<ApiVoteTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiVoteTypeResponseModel> result = await this.VoteTypeService.Create(model);
+				CreateResponse<ApiVoteTypeServerResponseModel> result = await this.VoteTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiVoteTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiVoteTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiVoteTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVoteTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiVoteTypeServerRequestModel model)
 		{
-			CreateResponse<ApiVoteTypeResponseModel> result = await this.VoteTypeService.Create(model);
+			CreateResponse<ApiVoteTypeServerResponseModel> result = await this.VoteTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVoteTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVoteTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVoteTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVoteTypeServerRequestModel> patch)
 		{
-			ApiVoteTypeResponseModel record = await this.VoteTypeService.Get(id);
+			ApiVoteTypeServerResponseModel record = await this.VoteTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiVoteTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiVoteTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiVoteTypeServerRequestModel;
 
-				UpdateResponse<ApiVoteTypeResponseModel> result = await this.VoteTypeService.Update(id, model);
+				UpdateResponse<ApiVoteTypeServerResponseModel> result = await this.VoteTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVoteTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVoteTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVoteTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVoteTypeServerRequestModel model)
 		{
-			ApiVoteTypeRequestModel request = await this.PatchModel(id, this.VoteTypeModelMapper.CreatePatch(model));
+			ApiVoteTypeServerRequestModel request = await this.PatchModel(id, this.VoteTypeModelMapper.CreatePatch(model)) as ApiVoteTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiVoteTypeResponseModel> result = await this.VoteTypeService.Update(id, request);
+				UpdateResponse<ApiVoteTypeServerResponseModel> result = await this.VoteTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.VoteTypeService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiVoteTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiVoteTypeRequestModel> patch)
+		private async Task<ApiVoteTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiVoteTypeServerRequestModel> patch)
 		{
 			var record = await this.VoteTypeService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiVoteTypeRequestModel request = this.VoteTypeModelMapper.MapResponseToRequest(record);
+				ApiVoteTypeServerRequestModel request = this.VoteTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f8795e8a7ffc671de3c3d5fe69ad3667</Hash>
+    <Hash>f84766e1ea3b217baa0e40236db2bb34</Hash>
 </Codenesium>*/

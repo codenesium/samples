@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class LinkTypeController : AbstractLinkTypeController
 	{
 		public LinkTypeController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<LinkTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkTypeService linkTypeService,
-			IApiLinkTypeModelMapper linkTypeModelMapper
+			IApiLinkTypeServerModelMapper linkTypeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>517d962766fef57f525b06ebe68a2dd6</Hash>
+    <Hash>58d2108404912082f33a6605be66d21c</Hash>
 </Codenesium>*/

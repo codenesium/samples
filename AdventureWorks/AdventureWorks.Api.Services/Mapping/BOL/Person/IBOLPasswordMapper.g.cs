@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOPassword MapModelToBO(
 			int businessEntityID,
-			ApiPasswordRequestModel model);
+			ApiPasswordServerRequestModel model);
 
-		ApiPasswordResponseModel MapBOToModel(
+		ApiPasswordServerResponseModel MapBOToModel(
 			BOPassword boPassword);
 
-		List<ApiPasswordResponseModel> MapBOToModel(
+		List<ApiPasswordServerResponseModel> MapBOToModel(
 			List<BOPassword> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>340d5b01b04400c595f3db52fc8b5538</Hash>
+    <Hash>c800f0ac8241dfbc72a2d7c42a2cde34</Hash>
 </Codenesium>*/

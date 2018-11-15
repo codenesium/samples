@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PasswordController : AbstractPasswordController
 	{
 		public PasswordController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<PasswordController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPasswordService passwordService,
-			IApiPasswordModelMapper passwordModelMapper
+			IApiPasswordServerModelMapper passwordModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8a2fdf021753ba5eb28f856ba1efe307</Hash>
+    <Hash>7c09be5150ddecf0f500b621235f7afa</Hash>
 </Codenesium>*/

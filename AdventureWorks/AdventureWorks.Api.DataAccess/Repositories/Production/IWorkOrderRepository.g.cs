@@ -20,11 +20,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<WorkOrder>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<WorkOrderRouting>> WorkOrderRoutingsByWorkOrderID(int workOrderID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>edd867361cfea0240eee27c8d07fc06a</Hash>
+    <Hash>4aa22c2f73b6c0b3d5e09c5157effc5b</Hash>
 </Codenesium>*/

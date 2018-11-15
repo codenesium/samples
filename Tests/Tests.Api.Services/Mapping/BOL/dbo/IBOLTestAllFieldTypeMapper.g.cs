@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOTestAllFieldType MapModelToBO(
 			int id,
-			ApiTestAllFieldTypeRequestModel model);
+			ApiTestAllFieldTypeServerRequestModel model);
 
-		ApiTestAllFieldTypeResponseModel MapBOToModel(
+		ApiTestAllFieldTypeServerResponseModel MapBOToModel(
 			BOTestAllFieldType boTestAllFieldType);
 
-		List<ApiTestAllFieldTypeResponseModel> MapBOToModel(
+		List<ApiTestAllFieldTypeServerResponseModel> MapBOToModel(
 			List<BOTestAllFieldType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>76d54b37aa77c925ccb1f2bfe07218a4</Hash>
+    <Hash>9a5cc6e096954c2b9d8d4cf9f978b3e6</Hash>
 </Codenesium>*/

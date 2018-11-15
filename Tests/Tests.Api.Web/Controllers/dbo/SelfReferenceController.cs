@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SelfReferenceController : AbstractSelfReferenceController
 	{
 		public SelfReferenceController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<SelfReferenceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISelfReferenceService selfReferenceService,
-			IApiSelfReferenceModelMapper selfReferenceModelMapper
+			IApiSelfReferenceServerModelMapper selfReferenceModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9dbb1175366dbd53ff17dc3d3f02be7d</Hash>
+    <Hash>fd01151b9c7215f7136197463a3f25fd</Hash>
 </Codenesium>*/

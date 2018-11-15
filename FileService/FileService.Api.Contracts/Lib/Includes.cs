@@ -1,8 +1,7 @@
-using FluentValidation.Results;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace FileServiceNS.Api.Contracts
 {
@@ -18,7 +17,7 @@ namespace FileServiceNS.Api.Contracts
 		[JsonProperty]
         public string ErrorMessage { get; set; } = string.Empty;
 
-	    [JsonProperty]
+		[JsonProperty]
         public string PropertyName { get; set; } = string.Empty;
 
 		[JsonProperty]
@@ -27,16 +26,17 @@ namespace FileServiceNS.Api.Contracts
 
     public class CreateResponse<T> : ActionResponse
     {
-	    [JsonProperty]
+		[JsonProperty]
         public virtual T Record { get; private set; }
-
-        public CreateResponse(FluentValidation.Results.ValidationResult result)
-                : base(result)
-        {
-        }
 
 		public CreateResponse()
 		{
+		}
+
+		public CreateResponse(T record)
+		{
+			this.SetRecord(record);
+			this.Success = true;
 		}
 
         public virtual void SetRecord(T record)
@@ -48,22 +48,17 @@ namespace FileServiceNS.Api.Contracts
 	
     public class UpdateResponse<T> : ActionResponse
     {
-	    [JsonProperty]
+		[JsonProperty]
         public virtual T Record { get; private set; }
 
-        public UpdateResponse(FluentValidation.Results.ValidationResult result)
-                : base(result)
-        {
-        }
+		public UpdateResponse()
+		{
+		}
 
 		public UpdateResponse(T record)
 		{
 			this.SetRecord(record);
 			this.Success = true;
-		}
-
-		public UpdateResponse()
-		{
 		}
 
         public virtual void SetRecord(T record)
@@ -74,7 +69,7 @@ namespace FileServiceNS.Api.Contracts
 
     public interface IActionResponse
     {
-        bool Success { get; }
+        bool Success { get; set;}
 
         List<ValidationError> ValidationErrors { get; }
     }
@@ -82,22 +77,9 @@ namespace FileServiceNS.Api.Contracts
     public class ActionResponse : IActionResponse
     {
 		[JsonProperty]
-        public virtual bool Success { get; protected set; }
+        public virtual bool Success { get; set; }
 
 		[JsonProperty]
         public virtual List<ValidationError> ValidationErrors { get; private set; } = new List<ValidationError>();
-
-        public ActionResponse()
-        {
-        }
-
-        public ActionResponse(ValidationResult result)
-        {
-            this.Success = result.IsValid;
-            foreach (ValidationFailure error in result.Errors)
-            {
-                this.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
-            }
-        }
     }
 }

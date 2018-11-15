@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class RowVersionCheckController : AbstractRowVersionCheckController
 	{
 		public RowVersionCheckController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<RowVersionCheckController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRowVersionCheckService rowVersionCheckService,
-			IApiRowVersionCheckModelMapper rowVersionCheckModelMapper
+			IApiRowVersionCheckServerModelMapper rowVersionCheckModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>95fffd682680f249edb705608ddbff9a</Hash>
+    <Hash>8459c86f439415a9309594b346aa3754</Hash>
 </Codenesium>*/

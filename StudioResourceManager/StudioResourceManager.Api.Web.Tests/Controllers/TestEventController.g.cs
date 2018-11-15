@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			var record = new ApiEventResponseModel();
-			var records = new List<ApiEventResponseModel>();
+			var record = new ApiEventServerResponseModel();
+			var records = new List<ApiEventServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiEventResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiEventServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiEventResponseModel>>(new List<ApiEventResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiEventServerResponseModel>>(new List<ApiEventServerResponseModel>()));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiEventResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiEventServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventServerResponseModel()));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiEventResponseModel;
+			var record = (response as OkObjectResult).Value as ApiEventServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventServerResponseModel>(null));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiEventResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiEventResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiEventServerResponseModel>.CreateResponse(null as ApiEventServerResponseModel);
+
+			mockResponse.SetRecord(new ApiEventServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventServerResponseModel>>(mockResponse));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiEventRequestModel>();
-			records.Add(new ApiEventRequestModel());
+			var records = new List<ApiEventServerRequestModel>();
+			records.Add(new ApiEventServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiEventResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiEventServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiEventResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiEventServerResponseModel>>(null as ApiEventServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventServerResponseModel>>(mockResponse.Object));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiEventRequestModel>();
-			records.Add(new ApiEventRequestModel());
+			var records = new List<ApiEventServerRequestModel>();
+			records.Add(new ApiEventServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiEventResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiEventResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiEventServerResponseModel>.CreateResponse(null as ApiEventServerResponseModel);
+
+			mockResponse.SetRecord(new ApiEventServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventServerResponseModel>>(mockResponse));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiEventRequestModel());
+			IActionResult response = await controller.Create(new ApiEventServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiEventResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiEventServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiEventResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiEventResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiEventServerResponseModel>>(null as ApiEventServerResponseModel);
+			var mockRecord = new ApiEventServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEventServerResponseModel>>(mockResponse.Object));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiEventRequestModel());
+			IActionResult response = await controller.Create(new ApiEventServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEventResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEventServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()))
-			.Callback<int, ApiEventRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()))
+			.Callback<int, ApiEventServerRequestModel>(
 				(id, model) => model.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiEventResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventResponseModel>(new ApiEventResponseModel()));
-			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiEventServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventServerResponseModel>(new ApiEventServerResponseModel()));
+			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiEventRequestModel>();
+			var patch = new JsonPatchDocument<ApiEventServerRequestModel>();
 			patch.Replace(x => x.ActualEndDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventServerResponseModel>(null));
 			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiEventRequestModel>();
+			var patch = new JsonPatchDocument<ApiEventServerRequestModel>();
 			patch.Replace(x => x.ActualEndDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEventResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEventServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventResponseModel()));
-			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventServerResponseModel()));
+			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEventRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEventServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEventResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEventServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventResponseModel()));
-			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEventServerResponseModel()));
+			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEventRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEventServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			EventControllerMockFacade mock = new EventControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEventResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEventServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventResponseModel>(null));
-			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEventServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventServerResponseModel>(null));
+			EventController controller = new EventController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEventServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEventRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEventServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<IEventService> ServiceMock { get; set; } = new Mock<IEventService>();
 
-		public Mock<IApiEventModelMapper> ModelMapperMock { get; set; } = new Mock<IApiEventModelMapper>();
+		public Mock<IApiEventServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiEventServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>68f38648e79e3370de81fffcf89245af</Hash>
+    <Hash>30b53672a81e04c75a31be24c072f0a2</Hash>
 </Codenesium>*/

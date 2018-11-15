@@ -40,48 +40,48 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Department")]
-		public string Department { get; private set; }
+		public virtual string Department { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("FirstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("GroupName")]
-		public string GroupName { get; private set; }
+		public virtual string GroupName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("LastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("MiddleName")]
-		public string MiddleName { get; private set; }
+		public virtual string MiddleName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Shift")]
-		public string Shift { get; private set; }
+		public virtual string Shift { get; private set; }
 
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
 		[MaxLength(10)]
 		[Column("Suffix")]
-		public string Suffix { get; private set; }
+		public virtual string Suffix { get; private set; }
 
 		[MaxLength(8)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>34e97603681eace2f98c05c4435b38e1</Hash>
+    <Hash>9c4aca43a537a14540bedebc7e80daf5</Hash>
 </Codenesium>*/

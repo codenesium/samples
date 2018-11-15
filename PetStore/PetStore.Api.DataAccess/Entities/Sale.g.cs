@@ -32,38 +32,48 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		[Column("amount")]
-		public decimal Amount { get; private set; }
+		public virtual decimal Amount { get; private set; }
 
 		[MaxLength(90)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(90)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[Column("paymentTypeId")]
-		public int PaymentTypeId { get; private set; }
+		public virtual int PaymentTypeId { get; private set; }
 
 		[Column("petId")]
-		public int PetId { get; private set; }
+		public virtual int PetId { get; private set; }
 
 		[MaxLength(10)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 
 		[ForeignKey("PaymentTypeId")]
 		public virtual PaymentType PaymentTypeNavigation { get; private set; }
 
+		public void SetPaymentTypeNavigation(PaymentType item)
+		{
+			this.PaymentTypeNavigation = item;
+		}
+
 		[ForeignKey("PetId")]
 		public virtual Pet PetNavigation { get; private set; }
+
+		public void SetPetNavigation(Pet item)
+		{
+			this.PetNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1571b1fadae767a1223ca6f9c6c26697</Hash>
+    <Hash>41f20f2330167eb36c838bd40581bdac</Hash>
 </Codenesium>*/

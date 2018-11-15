@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		protected IAdminRepository AdminRepository { get; private set; }
 
-		protected IApiAdminRequestModelValidator AdminModelValidator { get; private set; }
+		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
 
 		protected IBOLAdminMapper BolAdminMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace TicketingCRMNS.Api.Services
 		public AbstractAdminService(
 			ILogger logger,
 			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
+			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper,
 			IBOLVenueMapper bolVenueMapper,
@@ -47,14 +42,14 @@ namespace TicketingCRMNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.AdminRepository.All(limit, offset);
 
 			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiAdminResponseModel> Get(int id)
+		public virtual async Task<ApiAdminServerResponseModel> Get(int id)
 		{
 			var record = await this.AdminRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace TicketingCRMNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
-			ApiAdminRequestModel model)
+		public virtual async Task<CreateResponse<ApiAdminServerResponseModel>> Create(
+			ApiAdminServerRequestModel model)
 		{
-			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.AdminModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAdminServerResponseModel> response = ValidationResponseFactory<ApiAdminServerResponseModel>.CreateResponse(await this.AdminModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiAdminResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiAdminServerResponseModel>> Update(
 			int id,
-			ApiAdminRequestModel model)
+			ApiAdminServerRequestModel model)
 		{
 			var validationResult = await this.AdminModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.AdminRepository.Get(id);
 
-				return new UpdateResponse<ApiAdminResponseModel>(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiAdminResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.AdminModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AdminModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.AdminRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiVenueResponseModel>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiVenueServerResponseModel>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Venue> records = await this.AdminRepository.VenuesByAdminId(adminId, limit, offset);
 
@@ -126,5 +123,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>281f8aa484f761c6c424dd9dc67cd4b7</Hash>
+    <Hash>12d6175e8d6a3bcd013bf60eb12b3d41</Hash>
 </Codenesium>*/

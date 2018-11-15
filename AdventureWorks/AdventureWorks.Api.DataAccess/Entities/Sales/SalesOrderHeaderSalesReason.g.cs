@@ -24,24 +24,34 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("SalesOrderID")]
-		public int SalesOrderID { get; private set; }
+		public virtual int SalesOrderID { get; private set; }
 
 		[Key]
 		[Column("SalesReasonID")]
-		public int SalesReasonID { get; private set; }
+		public virtual int SalesReasonID { get; private set; }
 
 		[ForeignKey("SalesOrderID")]
 		public virtual SalesOrderHeader SalesOrderHeaderNavigation { get; private set; }
 
+		public void SetSalesOrderHeaderNavigation(SalesOrderHeader item)
+		{
+			this.SalesOrderHeaderNavigation = item;
+		}
+
 		[ForeignKey("SalesReasonID")]
 		public virtual SalesReason SalesReasonNavigation { get; private set; }
+
+		public void SetSalesReasonNavigation(SalesReason item)
+		{
+			this.SalesReasonNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dba45de5c24191e4ff9b4084b4e55cab</Hash>
+    <Hash>bf8a98c28ec8218d6318b912f78329b8</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Web
 	{
 		protected ICountryService CountryService { get; private set; }
 
-		protected IApiCountryModelMapper CountryModelMapper { get; private set; }
+		protected IApiCountryServerModelMapper CountryModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AbstractCountryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryService countryService,
-			IApiCountryModelMapper countryModelMapper
+			IApiCountryServerModelMapper countryModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCountryResponseModel> response = await this.CountryService.All(query.Limit, query.Offset);
+			List<ApiCountryServerResponseModel> response = await this.CountryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCountryResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCountryServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCountryResponseModel response = await this.CountryService.Get(id);
+			ApiCountryServerResponseModel response = await this.CountryService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetShippingNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCountryServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCountryResponseModel> records = new List<ApiCountryResponseModel>();
+			List<ApiCountryServerResponseModel> records = new List<ApiCountryServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCountryResponseModel> result = await this.CountryService.Create(model);
+				CreateResponse<ApiCountryServerResponseModel> result = await this.CountryService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetShippingNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCountryServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCountryResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCountryServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCountryServerRequestModel model)
 		{
-			CreateResponse<ApiCountryResponseModel> result = await this.CountryService.Create(model);
+			CreateResponse<ApiCountryServerResponseModel> result = await this.CountryService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCountryServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCountryRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCountryServerRequestModel> patch)
 		{
-			ApiCountryResponseModel record = await this.CountryService.Get(id);
+			ApiCountryServerResponseModel record = await this.CountryService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiCountryRequestModel model = await this.PatchModel(id, patch);
+				ApiCountryServerRequestModel model = await this.PatchModel(id, patch) as ApiCountryServerRequestModel;
 
-				UpdateResponse<ApiCountryResponseModel> result = await this.CountryService.Update(id, model);
+				UpdateResponse<ApiCountryServerResponseModel> result = await this.CountryService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCountryResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCountryServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCountryRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCountryServerRequestModel model)
 		{
-			ApiCountryRequestModel request = await this.PatchModel(id, this.CountryModelMapper.CreatePatch(model));
+			ApiCountryServerRequestModel request = await this.PatchModel(id, this.CountryModelMapper.CreatePatch(model)) as ApiCountryServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCountryResponseModel> result = await this.CountryService.Update(id, request);
+				UpdateResponse<ApiCountryServerResponseModel> result = await this.CountryService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetShippingNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CountryService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{countryId}/CountryRequirementsByCountryId")]
+		[Route("{countryId}/CountryRequirements")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryRequirementResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRequirementServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> CountryRequirementsByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,15 +228,15 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCountryRequirementResponseModel> response = await this.CountryService.CountryRequirementsByCountryId(countryId, query.Limit, query.Offset);
+			List<ApiCountryRequirementServerResponseModel> response = await this.CountryService.CountryRequirementsByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{countryId}/DestinationsByCountryId")]
+		[Route("{countryId}/Destinations")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDestinationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDestinationServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> DestinationsByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDestinationResponseModel> response = await this.CountryService.DestinationsByCountryId(countryId, query.Limit, query.Offset);
+			List<ApiDestinationServerResponseModel> response = await this.CountryService.DestinationsByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiCountryRequestModel> PatchModel(int id, JsonPatchDocument<ApiCountryRequestModel> patch)
+		private async Task<ApiCountryServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCountryServerRequestModel> patch)
 		{
 			var record = await this.CountryService.Get(id);
 
@@ -250,7 +260,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiCountryRequestModel request = this.CountryModelMapper.MapResponseToRequest(record);
+				ApiCountryServerRequestModel request = this.CountryModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b60a3a9d4223c777ac03293912e4e17d</Hash>
+    <Hash>ff0cc4be028b8f46fd2307982c01a932</Hash>
 </Codenesium>*/

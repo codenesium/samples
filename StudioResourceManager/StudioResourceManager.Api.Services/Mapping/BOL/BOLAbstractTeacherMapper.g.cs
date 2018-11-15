@@ -1,4 +1,3 @@
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual BOTeacher MapModelToBO(
 			int id,
-			ApiTeacherRequestModel model
+			ApiTeacherServerRequestModel model
 			)
 		{
 			BOTeacher boTeacher = new BOTeacher();
@@ -24,20 +23,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return boTeacher;
 		}
 
-		public virtual ApiTeacherResponseModel MapBOToModel(
+		public virtual ApiTeacherServerResponseModel MapBOToModel(
 			BOTeacher boTeacher)
 		{
-			var model = new ApiTeacherResponseModel();
+			var model = new ApiTeacherServerResponseModel();
 
 			model.SetProperties(boTeacher.Id, boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.LastName, boTeacher.Phone, boTeacher.UserId);
 
 			return model;
 		}
 
-		public virtual List<ApiTeacherResponseModel> MapBOToModel(
+		public virtual List<ApiTeacherServerResponseModel> MapBOToModel(
 			List<BOTeacher> items)
 		{
-			List<ApiTeacherResponseModel> response = new List<ApiTeacherResponseModel>();
+			List<ApiTeacherServerResponseModel> response = new List<ApiTeacherServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -50,5 +49,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7921ca53b2baf6fa6615ef41733cd7c3</Hash>
+    <Hash>2f4b74aba9be89544d624da1958b5e6f</Hash>
 </Codenesium>*/

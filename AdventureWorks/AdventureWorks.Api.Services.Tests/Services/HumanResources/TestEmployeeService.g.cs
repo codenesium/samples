@@ -30,14 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiEmployeeResponseModel> response = await service.All();
+			List<ApiEmployeeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -54,14 +50,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.Get(default(int));
+			ApiEmployeeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -77,14 +69,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.Get(default(int));
+			ApiEmployeeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -94,24 +82,20 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Employee>())).Returns(Task.FromResult(new Employee()));
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			CreateResponse<ApiEmployeeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiEmployeeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEmployeeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Employee>()));
 		}
 
@@ -119,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Employee>())).Returns(Task.FromResult(new Employee()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 			var service = new EmployeeService(mock.LoggerMock.Object,
@@ -127,17 +111,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			UpdateResponse<ApiEmployeeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiEmployeeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Employee>()));
 		}
 
@@ -145,17 +125,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var model = new ApiEmployeeRequestModel();
+			var model = new ApiEmployeeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
@@ -177,14 +153,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.ByLoginID(default(string));
+			ApiEmployeeServerResponseModel response = await service.ByLoginID("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByLoginID(It.IsAny<string>()));
@@ -200,14 +172,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.ByLoginID(default(string));
+			ApiEmployeeServerResponseModel response = await service.ByLoginID("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByLoginID(It.IsAny<string>()));
@@ -224,14 +192,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.ByNationalIDNumber(default(string));
+			ApiEmployeeServerResponseModel response = await service.ByNationalIDNumber("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByNationalIDNumber(It.IsAny<string>()));
@@ -247,113 +211,52 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			ApiEmployeeResponseModel response = await service.ByNationalIDNumber(default(string));
+			ApiEmployeeServerResponseModel response = await service.ByNationalIDNumber("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByNationalIDNumber(It.IsAny<string>()));
 		}
 
 		[Fact]
-		public async void EmployeeDepartmentHistoriesByBusinessEntityID_Exists()
+		public async void ByRowguid_Exists()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var records = new List<EmployeeDepartmentHistory>();
-			records.Add(new EmployeeDepartmentHistory());
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var record = new Employee();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByBusinessEntityID(default(int));
+			ApiEmployeeServerResponseModel response = await service.ByRowguid(default(Guid));
 
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
 		}
 
 		[Fact]
-		public async void EmployeeDepartmentHistoriesByBusinessEntityID_Not_Exists()
+		public async void ByRowguid_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmployeeDepartmentHistory>>(new List<EmployeeDepartmentHistory>()));
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<Employee>(null));
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByBusinessEntityID(default(int));
+			ApiEmployeeServerResponseModel response = await service.ByRowguid(default(Guid));
 
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EmployeePayHistoriesByBusinessEntityID_Exists()
-		{
-			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			var records = new List<EmployeePayHistory>();
-			records.Add(new EmployeePayHistory());
-			mock.RepositoryMock.Setup(x => x.EmployeePayHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new EmployeeService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
-			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
-
-			List<ApiEmployeePayHistoryResponseModel> response = await service.EmployeePayHistoriesByBusinessEntityID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeePayHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EmployeePayHistoriesByBusinessEntityID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IEmployeeRepository>();
-			mock.RepositoryMock.Setup(x => x.EmployeePayHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmployeePayHistory>>(new List<EmployeePayHistory>()));
-			var service = new EmployeeService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
-			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
-
-			List<ApiEmployeePayHistoryResponseModel> response = await service.EmployeePayHistoriesByBusinessEntityID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeePayHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
 		}
 
 		[Fact]
@@ -368,14 +271,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiJobCandidateResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
+			List<ApiJobCandidateServerResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.JobCandidatesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -391,14 +290,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLEmployeePayHistoryMapperMock,
-			                                  mock.DALMapperMockFactory.DALEmployeePayHistoryMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
-			List<ApiJobCandidateResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
+			List<ApiJobCandidateServerResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.JobCandidatesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -407,5 +302,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d5ec06b1de83f2d9204d414dc2b3d45c</Hash>
+    <Hash>0662af4091bdb62f8b808b1670d799f4</Hash>
 </Codenesium>*/

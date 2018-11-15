@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALMessengerMapper();
 			var bo = new BOMessenger();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"), 1, 1);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"), 1, 1);
 
 			Messenger response = mapper.MapBOToEF(bo);
 
@@ -25,7 +25,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.FromUserId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.MessageId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.ToUserId.Should().Be(1);
 			response.UserId.Should().Be(1);
 		}
@@ -35,7 +35,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALMessengerMapper();
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"), 1, 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"), 1, 1);
 
 			BOMessenger response = mapper.MapEFToBO(entity);
 
@@ -43,7 +43,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.FromUserId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.MessageId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.ToUserId.Should().Be(1);
 			response.UserId.Should().Be(1);
 		}
@@ -53,7 +53,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALMessengerMapper();
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("0"), 1, 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"), 1, 1);
 
 			List<BOMessenger> response = mapper.MapEFToBO(new List<Messenger>() { entity });
 
@@ -63,5 +63,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cef7fbc1ff3b0853ab34d94cf749139a</Hash>
+    <Hash>fead1d61f863d69ddc597f4bf6fdb245</Hash>
 </Codenesium>*/

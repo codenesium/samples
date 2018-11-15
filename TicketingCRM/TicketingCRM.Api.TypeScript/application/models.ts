@@ -1,4 +1,4 @@
-export class ApiAdminRequestModel {
+export class ApiAdminServerRequestModel {
 				email:string;
 firstName:string;
 id:number;
@@ -21,7 +21,7 @@ this.username = '';
 				}
 			}
 
-			export class ApiAdminResponseModel {
+			export class ApiAdminServerResponseModel {
 				email:string;
 firstName:string;
 id:number;
@@ -43,7 +43,7 @@ this.username = '';
 		
 				}
 			}
-			export class ApiCityRequestModel {
+			export class ApiCityServerRequestModel {
 				id:number;
 name:string;
 provinceId:number;
@@ -59,7 +59,7 @@ this.provinceId = 0;
 				}
 			}
 
-			export class ApiCityResponseModel {
+			export class ApiCityServerResponseModel {
 				id:number;
 name:string;
 provinceId:number;
@@ -74,7 +74,7 @@ this.provinceId = 0;
 		
 				}
 			}
-			export class ApiCountryRequestModel {
+			export class ApiCountryServerRequestModel {
 				id:number;
 name:string;
 
@@ -87,7 +87,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiCountryResponseModel {
+			export class ApiCountryServerResponseModel {
 				id:number;
 name:string;
 
@@ -99,7 +99,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiCustomerRequestModel {
+			export class ApiCustomerServerRequestModel {
 				email:string;
 firstName:string;
 id:number;
@@ -118,7 +118,7 @@ this.phone = '';
 				}
 			}
 
-			export class ApiCustomerResponseModel {
+			export class ApiCustomerServerResponseModel {
 				email:string;
 firstName:string;
 id:number;
@@ -136,7 +136,7 @@ this.phone = '';
 		
 				}
 			}
-			export class ApiEventRequestModel {
+			export class ApiEventServerRequestModel {
 				address1:string;
 address2:string;
 cityId:number;
@@ -168,7 +168,7 @@ this.website = '';
 				}
 			}
 
-			export class ApiEventResponseModel {
+			export class ApiEventServerResponseModel {
 				address1:string;
 address2:string;
 cityId:number;
@@ -199,7 +199,7 @@ this.website = '';
 		
 				}
 			}
-			export class ApiProvinceRequestModel {
+			export class ApiProvinceServerRequestModel {
 				countryId:number;
 countryIdEntity:number;
 id:number;
@@ -215,7 +215,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiProvinceResponseModel {
+			export class ApiProvinceServerResponseModel {
 				countryId:number;
 countryIdEntity:number;
 id:number;
@@ -230,7 +230,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiSaleRequestModel {
+			export class ApiSaleServerRequestModel {
 				id:number;
 ipAddress:string;
 note:string;
@@ -250,7 +250,7 @@ this.transactionId = 0;
 				}
 			}
 
-			export class ApiSaleResponseModel {
+			export class ApiSaleServerResponseModel {
 				id:number;
 ipAddress:string;
 note:string;
@@ -269,7 +269,7 @@ this.transactionId = 0;
 		
 				}
 			}
-			export class ApiTicketRequestModel {
+			export class ApiTicketServerRequestModel {
 				id:number;
 publicId:string;
 ticketStatusId:number;
@@ -285,7 +285,7 @@ this.ticketStatusId = 0;
 				}
 			}
 
-			export class ApiTicketResponseModel {
+			export class ApiTicketServerResponseModel {
 				id:number;
 publicId:string;
 ticketStatusId:number;
@@ -300,7 +300,7 @@ this.ticketStatusId = 0;
 		
 				}
 			}
-			export class ApiTicketStatuRequestModel {
+			export class ApiTicketStatuServerRequestModel {
 				id:number;
 name:string;
 
@@ -313,7 +313,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiTicketStatuResponseModel {
+			export class ApiTicketStatuServerResponseModel {
 				id:number;
 name:string;
 
@@ -325,7 +325,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiTransactionRequestModel {
+			export class ApiTransactionServerRequestModel {
 				amount:number;
 gatewayConfirmationNumber:string;
 id:number;
@@ -343,7 +343,7 @@ this.transactionStatusId = 0;
 				}
 			}
 
-			export class ApiTransactionResponseModel {
+			export class ApiTransactionServerResponseModel {
 				amount:number;
 gatewayConfirmationNumber:string;
 id:number;
@@ -360,7 +360,7 @@ this.transactionStatusId = 0;
 		
 				}
 			}
-			export class ApiTransactionStatuRequestModel {
+			export class ApiTransactionStatuServerRequestModel {
 				id:number;
 name:string;
 
@@ -373,7 +373,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiTransactionStatuResponseModel {
+			export class ApiTransactionStatuServerResponseModel {
 				id:number;
 name:string;
 
@@ -385,7 +385,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiVenueRequestModel {
+			export class ApiVenueServerRequestModel {
 				address1:string;
 address2:string;
 adminId:number;
@@ -416,7 +416,7 @@ this.website = '';
 				}
 			}
 
-			export class ApiVenueResponseModel {
+			export class ApiVenueServerResponseModel {
 				address1:string;
 address2:string;
 adminId:number;

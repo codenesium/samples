@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected ILinkTypeRepository LinkTypeRepository { get; private set; }
 
-		protected IApiLinkTypeRequestModelValidator LinkTypeModelValidator { get; private set; }
+		protected IApiLinkTypeServerRequestModelValidator LinkTypeModelValidator { get; private set; }
 
 		protected IBOLLinkTypeMapper BolLinkTypeMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractLinkTypeService(
 			ILogger logger,
 			ILinkTypeRepository linkTypeRepository,
-			IApiLinkTypeRequestModelValidator linkTypeModelValidator,
+			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
 			IBOLLinkTypeMapper bolLinkTypeMapper,
 			IDALLinkTypeMapper dalLinkTypeMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiLinkTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLinkTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.LinkTypeRepository.All(limit, offset);
 
 			return this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiLinkTypeResponseModel> Get(int id)
+		public virtual async Task<ApiLinkTypeServerResponseModel> Get(int id)
 		{
 			var record = await this.LinkTypeRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkTypeResponseModel>> Create(
-			ApiLinkTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiLinkTypeServerResponseModel>> Create(
+			ApiLinkTypeServerRequestModel model)
 		{
-			CreateResponse<ApiLinkTypeResponseModel> response = new CreateResponse<ApiLinkTypeResponseModel>(await this.LinkTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkTypeServerResponseModel> response = ValidationResponseFactory<ApiLinkTypeServerResponseModel>.CreateResponse(await this.LinkTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolLinkTypeMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiLinkTypeServerResponseModel>> Update(
 			int id,
-			ApiLinkTypeRequestModel model)
+			ApiLinkTypeServerRequestModel model)
 		{
 			var validationResult = await this.LinkTypeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.LinkTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiLinkTypeResponseModel>(this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiLinkTypeServerResponseModel>.UpdateResponse(this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiLinkTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiLinkTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.LinkTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.LinkTypeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.LinkTypeRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebf89e7b9219e6c566aa416b5986230c</Hash>
+    <Hash>6b6ec4be1a19c0059994cf8b5cdeede2</Hash>
 </Codenesium>*/

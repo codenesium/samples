@@ -24,8 +24,8 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			var record = new ApiSaleResponseModel();
-			var records = new List<ApiSaleResponseModel>();
+			var record = new ApiSaleServerResponseModel();
+			var records = new List<ApiSaleServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSaleResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSaleServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSaleResponseModel>>(new List<ApiSaleResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSaleServerResponseModel>>(new List<ApiSaleServerResponseModel>()));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSaleResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSaleServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleServerResponseModel()));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSaleResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSaleServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleServerResponseModel>(null));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSaleResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSaleResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSaleServerResponseModel>.CreateResponse(null as ApiSaleServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSaleServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleServerResponseModel>>(mockResponse));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSaleRequestModel>();
-			records.Add(new ApiSaleRequestModel());
+			var records = new List<ApiSaleServerRequestModel>();
+			records.Add(new ApiSaleServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSaleResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSaleServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSaleResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSaleServerResponseModel>>(null as ApiSaleServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleServerResponseModel>>(mockResponse.Object));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSaleRequestModel>();
-			records.Add(new ApiSaleRequestModel());
+			var records = new List<ApiSaleServerRequestModel>();
+			records.Add(new ApiSaleServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSaleResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSaleResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSaleServerResponseModel>.CreateResponse(null as ApiSaleServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSaleServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleServerResponseModel>>(mockResponse));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSaleRequestModel());
+			IActionResult response = await controller.Create(new ApiSaleServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSaleResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSaleServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSaleResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSaleResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSaleServerResponseModel>>(null as ApiSaleServerResponseModel);
+			var mockRecord = new ApiSaleServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSaleServerResponseModel>>(mockResponse.Object));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSaleRequestModel());
+			IActionResult response = await controller.Create(new ApiSaleServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSaleResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSaleServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()))
-			.Callback<int, ApiSaleRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>()))
+			.Callback<int, ApiSaleServerRequestModel>(
 				(id, model) => model.Amount.Should().Be(1m)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSaleResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleResponseModel>(new ApiSaleResponseModel()));
-			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSaleServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleServerResponseModel>(new ApiSaleServerResponseModel()));
+			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSaleRequestModel>();
+			var patch = new JsonPatchDocument<ApiSaleServerRequestModel>();
 			patch.Replace(x => x.Amount, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleServerResponseModel>(null));
 			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSaleRequestModel>();
+			var patch = new JsonPatchDocument<ApiSaleServerRequestModel>();
 			patch.Replace(x => x.Amount, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSaleResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSaleServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleResponseModel()));
-			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleServerResponseModel()));
+			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSaleRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSaleServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSaleResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSaleServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleResponseModel()));
-			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSaleServerResponseModel()));
+			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSaleRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSaleServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SaleControllerMockFacade mock = new SaleControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSaleResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSaleServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleResponseModel>(null));
-			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSaleServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSaleServerResponseModel>(null));
+			SaleController controller = new SaleController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSaleServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSaleRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSaleServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetStoreNS.Api.Web.Tests
 
 		public Mock<ISaleService> ServiceMock { get; set; } = new Mock<ISaleService>();
 
-		public Mock<IApiSaleModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSaleModelMapper>();
+		public Mock<IApiSaleServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSaleServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>29c8d04330da0203e2cd1efc74bbee00</Hash>
+    <Hash>be85d0fa1132bb7f98acb85c2114a640</Hash>
 </Codenesium>*/

@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IRowVersionCheckRepository RowVersionCheckRepository { get; private set; }
 
-		protected IApiRowVersionCheckRequestModelValidator RowVersionCheckModelValidator { get; private set; }
+		protected IApiRowVersionCheckServerRequestModelValidator RowVersionCheckModelValidator { get; private set; }
 
 		protected IBOLRowVersionCheckMapper BolRowVersionCheckMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractRowVersionCheckService(
 			ILogger logger,
 			IRowVersionCheckRepository rowVersionCheckRepository,
-			IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator,
+			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
 			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiRowVersionCheckResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.RowVersionCheckRepository.All(limit, offset);
 
 			return this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiRowVersionCheckResponseModel> Get(int id)
+		public virtual async Task<ApiRowVersionCheckServerResponseModel> Get(int id)
 		{
 			var record = await this.RowVersionCheckRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiRowVersionCheckResponseModel>> Create(
-			ApiRowVersionCheckRequestModel model)
+		public virtual async Task<CreateResponse<ApiRowVersionCheckServerResponseModel>> Create(
+			ApiRowVersionCheckServerRequestModel model)
 		{
-			CreateResponse<ApiRowVersionCheckResponseModel> response = new CreateResponse<ApiRowVersionCheckResponseModel>(await this.RowVersionCheckModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRowVersionCheckServerResponseModel> response = ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.CreateResponse(await this.RowVersionCheckModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolRowVersionCheckMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiRowVersionCheckResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiRowVersionCheckServerResponseModel>> Update(
 			int id,
-			ApiRowVersionCheckRequestModel model)
+			ApiRowVersionCheckServerRequestModel model)
 		{
 			var validationResult = await this.RowVersionCheckModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.RowVersionCheckRepository.Get(id);
 
-				return new UpdateResponse<ApiRowVersionCheckResponseModel>(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.UpdateResponse(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiRowVersionCheckResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.RowVersionCheckModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.RowVersionCheckModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.RowVersionCheckRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>abc6cd28ff838fdd58f4b818b6df8bbd</Hash>
+    <Hash>3328db5b15f9750531c6821a95fb5d7c</Hash>
 </Codenesium>*/

@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<RowVersionCheck, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<RowVersionCheck, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<RowVersionCheck, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<RowVersionCheck>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<RowVersionCheck>();
-			}
-			else
-			{
-				return await this.Context.Set<RowVersionCheck>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<RowVersionCheck>();
-			}
+			return await this.Context.Set<RowVersionCheck>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<RowVersionCheck>();
 		}
 
 		private async Task<RowVersionCheck> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0828c1ea55bd4d0159b78822c77d075f</Hash>
+    <Hash>f0c4446bd8e96ac40ac6b3a779d77e99</Hash>
 </Codenesium>*/

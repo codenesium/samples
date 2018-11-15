@@ -85,26 +85,33 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select spaces).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<SpaceSpaceFeature> CreateSpaceSpaceFeature(SpaceSpaceFeature item)
+		{
+			this.Context.Set<SpaceSpaceFeature>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteSpaceSpaceFeature(SpaceSpaceFeature item)
+		{
+			this.Context.Set<SpaceSpaceFeature>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Space>> Where(
 			Expression<Func<Space, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Space, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Space, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Space>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Space>();
-			}
-			else
-			{
-				return await this.Context.Set<Space>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Space>();
-			}
+			return await this.Context.Set<Space>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Space>();
 		}
 
 		private async Task<Space> GetById(int id)
@@ -117,5 +124,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd180b9650f2b41f8fcc742c0cfeaf0b</Hash>
+    <Hash>10a04b0c5da21d2435ee20794ab8e811</Hash>
 </Codenesium>*/

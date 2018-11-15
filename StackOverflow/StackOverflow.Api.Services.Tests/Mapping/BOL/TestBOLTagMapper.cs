@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTagMapper();
-			ApiTagRequestModel model = new ApiTagRequestModel();
+			ApiTagServerRequestModel model = new ApiTagServerRequestModel();
 			model.SetProperties(1, 1, "A", 1);
 			BOTag response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLTagMapper();
 			BOTag bo = new BOTag();
 			bo.SetProperties(1, 1, 1, "A", 1);
-			ApiTagResponseModel response = mapper.MapBOToModel(bo);
+			ApiTagServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Count.Should().Be(1);
 			response.ExcerptPostId.Should().Be(1);
@@ -48,7 +48,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLTagMapper();
 			BOTag bo = new BOTag();
 			bo.SetProperties(1, 1, 1, "A", 1);
-			List<ApiTagResponseModel> response = mapper.MapBOToModel(new List<BOTag>() { { bo } });
+			List<ApiTagServerResponseModel> response = mapper.MapBOToModel(new List<BOTag>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b4b4d8f0dae644d977ae224b0369aca9</Hash>
+    <Hash>bd610436fae56adbe79a3b3802b99675</Hash>
 </Codenesium>*/

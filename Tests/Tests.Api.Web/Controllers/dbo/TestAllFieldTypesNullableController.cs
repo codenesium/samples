@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TestAllFieldTypesNullableController : AbstractTestAllFieldTypesNullableController
 	{
 		public TestAllFieldTypesNullableController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<TestAllFieldTypesNullableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITestAllFieldTypesNullableService testAllFieldTypesNullableService,
-			IApiTestAllFieldTypesNullableModelMapper testAllFieldTypesNullableModelMapper
+			IApiTestAllFieldTypesNullableServerModelMapper testAllFieldTypesNullableModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85a7c478377750f85cbd9cb32ac3f401</Hash>
+    <Hash>28994d4dc16d39e4bd5bc4f2f7df4fc0</Hash>
 </Codenesium>*/

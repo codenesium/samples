@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new DALTestAllFieldTypesNullableMapper();
 			var bo = new BOTestAllFieldTypesNullable();
-			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 
 			TestAllFieldTypesNullable response = mapper.MapBOToEF(bo);
 
@@ -42,7 +42,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldSmallInt.Should().Be(1);
 			response.FieldSmallMoney.Should().Be(1m);
 			response.FieldText.Should().Be("A");
-			response.FieldTime.Should().Be(TimeSpan.Parse("0"));
+			response.FieldTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.FieldTimestamp.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldTinyInt.Should().Be(1);
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -57,7 +57,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new DALTestAllFieldTypesNullableMapper();
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-			entity.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", 1);
+			entity.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", 1);
 
 			BOTestAllFieldTypesNullable response = mapper.MapEFToBO(entity);
 
@@ -82,7 +82,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldSmallInt.Should().Be(1);
 			response.FieldSmallMoney.Should().Be(1m);
 			response.FieldText.Should().Be("A");
-			response.FieldTime.Should().Be(TimeSpan.Parse("0"));
+			response.FieldTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.FieldTimestamp.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldTinyInt.Should().Be(1);
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -97,7 +97,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new DALTestAllFieldTypesNullableMapper();
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-			entity.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", 1);
+			entity.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A", 1);
 
 			List<BOTestAllFieldTypesNullable> response = mapper.MapEFToBO(new List<TestAllFieldTypesNullable>() { entity });
 
@@ -107,5 +107,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f16eefc48517b1aa0f843806e9bd926</Hash>
+    <Hash>ef64a6e1d8ca9304e5950964b0db9544</Hash>
 </Codenesium>*/

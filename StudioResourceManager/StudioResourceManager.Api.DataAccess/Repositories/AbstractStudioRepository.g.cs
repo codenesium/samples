@@ -80,22 +80,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Expression<Func<Studio, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Studio, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Studio, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
-			}
-			else
-			{
-				return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
-			}
+			return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
 		}
 
 		private async Task<Studio> GetById(int id)
@@ -108,5 +100,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e997c387637d118aae7e316727c990b</Hash>
+    <Hash>9ead26da955d88cab1da8d2451dd18da</Hash>
 </Codenesium>*/

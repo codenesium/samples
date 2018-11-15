@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOErrorLog MapModelToBO(
 			int errorLogID,
-			ApiErrorLogRequestModel model
+			ApiErrorLogServerRequestModel model
 			)
 		{
 			BOErrorLog boErrorLog = new BOErrorLog();
@@ -26,20 +25,20 @@ namespace AdventureWorksNS.Api.Services
 			return boErrorLog;
 		}
 
-		public virtual ApiErrorLogResponseModel MapBOToModel(
+		public virtual ApiErrorLogServerResponseModel MapBOToModel(
 			BOErrorLog boErrorLog)
 		{
-			var model = new ApiErrorLogResponseModel();
+			var model = new ApiErrorLogServerResponseModel();
 
 			model.SetProperties(boErrorLog.ErrorLogID, boErrorLog.ErrorLine, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
 
 			return model;
 		}
 
-		public virtual List<ApiErrorLogResponseModel> MapBOToModel(
+		public virtual List<ApiErrorLogServerResponseModel> MapBOToModel(
 			List<BOErrorLog> items)
 		{
-			List<ApiErrorLogResponseModel> response = new List<ApiErrorLogResponseModel>();
+			List<ApiErrorLogServerResponseModel> response = new List<ApiErrorLogServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5e93536319ca07031c3be5a257d823b</Hash>
+    <Hash>7ca58bec32f95181986a4f84fbcc6b39</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace PetStoreNS.Api.Services
 	{
 		public virtual BOPaymentType MapModelToBO(
 			int id,
-			ApiPaymentTypeRequestModel model
+			ApiPaymentTypeServerRequestModel model
 			)
 		{
 			BOPaymentType boPaymentType = new BOPaymentType();
@@ -19,20 +18,20 @@ namespace PetStoreNS.Api.Services
 			return boPaymentType;
 		}
 
-		public virtual ApiPaymentTypeResponseModel MapBOToModel(
+		public virtual ApiPaymentTypeServerResponseModel MapBOToModel(
 			BOPaymentType boPaymentType)
 		{
-			var model = new ApiPaymentTypeResponseModel();
+			var model = new ApiPaymentTypeServerResponseModel();
 
 			model.SetProperties(boPaymentType.Id, boPaymentType.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiPaymentTypeResponseModel> MapBOToModel(
+		public virtual List<ApiPaymentTypeServerResponseModel> MapBOToModel(
 			List<BOPaymentType> items)
 		{
-			List<ApiPaymentTypeResponseModel> response = new List<ApiPaymentTypeResponseModel>();
+			List<ApiPaymentTypeServerResponseModel> response = new List<ApiPaymentTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c808455dd38dbc174bab8a369a837ed</Hash>
+    <Hash>0cc958f251fe96adc3d5e9676bb27ebf</Hash>
 </Codenesium>*/

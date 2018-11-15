@@ -28,30 +28,40 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("clientId")]
-		public int ClientId { get; private set; }
+		public virtual int ClientId { get; private set; }
 
 		[Column("dateCreated")]
-		public DateTime DateCreated { get; private set; }
+		public virtual DateTime DateCreated { get; private set; }
 
 		[Column("employeeId")]
-		public int EmployeeId { get; private set; }
+		public virtual int EmployeeId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public string Note { get; private set; }
+		public virtual string Note { get; private set; }
 
 		[ForeignKey("ClientId")]
 		public virtual Client ClientNavigation { get; private set; }
 
+		public void SetClientNavigation(Client item)
+		{
+			this.ClientNavigation = item;
+		}
+
 		[ForeignKey("EmployeeId")]
 		public virtual Employee EmployeeNavigation { get; private set; }
+
+		public void SetEmployeeNavigation(Employee item)
+		{
+			this.EmployeeNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9899a6fa48f16f2b95db02cd7003ff5</Hash>
+    <Hash>148c8c9a551b8566dc376b17923dc622</Hash>
 </Codenesium>*/

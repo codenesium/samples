@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SaleController : AbstractSaleController
 	{
 		public SaleController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<SaleController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISaleService saleService,
-			IApiSaleModelMapper saleModelMapper
+			IApiSaleServerModelMapper saleModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>df8febbb8f098e3816a5058d0739c343</Hash>
+    <Hash>7a2f50164227ff68d30fce5ac251cdd9</Hash>
 </Codenesium>*/

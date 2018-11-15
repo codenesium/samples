@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -9,7 +8,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public virtual BOEvent MapModelToBO(
 			int id,
-			ApiEventRequestModel model
+			ApiEventServerRequestModel model
 			)
 		{
 			BOEvent boEvent = new BOEvent();
@@ -28,20 +27,20 @@ namespace TicketingCRMNS.Api.Services
 			return boEvent;
 		}
 
-		public virtual ApiEventResponseModel MapBOToModel(
+		public virtual ApiEventServerResponseModel MapBOToModel(
 			BOEvent boEvent)
 		{
-			var model = new ApiEventResponseModel();
+			var model = new ApiEventServerResponseModel();
 
 			model.SetProperties(boEvent.Id, boEvent.Address1, boEvent.Address2, boEvent.CityId, boEvent.Date, boEvent.Description, boEvent.EndDate, boEvent.Facebook, boEvent.Name, boEvent.StartDate, boEvent.Website);
 
 			return model;
 		}
 
-		public virtual List<ApiEventResponseModel> MapBOToModel(
+		public virtual List<ApiEventServerResponseModel> MapBOToModel(
 			List<BOEvent> items)
 		{
-			List<ApiEventResponseModel> response = new List<ApiEventResponseModel>();
+			List<ApiEventServerResponseModel> response = new List<ApiEventServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -54,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55d4cc42d33f5412aee8db597cd4c7a1</Hash>
+    <Hash>0350150734283a6b8f162bce9f1fd702</Hash>
 </Codenesium>*/

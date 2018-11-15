@@ -36,40 +36,45 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		[Column("actualEndDate")]
-		public DateTime? ActualEndDate { get; private set; }
+		public virtual DateTime? ActualEndDate { get; private set; }
 
 		[Column("actualStartDate")]
-		public DateTime? ActualStartDate { get; private set; }
+		public virtual DateTime? ActualStartDate { get; private set; }
 
 		[Column("billAmount")]
-		public decimal? BillAmount { get; private set; }
+		public virtual decimal? BillAmount { get; private set; }
 
 		[Column("eventStatusId")]
-		public int EventStatusId { get; private set; }
+		public virtual int EventStatusId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("scheduledEndDate")]
-		public DateTime? ScheduledEndDate { get; private set; }
+		public virtual DateTime? ScheduledEndDate { get; private set; }
 
 		[Column("scheduledStartDate")]
-		public DateTime? ScheduledStartDate { get; private set; }
+		public virtual DateTime? ScheduledStartDate { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("studentNotes")]
-		public string StudentNote { get; private set; }
+		public virtual string StudentNote { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
-		public string TeacherNote { get; private set; }
+		public virtual string TeacherNote { get; private set; }
 
 		[ForeignKey("EventStatusId")]
-		public virtual EventStatus EventStatusNavigation { get; private set; }
+		public virtual EventStatu EventStatuNavigation { get; private set; }
+
+		public void SetEventStatuNavigation(EventStatu item)
+		{
+			this.EventStatuNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad02f0bca2fc03dca4a65ea8e3e929a7</Hash>
+    <Hash>dedeae18aae56c5f00ee547a3348cde5</Hash>
 </Codenesium>*/

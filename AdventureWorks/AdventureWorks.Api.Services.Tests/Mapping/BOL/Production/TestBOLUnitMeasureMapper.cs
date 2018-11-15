@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLUnitMeasureMapper();
-			ApiUnitMeasureRequestModel model = new ApiUnitMeasureRequestModel();
+			ApiUnitMeasureServerRequestModel model = new ApiUnitMeasureServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOUnitMeasure response = mapper.MapModelToBO("A", model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLUnitMeasureMapper();
 			BOUnitMeasure bo = new BOUnitMeasure();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiUnitMeasureResponseModel response = mapper.MapBOToModel(bo);
+			ApiUnitMeasureServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLUnitMeasureMapper();
 			BOUnitMeasure bo = new BOUnitMeasure();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiUnitMeasureResponseModel> response = mapper.MapBOToModel(new List<BOUnitMeasure>() { { bo } });
+			List<ApiUnitMeasureServerResponseModel> response = mapper.MapBOToModel(new List<BOUnitMeasure>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>62ab35c671a5cf304f98f721849c921d</Hash>
+    <Hash>ee64fe12c26c675e54deb60699591a88</Hash>
 </Codenesium>*/

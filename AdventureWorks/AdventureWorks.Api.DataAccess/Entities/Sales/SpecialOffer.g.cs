@@ -41,44 +41,43 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(50)]
 		[Column("Category")]
-		public string Category { get; private set; }
+		public virtual string Category { get; private set; }
 
 		[MaxLength(255)]
 		[Column("Description")]
-		public string Description { get; private set; }
+		public virtual string Description { get; private set; }
 
 		[Column("DiscountPct")]
-		public decimal DiscountPct { get; private set; }
+		public virtual decimal DiscountPct { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime EndDate { get; private set; }
+		public virtual DateTime EndDate { get; private set; }
 
 		[Column("MaxQty")]
-		public int? MaxQty { get; private set; }
+		public virtual int? MaxQty { get; private set; }
 
 		[Column("MinQty")]
-		public int MinQty { get; private set; }
+		public virtual int MinQty { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SpecialOfferID")]
-		public int SpecialOfferID { get; private set; }
+		public virtual int SpecialOfferID { get; private set; }
 
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Type")]
-		public string Type { get; private set; }
+		public virtual string Type { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8491a516d0a60919f198e6b379c2ce6f</Hash>
+    <Hash>a5f240d987ee7dffae3b75bbf6e73d48</Hash>
 </Codenesium>*/

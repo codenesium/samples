@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			var record = new ApiCountryRegionResponseModel();
-			var records = new List<ApiCountryRegionResponseModel>();
+			var record = new ApiCountryRegionServerResponseModel();
+			var records = new List<ApiCountryRegionServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCountryRegionResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCountryRegionServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCountryRegionResponseModel>>(new List<ApiCountryRegionResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCountryRegionServerResponseModel>>(new List<ApiCountryRegionServerResponseModel>()));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCountryRegionResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCountryRegionServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionServerResponseModel()));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCountryRegionResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCountryRegionServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionServerResponseModel>(null));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCountryRegionResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCountryRegionResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCountryRegionServerResponseModel>.CreateResponse(null as ApiCountryRegionServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCountryRegionServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionServerResponseModel>>(mockResponse));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCountryRegionRequestModel>();
-			records.Add(new ApiCountryRegionRequestModel());
+			var records = new List<ApiCountryRegionServerRequestModel>();
+			records.Add(new ApiCountryRegionServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCountryRegionResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCountryRegionServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCountryRegionResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCountryRegionServerResponseModel>>(null as ApiCountryRegionServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionServerResponseModel>>(mockResponse.Object));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCountryRegionRequestModel>();
-			records.Add(new ApiCountryRegionRequestModel());
+			var records = new List<ApiCountryRegionServerRequestModel>();
+			records.Add(new ApiCountryRegionServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCountryRegionResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCountryRegionResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCountryRegionServerResponseModel>.CreateResponse(null as ApiCountryRegionServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCountryRegionServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionServerResponseModel>>(mockResponse));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCountryRegionRequestModel());
+			IActionResult response = await controller.Create(new ApiCountryRegionServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCountryRegionResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCountryRegionServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCountryRegionResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCountryRegionResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCountryRegionServerResponseModel>>(null as ApiCountryRegionServerResponseModel);
+			var mockRecord = new ApiCountryRegionServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCountryRegionServerResponseModel>>(mockResponse.Object));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCountryRegionRequestModel());
+			IActionResult response = await controller.Create(new ApiCountryRegionServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryRegionResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryRegionServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>()))
-			.Callback<string, ApiCountryRegionRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()))
+			.Callback<string, ApiCountryRegionServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCountryRegionResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionResponseModel>(new ApiCountryRegionResponseModel()));
-			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCountryRegionServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionServerResponseModel>(new ApiCountryRegionServerResponseModel()));
+			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCountryRegionRequestModel>();
+			var patch = new JsonPatchDocument<ApiCountryRegionServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(string), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionServerResponseModel>(null));
 			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCountryRegionRequestModel>();
+			var patch = new JsonPatchDocument<ApiCountryRegionServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(string), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryRegionResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryRegionServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionResponseModel()));
-			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionServerResponseModel()));
+			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCountryRegionRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCountryRegionServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryRegionResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryRegionServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionResponseModel()));
-			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiCountryRegionServerResponseModel()));
+			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCountryRegionRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCountryRegionServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CountryRegionControllerMockFacade mock = new CountryRegionControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCountryRegionResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCountryRegionServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionResponseModel>(null));
-			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCountryRegionServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiCountryRegionServerResponseModel>(null));
+			CountryRegionController controller = new CountryRegionController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCountryRegionServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(string), new ApiCountryRegionRequestModel());
+			IActionResult response = await controller.Update(default(string), new ApiCountryRegionServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ICountryRegionService> ServiceMock { get; set; } = new Mock<ICountryRegionService>();
 
-		public Mock<IApiCountryRegionModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCountryRegionModelMapper>();
+		public Mock<IApiCountryRegionServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCountryRegionServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>1363af6abe8dddc9d8da7419e36b2720</Hash>
+    <Hash>ce74441e1f95bf93ce566e861cde988a</Hash>
 </Codenesium>*/

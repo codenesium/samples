@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IPersonRepository PersonRepository { get; private set; }
 
-		protected IApiPersonRequestModelValidator PersonModelValidator { get; private set; }
+		protected IApiPersonServerRequestModelValidator PersonModelValidator { get; private set; }
 
 		protected IBOLPersonMapper BolPersonMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractPersonService(
 			ILogger logger,
 			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
+			IApiPersonServerRequestModelValidator personModelValidator,
 			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PersonRepository.All(limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPersonResponseModel> Get(int personId)
+		public virtual async Task<ApiPersonServerResponseModel> Get(int personId)
 		{
 			var record = await this.PersonRepository.Get(personId);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
-			ApiPersonRequestModel model)
+		public virtual async Task<CreateResponse<ApiPersonServerResponseModel>> Create(
+			ApiPersonServerRequestModel model)
 		{
-			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.PersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonServerResponseModel> response = ValidationResponseFactory<ApiPersonServerResponseModel>.CreateResponse(await this.PersonModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPersonMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPersonResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPersonServerResponseModel>> Update(
 			int personId,
-			ApiPersonRequestModel model)
+			ApiPersonServerRequestModel model)
 		{
 			var validationResult = await this.PersonModelValidator.ValidateUpdateAsync(personId, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.PersonRepository.Get(personId);
 
-				return new UpdateResponse<ApiPersonResponseModel>(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPersonResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int personId)
 		{
-			ActionResponse response = new ActionResponse(await this.PersonModelValidator.ValidateDeleteAsync(personId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PersonModelValidator.ValidateDeleteAsync(personId));
+
 			if (response.Success)
 			{
 				await this.PersonRepository.Delete(personId);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0ca3c6d1988afa33eefada6882292d1</Hash>
+    <Hash>e170ffeb5948f5f4418f9fba998880a2</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ChainStatusController : AbstractChainStatusController
 	{
 		public ChainStatusController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<ChainStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IChainStatusService chainStatusService,
-			IApiChainStatusModelMapper chainStatusModelMapper
+			IApiChainStatusServerModelMapper chainStatusModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>679c96639e6e57e2f8656e987292f10d</Hash>
+    <Hash>8e9d0480e545461045da15a1e6764246</Hash>
 </Codenesium>*/

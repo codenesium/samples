@@ -48,9 +48,9 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<Breed> Breeds { get; set; }
 
-		public virtual DbSet<Client> Clients { get; set; }
+		public virtual DbSet<Customer> Customers { get; set; }
 
-		public virtual DbSet<ClientCommunication> ClientCommunications { get; set; }
+		public virtual DbSet<CustomerCommunication> CustomerCommunications { get; set; }
 
 		public virtual DbSet<Country> Countries { get; set; }
 
@@ -100,15 +100,6 @@ namespace PetShippingNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -162,27 +153,17 @@ namespace PetShippingNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<Client>()
+			modelBuilder.Entity<Customer>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<Client>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<ClientCommunication>()
+			modelBuilder.Entity<CustomerCommunication>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
-
-			modelBuilder.Entity<ClientCommunication>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Country>()
 			.HasKey(c => new
@@ -401,5 +382,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa77974448d1ae85f36d57c792ed63ad</Hash>
+    <Hash>7285b8b8c65379906da172dd5ae7d32f</Hash>
 </Codenesium>*/

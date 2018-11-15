@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLIncludedColumnTestMapper();
-			ApiIncludedColumnTestRequestModel model = new ApiIncludedColumnTestRequestModel();
+			ApiIncludedColumnTestServerRequestModel model = new ApiIncludedColumnTestServerRequestModel();
 			model.SetProperties("A", "A");
 			BOIncludedColumnTest response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLIncludedColumnTestMapper();
 			BOIncludedColumnTest bo = new BOIncludedColumnTest();
 			bo.SetProperties(1, "A", "A");
-			ApiIncludedColumnTestResponseModel response = mapper.MapBOToModel(bo);
+			ApiIncludedColumnTestServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLIncludedColumnTestMapper();
 			BOIncludedColumnTest bo = new BOIncludedColumnTest();
 			bo.SetProperties(1, "A", "A");
-			List<ApiIncludedColumnTestResponseModel> response = mapper.MapBOToModel(new List<BOIncludedColumnTest>() { { bo } });
+			List<ApiIncludedColumnTestServerResponseModel> response = mapper.MapBOToModel(new List<BOIncludedColumnTest>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>54101080678a94df44454cb531aa5902</Hash>
+    <Hash>20c4953dde7bd0f1b43ee7fa5f5291fb</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace PetStoreNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SaleController : AbstractSaleController
 	{
 		public SaleController(
@@ -25,7 +26,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<SaleController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISaleService saleService,
-			IApiSaleModelMapper saleModelMapper
+			IApiSaleServerModelMapper saleModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>277577258d4f5e1b34a779ca27f4fe2e</Hash>
+    <Hash>fedba3ebd87c4e88e700fe66d7852305</Hash>
 </Codenesium>*/

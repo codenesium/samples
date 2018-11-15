@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IIllustrationService IllustrationService { get; private set; }
 
-		protected IApiIllustrationModelMapper IllustrationModelMapper { get; private set; }
+		protected IApiIllustrationServerModelMapper IllustrationModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractIllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IIllustrationService illustrationService,
-			IApiIllustrationModelMapper illustrationModelMapper
+			IApiIllustrationServerModelMapper illustrationModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiIllustrationServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiIllustrationResponseModel> response = await this.IllustrationService.All(query.Limit, query.Offset);
+			List<ApiIllustrationServerResponseModel> response = await this.IllustrationService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiIllustrationResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiIllustrationServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiIllustrationResponseModel response = await this.IllustrationService.Get(id);
+			ApiIllustrationServerResponseModel response = await this.IllustrationService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiIllustrationServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIllustrationRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIllustrationServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiIllustrationResponseModel> records = new List<ApiIllustrationResponseModel>();
+			List<ApiIllustrationServerResponseModel> records = new List<ApiIllustrationServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Create(model);
+				CreateResponse<ApiIllustrationServerResponseModel> result = await this.IllustrationService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiIllustrationServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiIllustrationResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiIllustrationServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiIllustrationRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiIllustrationServerRequestModel model)
 		{
-			CreateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Create(model);
+			CreateResponse<ApiIllustrationServerResponseModel> result = await this.IllustrationService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiIllustrationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiIllustrationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiIllustrationRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiIllustrationServerRequestModel> patch)
 		{
-			ApiIllustrationResponseModel record = await this.IllustrationService.Get(id);
+			ApiIllustrationServerResponseModel record = await this.IllustrationService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiIllustrationRequestModel model = await this.PatchModel(id, patch);
+				ApiIllustrationServerRequestModel model = await this.PatchModel(id, patch) as ApiIllustrationServerRequestModel;
 
-				UpdateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Update(id, model);
+				UpdateResponse<ApiIllustrationServerResponseModel> result = await this.IllustrationService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiIllustrationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiIllustrationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationServerRequestModel model)
 		{
-			ApiIllustrationRequestModel request = await this.PatchModel(id, this.IllustrationModelMapper.CreatePatch(model));
+			ApiIllustrationServerRequestModel request = await this.PatchModel(id, this.IllustrationModelMapper.CreatePatch(model)) as ApiIllustrationServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiIllustrationResponseModel> result = await this.IllustrationService.Update(id, request);
+				UpdateResponse<ApiIllustrationServerResponseModel> result = await this.IllustrationService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.IllustrationService.Delete(id);
@@ -206,24 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("byProductModelID/{productModelID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductModelID(int productModelID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiIllustrationResponseModel> response = await this.IllustrationService.ByProductModelID(productModelID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationRequestModel> patch)
+		private async Task<ApiIllustrationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationServerRequestModel> patch)
 		{
 			var record = await this.IllustrationService.Get(id);
 
@@ -233,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiIllustrationRequestModel request = this.IllustrationModelMapper.MapResponseToRequest(record);
+				ApiIllustrationServerRequestModel request = this.IllustrationModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>569469d4bf50089f2c16d01b28d2bc0c</Hash>
+    <Hash>d16f27142a82a85b0a0e1d21a3a84237</Hash>
 </Codenesium>*/

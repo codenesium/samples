@@ -68,101 +68,101 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BikeFrame")]
-		public string BikeFrame { get; private set; }
+		public virtual string BikeFrame { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Color")]
-		public string Color { get; private set; }
+		public virtual string Color { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Copyright")]
-		public string Copyright { get; private set; }
+		public virtual string Copyright { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Crankset")]
-		public string Crankset { get; private set; }
+		public virtual string Crankset { get; private set; }
 
 		[MaxLength(256)]
 		[Column("MaintenanceDescription")]
-		public string MaintenanceDescription { get; private set; }
+		public virtual string MaintenanceDescription { get; private set; }
 
 		[Column("Manufacturer")]
-		public string Manufacturer { get; private set; }
+		public virtual string Manufacturer { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Material")]
-		public string Material { get; private set; }
+		public virtual string Material { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(256)]
 		[Column("NoOfYears")]
-		public string NoOfYear { get; private set; }
+		public virtual string NoOfYear { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Pedal")]
-		public string Pedal { get; private set; }
+		public virtual string Pedal { get; private set; }
 
 		[MaxLength(256)]
 		[Column("PictureAngle")]
-		public string PictureAngle { get; private set; }
+		public virtual string PictureAngle { get; private set; }
 
 		[MaxLength(256)]
 		[Column("PictureSize")]
-		public string PictureSize { get; private set; }
+		public virtual string PictureSize { get; private set; }
 
 		[MaxLength(256)]
 		[Column("ProductLine")]
-		public string ProductLine { get; private set; }
+		public virtual string ProductLine { get; private set; }
 
 		[Column("ProductModelID")]
-		public int ProductModelID { get; private set; }
+		public virtual int ProductModelID { get; private set; }
 
 		[MaxLength(256)]
 		[Column("ProductPhotoID")]
-		public string ProductPhotoID { get; private set; }
+		public virtual string ProductPhotoID { get; private set; }
 
 		[MaxLength(256)]
 		[Column("ProductURL")]
-		public string ProductURL { get; private set; }
+		public virtual string ProductURL { get; private set; }
 
 		[MaxLength(1024)]
 		[Column("RiderExperience")]
-		public string RiderExperience { get; private set; }
+		public virtual string RiderExperience { get; private set; }
 
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Saddle")]
-		public string Saddle { get; private set; }
+		public virtual string Saddle { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Style")]
-		public string Style { get; private set; }
+		public virtual string Style { get; private set; }
 
 		[Column("Summary")]
-		public string Summary { get; private set; }
+		public virtual string Summary { get; private set; }
 
 		[MaxLength(256)]
 		[Column("WarrantyDescription")]
-		public string WarrantyDescription { get; private set; }
+		public virtual string WarrantyDescription { get; private set; }
 
 		[MaxLength(256)]
 		[Column("WarrantyPeriod")]
-		public string WarrantyPeriod { get; private set; }
+		public virtual string WarrantyPeriod { get; private set; }
 
 		[MaxLength(256)]
 		[Column("Wheel")]
-		public string Wheel { get; private set; }
+		public virtual string Wheel { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b88052f92ee396de0e45d95c0f706b46</Hash>
+    <Hash>6ac68e69030d57ecebb33c4196da7984</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class EmployeeController : AbstractEmployeeController
 	{
 		public EmployeeController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<EmployeeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmployeeService employeeService,
-			IApiEmployeeModelMapper employeeModelMapper
+			IApiEmployeeServerModelMapper employeeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>02b5cab29036225e810a22125a7cb86d</Hash>
+    <Hash>f4ab5a11a298e30a5f8793c27680cd8b</Hash>
 </Codenesium>*/

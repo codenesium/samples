@@ -9,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 	{
 		BOCountry MapModelToBO(
 			int id,
-			ApiCountryRequestModel model);
+			ApiCountryServerRequestModel model);
 
-		ApiCountryResponseModel MapBOToModel(
+		ApiCountryServerResponseModel MapBOToModel(
 			BOCountry boCountry);
 
-		List<ApiCountryResponseModel> MapBOToModel(
+		List<ApiCountryServerResponseModel> MapBOToModel(
 			List<BOCountry> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e60adca487ea9cebecf10a6b4cc87689</Hash>
+    <Hash>8ea3cba98689de6b925b96ed074378b9</Hash>
 </Codenesium>*/

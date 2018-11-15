@@ -26,26 +26,36 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		[Column("amountPerMinute")]
-		public decimal AmountPerMinute { get; private set; }
+		public virtual decimal AmountPerMinute { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("teacherId")]
-		public int TeacherId { get; private set; }
+		public virtual int TeacherId { get; private set; }
 
 		[Column("teacherSkillId")]
-		public int TeacherSkillId { get; private set; }
+		public virtual int TeacherSkillId { get; private set; }
 
 		[ForeignKey("TeacherId")]
 		public virtual Teacher TeacherNavigation { get; private set; }
 
+		public void SetTeacherNavigation(Teacher item)
+		{
+			this.TeacherNavigation = item;
+		}
+
 		[ForeignKey("TeacherSkillId")]
 		public virtual TeacherSkill TeacherSkillNavigation { get; private set; }
+
+		public void SetTeacherSkillNavigation(TeacherSkill item)
+		{
+			this.TeacherSkillNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4ff44b886ab433ae271660a0fc54773</Hash>
+    <Hash>4a78387b5f04554efe6abbad7e8eccb3</Hash>
 </Codenesium>*/

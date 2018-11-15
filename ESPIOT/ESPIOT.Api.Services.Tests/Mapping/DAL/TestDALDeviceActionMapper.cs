@@ -17,14 +17,14 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 			var mapper = new DALDeviceActionMapper();
 			var bo = new BODeviceAction();
-			bo.SetProperties(1, 1, "A", "A");
+			bo.SetProperties(1, "A", 1, "A");
 
 			DeviceAction response = mapper.MapBOToEF(bo);
 
+			response.@Value.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.@Value.Should().Be("A");
 		}
 
 		[Fact]
@@ -32,14 +32,14 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 			var mapper = new DALDeviceActionMapper();
 			DeviceAction entity = new DeviceAction();
-			entity.SetProperties(1, 1, "A", "A");
+			entity.SetProperties("A", 1, 1, "A");
 
 			BODeviceAction response = mapper.MapEFToBO(entity);
 
+			response.@Value.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.@Value.Should().Be("A");
 		}
 
 		[Fact]
@@ -47,7 +47,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 			var mapper = new DALDeviceActionMapper();
 			DeviceAction entity = new DeviceAction();
-			entity.SetProperties(1, 1, "A", "A");
+			entity.SetProperties("A", 1, 1, "A");
 
 			List<BODeviceAction> response = mapper.MapEFToBO(new List<DeviceAction>() { entity });
 
@@ -57,5 +57,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a0626aac3a80d1b7ece5099bd70d0c5d</Hash>
+    <Hash>536ee6de470cd032b32d4155bd27d80f</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,37 +11,45 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IDestinationRepository DestinationRepository { get; private set; }
 
-		protected IApiDestinationRequestModelValidator DestinationModelValidator { get; private set; }
+		protected IApiDestinationServerRequestModelValidator DestinationModelValidator { get; private set; }
 
 		protected IBOLDestinationMapper BolDestinationMapper { get; private set; }
 
 		protected IDALDestinationMapper DalDestinationMapper { get; private set; }
+
+		protected IBOLPipelineStepDestinationMapper BolPipelineStepDestinationMapper { get; private set; }
+
+		protected IDALPipelineStepDestinationMapper DalPipelineStepDestinationMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractDestinationService(
 			ILogger logger,
 			IDestinationRepository destinationRepository,
-			IApiDestinationRequestModelValidator destinationModelValidator,
+			IApiDestinationServerRequestModelValidator destinationModelValidator,
 			IBOLDestinationMapper bolDestinationMapper,
-			IDALDestinationMapper dalDestinationMapper)
+			IDALDestinationMapper dalDestinationMapper,
+			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
+			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper)
 			: base()
 		{
 			this.DestinationRepository = destinationRepository;
 			this.DestinationModelValidator = destinationModelValidator;
 			this.BolDestinationMapper = bolDestinationMapper;
 			this.DalDestinationMapper = dalDestinationMapper;
+			this.BolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
+			this.DalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiDestinationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDestinationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.DestinationRepository.All(limit, offset);
 
 			return this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiDestinationResponseModel> Get(int id)
+		public virtual async Task<ApiDestinationServerResponseModel> Get(int id)
 		{
 			var record = await this.DestinationRepository.Get(id);
 
@@ -60,10 +63,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiDestinationResponseModel>> Create(
-			ApiDestinationRequestModel model)
+		public virtual async Task<CreateResponse<ApiDestinationServerResponseModel>> Create(
+			ApiDestinationServerRequestModel model)
 		{
-			CreateResponse<ApiDestinationResponseModel> response = new CreateResponse<ApiDestinationResponseModel>(await this.DestinationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDestinationServerResponseModel> response = ValidationResponseFactory<ApiDestinationServerResponseModel>.CreateResponse(await this.DestinationModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolDestinationMapper.MapModelToBO(default(int), model);
@@ -75,9 +79,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiDestinationResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiDestinationServerResponseModel>> Update(
 			int id,
-			ApiDestinationRequestModel model)
+			ApiDestinationServerRequestModel model)
 		{
 			var validationResult = await this.DestinationModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +92,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.DestinationRepository.Get(id);
 
-				return new UpdateResponse<ApiDestinationResponseModel>(this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiDestinationServerResponseModel>.UpdateResponse(this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiDestinationResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiDestinationServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.DestinationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DestinationModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.DestinationRepository.Delete(id);
@@ -108,15 +113,15 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiDestinationResponseModel>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepDestinationServerResponseModel>> PipelineStepDestinationsByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Destination> records = await this.DestinationRepository.ByDestinationId(destinationId, limit, offset);
+			List<PipelineStepDestination> records = await this.DestinationRepository.PipelineStepDestinationsByDestinationId(destinationId, limit, offset);
 
-			return this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(records));
+			return this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e11d74679d8902bcfbe1c4d0812197a</Hash>
+    <Hash>a1d93bb7742548f14f6b2847da64003e</Hash>
 </Codenesium>*/

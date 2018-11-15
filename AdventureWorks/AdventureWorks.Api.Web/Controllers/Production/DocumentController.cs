@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class DocumentController : AbstractDocumentController
 	{
 		public DocumentController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<DocumentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDocumentService documentService,
-			IApiDocumentModelMapper documentModelMapper
+			IApiDocumentServerModelMapper documentModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ba6be8cf4355cb1a7c4170077acf36a4</Hash>
+    <Hash>322cd3c30a3d408e324a301e01571742</Hash>
 </Codenesium>*/

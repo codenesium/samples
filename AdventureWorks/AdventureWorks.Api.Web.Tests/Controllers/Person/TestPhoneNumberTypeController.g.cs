@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			var record = new ApiPhoneNumberTypeResponseModel();
-			var records = new List<ApiPhoneNumberTypeResponseModel>();
+			var record = new ApiPhoneNumberTypeServerResponseModel();
+			var records = new List<ApiPhoneNumberTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPhoneNumberTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPhoneNumberTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPhoneNumberTypeResponseModel>>(new List<ApiPhoneNumberTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPhoneNumberTypeServerResponseModel>>(new List<ApiPhoneNumberTypeServerResponseModel>()));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPhoneNumberTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPhoneNumberTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeServerResponseModel()));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPhoneNumberTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPhoneNumberTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeServerResponseModel>(null));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPhoneNumberTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPhoneNumberTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPhoneNumberTypeServerResponseModel>.CreateResponse(null as ApiPhoneNumberTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPhoneNumberTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResponse));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPhoneNumberTypeRequestModel>();
-			records.Add(new ApiPhoneNumberTypeRequestModel());
+			var records = new List<ApiPhoneNumberTypeServerRequestModel>();
+			records.Add(new ApiPhoneNumberTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPhoneNumberTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPhoneNumberTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPhoneNumberTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(null as ApiPhoneNumberTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResponse.Object));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPhoneNumberTypeRequestModel>();
-			records.Add(new ApiPhoneNumberTypeRequestModel());
+			var records = new List<ApiPhoneNumberTypeServerRequestModel>();
+			records.Add(new ApiPhoneNumberTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPhoneNumberTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPhoneNumberTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPhoneNumberTypeServerResponseModel>.CreateResponse(null as ApiPhoneNumberTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPhoneNumberTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResponse));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPhoneNumberTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPhoneNumberTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPhoneNumberTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPhoneNumberTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPhoneNumberTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPhoneNumberTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(null as ApiPhoneNumberTypeServerResponseModel);
+			var mockRecord = new ApiPhoneNumberTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResponse.Object));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPhoneNumberTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPhoneNumberTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()))
-			.Callback<int, ApiPhoneNumberTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()))
+			.Callback<int, ApiPhoneNumberTypeServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeResponseModel>(new ApiPhoneNumberTypeResponseModel()));
-			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeServerResponseModel>(new ApiPhoneNumberTypeServerResponseModel()));
+			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPhoneNumberTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPhoneNumberTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeServerResponseModel>(null));
 			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPhoneNumberTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPhoneNumberTypeServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeResponseModel()));
-			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeServerResponseModel()));
+			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeResponseModel()));
-			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPhoneNumberTypeServerResponseModel()));
+			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PhoneNumberTypeControllerMockFacade mock = new PhoneNumberTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeResponseModel>(null));
-			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPhoneNumberTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPhoneNumberTypeServerResponseModel>(null));
+			PhoneNumberTypeController controller = new PhoneNumberTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPhoneNumberTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPhoneNumberTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IPhoneNumberTypeService> ServiceMock { get; set; } = new Mock<IPhoneNumberTypeService>();
 
-		public Mock<IApiPhoneNumberTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPhoneNumberTypeModelMapper>();
+		public Mock<IApiPhoneNumberTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPhoneNumberTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3b3d5889b3f02217a4dc679704db797</Hash>
+    <Hash>ff7ca4f5075d0c9eaba3adc13d197cbd</Hash>
 </Codenesium>*/

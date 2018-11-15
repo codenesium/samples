@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPetMapper();
-			ApiPetRequestModel model = new ApiPetRequestModel();
+			ApiPetServerRequestModel model = new ApiPetServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
 			BOPet response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPetMapper();
 			BOPet bo = new BOPet();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
-			ApiPetResponseModel response = mapper.MapBOToModel(bo);
+			ApiPetServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BreedId.Should().Be(1);
@@ -52,7 +52,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLPetMapper();
 			BOPet bo = new BOPet();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
-			List<ApiPetResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
+			List<ApiPetServerResponseModel> response = mapper.MapBOToModel(new List<BOPet>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0fb1901e09379e91dac13614e87ecb26</Hash>
+    <Hash>e138c48ab9ea5754602cdf49fb14bcf5</Hash>
 </Codenesium>*/

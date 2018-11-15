@@ -37,7 +37,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiUserResponseModel> response = await service.All();
+			List<ApiUserServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -61,7 +61,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			ApiUserResponseModel response = await service.Get(default(int));
+			ApiUserServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +84,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			ApiUserResponseModel response = await service.Get(default(int));
+			ApiUserServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -94,7 +94,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -108,10 +108,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			CreateResponse<ApiUserResponseModel> response = await service.Create(model);
+			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserRequestModel>()));
+			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
 		}
 
@@ -119,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
@@ -134,10 +134,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			UpdateResponse<ApiUserResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>()));
+			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<User>()));
 		}
 
@@ -145,7 +145,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var model = new ApiUserRequestModel();
+			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
@@ -185,7 +185,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiAdminResponseModel> response = await service.AdminsByUserId(default(int));
+			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -208,7 +208,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiAdminResponseModel> response = await service.AdminsByUserId(default(int));
+			List<ApiAdminServerResponseModel> response = await service.AdminsByUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.AdminsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -233,7 +233,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiStudentResponseModel> response = await service.StudentsByUserId(default(int));
+			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -256,7 +256,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiStudentResponseModel> response = await service.StudentsByUserId(default(int));
+			List<ApiStudentServerResponseModel> response = await service.StudentsByUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.StudentsByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -281,7 +281,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiTeacherResponseModel> response = await service.TeachersByUserId(default(int));
+			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -304,7 +304,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                              mock.DALMapperMockFactory.DALTeacherMapperMock);
 
-			List<ApiTeacherResponseModel> response = await service.TeachersByUserId(default(int));
+			List<ApiTeacherServerResponseModel> response = await service.TeachersByUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.TeachersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -313,5 +313,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>30f007cae390581db347d882cb881ce1</Hash>
+    <Hash>d878a631d5b09747b050dfc29e3ed526</Hash>
 </Codenesium>*/

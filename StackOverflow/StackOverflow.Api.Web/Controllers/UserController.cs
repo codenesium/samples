@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class UserController : AbstractUserController
 	{
 		public UserController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<UserController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUserService userService,
-			IApiUserModelMapper userModelMapper
+			IApiUserServerModelMapper userModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>38c4b7a7842de439ca59acbe1e01dcb7</Hash>
+    <Hash>a98ac4660ccbfd102f81aed0260e4f58</Hash>
 </Codenesium>*/

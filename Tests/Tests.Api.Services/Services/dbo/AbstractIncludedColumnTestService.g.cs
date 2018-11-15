@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IIncludedColumnTestRepository IncludedColumnTestRepository { get; private set; }
 
-		protected IApiIncludedColumnTestRequestModelValidator IncludedColumnTestModelValidator { get; private set; }
+		protected IApiIncludedColumnTestServerRequestModelValidator IncludedColumnTestModelValidator { get; private set; }
 
 		protected IBOLIncludedColumnTestMapper BolIncludedColumnTestMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractIncludedColumnTestService(
 			ILogger logger,
 			IIncludedColumnTestRepository includedColumnTestRepository,
-			IApiIncludedColumnTestRequestModelValidator includedColumnTestModelValidator,
+			IApiIncludedColumnTestServerRequestModelValidator includedColumnTestModelValidator,
 			IBOLIncludedColumnTestMapper bolIncludedColumnTestMapper,
 			IDALIncludedColumnTestMapper dalIncludedColumnTestMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiIncludedColumnTestResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiIncludedColumnTestServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.IncludedColumnTestRepository.All(limit, offset);
 
 			return this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiIncludedColumnTestResponseModel> Get(int id)
+		public virtual async Task<ApiIncludedColumnTestServerResponseModel> Get(int id)
 		{
 			var record = await this.IncludedColumnTestRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiIncludedColumnTestResponseModel>> Create(
-			ApiIncludedColumnTestRequestModel model)
+		public virtual async Task<CreateResponse<ApiIncludedColumnTestServerResponseModel>> Create(
+			ApiIncludedColumnTestServerRequestModel model)
 		{
-			CreateResponse<ApiIncludedColumnTestResponseModel> response = new CreateResponse<ApiIncludedColumnTestResponseModel>(await this.IncludedColumnTestModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiIncludedColumnTestServerResponseModel> response = ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.CreateResponse(await this.IncludedColumnTestModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolIncludedColumnTestMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiIncludedColumnTestResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiIncludedColumnTestServerResponseModel>> Update(
 			int id,
-			ApiIncludedColumnTestRequestModel model)
+			ApiIncludedColumnTestServerRequestModel model)
 		{
 			var validationResult = await this.IncludedColumnTestModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.IncludedColumnTestRepository.Get(id);
 
-				return new UpdateResponse<ApiIncludedColumnTestResponseModel>(this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.UpdateResponse(this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiIncludedColumnTestResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.IncludedColumnTestModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.IncludedColumnTestModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.IncludedColumnTestRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b20043a42e0a5c2c488a72f8520b1295</Hash>
+    <Hash>ffab6b78a66ee127d722cbb03ddf21d1</Hash>
 </Codenesium>*/

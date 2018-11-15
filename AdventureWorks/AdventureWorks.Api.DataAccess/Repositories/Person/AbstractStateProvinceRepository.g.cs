@@ -76,12 +76,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<StateProvince> ByName(string name)
+		public async virtual Task<StateProvince> ByName(string name)
 		{
 			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+		public async virtual Task<StateProvince> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
+		public async virtual Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
 			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 		}
@@ -95,22 +100,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<StateProvince, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<StateProvince, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<StateProvince, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.StateProvinceID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
-			}
-			else
-			{
-				return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
-			}
+			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
 		}
 
 		private async Task<StateProvince> GetById(int stateProvinceID)
@@ -123,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>40cce924519898234da85bfc308707c1</Hash>
+    <Hash>c5a60462182e3392cc9e3c5f874372fd</Hash>
 </Codenesium>*/

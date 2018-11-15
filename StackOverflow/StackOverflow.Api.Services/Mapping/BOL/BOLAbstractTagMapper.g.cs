@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOTag MapModelToBO(
 			int id,
-			ApiTagRequestModel model
+			ApiTagServerRequestModel model
 			)
 		{
 			BOTag boTag = new BOTag();
@@ -22,20 +21,20 @@ namespace StackOverflowNS.Api.Services
 			return boTag;
 		}
 
-		public virtual ApiTagResponseModel MapBOToModel(
+		public virtual ApiTagServerResponseModel MapBOToModel(
 			BOTag boTag)
 		{
-			var model = new ApiTagResponseModel();
+			var model = new ApiTagServerResponseModel();
 
 			model.SetProperties(boTag.Id, boTag.Count, boTag.ExcerptPostId, boTag.TagName, boTag.WikiPostId);
 
 			return model;
 		}
 
-		public virtual List<ApiTagResponseModel> MapBOToModel(
+		public virtual List<ApiTagServerResponseModel> MapBOToModel(
 			List<BOTag> items)
 		{
-			List<ApiTagResponseModel> response = new List<ApiTagResponseModel>();
+			List<ApiTagServerResponseModel> response = new List<ApiTagServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17fb23830d0ebc00278575ef93cd4f5c</Hash>
+    <Hash>6546502c7cedf4104c9bcca650d715d5</Hash>
 </Codenesium>*/

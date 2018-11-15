@@ -9,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 	{
 		BOAdmin MapModelToBO(
 			int id,
-			ApiAdminRequestModel model);
+			ApiAdminServerRequestModel model);
 
-		ApiAdminResponseModel MapBOToModel(
+		ApiAdminServerResponseModel MapBOToModel(
 			BOAdmin boAdmin);
 
-		List<ApiAdminResponseModel> MapBOToModel(
+		List<ApiAdminServerResponseModel> MapBOToModel(
 			List<BOAdmin> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>428dd6a85882e62b5a3edc0ba0aa9063</Hash>
+    <Hash>e5471efef6396ec0979b8d892aa8efd1</Hash>
 </Codenesium>*/

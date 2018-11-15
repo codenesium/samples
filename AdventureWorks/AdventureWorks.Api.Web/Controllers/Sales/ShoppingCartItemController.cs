@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ShoppingCartItemController : AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShoppingCartItemService shoppingCartItemService,
-			IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
+			IApiShoppingCartItemServerModelMapper shoppingCartItemModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2e37ea8ac1612b5c2042fb256cf8ca69</Hash>
+    <Hash>ec68278901754d5f96b59c18a14b8242</Hash>
 </Codenesium>*/

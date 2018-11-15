@@ -1,4 +1,3 @@
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual BORate MapModelToBO(
 			int id,
-			ApiRateRequestModel model
+			ApiRateServerRequestModel model
 			)
 		{
 			BORate boRate = new BORate();
@@ -21,20 +20,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return boRate;
 		}
 
-		public virtual ApiRateResponseModel MapBOToModel(
+		public virtual ApiRateServerResponseModel MapBOToModel(
 			BORate boRate)
 		{
-			var model = new ApiRateResponseModel();
+			var model = new ApiRateServerResponseModel();
 
 			model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId);
 
 			return model;
 		}
 
-		public virtual List<ApiRateResponseModel> MapBOToModel(
+		public virtual List<ApiRateServerResponseModel> MapBOToModel(
 			List<BORate> items)
 		{
-			List<ApiRateResponseModel> response = new List<ApiRateResponseModel>();
+			List<ApiRateServerResponseModel> response = new List<ApiRateServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a22fce65c73862a1ac7dd8f35ecfa029</Hash>
+    <Hash>21fe63e7077369cde27218fabe11909d</Hash>
 </Codenesium>*/

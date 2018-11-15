@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			var record = new ApiChainStatusResponseModel();
-			var records = new List<ApiChainStatusResponseModel>();
+			var record = new ApiChainStatusServerResponseModel();
+			var records = new List<ApiChainStatusServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiChainStatusResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiChainStatusServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiChainStatusResponseModel>>(new List<ApiChainStatusResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiChainStatusServerResponseModel>>(new List<ApiChainStatusServerResponseModel>()));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiChainStatusResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiChainStatusServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusServerResponseModel()));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiChainStatusResponseModel;
+			var record = (response as OkObjectResult).Value as ApiChainStatusServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusServerResponseModel>(null));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiChainStatusResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiChainStatusResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiChainStatusServerResponseModel>.CreateResponse(null as ApiChainStatusServerResponseModel);
+
+			mockResponse.SetRecord(new ApiChainStatusServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusServerResponseModel>>(mockResponse));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiChainStatusRequestModel>();
-			records.Add(new ApiChainStatusRequestModel());
+			var records = new List<ApiChainStatusServerRequestModel>();
+			records.Add(new ApiChainStatusServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiChainStatusResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiChainStatusServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiChainStatusResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiChainStatusServerResponseModel>>(null as ApiChainStatusServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusServerResponseModel>>(mockResponse.Object));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiChainStatusRequestModel>();
-			records.Add(new ApiChainStatusRequestModel());
+			var records = new List<ApiChainStatusServerRequestModel>();
+			records.Add(new ApiChainStatusServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiChainStatusResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiChainStatusResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiChainStatusServerResponseModel>.CreateResponse(null as ApiChainStatusServerResponseModel);
+
+			mockResponse.SetRecord(new ApiChainStatusServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusServerResponseModel>>(mockResponse));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiChainStatusRequestModel());
+			IActionResult response = await controller.Create(new ApiChainStatusServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiChainStatusResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiChainStatusServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiChainStatusResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiChainStatusResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiChainStatusServerResponseModel>>(null as ApiChainStatusServerResponseModel);
+			var mockRecord = new ApiChainStatusServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiChainStatusServerResponseModel>>(mockResponse.Object));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiChainStatusRequestModel());
+			IActionResult response = await controller.Create(new ApiChainStatusServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiChainStatusResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiChainStatusServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>()))
-			.Callback<int, ApiChainStatusRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>()))
+			.Callback<int, ApiChainStatusServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiChainStatusResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusResponseModel>(new ApiChainStatusResponseModel()));
-			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiChainStatusServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusServerResponseModel>(new ApiChainStatusServerResponseModel()));
+			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiChainStatusRequestModel>();
+			var patch = new JsonPatchDocument<ApiChainStatusServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusServerResponseModel>(null));
 			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiChainStatusRequestModel>();
+			var patch = new JsonPatchDocument<ApiChainStatusServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiChainStatusResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiChainStatusServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusResponseModel()));
-			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusServerResponseModel()));
+			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiChainStatusRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiChainStatusServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiChainStatusResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiChainStatusServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusResponseModel()));
-			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiChainStatusServerResponseModel()));
+			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiChainStatusRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiChainStatusServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ChainStatusControllerMockFacade mock = new ChainStatusControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiChainStatusResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiChainStatusServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusResponseModel>(null));
-			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiChainStatusServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiChainStatusServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiChainStatusServerResponseModel>(null));
+			ChainStatusController controller = new ChainStatusController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiChainStatusServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiChainStatusRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiChainStatusServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<IChainStatusService> ServiceMock { get; set; } = new Mock<IChainStatusService>();
 
-		public Mock<IApiChainStatusModelMapper> ModelMapperMock { get; set; } = new Mock<IApiChainStatusModelMapper>();
+		public Mock<IApiChainStatusServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiChainStatusServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0c3277709d33b380aeba97d4d5dd064</Hash>
+    <Hash>6ffc98f00f814fb76046249e87de882d</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 		public StoreService(
 			ILogger<IStoreRepository> logger,
 			IStoreRepository storeRepository,
-			IApiStoreRequestModelValidator storeModelValidator,
-			IBOLStoreMapper bolstoreMapper,
-			IDALStoreMapper dalstoreMapper,
+			IApiStoreServerRequestModelValidator storeModelValidator,
+			IBOLStoreMapper bolStoreMapper,
+			IDALStoreMapper dalStoreMapper,
 			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper)
 			: base(logger,
 			       storeRepository,
 			       storeModelValidator,
-			       bolstoreMapper,
-			       dalstoreMapper,
+			       bolStoreMapper,
+			       dalStoreMapper,
 			       bolCustomerMapper,
 			       dalCustomerMapper)
 		{
@@ -34,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13f194e44c27e67f8fd7925c12716a9e</Hash>
+    <Hash>47a6b4186fa87e779a82df7288d307d5</Hash>
 </Codenesium>*/

@@ -1,45 +1,4 @@
-export class ApiChainRequestModel {
-				chainStatusId:number;
-chainStatusIdEntity:number;
-externalId:string;
-id:number;
-name:string;
-teamId:number;
-teamIdEntity:number;
-
-	
-				constructor() {
-					this.chainStatusId = 0;
-this.externalId = '';
-this.id = 0;
-this.name = '';
-this.teamId = 0;
-
-		
-				}
-			}
-
-			export class ApiChainResponseModel {
-				chainStatusId:number;
-chainStatusIdEntity:number;
-externalId:string;
-id:number;
-name:string;
-teamId:number;
-teamIdEntity:number;
-
-	
-				constructor() {
-					this.chainStatusId = 0;
-this.externalId = '';
-this.id = 0;
-this.name = '';
-this.teamId = 0;
-
-		
-				}
-			}
-			export class ApiChainStatusRequestModel {
+export class ApiChainStatusServerRequestModel {
 				id:number;
 name:string;
 
@@ -52,7 +11,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiChainStatusResponseModel {
+			export class ApiChainStatusServerResponseModel {
 				id:number;
 name:string;
 
@@ -64,7 +23,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiLinkRequestModel {
+			export class ApiLinkServerRequestModel {
 				assignedMachineId:number;
 assignedMachineIdEntity:number;
 chainId:number;
@@ -102,7 +61,7 @@ this.timeoutInSecond = 0;
 				}
 			}
 
-			export class ApiLinkResponseModel {
+			export class ApiLinkServerResponseModel {
 				assignedMachineId:number;
 assignedMachineIdEntity:number;
 chainId:number;
@@ -139,7 +98,7 @@ this.timeoutInSecond = 0;
 		
 				}
 			}
-			export class ApiLinkLogRequestModel {
+			export class ApiLinkLogServerRequestModel {
 				dateEntered:string;
 id:number;
 linkId:number;
@@ -157,7 +116,7 @@ this.log = '';
 				}
 			}
 
-			export class ApiLinkLogResponseModel {
+			export class ApiLinkLogServerResponseModel {
 				dateEntered:string;
 id:number;
 linkId:number;
@@ -174,7 +133,7 @@ this.log = '';
 		
 				}
 			}
-			export class ApiLinkStatusRequestModel {
+			export class ApiLinkStatusServerRequestModel {
 				id:number;
 name:string;
 
@@ -187,7 +146,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiLinkStatusResponseModel {
+			export class ApiLinkStatusServerResponseModel {
 				id:number;
 name:string;
 
@@ -199,7 +158,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiMachineRequestModel {
+			export class ApiMachineServerRequestModel {
 				description:string;
 id:number;
 jwtKey:string;
@@ -220,7 +179,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiMachineResponseModel {
+			export class ApiMachineServerResponseModel {
 				description:string;
 id:number;
 jwtKey:string;
@@ -240,7 +199,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiOrganizationRequestModel {
+			export class ApiOrganizationServerRequestModel {
 				id:number;
 name:string;
 
@@ -253,7 +212,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiOrganizationResponseModel {
+			export class ApiOrganizationServerResponseModel {
 				id:number;
 name:string;
 
@@ -265,23 +224,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiTeamRequestModel {
-				id:number;
-name:string;
-organizationId:number;
-organizationIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-this.organizationId = 0;
-
-		
-				}
-			}
-
-			export class ApiTeamResponseModel {
+			export class ApiTeamServerRequestModel {
 				id:number;
 name:string;
 organizationId:number;
@@ -296,7 +239,23 @@ this.organizationId = 0;
 		
 				}
 			}
-			export class ApiVersionInfoRequestModel {
+
+			export class ApiTeamServerResponseModel {
+				id:number;
+name:string;
+organizationId:number;
+organizationIdEntity:number;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+this.organizationId = 0;
+
+		
+				}
+			}
+			export class ApiVersionInfoServerRequestModel {
 				appliedOn:string;
 description:string;
 version:number;
@@ -311,7 +270,7 @@ this.version = 0;
 				}
 			}
 
-			export class ApiVersionInfoResponseModel {
+			export class ApiVersionInfoServerResponseModel {
 				appliedOn:string;
 description:string;
 version:number;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -9,7 +8,7 @@ namespace TwitterNS.Api.Services
 	{
 		public virtual BOFollower MapModelToBO(
 			int id,
-			ApiFollowerRequestModel model
+			ApiFollowerServerRequestModel model
 			)
 		{
 			BOFollower boFollower = new BOFollower();
@@ -17,27 +16,27 @@ namespace TwitterNS.Api.Services
 				id,
 				model.Blocked,
 				model.DateFollowed,
-				model.FollowRequestStatu,
 				model.FollowedUserId,
 				model.FollowingUserId,
+				model.FollowRequestStatu,
 				model.Muted);
 			return boFollower;
 		}
 
-		public virtual ApiFollowerResponseModel MapBOToModel(
+		public virtual ApiFollowerServerResponseModel MapBOToModel(
 			BOFollower boFollower)
 		{
-			var model = new ApiFollowerResponseModel();
+			var model = new ApiFollowerServerResponseModel();
 
-			model.SetProperties(boFollower.Id, boFollower.Blocked, boFollower.DateFollowed, boFollower.FollowRequestStatu, boFollower.FollowedUserId, boFollower.FollowingUserId, boFollower.Muted);
+			model.SetProperties(boFollower.Id, boFollower.Blocked, boFollower.DateFollowed, boFollower.FollowedUserId, boFollower.FollowingUserId, boFollower.FollowRequestStatu, boFollower.Muted);
 
 			return model;
 		}
 
-		public virtual List<ApiFollowerResponseModel> MapBOToModel(
+		public virtual List<ApiFollowerServerResponseModel> MapBOToModel(
 			List<BOFollower> items)
 		{
-			List<ApiFollowerResponseModel> response = new List<ApiFollowerResponseModel>();
+			List<ApiFollowerServerResponseModel> response = new List<ApiFollowerServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -50,5 +49,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>387f7a7d867f6458e8aef119b4c73919</Hash>
+    <Hash>5bcb6d2b2bd7c1d30850371946ebae28</Hash>
 </Codenesium>*/

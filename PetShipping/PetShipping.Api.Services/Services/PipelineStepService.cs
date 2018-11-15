@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,9 +9,15 @@ namespace PetShippingNS.Api.Services
 		public PipelineStepService(
 			ILogger<IPipelineStepRepository> logger,
 			IPipelineStepRepository pipelineStepRepository,
-			IApiPipelineStepRequestModelValidator pipelineStepModelValidator,
-			IBOLPipelineStepMapper bolpipelineStepMapper,
-			IDALPipelineStepMapper dalpipelineStepMapper,
+			IApiPipelineStepServerRequestModelValidator pipelineStepModelValidator,
+			IBOLPipelineStepMapper bolPipelineStepMapper,
+			IDALPipelineStepMapper dalPipelineStepMapper,
+			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
+			IBOLOtherTransportMapper bolOtherTransportMapper,
+			IDALOtherTransportMapper dalOtherTransportMapper,
+			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
+			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
 			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
@@ -26,8 +25,14 @@ namespace PetShippingNS.Api.Services
 			: base(logger,
 			       pipelineStepRepository,
 			       pipelineStepModelValidator,
-			       bolpipelineStepMapper,
-			       dalpipelineStepMapper,
+			       bolPipelineStepMapper,
+			       dalPipelineStepMapper,
+			       bolHandlerPipelineStepMapper,
+			       dalHandlerPipelineStepMapper,
+			       bolOtherTransportMapper,
+			       dalOtherTransportMapper,
+			       bolPipelineStepDestinationMapper,
+			       dalPipelineStepDestinationMapper,
 			       bolPipelineStepNoteMapper,
 			       dalPipelineStepNoteMapper,
 			       bolPipelineStepStepRequirementMapper,
@@ -38,5 +43,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02cc34266d5cf013861beb1c40019365</Hash>
+    <Hash>fae452b747b3505745e0378ce4777475</Hash>
 </Codenesium>*/

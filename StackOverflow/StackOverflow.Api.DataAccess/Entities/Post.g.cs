@@ -58,71 +58,71 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("AcceptedAnswerId")]
-		public int? AcceptedAnswerId { get; private set; }
+		public virtual int? AcceptedAnswerId { get; private set; }
 
 		[Column("AnswerCount")]
-		public int? AnswerCount { get; private set; }
+		public virtual int? AnswerCount { get; private set; }
 
 		[Column("Body")]
-		public string Body { get; private set; }
+		public virtual string Body { get; private set; }
 
 		[Column("ClosedDate")]
-		public DateTime? ClosedDate { get; private set; }
+		public virtual DateTime? ClosedDate { get; private set; }
 
 		[Column("CommentCount")]
-		public int? CommentCount { get; private set; }
+		public virtual int? CommentCount { get; private set; }
 
 		[Column("CommunityOwnedDate")]
-		public DateTime? CommunityOwnedDate { get; private set; }
+		public virtual DateTime? CommunityOwnedDate { get; private set; }
 
 		[Column("CreationDate")]
-		public DateTime CreationDate { get; private set; }
+		public virtual DateTime CreationDate { get; private set; }
 
 		[Column("FavoriteCount")]
-		public int? FavoriteCount { get; private set; }
+		public virtual int? FavoriteCount { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("LastActivityDate")]
-		public DateTime LastActivityDate { get; private set; }
+		public virtual DateTime LastActivityDate { get; private set; }
 
 		[Column("LastEditDate")]
-		public DateTime? LastEditDate { get; private set; }
+		public virtual DateTime? LastEditDate { get; private set; }
 
 		[MaxLength(40)]
 		[Column("LastEditorDisplayName")]
-		public string LastEditorDisplayName { get; private set; }
+		public virtual string LastEditorDisplayName { get; private set; }
 
 		[Column("LastEditorUserId")]
-		public int? LastEditorUserId { get; private set; }
+		public virtual int? LastEditorUserId { get; private set; }
 
 		[Column("OwnerUserId")]
-		public int? OwnerUserId { get; private set; }
+		public virtual int? OwnerUserId { get; private set; }
 
 		[Column("ParentId")]
-		public int? ParentId { get; private set; }
+		public virtual int? ParentId { get; private set; }
 
 		[Column("PostTypeId")]
-		public int PostTypeId { get; private set; }
+		public virtual int PostTypeId { get; private set; }
 
 		[Column("Score")]
-		public int Score { get; private set; }
+		public virtual int Score { get; private set; }
 
 		[MaxLength(150)]
 		[Column("Tags")]
-		public string Tag { get; private set; }
+		public virtual string Tag { get; private set; }
 
 		[MaxLength(250)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 
 		[Column("ViewCount")]
-		public int ViewCount { get; private set; }
+		public virtual int ViewCount { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7988d2ea59ec6439f9f5c5eb6ea4eaa6</Hash>
+    <Hash>86f4d7c7b60c0fec465b05100623badf</Hash>
 </Codenesium>*/

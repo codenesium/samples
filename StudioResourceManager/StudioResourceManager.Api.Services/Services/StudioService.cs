@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public StudioService(
 			ILogger<IStudioRepository> logger,
 			IStudioRepository studioRepository,
-			IApiStudioRequestModelValidator studioModelValidator,
-			IBOLStudioMapper bolstudioMapper,
-			IDALStudioMapper dalstudioMapper)
+			IApiStudioServerRequestModelValidator studioModelValidator,
+			IBOLStudioMapper bolStudioMapper,
+			IDALStudioMapper dalStudioMapper)
 			: base(logger,
 			       studioRepository,
 			       studioModelValidator,
-			       bolstudioMapper,
-			       dalstudioMapper)
+			       bolStudioMapper,
+			       dalStudioMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bc663c1fcae43494b416f28e20d9bf6</Hash>
+    <Hash>e53d5589a7c02d14b97f377ac0c86a4e</Hash>
 </Codenesium>*/

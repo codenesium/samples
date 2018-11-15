@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TeacherSkillController : AbstractTeacherSkillController
 	{
 		public TeacherSkillController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<TeacherSkillController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITeacherSkillService teacherSkillService,
-			IApiTeacherSkillModelMapper teacherSkillModelMapper
+			IApiTeacherSkillServerModelMapper teacherSkillModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>80ac7765489d9a658e2e3898aea67b60</Hash>
+    <Hash>7fa2aa1106e41bfccdb6293c9af3b015</Hash>
 </Codenesium>*/

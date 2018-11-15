@@ -17,8 +17,8 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTestAllFieldTypeMapper();
-			ApiTestAllFieldTypeRequestModel model = new ApiTestAllFieldTypeRequestModel();
-			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			ApiTestAllFieldTypeServerRequestModel model = new ApiTestAllFieldTypeServerRequestModel();
+			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 			BOTestAllFieldType response = mapper.MapModelToBO(1, model);
 
 			response.FieldBigInt.Should().Be(1);
@@ -42,7 +42,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldSmallInt.Should().Be(1);
 			response.FieldSmallMoney.Should().Be(1m);
 			response.FieldText.Should().Be("A");
-			response.FieldTime.Should().Be(TimeSpan.Parse("0"));
+			response.FieldTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.FieldTimestamp.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldTinyInt.Should().Be(1);
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -56,8 +56,8 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new BOLTestAllFieldTypeMapper();
 			BOTestAllFieldType bo = new BOTestAllFieldType();
-			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
-			ApiTestAllFieldTypeResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			ApiTestAllFieldTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.FieldBigInt.Should().Be(1);
 			response.FieldBinary.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -80,7 +80,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldSmallInt.Should().Be(1);
 			response.FieldSmallMoney.Should().Be(1m);
 			response.FieldText.Should().Be("A");
-			response.FieldTime.Should().Be(TimeSpan.Parse("0"));
+			response.FieldTime.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.FieldTimestamp.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldTinyInt.Should().Be(1);
 			response.FieldUniqueIdentifier.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -95,8 +95,8 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new BOLTestAllFieldTypeMapper();
 			BOTestAllFieldType bo = new BOTestAllFieldType();
-			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("0"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
-			List<ApiTestAllFieldTypeResponseModel> response = mapper.MapBOToModel(new List<BOTestAllFieldType>() { { bo } });
+			bo.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			List<ApiTestAllFieldTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOTestAllFieldType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -104,5 +104,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a3fff4a5b894dd0a9fa1c4ce65b112b7</Hash>
+    <Hash>11265ec3ad90a3b196f6307061a8e605</Hash>
 </Codenesium>*/

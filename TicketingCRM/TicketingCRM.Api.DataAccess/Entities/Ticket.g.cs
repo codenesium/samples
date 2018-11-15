@@ -25,20 +25,25 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(8)]
 		[Column("publicId")]
-		public string PublicId { get; private set; }
+		public virtual string PublicId { get; private set; }
 
 		[Column("ticketStatusId")]
-		public int TicketStatusId { get; private set; }
+		public virtual int TicketStatusId { get; private set; }
 
 		[ForeignKey("TicketStatusId")]
 		public virtual TicketStatu TicketStatuNavigation { get; private set; }
+
+		public void SetTicketStatuNavigation(TicketStatu item)
+		{
+			this.TicketStatuNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3acb109e0419035432824693a0c973ef</Hash>
+    <Hash>d8e125c3c5c5aef0c6687e17fad96b87</Hash>
 </Codenesium>*/

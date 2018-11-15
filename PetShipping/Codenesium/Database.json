@@ -1,0 +1,1771 @@
+{
+  "$id": "1",
+  "Name": "Demo_PetShipping",
+  "Schemas": [
+    {
+      "$id": "2",
+      "Name": "dbo",
+      "Tables": [
+        {
+          "$id": "3",
+          "Name": "Airline",
+          "Columns": [
+            {
+              "$id": "4",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "5",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "6",
+              "Name": "PK_Airline",
+              "TableName": "Airline",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "7",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "8",
+          "Name": "AirTransport",
+          "Columns": [
+            {
+              "$id": "9",
+              "Name": "airlineId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "10",
+              "Name": "flightNumber",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 12,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "11",
+              "Name": "handlerId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "12",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "13",
+              "Name": "landDate",
+              "DataType": "datetime",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "14",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "15",
+              "Name": "takeoffDate",
+              "DataType": "datetime",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "16",
+              "Name": "PK_AirTransport",
+              "TableName": "AirTransport",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "17",
+                  "Name": "airlineId",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "18",
+          "Name": "Breed",
+          "Columns": [
+            {
+              "$id": "19",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "20",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "21",
+              "Name": "speciesId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "22",
+              "Name": "PK_Breed",
+              "TableName": "Breed",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "23",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "24",
+          "Name": "Client",
+          "Columns": [
+            {
+              "$id": "25",
+              "Name": "email",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "26",
+              "Name": "firstName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "27",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "28",
+              "Name": "lastName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "29",
+              "Name": "notes",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": true,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "30",
+              "Name": "phone",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 10,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "31",
+              "Name": "PK_Client",
+              "TableName": "Client",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "32",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "33",
+          "Name": "ClientCommunication",
+          "Columns": [
+            {
+              "$id": "34",
+              "Name": "clientId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "35",
+              "Name": "dateCreated",
+              "DataType": "datetime",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "36",
+              "Name": "employeeId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "37",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "38",
+              "Name": "notes",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "39",
+              "Name": "PK_ClientCommunication",
+              "TableName": "ClientCommunication",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "40",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "41",
+          "Name": "Country",
+          "Columns": [
+            {
+              "$id": "42",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "43",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "44",
+              "Name": "PK_Country",
+              "TableName": "Country",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "45",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "46",
+          "Name": "CountryRequirement",
+          "Columns": [
+            {
+              "$id": "47",
+              "Name": "countryId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "48",
+              "Name": "details",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "49",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "50",
+              "Name": "PK_CountryRequirement",
+              "TableName": "CountryRequirement",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "51",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "52",
+          "Name": "Destination",
+          "Columns": [
+            {
+              "$id": "53",
+              "Name": "countryId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "54",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "55",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "56",
+              "Name": "order",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "57",
+              "Name": "PK_Destination",
+              "TableName": "Destination",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "58",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "59",
+          "Name": "Employee",
+          "Columns": [
+            {
+              "$id": "60",
+              "Name": "firstName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "61",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "62",
+              "Name": "isSalesPerson",
+              "DataType": "bit",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "63",
+              "Name": "isShipper",
+              "DataType": "bit",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "64",
+              "Name": "lastName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "65",
+              "Name": "PK_Employee",
+              "TableName": "Employee",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "66",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "67",
+          "Name": "Handler",
+          "Columns": [
+            {
+              "$id": "68",
+              "Name": "countryId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "69",
+              "Name": "email",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "70",
+              "Name": "firstName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "71",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "72",
+              "Name": "lastName",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "73",
+              "Name": "phone",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 10,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "74",
+              "Name": "PK_Handler",
+              "TableName": "Handler",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "75",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "76",
+          "Name": "HandlerPipelineStep",
+          "Columns": [
+            {
+              "$id": "77",
+              "Name": "handlerId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "78",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "79",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "80",
+              "Name": "PK_HandlerPipelineStep",
+              "TableName": "HandlerPipelineStep",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "81",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "82",
+          "Name": "OtherTransport",
+          "Columns": [
+            {
+              "$id": "83",
+              "Name": "handlerId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "84",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "85",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "86",
+              "Name": "PK_OtherTransport",
+              "TableName": "OtherTransport",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "87",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "88",
+          "Name": "Pet",
+          "Columns": [
+            {
+              "$id": "89",
+              "Name": "breedId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "90",
+              "Name": "clientId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "91",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "92",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "93",
+              "Name": "weight",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "94",
+              "Name": "PK_Pet",
+              "TableName": "Pet",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "95",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "96",
+          "Name": "Pipeline",
+          "Columns": [
+            {
+              "$id": "97",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "98",
+              "Name": "pipelineStatusId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "99",
+              "Name": "saleId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "100",
+              "Name": "PK_Pipeline",
+              "TableName": "Pipeline",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "101",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "102",
+          "Name": "PipelineStatus",
+          "Columns": [
+            {
+              "$id": "103",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "104",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "105",
+              "Name": "PK_PipelineStatus",
+              "TableName": "PipelineStatus",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "106",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "107",
+          "Name": "PipelineStep",
+          "Columns": [
+            {
+              "$id": "108",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "109",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "110",
+              "Name": "pipelineStepStatusId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "111",
+              "Name": "shipperId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "112",
+              "Name": "PK_PipelineStep",
+              "TableName": "PipelineStep",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "113",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "114",
+          "Name": "PipelineStepDestination",
+          "Columns": [
+            {
+              "$id": "115",
+              "Name": "destinationId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "116",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "117",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "118",
+              "Name": "PK_PipelineStepDestination",
+              "TableName": "PipelineStepDestination",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "119",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "120",
+          "Name": "PipelineStepNote",
+          "Columns": [
+            {
+              "$id": "121",
+              "Name": "employeeId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "122",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "123",
+              "Name": "note",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "124",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "125",
+              "Name": "PK_PipelineStepNote",
+              "TableName": "PipelineStepNote",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "126",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "127",
+          "Name": "PipelineStepStatus",
+          "Columns": [
+            {
+              "$id": "128",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "129",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "130",
+              "Name": "PK_PipelineStepStatus",
+              "TableName": "PipelineStepStatus",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "131",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "132",
+          "Name": "PipelineStepStepRequirement",
+          "Columns": [
+            {
+              "$id": "133",
+              "Name": "details",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "134",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "135",
+              "Name": "pipelineStepId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "136",
+              "Name": "requirementMet",
+              "DataType": "bit",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "137",
+              "Name": "PK_PipelineStepStepRequirement",
+              "TableName": "PipelineStepStepRequirement",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "138",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "139",
+          "Name": "Sale",
+          "Columns": [
+            {
+              "$id": "140",
+              "Name": "amount",
+              "DataType": "money",
+              "NumericPrecision": 19,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "141",
+              "Name": "clientId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "142",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "143",
+              "Name": "note",
+              "DataType": "text",
+              "NumericPrecision": 0,
+              "MaxLength": 2147483647,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "144",
+              "Name": "petId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "145",
+              "Name": "saleDate",
+              "DataType": "datetime",
+              "NumericPrecision": 0,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            },
+            {
+              "$id": "146",
+              "Name": "salesPersonId",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "147",
+              "Name": "PK_Sale",
+              "TableName": "Sale",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "148",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        },
+        {
+          "$id": "149",
+          "Name": "Species",
+          "Columns": [
+            {
+              "$id": "150",
+              "Name": "id",
+              "DataType": "int",
+              "NumericPrecision": 10,
+              "MaxLength": 0,
+              "IsNullable": false,
+              "DatabaseGenerated": true
+            },
+            {
+              "$id": "151",
+              "Name": "name",
+              "DataType": "varchar",
+              "NumericPrecision": 0,
+              "MaxLength": 128,
+              "IsNullable": false,
+              "DatabaseGenerated": false
+            }
+          ],
+          "Constraints": [
+            {
+              "$id": "152",
+              "Name": "PK_Species",
+              "TableName": "Species",
+              "IsPrimaryKey": true,
+              "ConstraintType": "CLUSTERED",
+              "Columns": [
+                {
+                  "$id": "153",
+                  "Name": "id",
+                  "Order": 1,
+                  "Descending": false,
+                  "IsIncludedColumn": false,
+                  "IsIdentity": true
+                }
+              ],
+              "SchemaName": "dbo",
+              "IsUnique": true
+            }
+          ],
+          "DefaultConstraints": [],
+          "IsView": false
+        }
+      ],
+      "ForeignKeys": [
+        {
+          "$id": "154",
+          "Columns": [
+            {
+              "$id": "155",
+              "ForeignKeyTableName": "AirTransport",
+              "ForeignKeyColumnName": "handlerId",
+              "PrimaryKeyTableName": "Handler",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_AirTransport_handlerId_Handler_id"
+        },
+        {
+          "$id": "156",
+          "Columns": [
+            {
+              "$id": "157",
+              "ForeignKeyTableName": "Breed",
+              "ForeignKeyColumnName": "speciesId",
+              "PrimaryKeyTableName": "Species",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Breed_speciesId_Species_id"
+        },
+        {
+          "$id": "158",
+          "Columns": [
+            {
+              "$id": "159",
+              "ForeignKeyTableName": "ClientCommunication",
+              "ForeignKeyColumnName": "employeeId",
+              "PrimaryKeyTableName": "Employee",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_ClientCommunication_employeeId_Employee_id"
+        },
+        {
+          "$id": "160",
+          "Columns": [
+            {
+              "$id": "161",
+              "ForeignKeyTableName": "ClientCommunication",
+              "ForeignKeyColumnName": "clientId",
+              "PrimaryKeyTableName": "Client",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_ClientCommunication_clientId_Client_id"
+        },
+        {
+          "$id": "162",
+          "Columns": [
+            {
+              "$id": "163",
+              "ForeignKeyTableName": "CountryRequirement",
+              "ForeignKeyColumnName": "countryId",
+              "PrimaryKeyTableName": "Country",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_CountryRequirement_countryId_Country_id"
+        },
+        {
+          "$id": "164",
+          "Columns": [
+            {
+              "$id": "165",
+              "ForeignKeyTableName": "Destination",
+              "ForeignKeyColumnName": "countryId",
+              "PrimaryKeyTableName": "Country",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Destination_countryId_Country_id"
+        },
+        {
+          "$id": "166",
+          "Columns": [
+            {
+              "$id": "167",
+              "ForeignKeyTableName": "HandlerPipelineStep",
+              "ForeignKeyColumnName": "handlerId",
+              "PrimaryKeyTableName": "Handler",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_HandlerPipelineStep_handlerId_Handler_id"
+        },
+        {
+          "$id": "168",
+          "Columns": [
+            {
+              "$id": "169",
+              "ForeignKeyTableName": "HandlerPipelineStep",
+              "ForeignKeyColumnName": "pipelineStepId",
+              "PrimaryKeyTableName": "PipelineStep",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_HandlerPipelineStep_pipelineStepId_PipelineStep_id"
+        },
+        {
+          "$id": "170",
+          "Columns": [
+            {
+              "$id": "171",
+              "ForeignKeyTableName": "OtherTransport",
+              "ForeignKeyColumnName": "pipelineStepId",
+              "PrimaryKeyTableName": "PipelineStep",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_OtherTransport_pipelineStepId_PipelineStep_id"
+        },
+        {
+          "$id": "172",
+          "Columns": [
+            {
+              "$id": "173",
+              "ForeignKeyTableName": "OtherTransport",
+              "ForeignKeyColumnName": "handlerId",
+              "PrimaryKeyTableName": "Handler",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_OtherTransport_handlerId_Handler_id"
+        },
+        {
+          "$id": "174",
+          "Columns": [
+            {
+              "$id": "175",
+              "ForeignKeyTableName": "Pet",
+              "ForeignKeyColumnName": "breedId",
+              "PrimaryKeyTableName": "Breed",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Pet_breedId_Breed_id"
+        },
+        {
+          "$id": "176",
+          "Columns": [
+            {
+              "$id": "177",
+              "ForeignKeyTableName": "Pet",
+              "ForeignKeyColumnName": "clientId",
+              "PrimaryKeyTableName": "Client",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Pet_clientId_Client_id"
+        },
+        {
+          "$id": "178",
+          "Columns": [
+            {
+              "$id": "179",
+              "ForeignKeyTableName": "Pipeline",
+              "ForeignKeyColumnName": "pipelineStatusId",
+              "PrimaryKeyTableName": "PipelineStatus",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Pipeline_pipelineStatusId_PipelineStatus_id"
+        },
+        {
+          "$id": "180",
+          "Columns": [
+            {
+              "$id": "181",
+              "ForeignKeyTableName": "PipelineStep",
+              "ForeignKeyColumnName": "pipelineStepStatusId",
+              "PrimaryKeyTableName": "PipelineStepStatus",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStep_pipelineStepStatusId_PipelineStepStatus_id"
+        },
+        {
+          "$id": "182",
+          "Columns": [
+            {
+              "$id": "183",
+              "ForeignKeyTableName": "PipelineStep",
+              "ForeignKeyColumnName": "shipperId",
+              "PrimaryKeyTableName": "Employee",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStep_shipperId_Employee_id"
+        },
+        {
+          "$id": "184",
+          "Columns": [
+            {
+              "$id": "185",
+              "ForeignKeyTableName": "PipelineStepDestination",
+              "ForeignKeyColumnName": "destinationId",
+              "PrimaryKeyTableName": "Destination",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStepDestination_destinationId_Destination_id"
+        },
+        {
+          "$id": "186",
+          "Columns": [
+            {
+              "$id": "187",
+              "ForeignKeyTableName": "PipelineStepDestination",
+              "ForeignKeyColumnName": "pipelineStepId",
+              "PrimaryKeyTableName": "PipelineStep",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStepDestination_pipelineStepId_PipelineStep_id"
+        },
+        {
+          "$id": "188",
+          "Columns": [
+            {
+              "$id": "189",
+              "ForeignKeyTableName": "PipelineStepNote",
+              "ForeignKeyColumnName": "employeeId",
+              "PrimaryKeyTableName": "Employee",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStepNote_employeeId_Employee_id"
+        },
+        {
+          "$id": "190",
+          "Columns": [
+            {
+              "$id": "191",
+              "ForeignKeyTableName": "PipelineStepNote",
+              "ForeignKeyColumnName": "pipelineStepId",
+              "PrimaryKeyTableName": "PipelineStep",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStepNote_pipelineStepId_PipelineStep_id"
+        },
+        {
+          "$id": "192",
+          "Columns": [
+            {
+              "$id": "193",
+              "ForeignKeyTableName": "PipelineStepStepRequirement",
+              "ForeignKeyColumnName": "pipelineStepId",
+              "PrimaryKeyTableName": "PipelineStep",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_PipelineStepStepRequirement_pipelineStepId_PipelineStep_id"
+        },
+        {
+          "$id": "194",
+          "Columns": [
+            {
+              "$id": "195",
+              "ForeignKeyTableName": "Sale",
+              "ForeignKeyColumnName": "petId",
+              "PrimaryKeyTableName": "Pet",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Sale_petId_Pet_id"
+        },
+        {
+          "$id": "196",
+          "Columns": [
+            {
+              "$id": "197",
+              "ForeignKeyTableName": "Sale",
+              "ForeignKeyColumnName": "clientId",
+              "PrimaryKeyTableName": "Client",
+              "PrimaryKeyColumnName": "id",
+              "PrimaryKeySchemaName": "dbo",
+              "ForeignKeySchemaName": "dbo",
+              "Order": 1
+            }
+          ],
+          "ForeignKeyName": "FK_Sale_clientId_Client_id"
+        }
+      ]
+    }
+  ],
+  "Version": "1.0",
+  "DatabaseType": "MSSQL"
+}

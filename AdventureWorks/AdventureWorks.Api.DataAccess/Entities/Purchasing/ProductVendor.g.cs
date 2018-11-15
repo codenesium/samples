@@ -40,43 +40,43 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AverageLeadTime")]
-		public int AverageLeadTime { get; private set; }
+		public virtual int AverageLeadTime { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("LastReceiptCost")]
-		public decimal? LastReceiptCost { get; private set; }
+		public virtual decimal? LastReceiptCost { get; private set; }
 
 		[Column("LastReceiptDate")]
-		public DateTime? LastReceiptDate { get; private set; }
+		public virtual DateTime? LastReceiptDate { get; private set; }
 
 		[Column("MaxOrderQty")]
-		public int MaxOrderQty { get; private set; }
+		public virtual int MaxOrderQty { get; private set; }
 
 		[Column("MinOrderQty")]
-		public int MinOrderQty { get; private set; }
+		public virtual int MinOrderQty { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("OnOrderQty")]
-		public int? OnOrderQty { get; private set; }
+		public virtual int? OnOrderQty { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("StandardPrice")]
-		public decimal StandardPrice { get; private set; }
+		public virtual decimal StandardPrice { get; private set; }
 
 		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
-		public string UnitMeasureCode { get; private set; }
+		public virtual string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a66c912fc449122941b82314cf571533</Hash>
+    <Hash>18e7f92afb787cc35548ea6d8550fede</Hash>
 </Codenesium>*/

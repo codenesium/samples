@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOCurrencyRate MapModelToBO(
 			int currencyRateID,
-			ApiCurrencyRateRequestModel model);
+			ApiCurrencyRateServerRequestModel model);
 
-		ApiCurrencyRateResponseModel MapBOToModel(
+		ApiCurrencyRateServerResponseModel MapBOToModel(
 			BOCurrencyRate boCurrencyRate);
 
-		List<ApiCurrencyRateResponseModel> MapBOToModel(
+		List<ApiCurrencyRateServerResponseModel> MapBOToModel(
 			List<BOCurrencyRate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad56023d687719ad3c18703d64874f2e</Hash>
+    <Hash>513118878b8d834b17516bb709ff7e44</Hash>
 </Codenesium>*/

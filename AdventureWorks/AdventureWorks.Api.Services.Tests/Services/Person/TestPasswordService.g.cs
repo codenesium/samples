@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPasswordMapperMock,
 			                                  mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			List<ApiPasswordResponseModel> response = await service.All();
+			List<ApiPasswordServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPasswordMapperMock,
 			                                  mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			ApiPasswordResponseModel response = await service.Get(default(int));
+			ApiPasswordServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPasswordMapperMock,
 			                                  mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			ApiPasswordResponseModel response = await service.Get(default(int));
+			ApiPasswordServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPasswordRepository>();
-			var model = new ApiPasswordRequestModel();
+			var model = new ApiPasswordServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Password>())).Returns(Task.FromResult(new Password()));
 			var service = new PasswordService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPasswordMapperMock,
 			                                  mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			CreateResponse<ApiPasswordResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPasswordServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPasswordRequestModel>()));
+			mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPasswordServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Password>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPasswordRepository>();
-			var model = new ApiPasswordRequestModel();
+			var model = new ApiPasswordServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Password>())).Returns(Task.FromResult(new Password()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 			var service = new PasswordService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLPasswordMapperMock,
 			                                  mock.DALMapperMockFactory.DALPasswordMapperMock);
 
-			UpdateResponse<ApiPasswordResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPasswordServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPasswordRequestModel>()));
+			mock.ModelValidatorMockFactory.PasswordModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPasswordServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Password>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPasswordRepository>();
-			var model = new ApiPasswordRequestModel();
+			var model = new ApiPasswordServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PasswordService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0e1cc841d5732564aa3b1cf13706d81a</Hash>
+    <Hash>f59c48a23f9e3859e93a43f614e16945</Hash>
 </Codenesium>*/

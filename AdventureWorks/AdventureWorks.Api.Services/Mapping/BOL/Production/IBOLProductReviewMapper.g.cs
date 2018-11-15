@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOProductReview MapModelToBO(
 			int productReviewID,
-			ApiProductReviewRequestModel model);
+			ApiProductReviewServerRequestModel model);
 
-		ApiProductReviewResponseModel MapBOToModel(
+		ApiProductReviewServerResponseModel MapBOToModel(
 			BOProductReview boProductReview);
 
-		List<ApiProductReviewResponseModel> MapBOToModel(
+		List<ApiProductReviewServerResponseModel> MapBOToModel(
 			List<BOProductReview> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>93ffb4fefd78e0e1b8368f92ba356bcb</Hash>
+    <Hash>1632db945984de76379c6f390813fd37</Hash>
 </Codenesium>*/

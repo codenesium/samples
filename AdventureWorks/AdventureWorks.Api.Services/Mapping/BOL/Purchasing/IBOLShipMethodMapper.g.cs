@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOShipMethod MapModelToBO(
 			int shipMethodID,
-			ApiShipMethodRequestModel model);
+			ApiShipMethodServerRequestModel model);
 
-		ApiShipMethodResponseModel MapBOToModel(
+		ApiShipMethodServerResponseModel MapBOToModel(
 			BOShipMethod boShipMethod);
 
-		List<ApiShipMethodResponseModel> MapBOToModel(
+		List<ApiShipMethodServerResponseModel> MapBOToModel(
 			List<BOShipMethod> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fd13bec54e0bf0553e0952eb53908339</Hash>
+    <Hash>79ee9d91bad06ba8d7f7474f1bdd5d26</Hash>
 </Codenesium>*/

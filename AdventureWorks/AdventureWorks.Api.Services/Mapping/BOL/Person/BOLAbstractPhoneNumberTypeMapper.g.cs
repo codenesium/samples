@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOPhoneNumberType MapModelToBO(
 			int phoneNumberTypeID,
-			ApiPhoneNumberTypeRequestModel model
+			ApiPhoneNumberTypeServerRequestModel model
 			)
 		{
 			BOPhoneNumberType boPhoneNumberType = new BOPhoneNumberType();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boPhoneNumberType;
 		}
 
-		public virtual ApiPhoneNumberTypeResponseModel MapBOToModel(
+		public virtual ApiPhoneNumberTypeServerResponseModel MapBOToModel(
 			BOPhoneNumberType boPhoneNumberType)
 		{
-			var model = new ApiPhoneNumberTypeResponseModel();
+			var model = new ApiPhoneNumberTypeServerResponseModel();
 
 			model.SetProperties(boPhoneNumberType.PhoneNumberTypeID, boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiPhoneNumberTypeResponseModel> MapBOToModel(
+		public virtual List<ApiPhoneNumberTypeServerResponseModel> MapBOToModel(
 			List<BOPhoneNumberType> items)
 		{
-			List<ApiPhoneNumberTypeResponseModel> response = new List<ApiPhoneNumberTypeResponseModel>();
+			List<ApiPhoneNumberTypeServerResponseModel> response = new List<ApiPhoneNumberTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d1d3326b2edbb4f318c925790c74f8a</Hash>
+    <Hash>963c500c3338b46008f2852842333d04</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPostMapper();
-			ApiPostRequestModel model = new ApiPostRequestModel();
+			ApiPostServerRequestModel model = new ApiPostServerRequestModel();
 			model.SetProperties(1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
 			BOPost response = mapper.MapModelToBO(1, model);
 
@@ -48,7 +48,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostMapper();
 			BOPost bo = new BOPost();
 			bo.SetProperties(1, 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
-			ApiPostResponseModel response = mapper.MapBOToModel(bo);
+			ApiPostServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AcceptedAnswerId.Should().Be(1);
 			response.AnswerCount.Should().Be(1);
@@ -78,7 +78,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostMapper();
 			BOPost bo = new BOPost();
 			bo.SetProperties(1, 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
-			List<ApiPostResponseModel> response = mapper.MapBOToModel(new List<BOPost>() { { bo } });
+			List<ApiPostServerResponseModel> response = mapper.MapBOToModel(new List<BOPost>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -86,5 +86,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d94d815a6f10ad1135717a9c4fc36bc7</Hash>
+    <Hash>34c0342793ad204482fe0ce03fb60c0a</Hash>
 </Codenesium>*/

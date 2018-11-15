@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOTransactionHistoryArchive MapModelToBO(
 			int transactionID,
-			ApiTransactionHistoryArchiveRequestModel model);
+			ApiTransactionHistoryArchiveServerRequestModel model);
 
-		ApiTransactionHistoryArchiveResponseModel MapBOToModel(
+		ApiTransactionHistoryArchiveServerResponseModel MapBOToModel(
 			BOTransactionHistoryArchive boTransactionHistoryArchive);
 
-		List<ApiTransactionHistoryArchiveResponseModel> MapBOToModel(
+		List<ApiTransactionHistoryArchiveServerResponseModel> MapBOToModel(
 			List<BOTransactionHistoryArchive> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6eeec0d3c546c87cf4ba4391f8e52225</Hash>
+    <Hash>3e5c08dbb980e03fed0b0eb72ec8789d</Hash>
 </Codenesium>*/

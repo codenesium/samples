@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected IStudioService StudioService { get; private set; }
 
-		protected IApiStudioModelMapper StudioModelMapper { get; private set; }
+		protected IApiStudioServerModelMapper StudioModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractStudioController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStudioService studioService,
-			IApiStudioModelMapper studioModelMapper
+			IApiStudioServerModelMapper studioModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudioServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStudioResponseModel> response = await this.StudioService.All(query.Limit, query.Offset);
+			List<ApiStudioServerResponseModel> response = await this.StudioService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStudioResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiStudioServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiStudioResponseModel response = await this.StudioService.Get(id);
+			ApiStudioServerResponseModel response = await this.StudioService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiStudioServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudioRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudioServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiStudioResponseModel> records = new List<ApiStudioResponseModel>();
+			List<ApiStudioServerResponseModel> records = new List<ApiStudioServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiStudioResponseModel> result = await this.StudioService.Create(model);
+				CreateResponse<ApiStudioServerResponseModel> result = await this.StudioService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiStudioServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiStudioResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiStudioServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStudioRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiStudioServerRequestModel model)
 		{
-			CreateResponse<ApiStudioResponseModel> result = await this.StudioService.Create(model);
+			CreateResponse<ApiStudioServerResponseModel> result = await this.StudioService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStudioServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStudioRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStudioServerRequestModel> patch)
 		{
-			ApiStudioResponseModel record = await this.StudioService.Get(id);
+			ApiStudioServerResponseModel record = await this.StudioService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiStudioRequestModel model = await this.PatchModel(id, patch);
+				ApiStudioServerRequestModel model = await this.PatchModel(id, patch) as ApiStudioServerRequestModel;
 
-				UpdateResponse<ApiStudioResponseModel> result = await this.StudioService.Update(id, model);
+				UpdateResponse<ApiStudioServerResponseModel> result = await this.StudioService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStudioResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStudioServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudioRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudioServerRequestModel model)
 		{
-			ApiStudioRequestModel request = await this.PatchModel(id, this.StudioModelMapper.CreatePatch(model));
+			ApiStudioServerRequestModel request = await this.PatchModel(id, this.StudioModelMapper.CreatePatch(model)) as ApiStudioServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiStudioResponseModel> result = await this.StudioService.Update(id, request);
+				UpdateResponse<ApiStudioServerResponseModel> result = await this.StudioService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.StudioService.Delete(id);
@@ -206,7 +216,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		private async Task<ApiStudioRequestModel> PatchModel(int id, JsonPatchDocument<ApiStudioRequestModel> patch)
+		private async Task<ApiStudioServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiStudioServerRequestModel> patch)
 		{
 			var record = await this.StudioService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiStudioRequestModel request = this.StudioModelMapper.MapResponseToRequest(record);
+				ApiStudioServerRequestModel request = this.StudioModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fa24599060dd4c09a9d678ba86e2ec61</Hash>
+    <Hash>951a639c993c7389dd72d859942408b6</Hash>
 </Codenesium>*/

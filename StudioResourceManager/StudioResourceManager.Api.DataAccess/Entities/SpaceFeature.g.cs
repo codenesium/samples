@@ -23,14 +23,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c40367118935e7cfbb7f97c432fa123c</Hash>
+    <Hash>1cce91caccf4a3d622e0e7bfe0701dd3</Hash>
 </Codenesium>*/

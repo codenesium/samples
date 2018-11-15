@@ -23,20 +23,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Key]
 		[Column("teacherId")]
-		public int TeacherId { get; private set; }
+		public virtual int TeacherId { get; private set; }
 
 		[Key]
 		[Column("teacherSkillId")]
-		public int TeacherSkillId { get; private set; }
-
-		[ForeignKey("TeacherId")]
-		public virtual Teacher TeacherNavigation { get; private set; }
-
-		[ForeignKey("TeacherSkillId")]
-		public virtual TeacherSkill TeacherSkillNavigation { get; private set; }
+		public virtual int TeacherSkillId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>971a16014a7b767834f8551488caa27b</Hash>
+    <Hash>8deb25509eb1f0fd4c84198abbe3e7de</Hash>
 </Codenesium>*/

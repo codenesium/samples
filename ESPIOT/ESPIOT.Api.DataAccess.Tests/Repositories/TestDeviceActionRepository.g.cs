@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ESPIOTNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<DeviceActionRepository>> loggerMoc = DeviceActionRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DeviceActionRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace ESPIOTNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<DeviceActionRepository>> loggerMoc = DeviceActionRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeviceActionRepositoryMoc.GetContext();
+			var repository = new DeviceActionRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>83a9b3856cdbb706af98d373e0883854</Hash>
+    <Hash>2bae701ec216ce96ffcaafd82eca6dd0</Hash>
 </Codenesium>*/

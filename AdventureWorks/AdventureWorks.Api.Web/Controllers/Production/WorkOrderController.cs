@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class WorkOrderController : AbstractWorkOrderController
 	{
 		public WorkOrderController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<WorkOrderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderService workOrderService,
-			IApiWorkOrderModelMapper workOrderModelMapper
+			IApiWorkOrderServerModelMapper workOrderModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6034d7a8f6f8d44413a472e0330a5fd4</Hash>
+    <Hash>620d2ba66558971d9fd8070b1e9dbc16</Hash>
 </Codenesium>*/

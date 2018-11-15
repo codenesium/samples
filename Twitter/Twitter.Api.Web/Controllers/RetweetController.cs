@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class RetweetController : AbstractRetweetController
 	{
 		public RetweetController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<RetweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRetweetService retweetService,
-			IApiRetweetModelMapper retweetModelMapper
+			IApiRetweetServerModelMapper retweetModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f1efb55453a3a22a24db1ff3cf05ab9</Hash>
+    <Hash>d358f227ce06cdcaeb078fa5ed1a75e3</Hash>
 </Codenesium>*/

@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,9 +9,9 @@ namespace TicketingCRMNS.Api.Services
 		public ProvinceService(
 			ILogger<IProvinceRepository> logger,
 			IProvinceRepository provinceRepository,
-			IApiProvinceRequestModelValidator provinceModelValidator,
-			IBOLProvinceMapper bolprovinceMapper,
-			IDALProvinceMapper dalprovinceMapper,
+			IApiProvinceServerRequestModelValidator provinceModelValidator,
+			IBOLProvinceMapper bolProvinceMapper,
+			IDALProvinceMapper dalProvinceMapper,
 			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
 			IBOLVenueMapper bolVenueMapper,
@@ -26,8 +19,8 @@ namespace TicketingCRMNS.Api.Services
 			: base(logger,
 			       provinceRepository,
 			       provinceModelValidator,
-			       bolprovinceMapper,
-			       dalprovinceMapper,
+			       bolProvinceMapper,
+			       dalProvinceMapper,
 			       bolCityMapper,
 			       dalCityMapper,
 			       bolVenueMapper,
@@ -38,5 +31,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>061385c141d19265338f436853bfc898</Hash>
+    <Hash>e943920ee12fa140255bdcb03cbe4be7</Hash>
 </Codenesium>*/

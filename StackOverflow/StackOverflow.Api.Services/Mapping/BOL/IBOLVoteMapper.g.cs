@@ -9,16 +9,16 @@ namespace StackOverflowNS.Api.Services
 	{
 		BOVote MapModelToBO(
 			int id,
-			ApiVoteRequestModel model);
+			ApiVoteServerRequestModel model);
 
-		ApiVoteResponseModel MapBOToModel(
+		ApiVoteServerResponseModel MapBOToModel(
 			BOVote boVote);
 
-		List<ApiVoteResponseModel> MapBOToModel(
+		List<ApiVoteServerResponseModel> MapBOToModel(
 			List<BOVote> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a71d09d42842e86af954a7b03726d50</Hash>
+    <Hash>2d8c00e2150eb2a1360cb2c40b77244b</Hash>
 </Codenesium>*/

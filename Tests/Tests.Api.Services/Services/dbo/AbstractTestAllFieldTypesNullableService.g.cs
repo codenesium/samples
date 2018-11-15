@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ITestAllFieldTypesNullableRepository TestAllFieldTypesNullableRepository { get; private set; }
 
-		protected IApiTestAllFieldTypesNullableRequestModelValidator TestAllFieldTypesNullableModelValidator { get; private set; }
+		protected IApiTestAllFieldTypesNullableServerRequestModelValidator TestAllFieldTypesNullableModelValidator { get; private set; }
 
 		protected IBOLTestAllFieldTypesNullableMapper BolTestAllFieldTypesNullableMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractTestAllFieldTypesNullableService(
 			ILogger logger,
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
-			IApiTestAllFieldTypesNullableRequestModelValidator testAllFieldTypesNullableModelValidator,
+			IApiTestAllFieldTypesNullableServerRequestModelValidator testAllFieldTypesNullableModelValidator,
 			IBOLTestAllFieldTypesNullableMapper bolTestAllFieldTypesNullableMapper,
 			IDALTestAllFieldTypesNullableMapper dalTestAllFieldTypesNullableMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypesNullableResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTestAllFieldTypesNullableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TestAllFieldTypesNullableRepository.All(limit, offset);
 
 			return this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTestAllFieldTypesNullableResponseModel> Get(int id)
+		public virtual async Task<ApiTestAllFieldTypesNullableServerResponseModel> Get(int id)
 		{
 			var record = await this.TestAllFieldTypesNullableRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTestAllFieldTypesNullableResponseModel>> Create(
-			ApiTestAllFieldTypesNullableRequestModel model)
+		public virtual async Task<CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel>> Create(
+			ApiTestAllFieldTypesNullableServerRequestModel model)
 		{
-			CreateResponse<ApiTestAllFieldTypesNullableResponseModel> response = new CreateResponse<ApiTestAllFieldTypesNullableResponseModel>(await this.TestAllFieldTypesNullableModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.CreateResponse(await this.TestAllFieldTypesNullableModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTestAllFieldTypesNullableMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>> Update(
 			int id,
-			ApiTestAllFieldTypesNullableRequestModel model)
+			ApiTestAllFieldTypesNullableServerRequestModel model)
 		{
 			var validationResult = await this.TestAllFieldTypesNullableModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TestAllFieldTypesNullableRepository.Get(id);
 
-				return new UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.UpdateResponse(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TestAllFieldTypesNullableModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TestAllFieldTypesNullableModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TestAllFieldTypesNullableRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>813de822eb8e3a0ee9da36a53c4ae734</Hash>
+    <Hash>18a5c152bb20f0996c8668c244076292</Hash>
 </Codenesium>*/

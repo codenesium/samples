@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TwitterNS.Api.Services
 		public DirectTweetService(
 			ILogger<IDirectTweetRepository> logger,
 			IDirectTweetRepository directTweetRepository,
-			IApiDirectTweetRequestModelValidator directTweetModelValidator,
-			IBOLDirectTweetMapper boldirectTweetMapper,
-			IDALDirectTweetMapper daldirectTweetMapper)
+			IApiDirectTweetServerRequestModelValidator directTweetModelValidator,
+			IBOLDirectTweetMapper bolDirectTweetMapper,
+			IDALDirectTweetMapper dalDirectTweetMapper)
 			: base(logger,
 			       directTweetRepository,
 			       directTweetModelValidator,
-			       boldirectTweetMapper,
-			       daldirectTweetMapper)
+			       bolDirectTweetMapper,
+			       dalDirectTweetMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>776579ca972faabcc3cad4ad43962c51</Hash>
+    <Hash>1868dbc725e73299ac2d5fe14aa25e43</Hash>
 </Codenesium>*/

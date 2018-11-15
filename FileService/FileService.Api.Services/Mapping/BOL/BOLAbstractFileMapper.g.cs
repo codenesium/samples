@@ -1,4 +1,3 @@
-using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace FileServiceNS.Api.Services
 	{
 		public virtual BOFile MapModelToBO(
 			int id,
-			ApiFileRequestModel model
+			ApiFileServerRequestModel model
 			)
 		{
 			BOFile boFile = new BOFile();
@@ -29,20 +28,20 @@ namespace FileServiceNS.Api.Services
 			return boFile;
 		}
 
-		public virtual ApiFileResponseModel MapBOToModel(
+		public virtual ApiFileServerResponseModel MapBOToModel(
 			BOFile boFile)
 		{
-			var model = new ApiFileResponseModel();
+			var model = new ApiFileServerResponseModel();
 
 			model.SetProperties(boFile.Id, boFile.BucketId, boFile.DateCreated, boFile.Description, boFile.Expiration, boFile.Extension, boFile.ExternalId, boFile.FileSizeInByte, boFile.FileTypeId, boFile.Location, boFile.PrivateKey, boFile.PublicKey);
 
 			return model;
 		}
 
-		public virtual List<ApiFileResponseModel> MapBOToModel(
+		public virtual List<ApiFileServerResponseModel> MapBOToModel(
 			List<BOFile> items)
 		{
-			List<ApiFileResponseModel> response = new List<ApiFileResponseModel>();
+			List<ApiFileServerResponseModel> response = new List<ApiFileServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -55,5 +54,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6a1946575667e1700e129417ad7a3f7</Hash>
+    <Hash>fd1dcca6e1b3144e394c6b0b18aeb3bb</Hash>
 </Codenesium>*/

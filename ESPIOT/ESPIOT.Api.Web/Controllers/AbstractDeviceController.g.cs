@@ -20,7 +20,7 @@ namespace ESPIOTNS.Api.Web
 	{
 		protected IDeviceService DeviceService { get; private set; }
 
-		protected IApiDeviceModelMapper DeviceModelMapper { get; private set; }
+		protected IApiDeviceServerModelMapper DeviceModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace ESPIOTNS.Api.Web
 			ILogger<AbstractDeviceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDeviceService deviceService,
-			IApiDeviceModelMapper deviceModelMapper
+			IApiDeviceServerModelMapper deviceModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace ESPIOTNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDeviceResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeviceServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace ESPIOTNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDeviceResponseModel> response = await this.DeviceService.All(query.Limit, query.Offset);
+			List<ApiDeviceServerResponseModel> response = await this.DeviceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace ESPIOTNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDeviceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDeviceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiDeviceResponseModel response = await this.DeviceService.Get(id);
+			ApiDeviceServerResponseModel response = await this.DeviceService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace ESPIOTNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiDeviceResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiDeviceServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDeviceRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDeviceServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiDeviceResponseModel> records = new List<ApiDeviceResponseModel>();
+			List<ApiDeviceServerResponseModel> records = new List<ApiDeviceServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Create(model);
+				CreateResponse<ApiDeviceServerResponseModel> result = await this.DeviceService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace ESPIOTNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiDeviceServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiDeviceResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiDeviceServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDeviceRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiDeviceServerRequestModel model)
 		{
-			CreateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Create(model);
+			CreateResponse<ApiDeviceServerResponseModel> result = await this.DeviceService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace ESPIOTNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDeviceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDeviceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeviceRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeviceServerRequestModel> patch)
 		{
-			ApiDeviceResponseModel record = await this.DeviceService.Get(id);
+			ApiDeviceServerResponseModel record = await this.DeviceService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace ESPIOTNS.Api.Web
 			}
 			else
 			{
-				ApiDeviceRequestModel model = await this.PatchModel(id, patch);
+				ApiDeviceServerRequestModel model = await this.PatchModel(id, patch) as ApiDeviceServerRequestModel;
 
-				UpdateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Update(id, model);
+				UpdateResponse<ApiDeviceServerResponseModel> result = await this.DeviceService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace ESPIOTNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDeviceResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDeviceServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceServerRequestModel model)
 		{
-			ApiDeviceRequestModel request = await this.PatchModel(id, this.DeviceModelMapper.CreatePatch(model));
+			ApiDeviceServerRequestModel request = await this.PatchModel(id, this.DeviceModelMapper.CreatePatch(model)) as ApiDeviceServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace ESPIOTNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiDeviceResponseModel> result = await this.DeviceService.Update(id, request);
+				UpdateResponse<ApiDeviceServerResponseModel> result = await this.DeviceService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace ESPIOTNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.DeviceService.Delete(id);
@@ -209,11 +219,11 @@ namespace ESPIOTNS.Api.Web
 		[HttpGet]
 		[Route("byPublicId/{publicId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDeviceResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDeviceServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByPublicId(Guid publicId)
 		{
-			ApiDeviceResponseModel response = await this.DeviceService.ByPublicId(publicId);
+			ApiDeviceServerResponseModel response = await this.DeviceService.ByPublicId(publicId);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace ESPIOTNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{deviceId}/DeviceActionsByDeviceId")]
+		[Route("{deviceId}/DeviceActions")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeviceActionServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> DeviceActionsByDeviceId(int deviceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +247,12 @@ namespace ESPIOTNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDeviceActionResponseModel> response = await this.DeviceService.DeviceActionsByDeviceId(deviceId, query.Limit, query.Offset);
+			List<ApiDeviceActionServerResponseModel> response = await this.DeviceService.DeviceActionsByDeviceId(deviceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiDeviceRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeviceRequestModel> patch)
+		private async Task<ApiDeviceServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiDeviceServerRequestModel> patch)
 		{
 			var record = await this.DeviceService.Get(id);
 
@@ -252,7 +262,7 @@ namespace ESPIOTNS.Api.Web
 			}
 			else
 			{
-				ApiDeviceRequestModel request = this.DeviceModelMapper.MapResponseToRequest(record);
+				ApiDeviceServerRequestModel request = this.DeviceModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7e453672652e0108454f47651cb74c59</Hash>
+    <Hash>8812066131eb45a6f97691e956b0552b</Hash>
 </Codenesium>*/

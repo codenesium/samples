@@ -29,27 +29,32 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("ipAddress")]
-		public string IpAddress { get; private set; }
+		public virtual string IpAddress { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public string Note { get; private set; }
+		public virtual string Note { get; private set; }
 
 		[Column("saleDate")]
-		public DateTime SaleDate { get; private set; }
+		public virtual DateTime SaleDate { get; private set; }
 
 		[Column("transactionId")]
-		public int TransactionId { get; private set; }
+		public virtual int TransactionId { get; private set; }
 
 		[ForeignKey("TransactionId")]
 		public virtual Transaction TransactionNavigation { get; private set; }
+
+		public void SetTransactionNavigation(Transaction item)
+		{
+			this.TransactionNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>80ed96e532dc26829bf031c5df9f370c</Hash>
+    <Hash>706540990687e412848d6b7bb666c182</Hash>
 </Codenesium>*/

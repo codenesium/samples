@@ -76,12 +76,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<TransactionHistory>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TransactionHistory>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
-		public async Task<List<TransactionHistory>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TransactionHistory>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID, limit, offset);
 		}
@@ -90,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<TransactionHistory, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TransactionHistory, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TransactionHistory, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.TransactionID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
-			}
-			else
-			{
-				return await this.Context.Set<TransactionHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
-			}
+			return await this.Context.Set<TransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
 		}
 
 		private async Task<TransactionHistory> GetById(int transactionID)
@@ -118,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc0dd93c33942c5619f6fc3dc3f88fa7</Hash>
+    <Hash>05344c8e3d5a81f916298fbf17743f5d</Hash>
 </Codenesium>*/

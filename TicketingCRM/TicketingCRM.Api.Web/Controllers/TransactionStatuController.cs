@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TransactionStatuController : AbstractTransactionStatuController
 	{
 		public TransactionStatuController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<TransactionStatuController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITransactionStatuService transactionStatuService,
-			IApiTransactionStatuModelMapper transactionStatuModelMapper
+			IApiTransactionStatuServerModelMapper transactionStatuModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d1162f6aa222ca086474524710c1456c</Hash>
+    <Hash>bf7512c27a6faa40fe0d3f2bf110c9da</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected ILinkTypeService LinkTypeService { get; private set; }
 
-		protected IApiLinkTypeModelMapper LinkTypeModelMapper { get; private set; }
+		protected IApiLinkTypeServerModelMapper LinkTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractLinkTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkTypeService linkTypeService,
-			IApiLinkTypeModelMapper linkTypeModelMapper
+			IApiLinkTypeServerModelMapper linkTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkTypeResponseModel> response = await this.LinkTypeService.All(query.Limit, query.Offset);
+			List<ApiLinkTypeServerResponseModel> response = await this.LinkTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiLinkTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiLinkTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiLinkTypeResponseModel response = await this.LinkTypeService.Get(id);
+			ApiLinkTypeServerResponseModel response = await this.LinkTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiLinkTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiLinkTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiLinkTypeResponseModel> records = new List<ApiLinkTypeResponseModel>();
+			List<ApiLinkTypeServerResponseModel> records = new List<ApiLinkTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiLinkTypeResponseModel> result = await this.LinkTypeService.Create(model);
+				CreateResponse<ApiLinkTypeServerResponseModel> result = await this.LinkTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiLinkTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiLinkTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiLinkTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLinkTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkTypeServerRequestModel model)
 		{
-			CreateResponse<ApiLinkTypeResponseModel> result = await this.LinkTypeService.Create(model);
+			CreateResponse<ApiLinkTypeServerResponseModel> result = await this.LinkTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkTypeServerRequestModel> patch)
 		{
-			ApiLinkTypeResponseModel record = await this.LinkTypeService.Get(id);
+			ApiLinkTypeServerResponseModel record = await this.LinkTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiLinkTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiLinkTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiLinkTypeServerRequestModel;
 
-				UpdateResponse<ApiLinkTypeResponseModel> result = await this.LinkTypeService.Update(id, model);
+				UpdateResponse<ApiLinkTypeServerResponseModel> result = await this.LinkTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkTypeServerRequestModel model)
 		{
-			ApiLinkTypeRequestModel request = await this.PatchModel(id, this.LinkTypeModelMapper.CreatePatch(model));
+			ApiLinkTypeServerRequestModel request = await this.PatchModel(id, this.LinkTypeModelMapper.CreatePatch(model)) as ApiLinkTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiLinkTypeResponseModel> result = await this.LinkTypeService.Update(id, request);
+				UpdateResponse<ApiLinkTypeServerResponseModel> result = await this.LinkTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.LinkTypeService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiLinkTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkTypeRequestModel> patch)
+		private async Task<ApiLinkTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkTypeServerRequestModel> patch)
 		{
 			var record = await this.LinkTypeService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiLinkTypeRequestModel request = this.LinkTypeModelMapper.MapResponseToRequest(record);
+				ApiLinkTypeServerRequestModel request = this.LinkTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>78981c75ef6648b343d79761cb27380c</Hash>
+    <Hash>7bb7e1f0d477268fd7c97808770c3f10</Hash>
 </Codenesium>*/

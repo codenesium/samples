@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ICreditCardRepository CreditCardRepository { get; private set; }
 
-		protected IApiCreditCardRequestModelValidator CreditCardModelValidator { get; private set; }
+		protected IApiCreditCardServerRequestModelValidator CreditCardModelValidator { get; private set; }
 
 		protected IBOLCreditCardMapper BolCreditCardMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractCreditCardService(
 			ILogger logger,
 			ICreditCardRepository creditCardRepository,
-			IApiCreditCardRequestModelValidator creditCardModelValidator,
+			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
 			IBOLCreditCardMapper bolCreditCardMapper,
 			IDALCreditCardMapper dalCreditCardMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
@@ -47,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCreditCardServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CreditCardRepository.All(limit, offset);
 
 			return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
+		public virtual async Task<ApiCreditCardServerResponseModel> Get(int creditCardID)
 		{
 			var record = await this.CreditCardRepository.Get(creditCardID);
 
@@ -68,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
-			ApiCreditCardRequestModel model)
+		public virtual async Task<CreateResponse<ApiCreditCardServerResponseModel>> Create(
+			ApiCreditCardServerRequestModel model)
 		{
-			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.CreditCardModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCreditCardServerResponseModel> response = ValidationResponseFactory<ApiCreditCardServerResponseModel>.CreateResponse(await this.CreditCardModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCreditCardMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCreditCardResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCreditCardServerResponseModel>> Update(
 			int creditCardID,
-			ApiCreditCardRequestModel model)
+			ApiCreditCardServerRequestModel model)
 		{
 			var validationResult = await this.CreditCardModelValidator.ValidateUpdateAsync(creditCardID, model);
 
@@ -96,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CreditCardRepository.Get(creditCardID);
 
-				return new UpdateResponse<ApiCreditCardResponseModel>(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCreditCardResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int creditCardID)
 		{
-			ActionResponse response = new ActionResponse(await this.CreditCardModelValidator.ValidateDeleteAsync(creditCardID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CreditCardModelValidator.ValidateDeleteAsync(creditCardID));
+
 			if (response.Success)
 			{
 				await this.CreditCardRepository.Delete(creditCardID);
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiCreditCardResponseModel> ByCardNumber(string cardNumber)
+		public async virtual Task<ApiCreditCardServerResponseModel> ByCardNumber(string cardNumber)
 		{
 			CreditCard record = await this.CreditCardRepository.ByCardNumber(cardNumber);
 
@@ -130,22 +127,15 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeadersByCreditCardID(creditCardID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiCreditCardResponseModel>> ByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<CreditCard> records = await this.CreditCardRepository.ByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00957f9bd5cb6032ce557c9487009ed3</Hash>
+    <Hash>d8516250d1cb1523d9131aafa3569e93</Hash>
 </Codenesium>*/

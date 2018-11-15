@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected IDirectTweetService DirectTweetService { get; private set; }
 
-		protected IApiDirectTweetModelMapper DirectTweetModelMapper { get; private set; }
+		protected IApiDirectTweetServerModelMapper DirectTweetModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractDirectTweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDirectTweetService directTweetService,
-			IApiDirectTweetModelMapper directTweetModelMapper
+			IApiDirectTweetServerModelMapper directTweetModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDirectTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDirectTweetServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDirectTweetResponseModel> response = await this.DirectTweetService.All(query.Limit, query.Offset);
+			List<ApiDirectTweetServerResponseModel> response = await this.DirectTweetService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDirectTweetResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDirectTweetServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiDirectTweetResponseModel response = await this.DirectTweetService.Get(id);
+			ApiDirectTweetServerResponseModel response = await this.DirectTweetService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiDirectTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiDirectTweetServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDirectTweetRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDirectTweetServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiDirectTweetResponseModel> records = new List<ApiDirectTweetResponseModel>();
+			List<ApiDirectTweetServerResponseModel> records = new List<ApiDirectTweetServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiDirectTweetResponseModel> result = await this.DirectTweetService.Create(model);
+				CreateResponse<ApiDirectTweetServerResponseModel> result = await this.DirectTweetService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiDirectTweetServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiDirectTweetResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiDirectTweetServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDirectTweetRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiDirectTweetServerRequestModel model)
 		{
-			CreateResponse<ApiDirectTweetResponseModel> result = await this.DirectTweetService.Create(model);
+			CreateResponse<ApiDirectTweetServerResponseModel> result = await this.DirectTweetService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDirectTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDirectTweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDirectTweetRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDirectTweetServerRequestModel> patch)
 		{
-			ApiDirectTweetResponseModel record = await this.DirectTweetService.Get(id);
+			ApiDirectTweetServerResponseModel record = await this.DirectTweetService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiDirectTweetRequestModel model = await this.PatchModel(id, patch);
+				ApiDirectTweetServerRequestModel model = await this.PatchModel(id, patch) as ApiDirectTweetServerRequestModel;
 
-				UpdateResponse<ApiDirectTweetResponseModel> result = await this.DirectTweetService.Update(id, model);
+				UpdateResponse<ApiDirectTweetServerResponseModel> result = await this.DirectTweetService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDirectTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDirectTweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDirectTweetRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDirectTweetServerRequestModel model)
 		{
-			ApiDirectTweetRequestModel request = await this.PatchModel(id, this.DirectTweetModelMapper.CreatePatch(model));
+			ApiDirectTweetServerRequestModel request = await this.PatchModel(id, this.DirectTweetModelMapper.CreatePatch(model)) as ApiDirectTweetServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiDirectTweetResponseModel> result = await this.DirectTweetService.Update(id, request);
+				UpdateResponse<ApiDirectTweetServerResponseModel> result = await this.DirectTweetService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.DirectTweetService.Delete(id);
@@ -209,7 +219,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("byTaggedUserId/{taggedUserId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDirectTweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDirectTweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByTaggedUserId(int taggedUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDirectTweetResponseModel> response = await this.DirectTweetService.ByTaggedUserId(taggedUserId, query.Limit, query.Offset);
+			List<ApiDirectTweetServerResponseModel> response = await this.DirectTweetService.ByTaggedUserId(taggedUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiDirectTweetRequestModel> PatchModel(int id, JsonPatchDocument<ApiDirectTweetRequestModel> patch)
+		private async Task<ApiDirectTweetServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiDirectTweetServerRequestModel> patch)
 		{
 			var record = await this.DirectTweetService.Get(id);
 
@@ -233,7 +243,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiDirectTweetRequestModel request = this.DirectTweetModelMapper.MapResponseToRequest(record);
+				ApiDirectTweetServerRequestModel request = this.DirectTweetModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e8625c63c35c388191b39ae020413971</Hash>
+    <Hash>a7c11faa2a6450ab5fd5067ee8cf2094</Hash>
 </Codenesium>*/

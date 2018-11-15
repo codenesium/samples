@@ -26,22 +26,29 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SpecialOfferID")]
-		public int SpecialOfferID { get; private set; }
+		public virtual int SpecialOfferID { get; private set; }
+
+		[ForeignKey("SpecialOfferID")]
+		public virtual SpecialOffer SpecialOfferNavigation { get; private set; }
+
+		public void SetSpecialOfferNavigation(SpecialOffer item)
+		{
+			this.SpecialOfferNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>169e3dd6bac4c61c11522eb3266867df</Hash>
+    <Hash>061df3d3f571a4b77ebc7d77ee86b941</Hash>
 </Codenesium>*/

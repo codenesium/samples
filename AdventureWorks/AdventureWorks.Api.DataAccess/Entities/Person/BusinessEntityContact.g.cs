@@ -29,25 +29,24 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Key]
 		[Column("ContactTypeID")]
-		public int ContactTypeID { get; private set; }
+		public virtual int ContactTypeID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("PersonID")]
-		public int PersonID { get; private set; }
+		public virtual int PersonID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c98be5579d87ec2a44d2596e31c6ce6</Hash>
+    <Hash>7a58ea23b5ff655b9628190e451404eb</Hash>
 </Codenesium>*/

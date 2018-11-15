@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			var record = new ApiSalesTerritoryResponseModel();
-			var records = new List<ApiSalesTerritoryResponseModel>();
+			var record = new ApiSalesTerritoryServerResponseModel();
+			var records = new List<ApiSalesTerritoryServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSalesTerritoryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSalesTerritoryServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSalesTerritoryResponseModel>>(new List<ApiSalesTerritoryResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSalesTerritoryServerResponseModel>>(new List<ApiSalesTerritoryServerResponseModel>()));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSalesTerritoryResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSalesTerritoryServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryServerResponseModel()));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSalesTerritoryResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSalesTerritoryServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryServerResponseModel>(null));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSalesTerritoryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSalesTerritoryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSalesTerritoryServerResponseModel>.CreateResponse(null as ApiSalesTerritoryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSalesTerritoryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryServerResponseModel>>(mockResponse));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSalesTerritoryRequestModel>();
-			records.Add(new ApiSalesTerritoryRequestModel());
+			var records = new List<ApiSalesTerritoryServerRequestModel>();
+			records.Add(new ApiSalesTerritoryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSalesTerritoryResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSalesTerritoryServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSalesTerritoryResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSalesTerritoryServerResponseModel>>(null as ApiSalesTerritoryServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryServerResponseModel>>(mockResponse.Object));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSalesTerritoryRequestModel>();
-			records.Add(new ApiSalesTerritoryRequestModel());
+			var records = new List<ApiSalesTerritoryServerRequestModel>();
+			records.Add(new ApiSalesTerritoryServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSalesTerritoryResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSalesTerritoryResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSalesTerritoryServerResponseModel>.CreateResponse(null as ApiSalesTerritoryServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSalesTerritoryServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryServerResponseModel>>(mockResponse));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSalesTerritoryRequestModel());
+			IActionResult response = await controller.Create(new ApiSalesTerritoryServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSalesTerritoryResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSalesTerritoryServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSalesTerritoryResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSalesTerritoryResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSalesTerritoryServerResponseModel>>(null as ApiSalesTerritoryServerResponseModel);
+			var mockRecord = new ApiSalesTerritoryServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTerritoryServerResponseModel>>(mockResponse.Object));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSalesTerritoryRequestModel());
+			IActionResult response = await controller.Create(new ApiSalesTerritoryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>()))
-			.Callback<int, ApiSalesTerritoryRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()))
+			.Callback<int, ApiSalesTerritoryServerRequestModel>(
 				(id, model) => model.CostLastYear.Should().Be(1m)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryResponseModel>(new ApiSalesTerritoryResponseModel()));
-			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryServerResponseModel>(new ApiSalesTerritoryServerResponseModel()));
+			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSalesTerritoryRequestModel>();
+			var patch = new JsonPatchDocument<ApiSalesTerritoryServerRequestModel>();
 			patch.Replace(x => x.CostLastYear, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryServerResponseModel>(null));
 			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSalesTerritoryRequestModel>();
+			var patch = new JsonPatchDocument<ApiSalesTerritoryServerRequestModel>();
 			patch.Replace(x => x.CostLastYear, 1m);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryResponseModel()));
-			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryServerResponseModel()));
+			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryResponseModel()));
-			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTerritoryServerResponseModel()));
+			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SalesTerritoryControllerMockFacade mock = new SalesTerritoryControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTerritoryServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryResponseModel>(null));
-			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTerritoryServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTerritoryServerResponseModel>(null));
+			SalesTerritoryController controller = new SalesTerritoryController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTerritoryServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTerritoryServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ISalesTerritoryService> ServiceMock { get; set; } = new Mock<ISalesTerritoryService>();
 
-		public Mock<IApiSalesTerritoryModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSalesTerritoryModelMapper>();
+		public Mock<IApiSalesTerritoryServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSalesTerritoryServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7358da82a62084b2d4f7611ddf2d177</Hash>
+    <Hash>5043a9f2dcf0bf7fa5ffb581be7fc31e</Hash>
 </Codenesium>*/

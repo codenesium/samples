@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			List<ApiSalesTaxRateResponseModel> response = await service.All();
+			List<ApiSalesTaxRateServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			ApiSalesTaxRateResponseModel response = await service.Get(default(int));
+			ApiSalesTaxRateServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			ApiSalesTaxRateResponseModel response = await service.Get(default(int));
+			ApiSalesTaxRateServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
-			var model = new ApiSalesTaxRateRequestModel();
+			var model = new ApiSalesTaxRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTaxRate>())).Returns(Task.FromResult(new SalesTaxRate()));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			CreateResponse<ApiSalesTaxRateResponseModel> response = await service.Create(model);
+			CreateResponse<ApiSalesTaxRateServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SalesTaxRate>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
-			var model = new ApiSalesTaxRateRequestModel();
+			var model = new ApiSalesTaxRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTaxRate>())).Returns(Task.FromResult(new SalesTaxRate()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			UpdateResponse<ApiSalesTaxRateResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiSalesTaxRateServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SalesTaxRate>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
-			var model = new ApiSalesTaxRateRequestModel();
+			var model = new ApiSalesTaxRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -131,6 +131,41 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByRowguid_Exists()
+		{
+			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
+			var record = new SalesTaxRate();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
+
+			ApiSalesTaxRateServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<SalesTaxRate>(null));
+			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
+			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
+
+			ApiSalesTaxRateServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
 		public async void ByStateProvinceIDTaxType_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
@@ -142,7 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			ApiSalesTaxRateResponseModel response = await service.ByStateProvinceIDTaxType(default(int), default(int));
+			ApiSalesTaxRateServerResponseModel response = await service.ByStateProvinceIDTaxType(default(int), default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>()));
@@ -159,7 +194,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesTaxRateMapperMock);
 
-			ApiSalesTaxRateResponseModel response = await service.ByStateProvinceIDTaxType(default(int), default(int));
+			ApiSalesTaxRateServerResponseModel response = await service.ByStateProvinceIDTaxType(default(int), default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>()));
@@ -168,5 +203,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>34a66122f8f29f755a43d22c987a2e5f</Hash>
+    <Hash>db9c74189a9069fceac73105e15379e7</Hash>
 </Codenesium>*/

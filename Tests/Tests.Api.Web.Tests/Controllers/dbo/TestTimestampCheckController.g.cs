@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			var record = new ApiTimestampCheckResponseModel();
-			var records = new List<ApiTimestampCheckResponseModel>();
+			var record = new ApiTimestampCheckServerResponseModel();
+			var records = new List<ApiTimestampCheckServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTimestampCheckResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTimestampCheckServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTimestampCheckResponseModel>>(new List<ApiTimestampCheckResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTimestampCheckServerResponseModel>>(new List<ApiTimestampCheckServerResponseModel>()));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTimestampCheckResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTimestampCheckServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckServerResponseModel()));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTimestampCheckResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTimestampCheckServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckServerResponseModel>(null));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTimestampCheckResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTimestampCheckResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTimestampCheckServerResponseModel>.CreateResponse(null as ApiTimestampCheckServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTimestampCheckServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckServerResponseModel>>(mockResponse));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTimestampCheckRequestModel>();
-			records.Add(new ApiTimestampCheckRequestModel());
+			var records = new List<ApiTimestampCheckServerRequestModel>();
+			records.Add(new ApiTimestampCheckServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTimestampCheckResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTimestampCheckServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTimestampCheckResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTimestampCheckServerResponseModel>>(null as ApiTimestampCheckServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckServerResponseModel>>(mockResponse.Object));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTimestampCheckRequestModel>();
-			records.Add(new ApiTimestampCheckRequestModel());
+			var records = new List<ApiTimestampCheckServerRequestModel>();
+			records.Add(new ApiTimestampCheckServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTimestampCheckResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTimestampCheckResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTimestampCheckServerResponseModel>.CreateResponse(null as ApiTimestampCheckServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTimestampCheckServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckServerResponseModel>>(mockResponse));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTimestampCheckRequestModel());
+			IActionResult response = await controller.Create(new ApiTimestampCheckServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTimestampCheckResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTimestampCheckServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTimestampCheckResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTimestampCheckResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTimestampCheckServerResponseModel>>(null as ApiTimestampCheckServerResponseModel);
+			var mockRecord = new ApiTimestampCheckServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTimestampCheckServerResponseModel>>(mockResponse.Object));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTimestampCheckRequestModel());
+			IActionResult response = await controller.Create(new ApiTimestampCheckServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>()))
-			.Callback<int, ApiTimestampCheckRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>()))
+			.Callback<int, ApiTimestampCheckServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckResponseModel>(new ApiTimestampCheckResponseModel()));
-			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckServerResponseModel>(new ApiTimestampCheckServerResponseModel()));
+			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTimestampCheckRequestModel>();
+			var patch = new JsonPatchDocument<ApiTimestampCheckServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckServerResponseModel>(null));
 			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTimestampCheckRequestModel>();
+			var patch = new JsonPatchDocument<ApiTimestampCheckServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckResponseModel()));
-			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckServerResponseModel()));
+			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckResponseModel()));
-			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTimestampCheckServerResponseModel()));
+			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TimestampCheckControllerMockFacade mock = new TimestampCheckControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTimestampCheckServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckResponseModel>(null));
-			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTimestampCheckServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTimestampCheckServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTimestampCheckServerResponseModel>(null));
+			TimestampCheckController controller = new TimestampCheckController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTimestampCheckServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTimestampCheckServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<ITimestampCheckService> ServiceMock { get; set; } = new Mock<ITimestampCheckService>();
 
-		public Mock<IApiTimestampCheckModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTimestampCheckModelMapper>();
+		public Mock<IApiTimestampCheckServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTimestampCheckServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>44baaa222247d7875270081452b3a273</Hash>
+    <Hash>a7d249cd4cb0ff146fa66592f516052e</Hash>
 </Codenesium>*/

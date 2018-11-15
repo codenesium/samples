@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BORowVersionCheck MapModelToBO(
 			int id,
-			ApiRowVersionCheckRequestModel model);
+			ApiRowVersionCheckServerRequestModel model);
 
-		ApiRowVersionCheckResponseModel MapBOToModel(
+		ApiRowVersionCheckServerResponseModel MapBOToModel(
 			BORowVersionCheck boRowVersionCheck);
 
-		List<ApiRowVersionCheckResponseModel> MapBOToModel(
+		List<ApiRowVersionCheckServerResponseModel> MapBOToModel(
 			List<BORowVersionCheck> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3277d649e1895422b408dab7c3df7e66</Hash>
+    <Hash>9dce4a7ef9883c6fbaf2c313c8eb9a9a</Hash>
 </Codenesium>*/

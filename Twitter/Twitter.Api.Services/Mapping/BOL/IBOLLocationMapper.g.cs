@@ -9,16 +9,16 @@ namespace TwitterNS.Api.Services
 	{
 		BOLocation MapModelToBO(
 			int locationId,
-			ApiLocationRequestModel model);
+			ApiLocationServerRequestModel model);
 
-		ApiLocationResponseModel MapBOToModel(
+		ApiLocationServerResponseModel MapBOToModel(
 			BOLocation boLocation);
 
-		List<ApiLocationResponseModel> MapBOToModel(
+		List<ApiLocationServerResponseModel> MapBOToModel(
 			List<BOLocation> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>37e8bfb5cfb124adb4b70dd299f60dbf</Hash>
+    <Hash>62eec4de6c71c166131c3a9e8c574216</Hash>
 </Codenesium>*/

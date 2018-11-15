@@ -32,31 +32,31 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("2002")]
-		public decimal? @A2002 { get; private set; }
+		public virtual decimal? @A2002 { get; private set; }
 
 		[Column("2003")]
-		public decimal? @A2003 { get; private set; }
+		public virtual decimal? @A2003 { get; private set; }
 
 		[Column("2004")]
-		public decimal? @A2004 { get; private set; }
+		public virtual decimal? @A2004 { get; private set; }
 
 		[MaxLength(152)]
 		[Column("FullName")]
-		public string FullName { get; private set; }
+		public virtual string FullName { get; private set; }
 
 		[MaxLength(50)]
 		[Column("JobTitle")]
-		public string JobTitle { get; private set; }
+		public virtual string JobTitle { get; private set; }
 
 		[Column("SalesPersonID")]
-		public int? SalesPersonID { get; private set; }
+		public virtual int? SalesPersonID { get; private set; }
 
 		[MaxLength(50)]
 		[Column("SalesTerritory")]
-		public string SalesTerritory { get; private set; }
+		public virtual string SalesTerritory { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c0aae742c9caf5c0d9467170548abc6</Hash>
+    <Hash>62aecaab47bc3ae5052796d570acdcb0</Hash>
 </Codenesium>*/

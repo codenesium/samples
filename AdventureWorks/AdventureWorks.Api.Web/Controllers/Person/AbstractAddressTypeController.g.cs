@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IAddressTypeService AddressTypeService { get; private set; }
 
-		protected IApiAddressTypeModelMapper AddressTypeModelMapper { get; private set; }
+		protected IApiAddressTypeServerModelMapper AddressTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractAddressTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAddressTypeService addressTypeService,
-			IApiAddressTypeModelMapper addressTypeModelMapper
+			IApiAddressTypeServerModelMapper addressTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAddressTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAddressTypeResponseModel> response = await this.AddressTypeService.All(query.Limit, query.Offset);
+			List<ApiAddressTypeServerResponseModel> response = await this.AddressTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiAddressTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiAddressTypeResponseModel response = await this.AddressTypeService.Get(id);
+			ApiAddressTypeServerResponseModel response = await this.AddressTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiAddressTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiAddressTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiAddressTypeResponseModel> records = new List<ApiAddressTypeResponseModel>();
+			List<ApiAddressTypeServerResponseModel> records = new List<ApiAddressTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiAddressTypeResponseModel> result = await this.AddressTypeService.Create(model);
+				CreateResponse<ApiAddressTypeServerResponseModel> result = await this.AddressTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiAddressTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiAddressTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiAddressTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAddressTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiAddressTypeServerRequestModel model)
 		{
-			CreateResponse<ApiAddressTypeResponseModel> result = await this.AddressTypeService.Create(model);
+			CreateResponse<ApiAddressTypeServerResponseModel> result = await this.AddressTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAddressTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAddressTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAddressTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAddressTypeServerRequestModel> patch)
 		{
-			ApiAddressTypeResponseModel record = await this.AddressTypeService.Get(id);
+			ApiAddressTypeServerResponseModel record = await this.AddressTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiAddressTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiAddressTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiAddressTypeServerRequestModel;
 
-				UpdateResponse<ApiAddressTypeResponseModel> result = await this.AddressTypeService.Update(id, model);
+				UpdateResponse<ApiAddressTypeServerResponseModel> result = await this.AddressTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAddressTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAddressTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressTypeServerRequestModel model)
 		{
-			ApiAddressTypeRequestModel request = await this.PatchModel(id, this.AddressTypeModelMapper.CreatePatch(model));
+			ApiAddressTypeServerRequestModel request = await this.PatchModel(id, this.AddressTypeModelMapper.CreatePatch(model)) as ApiAddressTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiAddressTypeResponseModel> result = await this.AddressTypeService.Update(id, request);
+				UpdateResponse<ApiAddressTypeServerResponseModel> result = await this.AddressTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.AddressTypeService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiAddressTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiAddressTypeResponseModel response = await this.AddressTypeService.ByName(name);
+			ApiAddressTypeServerResponseModel response = await this.AddressTypeService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,23 +236,25 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{addressTypeID}/BusinessEntityAddressesByAddressTypeID")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityAddressesByAddressTypeID(int addressTypeID, int? limit, int? offset)
+		[ProducesResponseType(typeof(ApiAddressTypeServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			ApiAddressTypeServerResponseModel response = await this.AddressTypeService.ByRowguid(rowguid);
+
+			if (response == null)
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
-
-			List<ApiBusinessEntityAddressResponseModel> response = await this.AddressTypeService.BusinessEntityAddressesByAddressTypeID(addressTypeID, query.Limit, query.Offset);
-
-			return this.Ok(response);
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
-		private async Task<ApiAddressTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiAddressTypeRequestModel> patch)
+		private async Task<ApiAddressTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiAddressTypeServerRequestModel> patch)
 		{
 			var record = await this.AddressTypeService.Get(id);
 
@@ -252,7 +264,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiAddressTypeRequestModel request = this.AddressTypeModelMapper.MapResponseToRequest(record);
+				ApiAddressTypeServerRequestModel request = this.AddressTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +273,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fecbc29c8cbf045e3776b2cb101fc711</Hash>
+    <Hash>1cb6609115751b90294358459752e1b0</Hash>
 </Codenesium>*/

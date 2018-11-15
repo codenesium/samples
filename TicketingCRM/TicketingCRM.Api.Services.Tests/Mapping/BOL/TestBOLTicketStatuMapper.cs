@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTicketStatuMapper();
-			ApiTicketStatuRequestModel model = new ApiTicketStatuRequestModel();
+			ApiTicketStatuServerRequestModel model = new ApiTicketStatuServerRequestModel();
 			model.SetProperties("A");
 			BOTicketStatu response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLTicketStatuMapper();
 			BOTicketStatu bo = new BOTicketStatu();
 			bo.SetProperties(1, "A");
-			ApiTicketStatuResponseModel response = mapper.MapBOToModel(bo);
+			ApiTicketStatuServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLTicketStatuMapper();
 			BOTicketStatu bo = new BOTicketStatu();
 			bo.SetProperties(1, "A");
-			List<ApiTicketStatuResponseModel> response = mapper.MapBOToModel(new List<BOTicketStatu>() { { bo } });
+			List<ApiTicketStatuServerResponseModel> response = mapper.MapBOToModel(new List<BOTicketStatu>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e16484cb820f3c9cc568b66e94cf930c</Hash>
+    <Hash>ac063b4679f1114c82febcdf897dd849</Hash>
 </Codenesium>*/

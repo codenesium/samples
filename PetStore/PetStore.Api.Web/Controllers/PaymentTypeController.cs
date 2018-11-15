@@ -18,6 +18,7 @@ namespace PetStoreNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PaymentTypeController : AbstractPaymentTypeController
 	{
 		public PaymentTypeController(
@@ -25,7 +26,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<PaymentTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPaymentTypeService paymentTypeService,
-			IApiPaymentTypeModelMapper paymentTypeModelMapper
+			IApiPaymentTypeServerModelMapper paymentTypeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>225a6c1e690f4a1878231adb4bb1ad41</Hash>
+    <Hash>c2c69d899719200aec3239066d46c41c</Hash>
 </Codenesium>*/

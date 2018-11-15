@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
-			List<ApiTestAllFieldTypeResponseModel> response = await service.All();
+			List<ApiTestAllFieldTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
-			ApiTestAllFieldTypeResponseModel response = await service.Get(default(int));
+			ApiTestAllFieldTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
-			ApiTestAllFieldTypeResponseModel response = await service.Get(default(int));
+			ApiTestAllFieldTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypeRepository>();
-			var model = new ApiTestAllFieldTypeRequestModel();
+			var model = new ApiTestAllFieldTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TestAllFieldType>())).Returns(Task.FromResult(new TestAllFieldType()));
 			var service = new TestAllFieldTypeService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
-			CreateResponse<ApiTestAllFieldTypeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TestAllFieldType>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypeRepository>();
-			var model = new ApiTestAllFieldTypeRequestModel();
+			var model = new ApiTestAllFieldTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TestAllFieldType>())).Returns(Task.FromResult(new TestAllFieldType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldType()));
 			var service = new TestAllFieldTypeService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
-			UpdateResponse<ApiTestAllFieldTypeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TestAllFieldType>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypeRepository>();
-			var model = new ApiTestAllFieldTypeRequestModel();
+			var model = new ApiTestAllFieldTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TestAllFieldTypeService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>32cf6170c5a937f983e2cf8591e032e6</Hash>
+    <Hash>746ad1f2d0357ae5a2ccb9eb4d7fb823</Hash>
 </Codenesium>*/

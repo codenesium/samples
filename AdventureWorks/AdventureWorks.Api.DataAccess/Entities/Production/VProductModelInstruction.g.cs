@@ -40,42 +40,42 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Instructions")]
-		public string Instruction { get; private set; }
+		public virtual string Instruction { get; private set; }
 
 		[Column("LaborHours")]
-		public double? LaborHour { get; private set; }
+		public virtual double? LaborHour { get; private set; }
 
 		[Column("LocationID")]
-		public int? LocationID { get; private set; }
+		public virtual int? LocationID { get; private set; }
 
 		[Column("LotSize")]
-		public int? LotSize { get; private set; }
+		public virtual int? LotSize { get; private set; }
 
 		[Column("MachineHours")]
-		public double? MachineHour { get; private set; }
+		public virtual double? MachineHour { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("ProductModelID")]
-		public int ProductModelID { get; private set; }
+		public virtual int ProductModelID { get; private set; }
 
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("SetupHours")]
-		public double? SetupHour { get; private set; }
+		public virtual double? SetupHour { get; private set; }
 
 		[MaxLength(1024)]
 		[Column("Step")]
-		public string Step { get; private set; }
+		public virtual string Step { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>333080662df9c79a6604ae7a8a3cc6c7</Hash>
+    <Hash>a3043f4b6e2da14cf86337ce32c2972e</Hash>
 </Codenesium>*/

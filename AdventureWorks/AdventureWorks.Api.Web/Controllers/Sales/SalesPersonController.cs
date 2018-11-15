@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SalesPersonController : AbstractSalesPersonController
 	{
 		public SalesPersonController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<SalesPersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesPersonService salesPersonService,
-			IApiSalesPersonModelMapper salesPersonModelMapper
+			IApiSalesPersonServerModelMapper salesPersonModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>692d2142c700d315d8369af3793d2183</Hash>
+    <Hash>315446fd29bb048d0fa986bd62850ac4</Hash>
 </Codenesium>*/

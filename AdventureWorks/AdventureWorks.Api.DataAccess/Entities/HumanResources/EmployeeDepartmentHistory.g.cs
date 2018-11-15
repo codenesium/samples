@@ -31,28 +31,28 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Key]
 		[Column("DepartmentID")]
-		public short DepartmentID { get; private set; }
+		public virtual short DepartmentID { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ShiftID")]
-		public int ShiftID { get; private set; }
+		public virtual int ShiftID { get; private set; }
 
 		[Key]
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>af86757a97f08b1b95c726dbfd2ff6f3</Hash>
+    <Hash>751c50c67cdd37c9903c21022319fc8d</Hash>
 </Codenesium>*/

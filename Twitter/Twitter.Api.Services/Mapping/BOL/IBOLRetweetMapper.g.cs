@@ -9,16 +9,16 @@ namespace TwitterNS.Api.Services
 	{
 		BORetweet MapModelToBO(
 			int id,
-			ApiRetweetRequestModel model);
+			ApiRetweetServerRequestModel model);
 
-		ApiRetweetResponseModel MapBOToModel(
+		ApiRetweetServerResponseModel MapBOToModel(
 			BORetweet boRetweet);
 
-		List<ApiRetweetResponseModel> MapBOToModel(
+		List<ApiRetweetServerResponseModel> MapBOToModel(
 			List<BORetweet> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e954d5ba723b199fb3b656e6b3c9b6b2</Hash>
+    <Hash>82fa97e5f433adf730682984a6787045</Hash>
 </Codenesium>*/

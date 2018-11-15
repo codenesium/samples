@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTeacherMapper();
-			ApiTeacherRequestModel model = new ApiTeacherRequestModel();
+			ApiTeacherServerRequestModel model = new ApiTeacherServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			BOTeacher response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLTeacherMapper();
 			BOTeacher bo = new BOTeacher();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
-			ApiTeacherResponseModel response = mapper.MapBOToModel(bo);
+			ApiTeacherServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Email.Should().Be("A");
@@ -52,7 +52,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLTeacherMapper();
 			BOTeacher bo = new BOTeacher();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
-			List<ApiTeacherResponseModel> response = mapper.MapBOToModel(new List<BOTeacher>() { { bo } });
+			List<ApiTeacherServerResponseModel> response = mapper.MapBOToModel(new List<BOTeacher>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0235c89b82158b35177df4eddacd2730</Hash>
+    <Hash>a540ca450d6be81972a76de1bee41d86</Hash>
 </Codenesium>*/

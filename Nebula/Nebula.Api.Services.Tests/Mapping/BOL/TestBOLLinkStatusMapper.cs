@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLLinkStatusMapper();
-			ApiLinkStatusRequestModel model = new ApiLinkStatusRequestModel();
+			ApiLinkStatusServerRequestModel model = new ApiLinkStatusServerRequestModel();
 			model.SetProperties("A");
 			BOLinkStatus response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLLinkStatusMapper();
 			BOLinkStatus bo = new BOLinkStatus();
 			bo.SetProperties(1, "A");
-			ApiLinkStatusResponseModel response = mapper.MapBOToModel(bo);
+			ApiLinkStatusServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLLinkStatusMapper();
 			BOLinkStatus bo = new BOLinkStatus();
 			bo.SetProperties(1, "A");
-			List<ApiLinkStatusResponseModel> response = mapper.MapBOToModel(new List<BOLinkStatus>() { { bo } });
+			List<ApiLinkStatusServerResponseModel> response = mapper.MapBOToModel(new List<BOLinkStatus>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ef3168d35824b1fb31495ce3c722f8a</Hash>
+    <Hash>d9498e815a99129913d3c59ca295cba3</Hash>
 </Codenesium>*/

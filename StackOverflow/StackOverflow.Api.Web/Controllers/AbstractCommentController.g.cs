@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected ICommentService CommentService { get; private set; }
 
-		protected IApiCommentModelMapper CommentModelMapper { get; private set; }
+		protected IApiCommentServerModelMapper CommentModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractCommentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICommentService commentService,
-			IApiCommentModelMapper commentModelMapper
+			IApiCommentServerModelMapper commentModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCommentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCommentServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCommentResponseModel> response = await this.CommentService.All(query.Limit, query.Offset);
+			List<ApiCommentServerResponseModel> response = await this.CommentService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCommentResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCommentServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCommentResponseModel response = await this.CommentService.Get(id);
+			ApiCommentServerResponseModel response = await this.CommentService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCommentResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCommentServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCommentRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCommentServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCommentResponseModel> records = new List<ApiCommentResponseModel>();
+			List<ApiCommentServerResponseModel> records = new List<ApiCommentServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCommentResponseModel> result = await this.CommentService.Create(model);
+				CreateResponse<ApiCommentServerResponseModel> result = await this.CommentService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCommentServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCommentResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCommentServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCommentRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCommentServerRequestModel model)
 		{
-			CreateResponse<ApiCommentResponseModel> result = await this.CommentService.Create(model);
+			CreateResponse<ApiCommentServerResponseModel> result = await this.CommentService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCommentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCommentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCommentRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCommentServerRequestModel> patch)
 		{
-			ApiCommentResponseModel record = await this.CommentService.Get(id);
+			ApiCommentServerResponseModel record = await this.CommentService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiCommentRequestModel model = await this.PatchModel(id, patch);
+				ApiCommentServerRequestModel model = await this.PatchModel(id, patch) as ApiCommentServerRequestModel;
 
-				UpdateResponse<ApiCommentResponseModel> result = await this.CommentService.Update(id, model);
+				UpdateResponse<ApiCommentServerResponseModel> result = await this.CommentService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCommentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCommentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCommentRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCommentServerRequestModel model)
 		{
-			ApiCommentRequestModel request = await this.PatchModel(id, this.CommentModelMapper.CreatePatch(model));
+			ApiCommentServerRequestModel request = await this.PatchModel(id, this.CommentModelMapper.CreatePatch(model)) as ApiCommentServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCommentResponseModel> result = await this.CommentService.Update(id, request);
+				UpdateResponse<ApiCommentServerResponseModel> result = await this.CommentService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CommentService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiCommentRequestModel> PatchModel(int id, JsonPatchDocument<ApiCommentRequestModel> patch)
+		private async Task<ApiCommentServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCommentServerRequestModel> patch)
 		{
 			var record = await this.CommentService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiCommentRequestModel request = this.CommentModelMapper.MapResponseToRequest(record);
+				ApiCommentServerRequestModel request = this.CommentModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a95cb2322745397f210ebc7209fedf1b</Hash>
+    <Hash>ecb92c2a5dc5cef3546290c24f8f4681</Hash>
 </Codenesium>*/

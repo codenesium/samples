@@ -20,7 +20,7 @@ namespace FileServiceNS.Api.Web
 	{
 		protected IFileTypeService FileTypeService { get; private set; }
 
-		protected IApiFileTypeModelMapper FileTypeModelMapper { get; private set; }
+		protected IApiFileTypeServerModelMapper FileTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.Web
 			ILogger<AbstractFileTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFileTypeService fileTypeService,
-			IApiFileTypeModelMapper fileTypeModelMapper
+			IApiFileTypeServerModelMapper fileTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFileTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace FileServiceNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFileTypeResponseModel> response = await this.FileTypeService.All(query.Limit, query.Offset);
+			List<ApiFileTypeServerResponseModel> response = await this.FileTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace FileServiceNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiFileTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiFileTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiFileTypeResponseModel response = await this.FileTypeService.Get(id);
+			ApiFileTypeServerResponseModel response = await this.FileTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace FileServiceNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiFileTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiFileTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFileTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFileTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiFileTypeResponseModel> records = new List<ApiFileTypeResponseModel>();
+			List<ApiFileTypeServerResponseModel> records = new List<ApiFileTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiFileTypeResponseModel> result = await this.FileTypeService.Create(model);
+				CreateResponse<ApiFileTypeServerResponseModel> result = await this.FileTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace FileServiceNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiFileTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiFileTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiFileTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiFileTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiFileTypeServerRequestModel model)
 		{
-			CreateResponse<ApiFileTypeResponseModel> result = await this.FileTypeService.Create(model);
+			CreateResponse<ApiFileTypeServerResponseModel> result = await this.FileTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace FileServiceNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFileTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFileTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFileTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFileTypeServerRequestModel> patch)
 		{
-			ApiFileTypeResponseModel record = await this.FileTypeService.Get(id);
+			ApiFileTypeServerResponseModel record = await this.FileTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				ApiFileTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiFileTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiFileTypeServerRequestModel;
 
-				UpdateResponse<ApiFileTypeResponseModel> result = await this.FileTypeService.Update(id, model);
+				UpdateResponse<ApiFileTypeServerResponseModel> result = await this.FileTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace FileServiceNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFileTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFileTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileTypeServerRequestModel model)
 		{
-			ApiFileTypeRequestModel request = await this.PatchModel(id, this.FileTypeModelMapper.CreatePatch(model));
+			ApiFileTypeServerRequestModel request = await this.PatchModel(id, this.FileTypeModelMapper.CreatePatch(model)) as ApiFileTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiFileTypeResponseModel> result = await this.FileTypeService.Update(id, request);
+				UpdateResponse<ApiFileTypeServerResponseModel> result = await this.FileTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace FileServiceNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.FileTypeService.Delete(id);
@@ -207,9 +217,9 @@ namespace FileServiceNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{fileTypeId}/FilesByFileTypeId")]
+		[Route("{fileTypeId}/Files")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFileResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> FilesByFileTypeId(int fileTypeId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace FileServiceNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFileResponseModel> response = await this.FileTypeService.FilesByFileTypeId(fileTypeId, query.Limit, query.Offset);
+			List<ApiFileServerResponseModel> response = await this.FileTypeService.FilesByFileTypeId(fileTypeId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiFileTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiFileTypeRequestModel> patch)
+		private async Task<ApiFileTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiFileTypeServerRequestModel> patch)
 		{
 			var record = await this.FileTypeService.Get(id);
 
@@ -233,7 +243,7 @@ namespace FileServiceNS.Api.Web
 			}
 			else
 			{
-				ApiFileTypeRequestModel request = this.FileTypeModelMapper.MapResponseToRequest(record);
+				ApiFileTypeServerRequestModel request = this.FileTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>44b5e6dd14b132cad11f453ea10bba79</Hash>
+    <Hash>b641e05ebcef0f8041032af94a15e77f</Hash>
 </Codenesium>*/

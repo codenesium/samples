@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOWorkOrder MapModelToBO(
 			int workOrderID,
-			ApiWorkOrderRequestModel model
+			ApiWorkOrderServerRequestModel model
 			)
 		{
 			BOWorkOrder boWorkOrder = new BOWorkOrder();
@@ -27,20 +26,20 @@ namespace AdventureWorksNS.Api.Services
 			return boWorkOrder;
 		}
 
-		public virtual ApiWorkOrderResponseModel MapBOToModel(
+		public virtual ApiWorkOrderServerResponseModel MapBOToModel(
 			BOWorkOrder boWorkOrder)
 		{
-			var model = new ApiWorkOrderResponseModel();
+			var model = new ApiWorkOrderServerResponseModel();
 
 			model.SetProperties(boWorkOrder.WorkOrderID, boWorkOrder.DueDate, boWorkOrder.EndDate, boWorkOrder.ModifiedDate, boWorkOrder.OrderQty, boWorkOrder.ProductID, boWorkOrder.ScrappedQty, boWorkOrder.ScrapReasonID, boWorkOrder.StartDate, boWorkOrder.StockedQty);
 
 			return model;
 		}
 
-		public virtual List<ApiWorkOrderResponseModel> MapBOToModel(
+		public virtual List<ApiWorkOrderServerResponseModel> MapBOToModel(
 			List<BOWorkOrder> items)
 		{
-			List<ApiWorkOrderResponseModel> response = new List<ApiWorkOrderResponseModel>();
+			List<ApiWorkOrderServerResponseModel> response = new List<ApiWorkOrderServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f166e6db7fab47eb51329214b0fe0e2f</Hash>
+    <Hash>e2250e95da1c341232fdc6e2137b664f</Hash>
 </Codenesium>*/

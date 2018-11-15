@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			List<ApiBucketResponseModel> response = await service.All();
+			List<ApiBucketServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.Get(default(int));
+			ApiBucketServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.Get(default(int));
+			ApiBucketServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
-			var model = new ApiBucketRequestModel();
+			var model = new ApiBucketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Bucket>())).Returns(Task.FromResult(new Bucket()));
 			var service = new BucketService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			CreateResponse<ApiBucketResponseModel> response = await service.Create(model);
+			CreateResponse<ApiBucketServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketRequestModel>()));
+			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Bucket>()));
 		}
 
@@ -103,7 +103,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
-			var model = new ApiBucketRequestModel();
+			var model = new ApiBucketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Bucket>())).Returns(Task.FromResult(new Bucket()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 			var service = new BucketService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			UpdateResponse<ApiBucketResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiBucketServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketRequestModel>()));
+			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Bucket>()));
 		}
 
@@ -125,7 +125,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
-			var model = new ApiBucketRequestModel();
+			var model = new ApiBucketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BucketService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.ByExternalId(default(Guid));
+			ApiBucketServerResponseModel response = await service.ByExternalId(default(Guid));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
@@ -175,7 +175,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.ByExternalId(default(Guid));
+			ApiBucketServerResponseModel response = await service.ByExternalId(default(Guid));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
@@ -195,7 +195,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.ByName(default(string));
+			ApiBucketServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -214,7 +214,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			ApiBucketResponseModel response = await service.ByName(default(string));
+			ApiBucketServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -235,7 +235,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			List<ApiFileResponseModel> response = await service.FilesByBucketId(default(int));
+			List<ApiFileServerResponseModel> response = await service.FilesByBucketId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.FilesByBucketId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -254,7 +254,7 @@ namespace FileServiceNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                                mock.DALMapperMockFactory.DALFileMapperMock);
 
-			List<ApiFileResponseModel> response = await service.FilesByBucketId(default(int));
+			List<ApiFileServerResponseModel> response = await service.FilesByBucketId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.FilesByBucketId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -263,5 +263,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a6cee9a246c93b17e28ffb52ce79dcfb</Hash>
+    <Hash>d24c4c881f7fd611a3cfa49d5835923d</Hash>
 </Codenesium>*/

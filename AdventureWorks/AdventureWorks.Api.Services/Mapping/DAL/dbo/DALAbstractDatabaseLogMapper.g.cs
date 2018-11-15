@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +12,10 @@ namespace AdventureWorksNS.Api.Services
 		{
 			DatabaseLog efDatabaseLog = new DatabaseLog();
 			efDatabaseLog.SetProperties(
-				bo.DatabaseLogID,
-				bo.DatabaseUser,
 				bo.@Event,
 				bo.@Object,
+				bo.DatabaseLogID,
+				bo.DatabaseUser,
 				bo.PostTime,
 				bo.Schema,
 				bo.Tsql,
@@ -31,9 +30,9 @@ namespace AdventureWorksNS.Api.Services
 
 			bo.SetProperties(
 				ef.DatabaseLogID,
-				ef.DatabaseUser,
 				ef.@Event,
 				ef.@Object,
+				ef.DatabaseUser,
 				ef.PostTime,
 				ef.Schema,
 				ef.Tsql,
@@ -57,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08dd9c55b55c98d3652b9e97b0bb1dfb</Hash>
+    <Hash>8088a9452aa55855806b90d22f52fd92</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected IRetweetService RetweetService { get; private set; }
 
-		protected IApiRetweetModelMapper RetweetModelMapper { get; private set; }
+		protected IApiRetweetServerModelMapper RetweetModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractRetweetController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRetweetService retweetService,
-			IApiRetweetModelMapper retweetModelMapper
+			IApiRetweetServerModelMapper retweetModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiRetweetServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRetweetResponseModel> response = await this.RetweetService.All(query.Limit, query.Offset);
+			List<ApiRetweetServerResponseModel> response = await this.RetweetService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiRetweetResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiRetweetServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiRetweetResponseModel response = await this.RetweetService.Get(id);
+			ApiRetweetServerResponseModel response = await this.RetweetService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiRetweetServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRetweetRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRetweetServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiRetweetResponseModel> records = new List<ApiRetweetResponseModel>();
+			List<ApiRetweetServerResponseModel> records = new List<ApiRetweetServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiRetweetResponseModel> result = await this.RetweetService.Create(model);
+				CreateResponse<ApiRetweetServerResponseModel> result = await this.RetweetService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiRetweetServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiRetweetResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiRetweetServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiRetweetRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiRetweetServerRequestModel model)
 		{
-			CreateResponse<ApiRetweetResponseModel> result = await this.RetweetService.Create(model);
+			CreateResponse<ApiRetweetServerResponseModel> result = await this.RetweetService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRetweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRetweetRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRetweetServerRequestModel> patch)
 		{
-			ApiRetweetResponseModel record = await this.RetweetService.Get(id);
+			ApiRetweetServerResponseModel record = await this.RetweetService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiRetweetRequestModel model = await this.PatchModel(id, patch);
+				ApiRetweetServerRequestModel model = await this.PatchModel(id, patch) as ApiRetweetServerRequestModel;
 
-				UpdateResponse<ApiRetweetResponseModel> result = await this.RetweetService.Update(id, model);
+				UpdateResponse<ApiRetweetServerResponseModel> result = await this.RetweetService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRetweetServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRetweetRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRetweetServerRequestModel model)
 		{
-			ApiRetweetRequestModel request = await this.PatchModel(id, this.RetweetModelMapper.CreatePatch(model));
+			ApiRetweetServerRequestModel request = await this.PatchModel(id, this.RetweetModelMapper.CreatePatch(model)) as ApiRetweetServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiRetweetResponseModel> result = await this.RetweetService.Update(id, request);
+				UpdateResponse<ApiRetweetServerResponseModel> result = await this.RetweetService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.RetweetService.Delete(id);
@@ -209,7 +219,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("byRetwitterUserId/{retwitterUserId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiRetweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByRetwitterUserId(int? retwitterUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRetweetResponseModel> response = await this.RetweetService.ByRetwitterUserId(retwitterUserId, query.Limit, query.Offset);
+			List<ApiRetweetServerResponseModel> response = await this.RetweetService.ByRetwitterUserId(retwitterUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("byTweetTweetId/{tweetTweetId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRetweetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiRetweetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByTweetTweetId(int tweetTweetId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRetweetResponseModel> response = await this.RetweetService.ByTweetTweetId(tweetTweetId, query.Limit, query.Offset);
+			List<ApiRetweetServerResponseModel> response = await this.RetweetService.ByTweetTweetId(tweetTweetId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiRetweetRequestModel> PatchModel(int id, JsonPatchDocument<ApiRetweetRequestModel> patch)
+		private async Task<ApiRetweetServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiRetweetServerRequestModel> patch)
 		{
 			var record = await this.RetweetService.Get(id);
 
@@ -250,7 +260,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiRetweetRequestModel request = this.RetweetModelMapper.MapResponseToRequest(record);
+				ApiRetweetServerRequestModel request = this.RetweetModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>87d70da9aea1916682a4cf459ca72b5b</Hash>
+    <Hash>e202e13e7d82a6453d494c81ba3a2a0b</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public virtual BOPipelineStatu MapModelToBO(
 			int id,
-			ApiPipelineStatuRequestModel model
+			ApiPipelineStatuServerRequestModel model
 			)
 		{
 			BOPipelineStatu boPipelineStatu = new BOPipelineStatu();
@@ -19,20 +18,20 @@ namespace PetShippingNS.Api.Services
 			return boPipelineStatu;
 		}
 
-		public virtual ApiPipelineStatuResponseModel MapBOToModel(
+		public virtual ApiPipelineStatuServerResponseModel MapBOToModel(
 			BOPipelineStatu boPipelineStatu)
 		{
-			var model = new ApiPipelineStatuResponseModel();
+			var model = new ApiPipelineStatuServerResponseModel();
 
 			model.SetProperties(boPipelineStatu.Id, boPipelineStatu.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiPipelineStatuResponseModel> MapBOToModel(
+		public virtual List<ApiPipelineStatuServerResponseModel> MapBOToModel(
 			List<BOPipelineStatu> items)
 		{
-			List<ApiPipelineStatuResponseModel> response = new List<ApiPipelineStatuResponseModel>();
+			List<ApiPipelineStatuServerResponseModel> response = new List<ApiPipelineStatuServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a541d5f456431db8775cf31d48138d7d</Hash>
+    <Hash>073f88bb619e20321a7108bf6c081554</Hash>
 </Codenesium>*/

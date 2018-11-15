@@ -25,20 +25,25 @@ namespace NebulaNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("organizationId")]
-		public int OrganizationId { get; private set; }
+		public virtual int OrganizationId { get; private set; }
 
 		[ForeignKey("OrganizationId")]
 		public virtual Organization OrganizationNavigation { get; private set; }
+
+		public void SetOrganizationNavigation(Organization item)
+		{
+			this.OrganizationNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d6897fb014e4330a21164990f11072a7</Hash>
+    <Hash>d064bddae0f63eb842f116a3bd697cf7</Hash>
 </Codenesium>*/

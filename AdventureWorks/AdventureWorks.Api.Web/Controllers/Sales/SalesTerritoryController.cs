@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SalesTerritoryController : AbstractSalesTerritoryController
 	{
 		public SalesTerritoryController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<SalesTerritoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTerritoryService salesTerritoryService,
-			IApiSalesTerritoryModelMapper salesTerritoryModelMapper
+			IApiSalesTerritoryServerModelMapper salesTerritoryModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>24d6a59479c406039c397ef065c4e133</Hash>
+    <Hash>8d3d387400243cdd45155f5b8f7866de</Hash>
 </Codenesium>*/

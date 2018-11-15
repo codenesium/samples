@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPipelineStepStepRequirementMapper();
-			ApiPipelineStepStepRequirementRequestModel model = new ApiPipelineStepStepRequirementRequestModel();
+			ApiPipelineStepStepRequirementServerRequestModel model = new ApiPipelineStepStepRequirementServerRequestModel();
 			model.SetProperties("A", 1, true);
 			BOPipelineStepStepRequirement response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLPipelineStepStepRequirementMapper();
 			BOPipelineStepStepRequirement bo = new BOPipelineStepStepRequirement();
 			bo.SetProperties(1, "A", 1, true);
-			ApiPipelineStepStepRequirementResponseModel response = mapper.MapBOToModel(bo);
+			ApiPipelineStepStepRequirementServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Detail.Should().Be("A");
 			response.Id.Should().Be(1);
@@ -46,7 +46,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLPipelineStepStepRequirementMapper();
 			BOPipelineStepStepRequirement bo = new BOPipelineStepStepRequirement();
 			bo.SetProperties(1, "A", 1, true);
-			List<ApiPipelineStepStepRequirementResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepStepRequirement>() { { bo } });
+			List<ApiPipelineStepStepRequirementServerResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepStepRequirement>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e34fcefb2225c3ce116f92330ea54ffe</Hash>
+    <Hash>87042ea684469c977a0fdb4f64549254</Hash>
 </Codenesium>*/

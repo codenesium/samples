@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOStateProvince MapModelToBO(
 			int stateProvinceID,
-			ApiStateProvinceRequestModel model);
+			ApiStateProvinceServerRequestModel model);
 
-		ApiStateProvinceResponseModel MapBOToModel(
+		ApiStateProvinceServerResponseModel MapBOToModel(
 			BOStateProvince boStateProvince);
 
-		List<ApiStateProvinceResponseModel> MapBOToModel(
+		List<ApiStateProvinceServerResponseModel> MapBOToModel(
 			List<BOStateProvince> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fb2a0c0c1dfbb64348220c21d4e40f77</Hash>
+    <Hash>0994164b1598f0971c9f1989f28f29ce</Hash>
 </Codenesium>*/

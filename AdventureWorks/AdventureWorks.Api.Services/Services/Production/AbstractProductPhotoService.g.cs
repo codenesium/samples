@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,45 +11,37 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IProductPhotoRepository ProductPhotoRepository { get; private set; }
 
-		protected IApiProductPhotoRequestModelValidator ProductPhotoModelValidator { get; private set; }
+		protected IApiProductPhotoServerRequestModelValidator ProductPhotoModelValidator { get; private set; }
 
 		protected IBOLProductPhotoMapper BolProductPhotoMapper { get; private set; }
 
 		protected IDALProductPhotoMapper DalProductPhotoMapper { get; private set; }
-
-		protected IBOLProductProductPhotoMapper BolProductProductPhotoMapper { get; private set; }
-
-		protected IDALProductProductPhotoMapper DalProductProductPhotoMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractProductPhotoService(
 			ILogger logger,
 			IProductPhotoRepository productPhotoRepository,
-			IApiProductPhotoRequestModelValidator productPhotoModelValidator,
+			IApiProductPhotoServerRequestModelValidator productPhotoModelValidator,
 			IBOLProductPhotoMapper bolProductPhotoMapper,
-			IDALProductPhotoMapper dalProductPhotoMapper,
-			IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
-			IDALProductProductPhotoMapper dalProductProductPhotoMapper)
+			IDALProductPhotoMapper dalProductPhotoMapper)
 			: base()
 		{
 			this.ProductPhotoRepository = productPhotoRepository;
 			this.ProductPhotoModelValidator = productPhotoModelValidator;
 			this.BolProductPhotoMapper = bolProductPhotoMapper;
 			this.DalProductPhotoMapper = dalProductPhotoMapper;
-			this.BolProductProductPhotoMapper = bolProductProductPhotoMapper;
-			this.DalProductProductPhotoMapper = dalProductProductPhotoMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductPhotoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ProductPhotoRepository.All(limit, offset);
 
 			return this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiProductPhotoResponseModel> Get(int productPhotoID)
+		public virtual async Task<ApiProductPhotoServerResponseModel> Get(int productPhotoID)
 		{
 			var record = await this.ProductPhotoRepository.Get(productPhotoID);
 
@@ -68,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
-			ApiProductPhotoRequestModel model)
+		public virtual async Task<CreateResponse<ApiProductPhotoServerResponseModel>> Create(
+			ApiProductPhotoServerRequestModel model)
 		{
-			CreateResponse<ApiProductPhotoResponseModel> response = new CreateResponse<ApiProductPhotoResponseModel>(await this.ProductPhotoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductPhotoServerResponseModel> response = ValidationResponseFactory<ApiProductPhotoServerResponseModel>.CreateResponse(await this.ProductPhotoModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolProductPhotoMapper.MapModelToBO(default(int), model);
@@ -83,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiProductPhotoResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiProductPhotoServerResponseModel>> Update(
 			int productPhotoID,
-			ApiProductPhotoRequestModel model)
+			ApiProductPhotoServerRequestModel model)
 		{
 			var validationResult = await this.ProductPhotoModelValidator.ValidateUpdateAsync(productPhotoID, model);
 
@@ -96,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductPhotoRepository.Get(productPhotoID);
 
-				return new UpdateResponse<ApiProductPhotoResponseModel>(this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiProductPhotoResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int productPhotoID)
 		{
-			ActionResponse response = new ActionResponse(await this.ProductPhotoModelValidator.ValidateDeleteAsync(productPhotoID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ProductPhotoModelValidator.ValidateDeleteAsync(productPhotoID));
+
 			if (response.Success)
 			{
 				await this.ProductPhotoRepository.Delete(productPhotoID);
@@ -115,16 +104,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ProductProductPhoto> records = await this.ProductPhotoRepository.ProductProductPhotoesByProductPhotoID(productPhotoID, limit, offset);
-
-			return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef7840a51f9aa454c666e0da40d65651</Hash>
+    <Hash>fa096d82703d2493876ab44aca01151d</Hash>
 </Codenesium>*/

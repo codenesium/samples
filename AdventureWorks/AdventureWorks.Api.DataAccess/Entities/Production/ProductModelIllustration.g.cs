@@ -25,17 +25,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("IllustrationID")]
-		public int IllustrationID { get; private set; }
+		public virtual int IllustrationID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductModelID")]
-		public int ProductModelID { get; private set; }
+		public virtual int ProductModelID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8aee315d34440cb101a27d43709509c9</Hash>
+    <Hash>1fa3e8e0744cb1d6e3e327de3db3a276</Hash>
 </Codenesium>*/

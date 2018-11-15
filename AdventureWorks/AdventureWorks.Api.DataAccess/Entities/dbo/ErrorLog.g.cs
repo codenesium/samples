@@ -36,38 +36,38 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ErrorLine")]
-		public int? ErrorLine { get; private set; }
+		public virtual int? ErrorLine { get; private set; }
 
 		[Key]
 		[Column("ErrorLogID")]
-		public int ErrorLogID { get; private set; }
+		public virtual int ErrorLogID { get; private set; }
 
 		[MaxLength(4000)]
 		[Column("ErrorMessage")]
-		public string ErrorMessage { get; private set; }
+		public virtual string ErrorMessage { get; private set; }
 
 		[Column("ErrorNumber")]
-		public int ErrorNumber { get; private set; }
+		public virtual int ErrorNumber { get; private set; }
 
 		[MaxLength(126)]
 		[Column("ErrorProcedure")]
-		public string ErrorProcedure { get; private set; }
+		public virtual string ErrorProcedure { get; private set; }
 
 		[Column("ErrorSeverity")]
-		public int? ErrorSeverity { get; private set; }
+		public virtual int? ErrorSeverity { get; private set; }
 
 		[Column("ErrorState")]
-		public int? ErrorState { get; private set; }
+		public virtual int? ErrorState { get; private set; }
 
 		[Column("ErrorTime")]
-		public DateTime ErrorTime { get; private set; }
+		public virtual DateTime ErrorTime { get; private set; }
 
 		[MaxLength(128)]
 		[Column("UserName")]
-		public string UserName { get; private set; }
+		public virtual string UserName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>82bf27e7855a415ee97b9f53fed4f4aa</Hash>
+    <Hash>fdfb3e202751ec018c346503895c0837</Hash>
 </Codenesium>*/

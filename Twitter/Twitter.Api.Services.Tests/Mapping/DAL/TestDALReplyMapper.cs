@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALReplyMapper();
 			var bo = new BOReply();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
 
 			Reply response = mapper.MapBOToEF(bo);
 
@@ -25,7 +25,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ReplierUserId.Should().Be(1);
 			response.ReplyId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALReplyMapper();
 			Reply entity = new Reply();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
 
 			BOReply response = mapper.MapEFToBO(entity);
 
@@ -41,7 +41,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ReplierUserId.Should().Be(1);
 			response.ReplyId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALReplyMapper();
 			Reply entity = new Reply();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
 
 			List<BOReply> response = mapper.MapEFToBO(new List<Reply>() { entity });
 
@@ -59,5 +59,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>054724baf413e7cf4104da2edd91d52b</Hash>
+    <Hash>f95faca56a9e24b5d4100f3dc1bd249b</Hash>
 </Codenesium>*/

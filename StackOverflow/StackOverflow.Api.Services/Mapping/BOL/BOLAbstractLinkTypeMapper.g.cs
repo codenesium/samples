@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOLinkType MapModelToBO(
 			int id,
-			ApiLinkTypeRequestModel model
+			ApiLinkTypeServerRequestModel model
 			)
 		{
 			BOLinkType boLinkType = new BOLinkType();
@@ -19,20 +18,20 @@ namespace StackOverflowNS.Api.Services
 			return boLinkType;
 		}
 
-		public virtual ApiLinkTypeResponseModel MapBOToModel(
+		public virtual ApiLinkTypeServerResponseModel MapBOToModel(
 			BOLinkType boLinkType)
 		{
-			var model = new ApiLinkTypeResponseModel();
+			var model = new ApiLinkTypeServerResponseModel();
 
 			model.SetProperties(boLinkType.Id, boLinkType.Type);
 
 			return model;
 		}
 
-		public virtual List<ApiLinkTypeResponseModel> MapBOToModel(
+		public virtual List<ApiLinkTypeServerResponseModel> MapBOToModel(
 			List<BOLinkType> items)
 		{
-			List<ApiLinkTypeResponseModel> response = new List<ApiLinkTypeResponseModel>();
+			List<ApiLinkTypeServerResponseModel> response = new List<ApiLinkTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>899d51fd8ec88db3971ba4550ad06e5c</Hash>
+    <Hash>378e9227eb5e9f12167105a50f99dee5</Hash>
 </Codenesium>*/

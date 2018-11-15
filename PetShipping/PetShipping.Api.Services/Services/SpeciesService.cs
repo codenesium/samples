@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace PetShippingNS.Api.Services
 		public SpeciesService(
 			ILogger<ISpeciesRepository> logger,
 			ISpeciesRepository speciesRepository,
-			IApiSpeciesRequestModelValidator speciesModelValidator,
-			IBOLSpeciesMapper bolspeciesMapper,
-			IDALSpeciesMapper dalspeciesMapper,
+			IApiSpeciesServerRequestModelValidator speciesModelValidator,
+			IBOLSpeciesMapper bolSpeciesMapper,
+			IDALSpeciesMapper dalSpeciesMapper,
 			IBOLBreedMapper bolBreedMapper,
 			IDALBreedMapper dalBreedMapper)
 			: base(logger,
 			       speciesRepository,
 			       speciesModelValidator,
-			       bolspeciesMapper,
-			       dalspeciesMapper,
+			       bolSpeciesMapper,
+			       dalSpeciesMapper,
 			       bolBreedMapper,
 			       dalBreedMapper)
 		{
@@ -34,5 +27,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59140ae59aecb35c1e3afd8aa483d275</Hash>
+    <Hash>9c12eafbcd55163aac0182c917757bae</Hash>
 </Codenesium>*/

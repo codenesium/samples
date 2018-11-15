@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ITestAllFieldTypesNullableService TestAllFieldTypesNullableService { get; private set; }
 
-		protected IApiTestAllFieldTypesNullableModelMapper TestAllFieldTypesNullableModelMapper { get; private set; }
+		protected IApiTestAllFieldTypesNullableServerModelMapper TestAllFieldTypesNullableModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractTestAllFieldTypesNullableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITestAllFieldTypesNullableService testAllFieldTypesNullableService,
-			IApiTestAllFieldTypesNullableModelMapper testAllFieldTypesNullableModelMapper
+			IApiTestAllFieldTypesNullableServerModelMapper testAllFieldTypesNullableModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTestAllFieldTypesNullableResponseModel> response = await this.TestAllFieldTypesNullableService.All(query.Limit, query.Offset);
+			List<ApiTestAllFieldTypesNullableServerResponseModel> response = await this.TestAllFieldTypesNullableService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTestAllFieldTypesNullableResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTestAllFieldTypesNullableServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTestAllFieldTypesNullableResponseModel response = await this.TestAllFieldTypesNullableService.Get(id);
+			ApiTestAllFieldTypesNullableServerResponseModel response = await this.TestAllFieldTypesNullableService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTestAllFieldTypesNullableServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypesNullableRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTestAllFieldTypesNullableServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTestAllFieldTypesNullableResponseModel> records = new List<ApiTestAllFieldTypesNullableResponseModel>();
+			List<ApiTestAllFieldTypesNullableServerResponseModel> records = new List<ApiTestAllFieldTypesNullableServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+				CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTestAllFieldTypesNullableServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypesNullableResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypesNullableRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTestAllFieldTypesNullableServerRequestModel model)
 		{
-			CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
+			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTestAllFieldTypesNullableServerRequestModel> patch)
 		{
-			ApiTestAllFieldTypesNullableResponseModel record = await this.TestAllFieldTypesNullableService.Get(id);
+			ApiTestAllFieldTypesNullableServerResponseModel record = await this.TestAllFieldTypesNullableService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTestAllFieldTypesNullableRequestModel model = await this.PatchModel(id, patch);
+				ApiTestAllFieldTypesNullableServerRequestModel model = await this.PatchModel(id, patch) as ApiTestAllFieldTypesNullableServerRequestModel;
 
-				UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, model);
+				UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypesNullableRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTestAllFieldTypesNullableServerRequestModel model)
 		{
-			ApiTestAllFieldTypesNullableRequestModel request = await this.PatchModel(id, this.TestAllFieldTypesNullableModelMapper.CreatePatch(model));
+			ApiTestAllFieldTypesNullableServerRequestModel request = await this.PatchModel(id, this.TestAllFieldTypesNullableModelMapper.CreatePatch(model)) as ApiTestAllFieldTypesNullableServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, request);
+				UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> result = await this.TestAllFieldTypesNullableService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TestAllFieldTypesNullableService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiTestAllFieldTypesNullableRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypesNullableRequestModel> patch)
+		private async Task<ApiTestAllFieldTypesNullableServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTestAllFieldTypesNullableServerRequestModel> patch)
 		{
 			var record = await this.TestAllFieldTypesNullableService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTestAllFieldTypesNullableRequestModel request = this.TestAllFieldTypesNullableModelMapper.MapResponseToRequest(record);
+				ApiTestAllFieldTypesNullableServerRequestModel request = this.TestAllFieldTypesNullableModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>763bf1777bdde65a96900f9fa0af65f1</Hash>
+    <Hash>531dacbd2f97e092427dcc386fffe90a</Hash>
 </Codenesium>*/

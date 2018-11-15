@@ -76,41 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Location> ByName(string name)
+		public async virtual Task<Location> ByName(string name)
 		{
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.Name == name);
-		}
-
-		public async virtual Task<List<ProductInventory>> ProductInventoriesByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductInventory>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
-		}
-
-		public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutingsByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<WorkOrderRouting>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
 		}
 
 		protected async Task<List<Location>> Where(
 			Expression<Func<Location, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Location, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Location, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.LocationID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
-			}
-			else
-			{
-				return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
-			}
+			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
 		}
 
 		private async Task<Location> GetById(short locationID)
@@ -123,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5b401c2e98420898266e357f132c13d7</Hash>
+    <Hash>c4b91982b9bbc3e20fa82a92c2c2e4fa</Hash>
 </Codenesium>*/

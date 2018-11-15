@@ -2,27 +2,26 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IPipelineStepStepRequirementService
 	{
-		Task<CreateResponse<ApiPipelineStepStepRequirementResponseModel>> Create(
-			ApiPipelineStepStepRequirementRequestModel model);
+		Task<CreateResponse<ApiPipelineStepStepRequirementServerResponseModel>> Create(
+			ApiPipelineStepStepRequirementServerRequestModel model);
 
-		Task<UpdateResponse<ApiPipelineStepStepRequirementResponseModel>> Update(int id,
-		                                                                          ApiPipelineStepStepRequirementRequestModel model);
+		Task<UpdateResponse<ApiPipelineStepStepRequirementServerResponseModel>> Update(int id,
+		                                                                                ApiPipelineStepStepRequirementServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPipelineStepStepRequirementResponseModel> Get(int id);
+		Task<ApiPipelineStepStepRequirementServerResponseModel> Get(int id);
 
-		Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStepStepRequirementServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e05205adee5a44a06f90b619f80e41b</Hash>
+    <Hash>b76f97ba91dd05e4cf6d08763b4689dc</Hash>
 </Codenesium>*/

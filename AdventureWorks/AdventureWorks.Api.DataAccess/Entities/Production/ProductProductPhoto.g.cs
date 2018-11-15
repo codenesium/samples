@@ -26,21 +26,21 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("Primary")]
-		public bool Primary { get; private set; }
+		public virtual bool Primary { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Key]
 		[Column("ProductPhotoID")]
-		public int ProductPhotoID { get; private set; }
+		public virtual int ProductPhotoID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5fd24755d3022bf372df7acf6db5b57f</Hash>
+    <Hash>ee52a82bf9a1f5f35d71ddc7810e2fbb</Hash>
 </Codenesium>*/

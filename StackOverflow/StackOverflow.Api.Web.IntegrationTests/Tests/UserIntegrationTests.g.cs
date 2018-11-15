@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,108 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "User")]
 	[Trait("Area", "Integration")]
-	public class UserIntegrationTests
+	public partial class UserIntegrationTests
 	{
 		public UserIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.UserDeleteAsync(1);
+			var model = new ApiUserClientRequestModel();
+			model.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			var model2 = new ApiUserClientRequestModel();
+			model2.SetProperties("C", 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", 3, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", 3, 3, 3, "C");
+			var request = new List<ApiUserClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiUserClientResponseModel>> result = await client.UserBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<User>().ToList()[1].AboutMe.Should().Be("B");
+			context.Set<User>().ToList()[1].AccountId.Should().Be(2);
+			context.Set<User>().ToList()[1].Age.Should().Be(2);
+			context.Set<User>().ToList()[1].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[1].DisplayName.Should().Be("B");
+			context.Set<User>().ToList()[1].DownVote.Should().Be(2);
+			context.Set<User>().ToList()[1].EmailHash.Should().Be("B");
+			context.Set<User>().ToList()[1].LastAccessDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[1].Location.Should().Be("B");
+			context.Set<User>().ToList()[1].Reputation.Should().Be(2);
+			context.Set<User>().ToList()[1].UpVote.Should().Be(2);
+			context.Set<User>().ToList()[1].View.Should().Be(2);
+			context.Set<User>().ToList()[1].WebsiteUrl.Should().Be("B");
+
+			context.Set<User>().ToList()[2].AboutMe.Should().Be("C");
+			context.Set<User>().ToList()[2].AccountId.Should().Be(3);
+			context.Set<User>().ToList()[2].Age.Should().Be(3);
+			context.Set<User>().ToList()[2].CreationDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<User>().ToList()[2].DisplayName.Should().Be("C");
+			context.Set<User>().ToList()[2].DownVote.Should().Be(3);
+			context.Set<User>().ToList()[2].EmailHash.Should().Be("C");
+			context.Set<User>().ToList()[2].LastAccessDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<User>().ToList()[2].Location.Should().Be("C");
+			context.Set<User>().ToList()[2].Reputation.Should().Be(3);
+			context.Set<User>().ToList()[2].UpVote.Should().Be(3);
+			context.Set<User>().ToList()[2].View.Should().Be(3);
+			context.Set<User>().ToList()[2].WebsiteUrl.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiUserClientRequestModel();
+			model.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			CreateResponse<ApiUserClientResponseModel> result = await client.UserCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<User>().ToList()[1].AboutMe.Should().Be("B");
+			context.Set<User>().ToList()[1].AccountId.Should().Be(2);
+			context.Set<User>().ToList()[1].Age.Should().Be(2);
+			context.Set<User>().ToList()[1].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[1].DisplayName.Should().Be("B");
+			context.Set<User>().ToList()[1].DownVote.Should().Be(2);
+			context.Set<User>().ToList()[1].EmailHash.Should().Be("B");
+			context.Set<User>().ToList()[1].LastAccessDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[1].Location.Should().Be("B");
+			context.Set<User>().ToList()[1].Reputation.Should().Be(2);
+			context.Set<User>().ToList()[1].UpVote.Should().Be(2);
+			context.Set<User>().ToList()[1].View.Should().Be(2);
+			context.Set<User>().ToList()[1].WebsiteUrl.Should().Be("B");
+
+			result.Record.AboutMe.Should().Be("B");
+			result.Record.AccountId.Should().Be(2);
+			result.Record.Age.Should().Be(2);
+			result.Record.CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.DisplayName.Should().Be("B");
+			result.Record.DownVote.Should().Be(2);
+			result.Record.EmailHash.Should().Be("B");
+			result.Record.LastAccessDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Location.Should().Be("B");
+			result.Record.Reputation.Should().Be(2);
+			result.Record.UpVote.Should().Be(2);
+			result.Record.View.Should().Be(2);
+			result.Record.WebsiteUrl.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +127,77 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiUserServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IUserService service = testServer.Host.Services.GetService(typeof(IUserService)) as IUserService;
+			ApiUserServerResponseModel model = await service.Get(1);
 
-			ApiUserResponseModel model = await client.UserGetAsync(1);
+			ApiUserClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 
-			ApiUserModelMapper mapper = new ApiUserModelMapper();
+			UpdateResponse<ApiUserClientResponseModel> updateResponse = await client.UserUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiUserResponseModel> updateResponse = await client.UserUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<User>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<User>().ToList()[0].AboutMe.Should().Be("B");
+			context.Set<User>().ToList()[0].AccountId.Should().Be(2);
+			context.Set<User>().ToList()[0].Age.Should().Be(2);
+			context.Set<User>().ToList()[0].CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[0].DisplayName.Should().Be("B");
+			context.Set<User>().ToList()[0].DownVote.Should().Be(2);
+			context.Set<User>().ToList()[0].EmailHash.Should().Be("B");
+			context.Set<User>().ToList()[0].LastAccessDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<User>().ToList()[0].Location.Should().Be("B");
+			context.Set<User>().ToList()[0].Reputation.Should().Be(2);
+			context.Set<User>().ToList()[0].UpVote.Should().Be(2);
+			context.Set<User>().ToList()[0].View.Should().Be(2);
+			context.Set<User>().ToList()[0].WebsiteUrl.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.AboutMe.Should().Be("B");
+			updateResponse.Record.AccountId.Should().Be(2);
+			updateResponse.Record.Age.Should().Be(2);
+			updateResponse.Record.CreationDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.DisplayName.Should().Be("B");
+			updateResponse.Record.DownVote.Should().Be(2);
+			updateResponse.Record.EmailHash.Should().Be("B");
+			updateResponse.Record.LastAccessDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Location.Should().Be("B");
+			updateResponse.Record.Reputation.Should().Be(2);
+			updateResponse.Record.UpVote.Should().Be(2);
+			updateResponse.Record.View.Should().Be(2);
+			updateResponse.Record.WebsiteUrl.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiUserRequestModel();
-			createModel.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
-			CreateResponse<ApiUserResponseModel> createResult = await client.UserCreateAsync(createModel);
+			IUserService service = testServer.Host.Services.GetService(typeof(IUserService)) as IUserService;
+			var model = new ApiUserServerRequestModel();
+			model.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			CreateResponse<ApiUserServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiUserResponseModel getResponse = await client.UserGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.UserDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiUserResponseModel verifyResponse = await client.UserGetAsync(2);
+			ApiUserServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +205,43 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiUserResponseModel response = await client.UserGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiUserClientResponseModel response = await client.UserGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.AboutMe.Should().Be("A");
+			response.AccountId.Should().Be(1);
+			response.Age.Should().Be(1);
+			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.DisplayName.Should().Be("A");
+			response.DownVote.Should().Be(1);
+			response.EmailHash.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.LastAccessDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Location.Should().Be("A");
+			response.Reputation.Should().Be(1);
+			response.UpVote.Should().Be(1);
+			response.View.Should().Be(1);
+			response.WebsiteUrl.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiUserClientResponseModel response = await client.UserGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +250,47 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiUserResponseModel> response = await client.UserAllAsync();
+			List<ApiUserClientResponseModel> response = await client.UserAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].AboutMe.Should().Be("A");
+			response[0].AccountId.Should().Be(1);
+			response[0].Age.Should().Be(1);
+			response[0].CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].DisplayName.Should().Be("A");
+			response[0].DownVote.Should().Be(1);
+			response[0].EmailHash.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].LastAccessDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Location.Should().Be("A");
+			response[0].Reputation.Should().Be(1);
+			response[0].UpVote.Should().Be(1);
+			response[0].View.Should().Be(1);
+			response[0].WebsiteUrl.Should().Be("A");
 		}
 
-		private async Task<ApiUserResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiUserRequestModel();
-			model.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
-			CreateResponse<ApiUserResponseModel> result = await client.UserCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.UserAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>16961e9439827fa1ee5949b5ebc55cad</Hash>
+    <Hash>a5d22fc6a1c34d8ea8ca48c78592ba76</Hash>
 </Codenesium>*/

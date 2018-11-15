@@ -38,39 +38,38 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("DueDate")]
-		public DateTime DueDate { get; private set; }
+		public virtual DateTime DueDate { get; private set; }
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("OrderQty")]
-		public int OrderQty { get; private set; }
+		public virtual int OrderQty { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("ScrappedQty")]
-		public short ScrappedQty { get; private set; }
+		public virtual short ScrappedQty { get; private set; }
 
 		[Column("ScrapReasonID")]
-		public short? ScrapReasonID { get; private set; }
+		public virtual short? ScrapReasonID { get; private set; }
 
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("StockedQty")]
-		public int StockedQty { get; private set; }
+		public virtual int StockedQty { get; private set; }
 
 		[Key]
 		[Column("WorkOrderID")]
-		public int WorkOrderID { get; private set; }
+		public virtual int WorkOrderID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5185f321584e86a5b9815b7e3ea2d946</Hash>
+    <Hash>846502ec9fbcbeeacbef87e2f342b221</Hash>
 </Codenesium>*/

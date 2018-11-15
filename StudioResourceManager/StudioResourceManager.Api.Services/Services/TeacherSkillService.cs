@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 		public TeacherSkillService(
 			ILogger<ITeacherSkillRepository> logger,
 			ITeacherSkillRepository teacherSkillRepository,
-			IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
-			IBOLTeacherSkillMapper bolteacherSkillMapper,
-			IDALTeacherSkillMapper dalteacherSkillMapper,
+			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
+			IBOLTeacherSkillMapper bolTeacherSkillMapper,
+			IDALTeacherSkillMapper dalTeacherSkillMapper,
 			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base(logger,
 			       teacherSkillRepository,
 			       teacherSkillModelValidator,
-			       bolteacherSkillMapper,
-			       dalteacherSkillMapper,
+			       bolTeacherSkillMapper,
+			       dalTeacherSkillMapper,
 			       bolRateMapper,
 			       dalRateMapper)
 		{
@@ -34,5 +27,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>92acd15cda24b223728a23cf66125a97</Hash>
+    <Hash>c9bcd752f5a29a8a75b8902a6e164fe8</Hash>
 </Codenesium>*/

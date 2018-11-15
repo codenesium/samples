@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IUnitMeasureService UnitMeasureService { get; private set; }
 
-		protected IApiUnitMeasureModelMapper UnitMeasureModelMapper { get; private set; }
+		protected IApiUnitMeasureServerModelMapper UnitMeasureModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractUnitMeasureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUnitMeasureService unitMeasureService,
-			IApiUnitMeasureModelMapper unitMeasureModelMapper
+			IApiUnitMeasureServerModelMapper unitMeasureModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiUnitMeasureServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiUnitMeasureResponseModel> response = await this.UnitMeasureService.All(query.Limit, query.Offset);
+			List<ApiUnitMeasureServerResponseModel> response = await this.UnitMeasureService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiUnitMeasureServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			ApiUnitMeasureResponseModel response = await this.UnitMeasureService.Get(id);
+			ApiUnitMeasureServerResponseModel response = await this.UnitMeasureService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiUnitMeasureServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUnitMeasureRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUnitMeasureServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiUnitMeasureResponseModel> records = new List<ApiUnitMeasureResponseModel>();
+			List<ApiUnitMeasureServerResponseModel> records = new List<ApiUnitMeasureServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Create(model);
+				CreateResponse<ApiUnitMeasureServerResponseModel> result = await this.UnitMeasureService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiUnitMeasureServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiUnitMeasureResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiUnitMeasureServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiUnitMeasureRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiUnitMeasureServerRequestModel model)
 		{
-			CreateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Create(model);
+			CreateResponse<ApiUnitMeasureServerResponseModel> result = await this.UnitMeasureService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUnitMeasureRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUnitMeasureServerRequestModel> patch)
 		{
-			ApiUnitMeasureResponseModel record = await this.UnitMeasureService.Get(id);
+			ApiUnitMeasureServerResponseModel record = await this.UnitMeasureService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiUnitMeasureRequestModel model = await this.PatchModel(id, patch);
+				ApiUnitMeasureServerRequestModel model = await this.PatchModel(id, patch) as ApiUnitMeasureServerRequestModel;
 
-				UpdateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Update(id, model);
+				UpdateResponse<ApiUnitMeasureServerResponseModel> result = await this.UnitMeasureService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiUnitMeasureServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureRequestModel model)
+
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureServerRequestModel model)
 		{
-			ApiUnitMeasureRequestModel request = await this.PatchModel(id, this.UnitMeasureModelMapper.CreatePatch(model));
+			ApiUnitMeasureServerRequestModel request = await this.PatchModel(id, this.UnitMeasureModelMapper.CreatePatch(model)) as ApiUnitMeasureServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiUnitMeasureResponseModel> result = await this.UnitMeasureService.Update(id, request);
+				UpdateResponse<ApiUnitMeasureServerResponseModel> result = await this.UnitMeasureService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(string id)
 		{
 			ActionResponse result = await this.UnitMeasureService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiUnitMeasureServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiUnitMeasureResponseModel response = await this.UnitMeasureService.ByName(name);
+			ApiUnitMeasureServerResponseModel response = await this.UnitMeasureService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{unitMeasureCode}/BillOfMaterialsByUnitMeasureCode")]
+		[Route("{unitMeasureCode}/BillOfMaterials")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,15 +247,15 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBillOfMaterialResponseModel> response = await this.UnitMeasureService.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, query.Limit, query.Offset);
+			List<ApiBillOfMaterialServerResponseModel> response = await this.UnitMeasureService.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{sizeUnitMeasureCode}/ProductsBySizeUnitMeasureCode")]
+		[Route("{sizeUnitMeasureCode}/Products")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -254,7 +264,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductResponseModel> response = await this.UnitMeasureService.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, query.Limit, query.Offset);
+			List<ApiProductServerResponseModel> response = await this.UnitMeasureService.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -262,7 +272,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{weightUnitMeasureCode}/ProductsByWeightUnitMeasureCode")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -271,12 +281,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductResponseModel> response = await this.UnitMeasureService.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, query.Limit, query.Offset);
+			List<ApiProductServerResponseModel> response = await this.UnitMeasureService.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiUnitMeasureRequestModel> PatchModel(string id, JsonPatchDocument<ApiUnitMeasureRequestModel> patch)
+		private async Task<ApiUnitMeasureServerRequestModel> PatchModel(string id, JsonPatchDocument<ApiUnitMeasureServerRequestModel> patch)
 		{
 			var record = await this.UnitMeasureService.Get(id);
 
@@ -286,7 +296,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiUnitMeasureRequestModel request = this.UnitMeasureModelMapper.MapResponseToRequest(record);
+				ApiUnitMeasureServerRequestModel request = this.UnitMeasureModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -295,5 +305,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4419c0f02dd05c0e5ad80558d94b62c1</Hash>
+    <Hash>97c5f11e34f20338e7760a267d8ed3fe</Hash>
 </Codenesium>*/

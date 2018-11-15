@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Web
 	{
 		protected ISpeciesService SpeciesService { get; private set; }
 
-		protected IApiSpeciesModelMapper SpeciesModelMapper { get; private set; }
+		protected IApiSpeciesServerModelMapper SpeciesModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<AbstractSpeciesController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpeciesService speciesService,
-			IApiSpeciesModelMapper speciesModelMapper
+			IApiSpeciesServerModelMapper speciesModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpeciesServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpeciesResponseModel> response = await this.SpeciesService.All(query.Limit, query.Offset);
+			List<ApiSpeciesServerResponseModel> response = await this.SpeciesService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSpeciesResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSpeciesServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSpeciesResponseModel response = await this.SpeciesService.Get(id);
+			ApiSpeciesServerResponseModel response = await this.SpeciesService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetStoreNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSpeciesServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSpeciesResponseModel> records = new List<ApiSpeciesResponseModel>();
+			List<ApiSpeciesServerResponseModel> records = new List<ApiSpeciesServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
+				CreateResponse<ApiSpeciesServerResponseModel> result = await this.SpeciesService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetStoreNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSpeciesServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSpeciesResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSpeciesServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesServerRequestModel model)
 		{
-			CreateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Create(model);
+			CreateResponse<ApiSpeciesServerResponseModel> result = await this.SpeciesService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpeciesRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSpeciesServerRequestModel> patch)
 		{
-			ApiSpeciesResponseModel record = await this.SpeciesService.Get(id);
+			ApiSpeciesServerResponseModel record = await this.SpeciesService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiSpeciesRequestModel model = await this.PatchModel(id, patch);
+				ApiSpeciesServerRequestModel model = await this.PatchModel(id, patch) as ApiSpeciesServerRequestModel;
 
-				UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, model);
+				UpdateResponse<ApiSpeciesServerResponseModel> result = await this.SpeciesService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSpeciesServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesServerRequestModel model)
 		{
-			ApiSpeciesRequestModel request = await this.PatchModel(id, this.SpeciesModelMapper.CreatePatch(model));
+			ApiSpeciesServerRequestModel request = await this.PatchModel(id, this.SpeciesModelMapper.CreatePatch(model)) as ApiSpeciesServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSpeciesResponseModel> result = await this.SpeciesService.Update(id, request);
+				UpdateResponse<ApiSpeciesServerResponseModel> result = await this.SpeciesService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetStoreNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SpeciesService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{speciesId}/PetsBySpeciesId")]
+		[Route("{speciesId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PetsBySpeciesId(int speciesId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetResponseModel> response = await this.SpeciesService.PetsBySpeciesId(speciesId, query.Limit, query.Offset);
+			List<ApiPetServerResponseModel> response = await this.SpeciesService.PetsBySpeciesId(speciesId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiSpeciesRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpeciesRequestModel> patch)
+		private async Task<ApiSpeciesServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpeciesServerRequestModel> patch)
 		{
 			var record = await this.SpeciesService.Get(id);
 
@@ -233,7 +243,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiSpeciesRequestModel request = this.SpeciesModelMapper.MapResponseToRequest(record);
+				ApiSpeciesServerRequestModel request = this.SpeciesModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>932614547bc6a070b2663415363198b4</Hash>
+    <Hash>349f33bdddd0cc901f99bb05bedfd89a</Hash>
 </Codenesium>*/

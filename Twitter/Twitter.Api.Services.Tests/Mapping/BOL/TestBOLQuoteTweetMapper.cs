@@ -17,15 +17,15 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLQuoteTweetMapper();
-			ApiQuoteTweetRequestModel model = new ApiQuoteTweetRequestModel();
-			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
+			ApiQuoteTweetServerRequestModel model = new ApiQuoteTweetServerRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
 			BOQuoteTweet response = mapper.MapModelToBO(1, model);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.RetweeterUserId.Should().Be(1);
 			response.SourceTweetId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -33,15 +33,15 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLQuoteTweetMapper();
 			BOQuoteTweet bo = new BOQuoteTweet();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
-			ApiQuoteTweetResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
+			ApiQuoteTweetServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.QuoteTweetId.Should().Be(1);
 			response.RetweeterUserId.Should().Be(1);
 			response.SourceTweetId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -49,8 +49,8 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLQuoteTweetMapper();
 			BOQuoteTweet bo = new BOQuoteTweet();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"));
-			List<ApiQuoteTweetResponseModel> response = mapper.MapBOToModel(new List<BOQuoteTweet>() { { bo } });
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
+			List<ApiQuoteTweetServerResponseModel> response = mapper.MapBOToModel(new List<BOQuoteTweet>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>92e8a0882da1654bc316000949c796fc</Hash>
+    <Hash>3b9df16421917ac84ff411089beb38ef</Hash>
 </Codenesium>*/

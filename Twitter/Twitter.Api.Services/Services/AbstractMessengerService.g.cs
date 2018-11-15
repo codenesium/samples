@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IMessengerRepository MessengerRepository { get; private set; }
 
-		protected IApiMessengerRequestModelValidator MessengerModelValidator { get; private set; }
+		protected IApiMessengerServerRequestModelValidator MessengerModelValidator { get; private set; }
 
 		protected IBOLMessengerMapper BolMessengerMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractMessengerService(
 			ILogger logger,
 			IMessengerRepository messengerRepository,
-			IApiMessengerRequestModelValidator messengerModelValidator,
+			IApiMessengerServerRequestModelValidator messengerModelValidator,
 			IBOLMessengerMapper bolMessengerMapper,
 			IDALMessengerMapper dalMessengerMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiMessengerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiMessengerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.MessengerRepository.All(limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiMessengerResponseModel> Get(int id)
+		public virtual async Task<ApiMessengerServerResponseModel> Get(int id)
 		{
 			var record = await this.MessengerRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiMessengerResponseModel>> Create(
-			ApiMessengerRequestModel model)
+		public virtual async Task<CreateResponse<ApiMessengerServerResponseModel>> Create(
+			ApiMessengerServerRequestModel model)
 		{
-			CreateResponse<ApiMessengerResponseModel> response = new CreateResponse<ApiMessengerResponseModel>(await this.MessengerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMessengerServerResponseModel> response = ValidationResponseFactory<ApiMessengerServerResponseModel>.CreateResponse(await this.MessengerModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolMessengerMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiMessengerResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiMessengerServerResponseModel>> Update(
 			int id,
-			ApiMessengerRequestModel model)
+			ApiMessengerServerRequestModel model)
 		{
 			var validationResult = await this.MessengerModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.MessengerRepository.Get(id);
 
-				return new UpdateResponse<ApiMessengerResponseModel>(this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiMessengerServerResponseModel>.UpdateResponse(this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiMessengerResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiMessengerServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.MessengerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.MessengerModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.MessengerRepository.Delete(id);
@@ -108,21 +105,21 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiMessengerResponseModel>> ByMessageId(int? messageId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiMessengerServerResponseModel>> ByMessageId(int? messageId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Messenger> records = await this.MessengerRepository.ByMessageId(messageId, limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiMessengerResponseModel>> ByToUserId(int toUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiMessengerServerResponseModel>> ByToUserId(int toUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Messenger> records = await this.MessengerRepository.ByToUserId(toUserId, limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiMessengerResponseModel>> ByUserId(int? userId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiMessengerServerResponseModel>> ByUserId(int? userId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Messenger> records = await this.MessengerRepository.ByUserId(userId, limit, offset);
 
@@ -132,5 +129,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a65c0037dc774da7deb844aaca8dac8</Hash>
+    <Hash>763a587cad1a75c9dbe8f6fa6d5d9b4c</Hash>
 </Codenesium>*/

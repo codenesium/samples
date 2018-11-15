@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Post>> ByOwnerUserId(int? ownerUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Post>> ByOwnerUserId(int? ownerUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.OwnerUserId == ownerUserId, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace StackOverflowNS.Api.DataAccess
 			Expression<Func<Post, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Post, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Post, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Post>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Post>();
-			}
-			else
-			{
-				return await this.Context.Set<Post>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Post>();
-			}
+			return await this.Context.Set<Post>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Post>();
 		}
 
 		private async Task<Post> GetById(int id)
@@ -113,5 +105,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1cf97116031ae6562b66604939c16ccd</Hash>
+    <Hash>01235878ec5252ad372d0b22c19cbbfd</Hash>
 </Codenesium>*/

@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 		public AdminService(
 			ILogger<IAdminRepository> logger,
 			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
-			IBOLAdminMapper boladminMapper,
-			IDALAdminMapper daladminMapper,
+			IApiAdminServerRequestModelValidator adminModelValidator,
+			IBOLAdminMapper bolAdminMapper,
+			IDALAdminMapper dalAdminMapper,
 			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       adminRepository,
 			       adminModelValidator,
-			       boladminMapper,
-			       daladminMapper,
+			       bolAdminMapper,
+			       dalAdminMapper,
 			       bolVenueMapper,
 			       dalVenueMapper)
 		{
@@ -34,5 +27,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>856504455587f76eae51bf48d0389f73</Hash>
+    <Hash>749f517ca4ae5999662d74d8b327c2ed</Hash>
 </Codenesium>*/

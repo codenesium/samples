@@ -29,24 +29,24 @@ namespace PetShippingNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("isSalesPerson")]
-		public bool IsSalesPerson { get; private set; }
+		public virtual bool IsSalesPerson { get; private set; }
 
 		[Column("isShipper")]
-		public bool IsShipper { get; private set; }
+		public virtual bool IsShipper { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1411762fbb78493c229e04c7a0f9827e</Hash>
+    <Hash>9b1ce8736886ff533ee728dc0c82a668</Hash>
 </Codenesium>*/

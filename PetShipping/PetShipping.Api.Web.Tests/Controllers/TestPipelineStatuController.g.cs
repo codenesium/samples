@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			var record = new ApiPipelineStatuResponseModel();
-			var records = new List<ApiPipelineStatuResponseModel>();
+			var record = new ApiPipelineStatuServerResponseModel();
+			var records = new List<ApiPipelineStatuServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPipelineStatuResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPipelineStatuServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPipelineStatuResponseModel>>(new List<ApiPipelineStatuResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPipelineStatuServerResponseModel>>(new List<ApiPipelineStatuServerResponseModel>()));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPipelineStatuResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPipelineStatuServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuServerResponseModel()));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPipelineStatuResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPipelineStatuServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuServerResponseModel>(null));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPipelineStatuResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPipelineStatuResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPipelineStatuServerResponseModel>.CreateResponse(null as ApiPipelineStatuServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPipelineStatuServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuServerResponseModel>>(mockResponse));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPipelineStatuRequestModel>();
-			records.Add(new ApiPipelineStatuRequestModel());
+			var records = new List<ApiPipelineStatuServerRequestModel>();
+			records.Add(new ApiPipelineStatuServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPipelineStatuResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPipelineStatuServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPipelineStatuResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPipelineStatuServerResponseModel>>(null as ApiPipelineStatuServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuServerResponseModel>>(mockResponse.Object));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPipelineStatuRequestModel>();
-			records.Add(new ApiPipelineStatuRequestModel());
+			var records = new List<ApiPipelineStatuServerRequestModel>();
+			records.Add(new ApiPipelineStatuServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPipelineStatuResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPipelineStatuResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPipelineStatuServerResponseModel>.CreateResponse(null as ApiPipelineStatuServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPipelineStatuServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuServerResponseModel>>(mockResponse));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPipelineStatuRequestModel());
+			IActionResult response = await controller.Create(new ApiPipelineStatuServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPipelineStatuResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPipelineStatuServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPipelineStatuResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPipelineStatuResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPipelineStatuServerResponseModel>>(null as ApiPipelineStatuServerResponseModel);
+			var mockRecord = new ApiPipelineStatuServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPipelineStatuServerResponseModel>>(mockResponse.Object));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPipelineStatuRequestModel());
+			IActionResult response = await controller.Create(new ApiPipelineStatuServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>()))
-			.Callback<int, ApiPipelineStatuRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>()))
+			.Callback<int, ApiPipelineStatuServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuResponseModel>(new ApiPipelineStatuResponseModel()));
-			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuServerResponseModel>(new ApiPipelineStatuServerResponseModel()));
+			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPipelineStatuRequestModel>();
+			var patch = new JsonPatchDocument<ApiPipelineStatuServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuServerResponseModel>(null));
 			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPipelineStatuRequestModel>();
+			var patch = new JsonPatchDocument<ApiPipelineStatuServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuResponseModel()));
-			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuServerResponseModel()));
+			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuResponseModel()));
-			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPipelineStatuServerResponseModel()));
+			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PipelineStatuControllerMockFacade mock = new PipelineStatuControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPipelineStatuServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuResponseModel>(null));
-			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPipelineStatuServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPipelineStatuServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPipelineStatuServerResponseModel>(null));
+			PipelineStatuController controller = new PipelineStatuController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPipelineStatuServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPipelineStatuServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<IPipelineStatuService> ServiceMock { get; set; } = new Mock<IPipelineStatuService>();
 
-		public Mock<IApiPipelineStatuModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPipelineStatuModelMapper>();
+		public Mock<IApiPipelineStatuServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPipelineStatuServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc9179694b5675133772306ec20f96ff</Hash>
+    <Hash>90249e982cb1756050a6b2dbf9bc26ae</Hash>
 </Codenesium>*/

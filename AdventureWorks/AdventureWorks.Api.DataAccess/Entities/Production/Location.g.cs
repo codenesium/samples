@@ -28,24 +28,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Availability")]
-		public double Availability { get; private set; }
+		public virtual double Availability { get; private set; }
 
 		[Column("CostRate")]
-		public decimal CostRate { get; private set; }
+		public virtual decimal CostRate { get; private set; }
 
 		[Key]
 		[Column("LocationID")]
-		public short LocationID { get; private set; }
+		public virtual short LocationID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>91381355b414c88b06b65b3e7b3c7b1f</Hash>
+    <Hash>c30a544ed804b75fe682a4c06ba44d8f</Hash>
 </Codenesium>*/

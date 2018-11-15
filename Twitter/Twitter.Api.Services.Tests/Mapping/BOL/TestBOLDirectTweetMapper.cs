@@ -17,14 +17,14 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLDirectTweetMapper();
-			ApiDirectTweetRequestModel model = new ApiDirectTweetRequestModel();
-			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
+			ApiDirectTweetServerRequestModel model = new ApiDirectTweetServerRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
 			BODirectTweet response = mapper.MapModelToBO(1, model);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TaggedUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -32,13 +32,13 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLDirectTweetMapper();
 			BODirectTweet bo = new BODirectTweet();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
-			ApiDirectTweetResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
+			ApiDirectTweetServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TaggedUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.TweetId.Should().Be(1);
 		}
 
@@ -47,8 +47,8 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLDirectTweetMapper();
 			BODirectTweet bo = new BODirectTweet();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
-			List<ApiDirectTweetResponseModel> response = mapper.MapBOToModel(new List<BODirectTweet>() { { bo } });
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
+			List<ApiDirectTweetServerResponseModel> response = mapper.MapBOToModel(new List<BODirectTweet>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b84148e7484091b0c85337aafdb63caa</Hash>
+    <Hash>0fb15b274c215c4c9b79be68bf6d4ab4</Hash>
 </Codenesium>*/

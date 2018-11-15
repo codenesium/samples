@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SalesTaxRateController : AbstractSalesTaxRateController
 	{
 		public SalesTaxRateController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<SalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTaxRateService salesTaxRateService,
-			IApiSalesTaxRateModelMapper salesTaxRateModelMapper
+			IApiSalesTaxRateServerModelMapper salesTaxRateModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6dca4fb172406aba3d80ddc9778ba994</Hash>
+    <Hash>41e3a586639072c59f4106337e3b4553</Hash>
 </Codenesium>*/

@@ -2,27 +2,26 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IClientCommunicationService
 	{
-		Task<CreateResponse<ApiClientCommunicationResponseModel>> Create(
-			ApiClientCommunicationRequestModel model);
+		Task<CreateResponse<ApiClientCommunicationServerResponseModel>> Create(
+			ApiClientCommunicationServerRequestModel model);
 
-		Task<UpdateResponse<ApiClientCommunicationResponseModel>> Update(int id,
-		                                                                  ApiClientCommunicationRequestModel model);
+		Task<UpdateResponse<ApiClientCommunicationServerResponseModel>> Update(int id,
+		                                                                        ApiClientCommunicationServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiClientCommunicationResponseModel> Get(int id);
+		Task<ApiClientCommunicationServerResponseModel> Get(int id);
 
-		Task<List<ApiClientCommunicationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiClientCommunicationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>70b08df89c19e9d5438aed9028269c22</Hash>
+    <Hash>01462b4cef3e2267a8c17e0e090cd9ad</Hash>
 </Codenesium>*/

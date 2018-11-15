@@ -45,54 +45,54 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(50)]
 		[Column("Edu.Degree")]
-		public string EduDegree { get; private set; }
+		public virtual string EduDegree { get; private set; }
 
 		[Column("Edu.EndDate")]
-		public DateTime? EduEndDate { get; private set; }
+		public virtual DateTime? EduEndDate { get; private set; }
 
 		[MaxLength(5)]
 		[Column("Edu.GPA")]
-		public string EduGPA { get; private set; }
+		public virtual string EduGPA { get; private set; }
 
 		[MaxLength(5)]
 		[Column("Edu.GPAScale")]
-		public string EduGPAScale { get; private set; }
+		public virtual string EduGPAScale { get; private set; }
 
 		[Column("Edu.Level")]
-		public string EduLevel { get; private set; }
+		public virtual string EduLevel { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Edu.Loc.City")]
-		public string EduLocCity { get; private set; }
+		public virtual string EduLocCity { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Edu.Loc.CountryRegion")]
-		public string EduLocCountryRegion { get; private set; }
+		public virtual string EduLocCountryRegion { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Edu.Loc.State")]
-		public string EduLocState { get; private set; }
+		public virtual string EduLocState { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Edu.Major")]
-		public string EduMajor { get; private set; }
+		public virtual string EduMajor { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Edu.Minor")]
-		public string EduMinor { get; private set; }
+		public virtual string EduMinor { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Edu.School")]
-		public string EduSchool { get; private set; }
+		public virtual string EduSchool { get; private set; }
 
 		[Column("Edu.StartDate")]
-		public DateTime? EduStartDate { get; private set; }
+		public virtual DateTime? EduStartDate { get; private set; }
 
 		[Column("JobCandidateID")]
-		public int JobCandidateID { get; private set; }
+		public virtual int JobCandidateID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb6a9def4c964637dc3281e1fa17052b</Hash>
+    <Hash>080d430f9cfbb36c0e6786325cfdb15b</Hash>
 </Codenesium>*/

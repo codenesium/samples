@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public LinkTypeService(
 			ILogger<ILinkTypeRepository> logger,
 			ILinkTypeRepository linkTypeRepository,
-			IApiLinkTypeRequestModelValidator linkTypeModelValidator,
-			IBOLLinkTypeMapper bollinkTypeMapper,
-			IDALLinkTypeMapper dallinkTypeMapper)
+			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
+			IBOLLinkTypeMapper bolLinkTypeMapper,
+			IDALLinkTypeMapper dalLinkTypeMapper)
 			: base(logger,
 			       linkTypeRepository,
 			       linkTypeModelValidator,
-			       bollinkTypeMapper,
-			       dallinkTypeMapper)
+			       bolLinkTypeMapper,
+			       dalLinkTypeMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>384f2dcd885142b09ceb5996fd901951</Hash>
+    <Hash>24b50396f0a275536f7899dd323f0487</Hash>
 </Codenesium>*/

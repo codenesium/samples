@@ -76,9 +76,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<ShipMethod> ByName(string name)
+		public async virtual Task<ShipMethod> ByName(string name)
 		{
 			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Name == name);
+		}
+
+		public async virtual Task<ShipMethod> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
@@ -90,22 +95,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ShipMethod, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ShipMethod, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ShipMethod, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ShipMethodID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
-			}
-			else
-			{
-				return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
-			}
+			return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
 		}
 
 		private async Task<ShipMethod> GetById(int shipMethodID)
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>559fd72c559dcc550750dc735720cc20</Hash>
+    <Hash>2cc5a63c63a3be59e9ccd8e27f20b04e</Hash>
 </Codenesium>*/

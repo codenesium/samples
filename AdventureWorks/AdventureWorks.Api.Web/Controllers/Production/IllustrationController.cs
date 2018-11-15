@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class IllustrationController : AbstractIllustrationController
 	{
 		public IllustrationController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<IllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IIllustrationService illustrationService,
-			IApiIllustrationModelMapper illustrationModelMapper
+			IApiIllustrationServerModelMapper illustrationModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0ca9f6e2a8b71c962d592e69457f44b</Hash>
+    <Hash>f663a1d00367d00a93f0215eea6bfdae</Hash>
 </Codenesium>*/

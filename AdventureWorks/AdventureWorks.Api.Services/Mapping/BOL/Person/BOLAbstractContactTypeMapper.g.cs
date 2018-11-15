@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOContactType MapModelToBO(
 			int contactTypeID,
-			ApiContactTypeRequestModel model
+			ApiContactTypeServerRequestModel model
 			)
 		{
 			BOContactType boContactType = new BOContactType();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boContactType;
 		}
 
-		public virtual ApiContactTypeResponseModel MapBOToModel(
+		public virtual ApiContactTypeServerResponseModel MapBOToModel(
 			BOContactType boContactType)
 		{
-			var model = new ApiContactTypeResponseModel();
+			var model = new ApiContactTypeServerResponseModel();
 
 			model.SetProperties(boContactType.ContactTypeID, boContactType.ModifiedDate, boContactType.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiContactTypeResponseModel> MapBOToModel(
+		public virtual List<ApiContactTypeServerResponseModel> MapBOToModel(
 			List<BOContactType> items)
 		{
-			List<ApiContactTypeResponseModel> response = new List<ApiContactTypeResponseModel>();
+			List<ApiContactTypeServerResponseModel> response = new List<ApiContactTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>462c103101510d307035778e39856c0b</Hash>
+    <Hash>6d39a32948ea97b176e5c5b4ddbaeee4</Hash>
 </Codenesium>*/

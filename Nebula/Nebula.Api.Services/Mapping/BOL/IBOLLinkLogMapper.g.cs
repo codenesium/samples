@@ -1,24 +1,24 @@
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public partial interface IBOLLinkLogMapper
-	{
-		BOLinkLog MapModelToBO(
-			int id,
-			ApiLinkLogRequestModel model);
+    public partial interface IBOLLinkLogMapper
+    {
+	    BOLinkLog MapModelToBO(
+		int id,
+		ApiLinkLogServerRequestModel model);
 
-		ApiLinkLogResponseModel MapBOToModel(
-			BOLinkLog boLinkLog);
+		ApiLinkLogServerResponseModel MapBOToModel(
+		BOLinkLog boLinkLog);
 
-		List<ApiLinkLogResponseModel> MapBOToModel(
-			List<BOLinkLog> items);
-	}
+		List<ApiLinkLogServerResponseModel> MapBOToModel(
+                     List<BOLinkLog> items);
+    }
 }
 
 /*<Codenesium>
-    <Hash>aa6e6f4f9cb55d2140a4532244cae3b8</Hash>
+    <Hash>2757c6cdf7b10f1c9c5e503d6e4aed7c</Hash>
 </Codenesium>*/

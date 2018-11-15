@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Transaction>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Transaction>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TransactionStatusId == transactionStatusId, limit, offset);
 		}
@@ -95,22 +95,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			Expression<Func<Transaction, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Transaction, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Transaction, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
-			}
-			else
-			{
-				return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
-			}
+			return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
 		}
 
 		private async Task<Transaction> GetById(int id)
@@ -123,5 +115,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a36bc0c74e22e5fb1d00f9f03bdb7b15</Hash>
+    <Hash>4fd4d429c24a7d1166fb1eea427b36ec</Hash>
 </Codenesium>*/

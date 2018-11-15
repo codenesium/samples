@@ -31,30 +31,30 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public string Note { get; private set; }
+		public virtual string Note { get; private set; }
 
 		[MaxLength(128)]
 		[Column("primaryContactEmail")]
-		public string PrimaryContactEmail { get; private set; }
+		public virtual string PrimaryContactEmail { get; private set; }
 
 		[MaxLength(128)]
 		[Column("primaryContactFirstName")]
-		public string PrimaryContactFirstName { get; private set; }
+		public virtual string PrimaryContactFirstName { get; private set; }
 
 		[MaxLength(128)]
 		[Column("primaryContactLastName")]
-		public string PrimaryContactLastName { get; private set; }
+		public virtual string PrimaryContactLastName { get; private set; }
 
 		[MaxLength(128)]
 		[Column("primaryContactPhone")]
-		public string PrimaryContactPhone { get; private set; }
+		public virtual string PrimaryContactPhone { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>56b8b6d221403f23d25a52e65a13e3ea</Hash>
+    <Hash>6ebbaed0a64125ed1969e1b7c8a29fc6</Hash>
 </Codenesium>*/

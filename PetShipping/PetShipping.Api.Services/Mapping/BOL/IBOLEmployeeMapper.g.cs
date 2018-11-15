@@ -9,16 +9,16 @@ namespace PetShippingNS.Api.Services
 	{
 		BOEmployee MapModelToBO(
 			int id,
-			ApiEmployeeRequestModel model);
+			ApiEmployeeServerRequestModel model);
 
-		ApiEmployeeResponseModel MapBOToModel(
+		ApiEmployeeServerResponseModel MapBOToModel(
 			BOEmployee boEmployee);
 
-		List<ApiEmployeeResponseModel> MapBOToModel(
+		List<ApiEmployeeServerResponseModel> MapBOToModel(
 			List<BOEmployee> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>535f0206855fe1522c1770ca01a49a13</Hash>
+    <Hash>873b8991acf4576d297bd4d11c890a69</Hash>
 </Codenesium>*/

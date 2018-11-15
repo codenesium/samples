@@ -68,15 +68,6 @@ namespace PetStoreNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -193,5 +184,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b7e3cae4c15e08cf6ce068ae60c7dc0</Hash>
+    <Hash>9bb0f9e611ffdef9d3c5fe240588302f</Hash>
 </Codenesium>*/

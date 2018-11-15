@@ -19,12 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Vendor> ByAccountNumber(string accountNumber);
 
-		Task<List<ProductVendor>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf65f7c9bdd4d0f6005536b63c6f8f21</Hash>
+    <Hash>63573d24d6e2675ab6ae1d7602ef0226</Hash>
 </Codenesium>*/

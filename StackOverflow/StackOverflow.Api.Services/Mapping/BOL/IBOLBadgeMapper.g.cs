@@ -9,16 +9,16 @@ namespace StackOverflowNS.Api.Services
 	{
 		BOBadge MapModelToBO(
 			int id,
-			ApiBadgeRequestModel model);
+			ApiBadgeServerRequestModel model);
 
-		ApiBadgeResponseModel MapBOToModel(
+		ApiBadgeServerResponseModel MapBOToModel(
 			BOBadge boBadge);
 
-		List<ApiBadgeResponseModel> MapBOToModel(
+		List<ApiBadgeServerResponseModel> MapBOToModel(
 			List<BOBadge> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>06fa0303ac9b1babc722d3d0873821a2</Hash>
+    <Hash>dd86c9b35f1686c9d4f5bc990ca7cee4</Hash>
 </Codenesium>*/

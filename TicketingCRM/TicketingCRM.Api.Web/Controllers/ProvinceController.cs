@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ProvinceController : AbstractProvinceController
 	{
 		public ProvinceController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<ProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProvinceService provinceService,
-			IApiProvinceModelMapper provinceModelMapper
+			IApiProvinceServerModelMapper provinceModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0a65f6e86e8afeabe0c950de1d85c8eb</Hash>
+    <Hash>8dbebe6e361ac021adef84e105fa804e</Hash>
 </Codenesium>*/

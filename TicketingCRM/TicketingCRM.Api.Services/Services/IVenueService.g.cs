@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -9,24 +8,24 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IVenueService
 	{
-		Task<CreateResponse<ApiVenueResponseModel>> Create(
-			ApiVenueRequestModel model);
+		Task<CreateResponse<ApiVenueServerResponseModel>> Create(
+			ApiVenueServerRequestModel model);
 
-		Task<UpdateResponse<ApiVenueResponseModel>> Update(int id,
-		                                                    ApiVenueRequestModel model);
+		Task<UpdateResponse<ApiVenueServerResponseModel>> Update(int id,
+		                                                          ApiVenueServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiVenueResponseModel> Get(int id);
+		Task<ApiVenueServerResponseModel> Get(int id);
 
-		Task<List<ApiVenueResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiVenueResponseModel>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueServerResponseModel>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueServerResponseModel>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>176ea544120f6283f2b488e314c22660</Hash>
+    <Hash>c86eec00ebc2992e349b8103e39f34b8</Hash>
 </Codenesium>*/

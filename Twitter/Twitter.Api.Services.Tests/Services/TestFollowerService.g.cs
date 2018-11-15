@@ -31,7 +31,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.All();
+			List<ApiFollowerServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			ApiFollowerResponseModel response = await service.Get(default(int));
+			ApiFollowerServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			ApiFollowerResponseModel response = await service.Get(default(int));
+			ApiFollowerServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
-			var model = new ApiFollowerRequestModel();
+			var model = new ApiFollowerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Follower>())).Returns(Task.FromResult(new Follower()));
 			var service = new FollowerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			CreateResponse<ApiFollowerResponseModel> response = await service.Create(model);
+			CreateResponse<ApiFollowerServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerRequestModel>()));
+			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Follower>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
-			var model = new ApiFollowerRequestModel();
+			var model = new ApiFollowerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Follower>())).Returns(Task.FromResult(new Follower()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Follower()));
 			var service = new FollowerService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			UpdateResponse<ApiFollowerResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiFollowerServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>()));
+			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Follower>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
-			var model = new ApiFollowerRequestModel();
+			var model = new ApiFollowerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new FollowerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.ByFollowedUserId(default(int));
+			List<ApiFollowerServerResponseModel> response = await service.ByFollowedUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByFollowedUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.ByFollowedUserId(default(int));
+			List<ApiFollowerServerResponseModel> response = await service.ByFollowedUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByFollowedUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -179,7 +179,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.ByFollowingUserId(default(int));
+			List<ApiFollowerServerResponseModel> response = await service.ByFollowingUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByFollowingUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -196,7 +196,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
 			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.ByFollowingUserId(default(int));
+			List<ApiFollowerServerResponseModel> response = await service.ByFollowingUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByFollowingUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -205,5 +205,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e486b1be7e9b44cd81268bce27293205</Hash>
+    <Hash>d220330f56c11351fa1cdd4f1ecaec9b</Hash>
 </Codenesium>*/

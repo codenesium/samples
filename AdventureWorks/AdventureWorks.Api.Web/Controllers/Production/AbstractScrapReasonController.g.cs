@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IScrapReasonService ScrapReasonService { get; private set; }
 
-		protected IApiScrapReasonModelMapper ScrapReasonModelMapper { get; private set; }
+		protected IApiScrapReasonServerModelMapper ScrapReasonModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractScrapReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IScrapReasonService scrapReasonService,
-			IApiScrapReasonModelMapper scrapReasonModelMapper
+			IApiScrapReasonServerModelMapper scrapReasonModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiScrapReasonServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiScrapReasonResponseModel> response = await this.ScrapReasonService.All(query.Limit, query.Offset);
+			List<ApiScrapReasonServerResponseModel> response = await this.ScrapReasonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiScrapReasonServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(short id)
 		{
-			ApiScrapReasonResponseModel response = await this.ScrapReasonService.Get(id);
+			ApiScrapReasonServerResponseModel response = await this.ScrapReasonService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiScrapReasonServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiScrapReasonRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiScrapReasonServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiScrapReasonResponseModel> records = new List<ApiScrapReasonResponseModel>();
+			List<ApiScrapReasonServerResponseModel> records = new List<ApiScrapReasonServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Create(model);
+				CreateResponse<ApiScrapReasonServerResponseModel> result = await this.ScrapReasonService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiScrapReasonServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiScrapReasonResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiScrapReasonServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiScrapReasonRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiScrapReasonServerRequestModel model)
 		{
-			CreateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Create(model);
+			CreateResponse<ApiScrapReasonServerResponseModel> result = await this.ScrapReasonService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiScrapReasonRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiScrapReasonServerRequestModel> patch)
 		{
-			ApiScrapReasonResponseModel record = await this.ScrapReasonService.Get(id);
+			ApiScrapReasonServerResponseModel record = await this.ScrapReasonService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiScrapReasonRequestModel model = await this.PatchModel(id, patch);
+				ApiScrapReasonServerRequestModel model = await this.PatchModel(id, patch) as ApiScrapReasonServerRequestModel;
 
-				UpdateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Update(id, model);
+				UpdateResponse<ApiScrapReasonServerResponseModel> result = await this.ScrapReasonService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiScrapReasonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonRequestModel model)
+
+		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonServerRequestModel model)
 		{
-			ApiScrapReasonRequestModel request = await this.PatchModel(id, this.ScrapReasonModelMapper.CreatePatch(model));
+			ApiScrapReasonServerRequestModel request = await this.PatchModel(id, this.ScrapReasonModelMapper.CreatePatch(model)) as ApiScrapReasonServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiScrapReasonResponseModel> result = await this.ScrapReasonService.Update(id, request);
+				UpdateResponse<ApiScrapReasonServerResponseModel> result = await this.ScrapReasonService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(short id)
 		{
 			ActionResponse result = await this.ScrapReasonService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiScrapReasonServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiScrapReasonResponseModel response = await this.ScrapReasonService.ByName(name);
+			ApiScrapReasonServerResponseModel response = await this.ScrapReasonService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{scrapReasonID}/WorkOrdersByScrapReasonID")]
+		[Route("{scrapReasonID}/WorkOrders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> WorkOrdersByScrapReasonID(short scrapReasonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderResponseModel> response = await this.ScrapReasonService.WorkOrdersByScrapReasonID(scrapReasonID, query.Limit, query.Offset);
+			List<ApiWorkOrderServerResponseModel> response = await this.ScrapReasonService.WorkOrdersByScrapReasonID(scrapReasonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiScrapReasonRequestModel> PatchModel(short id, JsonPatchDocument<ApiScrapReasonRequestModel> patch)
+		private async Task<ApiScrapReasonServerRequestModel> PatchModel(short id, JsonPatchDocument<ApiScrapReasonServerRequestModel> patch)
 		{
 			var record = await this.ScrapReasonService.Get(id);
 
@@ -252,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiScrapReasonRequestModel request = this.ScrapReasonModelMapper.MapResponseToRequest(record);
+				ApiScrapReasonServerRequestModel request = this.ScrapReasonModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85e59575adec6d3b68bc71c5f3dfab15</Hash>
+    <Hash>1b4ebabfda68f54dd86cbe8dbfe9a60a</Hash>
 </Codenesium>*/

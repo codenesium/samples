@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IBadgeService BadgeService { get; private set; }
 
-		protected IApiBadgeModelMapper BadgeModelMapper { get; private set; }
+		protected IApiBadgeServerModelMapper BadgeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractBadgeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBadgeService badgeService,
-			IApiBadgeModelMapper badgeModelMapper
+			IApiBadgeServerModelMapper badgeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBadgeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBadgeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBadgeResponseModel> response = await this.BadgeService.All(query.Limit, query.Offset);
+			List<ApiBadgeServerResponseModel> response = await this.BadgeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBadgeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBadgeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiBadgeResponseModel response = await this.BadgeService.Get(id);
+			ApiBadgeServerResponseModel response = await this.BadgeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiBadgeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiBadgeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBadgeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBadgeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiBadgeResponseModel> records = new List<ApiBadgeResponseModel>();
+			List<ApiBadgeServerResponseModel> records = new List<ApiBadgeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiBadgeResponseModel> result = await this.BadgeService.Create(model);
+				CreateResponse<ApiBadgeServerResponseModel> result = await this.BadgeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiBadgeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiBadgeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiBadgeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBadgeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiBadgeServerRequestModel model)
 		{
-			CreateResponse<ApiBadgeResponseModel> result = await this.BadgeService.Create(model);
+			CreateResponse<ApiBadgeServerResponseModel> result = await this.BadgeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBadgeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBadgeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBadgeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBadgeServerRequestModel> patch)
 		{
-			ApiBadgeResponseModel record = await this.BadgeService.Get(id);
+			ApiBadgeServerResponseModel record = await this.BadgeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiBadgeRequestModel model = await this.PatchModel(id, patch);
+				ApiBadgeServerRequestModel model = await this.PatchModel(id, patch) as ApiBadgeServerRequestModel;
 
-				UpdateResponse<ApiBadgeResponseModel> result = await this.BadgeService.Update(id, model);
+				UpdateResponse<ApiBadgeServerResponseModel> result = await this.BadgeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBadgeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBadgeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBadgeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBadgeServerRequestModel model)
 		{
-			ApiBadgeRequestModel request = await this.PatchModel(id, this.BadgeModelMapper.CreatePatch(model));
+			ApiBadgeServerRequestModel request = await this.PatchModel(id, this.BadgeModelMapper.CreatePatch(model)) as ApiBadgeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiBadgeResponseModel> result = await this.BadgeService.Update(id, request);
+				UpdateResponse<ApiBadgeServerResponseModel> result = await this.BadgeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.BadgeService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiBadgeRequestModel> PatchModel(int id, JsonPatchDocument<ApiBadgeRequestModel> patch)
+		private async Task<ApiBadgeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBadgeServerRequestModel> patch)
 		{
 			var record = await this.BadgeService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiBadgeRequestModel request = this.BadgeModelMapper.MapResponseToRequest(record);
+				ApiBadgeServerRequestModel request = this.BadgeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>48d044089d2af1b87c62cb838a18540d</Hash>
+    <Hash>e1724c1e9b198ae832185b723191ce09</Hash>
 </Codenesium>*/

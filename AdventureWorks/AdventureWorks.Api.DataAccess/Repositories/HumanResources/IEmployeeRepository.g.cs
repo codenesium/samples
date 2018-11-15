@@ -21,14 +21,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Employee> ByNationalIDNumber(string nationalIDNumber);
 
-		Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<EmployeePayHistory>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<Employee> ByRowguid(Guid rowguid);
 
 		Task<List<JobCandidate>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>038003807fdd65bec9b1b109ce62e261</Hash>
+    <Hash>f8f841f2d415da6e84718c0211ba5f08</Hash>
 </Codenesium>*/

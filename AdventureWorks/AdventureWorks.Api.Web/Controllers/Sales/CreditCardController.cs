@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CreditCardController : AbstractCreditCardController
 	{
 		public CreditCardController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<CreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICreditCardService creditCardService,
-			IApiCreditCardModelMapper creditCardModelMapper
+			IApiCreditCardServerModelMapper creditCardModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c5d7b00aa9f375a6703acddef79afbf5</Hash>
+    <Hash>5c914184a7d08ae14264772cfa0491f2</Hash>
 </Codenesium>*/

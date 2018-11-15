@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.Web
 	{
 		protected IVenueService VenueService { get; private set; }
 
-		protected IApiVenueModelMapper VenueModelMapper { get; private set; }
+		protected IApiVenueServerModelMapper VenueModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<AbstractVenueController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVenueService venueService,
-			IApiVenueModelMapper venueModelMapper
+			IApiVenueServerModelMapper venueModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVenueResponseModel> response = await this.VenueService.All(query.Limit, query.Offset);
+			List<ApiVenueServerResponseModel> response = await this.VenueService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVenueResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiVenueServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiVenueResponseModel response = await this.VenueService.Get(id);
+			ApiVenueServerResponseModel response = await this.VenueService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiVenueServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVenueRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVenueServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiVenueResponseModel> records = new List<ApiVenueResponseModel>();
+			List<ApiVenueServerResponseModel> records = new List<ApiVenueServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiVenueResponseModel> result = await this.VenueService.Create(model);
+				CreateResponse<ApiVenueServerResponseModel> result = await this.VenueService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TicketingCRMNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiVenueServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiVenueResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiVenueServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVenueRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiVenueServerRequestModel model)
 		{
-			CreateResponse<ApiVenueResponseModel> result = await this.VenueService.Create(model);
+			CreateResponse<ApiVenueServerResponseModel> result = await this.VenueService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVenueServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVenueRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVenueServerRequestModel> patch)
 		{
-			ApiVenueResponseModel record = await this.VenueService.Get(id);
+			ApiVenueServerResponseModel record = await this.VenueService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiVenueRequestModel model = await this.PatchModel(id, patch);
+				ApiVenueServerRequestModel model = await this.PatchModel(id, patch) as ApiVenueServerRequestModel;
 
-				UpdateResponse<ApiVenueResponseModel> result = await this.VenueService.Update(id, model);
+				UpdateResponse<ApiVenueServerResponseModel> result = await this.VenueService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TicketingCRMNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVenueServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVenueRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVenueServerRequestModel model)
 		{
-			ApiVenueRequestModel request = await this.PatchModel(id, this.VenueModelMapper.CreatePatch(model));
+			ApiVenueServerRequestModel request = await this.PatchModel(id, this.VenueModelMapper.CreatePatch(model)) as ApiVenueServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiVenueResponseModel> result = await this.VenueService.Update(id, request);
+				UpdateResponse<ApiVenueServerResponseModel> result = await this.VenueService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TicketingCRMNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.VenueService.Delete(id);
@@ -209,7 +219,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("byAdminId/{adminId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByAdminId(int adminId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVenueResponseModel> response = await this.VenueService.ByAdminId(adminId, query.Limit, query.Offset);
+			List<ApiVenueServerResponseModel> response = await this.VenueService.ByAdminId(adminId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("byProvinceId/{provinceId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiVenueResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiVenueServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByProvinceId(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,12 +245,12 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiVenueResponseModel> response = await this.VenueService.ByProvinceId(provinceId, query.Limit, query.Offset);
+			List<ApiVenueServerResponseModel> response = await this.VenueService.ByProvinceId(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiVenueRequestModel> PatchModel(int id, JsonPatchDocument<ApiVenueRequestModel> patch)
+		private async Task<ApiVenueServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiVenueServerRequestModel> patch)
 		{
 			var record = await this.VenueService.Get(id);
 
@@ -250,7 +260,7 @@ namespace TicketingCRMNS.Api.Web
 			}
 			else
 			{
-				ApiVenueRequestModel request = this.VenueModelMapper.MapResponseToRequest(record);
+				ApiVenueServerRequestModel request = this.VenueModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +269,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1185300cc03202ed28074001efdb3856</Hash>
+    <Hash>f63ae8bd384e6327b42cd4116915d246</Hash>
 </Codenesium>*/

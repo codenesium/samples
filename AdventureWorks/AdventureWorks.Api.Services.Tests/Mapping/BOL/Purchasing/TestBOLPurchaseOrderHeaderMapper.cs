@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPurchaseOrderHeaderMapper();
-			ApiPurchaseOrderHeaderRequestModel model = new ApiPurchaseOrderHeaderRequestModel();
+			ApiPurchaseOrderHeaderServerRequestModel model = new ApiPurchaseOrderHeaderServerRequestModel();
 			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
 			BOPurchaseOrderHeader response = mapper.MapModelToBO(1, model);
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPurchaseOrderHeaderMapper();
 			BOPurchaseOrderHeader bo = new BOPurchaseOrderHeader();
 			bo.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
-			ApiPurchaseOrderHeaderResponseModel response = mapper.MapBOToModel(bo);
+			ApiPurchaseOrderHeaderServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.EmployeeID.Should().Be(1);
 			response.Freight.Should().Be(1m);
@@ -64,7 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPurchaseOrderHeaderMapper();
 			BOPurchaseOrderHeader bo = new BOPurchaseOrderHeader();
 			bo.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, 1m, 1m, 1);
-			List<ApiPurchaseOrderHeaderResponseModel> response = mapper.MapBOToModel(new List<BOPurchaseOrderHeader>() { { bo } });
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = mapper.MapBOToModel(new List<BOPurchaseOrderHeader>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dc246869cce00764939787fd895de518</Hash>
+    <Hash>0d09b9a3027d033a348fb2823dee021b</Hash>
 </Codenesium>*/

@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public IllustrationService(
 			ILogger<IIllustrationRepository> logger,
 			IIllustrationRepository illustrationRepository,
-			IApiIllustrationRequestModelValidator illustrationModelValidator,
-			IBOLIllustrationMapper bolillustrationMapper,
-			IDALIllustrationMapper dalillustrationMapper)
+			IApiIllustrationServerRequestModelValidator illustrationModelValidator,
+			IBOLIllustrationMapper bolIllustrationMapper,
+			IDALIllustrationMapper dalIllustrationMapper)
 			: base(logger,
 			       illustrationRepository,
 			       illustrationModelValidator,
-			       bolillustrationMapper,
-			       dalillustrationMapper)
+			       bolIllustrationMapper,
+			       dalIllustrationMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f570546a28a500ce342b83f078b8950</Hash>
+    <Hash>3d3bb10a9d76ded1c91f93ec9f4e8d73</Hash>
 </Codenesium>*/

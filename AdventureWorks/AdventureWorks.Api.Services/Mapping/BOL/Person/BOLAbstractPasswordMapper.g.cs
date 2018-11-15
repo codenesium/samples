@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOPassword MapModelToBO(
 			int businessEntityID,
-			ApiPasswordRequestModel model
+			ApiPasswordServerRequestModel model
 			)
 		{
 			BOPassword boPassword = new BOPassword();
@@ -22,20 +21,20 @@ namespace AdventureWorksNS.Api.Services
 			return boPassword;
 		}
 
-		public virtual ApiPasswordResponseModel MapBOToModel(
+		public virtual ApiPasswordServerResponseModel MapBOToModel(
 			BOPassword boPassword)
 		{
-			var model = new ApiPasswordResponseModel();
+			var model = new ApiPasswordServerResponseModel();
 
 			model.SetProperties(boPassword.BusinessEntityID, boPassword.ModifiedDate, boPassword.PasswordHash, boPassword.PasswordSalt, boPassword.Rowguid);
 
 			return model;
 		}
 
-		public virtual List<ApiPasswordResponseModel> MapBOToModel(
+		public virtual List<ApiPasswordServerResponseModel> MapBOToModel(
 			List<BOPassword> items)
 		{
-			List<ApiPasswordResponseModel> response = new List<ApiPasswordResponseModel>();
+			List<ApiPasswordServerResponseModel> response = new List<ApiPasswordServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43d1da16575066d6569cc3721eb53f93</Hash>
+    <Hash>4eefe7576b42874fd7a29d9a2a1c9574</Hash>
 </Codenesium>*/

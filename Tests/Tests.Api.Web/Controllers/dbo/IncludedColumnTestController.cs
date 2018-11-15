@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class IncludedColumnTestController : AbstractIncludedColumnTestController
 	{
 		public IncludedColumnTestController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<IncludedColumnTestController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IIncludedColumnTestService includedColumnTestService,
-			IApiIncludedColumnTestModelMapper includedColumnTestModelMapper
+			IApiIncludedColumnTestServerModelMapper includedColumnTestModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cea21d16ce0ff1c1825d52122b23a3ac</Hash>
+    <Hash>7587fcde57da47b68857d32556a4e5ff</Hash>
 </Codenesium>*/

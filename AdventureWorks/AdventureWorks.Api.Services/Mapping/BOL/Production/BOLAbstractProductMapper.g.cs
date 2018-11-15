@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOProduct MapModelToBO(
 			int productID,
-			ApiProductRequestModel model
+			ApiProductServerRequestModel model
 			)
 		{
 			BOProduct boProduct = new BOProduct();
@@ -42,20 +41,20 @@ namespace AdventureWorksNS.Api.Services
 			return boProduct;
 		}
 
-		public virtual ApiProductResponseModel MapBOToModel(
+		public virtual ApiProductServerResponseModel MapBOToModel(
 			BOProduct boProduct)
 		{
-			var model = new ApiProductResponseModel();
+			var model = new ApiProductServerResponseModel();
 
 			model.SetProperties(boProduct.ProductID, boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
 
 			return model;
 		}
 
-		public virtual List<ApiProductResponseModel> MapBOToModel(
+		public virtual List<ApiProductServerResponseModel> MapBOToModel(
 			List<BOProduct> items)
 		{
-			List<ApiProductResponseModel> response = new List<ApiProductResponseModel>();
+			List<ApiProductServerResponseModel> response = new List<ApiProductServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59e3ef6b429c2f9c580b32c83c9e37d2</Hash>
+    <Hash>a87898c8711558d2bc939a8bcf6bd549</Hash>
 </Codenesium>*/

@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
+using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,64 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Ticket")]
 	[Trait("Area", "Integration")]
-	public class TicketIntegrationTests
+	public partial class TicketIntegrationTests
 	{
 		public TicketIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.TicketDeleteAsync(1);
+			var model = new ApiTicketClientRequestModel();
+			model.SetProperties("B", 1);
+			var model2 = new ApiTicketClientRequestModel();
+			model2.SetProperties("C", 1);
+			var request = new List<ApiTicketClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiTicketClientResponseModel>> result = await client.TicketBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Ticket>().ToList()[1].PublicId.Should().Be("B");
+			context.Set<Ticket>().ToList()[1].TicketStatusId.Should().Be(1);
+
+			context.Set<Ticket>().ToList()[2].PublicId.Should().Be("C");
+			context.Set<Ticket>().ToList()[2].TicketStatusId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiTicketClientRequestModel();
+			model.SetProperties("B", 1);
+			CreateResponse<ApiTicketClientResponseModel> result = await client.TicketCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Ticket>().ToList()[1].PublicId.Should().Be("B");
+			context.Set<Ticket>().ToList()[1].TicketStatusId.Should().Be(1);
+
+			result.Record.PublicId.Should().Be("B");
+			result.Record.TicketStatusId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +83,55 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiTicketServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ITicketService service = testServer.Host.Services.GetService(typeof(ITicketService)) as ITicketService;
+			ApiTicketServerResponseModel model = await service.Get(1);
 
-			ApiTicketResponseModel model = await client.TicketGetAsync(1);
+			ApiTicketClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", 1);
 
-			ApiTicketModelMapper mapper = new ApiTicketModelMapper();
+			UpdateResponse<ApiTicketClientResponseModel> updateResponse = await client.TicketUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiTicketResponseModel> updateResponse = await client.TicketUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Ticket>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Ticket>().ToList()[0].PublicId.Should().Be("B");
+			context.Set<Ticket>().ToList()[0].TicketStatusId.Should().Be(1);
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.PublicId.Should().Be("B");
+			updateResponse.Record.TicketStatusId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiTicketRequestModel();
-			createModel.SetProperties("B", 1);
-			CreateResponse<ApiTicketResponseModel> createResult = await client.TicketCreateAsync(createModel);
+			ITicketService service = testServer.Host.Services.GetService(typeof(ITicketService)) as ITicketService;
+			var model = new ApiTicketServerRequestModel();
+			model.SetProperties("B", 1);
+			CreateResponse<ApiTicketServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiTicketResponseModel getResponse = await client.TicketGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.TicketDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiTicketResponseModel verifyResponse = await client.TicketGetAsync(2);
+			ApiTicketServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +139,32 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiTicketResponseModel response = await client.TicketGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiTicketClientResponseModel response = await client.TicketGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.PublicId.Should().Be("A");
+			response.TicketStatusId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTicketClientResponseModel response = await client.TicketGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +173,67 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiTicketResponseModel> response = await client.TicketAllAsync();
+			List<ApiTicketClientResponseModel> response = await client.TicketAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].PublicId.Should().Be("A");
+			response[0].TicketStatusId.Should().Be(1);
 		}
 
-		private async Task<ApiTicketResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByTicketStatusIdFound()
 		{
-			var model = new ApiTicketRequestModel();
-			model.SetProperties("B", 1);
-			CreateResponse<ApiTicketResponseModel> result = await client.TicketCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTicketClientResponseModel> response = await client.ByTicketByTicketStatusId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Id.Should().Be(1);
+			response[0].PublicId.Should().Be("A");
+			response[0].TicketStatusId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestByTicketStatusIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTicketClientResponseModel> response = await client.ByTicketByTicketStatusId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.TicketAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c43403237f325f3d1b31c0ca9c8ab64</Hash>
+    <Hash>76d8fcd8357e9642826700c660fdc93d</Hash>
 </Codenesium>*/

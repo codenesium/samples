@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCustomerMapper();
-			ApiCustomerRequestModel model = new ApiCustomerRequestModel();
+			ApiCustomerServerRequestModel model = new ApiCustomerServerRequestModel();
 			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 			BOCustomer response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCustomerMapper();
 			BOCustomer bo = new BOCustomer();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
-			ApiCustomerResponseModel response = mapper.MapBOToModel(bo);
+			ApiCustomerServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AccountNumber.Should().Be("A");
 			response.CustomerID.Should().Be(1);
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCustomerMapper();
 			BOCustomer bo = new BOCustomer();
 			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
-			List<ApiCustomerResponseModel> response = mapper.MapBOToModel(new List<BOCustomer>() { { bo } });
+			List<ApiCustomerServerResponseModel> response = mapper.MapBOToModel(new List<BOCustomer>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4bc230da7633054eef403a44da2ce778</Hash>
+    <Hash>894885765c20f8dae26392b9e5bfb918</Hash>
 </Codenesium>*/

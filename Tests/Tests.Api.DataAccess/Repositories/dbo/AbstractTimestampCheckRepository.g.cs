@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<TimestampCheck, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TimestampCheck, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TimestampCheck, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TimestampCheck>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TimestampCheck>();
-			}
-			else
-			{
-				return await this.Context.Set<TimestampCheck>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TimestampCheck>();
-			}
+			return await this.Context.Set<TimestampCheck>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TimestampCheck>();
 		}
 
 		private async Task<TimestampCheck> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a45eecd5ff768ba55736b375495b291a</Hash>
+    <Hash>a3ce8869127b052c0922994d2f52264a</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			var record = new ApiPostTypeResponseModel();
-			var records = new List<ApiPostTypeResponseModel>();
+			var record = new ApiPostTypeServerResponseModel();
+			var records = new List<ApiPostTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPostTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPostTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPostTypeResponseModel>>(new List<ApiPostTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPostTypeServerResponseModel>>(new List<ApiPostTypeServerResponseModel>()));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPostTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPostTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeServerResponseModel()));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPostTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPostTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeServerResponseModel>(null));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPostTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPostTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPostTypeServerResponseModel>.CreateResponse(null as ApiPostTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPostTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeServerResponseModel>>(mockResponse));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPostTypeRequestModel>();
-			records.Add(new ApiPostTypeRequestModel());
+			var records = new List<ApiPostTypeServerRequestModel>();
+			records.Add(new ApiPostTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPostTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPostTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPostTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPostTypeServerResponseModel>>(null as ApiPostTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeServerResponseModel>>(mockResponse.Object));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPostTypeRequestModel>();
-			records.Add(new ApiPostTypeRequestModel());
+			var records = new List<ApiPostTypeServerRequestModel>();
+			records.Add(new ApiPostTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPostTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPostTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPostTypeServerResponseModel>.CreateResponse(null as ApiPostTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPostTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeServerResponseModel>>(mockResponse));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPostTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPostTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPostTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPostTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPostTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPostTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPostTypeServerResponseModel>>(null as ApiPostTypeServerResponseModel);
+			var mockRecord = new ApiPostTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPostTypeServerResponseModel>>(mockResponse.Object));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPostTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiPostTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>()))
-			.Callback<int, ApiPostTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()))
+			.Callback<int, ApiPostTypeServerRequestModel>(
 				(id, model) => model.Type.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPostTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeResponseModel>(new ApiPostTypeResponseModel()));
-			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPostTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeServerResponseModel>(new ApiPostTypeServerResponseModel()));
+			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPostTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPostTypeServerRequestModel>();
 			patch.Replace(x => x.Type, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeServerResponseModel>(null));
 			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPostTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiPostTypeServerRequestModel>();
 			patch.Replace(x => x.Type, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeResponseModel()));
-			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeServerResponseModel()));
+			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeResponseModel()));
-			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPostTypeServerResponseModel()));
+			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PostTypeControllerMockFacade mock = new PostTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPostTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPostTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeResponseModel>(null));
-			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPostTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeServerResponseModel>(null));
+			PostTypeController controller = new PostTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPostTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPostTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPostTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<IPostTypeService> ServiceMock { get; set; } = new Mock<IPostTypeService>();
 
-		public Mock<IApiPostTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPostTypeModelMapper>();
+		public Mock<IApiPostTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPostTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ed41685294df9b65ad3ed3e455aa99e</Hash>
+    <Hash>d13a74afa83b5d0a1906d39577cde991</Hash>
 </Codenesium>*/

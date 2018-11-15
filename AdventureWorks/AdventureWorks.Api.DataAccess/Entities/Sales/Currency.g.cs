@@ -26,17 +26,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[MaxLength(3)]
 		[Column("CurrencyCode")]
-		public string CurrencyCode { get; private set; }
+		public virtual string CurrencyCode { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>77265fd64b375defa2e90aa989db484a</Hash>
+    <Hash>4fbd72ab4425537d0ef1dcbc158ed028</Hash>
 </Codenesium>*/

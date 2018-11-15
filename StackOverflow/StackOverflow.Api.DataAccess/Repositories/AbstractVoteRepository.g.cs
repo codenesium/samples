@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Vote>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Vote>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
@@ -85,22 +85,14 @@ namespace StackOverflowNS.Api.DataAccess
 			Expression<Func<Vote, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Vote, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Vote, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Vote>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vote>();
-			}
-			else
-			{
-				return await this.Context.Set<Vote>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Vote>();
-			}
+			return await this.Context.Set<Vote>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vote>();
 		}
 
 		private async Task<Vote> GetById(int id)
@@ -113,5 +105,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfd4350e9c27c155296a0fd441b8d32e</Hash>
+    <Hash>c3d103cb21a745e39450717b60ce147b</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace TwitterNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class FollowingController : AbstractFollowingController
 	{
 		public FollowingController(
@@ -25,7 +26,7 @@ namespace TwitterNS.Api.Web
 			ILogger<FollowingController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFollowingService followingService,
-			IApiFollowingModelMapper followingModelMapper
+			IApiFollowingServerModelMapper followingModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>78722969661747d0ac27fc68c3ef4667</Hash>
+    <Hash>1cdd0d0f338ad9edf1495bdb3df7e8a2</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected ILinkLogService LinkLogService { get; private set; }
 
-		protected IApiLinkLogModelMapper LinkLogModelMapper { get; private set; }
+		protected IApiLinkLogServerModelMapper LinkLogModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractLinkLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkLogService linkLogService,
-			IApiLinkLogModelMapper linkLogModelMapper
+			IApiLinkLogServerModelMapper linkLogModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkLogServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkLogResponseModel> response = await this.LinkLogService.All(query.Limit, query.Offset);
+			List<ApiLinkLogServerResponseModel> response = await this.LinkLogService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiLinkLogResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiLinkLogServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiLinkLogResponseModel response = await this.LinkLogService.Get(id);
+			ApiLinkLogServerResponseModel response = await this.LinkLogService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiLinkLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiLinkLogServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkLogRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkLogServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiLinkLogResponseModel> records = new List<ApiLinkLogResponseModel>();
+			List<ApiLinkLogServerResponseModel> records = new List<ApiLinkLogServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Create(model);
+				CreateResponse<ApiLinkLogServerResponseModel> result = await this.LinkLogService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiLinkLogServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiLinkLogResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiLinkLogServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLinkLogRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkLogServerRequestModel model)
 		{
-			CreateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Create(model);
+			CreateResponse<ApiLinkLogServerResponseModel> result = await this.LinkLogService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkLogRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkLogServerRequestModel> patch)
 		{
-			ApiLinkLogResponseModel record = await this.LinkLogService.Get(id);
+			ApiLinkLogServerResponseModel record = await this.LinkLogService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiLinkLogRequestModel model = await this.PatchModel(id, patch);
+				ApiLinkLogServerRequestModel model = await this.PatchModel(id, patch) as ApiLinkLogServerRequestModel;
 
-				UpdateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Update(id, model);
+				UpdateResponse<ApiLinkLogServerResponseModel> result = await this.LinkLogService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkLogResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkLogServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogServerRequestModel model)
 		{
-			ApiLinkLogRequestModel request = await this.PatchModel(id, this.LinkLogModelMapper.CreatePatch(model));
+			ApiLinkLogServerRequestModel request = await this.PatchModel(id, this.LinkLogModelMapper.CreatePatch(model)) as ApiLinkLogServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiLinkLogResponseModel> result = await this.LinkLogService.Update(id, request);
+				UpdateResponse<ApiLinkLogServerResponseModel> result = await this.LinkLogService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.LinkLogService.Delete(id);
@@ -206,7 +216,7 @@ namespace NebulaNS.Api.Web
 			}
 		}
 
-		private async Task<ApiLinkLogRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkLogRequestModel> patch)
+		private async Task<ApiLinkLogServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkLogServerRequestModel> patch)
 		{
 			var record = await this.LinkLogService.Get(id);
 
@@ -216,7 +226,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiLinkLogRequestModel request = this.LinkLogModelMapper.MapResponseToRequest(record);
+				ApiLinkLogServerRequestModel request = this.LinkLogModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1caa37c436ccbff4fd191a3d3873b48</Hash>
+    <Hash>fc5b315c7305f3cd2582e67729a5fc15</Hash>
 </Codenesium>*/

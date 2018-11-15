@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSchemaAPersonMapperMock,
 			                                       mock.DALMapperMockFactory.DALSchemaAPersonMapperMock);
 
-			List<ApiSchemaAPersonResponseModel> response = await service.All();
+			List<ApiSchemaAPersonServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSchemaAPersonMapperMock,
 			                                       mock.DALMapperMockFactory.DALSchemaAPersonMapperMock);
 
-			ApiSchemaAPersonResponseModel response = await service.Get(default(int));
+			ApiSchemaAPersonServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSchemaAPersonMapperMock,
 			                                       mock.DALMapperMockFactory.DALSchemaAPersonMapperMock);
 
-			ApiSchemaAPersonResponseModel response = await service.Get(default(int));
+			ApiSchemaAPersonServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ISchemaAPersonRepository>();
-			var model = new ApiSchemaAPersonRequestModel();
+			var model = new ApiSchemaAPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SchemaAPerson>())).Returns(Task.FromResult(new SchemaAPerson()));
 			var service = new SchemaAPersonService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSchemaAPersonMapperMock,
 			                                       mock.DALMapperMockFactory.DALSchemaAPersonMapperMock);
 
-			CreateResponse<ApiSchemaAPersonResponseModel> response = await service.Create(model);
+			CreateResponse<ApiSchemaAPersonServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SchemaAPersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ModelValidatorMockFactory.SchemaAPersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SchemaAPerson>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ISchemaAPersonRepository>();
-			var model = new ApiSchemaAPersonRequestModel();
+			var model = new ApiSchemaAPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SchemaAPerson>())).Returns(Task.FromResult(new SchemaAPerson()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SchemaAPerson()));
 			var service = new SchemaAPersonService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSchemaAPersonMapperMock,
 			                                       mock.DALMapperMockFactory.DALSchemaAPersonMapperMock);
 
-			UpdateResponse<ApiSchemaAPersonResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiSchemaAPersonServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SchemaAPersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ModelValidatorMockFactory.SchemaAPersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SchemaAPerson>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ISchemaAPersonRepository>();
-			var model = new ApiSchemaAPersonRequestModel();
+			var model = new ApiSchemaAPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SchemaAPersonService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>35e4f3460c6f046abe2659da4fadbd87</Hash>
+    <Hash>5929bcd5651b99b5a0ee41b94c115c71</Hash>
 </Codenesium>*/

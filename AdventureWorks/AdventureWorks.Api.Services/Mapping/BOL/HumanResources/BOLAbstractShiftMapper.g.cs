@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOShift MapModelToBO(
 			int shiftID,
-			ApiShiftRequestModel model
+			ApiShiftServerRequestModel model
 			)
 		{
 			BOShift boShift = new BOShift();
@@ -22,20 +21,20 @@ namespace AdventureWorksNS.Api.Services
 			return boShift;
 		}
 
-		public virtual ApiShiftResponseModel MapBOToModel(
+		public virtual ApiShiftServerResponseModel MapBOToModel(
 			BOShift boShift)
 		{
-			var model = new ApiShiftResponseModel();
+			var model = new ApiShiftServerResponseModel();
 
 			model.SetProperties(boShift.ShiftID, boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.StartTime);
 
 			return model;
 		}
 
-		public virtual List<ApiShiftResponseModel> MapBOToModel(
+		public virtual List<ApiShiftServerResponseModel> MapBOToModel(
 			List<BOShift> items)
 		{
-			List<ApiShiftResponseModel> response = new List<ApiShiftResponseModel>();
+			List<ApiShiftServerResponseModel> response = new List<ApiShiftServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77e6182f2b227917e0d5058148c7c955</Hash>
+    <Hash>aaca3dafaf7bf69cdf38178ffc405aae</Hash>
 </Codenesium>*/

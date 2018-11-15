@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,19 +11,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IEmployeeRepository EmployeeRepository { get; private set; }
 
-		protected IApiEmployeeRequestModelValidator EmployeeModelValidator { get; private set; }
+		protected IApiEmployeeServerRequestModelValidator EmployeeModelValidator { get; private set; }
 
 		protected IBOLEmployeeMapper BolEmployeeMapper { get; private set; }
 
 		protected IDALEmployeeMapper DalEmployeeMapper { get; private set; }
-
-		protected IBOLEmployeeDepartmentHistoryMapper BolEmployeeDepartmentHistoryMapper { get; private set; }
-
-		protected IDALEmployeeDepartmentHistoryMapper DalEmployeeDepartmentHistoryMapper { get; private set; }
-
-		protected IBOLEmployeePayHistoryMapper BolEmployeePayHistoryMapper { get; private set; }
-
-		protected IDALEmployeePayHistoryMapper DalEmployeePayHistoryMapper { get; private set; }
 
 		protected IBOLJobCandidateMapper BolJobCandidateMapper { get; private set; }
 
@@ -39,13 +26,9 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractEmployeeService(
 			ILogger logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
 			IDALEmployeeMapper dalEmployeeMapper,
-			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper,
-			IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
-			IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper,
 			IBOLJobCandidateMapper bolJobCandidateMapper,
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base()
@@ -54,23 +37,19 @@ namespace AdventureWorksNS.Api.Services
 			this.EmployeeModelValidator = employeeModelValidator;
 			this.BolEmployeeMapper = bolEmployeeMapper;
 			this.DalEmployeeMapper = dalEmployeeMapper;
-			this.BolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
-			this.DalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
-			this.BolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
-			this.DalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
 			this.BolJobCandidateMapper = bolJobCandidateMapper;
 			this.DalJobCandidateMapper = dalJobCandidateMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiEmployeeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.EmployeeRepository.All(limit, offset);
 
 			return this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEmployeeResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiEmployeeServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.EmployeeRepository.Get(businessEntityID);
 
@@ -84,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
-			ApiEmployeeRequestModel model)
+		public virtual async Task<CreateResponse<ApiEmployeeServerResponseModel>> Create(
+			ApiEmployeeServerRequestModel model)
 		{
-			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.EmployeeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeServerResponseModel> response = ValidationResponseFactory<ApiEmployeeServerResponseModel>.CreateResponse(await this.EmployeeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolEmployeeMapper.MapModelToBO(default(int), model);
@@ -99,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiEmployeeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiEmployeeServerResponseModel>> Update(
 			int businessEntityID,
-			ApiEmployeeRequestModel model)
+			ApiEmployeeServerRequestModel model)
 		{
 			var validationResult = await this.EmployeeModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -112,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.EmployeeRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiEmployeeResponseModel>(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiEmployeeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.EmployeeModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EmployeeModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.EmployeeRepository.Delete(businessEntityID);
@@ -132,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiEmployeeResponseModel> ByLoginID(string loginID)
+		public async virtual Task<ApiEmployeeServerResponseModel> ByLoginID(string loginID)
 		{
 			Employee record = await this.EmployeeRepository.ByLoginID(loginID);
 
@@ -146,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber)
+		public async virtual Task<ApiEmployeeServerResponseModel> ByNationalIDNumber(string nationalIDNumber)
 		{
 			Employee record = await this.EmployeeRepository.ByNationalIDNumber(nationalIDNumber);
 
@@ -160,21 +141,21 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiEmployeeServerResponseModel> ByRowguid(Guid rowguid)
 		{
-			List<EmployeeDepartmentHistory> records = await this.EmployeeRepository.EmployeeDepartmentHistoriesByBusinessEntityID(businessEntityID, limit, offset);
+			Employee record = await this.EmployeeRepository.ByRowguid(rowguid);
 
-			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record));
+			}
 		}
 
-		public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<EmployeePayHistory> records = await this.EmployeeRepository.EmployeePayHistoriesByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolEmployeePayHistoryMapper.MapBOToModel(this.DalEmployeePayHistoryMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiJobCandidateServerResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<JobCandidate> records = await this.EmployeeRepository.JobCandidatesByBusinessEntityID(businessEntityID, limit, offset);
 
@@ -184,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a55142ed90231c12f6e07343d7676eff</Hash>
+    <Hash>fd5c66619c86b8e5c12b7ce3588bacec</Hash>
 </Codenesium>*/

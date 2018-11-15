@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ISalesReasonRepository SalesReasonRepository { get; private set; }
 
-		protected IApiSalesReasonRequestModelValidator SalesReasonModelValidator { get; private set; }
+		protected IApiSalesReasonServerRequestModelValidator SalesReasonModelValidator { get; private set; }
 
 		protected IBOLSalesReasonMapper BolSalesReasonMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractSalesReasonService(
 			ILogger logger,
 			ISalesReasonRepository salesReasonRepository,
-			IApiSalesReasonRequestModelValidator salesReasonModelValidator,
+			IApiSalesReasonServerRequestModelValidator salesReasonModelValidator,
 			IBOLSalesReasonMapper bolSalesReasonMapper,
 			IDALSalesReasonMapper dalSalesReasonMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSalesReasonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SalesReasonRepository.All(limit, offset);
 
 			return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
+		public virtual async Task<ApiSalesReasonServerResponseModel> Get(int salesReasonID)
 		{
 			var record = await this.SalesReasonRepository.Get(salesReasonID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
-			ApiSalesReasonRequestModel model)
+		public virtual async Task<CreateResponse<ApiSalesReasonServerResponseModel>> Create(
+			ApiSalesReasonServerRequestModel model)
 		{
-			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.SalesReasonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesReasonServerResponseModel> response = ValidationResponseFactory<ApiSalesReasonServerResponseModel>.CreateResponse(await this.SalesReasonModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSalesReasonMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSalesReasonResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSalesReasonServerResponseModel>> Update(
 			int salesReasonID,
-			ApiSalesReasonRequestModel model)
+			ApiSalesReasonServerRequestModel model)
 		{
 			var validationResult = await this.SalesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesReasonRepository.Get(salesReasonID);
 
-				return new UpdateResponse<ApiSalesReasonResponseModel>(this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSalesReasonServerResponseModel>.UpdateResponse(this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSalesReasonResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSalesReasonServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int salesReasonID)
 		{
-			ActionResponse response = new ActionResponse(await this.SalesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SalesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
+
 			if (response.Success)
 			{
 				await this.SalesReasonRepository.Delete(salesReasonID);
@@ -107,16 +104,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiSalesReasonResponseModel>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesReason> records = await this.SalesReasonRepository.BySalesOrderID(salesOrderID, limit, offset);
-
-			return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b8d91fea4a89c8eca2bb90c01b94b95</Hash>
+    <Hash>9f78a3652b872814e3cff1c3dea00d86</Hash>
 </Codenesium>*/

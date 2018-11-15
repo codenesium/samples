@@ -28,21 +28,21 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[MaxLength(6)]
 		[Column("CultureID")]
-		public string CultureID { get; private set; }
+		public virtual string CultureID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductDescriptionID")]
-		public int ProductDescriptionID { get; private set; }
+		public virtual int ProductDescriptionID { get; private set; }
 
 		[Key]
 		[Column("ProductModelID")]
-		public int ProductModelID { get; private set; }
+		public virtual int ProductModelID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>38b8fd58f54aecd7752c02873bd8aa05</Hash>
+    <Hash>5f7a9904ca3a576dbf9521740ca51da4</Hash>
 </Codenesium>*/

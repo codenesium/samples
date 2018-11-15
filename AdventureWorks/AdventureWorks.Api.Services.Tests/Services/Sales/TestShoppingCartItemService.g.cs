@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			List<ApiShoppingCartItemResponseModel> response = await service.All();
+			List<ApiShoppingCartItemServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			ApiShoppingCartItemResponseModel response = await service.Get(default(int));
+			ApiShoppingCartItemServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			ApiShoppingCartItemResponseModel response = await service.Get(default(int));
+			ApiShoppingCartItemServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
-			var model = new ApiShoppingCartItemRequestModel();
+			var model = new ApiShoppingCartItemServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShoppingCartItem>())).Returns(Task.FromResult(new ShoppingCartItem()));
 			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			CreateResponse<ApiShoppingCartItemResponseModel> response = await service.Create(model);
+			CreateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShoppingCartItemRequestModel>()));
+			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShoppingCartItemServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ShoppingCartItem>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
-			var model = new ApiShoppingCartItemRequestModel();
+			var model = new ApiShoppingCartItemServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShoppingCartItem>())).Returns(Task.FromResult(new ShoppingCartItem()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			UpdateResponse<ApiShoppingCartItemResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemRequestModel>()));
+			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ShoppingCartItem>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
-			var model = new ApiShoppingCartItemRequestModel();
+			var model = new ApiShoppingCartItemServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default(string), default(int));
+			List<ApiShoppingCartItemServerResponseModel> response = await service.ByShoppingCartIDProductID("test_value", default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByShoppingCartIDProductID(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
 			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-			List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default(string), default(int));
+			List<ApiShoppingCartItemServerResponseModel> response = await service.ByShoppingCartIDProductID("test_value", default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByShoppingCartIDProductID(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>405f0d3a174f2cf3d973e9f9fc5bcfa2</Hash>
+    <Hash>d6fe00aa24f73bce4aa797f078f90c92</Hash>
 </Codenesium>*/

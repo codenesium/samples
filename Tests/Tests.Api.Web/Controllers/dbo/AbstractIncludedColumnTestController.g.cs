@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected IIncludedColumnTestService IncludedColumnTestService { get; private set; }
 
-		protected IApiIncludedColumnTestModelMapper IncludedColumnTestModelMapper { get; private set; }
+		protected IApiIncludedColumnTestServerModelMapper IncludedColumnTestModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractIncludedColumnTestController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IIncludedColumnTestService includedColumnTestService,
-			IApiIncludedColumnTestModelMapper includedColumnTestModelMapper
+			IApiIncludedColumnTestServerModelMapper includedColumnTestModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiIncludedColumnTestResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiIncludedColumnTestServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiIncludedColumnTestResponseModel> response = await this.IncludedColumnTestService.All(query.Limit, query.Offset);
+			List<ApiIncludedColumnTestServerResponseModel> response = await this.IncludedColumnTestService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiIncludedColumnTestResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiIncludedColumnTestServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiIncludedColumnTestResponseModel response = await this.IncludedColumnTestService.Get(id);
+			ApiIncludedColumnTestServerResponseModel response = await this.IncludedColumnTestService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiIncludedColumnTestResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiIncludedColumnTestServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIncludedColumnTestRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIncludedColumnTestServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiIncludedColumnTestResponseModel> records = new List<ApiIncludedColumnTestResponseModel>();
+			List<ApiIncludedColumnTestServerResponseModel> records = new List<ApiIncludedColumnTestServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiIncludedColumnTestResponseModel> result = await this.IncludedColumnTestService.Create(model);
+				CreateResponse<ApiIncludedColumnTestServerResponseModel> result = await this.IncludedColumnTestService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiIncludedColumnTestServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiIncludedColumnTestResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiIncludedColumnTestServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiIncludedColumnTestRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiIncludedColumnTestServerRequestModel model)
 		{
-			CreateResponse<ApiIncludedColumnTestResponseModel> result = await this.IncludedColumnTestService.Create(model);
+			CreateResponse<ApiIncludedColumnTestServerResponseModel> result = await this.IncludedColumnTestService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiIncludedColumnTestResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiIncludedColumnTestServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiIncludedColumnTestRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiIncludedColumnTestServerRequestModel> patch)
 		{
-			ApiIncludedColumnTestResponseModel record = await this.IncludedColumnTestService.Get(id);
+			ApiIncludedColumnTestServerResponseModel record = await this.IncludedColumnTestService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiIncludedColumnTestRequestModel model = await this.PatchModel(id, patch);
+				ApiIncludedColumnTestServerRequestModel model = await this.PatchModel(id, patch) as ApiIncludedColumnTestServerRequestModel;
 
-				UpdateResponse<ApiIncludedColumnTestResponseModel> result = await this.IncludedColumnTestService.Update(id, model);
+				UpdateResponse<ApiIncludedColumnTestServerResponseModel> result = await this.IncludedColumnTestService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiIncludedColumnTestResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiIncludedColumnTestServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIncludedColumnTestRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIncludedColumnTestServerRequestModel model)
 		{
-			ApiIncludedColumnTestRequestModel request = await this.PatchModel(id, this.IncludedColumnTestModelMapper.CreatePatch(model));
+			ApiIncludedColumnTestServerRequestModel request = await this.PatchModel(id, this.IncludedColumnTestModelMapper.CreatePatch(model)) as ApiIncludedColumnTestServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiIncludedColumnTestResponseModel> result = await this.IncludedColumnTestService.Update(id, request);
+				UpdateResponse<ApiIncludedColumnTestServerResponseModel> result = await this.IncludedColumnTestService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.IncludedColumnTestService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiIncludedColumnTestRequestModel> PatchModel(int id, JsonPatchDocument<ApiIncludedColumnTestRequestModel> patch)
+		private async Task<ApiIncludedColumnTestServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiIncludedColumnTestServerRequestModel> patch)
 		{
 			var record = await this.IncludedColumnTestService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiIncludedColumnTestRequestModel request = this.IncludedColumnTestModelMapper.MapResponseToRequest(record);
+				ApiIncludedColumnTestServerRequestModel request = this.IncludedColumnTestModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0b0d27924b36be17cbfa0ae29efe65fd</Hash>
+    <Hash>5f76144ad79bd92780b75a3c9520c867</Hash>
 </Codenesium>*/

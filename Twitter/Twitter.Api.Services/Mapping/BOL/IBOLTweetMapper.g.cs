@@ -9,16 +9,16 @@ namespace TwitterNS.Api.Services
 	{
 		BOTweet MapModelToBO(
 			int tweetId,
-			ApiTweetRequestModel model);
+			ApiTweetServerRequestModel model);
 
-		ApiTweetResponseModel MapBOToModel(
+		ApiTweetServerResponseModel MapBOToModel(
 			BOTweet boTweet);
 
-		List<ApiTweetResponseModel> MapBOToModel(
+		List<ApiTweetServerResponseModel> MapBOToModel(
 			List<BOTweet> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cbb5cde302a06e8d47193d8c1e2dd7a6</Hash>
+    <Hash>95fcd7738384ff4e0cca0b4a488dc615</Hash>
 </Codenesium>*/

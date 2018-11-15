@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOCurrency MapModelToBO(
 			string currencyCode,
-			ApiCurrencyRequestModel model
+			ApiCurrencyServerRequestModel model
 			)
 		{
 			BOCurrency boCurrency = new BOCurrency();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boCurrency;
 		}
 
-		public virtual ApiCurrencyResponseModel MapBOToModel(
+		public virtual ApiCurrencyServerResponseModel MapBOToModel(
 			BOCurrency boCurrency)
 		{
-			var model = new ApiCurrencyResponseModel();
+			var model = new ApiCurrencyServerResponseModel();
 
 			model.SetProperties(boCurrency.CurrencyCode, boCurrency.ModifiedDate, boCurrency.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCurrencyResponseModel> MapBOToModel(
+		public virtual List<ApiCurrencyServerResponseModel> MapBOToModel(
 			List<BOCurrency> items)
 		{
-			List<ApiCurrencyResponseModel> response = new List<ApiCurrencyResponseModel>();
+			List<ApiCurrencyServerResponseModel> response = new List<ApiCurrencyServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d47cbb99f1f29592afd516f20bfdc650</Hash>
+    <Hash>78cd712f690ecafc2754075d3a483588</Hash>
 </Codenesium>*/

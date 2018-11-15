@@ -1,4 +1,4 @@
-export class ApiBreedRequestModel {
+export class ApiBreedServerRequestModel {
 				id:number;
 name:string;
 
@@ -11,7 +11,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiBreedResponseModel {
+			export class ApiBreedServerResponseModel {
 				id:number;
 name:string;
 
@@ -23,32 +23,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiPaymentTypeRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-
-			export class ApiPaymentTypeResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-			export class ApiPenRequestModel {
+			export class ApiPaymentTypeServerRequestModel {
 				id:number;
 name:string;
 
@@ -61,7 +36,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiPenResponseModel {
+			export class ApiPaymentTypeServerResponseModel {
 				id:number;
 name:string;
 
@@ -73,7 +48,32 @@ this.name = '';
 		
 				}
 			}
-			export class ApiPetRequestModel {
+			export class ApiPenServerRequestModel {
+				id:number;
+name:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+
+		
+				}
+			}
+
+			export class ApiPenServerResponseModel {
+				id:number;
+name:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+
+		
+				}
+			}
+			export class ApiPetServerRequestModel {
 				acquiredDate:string;
 breedId:number;
 breedIdEntity:number;
@@ -99,7 +99,7 @@ this.speciesId = 0;
 				}
 			}
 
-			export class ApiPetResponseModel {
+			export class ApiPetServerResponseModel {
 				acquiredDate:string;
 breedId:number;
 breedIdEntity:number;
@@ -124,7 +124,7 @@ this.speciesId = 0;
 		
 				}
 			}
-			export class ApiSaleRequestModel {
+			export class ApiSaleServerRequestModel {
 				amount:number;
 firstName:string;
 id:number;
@@ -149,7 +149,7 @@ this.phone = '';
 				}
 			}
 
-			export class ApiSaleResponseModel {
+			export class ApiSaleServerResponseModel {
 				amount:number;
 firstName:string;
 id:number;
@@ -173,7 +173,7 @@ this.phone = '';
 		
 				}
 			}
-			export class ApiSpeciesRequestModel {
+			export class ApiSpeciesServerRequestModel {
 				id:number;
 name:string;
 
@@ -186,7 +186,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiSpeciesResponseModel {
+			export class ApiSpeciesServerResponseModel {
 				id:number;
 name:string;
 

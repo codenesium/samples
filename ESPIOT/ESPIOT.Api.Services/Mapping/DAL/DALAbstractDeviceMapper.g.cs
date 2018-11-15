@@ -1,4 +1,3 @@
-using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -47,5 +46,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a3c9ca865347b32bf1f1665c00b9bad</Hash>
+    <Hash>cfe8ed0441c5ff028b391d4f318ec6ea</Hash>
 </Codenesium>*/

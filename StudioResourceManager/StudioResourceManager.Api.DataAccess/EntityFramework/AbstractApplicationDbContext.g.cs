@@ -46,7 +46,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual DbSet<Event> Events { get; set; }
 
-		public virtual DbSet<EventStatus> EventStatuses { get; set; }
+		public virtual DbSet<EventStatu> EventStatus { get; set; }
 
 		public virtual DbSet<EventStudent> EventStudents { get; set; }
 
@@ -72,11 +72,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual DbSet<TeacherTeacherSkill> TeacherTeacherSkills { get; set; }
 
-		public virtual DbSet<Tenant> Tenants { get; set; }
-
 		public virtual DbSet<User> Users { get; set; }
-
-		public virtual DbSet<VEvent> VEvents { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -92,15 +88,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -143,13 +130,13 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<EventStatus>()
+			modelBuilder.Entity<EventStatu>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<EventStatus>()
+			modelBuilder.Entity<EventStatu>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -270,17 +257,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				c.TeacherSkillId,
 			});
 
-			modelBuilder.Entity<Tenant>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<Tenant>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
 			modelBuilder.Entity<User>()
 			.HasKey(c => new
 			{
@@ -288,17 +264,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			});
 
 			modelBuilder.Entity<User>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<VEvent>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<VEvent>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -306,39 +271,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Admin>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Event>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Event>().HasQueryFilter(x => x.TenantId == this.TenantId);
-			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => x.TenantId == this.TenantId);
+			modelBuilder.Entity<EventStatu>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Family>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Family>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Rate>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Rate>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Space>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Space>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<SpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<SpaceFeature>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<SpaceSpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<SpaceSpaceFeature>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Student>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Studio>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Studio>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<Teacher>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<User>().HasQueryFilter(x => x.TenantId == this.TenantId);
-			modelBuilder.Entity<VEvent>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<VEvent>().HasQueryFilter(x => x.TenantId == this.TenantId);
 		}
 	}
 
@@ -368,5 +315,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3d41f1069d4a724ea7f6de46ee78311e</Hash>
+    <Hash>f4bc81c185c64eedcc0d30e4961f29c1</Hash>
 </Codenesium>*/

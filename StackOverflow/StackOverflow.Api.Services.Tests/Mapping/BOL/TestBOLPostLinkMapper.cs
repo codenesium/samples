@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPostLinkMapper();
-			ApiPostLinkRequestModel model = new ApiPostLinkRequestModel();
+			ApiPostLinkServerRequestModel model = new ApiPostLinkServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
 			BOPostLink response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostLinkMapper();
 			BOPostLink bo = new BOPostLink();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-			ApiPostLinkResponseModel response = mapper.MapBOToModel(bo);
+			ApiPostLinkServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CreationDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
@@ -48,7 +48,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostLinkMapper();
 			BOPostLink bo = new BOPostLink();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
-			List<ApiPostLinkResponseModel> response = mapper.MapBOToModel(new List<BOPostLink>() { { bo } });
+			List<ApiPostLinkServerResponseModel> response = mapper.MapBOToModel(new List<BOPostLink>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d0cdff306a14c25d2c69fb927bfafe06</Hash>
+    <Hash>7b14180606ed4e8a6fe6e3e67f2eefe6</Hash>
 </Codenesium>*/

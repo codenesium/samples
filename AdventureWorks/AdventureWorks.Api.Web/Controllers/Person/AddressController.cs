@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class AddressController : AbstractAddressController
 	{
 		public AddressController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAddressService addressService,
-			IApiAddressModelMapper addressModelMapper
+			IApiAddressServerModelMapper addressModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>947430303c456bc21f85ecdeee3e9147</Hash>
+    <Hash>94311426a052f856993c107d087af412</Hash>
 </Codenesium>*/

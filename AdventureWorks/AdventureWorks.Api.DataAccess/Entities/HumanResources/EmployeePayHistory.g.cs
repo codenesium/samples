@@ -29,23 +29,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("PayFrequency")]
-		public int PayFrequency { get; private set; }
+		public virtual int PayFrequency { get; private set; }
 
 		[Column("Rate")]
-		public decimal Rate { get; private set; }
+		public virtual decimal Rate { get; private set; }
 
 		[Key]
 		[Column("RateChangeDate")]
-		public DateTime RateChangeDate { get; private set; }
+		public virtual DateTime RateChangeDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f8e3af02df02cc15f6c70c9626e7225</Hash>
+    <Hash>96c978bfbfe2cd0b614b53097ed655e2</Hash>
 </Codenesium>*/

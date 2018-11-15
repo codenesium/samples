@@ -76,31 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByProductDescriptionID(int productDescriptionID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ProductDescription> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductDescriptionID == productDescriptionID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
+			return await this.Context.Set<ProductDescription>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<ProductDescription>> Where(
 			Expression<Func<ProductDescription, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ProductDescription, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ProductDescription, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ProductDescriptionID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductDescription>();
-			}
-			else
-			{
-				return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductDescription>();
-			}
+			return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductDescription>();
 		}
 
 		private async Task<ProductDescription> GetById(int productDescriptionID)
@@ -113,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9bacdf6c35734cc914ec3d6f3709b49a</Hash>
+    <Hash>3ab9e35338bca54ba6364de9b40e3bf9</Hash>
 </Codenesium>*/

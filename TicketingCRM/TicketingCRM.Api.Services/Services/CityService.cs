@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,16 +9,16 @@ namespace TicketingCRMNS.Api.Services
 		public CityService(
 			ILogger<ICityRepository> logger,
 			ICityRepository cityRepository,
-			IApiCityRequestModelValidator cityModelValidator,
-			IBOLCityMapper bolcityMapper,
-			IDALCityMapper dalcityMapper,
+			IApiCityServerRequestModelValidator cityModelValidator,
+			IBOLCityMapper bolCityMapper,
+			IDALCityMapper dalCityMapper,
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       cityRepository,
 			       cityModelValidator,
-			       bolcityMapper,
-			       dalcityMapper,
+			       bolCityMapper,
+			       dalCityMapper,
 			       bolEventMapper,
 			       dalEventMapper)
 		{
@@ -34,5 +27,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9ea7fb6cc68c5c84251073159270584</Hash>
+    <Hash>9a39d8e2fc38c242ffa11c30624cc89e</Hash>
 </Codenesium>*/

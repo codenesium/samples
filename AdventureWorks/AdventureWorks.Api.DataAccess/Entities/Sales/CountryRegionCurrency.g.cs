@@ -26,21 +26,26 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[MaxLength(3)]
 		[Column("CountryRegionCode")]
-		public string CountryRegionCode { get; private set; }
+		public virtual string CountryRegionCode { get; private set; }
 
 		[Key]
 		[MaxLength(3)]
 		[Column("CurrencyCode")]
-		public string CurrencyCode { get; private set; }
+		public virtual string CurrencyCode { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[ForeignKey("CurrencyCode")]
 		public virtual Currency CurrencyNavigation { get; private set; }
+
+		public void SetCurrencyNavigation(Currency item)
+		{
+			this.CurrencyNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1c6750cecad1500b39a63badfdd1495</Hash>
+    <Hash>ea5885babbd71f9873c37df548ec17ba</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -9,7 +8,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public virtual BOTransaction MapModelToBO(
 			int id,
-			ApiTransactionRequestModel model
+			ApiTransactionServerRequestModel model
 			)
 		{
 			BOTransaction boTransaction = new BOTransaction();
@@ -21,20 +20,20 @@ namespace TicketingCRMNS.Api.Services
 			return boTransaction;
 		}
 
-		public virtual ApiTransactionResponseModel MapBOToModel(
+		public virtual ApiTransactionServerResponseModel MapBOToModel(
 			BOTransaction boTransaction)
 		{
-			var model = new ApiTransactionResponseModel();
+			var model = new ApiTransactionServerResponseModel();
 
 			model.SetProperties(boTransaction.Id, boTransaction.Amount, boTransaction.GatewayConfirmationNumber, boTransaction.TransactionStatusId);
 
 			return model;
 		}
 
-		public virtual List<ApiTransactionResponseModel> MapBOToModel(
+		public virtual List<ApiTransactionServerResponseModel> MapBOToModel(
 			List<BOTransaction> items)
 		{
-			List<ApiTransactionResponseModel> response = new List<ApiTransactionResponseModel>();
+			List<ApiTransactionServerResponseModel> response = new List<ApiTransactionServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6772a29b7cbb83095468fef780aac6f4</Hash>
+    <Hash>3e7d14611304002cf9af99e2ac1a6d5d</Hash>
 </Codenesium>*/

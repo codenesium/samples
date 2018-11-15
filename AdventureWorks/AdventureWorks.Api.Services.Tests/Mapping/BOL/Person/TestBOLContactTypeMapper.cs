@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLContactTypeMapper();
-			ApiContactTypeRequestModel model = new ApiContactTypeRequestModel();
+			ApiContactTypeServerRequestModel model = new ApiContactTypeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOContactType response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLContactTypeMapper();
 			BOContactType bo = new BOContactType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiContactTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiContactTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ContactTypeID.Should().Be(1);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLContactTypeMapper();
 			BOContactType bo = new BOContactType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiContactTypeResponseModel> response = mapper.MapBOToModel(new List<BOContactType>() { { bo } });
+			List<ApiContactTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOContactType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7bd0d736bb1bb8f397750d8f36b89055</Hash>
+    <Hash>2c833ac83c7f767e20c18a2841ad1783</Hash>
 </Codenesium>*/

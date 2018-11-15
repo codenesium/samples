@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -9,24 +8,26 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface ILocationService
 	{
-		Task<CreateResponse<ApiLocationResponseModel>> Create(
-			ApiLocationRequestModel model);
+		Task<CreateResponse<ApiLocationServerResponseModel>> Create(
+			ApiLocationServerRequestModel model);
 
-		Task<UpdateResponse<ApiLocationResponseModel>> Update(int locationId,
-		                                                       ApiLocationRequestModel model);
+		Task<UpdateResponse<ApiLocationServerResponseModel>> Update(int locationId,
+		                                                             ApiLocationServerRequestModel model);
 
 		Task<ActionResponse> Delete(int locationId);
 
-		Task<ApiLocationResponseModel> Get(int locationId);
+		Task<ApiLocationServerResponseModel> Get(int locationId);
 
-		Task<List<ApiLocationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLocationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTweetResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTweetServerResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiUserResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUserServerResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiLocationServerResponseModel>> ByUserUserId(int locationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>16e033e89a70b2b36f523ffd62814000</Hash>
+    <Hash>fa7640274c907589fbb3e688c8772a3d</Hash>
 </Codenesium>*/

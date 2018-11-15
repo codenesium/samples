@@ -12,7 +12,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IBOLEventMapper BOLEventMapperMock { get; set; } = new BOLEventMapper();
 
-		public IBOLEventStatusMapper BOLEventStatusMapperMock { get; set; } = new BOLEventStatusMapper();
+		public IBOLEventStatuMapper BOLEventStatuMapperMock { get; set; } = new BOLEventStatuMapper();
 
 		public IBOLFamilyMapper BOLFamilyMapperMock { get; set; } = new BOLFamilyMapper();
 
@@ -30,11 +30,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IBOLTeacherSkillMapper BOLTeacherSkillMapperMock { get; set; } = new BOLTeacherSkillMapper();
 
-		public IBOLTenantMapper BOLTenantMapperMock { get; set; } = new BOLTenantMapper();
-
 		public IBOLUserMapper BOLUserMapperMock { get; set; } = new BOLUserMapper();
-
-		public IBOLVEventMapper BOLVEventMapperMock { get; set; } = new BOLVEventMapper();
 
 		public BOLMapperMockFactory()
 		{
@@ -43,5 +39,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d1c8cfce6d45233c473af518f95ced4d</Hash>
+    <Hash>07161f6a4b0497b42a84d428f42b5d1f</Hash>
 </Codenesium>*/

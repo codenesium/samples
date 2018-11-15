@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Web
 	{
 		protected IBreedService BreedService { get; private set; }
 
-		protected IApiBreedModelMapper BreedModelMapper { get; private set; }
+		protected IApiBreedServerModelMapper BreedModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<AbstractBreedController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBreedService breedService,
-			IApiBreedModelMapper breedModelMapper
+			IApiBreedServerModelMapper breedModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBreedResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBreedServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBreedResponseModel> response = await this.BreedService.All(query.Limit, query.Offset);
+			List<ApiBreedServerResponseModel> response = await this.BreedService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBreedResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBreedServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiBreedResponseModel response = await this.BreedService.Get(id);
+			ApiBreedServerResponseModel response = await this.BreedService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetStoreNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiBreedResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiBreedServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBreedRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBreedServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiBreedResponseModel> records = new List<ApiBreedResponseModel>();
+			List<ApiBreedServerResponseModel> records = new List<ApiBreedServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiBreedResponseModel> result = await this.BreedService.Create(model);
+				CreateResponse<ApiBreedServerResponseModel> result = await this.BreedService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetStoreNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiBreedServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiBreedResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiBreedServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBreedRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiBreedServerRequestModel model)
 		{
-			CreateResponse<ApiBreedResponseModel> result = await this.BreedService.Create(model);
+			CreateResponse<ApiBreedServerResponseModel> result = await this.BreedService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBreedResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBreedServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBreedRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBreedServerRequestModel> patch)
 		{
-			ApiBreedResponseModel record = await this.BreedService.Get(id);
+			ApiBreedServerResponseModel record = await this.BreedService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiBreedRequestModel model = await this.PatchModel(id, patch);
+				ApiBreedServerRequestModel model = await this.PatchModel(id, patch) as ApiBreedServerRequestModel;
 
-				UpdateResponse<ApiBreedResponseModel> result = await this.BreedService.Update(id, model);
+				UpdateResponse<ApiBreedServerResponseModel> result = await this.BreedService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBreedResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBreedServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBreedRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBreedServerRequestModel model)
 		{
-			ApiBreedRequestModel request = await this.PatchModel(id, this.BreedModelMapper.CreatePatch(model));
+			ApiBreedServerRequestModel request = await this.PatchModel(id, this.BreedModelMapper.CreatePatch(model)) as ApiBreedServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiBreedResponseModel> result = await this.BreedService.Update(id, request);
+				UpdateResponse<ApiBreedServerResponseModel> result = await this.BreedService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetStoreNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.BreedService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{breedId}/PetsByBreedId")]
+		[Route("{breedId}/Pets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPetServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> PetsByBreedId(int breedId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetResponseModel> response = await this.BreedService.PetsByBreedId(breedId, query.Limit, query.Offset);
+			List<ApiPetServerResponseModel> response = await this.BreedService.PetsByBreedId(breedId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiBreedRequestModel> PatchModel(int id, JsonPatchDocument<ApiBreedRequestModel> patch)
+		private async Task<ApiBreedServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBreedServerRequestModel> patch)
 		{
 			var record = await this.BreedService.Get(id);
 
@@ -233,7 +243,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiBreedRequestModel request = this.BreedModelMapper.MapResponseToRequest(record);
+				ApiBreedServerRequestModel request = this.BreedModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f654d921f55875efdadba1fe69810c0</Hash>
+    <Hash>0eddbfc1b0034c5d99cb4c821b08a82e</Hash>
 </Codenesium>*/

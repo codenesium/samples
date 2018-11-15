@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessageResponseModel> response = await service.All();
+			List<ApiMessageServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			ApiMessageResponseModel response = await service.Get(default(int));
+			ApiMessageServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			ApiMessageResponseModel response = await service.Get(default(int));
+			ApiMessageServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IMessageRepository>();
-			var model = new ApiMessageRequestModel();
+			var model = new ApiMessageServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Message>())).Returns(Task.FromResult(new Message()));
 			var service = new MessageService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			CreateResponse<ApiMessageResponseModel> response = await service.Create(model);
+			CreateResponse<ApiMessageServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMessageRequestModel>()));
+			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMessageServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Message>()));
 		}
 
@@ -103,7 +103,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IMessageRepository>();
-			var model = new ApiMessageRequestModel();
+			var model = new ApiMessageServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Message>())).Returns(Task.FromResult(new Message()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Message()));
 			var service = new MessageService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			UpdateResponse<ApiMessageResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiMessageServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageRequestModel>()));
+			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Message>()));
 		}
 
@@ -125,7 +125,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IMessageRepository>();
-			var model = new ApiMessageRequestModel();
+			var model = new ApiMessageServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new MessageService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessageResponseModel> response = await service.BySenderUserId(default(int?));
+			List<ApiMessageServerResponseModel> response = await service.BySenderUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.BySenderUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessageResponseModel> response = await service.BySenderUserId(default(int?));
+			List<ApiMessageServerResponseModel> response = await service.BySenderUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.BySenderUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -197,7 +197,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.MessengersByMessageId(default(int));
+			List<ApiMessengerServerResponseModel> response = await service.MessengersByMessageId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -216,7 +216,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.MessengersByMessageId(default(int));
+			List<ApiMessengerServerResponseModel> response = await service.MessengersByMessageId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -225,5 +225,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>55de5caf2ab6858bd2dc9618c0262cd8</Hash>
+    <Hash>e6951a5b472087429c456456ef61069e</Hash>
 </Codenesium>*/

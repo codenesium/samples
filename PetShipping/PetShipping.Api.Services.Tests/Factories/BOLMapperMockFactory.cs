@@ -14,9 +14,9 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IBOLBreedMapper BOLBreedMapperMock { get; set; } = new BOLBreedMapper();
 
-		public IBOLClientMapper BOLClientMapperMock { get; set; } = new BOLClientMapper();
+		public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
 
-		public IBOLClientCommunicationMapper BOLClientCommunicationMapperMock { get; set; } = new BOLClientCommunicationMapper();
+		public IBOLCustomerCommunicationMapper BOLCustomerCommunicationMapperMock { get; set; } = new BOLCustomerCommunicationMapper();
 
 		public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
 
@@ -28,6 +28,10 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IBOLHandlerMapper BOLHandlerMapperMock { get; set; } = new BOLHandlerMapper();
 
+		public IBOLHandlerPipelineStepMapper BOLHandlerPipelineStepMapperMock { get; set; } = new BOLHandlerPipelineStepMapper();
+
+		public IBOLOtherTransportMapper BOLOtherTransportMapperMock { get; set; } = new BOLOtherTransportMapper();
+
 		public IBOLPetMapper BOLPetMapperMock { get; set; } = new BOLPetMapper();
 
 		public IBOLPipelineMapper BOLPipelineMapperMock { get; set; } = new BOLPipelineMapper();
@@ -35,6 +39,8 @@ namespace PetShippingNS.Api.Services.Tests
 		public IBOLPipelineStatuMapper BOLPipelineStatuMapperMock { get; set; } = new BOLPipelineStatuMapper();
 
 		public IBOLPipelineStepMapper BOLPipelineStepMapperMock { get; set; } = new BOLPipelineStepMapper();
+
+		public IBOLPipelineStepDestinationMapper BOLPipelineStepDestinationMapperMock { get; set; } = new BOLPipelineStepDestinationMapper();
 
 		public IBOLPipelineStepNoteMapper BOLPipelineStepNoteMapperMock { get; set; } = new BOLPipelineStepNoteMapper();
 
@@ -53,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf164b8f43aa90f58b565226748576e5</Hash>
+    <Hash>332b6d813bfa21c70696bbebf4e688d2</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
@@ -16,7 +11,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		protected IStudioRepository StudioRepository { get; private set; }
 
-		protected IApiStudioRequestModelValidator StudioModelValidator { get; private set; }
+		protected IApiStudioServerRequestModelValidator StudioModelValidator { get; private set; }
 
 		protected IBOLStudioMapper BolStudioMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public AbstractStudioService(
 			ILogger logger,
 			IStudioRepository studioRepository,
-			IApiStudioRequestModelValidator studioModelValidator,
+			IApiStudioServerRequestModelValidator studioModelValidator,
 			IBOLStudioMapper bolStudioMapper,
 			IDALStudioMapper dalStudioMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StudioResourceManagerNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiStudioResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiStudioServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.StudioRepository.All(limit, offset);
 
 			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiStudioResponseModel> Get(int id)
+		public virtual async Task<ApiStudioServerResponseModel> Get(int id)
 		{
 			var record = await this.StudioRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiStudioResponseModel>> Create(
-			ApiStudioRequestModel model)
+		public virtual async Task<CreateResponse<ApiStudioServerResponseModel>> Create(
+			ApiStudioServerRequestModel model)
 		{
-			CreateResponse<ApiStudioResponseModel> response = new CreateResponse<ApiStudioResponseModel>(await this.StudioModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStudioServerResponseModel> response = ValidationResponseFactory<ApiStudioServerResponseModel>.CreateResponse(await this.StudioModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolStudioMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiStudioResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiStudioServerResponseModel>> Update(
 			int id,
-			ApiStudioRequestModel model)
+			ApiStudioServerRequestModel model)
 		{
 			var validationResult = await this.StudioModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.StudioRepository.Get(id);
 
-				return new UpdateResponse<ApiStudioResponseModel>(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiStudioServerResponseModel>.UpdateResponse(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiStudioResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiStudioServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.StudioModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.StudioModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.StudioRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ef13ec76dae7095aac60db118b2018f</Hash>
+    <Hash>adb2300e7488ae4656c0a3e2eb95a518</Hash>
 </Codenesium>*/

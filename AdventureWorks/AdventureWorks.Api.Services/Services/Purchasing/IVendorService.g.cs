@@ -2,33 +2,30 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IVendorService
 	{
-		Task<CreateResponse<ApiVendorResponseModel>> Create(
-			ApiVendorRequestModel model);
+		Task<CreateResponse<ApiVendorServerResponseModel>> Create(
+			ApiVendorServerRequestModel model);
 
-		Task<UpdateResponse<ApiVendorResponseModel>> Update(int businessEntityID,
-		                                                     ApiVendorRequestModel model);
+		Task<UpdateResponse<ApiVendorServerResponseModel>> Update(int businessEntityID,
+		                                                           ApiVendorServerRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<ApiVendorResponseModel> Get(int businessEntityID);
+		Task<ApiVendorServerResponseModel> Get(int businessEntityID);
 
-		Task<List<ApiVendorResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVendorServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber);
+		Task<ApiVendorServerResponseModel> ByAccountNumber(string accountNumber);
 
-		Task<List<ApiProductVendorResponseModel>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPurchaseOrderHeaderServerResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bde61c4701853f239991a55a287fe07</Hash>
+    <Hash>e7548eb6464d8897f478e3aa61b7dffc</Hash>
 </Codenesium>*/

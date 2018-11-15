@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -9,24 +8,24 @@ namespace TwitterNS.Api.Services
 {
 	public partial interface IFollowerService
 	{
-		Task<CreateResponse<ApiFollowerResponseModel>> Create(
-			ApiFollowerRequestModel model);
+		Task<CreateResponse<ApiFollowerServerResponseModel>> Create(
+			ApiFollowerServerRequestModel model);
 
-		Task<UpdateResponse<ApiFollowerResponseModel>> Update(int id,
-		                                                       ApiFollowerRequestModel model);
+		Task<UpdateResponse<ApiFollowerServerResponseModel>> Update(int id,
+		                                                             ApiFollowerServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiFollowerResponseModel> Get(int id);
+		Task<ApiFollowerServerResponseModel> Get(int id);
 
-		Task<List<ApiFollowerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiFollowerResponseModel>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerServerResponseModel>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiFollowerResponseModel>> ByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerServerResponseModel>> ByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>12224b156eff2beed073048b71a916ad</Hash>
+    <Hash>71d42b1dc4755d10b0c8fb149c0a9890</Hash>
 </Codenesium>*/

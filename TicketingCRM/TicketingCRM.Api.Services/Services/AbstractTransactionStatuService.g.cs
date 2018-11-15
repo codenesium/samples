@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		protected ITransactionStatuRepository TransactionStatuRepository { get; private set; }
 
-		protected IApiTransactionStatuRequestModelValidator TransactionStatuModelValidator { get; private set; }
+		protected IApiTransactionStatuServerRequestModelValidator TransactionStatuModelValidator { get; private set; }
 
 		protected IBOLTransactionStatuMapper BolTransactionStatuMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace TicketingCRMNS.Api.Services
 		public AbstractTransactionStatuService(
 			ILogger logger,
 			ITransactionStatuRepository transactionStatuRepository,
-			IApiTransactionStatuRequestModelValidator transactionStatuModelValidator,
+			IApiTransactionStatuServerRequestModelValidator transactionStatuModelValidator,
 			IBOLTransactionStatuMapper bolTransactionStatuMapper,
 			IDALTransactionStatuMapper dalTransactionStatuMapper,
 			IBOLTransactionMapper bolTransactionMapper,
@@ -47,14 +42,14 @@ namespace TicketingCRMNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTransactionStatuResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTransactionStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TransactionStatuRepository.All(limit, offset);
 
 			return this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTransactionStatuResponseModel> Get(int id)
+		public virtual async Task<ApiTransactionStatuServerResponseModel> Get(int id)
 		{
 			var record = await this.TransactionStatuRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace TicketingCRMNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTransactionStatuResponseModel>> Create(
-			ApiTransactionStatuRequestModel model)
+		public virtual async Task<CreateResponse<ApiTransactionStatuServerResponseModel>> Create(
+			ApiTransactionStatuServerRequestModel model)
 		{
-			CreateResponse<ApiTransactionStatuResponseModel> response = new CreateResponse<ApiTransactionStatuResponseModel>(await this.TransactionStatuModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTransactionStatuServerResponseModel> response = ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.CreateResponse(await this.TransactionStatuModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTransactionStatuMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTransactionStatuResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTransactionStatuServerResponseModel>> Update(
 			int id,
-			ApiTransactionStatuRequestModel model)
+			ApiTransactionStatuServerRequestModel model)
 		{
 			var validationResult = await this.TransactionStatuModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.TransactionStatuRepository.Get(id);
 
-				return new UpdateResponse<ApiTransactionStatuResponseModel>(this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.UpdateResponse(this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTransactionStatuResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TransactionStatuModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TransactionStatuModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TransactionStatuRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiTransactionResponseModel>> TransactionsByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTransactionServerResponseModel>> TransactionsByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Transaction> records = await this.TransactionStatuRepository.TransactionsByTransactionStatusId(transactionStatusId, limit, offset);
 
@@ -126,5 +123,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3fc4849940ad78c6fe54105b1e995e5</Hash>
+    <Hash>5a036a16e4d3b55701cb616d46793fc6</Hash>
 </Codenesium>*/

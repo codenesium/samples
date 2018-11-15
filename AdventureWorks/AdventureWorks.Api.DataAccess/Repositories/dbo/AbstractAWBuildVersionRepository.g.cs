@@ -80,22 +80,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<AWBuildVersion, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<AWBuildVersion, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<AWBuildVersion, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.SystemInformationID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
-			}
-			else
-			{
-				return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
-			}
+			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
 		}
 
 		private async Task<AWBuildVersion> GetById(int systemInformationID)
@@ -108,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc3b5eb65854011f3b9f5f724285d03e</Hash>
+    <Hash>eff745eba8b7d07c17e77c207801df7b</Hash>
 </Codenesium>*/

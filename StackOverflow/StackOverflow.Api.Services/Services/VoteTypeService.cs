@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public VoteTypeService(
 			ILogger<IVoteTypeRepository> logger,
 			IVoteTypeRepository voteTypeRepository,
-			IApiVoteTypeRequestModelValidator voteTypeModelValidator,
-			IBOLVoteTypeMapper bolvoteTypeMapper,
-			IDALVoteTypeMapper dalvoteTypeMapper)
+			IApiVoteTypeServerRequestModelValidator voteTypeModelValidator,
+			IBOLVoteTypeMapper bolVoteTypeMapper,
+			IDALVoteTypeMapper dalVoteTypeMapper)
 			: base(logger,
 			       voteTypeRepository,
 			       voteTypeModelValidator,
-			       bolvoteTypeMapper,
-			       dalvoteTypeMapper)
+			       bolVoteTypeMapper,
+			       dalVoteTypeMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6ab36efba9a6460ae4c2b718bf0d9c1</Hash>
+    <Hash>385d6248a836865b7c29d4b9e4c2f41d</Hash>
 </Codenesium>*/

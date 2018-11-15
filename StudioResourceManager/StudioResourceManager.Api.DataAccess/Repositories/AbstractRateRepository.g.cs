@@ -76,6 +76,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Rate>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.TeacherId == teacherId, limit, offset);
+		}
+
+		public async virtual Task<List<Rate>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.TeacherSkillId == teacherSkillId, limit, offset);
+		}
+
 		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
 		{
 			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
@@ -90,22 +100,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Expression<Func<Rate, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Rate, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Rate, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
-			}
-			else
-			{
-				return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
-			}
+			return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		private async Task<Rate> GetById(int id)
@@ -118,5 +120,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa49a14c568f1244e792c4b932c8ccf1</Hash>
+    <Hash>662d62905a1d35511d4cadacca9466a3</Hash>
 </Codenesium>*/

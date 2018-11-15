@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			var record = new ApiEmployeeResponseModel();
-			var records = new List<ApiEmployeeResponseModel>();
+			var record = new ApiEmployeeServerResponseModel();
+			var records = new List<ApiEmployeeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiEmployeeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiEmployeeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiEmployeeResponseModel>>(new List<ApiEmployeeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiEmployeeServerResponseModel>>(new List<ApiEmployeeServerResponseModel>()));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiEmployeeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiEmployeeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeServerResponseModel()));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiEmployeeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiEmployeeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeServerResponseModel>(null));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiEmployeeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiEmployeeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiEmployeeServerResponseModel>.CreateResponse(null as ApiEmployeeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiEmployeeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeServerResponseModel>>(mockResponse));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiEmployeeRequestModel>();
-			records.Add(new ApiEmployeeRequestModel());
+			var records = new List<ApiEmployeeServerRequestModel>();
+			records.Add(new ApiEmployeeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiEmployeeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiEmployeeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiEmployeeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiEmployeeServerResponseModel>>(null as ApiEmployeeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeServerResponseModel>>(mockResponse.Object));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiEmployeeRequestModel>();
-			records.Add(new ApiEmployeeRequestModel());
+			var records = new List<ApiEmployeeServerRequestModel>();
+			records.Add(new ApiEmployeeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiEmployeeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiEmployeeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiEmployeeServerResponseModel>.CreateResponse(null as ApiEmployeeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiEmployeeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeServerResponseModel>>(mockResponse));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiEmployeeRequestModel());
+			IActionResult response = await controller.Create(new ApiEmployeeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiEmployeeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiEmployeeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiEmployeeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiEmployeeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiEmployeeServerResponseModel>>(null as ApiEmployeeServerResponseModel);
+			var mockRecord = new ApiEmployeeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiEmployeeServerResponseModel>>(mockResponse.Object));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiEmployeeRequestModel());
+			IActionResult response = await controller.Create(new ApiEmployeeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEmployeeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEmployeeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()))
-			.Callback<int, ApiEmployeeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()))
+			.Callback<int, ApiEmployeeServerRequestModel>(
 				(id, model) => model.FirstName.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiEmployeeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeResponseModel>(new ApiEmployeeResponseModel()));
-			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiEmployeeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeServerResponseModel>(new ApiEmployeeServerResponseModel()));
+			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiEmployeeRequestModel>();
+			var patch = new JsonPatchDocument<ApiEmployeeServerRequestModel>();
 			patch.Replace(x => x.FirstName, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeServerResponseModel>(null));
 			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiEmployeeRequestModel>();
+			var patch = new JsonPatchDocument<ApiEmployeeServerRequestModel>();
 			patch.Replace(x => x.FirstName, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEmployeeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEmployeeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeResponseModel()));
-			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeServerResponseModel()));
+			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEmployeeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEmployeeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEmployeeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEmployeeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeResponseModel()));
-			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiEmployeeServerResponseModel()));
+			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEmployeeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEmployeeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			EmployeeControllerMockFacade mock = new EmployeeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiEmployeeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiEmployeeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeResponseModel>(null));
-			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEmployeeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiEmployeeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEmployeeServerResponseModel>(null));
+			EmployeeController controller = new EmployeeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiEmployeeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiEmployeeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiEmployeeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<IEmployeeService> ServiceMock { get; set; } = new Mock<IEmployeeService>();
 
-		public Mock<IApiEmployeeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiEmployeeModelMapper>();
+		public Mock<IApiEmployeeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiEmployeeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6a4bf4792c05430a1d976fea0e7095b</Hash>
+    <Hash>3b09ff60c32bfcada19c904a5427b022</Hash>
 </Codenesium>*/

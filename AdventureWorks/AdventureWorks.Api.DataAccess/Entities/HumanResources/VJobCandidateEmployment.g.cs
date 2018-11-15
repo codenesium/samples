@@ -40,42 +40,42 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Emp.EndDate")]
-		public DateTime? EmpEndDate { get; private set; }
+		public virtual DateTime? EmpEndDate { get; private set; }
 
 		[Column("Emp.FunctionCategory")]
-		public string EmpFunctionCategory { get; private set; }
+		public virtual string EmpFunctionCategory { get; private set; }
 
 		[Column("Emp.IndustryCategory")]
-		public string EmpIndustryCategory { get; private set; }
+		public virtual string EmpIndustryCategory { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Emp.JobTitle")]
-		public string EmpJobTitle { get; private set; }
+		public virtual string EmpJobTitle { get; private set; }
 
 		[Column("Emp.Loc.City")]
-		public string EmpLocCity { get; private set; }
+		public virtual string EmpLocCity { get; private set; }
 
 		[Column("Emp.Loc.CountryRegion")]
-		public string EmpLocCountryRegion { get; private set; }
+		public virtual string EmpLocCountryRegion { get; private set; }
 
 		[Column("Emp.Loc.State")]
-		public string EmpLocState { get; private set; }
+		public virtual string EmpLocState { get; private set; }
 
 		[MaxLength(100)]
 		[Column("Emp.OrgName")]
-		public string EmpOrgName { get; private set; }
+		public virtual string EmpOrgName { get; private set; }
 
 		[Column("Emp.Responsibility")]
-		public string EmpResponsibility { get; private set; }
+		public virtual string EmpResponsibility { get; private set; }
 
 		[Column("Emp.StartDate")]
-		public DateTime? EmpStartDate { get; private set; }
+		public virtual DateTime? EmpStartDate { get; private set; }
 
 		[Column("JobCandidateID")]
-		public int JobCandidateID { get; private set; }
+		public virtual int JobCandidateID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8640fff655d6767372ac634915612a54</Hash>
+    <Hash>cd1103415450a000dc34a4e5e6f30c76</Hash>
 </Codenesium>*/

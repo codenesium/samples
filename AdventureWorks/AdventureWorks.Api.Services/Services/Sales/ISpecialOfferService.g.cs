@@ -2,27 +2,28 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface ISpecialOfferService
 	{
-		Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
-			ApiSpecialOfferRequestModel model);
+		Task<CreateResponse<ApiSpecialOfferServerResponseModel>> Create(
+			ApiSpecialOfferServerRequestModel model);
 
-		Task<UpdateResponse<ApiSpecialOfferResponseModel>> Update(int specialOfferID,
-		                                                           ApiSpecialOfferRequestModel model);
+		Task<UpdateResponse<ApiSpecialOfferServerResponseModel>> Update(int specialOfferID,
+		                                                                 ApiSpecialOfferServerRequestModel model);
 
 		Task<ActionResponse> Delete(int specialOfferID);
 
-		Task<ApiSpecialOfferResponseModel> Get(int specialOfferID);
+		Task<ApiSpecialOfferServerResponseModel> Get(int specialOfferID);
 
-		Task<List<ApiSpecialOfferResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpecialOfferServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<ApiSpecialOfferServerResponseModel> ByRowguid(Guid rowguid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>45ca2d94762bf064d81b31fb0acf6321</Hash>
+    <Hash>d097743784ea3ab670f2f9a3afd0f2ac</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,19 +11,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IBusinessEntityRepository BusinessEntityRepository { get; private set; }
 
-		protected IApiBusinessEntityRequestModelValidator BusinessEntityModelValidator { get; private set; }
+		protected IApiBusinessEntityServerRequestModelValidator BusinessEntityModelValidator { get; private set; }
 
 		protected IBOLBusinessEntityMapper BolBusinessEntityMapper { get; private set; }
 
 		protected IDALBusinessEntityMapper DalBusinessEntityMapper { get; private set; }
-
-		protected IBOLBusinessEntityAddressMapper BolBusinessEntityAddressMapper { get; private set; }
-
-		protected IDALBusinessEntityAddressMapper DalBusinessEntityAddressMapper { get; private set; }
-
-		protected IBOLBusinessEntityContactMapper BolBusinessEntityContactMapper { get; private set; }
-
-		protected IDALBusinessEntityContactMapper DalBusinessEntityContactMapper { get; private set; }
 
 		protected IBOLPersonMapper BolPersonMapper { get; private set; }
 
@@ -39,13 +26,9 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractBusinessEntityService(
 			ILogger logger,
 			IBusinessEntityRepository businessEntityRepository,
-			IApiBusinessEntityRequestModelValidator businessEntityModelValidator,
+			IApiBusinessEntityServerRequestModelValidator businessEntityModelValidator,
 			IBOLBusinessEntityMapper bolBusinessEntityMapper,
 			IDALBusinessEntityMapper dalBusinessEntityMapper,
-			IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper,
-			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
 			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper)
 			: base()
@@ -54,23 +37,19 @@ namespace AdventureWorksNS.Api.Services
 			this.BusinessEntityModelValidator = businessEntityModelValidator;
 			this.BolBusinessEntityMapper = bolBusinessEntityMapper;
 			this.DalBusinessEntityMapper = dalBusinessEntityMapper;
-			this.BolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
-			this.DalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
-			this.BolBusinessEntityContactMapper = bolBusinessEntityContactMapper;
-			this.DalBusinessEntityContactMapper = dalBusinessEntityContactMapper;
 			this.BolPersonMapper = bolPersonMapper;
 			this.DalPersonMapper = dalPersonMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBusinessEntityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.BusinessEntityRepository.All(limit, offset);
 
 			return this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiBusinessEntityResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiBusinessEntityServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.BusinessEntityRepository.Get(businessEntityID);
 
@@ -84,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiBusinessEntityResponseModel>> Create(
-			ApiBusinessEntityRequestModel model)
+		public virtual async Task<CreateResponse<ApiBusinessEntityServerResponseModel>> Create(
+			ApiBusinessEntityServerRequestModel model)
 		{
-			CreateResponse<ApiBusinessEntityResponseModel> response = new CreateResponse<ApiBusinessEntityResponseModel>(await this.BusinessEntityModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBusinessEntityServerResponseModel> response = ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.CreateResponse(await this.BusinessEntityModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolBusinessEntityMapper.MapModelToBO(default(int), model);
@@ -99,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiBusinessEntityResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiBusinessEntityServerResponseModel>> Update(
 			int businessEntityID,
-			ApiBusinessEntityRequestModel model)
+			ApiBusinessEntityServerRequestModel model)
 		{
 			var validationResult = await this.BusinessEntityModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -112,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.BusinessEntityRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiBusinessEntityResponseModel>(this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.UpdateResponse(this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiBusinessEntityResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.BusinessEntityModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.BusinessEntityModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.BusinessEntityRepository.Delete(businessEntityID);
@@ -132,21 +113,21 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiBusinessEntityServerResponseModel> ByRowguid(Guid rowguid)
 		{
-			List<BusinessEntityAddress> records = await this.BusinessEntityRepository.BusinessEntityAddressesByBusinessEntityID(businessEntityID, limit, offset);
+			BusinessEntity record = await this.BusinessEntityRepository.ByRowguid(rowguid);
 
-			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(record));
+			}
 		}
 
-		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<BusinessEntityContact> records = await this.BusinessEntityRepository.BusinessEntityContactsByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiPersonResponseModel>> PeopleByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPersonServerResponseModel>> PeopleByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Person> records = await this.BusinessEntityRepository.PeopleByBusinessEntityID(businessEntityID, limit, offset);
 
@@ -156,5 +137,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d09091d4cd75ac952401b4486a6f16bf</Hash>
+    <Hash>c9403a58e328efdf3fe8931c54f18d2c</Hash>
 </Codenesium>*/

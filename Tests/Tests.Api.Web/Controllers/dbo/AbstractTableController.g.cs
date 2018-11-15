@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ITableService TableService { get; private set; }
 
-		protected IApiTableModelMapper TableModelMapper { get; private set; }
+		protected IApiTableServerModelMapper TableModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractTableController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITableService tableService,
-			IApiTableModelMapper tableModelMapper
+			IApiTableServerModelMapper tableModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTableServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTableResponseModel> response = await this.TableService.All(query.Limit, query.Offset);
+			List<ApiTableServerResponseModel> response = await this.TableService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTableResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTableServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTableResponseModel response = await this.TableService.Get(id);
+			ApiTableServerResponseModel response = await this.TableService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTableServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTableRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTableServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTableResponseModel> records = new List<ApiTableResponseModel>();
+			List<ApiTableServerResponseModel> records = new List<ApiTableServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTableResponseModel> result = await this.TableService.Create(model);
+				CreateResponse<ApiTableServerResponseModel> result = await this.TableService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTableServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTableResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTableServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTableRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTableServerRequestModel model)
 		{
-			CreateResponse<ApiTableResponseModel> result = await this.TableService.Create(model);
+			CreateResponse<ApiTableServerResponseModel> result = await this.TableService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTableRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTableServerRequestModel> patch)
 		{
-			ApiTableResponseModel record = await this.TableService.Get(id);
+			ApiTableServerResponseModel record = await this.TableService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTableRequestModel model = await this.PatchModel(id, patch);
+				ApiTableServerRequestModel model = await this.PatchModel(id, patch) as ApiTableServerRequestModel;
 
-				UpdateResponse<ApiTableResponseModel> result = await this.TableService.Update(id, model);
+				UpdateResponse<ApiTableServerResponseModel> result = await this.TableService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTableResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTableServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTableRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTableServerRequestModel model)
 		{
-			ApiTableRequestModel request = await this.PatchModel(id, this.TableModelMapper.CreatePatch(model));
+			ApiTableServerRequestModel request = await this.PatchModel(id, this.TableModelMapper.CreatePatch(model)) as ApiTableServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTableResponseModel> result = await this.TableService.Update(id, request);
+				UpdateResponse<ApiTableServerResponseModel> result = await this.TableService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TableService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiTableRequestModel> PatchModel(int id, JsonPatchDocument<ApiTableRequestModel> patch)
+		private async Task<ApiTableServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTableServerRequestModel> patch)
 		{
 			var record = await this.TableService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTableRequestModel request = this.TableModelMapper.MapResponseToRequest(record);
+				ApiTableServerRequestModel request = this.TableModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7883b363ba7cf40b98e46f1830d8e107</Hash>
+    <Hash>199904a9047714c23b4b34b5eeaa6bad</Hash>
 </Codenesium>*/

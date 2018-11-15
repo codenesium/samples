@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TwitterNS.Api.Services
 		public ReplyService(
 			ILogger<IReplyRepository> logger,
 			IReplyRepository replyRepository,
-			IApiReplyRequestModelValidator replyModelValidator,
-			IBOLReplyMapper bolreplyMapper,
-			IDALReplyMapper dalreplyMapper)
+			IApiReplyServerRequestModelValidator replyModelValidator,
+			IBOLReplyMapper bolReplyMapper,
+			IDALReplyMapper dalReplyMapper)
 			: base(logger,
 			       replyRepository,
 			       replyModelValidator,
-			       bolreplyMapper,
-			       dalreplyMapper)
+			       bolReplyMapper,
+			       dalReplyMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1137738dc8ec9fc79869040466dc64df</Hash>
+    <Hash>808a1e9d577c09aa7be01281b32aa718</Hash>
 </Codenesium>*/

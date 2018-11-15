@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CountryController : AbstractCountryController
 	{
 		public CountryController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<CountryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryService countryService,
-			IApiCountryModelMapper countryModelMapper
+			IApiCountryServerModelMapper countryModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0e5d6fa61bf840e4963d21bdf2ddfc16</Hash>
+    <Hash>bb2163d009568234bbfb2eb1e2716c44</Hash>
 </Codenesium>*/

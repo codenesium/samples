@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ContactTypeController : AbstractContactTypeController
 	{
 		public ContactTypeController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ContactTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IContactTypeService contactTypeService,
-			IApiContactTypeModelMapper contactTypeModelMapper
+			IApiContactTypeServerModelMapper contactTypeModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b451174be9a8ddd484032a2f4b7ec08d</Hash>
+    <Hash>9d04d53ba08a7ec14771c781a6fadc8a</Hash>
 </Codenesium>*/

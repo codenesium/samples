@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PostType")]
 	[Trait("Area", "Integration")]
-	public class PostTypeIntegrationTests
+	public partial class PostTypeIntegrationTests
 	{
 		public PostTypeIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.PostTypeDeleteAsync(1);
+			var model = new ApiPostTypeClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiPostTypeClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiPostTypeClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiPostTypeClientResponseModel>> result = await client.PostTypeBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<PostType>().ToList()[1].Type.Should().Be("B");
+
+			context.Set<PostType>().ToList()[2].Type.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiPostTypeClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiPostTypeClientResponseModel> result = await client.PostTypeCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<PostType>().ToList()[1].Type.Should().Be("B");
+
+			result.Record.Type.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiPostTypeServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IPostTypeService service = testServer.Host.Services.GetService(typeof(IPostTypeService)) as IPostTypeService;
+			ApiPostTypeServerResponseModel model = await service.Get(1);
 
-			ApiPostTypeResponseModel model = await client.PostTypeGetAsync(1);
+			ApiPostTypeClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiPostTypeModelMapper mapper = new ApiPostTypeModelMapper();
+			UpdateResponse<ApiPostTypeClientResponseModel> updateResponse = await client.PostTypeUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiPostTypeResponseModel> updateResponse = await client.PostTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<PostType>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<PostType>().ToList()[0].Type.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Type.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiPostTypeRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiPostTypeResponseModel> createResult = await client.PostTypeCreateAsync(createModel);
+			IPostTypeService service = testServer.Host.Services.GetService(typeof(IPostTypeService)) as IPostTypeService;
+			var model = new ApiPostTypeServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiPostTypeServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiPostTypeResponseModel getResponse = await client.PostTypeGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.PostTypeDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiPostTypeResponseModel verifyResponse = await client.PostTypeGetAsync(2);
+			ApiPostTypeServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiPostTypeResponseModel response = await client.PostTypeGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiPostTypeClientResponseModel response = await client.PostTypeGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Type.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPostTypeClientResponseModel response = await client.PostTypeGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,35 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiPostTypeResponseModel> response = await client.PostTypeAllAsync();
+			List<ApiPostTypeClientResponseModel> response = await client.PostTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Type.Should().Be("A");
 		}
 
-		private async Task<ApiPostTypeResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiPostTypeRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiPostTypeResponseModel> result = await client.PostTypeCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.PostTypeAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6590f459a242a5943e8a0e7a4d06b23</Hash>
+    <Hash>f1b68ae18e5f1292ca73c3f5dea6457f</Hash>
 </Codenesium>*/

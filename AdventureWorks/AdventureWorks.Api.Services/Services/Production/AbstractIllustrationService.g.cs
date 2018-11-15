@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IIllustrationRepository IllustrationRepository { get; private set; }
 
-		protected IApiIllustrationRequestModelValidator IllustrationModelValidator { get; private set; }
+		protected IApiIllustrationServerRequestModelValidator IllustrationModelValidator { get; private set; }
 
 		protected IBOLIllustrationMapper BolIllustrationMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractIllustrationService(
 			ILogger logger,
 			IIllustrationRepository illustrationRepository,
-			IApiIllustrationRequestModelValidator illustrationModelValidator,
+			IApiIllustrationServerRequestModelValidator illustrationModelValidator,
 			IBOLIllustrationMapper bolIllustrationMapper,
 			IDALIllustrationMapper dalIllustrationMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiIllustrationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiIllustrationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.IllustrationRepository.All(limit, offset);
 
 			return this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiIllustrationResponseModel> Get(int illustrationID)
+		public virtual async Task<ApiIllustrationServerResponseModel> Get(int illustrationID)
 		{
 			var record = await this.IllustrationRepository.Get(illustrationID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiIllustrationResponseModel>> Create(
-			ApiIllustrationRequestModel model)
+		public virtual async Task<CreateResponse<ApiIllustrationServerResponseModel>> Create(
+			ApiIllustrationServerRequestModel model)
 		{
-			CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.IllustrationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiIllustrationServerResponseModel> response = ValidationResponseFactory<ApiIllustrationServerResponseModel>.CreateResponse(await this.IllustrationModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolIllustrationMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiIllustrationResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiIllustrationServerResponseModel>> Update(
 			int illustrationID,
-			ApiIllustrationRequestModel model)
+			ApiIllustrationServerRequestModel model)
 		{
 			var validationResult = await this.IllustrationModelValidator.ValidateUpdateAsync(illustrationID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.IllustrationRepository.Get(illustrationID);
 
-				return new UpdateResponse<ApiIllustrationResponseModel>(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiIllustrationServerResponseModel>.UpdateResponse(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiIllustrationResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiIllustrationServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int illustrationID)
 		{
-			ActionResponse response = new ActionResponse(await this.IllustrationModelValidator.ValidateDeleteAsync(illustrationID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.IllustrationModelValidator.ValidateDeleteAsync(illustrationID));
+
 			if (response.Success)
 			{
 				await this.IllustrationRepository.Delete(illustrationID);
@@ -107,16 +104,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiIllustrationResponseModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Illustration> records = await this.IllustrationRepository.ByProductModelID(productModelID, limit, offset);
-
-			return this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9cceff432919cbf1ec9e8a0f962c070</Hash>
+    <Hash>5d494ba1d0c5d5a4b342754f866c3205</Hash>
 </Codenesium>*/

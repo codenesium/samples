@@ -40,45 +40,42 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("DueDate")]
-		public DateTime DueDate { get; private set; }
+		public virtual DateTime DueDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("LineTotal")]
-		public decimal LineTotal { get; private set; }
+		public virtual decimal LineTotal { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("OrderQty")]
-		public short OrderQty { get; private set; }
+		public virtual short OrderQty { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("PurchaseOrderDetailID")]
-		public int PurchaseOrderDetailID { get; private set; }
+		public virtual int PurchaseOrderDetailID { get; private set; }
 
 		[Key]
 		[Column("PurchaseOrderID")]
-		public int PurchaseOrderID { get; private set; }
+		public virtual int PurchaseOrderID { get; private set; }
 
 		[Column("ReceivedQty")]
-		public double ReceivedQty { get; private set; }
+		public virtual double ReceivedQty { get; private set; }
 
 		[Column("RejectedQty")]
-		public double RejectedQty { get; private set; }
+		public virtual double RejectedQty { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("StockedQty")]
-		public double StockedQty { get; private set; }
+		public virtual double StockedQty { get; private set; }
 
 		[Column("UnitPrice")]
-		public decimal UnitPrice { get; private set; }
+		public virtual decimal UnitPrice { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ba43b494820e0eb4a6db13f52911c9c</Hash>
+    <Hash>4b441d8f5966149b528070ad0a321786</Hash>
 </Codenesium>*/

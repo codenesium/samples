@@ -76,7 +76,7 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DeviceAction>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<DeviceAction>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.DeviceId == deviceId, limit, offset);
 		}
@@ -90,22 +90,14 @@ namespace ESPIOTNS.Api.DataAccess
 			Expression<Func<DeviceAction, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<DeviceAction, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<DeviceAction, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
-			}
-			else
-			{
-				return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
-			}
+			return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
 		}
 
 		private async Task<DeviceAction> GetById(int id)
@@ -118,5 +110,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>631eef00c7bae5411a9d9e448da45ce5</Hash>
+    <Hash>246297302af50646c941c1f83cb1d3a1</Hash>
 </Codenesium>*/

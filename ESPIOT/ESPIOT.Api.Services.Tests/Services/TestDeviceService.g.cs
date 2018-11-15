@@ -33,7 +33,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceResponseModel> response = await service.All();
+			List<ApiDeviceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceResponseModel response = await service.Get(default(int));
+			ApiDeviceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceResponseModel response = await service.Get(default(int));
+			ApiDeviceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IDeviceRepository>();
-			var model = new ApiDeviceRequestModel();
+			var model = new ApiDeviceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
 			var service = new DeviceService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			CreateResponse<ApiDeviceResponseModel> response = await service.Create(model);
+			CreateResponse<ApiDeviceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceRequestModel>()));
+			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Device>()));
 		}
 
@@ -103,7 +103,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IDeviceRepository>();
-			var model = new ApiDeviceRequestModel();
+			var model = new ApiDeviceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
 			var service = new DeviceService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			UpdateResponse<ApiDeviceResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiDeviceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()));
+			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Device>()));
 		}
 
@@ -125,7 +125,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IDeviceRepository>();
-			var model = new ApiDeviceRequestModel();
+			var model = new ApiDeviceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DeviceService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceResponseModel response = await service.ByPublicId(default(Guid));
+			ApiDeviceServerResponseModel response = await service.ByPublicId(default(Guid));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByPublicId(It.IsAny<Guid>()));
@@ -175,7 +175,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			ApiDeviceResponseModel response = await service.ByPublicId(default(Guid));
+			ApiDeviceServerResponseModel response = await service.ByPublicId(default(Guid));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByPublicId(It.IsAny<Guid>()));
@@ -196,7 +196,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceActionResponseModel> response = await service.DeviceActionsByDeviceId(default(int));
+			List<ApiDeviceActionServerResponseModel> response = await service.DeviceActionsByDeviceId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.DeviceActionsByDeviceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-			List<ApiDeviceActionResponseModel> response = await service.DeviceActionsByDeviceId(default(int));
+			List<ApiDeviceActionServerResponseModel> response = await service.DeviceActionsByDeviceId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.DeviceActionsByDeviceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -224,5 +224,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>853a43cc411c6a4631f58019c4c6ca31</Hash>
+    <Hash>f40386fd8649dd3a73a7461a306b0cf3</Hash>
 </Codenesium>*/

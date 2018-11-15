@@ -1,4 +1,3 @@
-using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace PetStoreNS.Api.Services
 	{
 		public virtual BOBreed MapModelToBO(
 			int id,
-			ApiBreedRequestModel model
+			ApiBreedServerRequestModel model
 			)
 		{
 			BOBreed boBreed = new BOBreed();
@@ -19,20 +18,20 @@ namespace PetStoreNS.Api.Services
 			return boBreed;
 		}
 
-		public virtual ApiBreedResponseModel MapBOToModel(
+		public virtual ApiBreedServerResponseModel MapBOToModel(
 			BOBreed boBreed)
 		{
-			var model = new ApiBreedResponseModel();
+			var model = new ApiBreedServerResponseModel();
 
 			model.SetProperties(boBreed.Id, boBreed.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiBreedResponseModel> MapBOToModel(
+		public virtual List<ApiBreedServerResponseModel> MapBOToModel(
 			List<BOBreed> items)
 		{
-			List<ApiBreedResponseModel> response = new List<ApiBreedResponseModel>();
+			List<ApiBreedServerResponseModel> response = new List<ApiBreedServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c93a976e02dd1108030e7a4c471c441d</Hash>
+    <Hash>5fd3a6a3a2358f35aaada93ccc223b0a</Hash>
 </Codenesium>*/

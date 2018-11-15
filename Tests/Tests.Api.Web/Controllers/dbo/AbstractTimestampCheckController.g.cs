@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ITimestampCheckService TimestampCheckService { get; private set; }
 
-		protected IApiTimestampCheckModelMapper TimestampCheckModelMapper { get; private set; }
+		protected IApiTimestampCheckServerModelMapper TimestampCheckModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractTimestampCheckController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITimestampCheckService timestampCheckService,
-			IApiTimestampCheckModelMapper timestampCheckModelMapper
+			IApiTimestampCheckServerModelMapper timestampCheckModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTimestampCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTimestampCheckServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTimestampCheckResponseModel> response = await this.TimestampCheckService.All(query.Limit, query.Offset);
+			List<ApiTimestampCheckServerResponseModel> response = await this.TimestampCheckService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTimestampCheckResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTimestampCheckServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTimestampCheckResponseModel response = await this.TimestampCheckService.Get(id);
+			ApiTimestampCheckServerResponseModel response = await this.TimestampCheckService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTimestampCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTimestampCheckServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTimestampCheckRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTimestampCheckServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTimestampCheckResponseModel> records = new List<ApiTimestampCheckResponseModel>();
+			List<ApiTimestampCheckServerResponseModel> records = new List<ApiTimestampCheckServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTimestampCheckResponseModel> result = await this.TimestampCheckService.Create(model);
+				CreateResponse<ApiTimestampCheckServerResponseModel> result = await this.TimestampCheckService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTimestampCheckServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTimestampCheckResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTimestampCheckServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTimestampCheckRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTimestampCheckServerRequestModel model)
 		{
-			CreateResponse<ApiTimestampCheckResponseModel> result = await this.TimestampCheckService.Create(model);
+			CreateResponse<ApiTimestampCheckServerResponseModel> result = await this.TimestampCheckService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTimestampCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTimestampCheckServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTimestampCheckRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTimestampCheckServerRequestModel> patch)
 		{
-			ApiTimestampCheckResponseModel record = await this.TimestampCheckService.Get(id);
+			ApiTimestampCheckServerResponseModel record = await this.TimestampCheckService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTimestampCheckRequestModel model = await this.PatchModel(id, patch);
+				ApiTimestampCheckServerRequestModel model = await this.PatchModel(id, patch) as ApiTimestampCheckServerRequestModel;
 
-				UpdateResponse<ApiTimestampCheckResponseModel> result = await this.TimestampCheckService.Update(id, model);
+				UpdateResponse<ApiTimestampCheckServerResponseModel> result = await this.TimestampCheckService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTimestampCheckResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTimestampCheckServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTimestampCheckRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTimestampCheckServerRequestModel model)
 		{
-			ApiTimestampCheckRequestModel request = await this.PatchModel(id, this.TimestampCheckModelMapper.CreatePatch(model));
+			ApiTimestampCheckServerRequestModel request = await this.PatchModel(id, this.TimestampCheckModelMapper.CreatePatch(model)) as ApiTimestampCheckServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTimestampCheckResponseModel> result = await this.TimestampCheckService.Update(id, request);
+				UpdateResponse<ApiTimestampCheckServerResponseModel> result = await this.TimestampCheckService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TimestampCheckService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiTimestampCheckRequestModel> PatchModel(int id, JsonPatchDocument<ApiTimestampCheckRequestModel> patch)
+		private async Task<ApiTimestampCheckServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTimestampCheckServerRequestModel> patch)
 		{
 			var record = await this.TimestampCheckService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiTimestampCheckRequestModel request = this.TimestampCheckModelMapper.MapResponseToRequest(record);
+				ApiTimestampCheckServerRequestModel request = this.TimestampCheckModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9746685851014a59d682d12fdca9342b</Hash>
+    <Hash>12c3f6e7d7aec82c1c76917682ee3b47</Hash>
 </Codenesium>*/

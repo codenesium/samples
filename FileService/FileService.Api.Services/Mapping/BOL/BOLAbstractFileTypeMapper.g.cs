@@ -1,4 +1,3 @@
-using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace FileServiceNS.Api.Services
 	{
 		public virtual BOFileType MapModelToBO(
 			int id,
-			ApiFileTypeRequestModel model
+			ApiFileTypeServerRequestModel model
 			)
 		{
 			BOFileType boFileType = new BOFileType();
@@ -19,20 +18,20 @@ namespace FileServiceNS.Api.Services
 			return boFileType;
 		}
 
-		public virtual ApiFileTypeResponseModel MapBOToModel(
+		public virtual ApiFileTypeServerResponseModel MapBOToModel(
 			BOFileType boFileType)
 		{
-			var model = new ApiFileTypeResponseModel();
+			var model = new ApiFileTypeServerResponseModel();
 
 			model.SetProperties(boFileType.Id, boFileType.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiFileTypeResponseModel> MapBOToModel(
+		public virtual List<ApiFileTypeServerResponseModel> MapBOToModel(
 			List<BOFileType> items)
 		{
-			List<ApiFileTypeResponseModel> response = new List<ApiFileTypeResponseModel>();
+			List<ApiFileTypeServerResponseModel> response = new List<ApiFileTypeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb83da09bd4fea1266d400ed24810f24</Hash>
+    <Hash>cf7d9e7e7da94b7189acddf00d37a52f</Hash>
 </Codenesium>*/

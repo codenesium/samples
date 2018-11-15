@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IShiftService ShiftService { get; private set; }
 
-		protected IApiShiftModelMapper ShiftModelMapper { get; private set; }
+		protected IApiShiftServerModelMapper ShiftModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShiftService shiftService,
-			IApiShiftModelMapper shiftModelMapper
+			IApiShiftServerModelMapper shiftModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiShiftServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiShiftResponseModel> response = await this.ShiftService.All(query.Limit, query.Offset);
+			List<ApiShiftServerResponseModel> response = await this.ShiftService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShiftServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiShiftResponseModel response = await this.ShiftService.Get(id);
+			ApiShiftServerResponseModel response = await this.ShiftService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiShiftServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiShiftResponseModel> records = new List<ApiShiftResponseModel>();
+			List<ApiShiftServerResponseModel> records = new List<ApiShiftServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiShiftResponseModel> result = await this.ShiftService.Create(model);
+				CreateResponse<ApiShiftServerResponseModel> result = await this.ShiftService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiShiftServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiShiftResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiShiftServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShiftRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiShiftServerRequestModel model)
 		{
-			CreateResponse<ApiShiftResponseModel> result = await this.ShiftService.Create(model);
+			CreateResponse<ApiShiftServerResponseModel> result = await this.ShiftService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShiftResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShiftServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShiftRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShiftServerRequestModel> patch)
 		{
-			ApiShiftResponseModel record = await this.ShiftService.Get(id);
+			ApiShiftServerResponseModel record = await this.ShiftService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShiftRequestModel model = await this.PatchModel(id, patch);
+				ApiShiftServerRequestModel model = await this.PatchModel(id, patch) as ApiShiftServerRequestModel;
 
-				UpdateResponse<ApiShiftResponseModel> result = await this.ShiftService.Update(id, model);
+				UpdateResponse<ApiShiftServerResponseModel> result = await this.ShiftService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShiftResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShiftServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftServerRequestModel model)
 		{
-			ApiShiftRequestModel request = await this.PatchModel(id, this.ShiftModelMapper.CreatePatch(model));
+			ApiShiftServerRequestModel request = await this.PatchModel(id, this.ShiftModelMapper.CreatePatch(model)) as ApiShiftServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiShiftResponseModel> result = await this.ShiftService.Update(id, request);
+				UpdateResponse<ApiShiftServerResponseModel> result = await this.ShiftService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ShiftService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShiftServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiShiftResponseModel response = await this.ShiftService.ByName(name);
+			ApiShiftServerResponseModel response = await this.ShiftService.ByName(name);
 
 			if (response == null)
 			{
@@ -228,11 +238,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byStartTimeEndTime/{startTime}/{endTime}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShiftServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
 		{
-			ApiShiftResponseModel response = await this.ShiftService.ByStartTimeEndTime(startTime, endTime);
+			ApiShiftServerResponseModel response = await this.ShiftService.ByStartTimeEndTime(startTime, endTime);
 
 			if (response == null)
 			{
@@ -244,24 +254,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{shiftID}/EmployeeDepartmentHistoriesByShiftID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> EmployeeDepartmentHistoriesByShiftID(int shiftID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.ShiftService.EmployeeDepartmentHistoriesByShiftID(shiftID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiShiftRequestModel> PatchModel(int id, JsonPatchDocument<ApiShiftRequestModel> patch)
+		private async Task<ApiShiftServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiShiftServerRequestModel> patch)
 		{
 			var record = await this.ShiftService.Get(id);
 
@@ -271,7 +264,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShiftRequestModel request = this.ShiftModelMapper.MapResponseToRequest(record);
+				ApiShiftServerRequestModel request = this.ShiftModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -280,5 +273,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9fec23d9982cb41bbe8a9d4b26455ce7</Hash>
+    <Hash>3654df354724169e7298cec0bdeace59</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace ESPIOTNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			var record = new ApiDeviceResponseModel();
-			var records = new List<ApiDeviceResponseModel>();
+			var record = new ApiDeviceServerResponseModel();
+			var records = new List<ApiDeviceServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace ESPIOTNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDeviceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDeviceServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace ESPIOTNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDeviceResponseModel>>(new List<ApiDeviceResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDeviceServerResponseModel>>(new List<ApiDeviceServerResponseModel>()));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace ESPIOTNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiDeviceResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiDeviceServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace ESPIOTNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceServerResponseModel()));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace ESPIOTNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiDeviceResponseModel;
+			var record = (response as OkObjectResult).Value as ApiDeviceServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace ESPIOTNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceServerResponseModel>(null));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace ESPIOTNS.Api.Web.Tests
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDeviceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDeviceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDeviceServerResponseModel>.CreateResponse(null as ApiDeviceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDeviceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceServerResponseModel>>(mockResponse));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDeviceRequestModel>();
-			records.Add(new ApiDeviceRequestModel());
+			var records = new List<ApiDeviceServerRequestModel>();
+			records.Add(new ApiDeviceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiDeviceResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiDeviceServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace ESPIOTNS.Api.Web.Tests
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDeviceResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiDeviceServerResponseModel>>(null as ApiDeviceServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceServerResponseModel>>(mockResponse.Object));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiDeviceRequestModel>();
-			records.Add(new ApiDeviceRequestModel());
+			var records = new List<ApiDeviceServerRequestModel>();
+			records.Add(new ApiDeviceServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace ESPIOTNS.Api.Web.Tests
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiDeviceResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiDeviceResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiDeviceServerResponseModel>.CreateResponse(null as ApiDeviceServerResponseModel);
+
+			mockResponse.SetRecord(new ApiDeviceServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceServerResponseModel>>(mockResponse));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDeviceRequestModel());
+			IActionResult response = await controller.Create(new ApiDeviceServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDeviceResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiDeviceServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace ESPIOTNS.Api.Web.Tests
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiDeviceResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiDeviceResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiDeviceServerResponseModel>>(null as ApiDeviceServerResponseModel);
+			var mockRecord = new ApiDeviceServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiDeviceServerResponseModel>>(mockResponse.Object));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiDeviceRequestModel());
+			IActionResult response = await controller.Create(new ApiDeviceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDeviceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDeviceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()))
-			.Callback<int, ApiDeviceRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()))
+			.Callback<int, ApiDeviceServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiDeviceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceResponseModel>(new ApiDeviceResponseModel()));
-			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiDeviceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceServerResponseModel>(new ApiDeviceServerResponseModel()));
+			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
+			var patch = new JsonPatchDocument<ApiDeviceServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace ESPIOTNS.Api.Web.Tests
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceServerResponseModel>(null));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiDeviceRequestModel>();
+			var patch = new JsonPatchDocument<ApiDeviceServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace ESPIOTNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDeviceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDeviceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceResponseModel()));
-			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceServerResponseModel()));
+			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDeviceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDeviceServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDeviceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDeviceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceResponseModel()));
-			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiDeviceServerResponseModel()));
+			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDeviceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDeviceServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiDeviceResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiDeviceServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceResponseModel>(null));
-			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiDeviceServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceServerResponseModel>(null));
+			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiDeviceServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiDeviceRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiDeviceServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace ESPIOTNS.Api.Web.Tests
 
 		public Mock<IDeviceService> ServiceMock { get; set; } = new Mock<IDeviceService>();
 
-		public Mock<IApiDeviceModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDeviceModelMapper>();
+		public Mock<IApiDeviceServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiDeviceServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>a544efee7937ca5223b867abceea0789</Hash>
+    <Hash>2b1e730bf3dc1fb565910bb939fcfb5c</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			var record = new ApiLinkTypeResponseModel();
-			var records = new List<ApiLinkTypeResponseModel>();
+			var record = new ApiLinkTypeServerResponseModel();
+			var records = new List<ApiLinkTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLinkTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLinkTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLinkTypeResponseModel>>(new List<ApiLinkTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLinkTypeServerResponseModel>>(new List<ApiLinkTypeServerResponseModel>()));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLinkTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLinkTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeServerResponseModel()));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiLinkTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiLinkTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeServerResponseModel>(null));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLinkTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLinkTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLinkTypeServerResponseModel>.CreateResponse(null as ApiLinkTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLinkTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeServerResponseModel>>(mockResponse));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLinkTypeRequestModel>();
-			records.Add(new ApiLinkTypeRequestModel());
+			var records = new List<ApiLinkTypeServerRequestModel>();
+			records.Add(new ApiLinkTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiLinkTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiLinkTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLinkTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiLinkTypeServerResponseModel>>(null as ApiLinkTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeServerResponseModel>>(mockResponse.Object));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLinkTypeRequestModel>();
-			records.Add(new ApiLinkTypeRequestModel());
+			var records = new List<ApiLinkTypeServerRequestModel>();
+			records.Add(new ApiLinkTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLinkTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLinkTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLinkTypeServerResponseModel>.CreateResponse(null as ApiLinkTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLinkTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeServerResponseModel>>(mockResponse));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLinkTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiLinkTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLinkTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLinkTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLinkTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiLinkTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiLinkTypeServerResponseModel>>(null as ApiLinkTypeServerResponseModel);
+			var mockRecord = new ApiLinkTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLinkTypeServerResponseModel>>(mockResponse.Object));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLinkTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiLinkTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>()))
-			.Callback<int, ApiLinkTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>()))
+			.Callback<int, ApiLinkTypeServerRequestModel>(
 				(id, model) => model.Type.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiLinkTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeResponseModel>(new ApiLinkTypeResponseModel()));
-			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiLinkTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeServerResponseModel>(new ApiLinkTypeServerResponseModel()));
+			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLinkTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiLinkTypeServerRequestModel>();
 			patch.Replace(x => x.Type, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeServerResponseModel>(null));
 			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLinkTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiLinkTypeServerRequestModel>();
 			patch.Replace(x => x.Type, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeResponseModel()));
-			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeServerResponseModel()));
+			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeResponseModel()));
-			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLinkTypeServerResponseModel()));
+			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			LinkTypeControllerMockFacade mock = new LinkTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLinkTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLinkTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeResponseModel>(null));
-			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLinkTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLinkTypeServerResponseModel>(null));
+			LinkTypeController controller = new LinkTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLinkTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLinkTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLinkTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<ILinkTypeService> ServiceMock { get; set; } = new Mock<ILinkTypeService>();
 
-		public Mock<IApiLinkTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLinkTypeModelMapper>();
+		public Mock<IApiLinkTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLinkTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e183f773961da2bacde563d9c69e1a3</Hash>
+    <Hash>4f40a04ff0265220332148f4eaee27ae</Hash>
 </Codenesium>*/

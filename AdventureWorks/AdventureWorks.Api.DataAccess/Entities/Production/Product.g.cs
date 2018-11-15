@@ -69,92 +69,91 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(2)]
 		[Column("Class")]
-		public string @Class { get; private set; }
+		public virtual string @Class { get; private set; }
 
 		[MaxLength(15)]
 		[Column("Color")]
-		public string Color { get; private set; }
+		public virtual string Color { get; private set; }
 
 		[Column("DaysToManufacture")]
-		public int DaysToManufacture { get; private set; }
+		public virtual int DaysToManufacture { get; private set; }
 
 		[Column("DiscontinuedDate")]
-		public DateTime? DiscontinuedDate { get; private set; }
+		public virtual DateTime? DiscontinuedDate { get; private set; }
 
 		[Column("FinishedGoodsFlag")]
-		public bool FinishedGoodsFlag { get; private set; }
+		public virtual bool FinishedGoodsFlag { get; private set; }
 
 		[Column("ListPrice")]
-		public decimal ListPrice { get; private set; }
+		public virtual decimal ListPrice { get; private set; }
 
 		[Column("MakeFlag")]
-		public bool MakeFlag { get; private set; }
+		public virtual bool MakeFlag { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[MaxLength(2)]
 		[Column("ProductLine")]
-		public string ProductLine { get; private set; }
+		public virtual string ProductLine { get; private set; }
 
 		[Column("ProductModelID")]
-		public int? ProductModelID { get; private set; }
+		public virtual int? ProductModelID { get; private set; }
 
 		[MaxLength(25)]
 		[Column("ProductNumber")]
-		public string ProductNumber { get; private set; }
+		public virtual string ProductNumber { get; private set; }
 
 		[Column("ProductSubcategoryID")]
-		public int? ProductSubcategoryID { get; private set; }
+		public virtual int? ProductSubcategoryID { get; private set; }
 
 		[Column("ReorderPoint")]
-		public short ReorderPoint { get; private set; }
+		public virtual short ReorderPoint { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("SafetyStockLevel")]
-		public short SafetyStockLevel { get; private set; }
+		public virtual short SafetyStockLevel { get; private set; }
 
 		[Column("SellEndDate")]
-		public DateTime? SellEndDate { get; private set; }
+		public virtual DateTime? SellEndDate { get; private set; }
 
 		[Column("SellStartDate")]
-		public DateTime SellStartDate { get; private set; }
+		public virtual DateTime SellStartDate { get; private set; }
 
 		[MaxLength(5)]
 		[Column("Size")]
-		public string Size { get; private set; }
+		public virtual string Size { get; private set; }
 
 		[MaxLength(3)]
 		[Column("SizeUnitMeasureCode")]
-		public string SizeUnitMeasureCode { get; private set; }
+		public virtual string SizeUnitMeasureCode { get; private set; }
 
 		[Column("StandardCost")]
-		public decimal StandardCost { get; private set; }
+		public virtual decimal StandardCost { get; private set; }
 
 		[MaxLength(2)]
 		[Column("Style")]
-		public string Style { get; private set; }
+		public virtual string Style { get; private set; }
 
 		[Column("Weight")]
-		public double? Weight { get; private set; }
+		public virtual double? Weight { get; private set; }
 
 		[MaxLength(3)]
 		[Column("WeightUnitMeasureCode")]
-		public string WeightUnitMeasureCode { get; private set; }
+		public virtual string WeightUnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>089de0ba692ff64ec34ec9a0d71887c8</Hash>
+    <Hash>a50a7c6c3bd4ed2eb4915f683a735312</Hash>
 </Codenesium>*/

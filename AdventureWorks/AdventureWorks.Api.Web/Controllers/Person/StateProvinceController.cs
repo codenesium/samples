@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class StateProvinceController : AbstractStateProvinceController
 	{
 		public StateProvinceController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<StateProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStateProvinceService stateProvinceService,
-			IApiStateProvinceModelMapper stateProvinceModelMapper
+			IApiStateProvinceServerModelMapper stateProvinceModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e2364f1e0645a5561b80fcb7cb1f82b0</Hash>
+    <Hash>919d923ccb2a6fa32bc10e1879520105</Hash>
 </Codenesium>*/

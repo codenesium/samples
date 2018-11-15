@@ -26,21 +26,21 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("Date")]
-		public DateTime Date { get; private set; }
+		public virtual DateTime Date { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(40)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("UserId")]
-		public int UserId { get; private set; }
+		public virtual int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0c38ae71d90a8aefcbfc00fb4405250</Hash>
+    <Hash>73c6f337cace06472f0f2ac936c2043d</Hash>
 </Codenesium>*/

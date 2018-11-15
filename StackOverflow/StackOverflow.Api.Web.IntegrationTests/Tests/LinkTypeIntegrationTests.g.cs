@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "LinkType")]
 	[Trait("Area", "Integration")]
-	public class LinkTypeIntegrationTests
+	public partial class LinkTypeIntegrationTests
 	{
 		public LinkTypeIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.LinkTypeDeleteAsync(1);
+			var model = new ApiLinkTypeClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiLinkTypeClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiLinkTypeClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiLinkTypeClientResponseModel>> result = await client.LinkTypeBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<LinkType>().ToList()[1].Type.Should().Be("B");
+
+			context.Set<LinkType>().ToList()[2].Type.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiLinkTypeClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiLinkTypeClientResponseModel> result = await client.LinkTypeCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<LinkType>().ToList()[1].Type.Should().Be("B");
+
+			result.Record.Type.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiLinkTypeServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ILinkTypeService service = testServer.Host.Services.GetService(typeof(ILinkTypeService)) as ILinkTypeService;
+			ApiLinkTypeServerResponseModel model = await service.Get(1);
 
-			ApiLinkTypeResponseModel model = await client.LinkTypeGetAsync(1);
+			ApiLinkTypeClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiLinkTypeModelMapper mapper = new ApiLinkTypeModelMapper();
+			UpdateResponse<ApiLinkTypeClientResponseModel> updateResponse = await client.LinkTypeUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiLinkTypeResponseModel> updateResponse = await client.LinkTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<LinkType>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<LinkType>().ToList()[0].Type.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Type.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiLinkTypeRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiLinkTypeResponseModel> createResult = await client.LinkTypeCreateAsync(createModel);
+			ILinkTypeService service = testServer.Host.Services.GetService(typeof(ILinkTypeService)) as ILinkTypeService;
+			var model = new ApiLinkTypeServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiLinkTypeServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiLinkTypeResponseModel getResponse = await client.LinkTypeGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.LinkTypeDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiLinkTypeResponseModel verifyResponse = await client.LinkTypeGetAsync(2);
+			ApiLinkTypeServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiLinkTypeResponseModel response = await client.LinkTypeGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiLinkTypeClientResponseModel response = await client.LinkTypeGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Type.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiLinkTypeClientResponseModel response = await client.LinkTypeGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,35 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiLinkTypeResponseModel> response = await client.LinkTypeAllAsync();
+			List<ApiLinkTypeClientResponseModel> response = await client.LinkTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Type.Should().Be("A");
 		}
 
-		private async Task<ApiLinkTypeResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiLinkTypeRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiLinkTypeResponseModel> result = await client.LinkTypeCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.LinkTypeAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e17c645d04a18716f02c5c58b1a00fe</Hash>
+    <Hash>5762b68eb425670f08a2606a729ff293</Hash>
 </Codenesium>*/

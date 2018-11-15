@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public UserService(
 			ILogger<IUserRepository> logger,
 			IUserRepository userRepository,
-			IApiUserRequestModelValidator userModelValidator,
-			IBOLUserMapper boluserMapper,
-			IDALUserMapper daluserMapper)
+			IApiUserServerRequestModelValidator userModelValidator,
+			IBOLUserMapper bolUserMapper,
+			IDALUserMapper dalUserMapper)
 			: base(logger,
 			       userRepository,
 			       userModelValidator,
-			       boluserMapper,
-			       daluserMapper)
+			       bolUserMapper,
+			       dalUserMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>856c7a55e14a5292f1781824e90c172d</Hash>
+    <Hash>41dba3e3754bd2610bcc57e709155cfc</Hash>
 </Codenesium>*/

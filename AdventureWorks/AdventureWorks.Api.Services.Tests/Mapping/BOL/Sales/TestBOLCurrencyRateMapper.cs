@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCurrencyRateMapper();
-			ApiCurrencyRateRequestModel model = new ApiCurrencyRateRequestModel();
+			ApiCurrencyRateServerRequestModel model = new ApiCurrencyRateServerRequestModel();
 			model.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOCurrencyRate response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCurrencyRateMapper();
 			BOCurrencyRate bo = new BOCurrencyRate();
 			bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCurrencyRateResponseModel response = mapper.MapBOToModel(bo);
+			ApiCurrencyRateServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AverageRate.Should().Be(1m);
 			response.CurrencyRateDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCurrencyRateMapper();
 			BOCurrencyRate bo = new BOCurrencyRate();
 			bo.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCurrencyRateResponseModel> response = mapper.MapBOToModel(new List<BOCurrencyRate>() { { bo } });
+			List<ApiCurrencyRateServerResponseModel> response = mapper.MapBOToModel(new List<BOCurrencyRate>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7fe927feb56c743bacc49e5094d35471</Hash>
+    <Hash>4667c931339d6fb213c96015ddb777b8</Hash>
 </Codenesium>*/

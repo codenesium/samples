@@ -76,12 +76,12 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Venue>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Venue>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.AdminId == adminId, limit, offset);
 		}
 
-		public async Task<List<Venue>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Venue>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProvinceId == provinceId, limit, offset);
 		}
@@ -100,22 +100,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			Expression<Func<Venue, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Venue, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Venue, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Venue>();
-			}
-			else
-			{
-				return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Venue>();
-			}
+			return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Venue>();
 		}
 
 		private async Task<Venue> GetById(int id)
@@ -128,5 +120,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d738fcc896a8bb62c8ba1ba0e2495851</Hash>
+    <Hash>7f8f7d6e1f0333456a489922d24e543f</Hash>
 </Codenesium>*/

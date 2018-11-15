@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			var record = new ApiTeamResponseModel();
-			var records = new List<ApiTeamResponseModel>();
+			var record = new ApiTeamServerResponseModel();
+			var records = new List<ApiTeamServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTeamResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTeamServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTeamResponseModel>>(new List<ApiTeamResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiTeamServerResponseModel>>(new List<ApiTeamServerResponseModel>()));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiTeamResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiTeamServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamServerResponseModel()));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiTeamResponseModel;
+			var record = (response as OkObjectResult).Value as ApiTeamServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamServerResponseModel>(null));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTeamResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTeamResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTeamServerResponseModel>.CreateResponse(null as ApiTeamServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTeamServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamServerResponseModel>>(mockResponse));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTeamRequestModel>();
-			records.Add(new ApiTeamRequestModel());
+			var records = new List<ApiTeamServerRequestModel>();
+			records.Add(new ApiTeamServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiTeamResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiTeamServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTeamResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiTeamServerResponseModel>>(null as ApiTeamServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamServerResponseModel>>(mockResponse.Object));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiTeamRequestModel>();
-			records.Add(new ApiTeamRequestModel());
+			var records = new List<ApiTeamServerRequestModel>();
+			records.Add(new ApiTeamServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiTeamResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiTeamResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiTeamServerResponseModel>.CreateResponse(null as ApiTeamServerResponseModel);
+
+			mockResponse.SetRecord(new ApiTeamServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamServerResponseModel>>(mockResponse));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTeamRequestModel());
+			IActionResult response = await controller.Create(new ApiTeamServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTeamResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiTeamServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiTeamResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiTeamResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiTeamServerResponseModel>>(null as ApiTeamServerResponseModel);
+			var mockRecord = new ApiTeamServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiTeamServerResponseModel>>(mockResponse.Object));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiTeamRequestModel());
+			IActionResult response = await controller.Create(new ApiTeamServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeamResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeamServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>()))
-			.Callback<int, ApiTeamRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()))
+			.Callback<int, ApiTeamServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiTeamResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamResponseModel>(new ApiTeamResponseModel()));
-			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiTeamServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamServerResponseModel>(new ApiTeamServerResponseModel()));
+			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTeamRequestModel>();
+			var patch = new JsonPatchDocument<ApiTeamServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamServerResponseModel>(null));
 			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiTeamRequestModel>();
+			var patch = new JsonPatchDocument<ApiTeamServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeamResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeamServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamResponseModel()));
-			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamServerResponseModel()));
+			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeamRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeamServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeamResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeamServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamResponseModel()));
-			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiTeamServerResponseModel()));
+			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeamRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeamServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			TeamControllerMockFacade mock = new TeamControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiTeamResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiTeamServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamResponseModel>(null));
-			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiTeamServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiTeamServerResponseModel>(null));
+			TeamController controller = new TeamController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiTeamServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiTeamRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiTeamServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<ITeamService> ServiceMock { get; set; } = new Mock<ITeamService>();
 
-		public Mock<IApiTeamModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTeamModelMapper>();
+		public Mock<IApiTeamServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiTeamServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c8770dce1d944a460a6d318989cad01</Hash>
+    <Hash>f529d4882426f17787fde251b5885e65</Hash>
 </Codenesium>*/

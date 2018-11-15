@@ -1,4 +1,3 @@
-using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace NebulaNS.Api.Services
 	{
 		public virtual BOLinkLog MapModelToBO(
 			int id,
-			ApiLinkLogRequestModel model
+			ApiLinkLogServerRequestModel model
 			)
 		{
 			BOLinkLog boLinkLog = new BOLinkLog();
@@ -21,20 +20,20 @@ namespace NebulaNS.Api.Services
 			return boLinkLog;
 		}
 
-		public virtual ApiLinkLogResponseModel MapBOToModel(
+		public virtual ApiLinkLogServerResponseModel MapBOToModel(
 			BOLinkLog boLinkLog)
 		{
-			var model = new ApiLinkLogResponseModel();
+			var model = new ApiLinkLogServerResponseModel();
 
 			model.SetProperties(boLinkLog.Id, boLinkLog.DateEntered, boLinkLog.LinkId, boLinkLog.Log);
 
 			return model;
 		}
 
-		public virtual List<ApiLinkLogResponseModel> MapBOToModel(
+		public virtual List<ApiLinkLogServerResponseModel> MapBOToModel(
 			List<BOLinkLog> items)
 		{
-			List<ApiLinkLogResponseModel> response = new List<ApiLinkLogResponseModel>();
+			List<ApiLinkLogServerResponseModel> response = new List<ApiLinkLogServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4df2f4f6def3ed3a79a730aff91d19d3</Hash>
+    <Hash>8ea33923d1112c5efbc9860aa8773a88</Hash>
 </Codenesium>*/

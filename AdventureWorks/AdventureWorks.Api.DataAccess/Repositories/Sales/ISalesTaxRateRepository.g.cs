@@ -17,10 +17,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<SalesTaxRate> ByRowguid(Guid rowguid);
+
 		Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1aead7d240724e0aabf1776b6ef56b13</Hash>
+    <Hash>aca998fd7d86dcce979f0681ebf8da5a</Hash>
 </Codenesium>*/

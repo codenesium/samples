@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,9 +9,9 @@ namespace TwitterNS.Api.Services
 		public LocationService(
 			ILogger<ILocationRepository> logger,
 			ILocationRepository locationRepository,
-			IApiLocationRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bollocationMapper,
-			IDALLocationMapper dallocationMapper,
+			IApiLocationServerRequestModelValidator locationModelValidator,
+			IBOLLocationMapper bolLocationMapper,
+			IDALLocationMapper dalLocationMapper,
 			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
 			IBOLUserMapper bolUserMapper,
@@ -26,8 +19,8 @@ namespace TwitterNS.Api.Services
 			: base(logger,
 			       locationRepository,
 			       locationModelValidator,
-			       bollocationMapper,
-			       dallocationMapper,
+			       bolLocationMapper,
+			       dalLocationMapper,
 			       bolTweetMapper,
 			       dalTweetMapper,
 			       bolUserMapper,
@@ -38,5 +31,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82513f9ca528f9a1b01069c77b5e52ba</Hash>
+    <Hash>23e65827462f908baa3ca05eaedddbb9</Hash>
 </Codenesium>*/

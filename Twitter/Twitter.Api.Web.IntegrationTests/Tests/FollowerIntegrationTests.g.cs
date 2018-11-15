@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Client;
 using TwitterNS.Api.Contracts;
+using TwitterNS.Api.DataAccess;
 using TwitterNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,80 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Follower")]
 	[Trait("Area", "Integration")]
-	public class FollowerIntegrationTests
+	public partial class FollowerIntegrationTests
 	{
 		public FollowerIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.FollowerDeleteAsync(1);
+			var model = new ApiFollowerClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B");
+			var model2 = new ApiFollowerClientRequestModel();
+			model2.SetProperties("C", DateTime.Parse("1/1/1989 12:00:00 AM"), 1, 1, "C", "C");
+			var request = new List<ApiFollowerClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiFollowerClientResponseModel>> result = await client.FollowerBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Follower>().ToList()[1].Blocked.Should().Be("B");
+			context.Set<Follower>().ToList()[1].DateFollowed.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Follower>().ToList()[1].FollowedUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[1].FollowingUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[1].FollowRequestStatu.Should().Be("B");
+			context.Set<Follower>().ToList()[1].Muted.Should().Be("B");
+
+			context.Set<Follower>().ToList()[2].Blocked.Should().Be("C");
+			context.Set<Follower>().ToList()[2].DateFollowed.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<Follower>().ToList()[2].FollowedUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[2].FollowingUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[2].FollowRequestStatu.Should().Be("C");
+			context.Set<Follower>().ToList()[2].Muted.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiFollowerClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B");
+			CreateResponse<ApiFollowerClientResponseModel> result = await client.FollowerCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Follower>().ToList()[1].Blocked.Should().Be("B");
+			context.Set<Follower>().ToList()[1].DateFollowed.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Follower>().ToList()[1].FollowedUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[1].FollowingUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[1].FollowRequestStatu.Should().Be("B");
+			context.Set<Follower>().ToList()[1].Muted.Should().Be("B");
+
+			result.Record.Blocked.Should().Be("B");
+			result.Record.DateFollowed.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.FollowedUserId.Should().Be(1);
+			result.Record.FollowingUserId.Should().Be(1);
+			result.Record.FollowRequestStatu.Should().Be("B");
+			result.Record.Muted.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +99,63 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiFollowerServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IFollowerService service = testServer.Host.Services.GetService(typeof(IFollowerService)) as IFollowerService;
+			ApiFollowerServerResponseModel model = await service.Get(1);
 
-			ApiFollowerResponseModel model = await client.FollowerGetAsync(1);
+			ApiFollowerClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B");
 
-			ApiFollowerModelMapper mapper = new ApiFollowerModelMapper();
+			UpdateResponse<ApiFollowerClientResponseModel> updateResponse = await client.FollowerUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiFollowerResponseModel> updateResponse = await client.FollowerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Follower>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Follower>().ToList()[0].Blocked.Should().Be("B");
+			context.Set<Follower>().ToList()[0].DateFollowed.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Follower>().ToList()[0].FollowedUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[0].FollowingUserId.Should().Be(1);
+			context.Set<Follower>().ToList()[0].FollowRequestStatu.Should().Be("B");
+			context.Set<Follower>().ToList()[0].Muted.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Blocked.Should().Be("B");
+			updateResponse.Record.DateFollowed.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.FollowedUserId.Should().Be(1);
+			updateResponse.Record.FollowingUserId.Should().Be(1);
+			updateResponse.Record.FollowRequestStatu.Should().Be("B");
+			updateResponse.Record.Muted.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiFollowerRequestModel();
-			createModel.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 1, 1, "B");
-			CreateResponse<ApiFollowerResponseModel> createResult = await client.FollowerCreateAsync(createModel);
+			IFollowerService service = testServer.Host.Services.GetService(typeof(IFollowerService)) as IFollowerService;
+			var model = new ApiFollowerServerRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, "B", "B");
+			CreateResponse<ApiFollowerServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiFollowerResponseModel getResponse = await client.FollowerGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.FollowerDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiFollowerResponseModel verifyResponse = await client.FollowerGetAsync(2);
+			ApiFollowerServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +163,36 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiFollowerResponseModel response = await client.FollowerGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiFollowerClientResponseModel response = await client.FollowerGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Blocked.Should().Be("A");
+			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.FollowedUserId.Should().Be(1);
+			response.FollowingUserId.Should().Be(1);
+			response.FollowRequestStatu.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.Muted.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiFollowerClientResponseModel response = await client.FollowerGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +201,110 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiFollowerResponseModel> response = await client.FollowerAllAsync();
+			List<ApiFollowerClientResponseModel> response = await client.FollowerAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Blocked.Should().Be("A");
+			response[0].DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].FollowedUserId.Should().Be(1);
+			response[0].FollowingUserId.Should().Be(1);
+			response[0].FollowRequestStatu.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].Muted.Should().Be("A");
 		}
 
-		private async Task<ApiFollowerResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByFollowedUserIdFound()
 		{
-			var model = new ApiFollowerRequestModel();
-			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 1, 1, "B");
-			CreateResponse<ApiFollowerResponseModel> result = await client.FollowerCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiFollowerClientResponseModel> response = await client.ByFollowerByFollowedUserId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Blocked.Should().Be("A");
+			response[0].DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].FollowedUserId.Should().Be(1);
+			response[0].FollowingUserId.Should().Be(1);
+			response[0].FollowRequestStatu.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].Muted.Should().Be("A");
+		}
+
+		[Fact]
+		public virtual async void TestByFollowedUserIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiFollowerClientResponseModel> response = await client.ByFollowerByFollowedUserId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestByFollowingUserIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiFollowerClientResponseModel> response = await client.ByFollowerByFollowingUserId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Blocked.Should().Be("A");
+			response[0].DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].FollowedUserId.Should().Be(1);
+			response[0].FollowingUserId.Should().Be(1);
+			response[0].FollowRequestStatu.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].Muted.Should().Be("A");
+		}
+
+		[Fact]
+		public virtual async void TestByFollowingUserIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiFollowerClientResponseModel> response = await client.ByFollowerByFollowingUserId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.FollowerAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>01f99aaf3331ff909972d92910198c3f</Hash>
+    <Hash>ed0810e60e25ff4b25e2d2081cac0b04</Hash>
 </Codenesium>*/

@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IFollowingRepository FollowingRepository { get; private set; }
 
-		protected IApiFollowingRequestModelValidator FollowingModelValidator { get; private set; }
+		protected IApiFollowingServerRequestModelValidator FollowingModelValidator { get; private set; }
 
 		protected IBOLFollowingMapper BolFollowingMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractFollowingService(
 			ILogger logger,
 			IFollowingRepository followingRepository,
-			IApiFollowingRequestModelValidator followingModelValidator,
+			IApiFollowingServerRequestModelValidator followingModelValidator,
 			IBOLFollowingMapper bolFollowingMapper,
 			IDALFollowingMapper dalFollowingMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiFollowingResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFollowingServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.FollowingRepository.All(limit, offset);
 
 			return this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiFollowingResponseModel> Get(string userId)
+		public virtual async Task<ApiFollowingServerResponseModel> Get(int userId)
 		{
 			var record = await this.FollowingRepository.Get(userId);
 
@@ -60,13 +55,14 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiFollowingResponseModel>> Create(
-			ApiFollowingRequestModel model)
+		public virtual async Task<CreateResponse<ApiFollowingServerResponseModel>> Create(
+			ApiFollowingServerRequestModel model)
 		{
-			CreateResponse<ApiFollowingResponseModel> response = new CreateResponse<ApiFollowingResponseModel>(await this.FollowingModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFollowingServerResponseModel> response = ValidationResponseFactory<ApiFollowingServerResponseModel>.CreateResponse(await this.FollowingModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
-				var bo = this.BolFollowingMapper.MapModelToBO(default(string), model);
+				var bo = this.BolFollowingMapper.MapModelToBO(default(int), model);
 				var record = await this.FollowingRepository.Create(this.DalFollowingMapper.MapBOToEF(bo));
 
 				response.SetRecord(this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record)));
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiFollowingResponseModel>> Update(
-			string userId,
-			ApiFollowingRequestModel model)
+		public virtual async Task<UpdateResponse<ApiFollowingServerResponseModel>> Update(
+			int userId,
+			ApiFollowingServerRequestModel model)
 		{
 			var validationResult = await this.FollowingModelValidator.ValidateUpdateAsync(userId, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.FollowingRepository.Get(userId);
 
-				return new UpdateResponse<ApiFollowingResponseModel>(this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiFollowingServerResponseModel>.UpdateResponse(this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiFollowingResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiFollowingServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			string userId)
+			int userId)
 		{
-			ActionResponse response = new ActionResponse(await this.FollowingModelValidator.ValidateDeleteAsync(userId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.FollowingModelValidator.ValidateDeleteAsync(userId));
+
 			if (response.Success)
 			{
 				await this.FollowingRepository.Delete(userId);
@@ -111,5 +108,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05ae8e6d674239bff8cf9a4cfce6572f</Hash>
+    <Hash>9f1623151922dd85b1689ff757555b39</Hash>
 </Codenesium>*/

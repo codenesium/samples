@@ -90,26 +90,33 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select families).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<Student> CreateStudent(Student item)
+		{
+			this.Context.Set<Student>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteStudent(Student item)
+		{
+			this.Context.Set<Student>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Family>> Where(
 			Expression<Func<Family, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Family, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Family, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Family>();
-			}
-			else
-			{
-				return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Family>();
-			}
+			return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Family>();
 		}
 
 		private async Task<Family> GetById(int id)
@@ -122,5 +129,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f73e3124756d3fa67d1eae69316c4345</Hash>
+    <Hash>924b2310a69763ea6245c71781cc00c8</Hash>
 </Codenesium>*/

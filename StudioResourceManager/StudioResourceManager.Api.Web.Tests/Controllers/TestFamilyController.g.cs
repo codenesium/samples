@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			var record = new ApiFamilyResponseModel();
-			var records = new List<ApiFamilyResponseModel>();
+			var record = new ApiFamilyServerResponseModel();
+			var records = new List<ApiFamilyServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFamilyResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFamilyServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFamilyResponseModel>>(new List<ApiFamilyResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFamilyServerResponseModel>>(new List<ApiFamilyServerResponseModel>()));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFamilyResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFamilyServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyServerResponseModel()));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiFamilyResponseModel;
+			var record = (response as OkObjectResult).Value as ApiFamilyServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyServerResponseModel>(null));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFamilyResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFamilyResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFamilyServerResponseModel>.CreateResponse(null as ApiFamilyServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFamilyServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyServerResponseModel>>(mockResponse));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFamilyRequestModel>();
-			records.Add(new ApiFamilyRequestModel());
+			var records = new List<ApiFamilyServerRequestModel>();
+			records.Add(new ApiFamilyServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiFamilyResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiFamilyServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFamilyResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiFamilyServerResponseModel>>(null as ApiFamilyServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyServerResponseModel>>(mockResponse.Object));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFamilyRequestModel>();
-			records.Add(new ApiFamilyRequestModel());
+			var records = new List<ApiFamilyServerRequestModel>();
+			records.Add(new ApiFamilyServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFamilyResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFamilyResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFamilyServerResponseModel>.CreateResponse(null as ApiFamilyServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFamilyServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyServerResponseModel>>(mockResponse));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFamilyRequestModel());
+			IActionResult response = await controller.Create(new ApiFamilyServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFamilyResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFamilyServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFamilyResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiFamilyResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiFamilyServerResponseModel>>(null as ApiFamilyServerResponseModel);
+			var mockRecord = new ApiFamilyServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFamilyServerResponseModel>>(mockResponse.Object));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFamilyRequestModel());
+			IActionResult response = await controller.Create(new ApiFamilyServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFamilyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFamilyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()))
-			.Callback<int, ApiFamilyRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()))
+			.Callback<int, ApiFamilyServerRequestModel>(
 				(id, model) => model.Note.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiFamilyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyResponseModel>(new ApiFamilyResponseModel()));
-			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiFamilyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyServerResponseModel>(new ApiFamilyServerResponseModel()));
+			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
+			var patch = new JsonPatchDocument<ApiFamilyServerRequestModel>();
 			patch.Replace(x => x.Note, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyServerResponseModel>(null));
 			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
+			var patch = new JsonPatchDocument<ApiFamilyServerRequestModel>();
 			patch.Replace(x => x.Note, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFamilyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFamilyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyResponseModel()));
-			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyServerResponseModel()));
+			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFamilyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFamilyServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFamilyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFamilyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyResponseModel()));
-			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFamilyServerResponseModel()));
+			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFamilyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFamilyServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			FamilyControllerMockFacade mock = new FamilyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFamilyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFamilyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyResponseModel>(null));
-			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFamilyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyServerResponseModel>(null));
+			FamilyController controller = new FamilyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFamilyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFamilyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFamilyServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 
 		public Mock<IFamilyService> ServiceMock { get; set; } = new Mock<IFamilyService>();
 
-		public Mock<IApiFamilyModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFamilyModelMapper>();
+		public Mock<IApiFamilyServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFamilyServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>3de315a435f241727dc1b0dfb336b566</Hash>
+    <Hash>f4fb7f39c30557961f741a5c0289878b</Hash>
 </Codenesium>*/

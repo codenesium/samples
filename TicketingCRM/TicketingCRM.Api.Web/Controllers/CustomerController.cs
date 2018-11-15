@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CustomerController : AbstractCustomerController
 	{
 		public CustomerController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<CustomerController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICustomerService customerService,
-			IApiCustomerModelMapper customerModelMapper
+			IApiCustomerServerModelMapper customerModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>efbde5940a52aade25bce0cc24f43447</Hash>
+    <Hash>43d0440b2785c600dc8db2123d1afa94</Hash>
 </Codenesium>*/

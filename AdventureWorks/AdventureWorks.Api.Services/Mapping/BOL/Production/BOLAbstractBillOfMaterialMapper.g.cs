@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOBillOfMaterial MapModelToBO(
 			int billOfMaterialsID,
-			ApiBillOfMaterialRequestModel model
+			ApiBillOfMaterialServerRequestModel model
 			)
 		{
 			BOBillOfMaterial boBillOfMaterial = new BOBillOfMaterial();
@@ -26,20 +25,20 @@ namespace AdventureWorksNS.Api.Services
 			return boBillOfMaterial;
 		}
 
-		public virtual ApiBillOfMaterialResponseModel MapBOToModel(
+		public virtual ApiBillOfMaterialServerResponseModel MapBOToModel(
 			BOBillOfMaterial boBillOfMaterial)
 		{
-			var model = new ApiBillOfMaterialResponseModel();
+			var model = new ApiBillOfMaterialServerResponseModel();
 
 			model.SetProperties(boBillOfMaterial.BillOfMaterialsID, boBillOfMaterial.BOMLevel, boBillOfMaterial.ComponentID, boBillOfMaterial.EndDate, boBillOfMaterial.ModifiedDate, boBillOfMaterial.PerAssemblyQty, boBillOfMaterial.ProductAssemblyID, boBillOfMaterial.StartDate, boBillOfMaterial.UnitMeasureCode);
 
 			return model;
 		}
 
-		public virtual List<ApiBillOfMaterialResponseModel> MapBOToModel(
+		public virtual List<ApiBillOfMaterialServerResponseModel> MapBOToModel(
 			List<BOBillOfMaterial> items)
 		{
-			List<ApiBillOfMaterialResponseModel> response = new List<ApiBillOfMaterialResponseModel>();
+			List<ApiBillOfMaterialServerResponseModel> response = new List<ApiBillOfMaterialServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c59ddd25742b3e44e2043b554e37af8</Hash>
+    <Hash>58829233ac3fdaa46a4ecdf001b37bab</Hash>
 </Codenesium>*/

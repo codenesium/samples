@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IAirlineRepository AirlineRepository { get; private set; }
 
-		protected IApiAirlineRequestModelValidator AirlineModelValidator { get; private set; }
+		protected IApiAirlineServerRequestModelValidator AirlineModelValidator { get; private set; }
 
 		protected IBOLAirlineMapper BolAirlineMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractAirlineService(
 			ILogger logger,
 			IAirlineRepository airlineRepository,
-			IApiAirlineRequestModelValidator airlineModelValidator,
+			IApiAirlineServerRequestModelValidator airlineModelValidator,
 			IBOLAirlineMapper bolAirlineMapper,
 			IDALAirlineMapper dalAirlineMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiAirlineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAirlineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.AirlineRepository.All(limit, offset);
 
 			return this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiAirlineResponseModel> Get(int id)
+		public virtual async Task<ApiAirlineServerResponseModel> Get(int id)
 		{
 			var record = await this.AirlineRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiAirlineResponseModel>> Create(
-			ApiAirlineRequestModel model)
+		public virtual async Task<CreateResponse<ApiAirlineServerResponseModel>> Create(
+			ApiAirlineServerRequestModel model)
 		{
-			CreateResponse<ApiAirlineResponseModel> response = new CreateResponse<ApiAirlineResponseModel>(await this.AirlineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAirlineServerResponseModel> response = ValidationResponseFactory<ApiAirlineServerResponseModel>.CreateResponse(await this.AirlineModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolAirlineMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiAirlineResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiAirlineServerResponseModel>> Update(
 			int id,
-			ApiAirlineRequestModel model)
+			ApiAirlineServerRequestModel model)
 		{
 			var validationResult = await this.AirlineModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.AirlineRepository.Get(id);
 
-				return new UpdateResponse<ApiAirlineResponseModel>(this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiAirlineServerResponseModel>.UpdateResponse(this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiAirlineResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiAirlineServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.AirlineModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.AirlineModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.AirlineRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bffd14d13345fbc6ea262d3be8657fc</Hash>
+    <Hash>447152d25d1aa9f585afa3b06891261d</Hash>
 </Codenesium>*/

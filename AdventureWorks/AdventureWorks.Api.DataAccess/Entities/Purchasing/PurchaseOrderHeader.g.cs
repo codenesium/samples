@@ -44,48 +44,47 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("EmployeeID")]
-		public int EmployeeID { get; private set; }
+		public virtual int EmployeeID { get; private set; }
 
 		[Column("Freight")]
-		public decimal Freight { get; private set; }
+		public virtual decimal Freight { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("OrderDate")]
-		public DateTime OrderDate { get; private set; }
+		public virtual DateTime OrderDate { get; private set; }
 
 		[Key]
 		[Column("PurchaseOrderID")]
-		public int PurchaseOrderID { get; private set; }
+		public virtual int PurchaseOrderID { get; private set; }
 
 		[Column("RevisionNumber")]
-		public int RevisionNumber { get; private set; }
+		public virtual int RevisionNumber { get; private set; }
 
 		[Column("ShipDate")]
-		public DateTime? ShipDate { get; private set; }
+		public virtual DateTime? ShipDate { get; private set; }
 
 		[Column("ShipMethodID")]
-		public int ShipMethodID { get; private set; }
+		public virtual int ShipMethodID { get; private set; }
 
 		[Column("Status")]
-		public int Status { get; private set; }
+		public virtual int Status { get; private set; }
 
 		[Column("SubTotal")]
-		public decimal SubTotal { get; private set; }
+		public virtual decimal SubTotal { get; private set; }
 
 		[Column("TaxAmt")]
-		public decimal TaxAmt { get; private set; }
+		public virtual decimal TaxAmt { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("TotalDue")]
-		public decimal TotalDue { get; private set; }
+		public virtual decimal TotalDue { get; private set; }
 
 		[Column("VendorID")]
-		public int VendorID { get; private set; }
+		public virtual int VendorID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>662112aac08253837ce7f54ffd9a464f</Hash>
+    <Hash>a875d1231e78132fc0b4549d8d7551d8</Hash>
 </Codenesium>*/

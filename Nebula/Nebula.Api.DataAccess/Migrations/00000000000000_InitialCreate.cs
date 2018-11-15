@@ -21,14 +21,14 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
---IF (OBJECT_ID('dbo.FK_Chain_chainStatusId_ChainStatus_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_Chain_teamId_Team_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_teamId_Team_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Chain_chainStatusId_ChainStatus_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Clasp_nextChainId_Chain_id', 'F') IS NOT NULL)
@@ -41,11 +41,6 @@ GO
 --ALTER TABLE [dbo].[Clasp] DROP CONSTRAINT [FK_Clasp_previousChainId_Chain_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Link_assignedMachineId_Machine_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_assignedMachineId_Machine_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_Link_chainId_Chain_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_chainId_Chain_id]
@@ -56,19 +51,24 @@ GO
 --ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_linkStatusId_LinkStatus_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.FK_Link_assignedMachineId_Machine_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_assignedMachineId_Machine_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_LinkLog_linkId_Link_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[LinkLog] DROP CONSTRAINT [FK_LinkLog_linkId_Link_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_MachineRefTeam_machineId_Machine_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_machineRefTeam_teamId_Team_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_machineRefTeam_teamId_Team_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_MachineRefTeam_machineId_Machine_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Team_organizationId_Organization_id', 'F') IS NOT NULL)
@@ -154,8 +154,9 @@ CREATE TABLE [dbo].[ChainStatus](
 GO
 
 CREATE TABLE [dbo].[Clasp](
-[previousChainId] [int]     NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
 [nextChainId] [int]     NOT NULL,
+[previousChainId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -260,8 +261,7 @@ GO
 ALTER TABLE[dbo].[Clasp]
 ADD CONSTRAINT[PK_Clasp] PRIMARY KEY CLUSTERED
 (
-[previousChainId] ASC
-,[nextChainId] ASC
+[id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Link]
@@ -357,15 +357,15 @@ ADD CONSTRAINT[UC_Version] PRIMARY KEY CLUSTERED
 GO
 
 
-ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
-REFERENCES[dbo].[ChainStatus]([id])
-GO
-ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id]
-GO
 ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_teamId_Team_id] FOREIGN KEY([teamId])
 REFERENCES[dbo].[Team]([id])
 GO
 ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_teamId_Team_id]
+GO
+ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
+REFERENCES[dbo].[ChainStatus]([id])
+GO
+ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id]
 GO
 ALTER TABLE[dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT[FK_Clasp_nextChainId_Chain_id] FOREIGN KEY([nextChainId])
 REFERENCES[dbo].[Chain]([id])
@@ -377,11 +377,6 @@ REFERENCES[dbo].[Chain]([id])
 GO
 ALTER TABLE[dbo].[Clasp] CHECK CONSTRAINT[FK_Clasp_previousChainId_Chain_id]
 GO
-ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_assignedMachineId_Machine_id] FOREIGN KEY([assignedMachineId])
-REFERENCES[dbo].[Machine]([id])
-GO
-ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_assignedMachineId_Machine_id]
-GO
 ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_chainId_Chain_id] FOREIGN KEY([chainId])
 REFERENCES[dbo].[Chain]([id])
 GO
@@ -392,20 +387,25 @@ REFERENCES[dbo].[LinkStatus]([id])
 GO
 ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_linkStatusId_LinkStatus_id]
 GO
+ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_assignedMachineId_Machine_id] FOREIGN KEY([assignedMachineId])
+REFERENCES[dbo].[Machine]([id])
+GO
+ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_assignedMachineId_Machine_id]
+GO
 ALTER TABLE[dbo].[LinkLog]  WITH CHECK ADD  CONSTRAINT[FK_LinkLog_linkId_Link_id] FOREIGN KEY([linkId])
 REFERENCES[dbo].[Link]([id])
 GO
 ALTER TABLE[dbo].[LinkLog] CHECK CONSTRAINT[FK_LinkLog_linkId_Link_id]
 GO
-ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id] FOREIGN KEY([machineId])
-REFERENCES[dbo].[Machine]([id])
-GO
-ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id]
-GO
 ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_machineRefTeam_teamId_Team_id] FOREIGN KEY([teamId])
 REFERENCES[dbo].[Team]([id])
 GO
 ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_machineRefTeam_teamId_Team_id]
+GO
+ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id] FOREIGN KEY([machineId])
+REFERENCES[dbo].[Machine]([id])
+GO
+ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id]
 GO
 ALTER TABLE[dbo].[Team]  WITH CHECK ADD  CONSTRAINT[FK_Team_organizationId_Organization_id] FOREIGN KEY([organizationId])
 REFERENCES[dbo].[Organization]([id])

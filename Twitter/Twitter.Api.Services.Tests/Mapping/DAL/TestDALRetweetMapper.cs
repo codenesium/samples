@@ -17,14 +17,14 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALRetweetMapper();
 			var bo = new BORetweet();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
 
 			Retweet response = mapper.MapBOToEF(bo);
 
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
 			response.RetwitterUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.TweetTweetId.Should().Be(1);
 		}
 
@@ -33,14 +33,14 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALRetweetMapper();
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"), 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"), 1);
 
 			BORetweet response = mapper.MapEFToBO(entity);
 
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
 			response.RetwitterUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 			response.TweetTweetId.Should().Be(1);
 		}
 
@@ -49,7 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALRetweetMapper();
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("0"), 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"), 1);
 
 			List<BORetweet> response = mapper.MapEFToBO(new List<Retweet>() { entity });
 
@@ -59,5 +59,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b34a264f3a49a644944c7c4dc972a483</Hash>
+    <Hash>c28e044fb3201767fbb9bf65412972b6</Hash>
 </Codenesium>*/

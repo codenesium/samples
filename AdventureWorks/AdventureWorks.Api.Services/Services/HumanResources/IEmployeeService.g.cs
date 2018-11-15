@@ -2,37 +2,34 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IEmployeeService
 	{
-		Task<CreateResponse<ApiEmployeeResponseModel>> Create(
-			ApiEmployeeRequestModel model);
+		Task<CreateResponse<ApiEmployeeServerResponseModel>> Create(
+			ApiEmployeeServerRequestModel model);
 
-		Task<UpdateResponse<ApiEmployeeResponseModel>> Update(int businessEntityID,
-		                                                       ApiEmployeeRequestModel model);
+		Task<UpdateResponse<ApiEmployeeServerResponseModel>> Update(int businessEntityID,
+		                                                             ApiEmployeeServerRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<ApiEmployeeResponseModel> Get(int businessEntityID);
+		Task<ApiEmployeeServerResponseModel> Get(int businessEntityID);
 
-		Task<List<ApiEmployeeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiEmployeeResponseModel> ByLoginID(string loginID);
+		Task<ApiEmployeeServerResponseModel> ByLoginID(string loginID);
 
-		Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber);
+		Task<ApiEmployeeServerResponseModel> ByNationalIDNumber(string nationalIDNumber);
 
-		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiEmployeeServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiJobCandidateResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiJobCandidateServerResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f02848079282a3cd526599feea30b4c</Hash>
+    <Hash>70ae3df5286b173b93adf82968d67448</Hash>
 </Codenesium>*/

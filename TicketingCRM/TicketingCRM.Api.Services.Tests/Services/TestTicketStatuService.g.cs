@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			List<ApiTicketStatuResponseModel> response = await service.All();
+			List<ApiTicketStatuServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			ApiTicketStatuResponseModel response = await service.Get(default(int));
+			ApiTicketStatuServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			ApiTicketStatuResponseModel response = await service.Get(default(int));
+			ApiTicketStatuServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
-			var model = new ApiTicketStatuRequestModel();
+			var model = new ApiTicketStatuServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TicketStatu>())).Returns(Task.FromResult(new TicketStatu()));
 			var service = new TicketStatuService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			CreateResponse<ApiTicketStatuResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTicketStatuServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuRequestModel>()));
+			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TicketStatu>()));
 		}
 
@@ -103,7 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
-			var model = new ApiTicketStatuRequestModel();
+			var model = new ApiTicketStatuServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TicketStatu>())).Returns(Task.FromResult(new TicketStatu()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatu()));
 			var service = new TicketStatuService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			UpdateResponse<ApiTicketStatuResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTicketStatuServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuRequestModel>()));
+			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TicketStatu>()));
 		}
 
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
-			var model = new ApiTicketStatuRequestModel();
+			var model = new ApiTicketStatuServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TicketStatuService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			List<ApiTicketResponseModel> response = await service.TicketsByTicketStatusId(default(int));
+			List<ApiTicketServerResponseModel> response = await service.TicketsByTicketStatusId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			List<ApiTicketResponseModel> response = await service.TicketsByTicketStatusId(default(int));
+			List<ApiTicketServerResponseModel> response = await service.TicketsByTicketStatusId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -185,5 +185,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>724dd5b6809c88cafc999a89600d9db2</Hash>
+    <Hash>083028b3bdb48f3b048faf3b02a93a81</Hash>
 </Codenesium>*/

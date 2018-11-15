@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PetShippingNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<PipelineStepRepository>> loggerMoc = PipelineStepRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PipelineStepRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace PetShippingNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<PipelineStepRepository>> loggerMoc = PipelineStepRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PipelineStepRepositoryMoc.GetContext();
+			var repository = new PipelineStepRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>41f57caac3304142646fd27db61613bb</Hash>
+    <Hash>686a20a1b772fe214b58cf297fdef3c4</Hash>
 </Codenesium>*/

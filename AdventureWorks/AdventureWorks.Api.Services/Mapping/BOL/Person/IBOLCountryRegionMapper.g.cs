@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOCountryRegion MapModelToBO(
 			string countryRegionCode,
-			ApiCountryRegionRequestModel model);
+			ApiCountryRegionServerRequestModel model);
 
-		ApiCountryRegionResponseModel MapBOToModel(
+		ApiCountryRegionServerResponseModel MapBOToModel(
 			BOCountryRegion boCountryRegion);
 
-		List<ApiCountryRegionResponseModel> MapBOToModel(
+		List<ApiCountryRegionServerResponseModel> MapBOToModel(
 			List<BOCountryRegion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b76c54a37b2fe7997940d77152efdf5d</Hash>
+    <Hash>a96692e83c0992a2ca341882358159cf</Hash>
 </Codenesium>*/

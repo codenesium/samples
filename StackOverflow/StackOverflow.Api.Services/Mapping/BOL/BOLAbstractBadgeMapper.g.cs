@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOBadge MapModelToBO(
 			int id,
-			ApiBadgeRequestModel model
+			ApiBadgeServerRequestModel model
 			)
 		{
 			BOBadge boBadge = new BOBadge();
@@ -21,20 +20,20 @@ namespace StackOverflowNS.Api.Services
 			return boBadge;
 		}
 
-		public virtual ApiBadgeResponseModel MapBOToModel(
+		public virtual ApiBadgeServerResponseModel MapBOToModel(
 			BOBadge boBadge)
 		{
-			var model = new ApiBadgeResponseModel();
+			var model = new ApiBadgeServerResponseModel();
 
 			model.SetProperties(boBadge.Id, boBadge.Date, boBadge.Name, boBadge.UserId);
 
 			return model;
 		}
 
-		public virtual List<ApiBadgeResponseModel> MapBOToModel(
+		public virtual List<ApiBadgeServerResponseModel> MapBOToModel(
 			List<BOBadge> items)
 		{
-			List<ApiBadgeResponseModel> response = new List<ApiBadgeResponseModel>();
+			List<ApiBadgeServerResponseModel> response = new List<ApiBadgeServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7802fb1973607909340dd3a43a9b9fd</Hash>
+    <Hash>0cc1e15da7aded3bd172555a9e27b8fc</Hash>
 </Codenesium>*/

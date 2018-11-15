@@ -35,34 +35,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(3850)]
 		[Column("Comments")]
-		public string Comment { get; private set; }
+		public virtual string Comment { get; private set; }
 
 		[MaxLength(50)]
 		[Column("EmailAddress")]
-		public string EmailAddress { get; private set; }
+		public virtual string EmailAddress { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Key]
 		[Column("ProductReviewID")]
-		public int ProductReviewID { get; private set; }
+		public virtual int ProductReviewID { get; private set; }
 
 		[Column("Rating")]
-		public int Rating { get; private set; }
+		public virtual int Rating { get; private set; }
 
 		[Column("ReviewDate")]
-		public DateTime ReviewDate { get; private set; }
+		public virtual DateTime ReviewDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("ReviewerName")]
-		public string ReviewerName { get; private set; }
+		public virtual string ReviewerName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd9a116da82c83b21d471436d5907562</Hash>
+    <Hash>4d3e73a340d8e84bbd5020e3adb8d0a4</Hash>
 </Codenesium>*/

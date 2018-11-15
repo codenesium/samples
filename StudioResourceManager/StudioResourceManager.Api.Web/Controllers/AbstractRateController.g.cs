@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected IRateService RateService { get; private set; }
 
-		protected IApiRateModelMapper RateModelMapper { get; private set; }
+		protected IApiRateServerModelMapper RateModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IRateService rateService,
-			IApiRateModelMapper rateModelMapper
+			IApiRateServerModelMapper rateModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRateResponseModel> response = await this.RateService.All(query.Limit, query.Offset);
+			List<ApiRateServerResponseModel> response = await this.RateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiRateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiRateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiRateResponseModel response = await this.RateService.Get(id);
+			ApiRateServerResponseModel response = await this.RateService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiRateServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRateRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRateServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiRateResponseModel> records = new List<ApiRateResponseModel>();
+			List<ApiRateServerResponseModel> records = new List<ApiRateServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiRateResponseModel> result = await this.RateService.Create(model);
+				CreateResponse<ApiRateServerResponseModel> result = await this.RateService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiRateServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiRateResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiRateServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiRateRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiRateServerRequestModel model)
 		{
-			CreateResponse<ApiRateResponseModel> result = await this.RateService.Create(model);
+			CreateResponse<ApiRateServerResponseModel> result = await this.RateService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRateRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiRateServerRequestModel> patch)
 		{
-			ApiRateResponseModel record = await this.RateService.Get(id);
+			ApiRateServerResponseModel record = await this.RateService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiRateRequestModel model = await this.PatchModel(id, patch);
+				ApiRateServerRequestModel model = await this.PatchModel(id, patch) as ApiRateServerRequestModel;
 
-				UpdateResponse<ApiRateResponseModel> result = await this.RateService.Update(id, model);
+				UpdateResponse<ApiRateServerResponseModel> result = await this.RateService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateServerRequestModel model)
 		{
-			ApiRateRequestModel request = await this.PatchModel(id, this.RateModelMapper.CreatePatch(model));
+			ApiRateServerRequestModel request = await this.PatchModel(id, this.RateModelMapper.CreatePatch(model)) as ApiRateServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiRateResponseModel> result = await this.RateService.Update(id, request);
+				UpdateResponse<ApiRateServerResponseModel> result = await this.RateService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.RateService.Delete(id);
@@ -206,7 +216,41 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		private async Task<ApiRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiRateRequestModel> patch)
+		[HttpGet]
+		[Route("byTeacherId/{teacherId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByTeacherId(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiRateServerResponseModel> response = await this.RateService.ByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byTeacherSkillId/{teacherSkillId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByTeacherSkillId(int teacherSkillId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiRateServerResponseModel> response = await this.RateService.ByTeacherSkillId(teacherSkillId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		private async Task<ApiRateServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiRateServerRequestModel> patch)
 		{
 			var record = await this.RateService.Get(id);
 
@@ -216,7 +260,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiRateRequestModel request = this.RateModelMapper.MapResponseToRequest(record);
+				ApiRateServerRequestModel request = this.RateModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +269,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2fa21d9a900774d51b02b8b5b4c4c797</Hash>
+    <Hash>4871bd96fd53528a0e5475a6216bd9e9</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCountryMapper();
-			ApiCountryRequestModel model = new ApiCountryRequestModel();
+			ApiCountryServerRequestModel model = new ApiCountryServerRequestModel();
 			model.SetProperties("A");
 			BOCountry response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLCountryMapper();
 			BOCountry bo = new BOCountry();
 			bo.SetProperties(1, "A");
-			ApiCountryResponseModel response = mapper.MapBOToModel(bo);
+			ApiCountryServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLCountryMapper();
 			BOCountry bo = new BOCountry();
 			bo.SetProperties(1, "A");
-			List<ApiCountryResponseModel> response = mapper.MapBOToModel(new List<BOCountry>() { { bo } });
+			List<ApiCountryServerResponseModel> response = mapper.MapBOToModel(new List<BOCountry>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5b05903c6a9b0ca08875681ad4d0cf73</Hash>
+    <Hash>fbb78fc2aa9c9f07784522e5683f1d89</Hash>
 </Codenesium>*/

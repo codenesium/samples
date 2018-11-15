@@ -31,27 +31,27 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(25)]
 		[Column("CardNumber")]
-		public string CardNumber { get; private set; }
+		public virtual string CardNumber { get; private set; }
 
 		[MaxLength(50)]
 		[Column("CardType")]
-		public string CardType { get; private set; }
+		public virtual string CardType { get; private set; }
 
 		[Key]
 		[Column("CreditCardID")]
-		public int CreditCardID { get; private set; }
+		public virtual int CreditCardID { get; private set; }
 
 		[Column("ExpMonth")]
-		public int ExpMonth { get; private set; }
+		public virtual int ExpMonth { get; private set; }
 
 		[Column("ExpYear")]
-		public short ExpYear { get; private set; }
+		public virtual short ExpYear { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>08eeaf3037f02d4a7ea37fd09b6ad88f</Hash>
+    <Hash>654a45ced1a74b2600b06fbc44ead5ce</Hash>
 </Codenesium>*/

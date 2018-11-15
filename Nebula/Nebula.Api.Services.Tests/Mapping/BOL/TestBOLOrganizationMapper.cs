@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLOrganizationMapper();
-			ApiOrganizationRequestModel model = new ApiOrganizationRequestModel();
+			ApiOrganizationServerRequestModel model = new ApiOrganizationServerRequestModel();
 			model.SetProperties("A");
 			BOOrganization response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLOrganizationMapper();
 			BOOrganization bo = new BOOrganization();
 			bo.SetProperties(1, "A");
-			ApiOrganizationResponseModel response = mapper.MapBOToModel(bo);
+			ApiOrganizationServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLOrganizationMapper();
 			BOOrganization bo = new BOOrganization();
 			bo.SetProperties(1, "A");
-			List<ApiOrganizationResponseModel> response = mapper.MapBOToModel(new List<BOOrganization>() { { bo } });
+			List<ApiOrganizationServerResponseModel> response = mapper.MapBOToModel(new List<BOOrganization>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>72dd1be6844414b37139c02b860a5517</Hash>
+    <Hash>8012f149cfa445f04def39aab7f77c28</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual BOPostLink MapModelToBO(
 			int id,
-			ApiPostLinkRequestModel model
+			ApiPostLinkServerRequestModel model
 			)
 		{
 			BOPostLink boPostLink = new BOPostLink();
@@ -22,20 +21,20 @@ namespace StackOverflowNS.Api.Services
 			return boPostLink;
 		}
 
-		public virtual ApiPostLinkResponseModel MapBOToModel(
+		public virtual ApiPostLinkServerResponseModel MapBOToModel(
 			BOPostLink boPostLink)
 		{
-			var model = new ApiPostLinkResponseModel();
+			var model = new ApiPostLinkServerResponseModel();
 
 			model.SetProperties(boPostLink.Id, boPostLink.CreationDate, boPostLink.LinkTypeId, boPostLink.PostId, boPostLink.RelatedPostId);
 
 			return model;
 		}
 
-		public virtual List<ApiPostLinkResponseModel> MapBOToModel(
+		public virtual List<ApiPostLinkServerResponseModel> MapBOToModel(
 			List<BOPostLink> items)
 		{
-			List<ApiPostLinkResponseModel> response = new List<ApiPostLinkResponseModel>();
+			List<ApiPostLinkServerResponseModel> response = new List<ApiPostLinkServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -48,5 +47,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>514f54951ef6ee32f05ba6748a3cb2e4</Hash>
+    <Hash>f6967ffc7c3f4c1dd834b05eb5fe858d</Hash>
 </Codenesium>*/

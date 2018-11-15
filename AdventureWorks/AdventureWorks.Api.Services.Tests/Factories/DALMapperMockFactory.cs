@@ -18,10 +18,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALEmployeeMapper DALEmployeeMapperMock { get; set; } = new DALEmployeeMapper();
 
-		public IDALEmployeeDepartmentHistoryMapper DALEmployeeDepartmentHistoryMapperMock { get; set; } = new DALEmployeeDepartmentHistoryMapper();
-
-		public IDALEmployeePayHistoryMapper DALEmployeePayHistoryMapperMock { get; set; } = new DALEmployeePayHistoryMapper();
-
 		public IDALJobCandidateMapper DALJobCandidateMapperMock { get; set; } = new DALJobCandidateMapper();
 
 		public IDALShiftMapper DALShiftMapperMock { get; set; } = new DALShiftMapper();
@@ -32,27 +28,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALBusinessEntityMapper DALBusinessEntityMapperMock { get; set; } = new DALBusinessEntityMapper();
 
-		public IDALBusinessEntityAddressMapper DALBusinessEntityAddressMapperMock { get; set; } = new DALBusinessEntityAddressMapper();
-
-		public IDALBusinessEntityContactMapper DALBusinessEntityContactMapperMock { get; set; } = new DALBusinessEntityContactMapper();
-
 		public IDALContactTypeMapper DALContactTypeMapperMock { get; set; } = new DALContactTypeMapper();
 
 		public IDALCountryRegionMapper DALCountryRegionMapperMock { get; set; } = new DALCountryRegionMapper();
-
-		public IDALEmailAddressMapper DALEmailAddressMapperMock { get; set; } = new DALEmailAddressMapper();
 
 		public IDALPasswordMapper DALPasswordMapperMock { get; set; } = new DALPasswordMapper();
 
 		public IDALPersonMapper DALPersonMapperMock { get; set; } = new DALPersonMapper();
 
-		public IDALPersonPhoneMapper DALPersonPhoneMapperMock { get; set; } = new DALPersonPhoneMapper();
-
 		public IDALPhoneNumberTypeMapper DALPhoneNumberTypeMapperMock { get; set; } = new DALPhoneNumberTypeMapper();
 
 		public IDALStateProvinceMapper DALStateProvinceMapperMock { get; set; } = new DALStateProvinceMapper();
-
-		public IDALVStateProvinceCountryRegionMapper DALVStateProvinceCountryRegionMapperMock { get; set; } = new DALVStateProvinceCountryRegionMapper();
 
 		public IDALBillOfMaterialMapper DALBillOfMaterialMapperMock { get; set; } = new DALBillOfMaterialMapper();
 
@@ -68,21 +54,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALProductCategoryMapper DALProductCategoryMapperMock { get; set; } = new DALProductCategoryMapper();
 
-		public IDALProductCostHistoryMapper DALProductCostHistoryMapperMock { get; set; } = new DALProductCostHistoryMapper();
-
 		public IDALProductDescriptionMapper DALProductDescriptionMapperMock { get; set; } = new DALProductDescriptionMapper();
-
-		public IDALProductInventoryMapper DALProductInventoryMapperMock { get; set; } = new DALProductInventoryMapper();
-
-		public IDALProductListPriceHistoryMapper DALProductListPriceHistoryMapperMock { get; set; } = new DALProductListPriceHistoryMapper();
 
 		public IDALProductModelMapper DALProductModelMapperMock { get; set; } = new DALProductModelMapper();
 
-		public IDALProductModelProductDescriptionCultureMapper DALProductModelProductDescriptionCultureMapperMock { get; set; } = new DALProductModelProductDescriptionCultureMapper();
-
 		public IDALProductPhotoMapper DALProductPhotoMapperMock { get; set; } = new DALProductPhotoMapper();
-
-		public IDALProductProductPhotoMapper DALProductProductPhotoMapperMock { get; set; } = new DALProductProductPhotoMapper();
 
 		public IDALProductReviewMapper DALProductReviewMapperMock { get; set; } = new DALProductReviewMapper();
 
@@ -96,15 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALUnitMeasureMapper DALUnitMeasureMapperMock { get; set; } = new DALUnitMeasureMapper();
 
-		public IDALVProductAndDescriptionMapper DALVProductAndDescriptionMapperMock { get; set; } = new DALVProductAndDescriptionMapper();
-
 		public IDALWorkOrderMapper DALWorkOrderMapperMock { get; set; } = new DALWorkOrderMapper();
-
-		public IDALWorkOrderRoutingMapper DALWorkOrderRoutingMapperMock { get; set; } = new DALWorkOrderRoutingMapper();
-
-		public IDALProductVendorMapper DALProductVendorMapperMock { get; set; } = new DALProductVendorMapper();
-
-		public IDALPurchaseOrderDetailMapper DALPurchaseOrderDetailMapperMock { get; set; } = new DALPurchaseOrderDetailMapper();
 
 		public IDALPurchaseOrderHeaderMapper DALPurchaseOrderHeaderMapperMock { get; set; } = new DALPurchaseOrderHeaderMapper();
 
@@ -120,13 +88,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALCustomerMapper DALCustomerMapperMock { get; set; } = new DALCustomerMapper();
 
-		public IDALSalesOrderDetailMapper DALSalesOrderDetailMapperMock { get; set; } = new DALSalesOrderDetailMapper();
-
 		public IDALSalesOrderHeaderMapper DALSalesOrderHeaderMapperMock { get; set; } = new DALSalesOrderHeaderMapper();
 
 		public IDALSalesPersonMapper DALSalesPersonMapperMock { get; set; } = new DALSalesPersonMapper();
-
-		public IDALSalesPersonQuotaHistoryMapper DALSalesPersonQuotaHistoryMapperMock { get; set; } = new DALSalesPersonQuotaHistoryMapper();
 
 		public IDALSalesReasonMapper DALSalesReasonMapperMock { get; set; } = new DALSalesReasonMapper();
 
@@ -134,13 +98,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALSalesTerritoryMapper DALSalesTerritoryMapperMock { get; set; } = new DALSalesTerritoryMapper();
 
-		public IDALSalesTerritoryHistoryMapper DALSalesTerritoryHistoryMapperMock { get; set; } = new DALSalesTerritoryHistoryMapper();
-
 		public IDALShoppingCartItemMapper DALShoppingCartItemMapperMock { get; set; } = new DALShoppingCartItemMapper();
 
 		public IDALSpecialOfferMapper DALSpecialOfferMapperMock { get; set; } = new DALSpecialOfferMapper();
-
-		public IDALSpecialOfferProductMapper DALSpecialOfferProductMapperMock { get; set; } = new DALSpecialOfferProductMapper();
 
 		public IDALStoreMapper DALStoreMapperMock { get; set; } = new DALStoreMapper();
 
@@ -151,5 +111,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a3cc4ac236ecc8b5ed6d677caf096e98</Hash>
+    <Hash>1f7a014cfda65138c95e20d34ea8de7f</Hash>
 </Codenesium>*/

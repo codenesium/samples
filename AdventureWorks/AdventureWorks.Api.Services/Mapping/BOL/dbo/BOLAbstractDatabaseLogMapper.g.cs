@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,15 +8,15 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BODatabaseLog MapModelToBO(
 			int databaseLogID,
-			ApiDatabaseLogRequestModel model
+			ApiDatabaseLogServerRequestModel model
 			)
 		{
 			BODatabaseLog boDatabaseLog = new BODatabaseLog();
 			boDatabaseLog.SetProperties(
 				databaseLogID,
-				model.DatabaseUser,
 				model.@Event,
 				model.@Object,
+				model.DatabaseUser,
 				model.PostTime,
 				model.Schema,
 				model.Tsql,
@@ -25,20 +24,20 @@ namespace AdventureWorksNS.Api.Services
 			return boDatabaseLog;
 		}
 
-		public virtual ApiDatabaseLogResponseModel MapBOToModel(
+		public virtual ApiDatabaseLogServerResponseModel MapBOToModel(
 			BODatabaseLog boDatabaseLog)
 		{
-			var model = new ApiDatabaseLogResponseModel();
+			var model = new ApiDatabaseLogServerResponseModel();
 
-			model.SetProperties(boDatabaseLog.DatabaseLogID, boDatabaseLog.DatabaseUser, boDatabaseLog.@Event, boDatabaseLog.@Object, boDatabaseLog.PostTime, boDatabaseLog.Schema, boDatabaseLog.Tsql, boDatabaseLog.XmlEvent);
+			model.SetProperties(boDatabaseLog.DatabaseLogID, boDatabaseLog.@Event, boDatabaseLog.@Object, boDatabaseLog.DatabaseUser, boDatabaseLog.PostTime, boDatabaseLog.Schema, boDatabaseLog.Tsql, boDatabaseLog.XmlEvent);
 
 			return model;
 		}
 
-		public virtual List<ApiDatabaseLogResponseModel> MapBOToModel(
+		public virtual List<ApiDatabaseLogServerResponseModel> MapBOToModel(
 			List<BODatabaseLog> items)
 		{
-			List<ApiDatabaseLogResponseModel> response = new List<ApiDatabaseLogResponseModel>();
+			List<ApiDatabaseLogServerResponseModel> response = new List<ApiDatabaseLogServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7bd16c978304484d5ad9a5d22d767af</Hash>
+    <Hash>bead9d7d028b623c28c7d5ed496f1b6a</Hash>
 </Codenesium>*/

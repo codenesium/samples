@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected ICommentRepository CommentRepository { get; private set; }
 
-		protected IApiCommentRequestModelValidator CommentModelValidator { get; private set; }
+		protected IApiCommentServerRequestModelValidator CommentModelValidator { get; private set; }
 
 		protected IBOLCommentMapper BolCommentMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractCommentService(
 			ILogger logger,
 			ICommentRepository commentRepository,
-			IApiCommentRequestModelValidator commentModelValidator,
+			IApiCommentServerRequestModelValidator commentModelValidator,
 			IBOLCommentMapper bolCommentMapper,
 			IDALCommentMapper dalCommentMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCommentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCommentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CommentRepository.All(limit, offset);
 
 			return this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCommentResponseModel> Get(int id)
+		public virtual async Task<ApiCommentServerResponseModel> Get(int id)
 		{
 			var record = await this.CommentRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCommentResponseModel>> Create(
-			ApiCommentRequestModel model)
+		public virtual async Task<CreateResponse<ApiCommentServerResponseModel>> Create(
+			ApiCommentServerRequestModel model)
 		{
-			CreateResponse<ApiCommentResponseModel> response = new CreateResponse<ApiCommentResponseModel>(await this.CommentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCommentServerResponseModel> response = ValidationResponseFactory<ApiCommentServerResponseModel>.CreateResponse(await this.CommentModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCommentMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCommentResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCommentServerResponseModel>> Update(
 			int id,
-			ApiCommentRequestModel model)
+			ApiCommentServerRequestModel model)
 		{
 			var validationResult = await this.CommentModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.CommentRepository.Get(id);
 
-				return new UpdateResponse<ApiCommentResponseModel>(this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCommentServerResponseModel>.UpdateResponse(this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCommentResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCommentServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.CommentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CommentModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.CommentRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb8ee4bbda9a1fdf3629a69836bf1fe1</Hash>
+    <Hash>79dd4de5bdc55cfc83e2f54e48c93d8c</Hash>
 </Codenesium>*/

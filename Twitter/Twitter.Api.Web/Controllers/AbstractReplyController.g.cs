@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected IReplyService ReplyService { get; private set; }
 
-		protected IApiReplyModelMapper ReplyModelMapper { get; private set; }
+		protected IApiReplyServerModelMapper ReplyModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractReplyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IReplyService replyService,
-			IApiReplyModelMapper replyModelMapper
+			IApiReplyServerModelMapper replyModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiReplyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiReplyServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiReplyResponseModel> response = await this.ReplyService.All(query.Limit, query.Offset);
+			List<ApiReplyServerResponseModel> response = await this.ReplyService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiReplyResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiReplyServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiReplyResponseModel response = await this.ReplyService.Get(id);
+			ApiReplyServerResponseModel response = await this.ReplyService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiReplyResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiReplyServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiReplyRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiReplyServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiReplyResponseModel> records = new List<ApiReplyResponseModel>();
+			List<ApiReplyServerResponseModel> records = new List<ApiReplyServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiReplyResponseModel> result = await this.ReplyService.Create(model);
+				CreateResponse<ApiReplyServerResponseModel> result = await this.ReplyService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiReplyServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiReplyResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiReplyServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiReplyRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiReplyServerRequestModel model)
 		{
-			CreateResponse<ApiReplyResponseModel> result = await this.ReplyService.Create(model);
+			CreateResponse<ApiReplyServerResponseModel> result = await this.ReplyService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiReplyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiReplyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiReplyRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiReplyServerRequestModel> patch)
 		{
-			ApiReplyResponseModel record = await this.ReplyService.Get(id);
+			ApiReplyServerResponseModel record = await this.ReplyService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiReplyRequestModel model = await this.PatchModel(id, patch);
+				ApiReplyServerRequestModel model = await this.PatchModel(id, patch) as ApiReplyServerRequestModel;
 
-				UpdateResponse<ApiReplyResponseModel> result = await this.ReplyService.Update(id, model);
+				UpdateResponse<ApiReplyServerResponseModel> result = await this.ReplyService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiReplyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiReplyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiReplyRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiReplyServerRequestModel model)
 		{
-			ApiReplyRequestModel request = await this.PatchModel(id, this.ReplyModelMapper.CreatePatch(model));
+			ApiReplyServerRequestModel request = await this.PatchModel(id, this.ReplyModelMapper.CreatePatch(model)) as ApiReplyServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiReplyResponseModel> result = await this.ReplyService.Update(id, request);
+				UpdateResponse<ApiReplyServerResponseModel> result = await this.ReplyService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ReplyService.Delete(id);
@@ -209,7 +219,7 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("byReplierUserId/{replierUserId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiReplyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiReplyServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByReplierUserId(int replierUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiReplyResponseModel> response = await this.ReplyService.ByReplierUserId(replierUserId, query.Limit, query.Offset);
+			List<ApiReplyServerResponseModel> response = await this.ReplyService.ByReplierUserId(replierUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiReplyRequestModel> PatchModel(int id, JsonPatchDocument<ApiReplyRequestModel> patch)
+		private async Task<ApiReplyServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiReplyServerRequestModel> patch)
 		{
 			var record = await this.ReplyService.Get(id);
 
@@ -233,7 +243,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiReplyRequestModel request = this.ReplyModelMapper.MapResponseToRequest(record);
+				ApiReplyServerRequestModel request = this.ReplyModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ca6f2d56c723292a613fc1076e6cf43</Hash>
+    <Hash>ba97623b226cddef32c49368f18d3ff4</Hash>
 </Codenesium>*/

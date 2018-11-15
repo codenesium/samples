@@ -85,22 +85,14 @@ namespace PetStoreNS.Api.DataAccess
 			Expression<Func<Species, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Species, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Species, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Species>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Species>();
-			}
-			else
-			{
-				return await this.Context.Set<Species>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Species>();
-			}
+			return await this.Context.Set<Species>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Species>();
 		}
 
 		private async Task<Species> GetById(int id)
@@ -113,5 +105,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccb44afd847250d47b65e78b91e22bdf</Hash>
+    <Hash>4520a7b227113c7ad7557c08d5b3ab69</Hash>
 </Codenesium>*/

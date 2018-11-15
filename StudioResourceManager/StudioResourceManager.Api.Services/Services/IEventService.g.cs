@@ -2,29 +2,32 @@ using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IEventService
 	{
-		Task<CreateResponse<ApiEventResponseModel>> Create(
-			ApiEventRequestModel model);
+		Task<CreateResponse<ApiEventServerResponseModel>> Create(
+			ApiEventServerRequestModel model);
 
-		Task<UpdateResponse<ApiEventResponseModel>> Update(int id,
-		                                                    ApiEventRequestModel model);
+		Task<UpdateResponse<ApiEventServerResponseModel>> Update(int id,
+		                                                          ApiEventServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiEventResponseModel> Get(int id);
+		Task<ApiEventServerResponseModel> Get(int id);
 
-		Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEventResponseModel>> ByStudentId(int eventId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventServerResponseModel>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventServerResponseModel>> ByStudentId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventServerResponseModel>> ByTeacherId(int eventId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>00130170c64a8a1392b96958dc62c7e2</Hash>
+    <Hash>543fa6db373d57ddc93675e9bde34659</Hash>
 </Codenesium>*/

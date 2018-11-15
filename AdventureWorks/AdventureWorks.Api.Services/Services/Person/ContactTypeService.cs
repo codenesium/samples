@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public ContactTypeService(
 			ILogger<IContactTypeRepository> logger,
 			IContactTypeRepository contactTypeRepository,
-			IApiContactTypeRequestModelValidator contactTypeModelValidator,
-			IBOLContactTypeMapper bolcontactTypeMapper,
-			IDALContactTypeMapper dalcontactTypeMapper,
-			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper)
+			IApiContactTypeServerRequestModelValidator contactTypeModelValidator,
+			IBOLContactTypeMapper bolContactTypeMapper,
+			IDALContactTypeMapper dalContactTypeMapper)
 			: base(logger,
 			       contactTypeRepository,
 			       contactTypeModelValidator,
-			       bolcontactTypeMapper,
-			       dalcontactTypeMapper,
-			       bolBusinessEntityContactMapper,
-			       dalBusinessEntityContactMapper)
+			       bolContactTypeMapper,
+			       dalContactTypeMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>34f5d7d9f24fdb3ecaef020b3a0d5ff3</Hash>
+    <Hash>773af6ee08455067e380bac1ecd11c34</Hash>
 </Codenesium>*/

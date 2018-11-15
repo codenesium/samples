@@ -24,8 +24,8 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			var record = new ApiPenResponseModel();
-			var records = new List<ApiPenResponseModel>();
+			var record = new ApiPenServerResponseModel();
+			var records = new List<ApiPenServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPenResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPenServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPenResponseModel>>(new List<ApiPenResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPenServerResponseModel>>(new List<ApiPenServerResponseModel>()));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiPenResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiPenServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenServerResponseModel()));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetStoreNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiPenResponseModel;
+			var record = (response as OkObjectResult).Value as ApiPenServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenServerResponseModel>(null));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPenResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPenResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPenServerResponseModel>.CreateResponse(null as ApiPenServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPenServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenServerResponseModel>>(mockResponse));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPenRequestModel>();
-			records.Add(new ApiPenRequestModel());
+			var records = new List<ApiPenServerRequestModel>();
+			records.Add(new ApiPenServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiPenResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiPenServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPenResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiPenServerResponseModel>>(null as ApiPenServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenServerResponseModel>>(mockResponse.Object));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiPenRequestModel>();
-			records.Add(new ApiPenRequestModel());
+			var records = new List<ApiPenServerRequestModel>();
+			records.Add(new ApiPenServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiPenResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiPenResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiPenServerResponseModel>.CreateResponse(null as ApiPenServerResponseModel);
+
+			mockResponse.SetRecord(new ApiPenServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenServerResponseModel>>(mockResponse));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPenRequestModel());
+			IActionResult response = await controller.Create(new ApiPenServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPenResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiPenServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiPenResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiPenResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiPenServerResponseModel>>(null as ApiPenServerResponseModel);
+			var mockRecord = new ApiPenServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiPenServerResponseModel>>(mockResponse.Object));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiPenRequestModel());
+			IActionResult response = await controller.Create(new ApiPenServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPenResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPenServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()))
-			.Callback<int, ApiPenRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()))
+			.Callback<int, ApiPenServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiPenResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenResponseModel>(new ApiPenResponseModel()));
-			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiPenServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenServerResponseModel>(new ApiPenServerResponseModel()));
+			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPenRequestModel>();
+			var patch = new JsonPatchDocument<ApiPenServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetStoreNS.Api.Web.Tests
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenServerResponseModel>(null));
 			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiPenRequestModel>();
+			var patch = new JsonPatchDocument<ApiPenServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetStoreNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPenResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPenServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenResponseModel()));
-			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenServerResponseModel()));
+			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPenRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPenServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPenResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPenServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenResponseModel()));
-			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiPenServerResponseModel()));
+			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPenRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPenServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			PenControllerMockFacade mock = new PenControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiPenResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiPenServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenResponseModel>(null));
-			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiPenServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPenServerResponseModel>(null));
+			PenController controller = new PenController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiPenServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiPenRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiPenServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetStoreNS.Api.Web.Tests
 
 		public Mock<IPenService> ServiceMock { get; set; } = new Mock<IPenService>();
 
-		public Mock<IApiPenModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPenModelMapper>();
+		public Mock<IApiPenServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiPenServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>50daf8b81399b7f0d70a3893802e5802</Hash>
+    <Hash>33eac6840861761ba1077933420d0c67</Hash>
 </Codenesium>*/

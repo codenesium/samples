@@ -30,28 +30,27 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("ShipBase")]
-		public decimal ShipBase { get; private set; }
+		public virtual decimal ShipBase { get; private set; }
 
 		[Key]
 		[Column("ShipMethodID")]
-		public int ShipMethodID { get; private set; }
+		public virtual int ShipMethodID { get; private set; }
 
 		[Column("ShipRate")]
-		public decimal ShipRate { get; private set; }
+		public virtual decimal ShipRate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>eebf9133716a3546341eb55f04bf9ee2</Hash>
+    <Hash>97640ccbd6fb80a9cc13c504e396b8a2</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPipelineStepNoteMapper();
-			ApiPipelineStepNoteRequestModel model = new ApiPipelineStepNoteRequestModel();
+			ApiPipelineStepNoteServerRequestModel model = new ApiPipelineStepNoteServerRequestModel();
 			model.SetProperties(1, "A", 1);
 			BOPipelineStepNote response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLPipelineStepNoteMapper();
 			BOPipelineStepNote bo = new BOPipelineStepNote();
 			bo.SetProperties(1, 1, "A", 1);
-			ApiPipelineStepNoteResponseModel response = mapper.MapBOToModel(bo);
+			ApiPipelineStepNoteServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.EmployeeId.Should().Be(1);
 			response.Id.Should().Be(1);
@@ -46,7 +46,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLPipelineStepNoteMapper();
 			BOPipelineStepNote bo = new BOPipelineStepNote();
 			bo.SetProperties(1, 1, "A", 1);
-			List<ApiPipelineStepNoteResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepNote>() { { bo } });
+			List<ApiPipelineStepNoteServerResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepNote>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>44fff7b05843c2cbca25cd3e838d200c</Hash>
+    <Hash>5da4c33a11dfa463b132daccb90f2826</Hash>
 </Codenesium>*/

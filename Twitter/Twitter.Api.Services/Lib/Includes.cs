@@ -2,6 +2,7 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TwitterNS.Api.Contracts;
 
 namespace TwitterNS.Api.Services
 {
@@ -12,8 +13,57 @@ namespace TwitterNS.Api.Services
 	public abstract class AbstractBusinessObject
 	{
 	}
+
+	public static class ValidationResponseFactory<T>
+	{
+		public static CreateResponse<T> CreateResponse(T record)
+		{
+			return new CreateResponse<T>(record);
+		}
+
+		public static CreateResponse<T> CreateResponse(ValidationResult result)
+		{
+			var response = new CreateResponse<T>();
+			response.Success = result.IsValid;
+			foreach (ValidationFailure error in result.Errors)
+			{
+				response.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
+			}
+
+			return response;
+		}
+
+		public static UpdateResponse<T> UpdateResponse(T record)
+		{
+			return new UpdateResponse<T>(record);
+		}
+
+		public static UpdateResponse<T> UpdateResponse(ValidationResult result)
+		{
+			var response = new UpdateResponse<T>();
+			response.Success = result.IsValid;
+			foreach (ValidationFailure error in result.Errors)
+			{
+				response.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
+			}
+
+			return response;
+		}
+
+		public static ActionResponse ActionResponse(ValidationResult result)
+		{
+			var response = new ActionResponse();
+			response.Success = result.IsValid;
+			foreach (ValidationFailure error in result.Errors)
+			{
+				response.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
+			}
+
+			return response;
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>df3864e6d20cd45b93023fd97503d82c</Hash>
+    <Hash>a207a6b835f1894039e6c83a0434d15a</Hash>
 </Codenesium>*/

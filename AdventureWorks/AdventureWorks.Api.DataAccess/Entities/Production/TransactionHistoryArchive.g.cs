@@ -36,36 +36,36 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ActualCost")]
-		public decimal ActualCost { get; private set; }
+		public virtual decimal ActualCost { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("Quantity")]
-		public int Quantity { get; private set; }
+		public virtual int Quantity { get; private set; }
 
 		[Column("ReferenceOrderID")]
-		public int ReferenceOrderID { get; private set; }
+		public virtual int ReferenceOrderID { get; private set; }
 
 		[Column("ReferenceOrderLineID")]
-		public int ReferenceOrderLineID { get; private set; }
+		public virtual int ReferenceOrderLineID { get; private set; }
 
 		[Column("TransactionDate")]
-		public DateTime TransactionDate { get; private set; }
+		public virtual DateTime TransactionDate { get; private set; }
 
 		[Key]
 		[Column("TransactionID")]
-		public int TransactionID { get; private set; }
+		public virtual int TransactionID { get; private set; }
 
 		[MaxLength(1)]
 		[Column("TransactionType")]
-		public string TransactionType { get; private set; }
+		public virtual string TransactionType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d340192f5fe8784cc5014e460a097c25</Hash>
+    <Hash>e9a078cdd67e5c5e0d518274103e6c42</Hash>
 </Codenesium>*/

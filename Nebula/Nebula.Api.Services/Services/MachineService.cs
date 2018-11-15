@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace NebulaNS.Api.Services
 		public MachineService(
 			ILogger<IMachineRepository> logger,
 			IMachineRepository machineRepository,
-			IApiMachineRequestModelValidator machineModelValidator,
-			IBOLMachineMapper bolmachineMapper,
-			IDALMachineMapper dalmachineMapper,
+			IApiMachineServerRequestModelValidator machineModelValidator,
+			IBOLMachineMapper bolMachineMapper,
+			IDALMachineMapper dalMachineMapper,
 			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base(logger,
 			       machineRepository,
 			       machineModelValidator,
-			       bolmachineMapper,
-			       dalmachineMapper,
+			       bolMachineMapper,
+			       dalMachineMapper,
 			       bolLinkMapper,
 			       dalLinkMapper)
 		{
@@ -34,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40ec6ece32dca852b6e869d3b8218955</Hash>
+    <Hash>ac663644b70263808e6dca84cb367437</Hash>
 </Codenesium>*/

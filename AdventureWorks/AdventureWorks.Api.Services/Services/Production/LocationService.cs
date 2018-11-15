@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,27 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public LocationService(
 			ILogger<ILocationRepository> logger,
 			ILocationRepository locationRepository,
-			IApiLocationRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bollocationMapper,
-			IDALLocationMapper dallocationMapper,
-			IBOLProductInventoryMapper bolProductInventoryMapper,
-			IDALProductInventoryMapper dalProductInventoryMapper,
-			IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
-			IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
+			IApiLocationServerRequestModelValidator locationModelValidator,
+			IBOLLocationMapper bolLocationMapper,
+			IDALLocationMapper dalLocationMapper)
 			: base(logger,
 			       locationRepository,
 			       locationModelValidator,
-			       bollocationMapper,
-			       dallocationMapper,
-			       bolProductInventoryMapper,
-			       dalProductInventoryMapper,
-			       bolWorkOrderRoutingMapper,
-			       dalWorkOrderRoutingMapper)
+			       bolLocationMapper,
+			       dalLocationMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0290729a861733194e937cb3e69f3647</Hash>
+    <Hash>93738b6f24838e4f2b938751a2994325</Hash>
 </Codenesium>*/

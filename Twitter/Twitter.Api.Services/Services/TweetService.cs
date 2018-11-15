@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,9 +9,9 @@ namespace TwitterNS.Api.Services
 		public TweetService(
 			ILogger<ITweetRepository> logger,
 			ITweetRepository tweetRepository,
-			IApiTweetRequestModelValidator tweetModelValidator,
-			IBOLTweetMapper boltweetMapper,
-			IDALTweetMapper daltweetMapper,
+			IApiTweetServerRequestModelValidator tweetModelValidator,
+			IBOLTweetMapper bolTweetMapper,
+			IDALTweetMapper dalTweetMapper,
 			IBOLQuoteTweetMapper bolQuoteTweetMapper,
 			IDALQuoteTweetMapper dalQuoteTweetMapper,
 			IBOLRetweetMapper bolRetweetMapper,
@@ -26,8 +19,8 @@ namespace TwitterNS.Api.Services
 			: base(logger,
 			       tweetRepository,
 			       tweetModelValidator,
-			       boltweetMapper,
-			       daltweetMapper,
+			       bolTweetMapper,
+			       dalTweetMapper,
 			       bolQuoteTweetMapper,
 			       dalQuoteTweetMapper,
 			       bolRetweetMapper,
@@ -38,5 +31,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef5c1e93b5300ce3b0c703c48c787ddd</Hash>
+    <Hash>d8897fd8fff061cb7602bef95cef6ce3</Hash>
 </Codenesium>*/

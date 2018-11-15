@@ -76,6 +76,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Student>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.FamilyId == familyId, limit, offset);
+		}
+
+		public async virtual Task<List<Student>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.UserId == userId, limit, offset);
+		}
+
 		public async virtual Task<Family> FamilyByFamilyId(int familyId)
 		{
 			return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
@@ -95,26 +105,33 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select students).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<EventStudent> CreateEventStudent(EventStudent item)
+		{
+			this.Context.Set<EventStudent>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteEventStudent(EventStudent item)
+		{
+			this.Context.Set<EventStudent>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Student>> Where(
 			Expression<Func<Student, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Student, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Student, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
-			}
-			else
-			{
-				return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
-			}
+			return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
 		private async Task<Student> GetById(int id)
@@ -127,5 +144,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58d828be0832a667cbce43576d5f87a5</Hash>
+    <Hash>cde6d001c2a2490a378edcac105416d5</Hash>
 </Codenesium>*/

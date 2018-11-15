@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ISalesReasonService SalesReasonService { get; private set; }
 
-		protected IApiSalesReasonModelMapper SalesReasonModelMapper { get; private set; }
+		protected IApiSalesReasonServerModelMapper SalesReasonModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractSalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesReasonService salesReasonService,
-			IApiSalesReasonModelMapper salesReasonModelMapper
+			IApiSalesReasonServerModelMapper salesReasonModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesReasonServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesReasonResponseModel> response = await this.SalesReasonService.All(query.Limit, query.Offset);
+			List<ApiSalesReasonServerResponseModel> response = await this.SalesReasonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesReasonResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesReasonServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSalesReasonResponseModel response = await this.SalesReasonService.Get(id);
+			ApiSalesReasonServerResponseModel response = await this.SalesReasonService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSalesReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSalesReasonServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesReasonRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesReasonServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSalesReasonResponseModel> records = new List<ApiSalesReasonResponseModel>();
+			List<ApiSalesReasonServerResponseModel> records = new List<ApiSalesReasonServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSalesReasonResponseModel> result = await this.SalesReasonService.Create(model);
+				CreateResponse<ApiSalesReasonServerResponseModel> result = await this.SalesReasonService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSalesReasonServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSalesReasonResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSalesReasonServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesReasonRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesReasonServerRequestModel model)
 		{
-			CreateResponse<ApiSalesReasonResponseModel> result = await this.SalesReasonService.Create(model);
+			CreateResponse<ApiSalesReasonServerResponseModel> result = await this.SalesReasonService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesReasonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesReasonRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesReasonServerRequestModel> patch)
 		{
-			ApiSalesReasonResponseModel record = await this.SalesReasonService.Get(id);
+			ApiSalesReasonServerResponseModel record = await this.SalesReasonService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesReasonRequestModel model = await this.PatchModel(id, patch);
+				ApiSalesReasonServerRequestModel model = await this.PatchModel(id, patch) as ApiSalesReasonServerRequestModel;
 
-				UpdateResponse<ApiSalesReasonResponseModel> result = await this.SalesReasonService.Update(id, model);
+				UpdateResponse<ApiSalesReasonServerResponseModel> result = await this.SalesReasonService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesReasonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesReasonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesReasonRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesReasonServerRequestModel model)
 		{
-			ApiSalesReasonRequestModel request = await this.PatchModel(id, this.SalesReasonModelMapper.CreatePatch(model));
+			ApiSalesReasonServerRequestModel request = await this.PatchModel(id, this.SalesReasonModelMapper.CreatePatch(model)) as ApiSalesReasonServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSalesReasonResponseModel> result = await this.SalesReasonService.Update(id, request);
+				UpdateResponse<ApiSalesReasonServerResponseModel> result = await this.SalesReasonService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SalesReasonService.Delete(id);
@@ -206,24 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("bySalesOrderID/{salesOrderID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesReasonResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySalesOrderID(int salesOrderID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesReasonResponseModel> response = await this.SalesReasonService.BySalesOrderID(salesOrderID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiSalesReasonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesReasonRequestModel> patch)
+		private async Task<ApiSalesReasonServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesReasonServerRequestModel> patch)
 		{
 			var record = await this.SalesReasonService.Get(id);
 
@@ -233,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesReasonRequestModel request = this.SalesReasonModelMapper.MapResponseToRequest(record);
+				ApiSalesReasonServerRequestModel request = this.SalesReasonModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>32c0efe75d48b43cfbd6c045a48eb75d</Hash>
+    <Hash>b2ff4d6079bb4222daf9864b804456bc</Hash>
 </Codenesium>*/

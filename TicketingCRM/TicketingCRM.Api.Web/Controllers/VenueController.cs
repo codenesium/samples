@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class VenueController : AbstractVenueController
 	{
 		public VenueController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<VenueController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVenueService venueService,
-			IApiVenueModelMapper venueModelMapper
+			IApiVenueServerModelMapper venueModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0b90568c94533787fcede465701f02b2</Hash>
+    <Hash>97d13e4879734ea6c1c703e3b4b70614</Hash>
 </Codenesium>*/

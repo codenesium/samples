@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BillOfMaterialController : AbstractBillOfMaterialController
 	{
 		public BillOfMaterialController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<BillOfMaterialController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBillOfMaterialService billOfMaterialService,
-			IApiBillOfMaterialModelMapper billOfMaterialModelMapper
+			IApiBillOfMaterialServerModelMapper billOfMaterialModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e999dc3717d85c0eca163e74d194935</Hash>
+    <Hash>317acf16fcc1847ae51b6d4d34bad651</Hash>
 </Codenesium>*/

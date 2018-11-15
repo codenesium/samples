@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public ErrorLogService(
 			ILogger<IErrorLogRepository> logger,
 			IErrorLogRepository errorLogRepository,
-			IApiErrorLogRequestModelValidator errorLogModelValidator,
-			IBOLErrorLogMapper bolerrorLogMapper,
-			IDALErrorLogMapper dalerrorLogMapper)
+			IApiErrorLogServerRequestModelValidator errorLogModelValidator,
+			IBOLErrorLogMapper bolErrorLogMapper,
+			IDALErrorLogMapper dalErrorLogMapper)
 			: base(logger,
 			       errorLogRepository,
 			       errorLogModelValidator,
-			       bolerrorLogMapper,
-			       dalerrorLogMapper)
+			       bolErrorLogMapper,
+			       dalErrorLogMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b30eecb7098426d595dd23708daccbbb</Hash>
+    <Hash>dc4cfeb971fac2265334d32b9bc04f1f</Hash>
 </Codenesium>*/

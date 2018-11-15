@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
+using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,72 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Customer")]
 	[Trait("Area", "Integration")]
-	public class CustomerIntegrationTests
+	public partial class CustomerIntegrationTests
 	{
 		public CustomerIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.CustomerDeleteAsync(1);
+			var model = new ApiCustomerClientRequestModel();
+			model.SetProperties("B", "B", "B", "B");
+			var model2 = new ApiCustomerClientRequestModel();
+			model2.SetProperties("C", "C", "C", "C");
+			var request = new List<ApiCustomerClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiCustomerClientResponseModel>> result = await client.CustomerBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Customer>().ToList()[1].Email.Should().Be("B");
+			context.Set<Customer>().ToList()[1].FirstName.Should().Be("B");
+			context.Set<Customer>().ToList()[1].LastName.Should().Be("B");
+			context.Set<Customer>().ToList()[1].Phone.Should().Be("B");
+
+			context.Set<Customer>().ToList()[2].Email.Should().Be("C");
+			context.Set<Customer>().ToList()[2].FirstName.Should().Be("C");
+			context.Set<Customer>().ToList()[2].LastName.Should().Be("C");
+			context.Set<Customer>().ToList()[2].Phone.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiCustomerClientRequestModel();
+			model.SetProperties("B", "B", "B", "B");
+			CreateResponse<ApiCustomerClientResponseModel> result = await client.CustomerCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Customer>().ToList()[1].Email.Should().Be("B");
+			context.Set<Customer>().ToList()[1].FirstName.Should().Be("B");
+			context.Set<Customer>().ToList()[1].LastName.Should().Be("B");
+			context.Set<Customer>().ToList()[1].Phone.Should().Be("B");
+
+			result.Record.Email.Should().Be("B");
+			result.Record.FirstName.Should().Be("B");
+			result.Record.LastName.Should().Be("B");
+			result.Record.Phone.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +91,59 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiCustomerServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ICustomerService service = testServer.Host.Services.GetService(typeof(ICustomerService)) as ICustomerService;
+			ApiCustomerServerResponseModel model = await service.Get(1);
 
-			ApiCustomerResponseModel model = await client.CustomerGetAsync(1);
+			ApiCustomerClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", "B", "B", "B");
 
-			ApiCustomerModelMapper mapper = new ApiCustomerModelMapper();
+			UpdateResponse<ApiCustomerClientResponseModel> updateResponse = await client.CustomerUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiCustomerResponseModel> updateResponse = await client.CustomerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Customer>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Customer>().ToList()[0].Email.Should().Be("B");
+			context.Set<Customer>().ToList()[0].FirstName.Should().Be("B");
+			context.Set<Customer>().ToList()[0].LastName.Should().Be("B");
+			context.Set<Customer>().ToList()[0].Phone.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Email.Should().Be("B");
+			updateResponse.Record.FirstName.Should().Be("B");
+			updateResponse.Record.LastName.Should().Be("B");
+			updateResponse.Record.Phone.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiCustomerRequestModel();
-			createModel.SetProperties("B", "B", "B", "B");
-			CreateResponse<ApiCustomerResponseModel> createResult = await client.CustomerCreateAsync(createModel);
+			ICustomerService service = testServer.Host.Services.GetService(typeof(ICustomerService)) as ICustomerService;
+			var model = new ApiCustomerServerRequestModel();
+			model.SetProperties("B", "B", "B", "B");
+			CreateResponse<ApiCustomerServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiCustomerResponseModel getResponse = await client.CustomerGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.CustomerDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiCustomerResponseModel verifyResponse = await client.CustomerGetAsync(2);
+			ApiCustomerServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +151,34 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiCustomerResponseModel response = await client.CustomerGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiCustomerClientResponseModel response = await client.CustomerGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Email.Should().Be("A");
+			response.FirstName.Should().Be("A");
+			response.Id.Should().Be(1);
+			response.LastName.Should().Be("A");
+			response.Phone.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCustomerClientResponseModel response = await client.CustomerGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +187,38 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiCustomerResponseModel> response = await client.CustomerAllAsync();
+			List<ApiCustomerClientResponseModel> response = await client.CustomerAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Email.Should().Be("A");
+			response[0].FirstName.Should().Be("A");
+			response[0].Id.Should().Be(1);
+			response[0].LastName.Should().Be("A");
+			response[0].Phone.Should().Be("A");
 		}
 
-		private async Task<ApiCustomerResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiCustomerRequestModel();
-			model.SetProperties("B", "B", "B", "B");
-			CreateResponse<ApiCustomerResponseModel> result = await client.CustomerCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.CustomerAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d3fdec799933bbbba3508faa2a16671</Hash>
+    <Hash>b48cf13b7abf29740143f731c2ca9416</Hash>
 </Codenesium>*/

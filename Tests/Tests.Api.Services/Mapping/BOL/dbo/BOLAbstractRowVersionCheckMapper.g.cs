@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BORowVersionCheck MapModelToBO(
 			int id,
-			ApiRowVersionCheckRequestModel model
+			ApiRowVersionCheckServerRequestModel model
 			)
 		{
 			BORowVersionCheck boRowVersionCheck = new BORowVersionCheck();
@@ -20,20 +19,20 @@ namespace TestsNS.Api.Services
 			return boRowVersionCheck;
 		}
 
-		public virtual ApiRowVersionCheckResponseModel MapBOToModel(
+		public virtual ApiRowVersionCheckServerResponseModel MapBOToModel(
 			BORowVersionCheck boRowVersionCheck)
 		{
-			var model = new ApiRowVersionCheckResponseModel();
+			var model = new ApiRowVersionCheckServerResponseModel();
 
 			model.SetProperties(boRowVersionCheck.Id, boRowVersionCheck.Name, boRowVersionCheck.RowVersion);
 
 			return model;
 		}
 
-		public virtual List<ApiRowVersionCheckResponseModel> MapBOToModel(
+		public virtual List<ApiRowVersionCheckServerResponseModel> MapBOToModel(
 			List<BORowVersionCheck> items)
 		{
-			List<ApiRowVersionCheckResponseModel> response = new List<ApiRowVersionCheckResponseModel>();
+			List<ApiRowVersionCheckServerResponseModel> response = new List<ApiRowVersionCheckServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ee3d2c5330191c175658a3588d1cf67</Hash>
+    <Hash>8895c19051753a1caa8420f972d6a908</Hash>
 </Codenesium>*/

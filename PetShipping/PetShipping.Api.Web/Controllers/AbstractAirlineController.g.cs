@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Web
 	{
 		protected IAirlineService AirlineService { get; private set; }
 
-		protected IApiAirlineModelMapper AirlineModelMapper { get; private set; }
+		protected IApiAirlineServerModelMapper AirlineModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AbstractAirlineController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAirlineService airlineService,
-			IApiAirlineModelMapper airlineModelMapper
+			IApiAirlineServerModelMapper airlineModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAirlineResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAirlineServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAirlineResponseModel> response = await this.AirlineService.All(query.Limit, query.Offset);
+			List<ApiAirlineServerResponseModel> response = await this.AirlineService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiAirlineResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiAirlineServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiAirlineResponseModel response = await this.AirlineService.Get(id);
+			ApiAirlineServerResponseModel response = await this.AirlineService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetShippingNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiAirlineResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiAirlineServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAirlineRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAirlineServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiAirlineResponseModel> records = new List<ApiAirlineResponseModel>();
+			List<ApiAirlineServerResponseModel> records = new List<ApiAirlineServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiAirlineResponseModel> result = await this.AirlineService.Create(model);
+				CreateResponse<ApiAirlineServerResponseModel> result = await this.AirlineService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetShippingNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiAirlineServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiAirlineResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiAirlineServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAirlineRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiAirlineServerRequestModel model)
 		{
-			CreateResponse<ApiAirlineResponseModel> result = await this.AirlineService.Create(model);
+			CreateResponse<ApiAirlineServerResponseModel> result = await this.AirlineService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAirlineResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAirlineServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAirlineRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAirlineServerRequestModel> patch)
 		{
-			ApiAirlineResponseModel record = await this.AirlineService.Get(id);
+			ApiAirlineServerResponseModel record = await this.AirlineService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiAirlineRequestModel model = await this.PatchModel(id, patch);
+				ApiAirlineServerRequestModel model = await this.PatchModel(id, patch) as ApiAirlineServerRequestModel;
 
-				UpdateResponse<ApiAirlineResponseModel> result = await this.AirlineService.Update(id, model);
+				UpdateResponse<ApiAirlineServerResponseModel> result = await this.AirlineService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAirlineResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAirlineServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAirlineRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAirlineServerRequestModel model)
 		{
-			ApiAirlineRequestModel request = await this.PatchModel(id, this.AirlineModelMapper.CreatePatch(model));
+			ApiAirlineServerRequestModel request = await this.PatchModel(id, this.AirlineModelMapper.CreatePatch(model)) as ApiAirlineServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiAirlineResponseModel> result = await this.AirlineService.Update(id, request);
+				UpdateResponse<ApiAirlineServerResponseModel> result = await this.AirlineService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetShippingNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.AirlineService.Delete(id);
@@ -206,7 +216,7 @@ namespace PetShippingNS.Api.Web
 			}
 		}
 
-		private async Task<ApiAirlineRequestModel> PatchModel(int id, JsonPatchDocument<ApiAirlineRequestModel> patch)
+		private async Task<ApiAirlineServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiAirlineServerRequestModel> patch)
 		{
 			var record = await this.AirlineService.Get(id);
 
@@ -216,7 +226,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiAirlineRequestModel request = this.AirlineModelMapper.MapResponseToRequest(record);
+				ApiAirlineServerRequestModel request = this.AirlineModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>784750bdd2c5d362cc833380f6e9e572</Hash>
+    <Hash>6e82ef61cf9316057489f94907753977</Hash>
 </Codenesium>*/

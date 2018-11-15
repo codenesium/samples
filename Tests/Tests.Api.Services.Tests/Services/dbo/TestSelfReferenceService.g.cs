@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
-			List<ApiSelfReferenceResponseModel> response = await service.All();
+			List<ApiSelfReferenceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
-			ApiSelfReferenceResponseModel response = await service.Get(default(int));
+			ApiSelfReferenceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
-			ApiSelfReferenceResponseModel response = await service.Get(default(int));
+			ApiSelfReferenceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
-			var model = new ApiSelfReferenceRequestModel();
+			var model = new ApiSelfReferenceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SelfReference>())).Returns(Task.FromResult(new SelfReference()));
 			var service = new SelfReferenceService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
-			CreateResponse<ApiSelfReferenceResponseModel> response = await service.Create(model);
+			CreateResponse<ApiSelfReferenceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSelfReferenceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SelfReference>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
-			var model = new ApiSelfReferenceRequestModel();
+			var model = new ApiSelfReferenceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SelfReference>())).Returns(Task.FromResult(new SelfReference()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SelfReference()));
 			var service = new SelfReferenceService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
-			UpdateResponse<ApiSelfReferenceResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiSelfReferenceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSelfReferenceRequestModel>()));
+			mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSelfReferenceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SelfReference>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
-			var model = new ApiSelfReferenceRequestModel();
+			var model = new ApiSelfReferenceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SelfReferenceService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>69e93f0b1093d78a77454e6b0cad8293</Hash>
+    <Hash>1f6146d8c977e9f857eac9f40bc0d2a5</Hash>
 </Codenesium>*/

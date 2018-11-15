@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLProvinceMapper();
-			ApiProvinceRequestModel model = new ApiProvinceRequestModel();
+			ApiProvinceServerRequestModel model = new ApiProvinceServerRequestModel();
 			model.SetProperties(1, "A");
 			BOProvince response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLProvinceMapper();
 			BOProvince bo = new BOProvince();
 			bo.SetProperties(1, 1, "A");
-			ApiProvinceResponseModel response = mapper.MapBOToModel(bo);
+			ApiProvinceServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CountryId.Should().Be(1);
 			response.Id.Should().Be(1);
@@ -44,7 +44,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLProvinceMapper();
 			BOProvince bo = new BOProvince();
 			bo.SetProperties(1, 1, "A");
-			List<ApiProvinceResponseModel> response = mapper.MapBOToModel(new List<BOProvince>() { { bo } });
+			List<ApiProvinceServerResponseModel> response = mapper.MapBOToModel(new List<BOProvince>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c09a70012fd88a54ec68336a06b87db2</Hash>
+    <Hash>bcc4290786346f78b027c461efb64a1f</Hash>
 </Codenesium>*/

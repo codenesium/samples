@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IDatabaseLogRepository DatabaseLogRepository { get; private set; }
 
-		protected IApiDatabaseLogRequestModelValidator DatabaseLogModelValidator { get; private set; }
+		protected IApiDatabaseLogServerRequestModelValidator DatabaseLogModelValidator { get; private set; }
 
 		protected IBOLDatabaseLogMapper BolDatabaseLogMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractDatabaseLogService(
 			ILogger logger,
 			IDatabaseLogRepository databaseLogRepository,
-			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+			IApiDatabaseLogServerRequestModelValidator databaseLogModelValidator,
 			IBOLDatabaseLogMapper bolDatabaseLogMapper,
 			IDALDatabaseLogMapper dalDatabaseLogMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDatabaseLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.DatabaseLogRepository.All(limit, offset);
 
 			return this.BolDatabaseLogMapper.MapBOToModel(this.DalDatabaseLogMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiDatabaseLogResponseModel> Get(int databaseLogID)
+		public virtual async Task<ApiDatabaseLogServerResponseModel> Get(int databaseLogID)
 		{
 			var record = await this.DatabaseLogRepository.Get(databaseLogID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
-			ApiDatabaseLogRequestModel model)
+		public virtual async Task<CreateResponse<ApiDatabaseLogServerResponseModel>> Create(
+			ApiDatabaseLogServerRequestModel model)
 		{
-			CreateResponse<ApiDatabaseLogResponseModel> response = new CreateResponse<ApiDatabaseLogResponseModel>(await this.DatabaseLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDatabaseLogServerResponseModel> response = ValidationResponseFactory<ApiDatabaseLogServerResponseModel>.CreateResponse(await this.DatabaseLogModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolDatabaseLogMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiDatabaseLogResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiDatabaseLogServerResponseModel>> Update(
 			int databaseLogID,
-			ApiDatabaseLogRequestModel model)
+			ApiDatabaseLogServerRequestModel model)
 		{
 			var validationResult = await this.DatabaseLogModelValidator.ValidateUpdateAsync(databaseLogID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.DatabaseLogRepository.Get(databaseLogID);
 
-				return new UpdateResponse<ApiDatabaseLogResponseModel>(this.BolDatabaseLogMapper.MapBOToModel(this.DalDatabaseLogMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiDatabaseLogServerResponseModel>.UpdateResponse(this.BolDatabaseLogMapper.MapBOToModel(this.DalDatabaseLogMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiDatabaseLogResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiDatabaseLogServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int databaseLogID)
 		{
-			ActionResponse response = new ActionResponse(await this.DatabaseLogModelValidator.ValidateDeleteAsync(databaseLogID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DatabaseLogModelValidator.ValidateDeleteAsync(databaseLogID));
+
 			if (response.Success)
 			{
 				await this.DatabaseLogRepository.Delete(databaseLogID);
@@ -111,5 +108,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>26be80b7cc7023a7aa593e276e036614</Hash>
+    <Hash>02849a8213cc6e33941532ee00a7d51d</Hash>
 </Codenesium>*/

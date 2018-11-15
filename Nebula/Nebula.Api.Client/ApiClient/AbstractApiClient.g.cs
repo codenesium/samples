@@ -6,24 +6,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Client
 {
 	public abstract class AbstractApiClient
 	{
-		private HttpClient client;
+		protected HttpClient Client { get; private set; }
 
 		protected string ApiUrl { get; set; }
 
 		protected string ApiVersion { get; set; }
 
+		protected int MaxLimit { get; set; } = 1000;
+
 		public AbstractApiClient(HttpClient client)
 		{
-			this.client = client;
+			this.Client = client;
 		}
 
-		public AbstractApiClient(string apiUrl, string apiVersion)
+		public AbstractApiClient(string apiUrl, string apiVersion = "1.0")
 		{
 			if (string.IsNullOrWhiteSpace(apiUrl))
 			{
@@ -42,503 +45,653 @@ namespace NebulaNS.Api.Client
 
 			this.ApiUrl = apiUrl;
 			this.ApiVersion = apiVersion;
-			this.client = new HttpClient();
-			this.client.BaseAddress = new Uri(apiUrl);
-			this.client.DefaultRequestHeaders.Accept.Clear();
-			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
+			this.Client = new HttpClient();
+			this.Client.BaseAddress = new Uri(apiUrl);
+			this.Client.DefaultRequestHeaders.Accept.Clear();
+			this.Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.Client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
 		public void SetBearerToken(string token)
 		{
-			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<List<ApiChainResponseModel>> ChainBulkInsertAsync(List<ApiChainRequestModel> items)
+		public virtual async Task<CreateResponse<List<ApiChainStatusClientResponseModel>> > ChainStatusBulkInsertAsync(List<ApiChainStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ChainStatuses/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiChainStatusClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiChainResponseModel>> ChainCreateAsync(ApiChainRequestModel item)
+		public virtual async Task<CreateResponse<ApiChainStatusClientResponseModel>> ChainStatusCreateAsync(ApiChainStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ChainStatuses", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiChainStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiChainResponseModel>> ChainUpdateAsync(int id, ApiChainRequestModel item)
+		public virtual async Task<UpdateResponse<ApiChainStatusClientResponseModel>> ChainStatusUpdateAsync(int id, ApiChainStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Chains/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/ChainStatuses/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiChainStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> ChainDeleteAsync(int id)
+		public virtual async Task<ActionResponse> ChainStatusDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Chains/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/ChainStatuses/{id}", cancellationToken).ConfigureAwait(false);
 
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiChainResponseModel> ChainGetAsync(int id)
+		public virtual async Task<ApiChainStatusClientResponseModel> ChainStatusGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/ChainStatuses/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiChainResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiChainStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainResponseModel>> ChainAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiChainStatusClientResponseModel>> ChainStatusAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiChainStatusClientResponseModel> response = new List<ApiChainStatusClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/ChainStatuses?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiChainStatusClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiChainStatusClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiChainResponseModel> ByChainByExternalId(Guid externalId)
+		public virtual async Task<ApiChainStatusClientResponseModel> ByChainStatusByName(string name, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/byExternalId/{externalId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/ChainStatuses/byName/{name}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiChainResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiChainStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> LinksByChainId(int chainId)
+		public virtual async Task<CreateResponse<List<ApiLinkClientResponseModel>> > LinkBulkInsertAsync(List<ApiLinkClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/LinksByChainId/{chainId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Links/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainStatusResponseModel>> ChainStatusBulkInsertAsync(List<ApiChainStatusRequestModel> items)
+		public virtual async Task<CreateResponse<ApiLinkClientResponseModel>> LinkCreateAsync(ApiLinkClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatuses/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Links", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiChainStatusResponseModel>> ChainStatusCreateAsync(ApiChainStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiLinkClientResponseModel>> LinkUpdateAsync(int id, ApiLinkClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatuses", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Links/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiChainStatusResponseModel>> ChainStatusUpdateAsync(int id, ApiChainStatusRequestModel item)
+		public virtual async Task<ActionResponse> LinkDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatuses/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Links/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> ChainStatusDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ChainStatuses/{id}").ConfigureAwait(false);
-
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiChainStatusResponseModel> ChainStatusGetAsync(int id)
+		public virtual async Task<ApiLinkClientResponseModel> LinkGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Links/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiChainStatusResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiLinkClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainStatusResponseModel>> ChainStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiLinkClientResponseModel>> LinkAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiLinkClientResponseModel> response = new List<ApiLinkClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Links?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiLinkClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiChainStatusResponseModel> ByChainStatusByName(string name)
+		public virtual async Task<ApiLinkClientResponseModel> ByLinkByExternalId(Guid externalId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses/byName/{name}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Links/byExternalId/{externalId}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiChainStatusResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiLinkClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainResponseModel>> ChainsByChainStatusId(int chainStatusId)
+		public virtual async Task<List<ApiLinkClientResponseModel>> ByLinkByChainId(int chainId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses/ChainsByChainStatusId/{chainStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Links/byChainId/{chainId}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> LinkBulkInsertAsync(List<ApiLinkRequestModel> items)
+		public virtual async Task<List<ApiLinkLogClientResponseModel>> LinkLogsByLinkId(int linkId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Links/{linkId}/LinkLogs", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiLinkLogClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkResponseModel>> LinkCreateAsync(ApiLinkRequestModel item)
+		public virtual async Task<CreateResponse<List<ApiLinkLogClientResponseModel>> > LinkLogBulkInsertAsync(List<ApiLinkLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkLogs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkLogClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkResponseModel>> LinkUpdateAsync(int id, ApiLinkRequestModel item)
+		public virtual async Task<CreateResponse<ApiLinkLogClientResponseModel>> LinkLogCreateAsync(ApiLinkLogClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Links/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkLogs", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkLogClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> LinkDeleteAsync(int id)
+		public virtual async Task<UpdateResponse<ApiLinkLogClientResponseModel>> LinkLogUpdateAsync(int id, ApiLinkLogClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Links/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/LinkLogs/{id}", item, cancellationToken).ConfigureAwait(false);
 
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkLogClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> LinkLogDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/LinkLogs/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiLinkResponseModel> LinkGetAsync(int id)
+		public virtual async Task<ApiLinkLogClientResponseModel> LinkLogGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkLogs/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiLinkLogClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> LinkAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiLinkLogClientResponseModel>> LinkLogAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiLinkLogClientResponseModel> response = new List<ApiLinkLogClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkLogs?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiLinkLogClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiLinkLogClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiLinkResponseModel> ByLinkByExternalId(Guid externalId)
+		public virtual async Task<CreateResponse<List<ApiLinkStatusClientResponseModel>> > LinkStatusBulkInsertAsync(List<ApiLinkStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/byExternalId/{externalId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkStatuses/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkStatusClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> ByLinkByChainId(int chainId)
+		public virtual async Task<CreateResponse<ApiLinkStatusClientResponseModel>> LinkStatusCreateAsync(ApiLinkStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/byChainId/{chainId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkStatuses", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogsByLinkId(int linkId)
+		public virtual async Task<UpdateResponse<ApiLinkStatusClientResponseModel>> LinkStatusUpdateAsync(int id, ApiLinkStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/LinkLogsByLinkId/{linkId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/LinkStatuses/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkStatusClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogBulkInsertAsync(List<ApiLinkLogRequestModel> items)
+		public virtual async Task<ActionResponse> LinkStatusDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/LinkStatuses/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> LinkLogCreateAsync(ApiLinkLogRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiLinkLogResponseModel>> LinkLogUpdateAsync(int id, ApiLinkLogRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkLogs/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> LinkLogDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkLogs/{id}").ConfigureAwait(false);
-
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiLinkLogResponseModel> LinkLogGetAsync(int id)
+		public virtual async Task<ApiLinkStatusClientResponseModel> LinkStatusGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkLogs/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkStatuses/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkLogResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiLinkStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiLinkStatusClientResponseModel>> LinkStatusAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkLogs?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiLinkStatusClientResponseModel> response = new List<ApiLinkStatusClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkStatuses?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiLinkStatusClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiLinkStatusClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<List<ApiLinkStatusResponseModel>> LinkStatusBulkInsertAsync(List<ApiLinkStatusRequestModel> items)
+		public virtual async Task<ApiLinkStatusClientResponseModel> ByLinkStatusByName(string name, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatuses/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkStatuses/byName/{name}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiLinkStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkStatusResponseModel>> LinkStatusCreateAsync(ApiLinkStatusRequestModel item)
+		public virtual async Task<List<ApiLinkClientResponseModel>> LinksByLinkStatusId(int linkStatusId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatuses", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/LinkStatuses/{linkStatusId}/Links", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkStatusResponseModel>> LinkStatusUpdateAsync(int id, ApiLinkStatusRequestModel item)
+		public virtual async Task<CreateResponse<List<ApiMachineClientResponseModel>> > MachineBulkInsertAsync(List<ApiMachineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatuses/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Machines/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMachineClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> LinkStatusDeleteAsync(int id)
+		public virtual async Task<CreateResponse<ApiMachineClientResponseModel>> MachineCreateAsync(ApiMachineClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkStatuses/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Machines", item, cancellationToken).ConfigureAwait(false);
 
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiMachineClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiMachineClientResponseModel>> MachineUpdateAsync(int id, ApiMachineClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Machines/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiMachineClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> MachineDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Machines/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiLinkStatusResponseModel> LinkStatusGetAsync(int id)
+		public virtual async Task<ApiMachineClientResponseModel> MachineGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatuses/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Machines/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkStatusResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiMachineClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkStatusResponseModel>> LinkStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiMachineClientResponseModel>> MachineAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatuses?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiMachineClientResponseModel> response = new List<ApiMachineClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Machines?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiMachineClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiMachineClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiLinkStatusResponseModel> ByLinkStatusByName(string name)
+		public virtual async Task<ApiMachineClientResponseModel> ByMachineByMachineGuid(Guid machineGuid, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatuses/byName/{name}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Machines/byMachineGuid/{machineGuid}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkStatusResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiMachineClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> LinksByLinkStatusId(int linkStatusId)
+		public virtual async Task<List<ApiLinkClientResponseModel>> LinksByAssignedMachineId(int assignedMachineId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatuses/LinksByLinkStatusId/{linkStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Machines/{assignedMachineId}/Links", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMachineResponseModel>> MachineBulkInsertAsync(List<ApiMachineRequestModel> items)
+		public virtual async Task<CreateResponse<List<ApiOrganizationClientResponseModel>> > OrganizationBulkInsertAsync(List<ApiOrganizationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Organizations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOrganizationClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiMachineResponseModel>> MachineCreateAsync(ApiMachineRequestModel item)
+		public virtual async Task<CreateResponse<ApiOrganizationClientResponseModel>> OrganizationCreateAsync(ApiOrganizationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Organizations", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiOrganizationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiMachineResponseModel>> MachineUpdateAsync(int id, ApiMachineRequestModel item)
+		public virtual async Task<UpdateResponse<ApiOrganizationClientResponseModel>> OrganizationUpdateAsync(int id, ApiOrganizationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Machines/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Organizations/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiOrganizationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> MachineDeleteAsync(int id)
+		public virtual async Task<ActionResponse> OrganizationDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Machines/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Organizations/{id}", cancellationToken).ConfigureAwait(false);
 
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiMachineResponseModel> MachineGetAsync(int id)
+		public virtual async Task<ApiOrganizationClientResponseModel> OrganizationGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Organizations/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiOrganizationClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMachineResponseModel>> MachineAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiOrganizationClientResponseModel>> OrganizationAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiOrganizationClientResponseModel> response = new List<ApiOrganizationClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Organizations?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiOrganizationClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiOrganizationClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiMachineResponseModel> ByMachineByMachineGuid(Guid machineGuid)
+		public virtual async Task<ApiOrganizationClientResponseModel> ByOrganizationByName(string name, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/byMachineGuid/{machineGuid}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Organizations/byName/{name}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiOrganizationClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> LinksByAssignedMachineId(int assignedMachineId)
+		public virtual async Task<List<ApiTeamClientResponseModel>> TeamsByOrganizationId(int organizationId, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/LinksByAssignedMachineId/{assignedMachineId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Organizations/{organizationId}/Teams", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiTeamClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiOrganizationResponseModel>> OrganizationBulkInsertAsync(List<ApiOrganizationRequestModel> items)
+		public virtual async Task<CreateResponse<List<ApiTeamClientResponseModel>> > TeamBulkInsertAsync(List<ApiTeamClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Teams/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeamClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> OrganizationCreateAsync(ApiOrganizationRequestModel item)
+		public virtual async Task<CreateResponse<ApiTeamClientResponseModel>> TeamCreateAsync(ApiTeamClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Teams", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiTeamClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiOrganizationResponseModel>> OrganizationUpdateAsync(int id, ApiOrganizationRequestModel item)
+		public virtual async Task<UpdateResponse<ApiTeamClientResponseModel>> TeamUpdateAsync(int id, ApiTeamClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Organizations/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Teams/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiTeamClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> OrganizationDeleteAsync(int id)
+		public virtual async Task<ActionResponse> TeamDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Organizations/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Teams/{id}", cancellationToken).ConfigureAwait(false);
 
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiOrganizationResponseModel> OrganizationGetAsync(int id)
+		public virtual async Task<ApiTeamClientResponseModel> TeamGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teams/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiOrganizationResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiTeamClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiOrganizationResponseModel>> OrganizationAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiTeamClientResponseModel>> TeamAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiTeamClientResponseModel> response = new List<ApiTeamClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teams?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiTeamClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiTeamClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiOrganizationResponseModel> ByOrganizationByName(string name)
+		public virtual async Task<ApiTeamClientResponseModel> ByTeamByName(string name, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/byName/{name}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Teams/byName/{name}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiOrganizationResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiTeamClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeamResponseModel>> TeamsByOrganizationId(int organizationId)
+		public virtual async Task<CreateResponse<List<ApiVersionInfoClientResponseModel>> > VersionInfoBulkInsertAsync(List<ApiVersionInfoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/TeamsByOrganizationId/{organizationId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVersionInfoClientResponseModel>> >(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeamResponseModel>> TeamBulkInsertAsync(List<ApiTeamRequestModel> items)
+		public virtual async Task<CreateResponse<ApiVersionInfoClientResponseModel>> VersionInfoCreateAsync(ApiVersionInfoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VersionInfoes", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiTeamResponseModel>> TeamCreateAsync(ApiTeamRequestModel item)
+		public virtual async Task<UpdateResponse<ApiVersionInfoClientResponseModel>> VersionInfoUpdateAsync(long id, ApiVersionInfoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/VersionInfoes/{id}", item, cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiTeamResponseModel>> TeamUpdateAsync(int id, ApiTeamRequestModel item)
+		public virtual async Task<ActionResponse> VersionInfoDeleteAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Teams/{id}", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/VersionInfoes/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> TeamDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Teams/{id}").ConfigureAwait(false);
-
+			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiTeamResponseModel> TeamGetAsync(int id)
+		public virtual async Task<ApiVersionInfoClientResponseModel> VersionInfoGetAsync(long id, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/{id}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VersionInfoes/{id}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiVersionInfoClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeamResponseModel>> TeamAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiVersionInfoClientResponseModel>> VersionInfoAllAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams?limit={limit}&offset={offset}").ConfigureAwait(false);
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiVersionInfoClientResponseModel> response = new List<ApiVersionInfoClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VersionInfoes?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+				this.HandleResponseCode(httpResponse);
+				List<ApiVersionInfoClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiVersionInfoClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
 		}
 
-		public virtual async Task<ApiTeamResponseModel> ByTeamByName(string name)
+		private void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/byName/{name}").ConfigureAwait(false);
+			int responseCode = (int)httpResponse.StatusCode;
+			if (responseCode >= 400 && responseCode != 422)
+			{
+				switch (responseCode)
+				{
+				case 401:
+				{
+					throw new UnauthorizedAccessException("Response from server was 401.");
+				}
 
-			return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
-		}
+				case 404:
+				{
+					break;
+				}
 
-		public virtual async Task<List<ApiChainResponseModel>> ChainsByTeamId(int teamId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/ChainsByTeamId/{teamId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoBulkInsertAsync(List<ApiVersionInfoRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> VersionInfoCreateAsync(ApiVersionInfoRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiVersionInfoResponseModel>> VersionInfoUpdateAsync(long id, ApiVersionInfoRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> VersionInfoDeleteAsync(long id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiVersionInfoResponseModel> VersionInfoGetAsync(long id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
+				default:
+				{
+					throw new Exception($"Received error response from server. Response code was {responseCode}. Message was {httpResponse.Content.ContentToString()}");
+				}
+				}
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d29c59ec21c10f78755e62eeb103888</Hash>
+    <Hash>ef5e5c46a1cd527611d6996cd6774a5c</Hash>
 </Codenesium>*/

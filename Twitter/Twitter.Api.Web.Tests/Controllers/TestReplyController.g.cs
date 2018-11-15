@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			var record = new ApiReplyResponseModel();
-			var records = new List<ApiReplyResponseModel>();
+			var record = new ApiReplyServerResponseModel();
+			var records = new List<ApiReplyServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiReplyResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiReplyServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiReplyResponseModel>>(new List<ApiReplyResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiReplyServerResponseModel>>(new List<ApiReplyServerResponseModel>()));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiReplyResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiReplyServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyServerResponseModel()));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiReplyResponseModel;
+			var record = (response as OkObjectResult).Value as ApiReplyServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyServerResponseModel>(null));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiReplyResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiReplyResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiReplyServerResponseModel>.CreateResponse(null as ApiReplyServerResponseModel);
+
+			mockResponse.SetRecord(new ApiReplyServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyServerResponseModel>>(mockResponse));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiReplyRequestModel>();
-			records.Add(new ApiReplyRequestModel());
+			var records = new List<ApiReplyServerRequestModel>();
+			records.Add(new ApiReplyServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiReplyResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiReplyServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiReplyResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiReplyServerResponseModel>>(null as ApiReplyServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyServerResponseModel>>(mockResponse.Object));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiReplyRequestModel>();
-			records.Add(new ApiReplyRequestModel());
+			var records = new List<ApiReplyServerRequestModel>();
+			records.Add(new ApiReplyServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiReplyResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiReplyResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiReplyServerResponseModel>.CreateResponse(null as ApiReplyServerResponseModel);
+
+			mockResponse.SetRecord(new ApiReplyServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyServerResponseModel>>(mockResponse));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiReplyRequestModel());
+			IActionResult response = await controller.Create(new ApiReplyServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiReplyResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiReplyServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiReplyResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiReplyResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiReplyServerResponseModel>>(null as ApiReplyServerResponseModel);
+			var mockRecord = new ApiReplyServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiReplyServerResponseModel>>(mockResponse.Object));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiReplyRequestModel());
+			IActionResult response = await controller.Create(new ApiReplyServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiReplyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiReplyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>()))
-			.Callback<int, ApiReplyRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>()))
+			.Callback<int, ApiReplyServerRequestModel>(
 				(id, model) => model.Content.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiReplyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyResponseModel>(new ApiReplyResponseModel()));
-			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiReplyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyServerResponseModel>(new ApiReplyServerResponseModel()));
+			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiReplyRequestModel>();
+			var patch = new JsonPatchDocument<ApiReplyServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyServerResponseModel>(null));
 			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiReplyRequestModel>();
+			var patch = new JsonPatchDocument<ApiReplyServerRequestModel>();
 			patch.Replace(x => x.Content, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiReplyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiReplyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyResponseModel()));
-			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyServerResponseModel()));
+			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiReplyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiReplyServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiReplyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiReplyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyResponseModel()));
-			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiReplyServerResponseModel()));
+			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiReplyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiReplyServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			ReplyControllerMockFacade mock = new ReplyControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiReplyResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiReplyServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyResponseModel>(null));
-			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiReplyServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiReplyServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiReplyServerResponseModel>(null));
+			ReplyController controller = new ReplyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiReplyServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiReplyRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiReplyServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<IReplyService> ServiceMock { get; set; } = new Mock<IReplyService>();
 
-		public Mock<IApiReplyModelMapper> ModelMapperMock { get; set; } = new Mock<IApiReplyModelMapper>();
+		public Mock<IApiReplyServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiReplyServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>49f5f12949e8d78e5ef2e7e730419710</Hash>
+    <Hash>a2bbdc51ba2e6d74f63fb9be31a7d8a0</Hash>
 </Codenesium>*/

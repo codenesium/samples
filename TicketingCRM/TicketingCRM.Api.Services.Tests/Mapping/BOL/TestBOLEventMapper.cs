@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLEventMapper();
-			ApiEventRequestModel model = new ApiEventRequestModel();
+			ApiEventServerRequestModel model = new ApiEventServerRequestModel();
 			model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOEvent response = mapper.MapModelToBO(1, model);
 
@@ -39,7 +39,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLEventMapper();
 			BOEvent bo = new BOEvent();
 			bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiEventResponseModel response = mapper.MapBOToModel(bo);
+			ApiEventServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
@@ -60,7 +60,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLEventMapper();
 			BOEvent bo = new BOEvent();
 			bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiEventResponseModel> response = mapper.MapBOToModel(new List<BOEvent>() { { bo } });
+			List<ApiEventServerResponseModel> response = mapper.MapBOToModel(new List<BOEvent>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -68,5 +68,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eca221a5ac6e41de1087988351aadda7</Hash>
+    <Hash>84bbaeba0355a86296f69012af006f84</Hash>
 </Codenesium>*/

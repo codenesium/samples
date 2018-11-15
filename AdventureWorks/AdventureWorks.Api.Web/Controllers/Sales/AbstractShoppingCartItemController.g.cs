@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IShoppingCartItemService ShoppingCartItemService { get; private set; }
 
-		protected IApiShoppingCartItemModelMapper ShoppingCartItemModelMapper { get; private set; }
+		protected IApiShoppingCartItemServerModelMapper ShoppingCartItemModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShoppingCartItemService shoppingCartItemService,
-			IApiShoppingCartItemModelMapper shoppingCartItemModelMapper
+			IApiShoppingCartItemServerModelMapper shoppingCartItemModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
+			List<ApiShoppingCartItemServerResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiShoppingCartItemServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiShoppingCartItemResponseModel response = await this.ShoppingCartItemService.Get(id);
+			ApiShoppingCartItemServerResponseModel response = await this.ShoppingCartItemService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiShoppingCartItemServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiShoppingCartItemResponseModel> records = new List<ApiShoppingCartItemResponseModel>();
+			List<ApiShoppingCartItemServerResponseModel> records = new List<ApiShoppingCartItemServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
+				CreateResponse<ApiShoppingCartItemServerResponseModel> result = await this.ShoppingCartItemService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiShoppingCartItemServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiShoppingCartItemResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiShoppingCartItemServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemServerRequestModel model)
 		{
-			CreateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Create(model);
+			CreateResponse<ApiShoppingCartItemServerResponseModel> result = await this.ShoppingCartItemService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiShoppingCartItemServerRequestModel> patch)
 		{
-			ApiShoppingCartItemResponseModel record = await this.ShoppingCartItemService.Get(id);
+			ApiShoppingCartItemServerResponseModel record = await this.ShoppingCartItemService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShoppingCartItemRequestModel model = await this.PatchModel(id, patch);
+				ApiShoppingCartItemServerRequestModel model = await this.PatchModel(id, patch) as ApiShoppingCartItemServerRequestModel;
 
-				UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, model);
+				UpdateResponse<ApiShoppingCartItemServerResponseModel> result = await this.ShoppingCartItemService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiShoppingCartItemServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemServerRequestModel model)
 		{
-			ApiShoppingCartItemRequestModel request = await this.PatchModel(id, this.ShoppingCartItemModelMapper.CreatePatch(model));
+			ApiShoppingCartItemServerRequestModel request = await this.PatchModel(id, this.ShoppingCartItemModelMapper.CreatePatch(model)) as ApiShoppingCartItemServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiShoppingCartItemResponseModel> result = await this.ShoppingCartItemService.Update(id, request);
+				UpdateResponse<ApiShoppingCartItemServerResponseModel> result = await this.ShoppingCartItemService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ShoppingCartItemService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byShoppingCartIDProductID/{shoppingCartID}/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID, query.Limit, query.Offset);
+			List<ApiShoppingCartItemServerResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiShoppingCartItemRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemRequestModel> patch)
+		private async Task<ApiShoppingCartItemServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiShoppingCartItemServerRequestModel> patch)
 		{
 			var record = await this.ShoppingCartItemService.Get(id);
 
@@ -233,7 +243,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiShoppingCartItemRequestModel request = this.ShoppingCartItemModelMapper.MapResponseToRequest(record);
+				ApiShoppingCartItemServerRequestModel request = this.ShoppingCartItemModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9188483b38ad6f2e7dc697e221817586</Hash>
+    <Hash>2f10cf4c47cda60da27902c7210b530a</Hash>
 </Codenesium>*/

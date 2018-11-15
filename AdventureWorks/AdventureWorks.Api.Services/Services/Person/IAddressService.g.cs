@@ -2,33 +2,32 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IAddressService
 	{
-		Task<CreateResponse<ApiAddressResponseModel>> Create(
-			ApiAddressRequestModel model);
+		Task<CreateResponse<ApiAddressServerResponseModel>> Create(
+			ApiAddressServerRequestModel model);
 
-		Task<UpdateResponse<ApiAddressResponseModel>> Update(int addressID,
-		                                                      ApiAddressRequestModel model);
+		Task<UpdateResponse<ApiAddressServerResponseModel>> Update(int addressID,
+		                                                            ApiAddressServerRequestModel model);
 
 		Task<ActionResponse> Delete(int addressID);
 
-		Task<ApiAddressResponseModel> Get(int addressID);
+		Task<ApiAddressServerResponseModel> Get(int addressID);
 
-		Task<List<ApiAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAddressServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiAddressResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
+		Task<ApiAddressServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiAddressServerResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
 
-		Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAddressServerResponseModel>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0906f00ee75ac65576370389035d94a2</Hash>
+    <Hash>fd793fee3b56b6d6ffd2116c8c8f8252</Hash>
 </Codenesium>*/

@@ -90,22 +90,14 @@ namespace PetShippingNS.Api.DataAccess
 			Expression<Func<Country, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Country, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Country, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
-			}
-			else
-			{
-				return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
-			}
+			return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
 		}
 
 		private async Task<Country> GetById(int id)
@@ -118,5 +110,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43a4b08de033380f379f158827e38567</Hash>
+    <Hash>6772db24faced97f7450c54475b31a81</Hash>
 </Codenesium>*/

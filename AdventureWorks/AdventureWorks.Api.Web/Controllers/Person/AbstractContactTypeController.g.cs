@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IContactTypeService ContactTypeService { get; private set; }
 
-		protected IApiContactTypeModelMapper ContactTypeModelMapper { get; private set; }
+		protected IApiContactTypeServerModelMapper ContactTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractContactTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IContactTypeService contactTypeService,
-			IApiContactTypeModelMapper contactTypeModelMapper
+			IApiContactTypeServerModelMapper contactTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiContactTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiContactTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiContactTypeResponseModel> response = await this.ContactTypeService.All(query.Limit, query.Offset);
+			List<ApiContactTypeServerResponseModel> response = await this.ContactTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiContactTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiContactTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiContactTypeResponseModel response = await this.ContactTypeService.Get(id);
+			ApiContactTypeServerResponseModel response = await this.ContactTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiContactTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiContactTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiContactTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiContactTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiContactTypeResponseModel> records = new List<ApiContactTypeResponseModel>();
+			List<ApiContactTypeServerResponseModel> records = new List<ApiContactTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Create(model);
+				CreateResponse<ApiContactTypeServerResponseModel> result = await this.ContactTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiContactTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiContactTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiContactTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiContactTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiContactTypeServerRequestModel model)
 		{
-			CreateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Create(model);
+			CreateResponse<ApiContactTypeServerResponseModel> result = await this.ContactTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiContactTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiContactTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiContactTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiContactTypeServerRequestModel> patch)
 		{
-			ApiContactTypeResponseModel record = await this.ContactTypeService.Get(id);
+			ApiContactTypeServerResponseModel record = await this.ContactTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiContactTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiContactTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiContactTypeServerRequestModel;
 
-				UpdateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Update(id, model);
+				UpdateResponse<ApiContactTypeServerResponseModel> result = await this.ContactTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiContactTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiContactTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiContactTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiContactTypeServerRequestModel model)
 		{
-			ApiContactTypeRequestModel request = await this.PatchModel(id, this.ContactTypeModelMapper.CreatePatch(model));
+			ApiContactTypeServerRequestModel request = await this.PatchModel(id, this.ContactTypeModelMapper.CreatePatch(model)) as ApiContactTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiContactTypeResponseModel> result = await this.ContactTypeService.Update(id, request);
+				UpdateResponse<ApiContactTypeServerResponseModel> result = await this.ContactTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ContactTypeService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiContactTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiContactTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiContactTypeResponseModel response = await this.ContactTypeService.ByName(name);
+			ApiContactTypeServerResponseModel response = await this.ContactTypeService.ByName(name);
 
 			if (response == null)
 			{
@@ -225,24 +235,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{contactTypeID}/BusinessEntityContactsByContactTypeID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityContactsByContactTypeID(int contactTypeID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiBusinessEntityContactResponseModel> response = await this.ContactTypeService.BusinessEntityContactsByContactTypeID(contactTypeID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiContactTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiContactTypeRequestModel> patch)
+		private async Task<ApiContactTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiContactTypeServerRequestModel> patch)
 		{
 			var record = await this.ContactTypeService.Get(id);
 
@@ -252,7 +245,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiContactTypeRequestModel request = this.ContactTypeModelMapper.MapResponseToRequest(record);
+				ApiContactTypeServerRequestModel request = this.ContactTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3f62f135bc675fecbbe758a403e88ecc</Hash>
+    <Hash>06a32ea264192b0f0f64d44a4cfacacc</Hash>
 </Codenesium>*/

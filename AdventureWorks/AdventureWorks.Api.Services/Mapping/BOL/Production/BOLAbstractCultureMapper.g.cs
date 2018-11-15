@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOCulture MapModelToBO(
 			string cultureID,
-			ApiCultureRequestModel model
+			ApiCultureServerRequestModel model
 			)
 		{
 			BOCulture boCulture = new BOCulture();
@@ -20,20 +19,20 @@ namespace AdventureWorksNS.Api.Services
 			return boCulture;
 		}
 
-		public virtual ApiCultureResponseModel MapBOToModel(
+		public virtual ApiCultureServerResponseModel MapBOToModel(
 			BOCulture boCulture)
 		{
-			var model = new ApiCultureResponseModel();
+			var model = new ApiCultureServerResponseModel();
 
 			model.SetProperties(boCulture.CultureID, boCulture.ModifiedDate, boCulture.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCultureResponseModel> MapBOToModel(
+		public virtual List<ApiCultureServerResponseModel> MapBOToModel(
 			List<BOCulture> items)
 		{
-			List<ApiCultureResponseModel> response = new List<ApiCultureResponseModel>();
+			List<ApiCultureServerResponseModel> response = new List<ApiCultureServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f8534f61de09c3da24d123771e7f640a</Hash>
+    <Hash>4e79a9d490bf50c61669a3632f5c5f16</Hash>
 </Codenesium>*/

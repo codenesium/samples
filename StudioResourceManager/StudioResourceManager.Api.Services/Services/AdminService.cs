@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public AdminService(
 			ILogger<IAdminRepository> logger,
 			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
-			IBOLAdminMapper boladminMapper,
-			IDALAdminMapper daladminMapper)
+			IApiAdminServerRequestModelValidator adminModelValidator,
+			IBOLAdminMapper bolAdminMapper,
+			IDALAdminMapper dalAdminMapper)
 			: base(logger,
 			       adminRepository,
 			       adminModelValidator,
-			       boladminMapper,
-			       daladminMapper)
+			       bolAdminMapper,
+			       dalAdminMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00b239f23773fbaf53d99a781ba5bd84</Hash>
+    <Hash>86513b8cd2c3b67558dbfbebd48f3374</Hash>
 </Codenesium>*/

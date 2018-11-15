@@ -7,30 +7,20 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public class IntegrationTestMigration
+	public class IntegrationTestMigration : AbstractIntegrationTestMigration
 	{
-		private ApplicationDbContext context;
-
 		public IntegrationTestMigration(ApplicationDbContext context)
+			: base(context)
 		{
-			this.context = context;
 		}
 
-		public async void Migrate()
+		public override async void Migrate()
 		{
-			var deviceItem1 = new Device();
-			deviceItem1.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			this.context.Devices.Add(deviceItem1);
-
-			var deviceActionItem1 = new DeviceAction();
-			deviceActionItem1.SetProperties(1, 1, "A", "A");
-			this.context.DeviceActions.Add(deviceActionItem1);
-
-			await this.context.SaveChangesAsync();
+			base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7aa261e4001380f08d64d5ce58ee7cb</Hash>
+    <Hash>b18c86acd0ba128f9cf75691b5a893f3</Hash>
 </Codenesium>*/

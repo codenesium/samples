@@ -76,12 +76,12 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Follower>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Follower>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.FollowedUserId == followedUserId, limit, offset);
 		}
 
-		public async Task<List<Follower>> ByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Follower>> ByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.FollowingUserId == followingUserId, limit, offset);
 		}
@@ -100,22 +100,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<Follower, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Follower, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Follower, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Follower>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Follower>();
-			}
-			else
-			{
-				return await this.Context.Set<Follower>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Follower>();
-			}
+			return await this.Context.Set<Follower>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
 		private async Task<Follower> GetById(int id)
@@ -128,5 +120,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>385dc710d484ec09ed936c3b2570a896</Hash>
+    <Hash>380619d92a2a6b3d25bc2a153086c1b2</Hash>
 </Codenesium>*/

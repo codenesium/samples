@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace TestsNS.Api.DataAccess
@@ -61,9 +62,90 @@ namespace TestsNS.Api.DataAccess
 
 			record.Should().NotBeNull();
 		}
+
+		[Fact]
+		public async void Create()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+
+			var entity = new VPerson();
+			await repository.Create(entity);
+
+			var record = await context.Set<VPerson>().FirstOrDefaultAsync();
+
+			record.Should().NotBeNull();
+		}
+
+		[Fact]
+		public async void Update_Entity_Is_Tracked()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+			VPerson entity = new VPerson();
+			context.Set<VPerson>().Add(entity);
+			await context.SaveChangesAsync();
+
+			var record = await repository.Get(entity.PersonId);
+
+			await repository.Update(record);
+
+			var modifiedRecord = context.Set<VPerson>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
+
+		[Fact]
+		public async void Update_Entity_Is_Not_Tracked()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+			VPerson entity = new VPerson();
+			context.Set<VPerson>().Add(entity);
+			await context.SaveChangesAsync();
+
+			await repository.Update(new VPerson());
+
+			var modifiedRecord = context.Set<VPerson>().FirstOrDefaultAsync();
+			modifiedRecord.Should().NotBeNull();
+		}
+
+		[Fact]
+		public async void DeleteFound()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+			VPerson entity = new VPerson();
+			context.Set<VPerson>().Add(entity);
+			await context.SaveChangesAsync();
+
+			await repository.Delete(entity.PersonId);
+
+			VPerson modifiedRecord = await context.Set<VPerson>().FirstOrDefaultAsync();
+
+			modifiedRecord.Should().BeNull();
+		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5e6deaa34349601c8d9b4f177a2e9cb</Hash>
+    <Hash>d1dbacb20903521868368c9e22d8e514</Hash>
 </Codenesium>*/

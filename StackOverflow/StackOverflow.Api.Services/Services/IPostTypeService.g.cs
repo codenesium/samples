@@ -2,27 +2,26 @@ using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
 	public partial interface IPostTypeService
 	{
-		Task<CreateResponse<ApiPostTypeResponseModel>> Create(
-			ApiPostTypeRequestModel model);
+		Task<CreateResponse<ApiPostTypeServerResponseModel>> Create(
+			ApiPostTypeServerRequestModel model);
 
-		Task<UpdateResponse<ApiPostTypeResponseModel>> Update(int id,
-		                                                       ApiPostTypeRequestModel model);
+		Task<UpdateResponse<ApiPostTypeServerResponseModel>> Update(int id,
+		                                                             ApiPostTypeServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiPostTypeResponseModel> Get(int id);
+		Task<ApiPostTypeServerResponseModel> Get(int id);
 
-		Task<List<ApiPostTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPostTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>126965d1855af2771a9c2f3c982549ea</Hash>
+    <Hash>20777da81e251dcaf2f9da91cdb37cb3</Hash>
 </Codenesium>*/

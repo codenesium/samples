@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IFollowerRepository FollowerRepository { get; private set; }
 
-		protected IApiFollowerRequestModelValidator FollowerModelValidator { get; private set; }
+		protected IApiFollowerServerRequestModelValidator FollowerModelValidator { get; private set; }
 
 		protected IBOLFollowerMapper BolFollowerMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractFollowerService(
 			ILogger logger,
 			IFollowerRepository followerRepository,
-			IApiFollowerRequestModelValidator followerModelValidator,
+			IApiFollowerServerRequestModelValidator followerModelValidator,
 			IBOLFollowerMapper bolFollowerMapper,
 			IDALFollowerMapper dalFollowerMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiFollowerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFollowerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.FollowerRepository.All(limit, offset);
 
 			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiFollowerResponseModel> Get(int id)
+		public virtual async Task<ApiFollowerServerResponseModel> Get(int id)
 		{
 			var record = await this.FollowerRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiFollowerResponseModel>> Create(
-			ApiFollowerRequestModel model)
+		public virtual async Task<CreateResponse<ApiFollowerServerResponseModel>> Create(
+			ApiFollowerServerRequestModel model)
 		{
-			CreateResponse<ApiFollowerResponseModel> response = new CreateResponse<ApiFollowerResponseModel>(await this.FollowerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFollowerServerResponseModel> response = ValidationResponseFactory<ApiFollowerServerResponseModel>.CreateResponse(await this.FollowerModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolFollowerMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiFollowerResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiFollowerServerResponseModel>> Update(
 			int id,
-			ApiFollowerRequestModel model)
+			ApiFollowerServerRequestModel model)
 		{
 			var validationResult = await this.FollowerModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.FollowerRepository.Get(id);
 
-				return new UpdateResponse<ApiFollowerResponseModel>(this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiFollowerServerResponseModel>.UpdateResponse(this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiFollowerResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiFollowerServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.FollowerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.FollowerModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.FollowerRepository.Delete(id);
@@ -108,14 +105,14 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiFollowerResponseModel>> ByFollowedUserId(int followedUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiFollowerServerResponseModel>> ByFollowedUserId(int followedUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Follower> records = await this.FollowerRepository.ByFollowedUserId(followedUserId, limit, offset);
 
 			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiFollowerResponseModel>> ByFollowingUserId(int followingUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiFollowerServerResponseModel>> ByFollowingUserId(int followingUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Follower> records = await this.FollowerRepository.ByFollowingUserId(followingUserId, limit, offset);
 
@@ -125,5 +122,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d062fa1576cf027f4531e4852060d1a</Hash>
+    <Hash>b4ef35cbe6e24006cd44bf3e8048999c</Hash>
 </Codenesium>*/

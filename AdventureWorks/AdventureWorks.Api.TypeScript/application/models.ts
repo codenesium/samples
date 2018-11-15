@@ -1,4 +1,4 @@
-export class ApiAWBuildVersionRequestModel {
+export class ApiAWBuildVersionServerRequestModel {
 				database_Version:string;
 modifiedDate:string;
 systemInformationID:number;
@@ -15,7 +15,7 @@ this.versionDate = '';
 				}
 			}
 
-			export class ApiAWBuildVersionResponseModel {
+			export class ApiAWBuildVersionServerResponseModel {
 				database_Version:string;
 modifiedDate:string;
 systemInformationID:number;
@@ -31,7 +31,7 @@ this.versionDate = '';
 		
 				}
 			}
-			export class ApiDatabaseLogRequestModel {
+			export class ApiDatabaseLogServerRequestModel {
 				databaseLogID:number;
 databaseUser:string;
 event:string;
@@ -56,7 +56,7 @@ this.xmlEvent = '';
 				}
 			}
 
-			export class ApiDatabaseLogResponseModel {
+			export class ApiDatabaseLogServerResponseModel {
 				databaseLogID:number;
 databaseUser:string;
 event:string;
@@ -80,7 +80,7 @@ this.xmlEvent = '';
 		
 				}
 			}
-			export class ApiErrorLogRequestModel {
+			export class ApiErrorLogServerRequestModel {
 				errorLine:number;
 errorLogID:number;
 errorMessage:string;
@@ -107,7 +107,7 @@ this.userName = '';
 				}
 			}
 
-			export class ApiErrorLogResponseModel {
+			export class ApiErrorLogServerResponseModel {
 				errorLine:number;
 errorLogID:number;
 errorMessage:string;
@@ -133,7 +133,7 @@ this.userName = '';
 		
 				}
 			}
-			export class ApiDepartmentRequestModel {
+			export class ApiDepartmentServerRequestModel {
 				departmentID:number;
 groupName:string;
 modifiedDate:string;
@@ -150,7 +150,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiDepartmentResponseModel {
+			export class ApiDepartmentServerResponseModel {
 				departmentID:number;
 groupName:string;
 modifiedDate:string;
@@ -166,7 +166,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiEmployeeRequestModel {
+			export class ApiEmployeeServerRequestModel {
 				birthDate:string;
 businessEntityID:number;
 currentFlag:boolean;
@@ -205,7 +205,7 @@ this.vacationHour = 0;
 				}
 			}
 
-			export class ApiEmployeeResponseModel {
+			export class ApiEmployeeServerResponseModel {
 				birthDate:string;
 businessEntityID:number;
 currentFlag:boolean;
@@ -243,85 +243,7 @@ this.vacationHour = 0;
 		
 				}
 			}
-			export class ApiEmployeeDepartmentHistoryRequestModel {
-				businessEntityID:number;
-departmentID:number;
-endDate:string;
-modifiedDate:string;
-shiftID:number;
-startDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.departmentID = 0;
-this.endDate = '';
-this.modifiedDate = '';
-this.shiftID = 0;
-this.startDate = '';
-
-		
-				}
-			}
-
-			export class ApiEmployeeDepartmentHistoryResponseModel {
-				businessEntityID:number;
-departmentID:number;
-endDate:string;
-modifiedDate:string;
-shiftID:number;
-startDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.departmentID = 0;
-this.endDate = '';
-this.modifiedDate = '';
-this.shiftID = 0;
-this.startDate = '';
-
-		
-				}
-			}
-			export class ApiEmployeePayHistoryRequestModel {
-				businessEntityID:number;
-modifiedDate:string;
-payFrequency:number;
-rate:number;
-rateChangeDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.payFrequency = 0;
-this.rate = 0;
-this.rateChangeDate = '';
-
-		
-				}
-			}
-
-			export class ApiEmployeePayHistoryResponseModel {
-				businessEntityID:number;
-modifiedDate:string;
-payFrequency:number;
-rate:number;
-rateChangeDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.payFrequency = 0;
-this.rate = 0;
-this.rateChangeDate = '';
-
-		
-				}
-			}
-			export class ApiJobCandidateRequestModel {
+			export class ApiJobCandidateServerRequestModel {
 				businessEntityID:number;
 jobCandidateID:number;
 modifiedDate:string;
@@ -338,7 +260,7 @@ this.resume = '';
 				}
 			}
 
-			export class ApiJobCandidateResponseModel {
+			export class ApiJobCandidateServerResponseModel {
 				businessEntityID:number;
 jobCandidateID:number;
 modifiedDate:string;
@@ -354,7 +276,7 @@ this.resume = '';
 		
 				}
 			}
-			export class ApiShiftRequestModel {
+			export class ApiShiftServerRequestModel {
 				endTime:string;
 modifiedDate:string;
 name:string;
@@ -373,7 +295,7 @@ this.startTime = '';
 				}
 			}
 
-			export class ApiShiftResponseModel {
+			export class ApiShiftServerResponseModel {
 				endTime:string;
 modifiedDate:string;
 name:string;
@@ -391,7 +313,7 @@ this.startTime = '';
 		
 				}
 			}
-			export class ApiAddressRequestModel {
+			export class ApiAddressServerRequestModel {
 				addressID:number;
 addressLine1:string;
 addressLine2:string;
@@ -416,7 +338,7 @@ this.stateProvinceID = 0;
 				}
 			}
 
-			export class ApiAddressResponseModel {
+			export class ApiAddressServerResponseModel {
 				addressID:number;
 addressLine1:string;
 addressLine2:string;
@@ -440,7 +362,7 @@ this.stateProvinceID = 0;
 		
 				}
 			}
-			export class ApiAddressTypeRequestModel {
+			export class ApiAddressTypeServerRequestModel {
 				addressTypeID:number;
 modifiedDate:string;
 name:string;
@@ -457,7 +379,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiAddressTypeResponseModel {
+			export class ApiAddressTypeServerResponseModel {
 				addressTypeID:number;
 modifiedDate:string;
 name:string;
@@ -473,7 +395,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiBusinessEntityRequestModel {
+			export class ApiBusinessEntityServerRequestModel {
 				businessEntityID:number;
 modifiedDate:string;
 rowguid:string;
@@ -488,7 +410,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiBusinessEntityResponseModel {
+			export class ApiBusinessEntityServerResponseModel {
 				businessEntityID:number;
 modifiedDate:string;
 rowguid:string;
@@ -502,81 +424,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiBusinessEntityAddressRequestModel {
-				addressID:number;
-addressTypeID:number;
-businessEntityID:number;
-modifiedDate:string;
-rowguid:string;
-
-	
-				constructor() {
-					this.addressID = 0;
-this.addressTypeID = 0;
-this.businessEntityID = 0;
-this.modifiedDate = '';
-this.rowguid = '';
-
-		
-				}
-			}
-
-			export class ApiBusinessEntityAddressResponseModel {
-				addressID:number;
-addressTypeID:number;
-businessEntityID:number;
-modifiedDate:string;
-rowguid:string;
-
-	
-				constructor() {
-					this.addressID = 0;
-this.addressTypeID = 0;
-this.businessEntityID = 0;
-this.modifiedDate = '';
-this.rowguid = '';
-
-		
-				}
-			}
-			export class ApiBusinessEntityContactRequestModel {
-				businessEntityID:number;
-contactTypeID:number;
-modifiedDate:string;
-personID:number;
-rowguid:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.contactTypeID = 0;
-this.modifiedDate = '';
-this.personID = 0;
-this.rowguid = '';
-
-		
-				}
-			}
-
-			export class ApiBusinessEntityContactResponseModel {
-				businessEntityID:number;
-contactTypeID:number;
-modifiedDate:string;
-personID:number;
-rowguid:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.contactTypeID = 0;
-this.modifiedDate = '';
-this.personID = 0;
-this.rowguid = '';
-
-		
-				}
-			}
-			export class ApiContactTypeRequestModel {
+			export class ApiContactTypeServerRequestModel {
 				contactTypeID:number;
 modifiedDate:string;
 name:string;
@@ -591,7 +439,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiContactTypeResponseModel {
+			export class ApiContactTypeServerResponseModel {
 				contactTypeID:number;
 modifiedDate:string;
 name:string;
@@ -605,7 +453,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiCountryRegionRequestModel {
+			export class ApiCountryRegionServerRequestModel {
 				countryRegionCode:string;
 modifiedDate:string;
 name:string;
@@ -620,7 +468,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiCountryRegionResponseModel {
+			export class ApiCountryRegionServerResponseModel {
 				countryRegionCode:string;
 modifiedDate:string;
 name:string;
@@ -634,44 +482,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiEmailAddressRequestModel {
-				businessEntityID:number;
-emailAddress1:string;
-emailAddressID:number;
-modifiedDate:string;
-rowguid:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.emailAddress1 = '';
-this.emailAddressID = 0;
-this.modifiedDate = '';
-this.rowguid = '';
-
-		
-				}
-			}
-
-			export class ApiEmailAddressResponseModel {
-				businessEntityID:number;
-emailAddress1:string;
-emailAddressID:number;
-modifiedDate:string;
-rowguid:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.emailAddress1 = '';
-this.emailAddressID = 0;
-this.modifiedDate = '';
-this.rowguid = '';
-
-		
-				}
-			}
-			export class ApiPasswordRequestModel {
+			export class ApiPasswordServerRequestModel {
 				businessEntityID:number;
 modifiedDate:string;
 passwordHash:string;
@@ -690,7 +501,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiPasswordResponseModel {
+			export class ApiPasswordServerResponseModel {
 				businessEntityID:number;
 modifiedDate:string;
 passwordHash:string;
@@ -708,7 +519,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiPersonRequestModel {
+			export class ApiPersonServerRequestModel {
 				additionalContactInfo:string;
 businessEntityID:number;
 demographic:string;
@@ -743,7 +554,7 @@ this.title = '';
 				}
 			}
 
-			export class ApiPersonResponseModel {
+			export class ApiPersonServerResponseModel {
 				additionalContactInfo:string;
 businessEntityID:number;
 demographic:string;
@@ -777,40 +588,7 @@ this.title = '';
 		
 				}
 			}
-			export class ApiPersonPhoneRequestModel {
-				businessEntityID:number;
-modifiedDate:string;
-phoneNumber:string;
-phoneNumberTypeID:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.phoneNumber = '';
-this.phoneNumberTypeID = 0;
-
-		
-				}
-			}
-
-			export class ApiPersonPhoneResponseModel {
-				businessEntityID:number;
-modifiedDate:string;
-phoneNumber:string;
-phoneNumberTypeID:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.phoneNumber = '';
-this.phoneNumberTypeID = 0;
-
-		
-				}
-			}
-			export class ApiPhoneNumberTypeRequestModel {
+			export class ApiPhoneNumberTypeServerRequestModel {
 				modifiedDate:string;
 name:string;
 phoneNumberTypeID:number;
@@ -825,7 +603,7 @@ this.phoneNumberTypeID = 0;
 				}
 			}
 
-			export class ApiPhoneNumberTypeResponseModel {
+			export class ApiPhoneNumberTypeServerResponseModel {
 				modifiedDate:string;
 name:string;
 phoneNumberTypeID:number;
@@ -839,7 +617,7 @@ this.phoneNumberTypeID = 0;
 		
 				}
 			}
-			export class ApiStateProvinceRequestModel {
+			export class ApiStateProvinceServerRequestModel {
 				countryRegionCode:string;
 isOnlyStateProvinceFlag:boolean;
 modifiedDate:string;
@@ -864,7 +642,7 @@ this.territoryID = 0;
 				}
 			}
 
-			export class ApiStateProvinceResponseModel {
+			export class ApiStateProvinceServerResponseModel {
 				countryRegionCode:string;
 isOnlyStateProvinceFlag:boolean;
 modifiedDate:string;
@@ -888,52 +666,7 @@ this.territoryID = 0;
 		
 				}
 			}
-			export class ApiVStateProvinceCountryRegionRequestModel {
-				countryRegionCode:string;
-countryRegionName:string;
-isOnlyStateProvinceFlag:boolean;
-stateProvinceCode:string;
-stateProvinceID:number;
-stateProvinceName:string;
-territoryID:number;
-
-	
-				constructor() {
-					this.countryRegionCode = '';
-this.countryRegionName = '';
-this.isOnlyStateProvinceFlag = false;
-this.stateProvinceCode = '';
-this.stateProvinceID = 0;
-this.stateProvinceName = '';
-this.territoryID = 0;
-
-		
-				}
-			}
-
-			export class ApiVStateProvinceCountryRegionResponseModel {
-				countryRegionCode:string;
-countryRegionName:string;
-isOnlyStateProvinceFlag:boolean;
-stateProvinceCode:string;
-stateProvinceID:number;
-stateProvinceName:string;
-territoryID:number;
-
-	
-				constructor() {
-					this.countryRegionCode = '';
-this.countryRegionName = '';
-this.isOnlyStateProvinceFlag = false;
-this.stateProvinceCode = '';
-this.stateProvinceID = 0;
-this.stateProvinceName = '';
-this.territoryID = 0;
-
-		
-				}
-			}
-			export class ApiBillOfMaterialRequestModel {
+			export class ApiBillOfMaterialServerRequestModel {
 				billOfMaterialsID:number;
 bOMLevel:number;
 componentID:number;
@@ -960,7 +693,7 @@ this.unitMeasureCode = '';
 				}
 			}
 
-			export class ApiBillOfMaterialResponseModel {
+			export class ApiBillOfMaterialServerResponseModel {
 				billOfMaterialsID:number;
 bOMLevel:number;
 componentID:number;
@@ -986,7 +719,7 @@ this.unitMeasureCode = '';
 		
 				}
 			}
-			export class ApiCultureRequestModel {
+			export class ApiCultureServerRequestModel {
 				cultureID:string;
 modifiedDate:string;
 name:string;
@@ -1001,7 +734,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiCultureResponseModel {
+			export class ApiCultureServerResponseModel {
 				cultureID:string;
 modifiedDate:string;
 name:string;
@@ -1015,7 +748,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiDocumentRequestModel {
+			export class ApiDocumentServerRequestModel {
 				changeNumber:number;
 document1:string;
 documentLevel:number;
@@ -1050,7 +783,7 @@ this.title = '';
 				}
 			}
 
-			export class ApiDocumentResponseModel {
+			export class ApiDocumentServerResponseModel {
 				changeNumber:number;
 document1:string;
 documentLevel:number;
@@ -1084,7 +817,7 @@ this.title = '';
 		
 				}
 			}
-			export class ApiIllustrationRequestModel {
+			export class ApiIllustrationServerRequestModel {
 				diagram:string;
 illustrationID:number;
 modifiedDate:string;
@@ -1099,7 +832,7 @@ this.modifiedDate = '';
 				}
 			}
 
-			export class ApiIllustrationResponseModel {
+			export class ApiIllustrationServerResponseModel {
 				diagram:string;
 illustrationID:number;
 modifiedDate:string;
@@ -1113,7 +846,7 @@ this.modifiedDate = '';
 		
 				}
 			}
-			export class ApiLocationRequestModel {
+			export class ApiLocationServerRequestModel {
 				availability:number;
 costRate:number;
 locationID:number;
@@ -1132,7 +865,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiLocationResponseModel {
+			export class ApiLocationServerResponseModel {
 				availability:number;
 costRate:number;
 locationID:number;
@@ -1150,7 +883,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiProductRequestModel {
+			export class ApiProductServerRequestModel {
 				class:string;
 color:string;
 daysToManufacture:number;
@@ -1209,7 +942,7 @@ this.weightUnitMeasureCode = '';
 				}
 			}
 
-			export class ApiProductResponseModel {
+			export class ApiProductServerResponseModel {
 				class:string;
 color:string;
 daysToManufacture:number;
@@ -1267,7 +1000,7 @@ this.weightUnitMeasureCode = '';
 		
 				}
 			}
-			export class ApiProductCategoryRequestModel {
+			export class ApiProductCategoryServerRequestModel {
 				modifiedDate:string;
 name:string;
 productCategoryID:number;
@@ -1284,7 +1017,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiProductCategoryResponseModel {
+			export class ApiProductCategoryServerResponseModel {
 				modifiedDate:string;
 name:string;
 productCategoryID:number;
@@ -1300,44 +1033,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiProductCostHistoryRequestModel {
-				endDate:string;
-modifiedDate:string;
-productID:number;
-standardCost:number;
-startDate:string;
-
-	
-				constructor() {
-					this.endDate = '';
-this.modifiedDate = '';
-this.productID = 0;
-this.standardCost = 0;
-this.startDate = '';
-
-		
-				}
-			}
-
-			export class ApiProductCostHistoryResponseModel {
-				endDate:string;
-modifiedDate:string;
-productID:number;
-standardCost:number;
-startDate:string;
-
-	
-				constructor() {
-					this.endDate = '';
-this.modifiedDate = '';
-this.productID = 0;
-this.standardCost = 0;
-this.startDate = '';
-
-		
-				}
-			}
-			export class ApiProductDescriptionRequestModel {
+			export class ApiProductDescriptionServerRequestModel {
 				description:string;
 modifiedDate:string;
 productDescriptionID:number;
@@ -1354,7 +1050,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiProductDescriptionResponseModel {
+			export class ApiProductDescriptionServerResponseModel {
 				description:string;
 modifiedDate:string;
 productDescriptionID:number;
@@ -1370,89 +1066,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiProductInventoryRequestModel {
-				bin:number;
-locationID:number;
-modifiedDate:string;
-productID:number;
-quantity:number;
-rowguid:string;
-shelf:string;
-
-	
-				constructor() {
-					this.bin = 0;
-this.locationID = 0;
-this.modifiedDate = '';
-this.productID = 0;
-this.quantity = 0;
-this.rowguid = '';
-this.shelf = '';
-
-		
-				}
-			}
-
-			export class ApiProductInventoryResponseModel {
-				bin:number;
-locationID:number;
-modifiedDate:string;
-productID:number;
-quantity:number;
-rowguid:string;
-shelf:string;
-
-	
-				constructor() {
-					this.bin = 0;
-this.locationID = 0;
-this.modifiedDate = '';
-this.productID = 0;
-this.quantity = 0;
-this.rowguid = '';
-this.shelf = '';
-
-		
-				}
-			}
-			export class ApiProductListPriceHistoryRequestModel {
-				endDate:string;
-listPrice:number;
-modifiedDate:string;
-productID:number;
-startDate:string;
-
-	
-				constructor() {
-					this.endDate = '';
-this.listPrice = 0;
-this.modifiedDate = '';
-this.productID = 0;
-this.startDate = '';
-
-		
-				}
-			}
-
-			export class ApiProductListPriceHistoryResponseModel {
-				endDate:string;
-listPrice:number;
-modifiedDate:string;
-productID:number;
-startDate:string;
-
-	
-				constructor() {
-					this.endDate = '';
-this.listPrice = 0;
-this.modifiedDate = '';
-this.productID = 0;
-this.startDate = '';
-
-		
-				}
-			}
-			export class ApiProductModelRequestModel {
+			export class ApiProductModelServerRequestModel {
 				catalogDescription:string;
 instruction:string;
 modifiedDate:string;
@@ -1473,7 +1087,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiProductModelResponseModel {
+			export class ApiProductModelServerResponseModel {
 				catalogDescription:string;
 instruction:string;
 modifiedDate:string;
@@ -1493,40 +1107,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiProductModelProductDescriptionCultureRequestModel {
-				cultureID:string;
-modifiedDate:string;
-productDescriptionID:number;
-productModelID:number;
-
-	
-				constructor() {
-					this.cultureID = '';
-this.modifiedDate = '';
-this.productDescriptionID = 0;
-this.productModelID = 0;
-
-		
-				}
-			}
-
-			export class ApiProductModelProductDescriptionCultureResponseModel {
-				cultureID:string;
-modifiedDate:string;
-productDescriptionID:number;
-productModelID:number;
-
-	
-				constructor() {
-					this.cultureID = '';
-this.modifiedDate = '';
-this.productDescriptionID = 0;
-this.productModelID = 0;
-
-		
-				}
-			}
-			export class ApiProductPhotoRequestModel {
+			export class ApiProductPhotoServerRequestModel {
 				largePhoto:string;
 largePhotoFileName:string;
 modifiedDate:string;
@@ -1547,7 +1128,7 @@ this.thumbnailPhotoFileName = '';
 				}
 			}
 
-			export class ApiProductPhotoResponseModel {
+			export class ApiProductPhotoServerResponseModel {
 				largePhoto:string;
 largePhotoFileName:string;
 modifiedDate:string;
@@ -1567,40 +1148,7 @@ this.thumbnailPhotoFileName = '';
 		
 				}
 			}
-			export class ApiProductProductPhotoRequestModel {
-				modifiedDate:string;
-primary:boolean;
-productID:number;
-productPhotoID:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.primary = false;
-this.productID = 0;
-this.productPhotoID = 0;
-
-		
-				}
-			}
-
-			export class ApiProductProductPhotoResponseModel {
-				modifiedDate:string;
-primary:boolean;
-productID:number;
-productPhotoID:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.primary = false;
-this.productID = 0;
-this.productPhotoID = 0;
-
-		
-				}
-			}
-			export class ApiProductReviewRequestModel {
+			export class ApiProductReviewServerRequestModel {
 				comment:string;
 emailAddress:string;
 modifiedDate:string;
@@ -1625,7 +1173,7 @@ this.reviewerName = '';
 				}
 			}
 
-			export class ApiProductReviewResponseModel {
+			export class ApiProductReviewServerResponseModel {
 				comment:string;
 emailAddress:string;
 modifiedDate:string;
@@ -1649,7 +1197,7 @@ this.reviewerName = '';
 		
 				}
 			}
-			export class ApiProductSubcategoryRequestModel {
+			export class ApiProductSubcategoryServerRequestModel {
 				modifiedDate:string;
 name:string;
 productCategoryID:number;
@@ -1668,7 +1216,7 @@ this.rowguid = '';
 				}
 			}
 
-			export class ApiProductSubcategoryResponseModel {
+			export class ApiProductSubcategoryServerResponseModel {
 				modifiedDate:string;
 name:string;
 productCategoryID:number;
@@ -1686,7 +1234,7 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiScrapReasonRequestModel {
+			export class ApiScrapReasonServerRequestModel {
 				modifiedDate:string;
 name:string;
 scrapReasonID:number;
@@ -1701,7 +1249,7 @@ this.scrapReasonID = 0;
 				}
 			}
 
-			export class ApiScrapReasonResponseModel {
+			export class ApiScrapReasonServerResponseModel {
 				modifiedDate:string;
 name:string;
 scrapReasonID:number;
@@ -1715,7 +1263,7 @@ this.scrapReasonID = 0;
 		
 				}
 			}
-			export class ApiTransactionHistoryRequestModel {
+			export class ApiTransactionHistoryServerRequestModel {
 				actualCost:number;
 modifiedDate:string;
 productID:number;
@@ -1742,7 +1290,7 @@ this.transactionType = '';
 				}
 			}
 
-			export class ApiTransactionHistoryResponseModel {
+			export class ApiTransactionHistoryServerResponseModel {
 				actualCost:number;
 modifiedDate:string;
 productID:number;
@@ -1768,7 +1316,7 @@ this.transactionType = '';
 		
 				}
 			}
-			export class ApiTransactionHistoryArchiveRequestModel {
+			export class ApiTransactionHistoryArchiveServerRequestModel {
 				actualCost:number;
 modifiedDate:string;
 productID:number;
@@ -1795,7 +1343,7 @@ this.transactionType = '';
 				}
 			}
 
-			export class ApiTransactionHistoryArchiveResponseModel {
+			export class ApiTransactionHistoryArchiveServerResponseModel {
 				actualCost:number;
 modifiedDate:string;
 productID:number;
@@ -1821,7 +1369,7 @@ this.transactionType = '';
 		
 				}
 			}
-			export class ApiUnitMeasureRequestModel {
+			export class ApiUnitMeasureServerRequestModel {
 				modifiedDate:string;
 name:string;
 unitMeasureCode:string;
@@ -1836,7 +1384,7 @@ this.unitMeasureCode = '';
 				}
 			}
 
-			export class ApiUnitMeasureResponseModel {
+			export class ApiUnitMeasureServerResponseModel {
 				modifiedDate:string;
 name:string;
 unitMeasureCode:string;
@@ -1850,44 +1398,7 @@ this.unitMeasureCode = '';
 		
 				}
 			}
-			export class ApiVProductAndDescriptionRequestModel {
-				cultureID:string;
-description:string;
-name:string;
-productID:number;
-productModel:string;
-
-	
-				constructor() {
-					this.cultureID = '';
-this.description = '';
-this.name = '';
-this.productID = 0;
-this.productModel = '';
-
-		
-				}
-			}
-
-			export class ApiVProductAndDescriptionResponseModel {
-				cultureID:string;
-description:string;
-name:string;
-productID:number;
-productModel:string;
-
-	
-				constructor() {
-					this.cultureID = '';
-this.description = '';
-this.name = '';
-this.productID = 0;
-this.productModel = '';
-
-		
-				}
-			}
-			export class ApiWorkOrderRequestModel {
+			export class ApiWorkOrderServerRequestModel {
 				dueDate:string;
 endDate:string;
 modifiedDate:string;
@@ -1916,7 +1427,7 @@ this.workOrderID = 0;
 				}
 			}
 
-			export class ApiWorkOrderResponseModel {
+			export class ApiWorkOrderServerResponseModel {
 				dueDate:string;
 endDate:string;
 modifiedDate:string;
@@ -1944,194 +1455,7 @@ this.workOrderID = 0;
 		
 				}
 			}
-			export class ApiWorkOrderRoutingRequestModel {
-				actualCost:number;
-actualEndDate:string;
-actualResourceHr:number;
-actualStartDate:string;
-locationID:number;
-modifiedDate:string;
-operationSequence:number;
-plannedCost:number;
-productID:number;
-scheduledEndDate:string;
-scheduledStartDate:string;
-workOrderID:number;
-
-	
-				constructor() {
-					this.actualCost = 0;
-this.actualEndDate = '';
-this.actualResourceHr = 0;
-this.actualStartDate = '';
-this.locationID = 0;
-this.modifiedDate = '';
-this.operationSequence = 0;
-this.plannedCost = 0;
-this.productID = 0;
-this.scheduledEndDate = '';
-this.scheduledStartDate = '';
-this.workOrderID = 0;
-
-		
-				}
-			}
-
-			export class ApiWorkOrderRoutingResponseModel {
-				actualCost:number;
-actualEndDate:string;
-actualResourceHr:number;
-actualStartDate:string;
-locationID:number;
-modifiedDate:string;
-operationSequence:number;
-plannedCost:number;
-productID:number;
-scheduledEndDate:string;
-scheduledStartDate:string;
-workOrderID:number;
-
-	
-				constructor() {
-					this.actualCost = 0;
-this.actualEndDate = '';
-this.actualResourceHr = 0;
-this.actualStartDate = '';
-this.locationID = 0;
-this.modifiedDate = '';
-this.operationSequence = 0;
-this.plannedCost = 0;
-this.productID = 0;
-this.scheduledEndDate = '';
-this.scheduledStartDate = '';
-this.workOrderID = 0;
-
-		
-				}
-			}
-			export class ApiProductVendorRequestModel {
-				averageLeadTime:number;
-businessEntityID:number;
-lastReceiptCost:number;
-lastReceiptDate:string;
-maxOrderQty:number;
-minOrderQty:number;
-modifiedDate:string;
-onOrderQty:number;
-productID:number;
-standardPrice:number;
-unitMeasureCode:string;
-
-	
-				constructor() {
-					this.averageLeadTime = 0;
-this.businessEntityID = 0;
-this.lastReceiptCost = 0;
-this.lastReceiptDate = '';
-this.maxOrderQty = 0;
-this.minOrderQty = 0;
-this.modifiedDate = '';
-this.onOrderQty = 0;
-this.productID = 0;
-this.standardPrice = 0;
-this.unitMeasureCode = '';
-
-		
-				}
-			}
-
-			export class ApiProductVendorResponseModel {
-				averageLeadTime:number;
-businessEntityID:number;
-lastReceiptCost:number;
-lastReceiptDate:string;
-maxOrderQty:number;
-minOrderQty:number;
-modifiedDate:string;
-onOrderQty:number;
-productID:number;
-standardPrice:number;
-unitMeasureCode:string;
-
-	
-				constructor() {
-					this.averageLeadTime = 0;
-this.businessEntityID = 0;
-this.lastReceiptCost = 0;
-this.lastReceiptDate = '';
-this.maxOrderQty = 0;
-this.minOrderQty = 0;
-this.modifiedDate = '';
-this.onOrderQty = 0;
-this.productID = 0;
-this.standardPrice = 0;
-this.unitMeasureCode = '';
-
-		
-				}
-			}
-			export class ApiPurchaseOrderDetailRequestModel {
-				dueDate:string;
-lineTotal:number;
-modifiedDate:string;
-orderQty:number;
-productID:number;
-purchaseOrderDetailID:number;
-purchaseOrderID:number;
-receivedQty:number;
-rejectedQty:number;
-stockedQty:number;
-unitPrice:number;
-
-	
-				constructor() {
-					this.dueDate = '';
-this.lineTotal = 0;
-this.modifiedDate = '';
-this.orderQty = 0;
-this.productID = 0;
-this.purchaseOrderDetailID = 0;
-this.purchaseOrderID = 0;
-this.receivedQty = 0;
-this.rejectedQty = 0;
-this.stockedQty = 0;
-this.unitPrice = 0;
-
-		
-				}
-			}
-
-			export class ApiPurchaseOrderDetailResponseModel {
-				dueDate:string;
-lineTotal:number;
-modifiedDate:string;
-orderQty:number;
-productID:number;
-purchaseOrderDetailID:number;
-purchaseOrderID:number;
-receivedQty:number;
-rejectedQty:number;
-stockedQty:number;
-unitPrice:number;
-
-	
-				constructor() {
-					this.dueDate = '';
-this.lineTotal = 0;
-this.modifiedDate = '';
-this.orderQty = 0;
-this.productID = 0;
-this.purchaseOrderDetailID = 0;
-this.purchaseOrderID = 0;
-this.receivedQty = 0;
-this.rejectedQty = 0;
-this.stockedQty = 0;
-this.unitPrice = 0;
-
-		
-				}
-			}
-			export class ApiPurchaseOrderHeaderRequestModel {
+			export class ApiPurchaseOrderHeaderServerRequestModel {
 				employeeID:number;
 freight:number;
 modifiedDate:string;
@@ -2166,7 +1490,7 @@ this.vendorID = 0;
 				}
 			}
 
-			export class ApiPurchaseOrderHeaderResponseModel {
+			export class ApiPurchaseOrderHeaderServerResponseModel {
 				employeeID:number;
 freight:number;
 modifiedDate:string;
@@ -2200,7 +1524,7 @@ this.vendorID = 0;
 		
 				}
 			}
-			export class ApiShipMethodRequestModel {
+			export class ApiShipMethodServerRequestModel {
 				modifiedDate:string;
 name:string;
 rowguid:string;
@@ -2221,7 +1545,7 @@ this.shipRate = 0;
 				}
 			}
 
-			export class ApiShipMethodResponseModel {
+			export class ApiShipMethodServerResponseModel {
 				modifiedDate:string;
 name:string;
 rowguid:string;
@@ -2241,7 +1565,7 @@ this.shipRate = 0;
 		
 				}
 			}
-			export class ApiVendorRequestModel {
+			export class ApiVendorServerRequestModel {
 				accountNumber:string;
 activeFlag:boolean;
 businessEntityID:number;
@@ -2266,7 +1590,7 @@ this.purchasingWebServiceURL = '';
 				}
 			}
 
-			export class ApiVendorResponseModel {
+			export class ApiVendorServerResponseModel {
 				accountNumber:string;
 activeFlag:boolean;
 businessEntityID:number;
@@ -2290,7 +1614,7 @@ this.purchasingWebServiceURL = '';
 		
 				}
 			}
-			export class ApiCreditCardRequestModel {
+			export class ApiCreditCardServerRequestModel {
 				cardNumber:string;
 cardType:string;
 creditCardID:number;
@@ -2311,7 +1635,7 @@ this.modifiedDate = '';
 				}
 			}
 
-			export class ApiCreditCardResponseModel {
+			export class ApiCreditCardServerResponseModel {
 				cardNumber:string;
 cardType:string;
 creditCardID:number;
@@ -2331,7 +1655,7 @@ this.modifiedDate = '';
 		
 				}
 			}
-			export class ApiCurrencyRequestModel {
+			export class ApiCurrencyServerRequestModel {
 				currencyCode:string;
 modifiedDate:string;
 name:string;
@@ -2346,7 +1670,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiCurrencyResponseModel {
+			export class ApiCurrencyServerResponseModel {
 				currencyCode:string;
 modifiedDate:string;
 name:string;
@@ -2360,7 +1684,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiCurrencyRateRequestModel {
+			export class ApiCurrencyRateServerRequestModel {
 				averageRate:number;
 currencyRateDate:string;
 currencyRateID:number;
@@ -2385,7 +1709,7 @@ this.toCurrencyCode = '';
 				}
 			}
 
-			export class ApiCurrencyRateResponseModel {
+			export class ApiCurrencyRateServerResponseModel {
 				averageRate:number;
 currencyRateDate:string;
 currencyRateID:number;
@@ -2409,7 +1733,7 @@ this.toCurrencyCode = '';
 		
 				}
 			}
-			export class ApiCustomerRequestModel {
+			export class ApiCustomerServerRequestModel {
 				accountNumber:string;
 customerID:number;
 modifiedDate:string;
@@ -2434,7 +1758,7 @@ this.territoryID = 0;
 				}
 			}
 
-			export class ApiCustomerResponseModel {
+			export class ApiCustomerServerResponseModel {
 				accountNumber:string;
 customerID:number;
 modifiedDate:string;
@@ -2458,70 +1782,7 @@ this.territoryID = 0;
 		
 				}
 			}
-			export class ApiSalesOrderDetailRequestModel {
-				carrierTrackingNumber:string;
-lineTotal:number;
-modifiedDate:string;
-orderQty:number;
-productID:number;
-rowguid:string;
-salesOrderDetailID:number;
-salesOrderID:number;
-salesOrderIDEntity:number;
-specialOfferID:number;
-unitPrice:number;
-unitPriceDiscount:number;
-
-	
-				constructor() {
-					this.carrierTrackingNumber = '';
-this.lineTotal = 0;
-this.modifiedDate = '';
-this.orderQty = 0;
-this.productID = 0;
-this.rowguid = '';
-this.salesOrderDetailID = 0;
-this.salesOrderID = 0;
-this.specialOfferID = 0;
-this.unitPrice = 0;
-this.unitPriceDiscount = 0;
-
-		
-				}
-			}
-
-			export class ApiSalesOrderDetailResponseModel {
-				carrierTrackingNumber:string;
-lineTotal:number;
-modifiedDate:string;
-orderQty:number;
-productID:number;
-rowguid:string;
-salesOrderDetailID:number;
-salesOrderID:number;
-salesOrderIDEntity:number;
-specialOfferID:number;
-unitPrice:number;
-unitPriceDiscount:number;
-
-	
-				constructor() {
-					this.carrierTrackingNumber = '';
-this.lineTotal = 0;
-this.modifiedDate = '';
-this.orderQty = 0;
-this.productID = 0;
-this.rowguid = '';
-this.salesOrderDetailID = 0;
-this.salesOrderID = 0;
-this.specialOfferID = 0;
-this.unitPrice = 0;
-this.unitPriceDiscount = 0;
-
-		
-				}
-			}
-			export class ApiSalesOrderHeaderRequestModel {
+			export class ApiSalesOrderHeaderServerRequestModel {
 				accountNumber:string;
 billToAddressID:number;
 comment:string;
@@ -2587,7 +1848,7 @@ this.totalDue = 0;
 				}
 			}
 
-			export class ApiSalesOrderHeaderResponseModel {
+			export class ApiSalesOrderHeaderServerResponseModel {
 				accountNumber:string;
 billToAddressID:number;
 comment:string;
@@ -2652,7 +1913,7 @@ this.totalDue = 0;
 		
 				}
 			}
-			export class ApiSalesPersonRequestModel {
+			export class ApiSalesPersonServerRequestModel {
 				bonus:number;
 businessEntityID:number;
 commissionPct:number;
@@ -2680,7 +1941,7 @@ this.territoryID = 0;
 				}
 			}
 
-			export class ApiSalesPersonResponseModel {
+			export class ApiSalesPersonServerResponseModel {
 				bonus:number;
 businessEntityID:number;
 commissionPct:number;
@@ -2707,46 +1968,7 @@ this.territoryID = 0;
 		
 				}
 			}
-			export class ApiSalesPersonQuotaHistoryRequestModel {
-				businessEntityID:number;
-businessEntityIDEntity:number;
-modifiedDate:string;
-quotaDate:string;
-rowguid:string;
-salesQuota:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.quotaDate = '';
-this.rowguid = '';
-this.salesQuota = 0;
-
-		
-				}
-			}
-
-			export class ApiSalesPersonQuotaHistoryResponseModel {
-				businessEntityID:number;
-businessEntityIDEntity:number;
-modifiedDate:string;
-quotaDate:string;
-rowguid:string;
-salesQuota:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.modifiedDate = '';
-this.quotaDate = '';
-this.rowguid = '';
-this.salesQuota = 0;
-
-		
-				}
-			}
-			export class ApiSalesReasonRequestModel {
+			export class ApiSalesReasonServerRequestModel {
 				modifiedDate:string;
 name:string;
 reasonType:string;
@@ -2763,7 +1985,7 @@ this.salesReasonID = 0;
 				}
 			}
 
-			export class ApiSalesReasonResponseModel {
+			export class ApiSalesReasonServerResponseModel {
 				modifiedDate:string;
 name:string;
 reasonType:string;
@@ -2779,7 +2001,7 @@ this.salesReasonID = 0;
 		
 				}
 			}
-			export class ApiSalesTaxRateRequestModel {
+			export class ApiSalesTaxRateServerRequestModel {
 				modifiedDate:string;
 name:string;
 rowguid:string;
@@ -2802,7 +2024,7 @@ this.taxType = 0;
 				}
 			}
 
-			export class ApiSalesTaxRateResponseModel {
+			export class ApiSalesTaxRateServerResponseModel {
 				modifiedDate:string;
 name:string;
 rowguid:string;
@@ -2824,7 +2046,7 @@ this.taxType = 0;
 		
 				}
 			}
-			export class ApiSalesTerritoryRequestModel {
+			export class ApiSalesTerritoryServerRequestModel {
 				costLastYear:number;
 costYTD:number;
 countryRegionCode:string;
@@ -2853,7 +2075,7 @@ this.territoryID = 0;
 				}
 			}
 
-			export class ApiSalesTerritoryResponseModel {
+			export class ApiSalesTerritoryServerResponseModel {
 				costLastYear:number;
 costYTD:number;
 countryRegionCode:string;
@@ -2881,52 +2103,7 @@ this.territoryID = 0;
 		
 				}
 			}
-			export class ApiSalesTerritoryHistoryRequestModel {
-				businessEntityID:number;
-businessEntityIDEntity:number;
-endDate:string;
-modifiedDate:string;
-rowguid:string;
-startDate:string;
-territoryID:number;
-territoryIDEntity:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.endDate = '';
-this.modifiedDate = '';
-this.rowguid = '';
-this.startDate = '';
-this.territoryID = 0;
-
-		
-				}
-			}
-
-			export class ApiSalesTerritoryHistoryResponseModel {
-				businessEntityID:number;
-businessEntityIDEntity:number;
-endDate:string;
-modifiedDate:string;
-rowguid:string;
-startDate:string;
-territoryID:number;
-territoryIDEntity:number;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.endDate = '';
-this.modifiedDate = '';
-this.rowguid = '';
-this.startDate = '';
-this.territoryID = 0;
-
-		
-				}
-			}
-			export class ApiShoppingCartItemRequestModel {
+			export class ApiShoppingCartItemServerRequestModel {
 				dateCreated:string;
 modifiedDate:string;
 productID:number;
@@ -2947,7 +2124,7 @@ this.shoppingCartItemID = 0;
 				}
 			}
 
-			export class ApiShoppingCartItemResponseModel {
+			export class ApiShoppingCartItemServerResponseModel {
 				dateCreated:string;
 modifiedDate:string;
 productID:number;
@@ -2967,7 +2144,7 @@ this.shoppingCartItemID = 0;
 		
 				}
 			}
-			export class ApiSpecialOfferRequestModel {
+			export class ApiSpecialOfferServerRequestModel {
 				category:string;
 description:string;
 discountPct:number;
@@ -2998,7 +2175,7 @@ this.type = '';
 				}
 			}
 
-			export class ApiSpecialOfferResponseModel {
+			export class ApiSpecialOfferServerResponseModel {
 				category:string;
 description:string;
 discountPct:number;
@@ -3028,40 +2205,7 @@ this.type = '';
 		
 				}
 			}
-			export class ApiSpecialOfferProductRequestModel {
-				modifiedDate:string;
-productID:number;
-rowguid:string;
-specialOfferID:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.productID = 0;
-this.rowguid = '';
-this.specialOfferID = 0;
-
-		
-				}
-			}
-
-			export class ApiSpecialOfferProductResponseModel {
-				modifiedDate:string;
-productID:number;
-rowguid:string;
-specialOfferID:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.productID = 0;
-this.rowguid = '';
-this.specialOfferID = 0;
-
-		
-				}
-			}
-			export class ApiStoreRequestModel {
+			export class ApiStoreServerRequestModel {
 				businessEntityID:number;
 demographic:string;
 modifiedDate:string;
@@ -3083,7 +2227,7 @@ this.salesPersonID = 0;
 				}
 			}
 
-			export class ApiStoreResponseModel {
+			export class ApiStoreServerResponseModel {
 				businessEntityID:number;
 demographic:string;
 modifiedDate:string;

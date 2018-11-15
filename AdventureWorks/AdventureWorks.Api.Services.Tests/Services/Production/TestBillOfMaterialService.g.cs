@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			List<ApiBillOfMaterialResponseModel> response = await service.All();
+			List<ApiBillOfMaterialServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			ApiBillOfMaterialResponseModel response = await service.Get(default(int));
+			ApiBillOfMaterialServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			ApiBillOfMaterialResponseModel response = await service.Get(default(int));
+			ApiBillOfMaterialServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			var model = new ApiBillOfMaterialRequestModel();
+			var model = new ApiBillOfMaterialServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BillOfMaterial>())).Returns(Task.FromResult(new BillOfMaterial()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			CreateResponse<ApiBillOfMaterialResponseModel> response = await service.Create(model);
+			CreateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<BillOfMaterial>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			var model = new ApiBillOfMaterialRequestModel();
+			var model = new ApiBillOfMaterialServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BillOfMaterial>())).Returns(Task.FromResult(new BillOfMaterial()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			UpdateResponse<ApiBillOfMaterialResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>()));
+			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<BillOfMaterial>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			var model = new ApiBillOfMaterialRequestModel();
+			var model = new ApiBillOfMaterialServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			List<ApiBillOfMaterialResponseModel> response = await service.ByUnitMeasureCode(default(string));
+			List<ApiBillOfMaterialServerResponseModel> response = await service.ByUnitMeasureCode("test_value");
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
-			List<ApiBillOfMaterialResponseModel> response = await service.ByUnitMeasureCode(default(string));
+			List<ApiBillOfMaterialServerResponseModel> response = await service.ByUnitMeasureCode("test_value");
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b1225bc02134bed20f9161393e608360</Hash>
+    <Hash>31ec34fdc14e90a9a9f5bea9b23276a9</Hash>
 </Codenesium>*/

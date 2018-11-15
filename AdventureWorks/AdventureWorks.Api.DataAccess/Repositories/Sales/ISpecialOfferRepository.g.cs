@@ -16,9 +16,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<SpecialOffer> Get(int specialOfferID);
 
 		Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<SpecialOffer> ByRowguid(Guid rowguid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c065fc6010d3c37b6788eeafbe8ccbfb</Hash>
+    <Hash>64076999f865b24156ec9be2a7892d52</Hash>
 </Codenesium>*/

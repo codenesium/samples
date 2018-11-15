@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,45 +11,37 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; private set; }
 
-		protected IApiSalesOrderHeaderRequestModelValidator SalesOrderHeaderModelValidator { get; private set; }
+		protected IApiSalesOrderHeaderServerRequestModelValidator SalesOrderHeaderModelValidator { get; private set; }
 
 		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
-
-		protected IBOLSalesOrderDetailMapper BolSalesOrderDetailMapper { get; private set; }
-
-		protected IDALSalesOrderDetailMapper DalSalesOrderDetailMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractSalesOrderHeaderService(
 			ILogger logger,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
+			IApiSalesOrderHeaderServerRequestModelValidator salesOrderHeaderModelValidator,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
-			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
+			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
 		{
 			this.SalesOrderHeaderRepository = salesOrderHeaderRepository;
 			this.SalesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
-			this.BolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
-			this.DalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesOrderHeaderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SalesOrderHeaderRepository.All(limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSalesOrderHeaderResponseModel> Get(int salesOrderID)
+		public virtual async Task<ApiSalesOrderHeaderServerResponseModel> Get(int salesOrderID)
 		{
 			var record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
 
@@ -68,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
-			ApiSalesOrderHeaderRequestModel model)
+		public virtual async Task<CreateResponse<ApiSalesOrderHeaderServerResponseModel>> Create(
+			ApiSalesOrderHeaderServerRequestModel model)
 		{
-			CreateResponse<ApiSalesOrderHeaderResponseModel> response = new CreateResponse<ApiSalesOrderHeaderResponseModel>(await this.SalesOrderHeaderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesOrderHeaderServerResponseModel> response = ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.CreateResponse(await this.SalesOrderHeaderModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSalesOrderHeaderMapper.MapModelToBO(default(int), model);
@@ -83,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSalesOrderHeaderResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSalesOrderHeaderServerResponseModel>> Update(
 			int salesOrderID,
-			ApiSalesOrderHeaderRequestModel model)
+			ApiSalesOrderHeaderServerRequestModel model)
 		{
 			var validationResult = await this.SalesOrderHeaderModelValidator.ValidateUpdateAsync(salesOrderID, model);
 
@@ -96,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
 
-				return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.UpdateResponse(this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSalesOrderHeaderResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int salesOrderID)
 		{
-			ActionResponse response = new ActionResponse(await this.SalesOrderHeaderModelValidator.ValidateDeleteAsync(salesOrderID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SalesOrderHeaderModelValidator.ValidateDeleteAsync(salesOrderID));
+
 			if (response.Success)
 			{
 				await this.SalesOrderHeaderRepository.Delete(salesOrderID);
@@ -116,7 +105,21 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiSalesOrderHeaderResponseModel> BySalesOrderNumber(string salesOrderNumber)
+		public async virtual Task<ApiSalesOrderHeaderServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			SalesOrderHeader record = await this.SalesOrderHeaderRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<ApiSalesOrderHeaderServerResponseModel> BySalesOrderNumber(string salesOrderNumber)
 		{
 			SalesOrderHeader record = await this.SalesOrderHeaderRepository.BySalesOrderNumber(salesOrderNumber);
 
@@ -130,30 +133,16 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> ByCustomerID(int customerID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.ByCustomerID(customerID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> BySalesPersonID(int? salesPersonID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesPersonID(salesPersonID, limit, offset);
-
-			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetailsBySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesOrderDetail> records = await this.SalesOrderHeaderRepository.SalesOrderDetailsBySalesOrderID(salesOrderID, limit, offset);
-
-			return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> BySalesReasonID(int salesReasonID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesReasonID(salesReasonID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -161,5 +150,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2185c20ae7211b064d8599bc66ec720d</Hash>
+    <Hash>2815000a4674aa807dc8b93adc709230</Hash>
 </Codenesium>*/

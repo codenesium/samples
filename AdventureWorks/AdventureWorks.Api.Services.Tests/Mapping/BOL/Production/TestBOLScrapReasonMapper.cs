@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLScrapReasonMapper();
-			ApiScrapReasonRequestModel model = new ApiScrapReasonRequestModel();
+			ApiScrapReasonServerRequestModel model = new ApiScrapReasonServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOScrapReason response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLScrapReasonMapper();
 			BOScrapReason bo = new BOScrapReason();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiScrapReasonResponseModel response = mapper.MapBOToModel(bo);
+			ApiScrapReasonServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLScrapReasonMapper();
 			BOScrapReason bo = new BOScrapReason();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiScrapReasonResponseModel> response = mapper.MapBOToModel(new List<BOScrapReason>() { { bo } });
+			List<ApiScrapReasonServerResponseModel> response = mapper.MapBOToModel(new List<BOScrapReason>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7ef06baadb134e02470fbac32c19a568</Hash>
+    <Hash>5dd569be342b1eb14d1ce071183a9085</Hash>
 </Codenesium>*/

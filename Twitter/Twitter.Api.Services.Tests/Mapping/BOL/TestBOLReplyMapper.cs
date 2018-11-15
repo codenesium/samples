@@ -17,14 +17,14 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLReplyMapper();
-			ApiReplyRequestModel model = new ApiReplyRequestModel();
-			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
+			ApiReplyServerRequestModel model = new ApiReplyServerRequestModel();
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
 			BOReply response = mapper.MapModelToBO(1, model);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ReplierUserId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -32,14 +32,14 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLReplyMapper();
 			BOReply bo = new BOReply();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
-			ApiReplyResponseModel response = mapper.MapBOToModel(bo);
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
+			ApiReplyServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Content.Should().Be("A");
 			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ReplierUserId.Should().Be(1);
 			response.ReplyId.Should().Be(1);
-			response.Time.Should().Be(TimeSpan.Parse("0"));
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
 		}
 
 		[Fact]
@@ -47,8 +47,8 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new BOLReplyMapper();
 			BOReply bo = new BOReply();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"));
-			List<ApiReplyResponseModel> response = mapper.MapBOToModel(new List<BOReply>() { { bo } });
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
+			List<ApiReplyServerResponseModel> response = mapper.MapBOToModel(new List<BOReply>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e0a6799a5554529ba727cd3848bcc423</Hash>
+    <Hash>c46152a8a60d9f401e306d375db23c0f</Hash>
 </Codenesium>*/

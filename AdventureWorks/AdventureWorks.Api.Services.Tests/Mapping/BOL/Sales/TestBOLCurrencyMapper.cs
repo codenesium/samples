@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCurrencyMapper();
-			ApiCurrencyRequestModel model = new ApiCurrencyRequestModel();
+			ApiCurrencyServerRequestModel model = new ApiCurrencyServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOCurrency response = mapper.MapModelToBO("A", model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCurrencyMapper();
 			BOCurrency bo = new BOCurrency();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCurrencyResponseModel response = mapper.MapBOToModel(bo);
+			ApiCurrencyServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CurrencyCode.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCurrencyMapper();
 			BOCurrency bo = new BOCurrency();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCurrencyResponseModel> response = mapper.MapBOToModel(new List<BOCurrency>() { { bo } });
+			List<ApiCurrencyServerResponseModel> response = mapper.MapBOToModel(new List<BOCurrency>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>635e01ec141f86b67ddf9a274dc9d40b</Hash>
+    <Hash>e8366df6e73ad43f8806fef0f5e74625</Hash>
 </Codenesium>*/

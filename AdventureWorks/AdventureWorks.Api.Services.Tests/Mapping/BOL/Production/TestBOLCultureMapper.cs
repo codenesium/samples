@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCultureMapper();
-			ApiCultureRequestModel model = new ApiCultureRequestModel();
+			ApiCultureServerRequestModel model = new ApiCultureServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOCulture response = mapper.MapModelToBO("A", model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCultureMapper();
 			BOCulture bo = new BOCulture();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiCultureResponseModel response = mapper.MapBOToModel(bo);
+			ApiCultureServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.CultureID.Should().Be("A");
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLCultureMapper();
 			BOCulture bo = new BOCulture();
 			bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiCultureResponseModel> response = mapper.MapBOToModel(new List<BOCulture>() { { bo } });
+			List<ApiCultureServerResponseModel> response = mapper.MapBOToModel(new List<BOCulture>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7aacf921aef1e73c295871796932717f</Hash>
+    <Hash>cd9b4edee308fe208744b1488d85b18f</Hash>
 </Codenesium>*/

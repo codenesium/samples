@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiAdminResponseModel> response = await service.All();
+			List<ApiAdminServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiAdminResponseModel response = await service.Get(default(int));
+			ApiAdminServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiAdminResponseModel response = await service.Get(default(int));
+			ApiAdminServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IAdminRepository>();
-			var model = new ApiAdminRequestModel();
+			var model = new ApiAdminServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Admin>())).Returns(Task.FromResult(new Admin()));
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			CreateResponse<ApiAdminResponseModel> response = await service.Create(model);
+			CreateResponse<ApiAdminServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAdminRequestModel>()));
+			mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAdminServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Admin>()));
 		}
 
@@ -103,7 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IAdminRepository>();
-			var model = new ApiAdminRequestModel();
+			var model = new ApiAdminServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Admin>())).Returns(Task.FromResult(new Admin()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 			var service = new AdminService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			UpdateResponse<ApiAdminResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiAdminServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAdminRequestModel>()));
+			mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAdminServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Admin>()));
 		}
 
@@ -125,7 +125,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IAdminRepository>();
-			var model = new ApiAdminRequestModel();
+			var model = new ApiAdminServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.VenuesByAdminId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.VenuesByAdminId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.VenuesByAdminId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.VenuesByAdminId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -185,5 +185,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c6de97acbb159477590f6b36f7642822</Hash>
+    <Hash>c6b73c7bb7e57591d4c62c8893991842</Hash>
 </Codenesium>*/

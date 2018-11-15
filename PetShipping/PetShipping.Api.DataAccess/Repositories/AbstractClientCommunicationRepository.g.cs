@@ -90,22 +90,14 @@ namespace PetShippingNS.Api.DataAccess
 			Expression<Func<ClientCommunication, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ClientCommunication, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ClientCommunication, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
-			}
-			else
-			{
-				return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
-			}
+			return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
 		}
 
 		private async Task<ClientCommunication> GetById(int id)
@@ -118,5 +110,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9ab6ef04c9c71edc8f9da5af0f8d4499</Hash>
+    <Hash>e839427a20b7bf6a955b3eb72ec8ae16</Hash>
 </Codenesium>*/

@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.Services.Tests
 			Sale response = mapper.MapBOToEF(bo);
 
 			response.Amount.Should().Be(1m);
-			response.ClientId.Should().Be(1);
+			response.CutomerId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Note.Should().Be("A");
 			response.PetId.Should().Be(1);
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Services.Tests
 			BOSale response = mapper.MapEFToBO(entity);
 
 			response.Amount.Should().Be(1m);
-			response.ClientId.Should().Be(1);
+			response.CutomerId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Note.Should().Be("A");
 			response.PetId.Should().Be(1);
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>47475db6d7438d2a41ecaa6c8742a1b0</Hash>
+    <Hash>c274ef061747660f0711e5e56930de12</Hash>
 </Codenesium>*/

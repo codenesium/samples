@@ -1,5 +1,6 @@
 using ESPIOTNS.Api.Client;
 using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
 using ESPIOTNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,68 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "DeviceAction")]
 	[Trait("Area", "Integration")]
-	public class DeviceActionIntegrationTests
+	public partial class DeviceActionIntegrationTests
 	{
 		public DeviceActionIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.DeviceActionDeleteAsync(1);
+			var model = new ApiDeviceActionClientRequestModel();
+			model.SetProperties("B", 1, "B");
+			var model2 = new ApiDeviceActionClientRequestModel();
+			model2.SetProperties("C", 1, "C");
+			var request = new List<ApiDeviceActionClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiDeviceActionClientResponseModel>> result = await client.DeviceActionBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<DeviceAction>().ToList()[1].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[1].DeviceId.Should().Be(1);
+			context.Set<DeviceAction>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<DeviceAction>().ToList()[2].@Value.Should().Be("C");
+			context.Set<DeviceAction>().ToList()[2].DeviceId.Should().Be(1);
+			context.Set<DeviceAction>().ToList()[2].Name.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiDeviceActionClientRequestModel();
+			model.SetProperties("B", 1, "B");
+			CreateResponse<ApiDeviceActionClientResponseModel> result = await client.DeviceActionCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<DeviceAction>().ToList()[1].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[1].DeviceId.Should().Be(1);
+			context.Set<DeviceAction>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.@Value.Should().Be("B");
+			result.Record.DeviceId.Should().Be(1);
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +87,57 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiDeviceActionServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IDeviceActionService service = testServer.Host.Services.GetService(typeof(IDeviceActionService)) as IDeviceActionService;
+			ApiDeviceActionServerResponseModel model = await service.Get(1);
 
-			ApiDeviceActionResponseModel model = await client.DeviceActionGetAsync(1);
+			ApiDeviceActionClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", 1, "B");
 
-			ApiDeviceActionModelMapper mapper = new ApiDeviceActionModelMapper();
+			UpdateResponse<ApiDeviceActionClientResponseModel> updateResponse = await client.DeviceActionUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiDeviceActionResponseModel> updateResponse = await client.DeviceActionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<DeviceAction>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<DeviceAction>().ToList()[0].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[0].DeviceId.Should().Be(1);
+			context.Set<DeviceAction>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.@Value.Should().Be("B");
+			updateResponse.Record.DeviceId.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiDeviceActionRequestModel();
-			createModel.SetProperties(1, "B", "B");
-			CreateResponse<ApiDeviceActionResponseModel> createResult = await client.DeviceActionCreateAsync(createModel);
+			IDeviceActionService service = testServer.Host.Services.GetService(typeof(IDeviceActionService)) as IDeviceActionService;
+			var model = new ApiDeviceActionServerRequestModel();
+			model.SetProperties("B", 1, "B");
+			CreateResponse<ApiDeviceActionServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiDeviceActionResponseModel getResponse = await client.DeviceActionGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.DeviceActionDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiDeviceActionResponseModel verifyResponse = await client.DeviceActionGetAsync(2);
+			ApiDeviceActionServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +145,33 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiDeviceActionResponseModel response = await client.DeviceActionGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiDeviceActionClientResponseModel response = await client.DeviceActionGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.@Value.Should().Be("A");
+			response.DeviceId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDeviceActionClientResponseModel response = await client.DeviceActionGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +180,69 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiDeviceActionResponseModel> response = await client.DeviceActionAllAsync();
+			List<ApiDeviceActionClientResponseModel> response = await client.DeviceActionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].@Value.Should().Be("A");
+			response[0].DeviceId.Should().Be(1);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
 		}
 
-		private async Task<ApiDeviceActionResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByDeviceIdFound()
 		{
-			var model = new ApiDeviceActionRequestModel();
-			model.SetProperties(1, "B", "B");
-			CreateResponse<ApiDeviceActionResponseModel> result = await client.DeviceActionCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiDeviceActionClientResponseModel> response = await client.ByDeviceActionByDeviceId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].@Value.Should().Be("A");
+			response[0].DeviceId.Should().Be(1);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
+		}
+
+		[Fact]
+		public virtual async void TestByDeviceIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiDeviceActionClientResponseModel> response = await client.ByDeviceActionByDeviceId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.DeviceActionAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2fe78c31b98fb625c5ce3883d7a1cf85</Hash>
+    <Hash>b7e1fae627d2c68d04af71d3b2f40b33</Hash>
 </Codenesium>*/

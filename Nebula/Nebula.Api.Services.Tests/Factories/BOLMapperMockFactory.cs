@@ -8,8 +8,6 @@ namespace NebulaNS.Api.Services.Tests
 {
 	public class BOLMapperMockFactory
 	{
-		public IBOLChainMapper BOLChainMapperMock { get; set; } = new BOLChainMapper();
-
 		public IBOLChainStatusMapper BOLChainStatusMapperMock { get; set; } = new BOLChainStatusMapper();
 
 		public IBOLLinkMapper BOLLinkMapperMock { get; set; } = new BOLLinkMapper();
@@ -33,5 +31,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>80632f54136116bd535c435c52a47bd1</Hash>
+    <Hash>ac62eece9d3d5452098db3c3dfae6665</Hash>
 </Codenesium>*/

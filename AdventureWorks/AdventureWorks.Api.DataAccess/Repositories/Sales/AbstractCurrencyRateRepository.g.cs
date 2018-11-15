@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
+		public async virtual Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
 		{
 			return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 		}
@@ -100,22 +100,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<CurrencyRate, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<CurrencyRate, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<CurrencyRate, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.CurrencyRateID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
-			}
-			else
-			{
-				return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
-			}
+			return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
 		private async Task<CurrencyRate> GetById(int currencyRateID)
@@ -128,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3e0b0d9b3dfa84c75f4abd28ab02f79</Hash>
+    <Hash>e8c2636a359186ccd05f0851bf95699d</Hash>
 </Codenesium>*/

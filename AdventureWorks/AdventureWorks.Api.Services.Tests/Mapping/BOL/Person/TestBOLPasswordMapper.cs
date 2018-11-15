@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPasswordMapper();
-			ApiPasswordRequestModel model = new ApiPasswordRequestModel();
+			ApiPasswordServerRequestModel model = new ApiPasswordServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BOPassword response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPasswordMapper();
 			BOPassword bo = new BOPassword();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiPasswordResponseModel response = mapper.MapBOToModel(bo);
+			ApiPasswordServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.BusinessEntityID.Should().Be(1);
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPasswordMapper();
 			BOPassword bo = new BOPassword();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiPasswordResponseModel> response = mapper.MapBOToModel(new List<BOPassword>() { { bo } });
+			List<ApiPasswordServerResponseModel> response = mapper.MapBOToModel(new List<BOPassword>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7b73d71d82048856654793195473bb2d</Hash>
+    <Hash>9a5a7ab7cfb0f063d38bbccbed3d701d</Hash>
 </Codenesium>*/

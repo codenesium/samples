@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOSelfReference MapModelToBO(
 			int id,
-			ApiSelfReferenceRequestModel model);
+			ApiSelfReferenceServerRequestModel model);
 
-		ApiSelfReferenceResponseModel MapBOToModel(
+		ApiSelfReferenceServerResponseModel MapBOToModel(
 			BOSelfReference boSelfReference);
 
-		List<ApiSelfReferenceResponseModel> MapBOToModel(
+		List<ApiSelfReferenceServerResponseModel> MapBOToModel(
 			List<BOSelfReference> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd0b3140db79122c697fde29ee5b545d</Hash>
+    <Hash>31239f9fbee51ed23ba8650ad0587272</Hash>
 </Codenesium>*/

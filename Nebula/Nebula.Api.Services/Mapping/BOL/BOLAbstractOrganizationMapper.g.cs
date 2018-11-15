@@ -1,4 +1,3 @@
-using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace NebulaNS.Api.Services
 	{
 		public virtual BOOrganization MapModelToBO(
 			int id,
-			ApiOrganizationRequestModel model
+			ApiOrganizationServerRequestModel model
 			)
 		{
 			BOOrganization boOrganization = new BOOrganization();
@@ -19,20 +18,20 @@ namespace NebulaNS.Api.Services
 			return boOrganization;
 		}
 
-		public virtual ApiOrganizationResponseModel MapBOToModel(
+		public virtual ApiOrganizationServerResponseModel MapBOToModel(
 			BOOrganization boOrganization)
 		{
-			var model = new ApiOrganizationResponseModel();
+			var model = new ApiOrganizationServerResponseModel();
 
 			model.SetProperties(boOrganization.Id, boOrganization.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiOrganizationResponseModel> MapBOToModel(
+		public virtual List<ApiOrganizationServerResponseModel> MapBOToModel(
 			List<BOOrganization> items)
 		{
-			List<ApiOrganizationResponseModel> response = new List<ApiOrganizationResponseModel>();
+			List<ApiOrganizationServerResponseModel> response = new List<ApiOrganizationServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8607d414895ccf707c485fe06804cad3</Hash>
+    <Hash>b6b2baea55b5b2e067e523b3100b9668</Hash>
 </Codenesium>*/

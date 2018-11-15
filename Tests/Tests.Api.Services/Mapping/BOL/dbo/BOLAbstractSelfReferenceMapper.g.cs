@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOSelfReference MapModelToBO(
 			int id,
-			ApiSelfReferenceRequestModel model
+			ApiSelfReferenceServerRequestModel model
 			)
 		{
 			BOSelfReference boSelfReference = new BOSelfReference();
@@ -20,20 +19,20 @@ namespace TestsNS.Api.Services
 			return boSelfReference;
 		}
 
-		public virtual ApiSelfReferenceResponseModel MapBOToModel(
+		public virtual ApiSelfReferenceServerResponseModel MapBOToModel(
 			BOSelfReference boSelfReference)
 		{
-			var model = new ApiSelfReferenceResponseModel();
+			var model = new ApiSelfReferenceServerResponseModel();
 
 			model.SetProperties(boSelfReference.Id, boSelfReference.SelfReferenceId, boSelfReference.SelfReferenceId2);
 
 			return model;
 		}
 
-		public virtual List<ApiSelfReferenceResponseModel> MapBOToModel(
+		public virtual List<ApiSelfReferenceServerResponseModel> MapBOToModel(
 			List<BOSelfReference> items)
 		{
-			List<ApiSelfReferenceResponseModel> response = new List<ApiSelfReferenceResponseModel>();
+			List<ApiSelfReferenceServerResponseModel> response = new List<ApiSelfReferenceServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ff6929b4009399cf1c92fd4300ca990</Hash>
+    <Hash>c105f209b83545fe1975ab981e41c1b2</Hash>
 </Codenesium>*/

@@ -42,46 +42,46 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ActualCost")]
-		public decimal? ActualCost { get; private set; }
+		public virtual decimal? ActualCost { get; private set; }
 
 		[Column("ActualEndDate")]
-		public DateTime? ActualEndDate { get; private set; }
+		public virtual DateTime? ActualEndDate { get; private set; }
 
 		[Column("ActualResourceHrs")]
-		public double? ActualResourceHr { get; private set; }
+		public virtual double? ActualResourceHr { get; private set; }
 
 		[Column("ActualStartDate")]
-		public DateTime? ActualStartDate { get; private set; }
+		public virtual DateTime? ActualStartDate { get; private set; }
 
 		[Column("LocationID")]
-		public short LocationID { get; private set; }
+		public virtual short LocationID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("OperationSequence")]
-		public short OperationSequence { get; private set; }
+		public virtual short OperationSequence { get; private set; }
 
 		[Column("PlannedCost")]
-		public decimal PlannedCost { get; private set; }
+		public virtual decimal PlannedCost { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Column("ScheduledEndDate")]
-		public DateTime ScheduledEndDate { get; private set; }
+		public virtual DateTime ScheduledEndDate { get; private set; }
 
 		[Column("ScheduledStartDate")]
-		public DateTime ScheduledStartDate { get; private set; }
+		public virtual DateTime ScheduledStartDate { get; private set; }
 
 		[Key]
 		[Column("WorkOrderID")]
-		public int WorkOrderID { get; private set; }
+		public virtual int WorkOrderID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8247cacce4b877af6496e09d5e06c924</Hash>
+    <Hash>2339e3ecc0e8f5054f49d30e1fa85883</Hash>
 </Codenesium>*/

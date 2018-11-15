@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<CreditCard> ByCardNumber(string cardNumber)
+		public async virtual Task<CreditCard> ByCardNumber(string cardNumber)
 		{
 			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CardNumber == cardNumber);
 		}
@@ -86,35 +86,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
-		public async virtual Task<List<CreditCard>> ByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.PersonCreditCards
-			              join creditCards in this.Context.CreditCards on
-			              refTable.CreditCardID equals creditCards.CreditCardID
-			              where refTable.BusinessEntityID == businessEntityID
-			              select creditCards).Skip(offset).Take(limit).ToListAsync();
-		}
-
 		protected async Task<List<CreditCard>> Where(
 			Expression<Func<CreditCard, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<CreditCard, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<CreditCard, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.CreditCardID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CreditCard>();
-			}
-			else
-			{
-				return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CreditCard>();
-			}
+			return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CreditCard>();
 		}
 
 		private async Task<CreditCard> GetById(int creditCardID)
@@ -127,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>699f45ab7135daf38b21875503a53435</Hash>
+    <Hash>8cc630977b2c5b2ccb9549559d8b3d71</Hash>
 </Codenesium>*/

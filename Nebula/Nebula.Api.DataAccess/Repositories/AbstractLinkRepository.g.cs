@@ -76,12 +76,12 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Link> ByExternalId(Guid externalId)
+		public async virtual Task<Link> ByExternalId(Guid externalId)
 		{
 			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
-		public async Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ChainId == chainId, limit, offset);
 		}
@@ -96,11 +96,6 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
 		}
 
-		public async virtual Task<Chain> ChainByChainId(int chainId)
-		{
-			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
-		}
-
 		public async virtual Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId)
 		{
 			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
@@ -110,22 +105,14 @@ namespace NebulaNS.Api.DataAccess
 			Expression<Func<Link, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Link, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Link, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Link>();
-			}
-			else
-			{
-				return await this.Context.Set<Link>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Link>();
-			}
+			return await this.Context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
 		private async Task<Link> GetById(int id)
@@ -138,5 +125,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7aa03a4b0153acc9cfeb63d3b4e9085d</Hash>
+    <Hash>4c6080a40c663617986dbf48ed7af3ca</Hash>
 </Codenesium>*/

@@ -2,27 +2,28 @@ using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
 	public partial interface IAdminService
 	{
-		Task<CreateResponse<ApiAdminResponseModel>> Create(
-			ApiAdminRequestModel model);
+		Task<CreateResponse<ApiAdminServerResponseModel>> Create(
+			ApiAdminServerRequestModel model);
 
-		Task<UpdateResponse<ApiAdminResponseModel>> Update(int id,
-		                                                    ApiAdminRequestModel model);
+		Task<UpdateResponse<ApiAdminServerResponseModel>> Update(int id,
+		                                                          ApiAdminServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiAdminResponseModel> Get(int id);
+		Task<ApiAdminServerResponseModel> Get(int id);
 
-		Task<List<ApiAdminResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAdminServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiAdminServerResponseModel>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7701a68bd7d4c3707fbbb944c8985e2</Hash>
+    <Hash>1314fd5e93b6416915d741332cb1c8ca</Hash>
 </Codenesium>*/

@@ -28,23 +28,23 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Column("CreationDate")]
-		public DateTime CreationDate { get; private set; }
+		public virtual DateTime CreationDate { get; private set; }
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("LinkTypeId")]
-		public int LinkTypeId { get; private set; }
+		public virtual int LinkTypeId { get; private set; }
 
 		[Column("PostId")]
-		public int PostId { get; private set; }
+		public virtual int PostId { get; private set; }
 
 		[Column("RelatedPostId")]
-		public int RelatedPostId { get; private set; }
+		public virtual int RelatedPostId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0b3c9c4ff00b44fc607c33d5651d2bc</Hash>
+    <Hash>c2a7b3c8c20d503d583851938e782296</Hash>
 </Codenesium>*/

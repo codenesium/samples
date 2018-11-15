@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StudioResourceManagerNS.Api.Client;
 using StudioResourceManagerNS.Api.Contracts;
+using StudioResourceManagerNS.Api.DataAccess;
 using StudioResourceManagerNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "TeacherSkill")]
 	[Trait("Area", "Integration")]
-	public class TeacherSkillIntegrationTests
+	public partial class TeacherSkillIntegrationTests
 	{
 		public TeacherSkillIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.TeacherSkillDeleteAsync(1);
+			var model = new ApiTeacherSkillClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiTeacherSkillClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiTeacherSkillClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiTeacherSkillClientResponseModel>> result = await client.TeacherSkillBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<TeacherSkill>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<TeacherSkill>().ToList()[2].Name.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiTeacherSkillClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiTeacherSkillClientResponseModel> result = await client.TeacherSkillCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<TeacherSkill>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiTeacherSkillServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ITeacherSkillService service = testServer.Host.Services.GetService(typeof(ITeacherSkillService)) as ITeacherSkillService;
+			ApiTeacherSkillServerResponseModel model = await service.Get(1);
 
-			ApiTeacherSkillResponseModel model = await client.TeacherSkillGetAsync(1);
+			ApiTeacherSkillClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiTeacherSkillModelMapper mapper = new ApiTeacherSkillModelMapper();
+			UpdateResponse<ApiTeacherSkillClientResponseModel> updateResponse = await client.TeacherSkillUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiTeacherSkillResponseModel> updateResponse = await client.TeacherSkillUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<TeacherSkill>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<TeacherSkill>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiTeacherSkillRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiTeacherSkillResponseModel> createResult = await client.TeacherSkillCreateAsync(createModel);
+			ITeacherSkillService service = testServer.Host.Services.GetService(typeof(ITeacherSkillService)) as ITeacherSkillService;
+			var model = new ApiTeacherSkillServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiTeacherSkillServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiTeacherSkillResponseModel getResponse = await client.TeacherSkillGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.TeacherSkillDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiTeacherSkillResponseModel verifyResponse = await client.TeacherSkillGetAsync(2);
+			ApiTeacherSkillServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiTeacherSkillResponseModel response = await client.TeacherSkillGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiTeacherSkillClientResponseModel response = await client.TeacherSkillGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTeacherSkillClientResponseModel response = await client.TeacherSkillGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,63 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiTeacherSkillResponseModel> response = await client.TeacherSkillAllAsync();
+			List<ApiTeacherSkillClientResponseModel> response = await client.TeacherSkillAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
 		}
 
-		private async Task<ApiTeacherSkillResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestForeignKeyRatesByTeacherSkillIdFound()
 		{
-			var model = new ApiTeacherSkillRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiTeacherSkillResponseModel> result = await client.TeacherSkillCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiRateClientResponseModel> response = await client.RatesByTeacherSkillId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyRatesByTeacherSkillIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiRateClientResponseModel> response = await client.RatesByTeacherSkillId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.TeacherSkillAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c80ec85a497ff478ed1d4f566cd61e1</Hash>
+    <Hash>07c99b6bd6a3385e56dbfb1409c2463b</Hash>
 </Codenesium>*/

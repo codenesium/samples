@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../StudioResourceManager.Api.Contracts/StudioResourceManager.Api.Contracts.csproj" />
+    <ProjectReference Include="../StudioResourceManager.Api.Client/StudioResourceManager.Api.Client.csproj" />
     <ProjectReference Include="../StudioResourceManager.Api.DataAccess/StudioResourceManager.Api.DataAccess.csproj" />
   </ItemGroup>
 

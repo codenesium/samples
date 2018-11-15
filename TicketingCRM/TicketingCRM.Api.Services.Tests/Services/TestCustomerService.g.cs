@@ -31,7 +31,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                                  mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			List<ApiCustomerResponseModel> response = await service.All();
+			List<ApiCustomerServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                                  mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			ApiCustomerResponseModel response = await service.Get(default(int));
+			ApiCustomerServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                                  mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			ApiCustomerResponseModel response = await service.Get(default(int));
+			ApiCustomerServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
-			var model = new ApiCustomerRequestModel();
+			var model = new ApiCustomerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Customer>())).Returns(Task.FromResult(new Customer()));
 			var service = new CustomerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                                  mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			CreateResponse<ApiCustomerResponseModel> response = await service.Create(model);
+			CreateResponse<ApiCustomerServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerRequestModel>()));
+			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Customer>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
-			var model = new ApiCustomerRequestModel();
+			var model = new ApiCustomerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Customer>())).Returns(Task.FromResult(new Customer()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 			var service = new CustomerService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                                  mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			UpdateResponse<ApiCustomerResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiCustomerServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>()));
+			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Customer>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
-			var model = new ApiCustomerRequestModel();
+			var model = new ApiCustomerServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CustomerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b7aabeaaecb161be6f0608626f5027af</Hash>
+    <Hash>99663d005be6fe549e60f002a59ca08a</Hash>
 </Codenesium>*/

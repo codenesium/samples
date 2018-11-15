@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IShipMethodRepository ShipMethodRepository { get; private set; }
 
-		protected IApiShipMethodRequestModelValidator ShipMethodModelValidator { get; private set; }
+		protected IApiShipMethodServerRequestModelValidator ShipMethodModelValidator { get; private set; }
 
 		protected IBOLShipMethodMapper BolShipMethodMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractShipMethodService(
 			ILogger logger,
 			IShipMethodRepository shipMethodRepository,
-			IApiShipMethodRequestModelValidator shipMethodModelValidator,
+			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
 			IBOLShipMethodMapper bolShipMethodMapper,
 			IDALShipMethodMapper dalShipMethodMapper,
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
@@ -47,14 +42,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiShipMethodResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiShipMethodServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ShipMethodRepository.All(limit, offset);
 
 			return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiShipMethodResponseModel> Get(int shipMethodID)
+		public virtual async Task<ApiShipMethodServerResponseModel> Get(int shipMethodID)
 		{
 			var record = await this.ShipMethodRepository.Get(shipMethodID);
 
@@ -68,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiShipMethodResponseModel>> Create(
-			ApiShipMethodRequestModel model)
+		public virtual async Task<CreateResponse<ApiShipMethodServerResponseModel>> Create(
+			ApiShipMethodServerRequestModel model)
 		{
-			CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.ShipMethodModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShipMethodServerResponseModel> response = ValidationResponseFactory<ApiShipMethodServerResponseModel>.CreateResponse(await this.ShipMethodModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolShipMethodMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiShipMethodResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiShipMethodServerResponseModel>> Update(
 			int shipMethodID,
-			ApiShipMethodRequestModel model)
+			ApiShipMethodServerRequestModel model)
 		{
 			var validationResult = await this.ShipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model);
 
@@ -96,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ShipMethodRepository.Get(shipMethodID);
 
-				return new UpdateResponse<ApiShipMethodResponseModel>(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiShipMethodResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int shipMethodID)
 		{
-			ActionResponse response = new ActionResponse(await this.ShipMethodModelValidator.ValidateDeleteAsync(shipMethodID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ShipMethodModelValidator.ValidateDeleteAsync(shipMethodID));
+
 			if (response.Success)
 			{
 				await this.ShipMethodRepository.Delete(shipMethodID);
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiShipMethodResponseModel> ByName(string name)
+		public async virtual Task<ApiShipMethodServerResponseModel> ByName(string name)
 		{
 			ShipMethod record = await this.ShipMethodRepository.ByName(name);
 
@@ -130,7 +127,21 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<ApiShipMethodServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			ShipMethod record = await this.ShipMethodRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<List<ApiPurchaseOrderHeaderServerResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeadersByShipMethodID(shipMethodID, limit, offset);
 
@@ -140,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2601477b37368955c920d4142187e8d5</Hash>
+    <Hash>a74b3c78e1d69225b203ebf56e62eaf0</Hash>
 </Codenesium>*/

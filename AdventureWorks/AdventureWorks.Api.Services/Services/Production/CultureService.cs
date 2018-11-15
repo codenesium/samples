@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public CultureService(
 			ILogger<ICultureRepository> logger,
 			ICultureRepository cultureRepository,
-			IApiCultureRequestModelValidator cultureModelValidator,
-			IBOLCultureMapper bolcultureMapper,
-			IDALCultureMapper dalcultureMapper,
-			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
+			IApiCultureServerRequestModelValidator cultureModelValidator,
+			IBOLCultureMapper bolCultureMapper,
+			IDALCultureMapper dalCultureMapper)
 			: base(logger,
 			       cultureRepository,
 			       cultureModelValidator,
-			       bolcultureMapper,
-			       dalcultureMapper,
-			       bolProductModelProductDescriptionCultureMapper,
-			       dalProductModelProductDescriptionCultureMapper)
+			       bolCultureMapper,
+			       dalCultureMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2316c30fa44319cf8b1d2aa11ead5bc1</Hash>
+    <Hash>c39f5aa27b17eb2c5de3da0765399d32</Hash>
 </Codenesium>*/

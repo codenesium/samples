@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected IPersonRefRepository PersonRefRepository { get; private set; }
 
-		protected IApiPersonRefRequestModelValidator PersonRefModelValidator { get; private set; }
+		protected IApiPersonRefServerRequestModelValidator PersonRefModelValidator { get; private set; }
 
 		protected IBOLPersonRefMapper BolPersonRefMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractPersonRefService(
 			ILogger logger,
 			IPersonRefRepository personRefRepository,
-			IApiPersonRefRequestModelValidator personRefModelValidator,
+			IApiPersonRefServerRequestModelValidator personRefModelValidator,
 			IBOLPersonRefMapper bolPersonRefMapper,
 			IDALPersonRefMapper dalPersonRefMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPersonRefResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPersonRefServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PersonRefRepository.All(limit, offset);
 
 			return this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPersonRefResponseModel> Get(int id)
+		public virtual async Task<ApiPersonRefServerResponseModel> Get(int id)
 		{
 			var record = await this.PersonRefRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPersonRefResponseModel>> Create(
-			ApiPersonRefRequestModel model)
+		public virtual async Task<CreateResponse<ApiPersonRefServerResponseModel>> Create(
+			ApiPersonRefServerRequestModel model)
 		{
-			CreateResponse<ApiPersonRefResponseModel> response = new CreateResponse<ApiPersonRefResponseModel>(await this.PersonRefModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonRefServerResponseModel> response = ValidationResponseFactory<ApiPersonRefServerResponseModel>.CreateResponse(await this.PersonRefModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPersonRefMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPersonRefResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPersonRefServerResponseModel>> Update(
 			int id,
-			ApiPersonRefRequestModel model)
+			ApiPersonRefServerRequestModel model)
 		{
 			var validationResult = await this.PersonRefModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.PersonRefRepository.Get(id);
 
-				return new UpdateResponse<ApiPersonRefResponseModel>(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPersonRefServerResponseModel>.UpdateResponse(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPersonRefResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPersonRefServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PersonRefModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PersonRefModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PersonRefRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ccec1fc1ad33b08b656c35f271a81c0</Hash>
+    <Hash>c97a749d17375284d5ccbfdfb27077c1</Hash>
 </Codenesium>*/

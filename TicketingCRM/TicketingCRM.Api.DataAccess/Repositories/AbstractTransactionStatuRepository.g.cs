@@ -85,22 +85,14 @@ namespace TicketingCRMNS.Api.DataAccess
 			Expression<Func<TransactionStatu, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TransactionStatu, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TransactionStatu, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TransactionStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionStatu>();
-			}
-			else
-			{
-				return await this.Context.Set<TransactionStatu>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionStatu>();
-			}
+			return await this.Context.Set<TransactionStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionStatu>();
 		}
 
 		private async Task<TransactionStatu> GetById(int id)
@@ -113,5 +105,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2f7fe3ce1a6cf34f181b5bab78c0b91</Hash>
+    <Hash>81a543b0e58bf2d88aff9d9b49ff0d32</Hash>
 </Codenesium>*/

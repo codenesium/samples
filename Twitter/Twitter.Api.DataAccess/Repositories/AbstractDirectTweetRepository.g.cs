@@ -76,7 +76,7 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DirectTweet>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<DirectTweet>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TaggedUserId == taggedUserId, limit, offset);
 		}
@@ -90,22 +90,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<DirectTweet, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<DirectTweet, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<DirectTweet, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.TweetId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<DirectTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DirectTweet>();
-			}
-			else
-			{
-				return await this.Context.Set<DirectTweet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DirectTweet>();
-			}
+			return await this.Context.Set<DirectTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
 		private async Task<DirectTweet> GetById(int tweetId)
@@ -118,5 +110,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a5268ea9e795ed9df90aada7b5eea86</Hash>
+    <Hash>3cab04da8e7c6ff8393ee71a81503a3d</Hash>
 </Codenesium>*/

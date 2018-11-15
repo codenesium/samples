@@ -76,12 +76,12 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<QuoteTweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<QuoteTweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.RetweeterUserId == retweeterUserId, limit, offset);
 		}
 
-		public async Task<List<QuoteTweet>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<QuoteTweet>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SourceTweetId == sourceTweetId, limit, offset);
 		}
@@ -100,22 +100,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<QuoteTweet, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<QuoteTweet, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<QuoteTweet, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.QuoteTweetId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<QuoteTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
-			}
-			else
-			{
-				return await this.Context.Set<QuoteTweet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
-			}
+			return await this.Context.Set<QuoteTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
 		private async Task<QuoteTweet> GetById(int quoteTweetId)
@@ -128,5 +120,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8edb974abd1fd81d428233af8f8e1af2</Hash>
+    <Hash>1b229e74aeda010b4169d24606e0bf6c</Hash>
 </Codenesium>*/

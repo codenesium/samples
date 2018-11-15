@@ -31,7 +31,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
-			List<ApiColumnSameAsFKTableResponseModel> response = await service.All();
+			List<ApiColumnSameAsFKTableServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
-			ApiColumnSameAsFKTableResponseModel response = await service.Get(default(int));
+			ApiColumnSameAsFKTableServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
-			ApiColumnSameAsFKTableResponseModel response = await service.Get(default(int));
+			ApiColumnSameAsFKTableServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IColumnSameAsFKTableRepository>();
-			var model = new ApiColumnSameAsFKTableRequestModel();
+			var model = new ApiColumnSameAsFKTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ColumnSameAsFKTable>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
-			CreateResponse<ApiColumnSameAsFKTableResponseModel> response = await service.Create(model);
+			CreateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableRequestModel>()));
+			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ColumnSameAsFKTable>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IColumnSameAsFKTableRepository>();
-			var model = new ApiColumnSameAsFKTableRequestModel();
+			var model = new ApiColumnSameAsFKTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ColumnSameAsFKTable>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
-			UpdateResponse<ApiColumnSameAsFKTableResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableRequestModel>()));
+			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ColumnSameAsFKTable>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TestsNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IColumnSameAsFKTableRepository>();
-			var model = new ApiColumnSameAsFKTableRequestModel();
+			var model = new ApiColumnSameAsFKTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ffb7f48f8f3dc5ae88f00a368ce4b732</Hash>
+    <Hash>b90b1378c0d1bd0d1378eeb99bd099b6</Hash>
 </Codenesium>*/

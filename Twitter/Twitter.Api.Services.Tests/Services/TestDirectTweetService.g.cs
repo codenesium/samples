@@ -31,7 +31,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			List<ApiDirectTweetResponseModel> response = await service.All();
+			List<ApiDirectTweetServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			ApiDirectTweetResponseModel response = await service.Get(default(int));
+			ApiDirectTweetServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			ApiDirectTweetResponseModel response = await service.Get(default(int));
+			ApiDirectTweetServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
-			var model = new ApiDirectTweetRequestModel();
+			var model = new ApiDirectTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DirectTweet>())).Returns(Task.FromResult(new DirectTweet()));
 			var service = new DirectTweetService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			CreateResponse<ApiDirectTweetResponseModel> response = await service.Create(model);
+			CreateResponse<ApiDirectTweetServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DirectTweet>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
-			var model = new ApiDirectTweetRequestModel();
+			var model = new ApiDirectTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DirectTweet>())).Returns(Task.FromResult(new DirectTweet()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DirectTweet()));
 			var service = new DirectTweetService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			UpdateResponse<ApiDirectTweetResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiDirectTweetServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>()));
+			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DirectTweet>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
-			var model = new ApiDirectTweetRequestModel();
+			var model = new ApiDirectTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DirectTweetService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			List<ApiDirectTweetResponseModel> response = await service.ByTaggedUserId(default(int));
+			List<ApiDirectTweetServerResponseModel> response = await service.ByTaggedUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByTaggedUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
 
-			List<ApiDirectTweetResponseModel> response = await service.ByTaggedUserId(default(int));
+			List<ApiDirectTweetServerResponseModel> response = await service.ByTaggedUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByTaggedUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -169,5 +169,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4df20c57fa09818aa92551c91e67c2f9</Hash>
+    <Hash>b6c33fa9152e6a1c41163b0e80fcab95</Hash>
 </Codenesium>*/

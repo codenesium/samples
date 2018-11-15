@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLShipMethodMapper();
-			ApiShipMethodRequestModel model = new ApiShipMethodRequestModel();
+			ApiShipMethodServerRequestModel model = new ApiShipMethodServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 			BOShipMethod response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLShipMethodMapper();
 			BOShipMethod bo = new BOShipMethod();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
-			ApiShipMethodResponseModel response = mapper.MapBOToModel(bo);
+			ApiShipMethodServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLShipMethodMapper();
 			BOShipMethod bo = new BOShipMethod();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
-			List<ApiShipMethodResponseModel> response = mapper.MapBOToModel(new List<BOShipMethod>() { { bo } });
+			List<ApiShipMethodServerResponseModel> response = mapper.MapBOToModel(new List<BOShipMethod>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>76c0d6c8a03dd6146bbe6812715c8b86</Hash>
+    <Hash>a7fad4907b4de18f5990d595394cbe6b</Hash>
 </Codenesium>*/

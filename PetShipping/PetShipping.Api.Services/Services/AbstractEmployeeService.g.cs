@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,15 +11,11 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IEmployeeRepository EmployeeRepository { get; private set; }
 
-		protected IApiEmployeeRequestModelValidator EmployeeModelValidator { get; private set; }
+		protected IApiEmployeeServerRequestModelValidator EmployeeModelValidator { get; private set; }
 
 		protected IBOLEmployeeMapper BolEmployeeMapper { get; private set; }
 
 		protected IDALEmployeeMapper DalEmployeeMapper { get; private set; }
-
-		protected IBOLClientCommunicationMapper BolClientCommunicationMapper { get; private set; }
-
-		protected IDALClientCommunicationMapper DalClientCommunicationMapper { get; private set; }
 
 		protected IBOLPipelineStepMapper BolPipelineStepMapper { get; private set; }
 
@@ -34,43 +25,47 @@ namespace PetShippingNS.Api.Services
 
 		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
 
+		protected IBOLCustomerCommunicationMapper BolCustomerCommunicationMapper { get; private set; }
+
+		protected IDALCustomerCommunicationMapper DalCustomerCommunicationMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractEmployeeService(
 			ILogger logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
 			IDALEmployeeMapper dalEmployeeMapper,
-			IBOLClientCommunicationMapper bolClientCommunicationMapper,
-			IDALClientCommunicationMapper dalClientCommunicationMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
+			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
+			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base()
 		{
 			this.EmployeeRepository = employeeRepository;
 			this.EmployeeModelValidator = employeeModelValidator;
 			this.BolEmployeeMapper = bolEmployeeMapper;
 			this.DalEmployeeMapper = dalEmployeeMapper;
-			this.BolClientCommunicationMapper = bolClientCommunicationMapper;
-			this.DalClientCommunicationMapper = dalClientCommunicationMapper;
 			this.BolPipelineStepMapper = bolPipelineStepMapper;
 			this.DalPipelineStepMapper = dalPipelineStepMapper;
 			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
+			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
+			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiEmployeeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.EmployeeRepository.All(limit, offset);
 
 			return this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEmployeeResponseModel> Get(int id)
+		public virtual async Task<ApiEmployeeServerResponseModel> Get(int id)
 		{
 			var record = await this.EmployeeRepository.Get(id);
 
@@ -84,10 +79,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
-			ApiEmployeeRequestModel model)
+		public virtual async Task<CreateResponse<ApiEmployeeServerResponseModel>> Create(
+			ApiEmployeeServerRequestModel model)
 		{
-			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.EmployeeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeServerResponseModel> response = ValidationResponseFactory<ApiEmployeeServerResponseModel>.CreateResponse(await this.EmployeeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolEmployeeMapper.MapModelToBO(default(int), model);
@@ -99,9 +95,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiEmployeeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiEmployeeServerResponseModel>> Update(
 			int id,
-			ApiEmployeeRequestModel model)
+			ApiEmployeeServerRequestModel model)
 		{
 			var validationResult = await this.EmployeeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -112,18 +108,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.EmployeeRepository.Get(id);
 
-				return new UpdateResponse<ApiEmployeeResponseModel>(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiEmployeeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.EmployeeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EmployeeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.EmployeeRepository.Delete(id);
@@ -132,29 +129,29 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ClientCommunication> records = await this.EmployeeRepository.ClientCommunicationsByEmployeeId(employeeId, limit, offset);
-
-			return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepServerResponseModel>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStep> records = await this.EmployeeRepository.PipelineStepsByShipperId(shipperId, limit, offset);
 
 			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotesByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepNoteServerResponseModel>> PipelineStepNotesByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStepNote> records = await this.EmployeeRepository.PipelineStepNotesByEmployeeId(employeeId, limit, offset);
 
 			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiCustomerCommunicationServerResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<CustomerCommunication> records = await this.EmployeeRepository.CustomerCommunicationsByEmployeeId(employeeId, limit, offset);
+
+			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc16654f4b7ee940008bab735359d14b</Hash>
+    <Hash>89cd6f907014be324b402e314be4c003</Hash>
 </Codenesium>*/

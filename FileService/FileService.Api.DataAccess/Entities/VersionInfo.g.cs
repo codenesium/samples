@@ -24,18 +24,18 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		[Column("AppliedOn")]
-		public DateTime? AppliedOn { get; private set; }
+		public virtual DateTime? AppliedOn { get; private set; }
 
 		[MaxLength(1024)]
 		[Column("Description")]
-		public string Description { get; private set; }
+		public virtual string Description { get; private set; }
 
 		[Key]
 		[Column("Version")]
-		public long Version { get; private set; }
+		public virtual long Version { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>434f1b85ca0c9cca53471e3086652619</Hash>
+    <Hash>7c354c201578579b7623f7deb02bd6f0</Hash>
 </Codenesium>*/

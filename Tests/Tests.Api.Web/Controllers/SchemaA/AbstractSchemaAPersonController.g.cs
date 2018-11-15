@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ISchemaAPersonService SchemaAPersonService { get; private set; }
 
-		protected IApiSchemaAPersonModelMapper SchemaAPersonModelMapper { get; private set; }
+		protected IApiSchemaAPersonServerModelMapper SchemaAPersonModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractSchemaAPersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISchemaAPersonService schemaAPersonService,
-			IApiSchemaAPersonModelMapper schemaAPersonModelMapper
+			IApiSchemaAPersonServerModelMapper schemaAPersonModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSchemaAPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSchemaAPersonServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSchemaAPersonResponseModel> response = await this.SchemaAPersonService.All(query.Limit, query.Offset);
+			List<ApiSchemaAPersonServerResponseModel> response = await this.SchemaAPersonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSchemaAPersonResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSchemaAPersonServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSchemaAPersonResponseModel response = await this.SchemaAPersonService.Get(id);
+			ApiSchemaAPersonServerResponseModel response = await this.SchemaAPersonService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSchemaAPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSchemaAPersonServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSchemaAPersonRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSchemaAPersonServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSchemaAPersonResponseModel> records = new List<ApiSchemaAPersonResponseModel>();
+			List<ApiSchemaAPersonServerResponseModel> records = new List<ApiSchemaAPersonServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSchemaAPersonResponseModel> result = await this.SchemaAPersonService.Create(model);
+				CreateResponse<ApiSchemaAPersonServerResponseModel> result = await this.SchemaAPersonService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSchemaAPersonServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSchemaAPersonResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSchemaAPersonServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSchemaAPersonRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSchemaAPersonServerRequestModel model)
 		{
-			CreateResponse<ApiSchemaAPersonResponseModel> result = await this.SchemaAPersonService.Create(model);
+			CreateResponse<ApiSchemaAPersonServerResponseModel> result = await this.SchemaAPersonService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSchemaAPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSchemaAPersonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSchemaAPersonRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSchemaAPersonServerRequestModel> patch)
 		{
-			ApiSchemaAPersonResponseModel record = await this.SchemaAPersonService.Get(id);
+			ApiSchemaAPersonServerResponseModel record = await this.SchemaAPersonService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiSchemaAPersonRequestModel model = await this.PatchModel(id, patch);
+				ApiSchemaAPersonServerRequestModel model = await this.PatchModel(id, patch) as ApiSchemaAPersonServerRequestModel;
 
-				UpdateResponse<ApiSchemaAPersonResponseModel> result = await this.SchemaAPersonService.Update(id, model);
+				UpdateResponse<ApiSchemaAPersonServerResponseModel> result = await this.SchemaAPersonService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSchemaAPersonResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSchemaAPersonServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSchemaAPersonRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSchemaAPersonServerRequestModel model)
 		{
-			ApiSchemaAPersonRequestModel request = await this.PatchModel(id, this.SchemaAPersonModelMapper.CreatePatch(model));
+			ApiSchemaAPersonServerRequestModel request = await this.PatchModel(id, this.SchemaAPersonModelMapper.CreatePatch(model)) as ApiSchemaAPersonServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSchemaAPersonResponseModel> result = await this.SchemaAPersonService.Update(id, request);
+				UpdateResponse<ApiSchemaAPersonServerResponseModel> result = await this.SchemaAPersonService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SchemaAPersonService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiSchemaAPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSchemaAPersonRequestModel> patch)
+		private async Task<ApiSchemaAPersonServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSchemaAPersonServerRequestModel> patch)
 		{
 			var record = await this.SchemaAPersonService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiSchemaAPersonRequestModel request = this.SchemaAPersonModelMapper.MapResponseToRequest(record);
+				ApiSchemaAPersonServerRequestModel request = this.SchemaAPersonModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2f2bfe78d2a156a4b7370c47a6e9cbd2</Hash>
+    <Hash>caf61198119a19c532808887cdb646f4</Hash>
 </Codenesium>*/

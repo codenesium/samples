@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ICompositePrimaryKeyRepository CompositePrimaryKeyRepository { get; private set; }
 
-		protected IApiCompositePrimaryKeyRequestModelValidator CompositePrimaryKeyModelValidator { get; private set; }
+		protected IApiCompositePrimaryKeyServerRequestModelValidator CompositePrimaryKeyModelValidator { get; private set; }
 
 		protected IBOLCompositePrimaryKeyMapper BolCompositePrimaryKeyMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractCompositePrimaryKeyService(
 			ILogger logger,
 			ICompositePrimaryKeyRepository compositePrimaryKeyRepository,
-			IApiCompositePrimaryKeyRequestModelValidator compositePrimaryKeyModelValidator,
+			IApiCompositePrimaryKeyServerRequestModelValidator compositePrimaryKeyModelValidator,
 			IBOLCompositePrimaryKeyMapper bolCompositePrimaryKeyMapper,
 			IDALCompositePrimaryKeyMapper dalCompositePrimaryKeyMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCompositePrimaryKeyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCompositePrimaryKeyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CompositePrimaryKeyRepository.All(limit, offset);
 
 			return this.BolCompositePrimaryKeyMapper.MapBOToModel(this.DalCompositePrimaryKeyMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCompositePrimaryKeyResponseModel> Get(int id)
+		public virtual async Task<ApiCompositePrimaryKeyServerResponseModel> Get(int id)
 		{
 			var record = await this.CompositePrimaryKeyRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyResponseModel>> Create(
-			ApiCompositePrimaryKeyRequestModel model)
+		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyServerResponseModel>> Create(
+			ApiCompositePrimaryKeyServerRequestModel model)
 		{
-			CreateResponse<ApiCompositePrimaryKeyResponseModel> response = new CreateResponse<ApiCompositePrimaryKeyResponseModel>(await this.CompositePrimaryKeyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCompositePrimaryKeyServerResponseModel> response = ValidationResponseFactory<ApiCompositePrimaryKeyServerResponseModel>.CreateResponse(await this.CompositePrimaryKeyModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCompositePrimaryKeyMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCompositePrimaryKeyResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCompositePrimaryKeyServerResponseModel>> Update(
 			int id,
-			ApiCompositePrimaryKeyRequestModel model)
+			ApiCompositePrimaryKeyServerRequestModel model)
 		{
 			var validationResult = await this.CompositePrimaryKeyModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.CompositePrimaryKeyRepository.Get(id);
 
-				return new UpdateResponse<ApiCompositePrimaryKeyResponseModel>(this.BolCompositePrimaryKeyMapper.MapBOToModel(this.DalCompositePrimaryKeyMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCompositePrimaryKeyServerResponseModel>.UpdateResponse(this.BolCompositePrimaryKeyMapper.MapBOToModel(this.DalCompositePrimaryKeyMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCompositePrimaryKeyResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCompositePrimaryKeyServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.CompositePrimaryKeyModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CompositePrimaryKeyModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.CompositePrimaryKeyRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8ede07f1feae7561522b861d5595d61</Hash>
+    <Hash>89a7ab266c6ee6bcf0eac3ee1c0c73ed</Hash>
 </Codenesium>*/

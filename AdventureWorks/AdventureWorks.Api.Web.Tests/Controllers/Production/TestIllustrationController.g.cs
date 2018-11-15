@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			var record = new ApiIllustrationResponseModel();
-			var records = new List<ApiIllustrationResponseModel>();
+			var record = new ApiIllustrationServerResponseModel();
+			var records = new List<ApiIllustrationServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiIllustrationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiIllustrationServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiIllustrationResponseModel>>(new List<ApiIllustrationResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiIllustrationServerResponseModel>>(new List<ApiIllustrationServerResponseModel>()));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiIllustrationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiIllustrationServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationServerResponseModel()));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiIllustrationResponseModel;
+			var record = (response as OkObjectResult).Value as ApiIllustrationServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationServerResponseModel>(null));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiIllustrationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiIllustrationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiIllustrationServerResponseModel>.CreateResponse(null as ApiIllustrationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiIllustrationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationServerResponseModel>>(mockResponse));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiIllustrationRequestModel>();
-			records.Add(new ApiIllustrationRequestModel());
+			var records = new List<ApiIllustrationServerRequestModel>();
+			records.Add(new ApiIllustrationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiIllustrationResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiIllustrationServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiIllustrationResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiIllustrationServerResponseModel>>(null as ApiIllustrationServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationServerResponseModel>>(mockResponse.Object));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiIllustrationRequestModel>();
-			records.Add(new ApiIllustrationRequestModel());
+			var records = new List<ApiIllustrationServerRequestModel>();
+			records.Add(new ApiIllustrationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiIllustrationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiIllustrationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiIllustrationServerResponseModel>.CreateResponse(null as ApiIllustrationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiIllustrationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationServerResponseModel>>(mockResponse));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiIllustrationRequestModel());
+			IActionResult response = await controller.Create(new ApiIllustrationServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiIllustrationResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiIllustrationServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiIllustrationResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiIllustrationResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiIllustrationServerResponseModel>>(null as ApiIllustrationServerResponseModel);
+			var mockRecord = new ApiIllustrationServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIllustrationServerResponseModel>>(mockResponse.Object));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiIllustrationRequestModel());
+			IActionResult response = await controller.Create(new ApiIllustrationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIllustrationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIllustrationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>()))
-			.Callback<int, ApiIllustrationRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>()))
+			.Callback<int, ApiIllustrationServerRequestModel>(
 				(id, model) => model.Diagram.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiIllustrationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationResponseModel>(new ApiIllustrationResponseModel()));
-			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiIllustrationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationServerResponseModel>(new ApiIllustrationServerResponseModel()));
+			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiIllustrationRequestModel>();
+			var patch = new JsonPatchDocument<ApiIllustrationServerRequestModel>();
 			patch.Replace(x => x.Diagram, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationServerResponseModel>(null));
 			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiIllustrationRequestModel>();
+			var patch = new JsonPatchDocument<ApiIllustrationServerRequestModel>();
 			patch.Replace(x => x.Diagram, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIllustrationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIllustrationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationResponseModel()));
-			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationServerResponseModel()));
+			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIllustrationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIllustrationServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIllustrationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIllustrationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationResponseModel()));
-			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIllustrationServerResponseModel()));
+			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIllustrationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIllustrationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			IllustrationControllerMockFacade mock = new IllustrationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIllustrationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIllustrationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationResponseModel>(null));
-			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIllustrationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIllustrationServerResponseModel>(null));
+			IllustrationController controller = new IllustrationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIllustrationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIllustrationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIllustrationServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<IIllustrationService> ServiceMock { get; set; } = new Mock<IIllustrationService>();
 
-		public Mock<IApiIllustrationModelMapper> ModelMapperMock { get; set; } = new Mock<IApiIllustrationModelMapper>();
+		public Mock<IApiIllustrationServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiIllustrationServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>f58c2f7789bf8d8e393de86a3a7180f4</Hash>
+    <Hash>d31ec5ff3444b09259444a60cf27ff53</Hash>
 </Codenesium>*/

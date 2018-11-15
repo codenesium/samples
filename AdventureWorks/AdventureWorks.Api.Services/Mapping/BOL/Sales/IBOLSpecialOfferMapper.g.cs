@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOSpecialOffer MapModelToBO(
 			int specialOfferID,
-			ApiSpecialOfferRequestModel model);
+			ApiSpecialOfferServerRequestModel model);
 
-		ApiSpecialOfferResponseModel MapBOToModel(
+		ApiSpecialOfferServerResponseModel MapBOToModel(
 			BOSpecialOffer boSpecialOffer);
 
-		List<ApiSpecialOfferResponseModel> MapBOToModel(
+		List<ApiSpecialOfferServerResponseModel> MapBOToModel(
 			List<BOSpecialOffer> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c371eb8ddc03875cf05994b224ed8391</Hash>
+    <Hash>e49b60c34f7ec701a85c888e6073a16e</Hash>
 </Codenesium>*/

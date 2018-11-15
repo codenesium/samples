@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLProductSubcategoryMapper();
-			ApiProductSubcategoryRequestModel model = new ApiProductSubcategoryRequestModel();
+			ApiProductSubcategoryServerRequestModel model = new ApiProductSubcategoryServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BOProductSubcategory response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductSubcategoryMapper();
 			BOProductSubcategory bo = new BOProductSubcategory();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiProductSubcategoryResponseModel response = mapper.MapBOToModel(bo);
+			ApiProductSubcategoryServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLProductSubcategoryMapper();
 			BOProductSubcategory bo = new BOProductSubcategory();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiProductSubcategoryResponseModel> response = mapper.MapBOToModel(new List<BOProductSubcategory>() { { bo } });
+			List<ApiProductSubcategoryServerResponseModel> response = mapper.MapBOToModel(new List<BOProductSubcategory>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7a8444898c0867f75f645b1267ef8f7</Hash>
+    <Hash>a4cffcca80617441d41e318ac7ce0267</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Web
 	{
 		protected IPaymentTypeService PaymentTypeService { get; private set; }
 
-		protected IApiPaymentTypeModelMapper PaymentTypeModelMapper { get; private set; }
+		protected IApiPaymentTypeServerModelMapper PaymentTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<AbstractPaymentTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPaymentTypeService paymentTypeService,
-			IApiPaymentTypeModelMapper paymentTypeModelMapper
+			IApiPaymentTypeServerModelMapper paymentTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPaymentTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPaymentTypeResponseModel> response = await this.PaymentTypeService.All(query.Limit, query.Offset);
+			List<ApiPaymentTypeServerResponseModel> response = await this.PaymentTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPaymentTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPaymentTypeResponseModel response = await this.PaymentTypeService.Get(id);
+			ApiPaymentTypeServerResponseModel response = await this.PaymentTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetStoreNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPaymentTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPaymentTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPaymentTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPaymentTypeResponseModel> records = new List<ApiPaymentTypeResponseModel>();
+			List<ApiPaymentTypeServerResponseModel> records = new List<ApiPaymentTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Create(model);
+				CreateResponse<ApiPaymentTypeServerResponseModel> result = await this.PaymentTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetStoreNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPaymentTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPaymentTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPaymentTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeServerRequestModel model)
 		{
-			CreateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Create(model);
+			CreateResponse<ApiPaymentTypeServerResponseModel> result = await this.PaymentTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPaymentTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPaymentTypeServerRequestModel> patch)
 		{
-			ApiPaymentTypeResponseModel record = await this.PaymentTypeService.Get(id);
+			ApiPaymentTypeServerResponseModel record = await this.PaymentTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiPaymentTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiPaymentTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiPaymentTypeServerRequestModel;
 
-				UpdateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Update(id, model);
+				UpdateResponse<ApiPaymentTypeServerResponseModel> result = await this.PaymentTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPaymentTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeServerRequestModel model)
 		{
-			ApiPaymentTypeRequestModel request = await this.PatchModel(id, this.PaymentTypeModelMapper.CreatePatch(model));
+			ApiPaymentTypeServerRequestModel request = await this.PatchModel(id, this.PaymentTypeModelMapper.CreatePatch(model)) as ApiPaymentTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPaymentTypeResponseModel> result = await this.PaymentTypeService.Update(id, request);
+				UpdateResponse<ApiPaymentTypeServerResponseModel> result = await this.PaymentTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetStoreNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PaymentTypeService.Delete(id);
@@ -207,9 +217,9 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{paymentTypeId}/SalesByPaymentTypeId")]
+		[Route("{paymentTypeId}/Sales")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesByPaymentTypeId(int paymentTypeId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSaleResponseModel> response = await this.PaymentTypeService.SalesByPaymentTypeId(paymentTypeId, query.Limit, query.Offset);
+			List<ApiSaleServerResponseModel> response = await this.PaymentTypeService.SalesByPaymentTypeId(paymentTypeId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiPaymentTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPaymentTypeRequestModel> patch)
+		private async Task<ApiPaymentTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPaymentTypeServerRequestModel> patch)
 		{
 			var record = await this.PaymentTypeService.Get(id);
 
@@ -233,7 +243,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiPaymentTypeRequestModel request = this.PaymentTypeModelMapper.MapResponseToRequest(record);
+				ApiPaymentTypeServerRequestModel request = this.PaymentTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c735607defb525d60c71f9bc3ae30735</Hash>
+    <Hash>a796e7d5bab4b68728fa1a562b2d6187</Hash>
 </Codenesium>*/

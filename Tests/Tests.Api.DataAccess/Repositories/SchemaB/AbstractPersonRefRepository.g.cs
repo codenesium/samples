@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<PersonRef, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PersonRef, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PersonRef, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PersonRef>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PersonRef>();
-			}
-			else
-			{
-				return await this.Context.Set<PersonRef>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PersonRef>();
-			}
+			return await this.Context.Set<PersonRef>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PersonRef>();
 		}
 
 		private async Task<PersonRef> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e5e0bff5ed7824036da92df0d75ed860</Hash>
+    <Hash>9499090c40365f495f827a26f4dafd72</Hash>
 </Codenesium>*/

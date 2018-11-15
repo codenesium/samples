@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ClientCommunicationController : AbstractClientCommunicationController
 	{
 		public ClientCommunicationController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<ClientCommunicationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IClientCommunicationService clientCommunicationService,
-			IApiClientCommunicationModelMapper clientCommunicationModelMapper
+			IApiClientCommunicationServerModelMapper clientCommunicationModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4ed90c785b2a8a965316d42e5d870895</Hash>
+    <Hash>4323406a2e609288b163ac8e13484035</Hash>
 </Codenesium>*/

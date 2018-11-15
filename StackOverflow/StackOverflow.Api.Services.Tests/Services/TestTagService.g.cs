@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLTagMapperMock,
 			                             mock.DALMapperMockFactory.DALTagMapperMock);
 
-			List<ApiTagResponseModel> response = await service.All();
+			List<ApiTagServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLTagMapperMock,
 			                             mock.DALMapperMockFactory.DALTagMapperMock);
 
-			ApiTagResponseModel response = await service.Get(default(int));
+			ApiTagServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLTagMapperMock,
 			                             mock.DALMapperMockFactory.DALTagMapperMock);
 
-			ApiTagResponseModel response = await service.Get(default(int));
+			ApiTagServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITagRepository>();
-			var model = new ApiTagRequestModel();
+			var model = new ApiTagServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Tag>())).Returns(Task.FromResult(new Tag()));
 			var service = new TagService(mock.LoggerMock.Object,
 			                             mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLTagMapperMock,
 			                             mock.DALMapperMockFactory.DALTagMapperMock);
 
-			CreateResponse<ApiTagResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTagServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TagModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTagRequestModel>()));
+			mock.ModelValidatorMockFactory.TagModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTagServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Tag>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITagRepository>();
-			var model = new ApiTagRequestModel();
+			var model = new ApiTagServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Tag>())).Returns(Task.FromResult(new Tag()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tag()));
 			var service = new TagService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLTagMapperMock,
 			                             mock.DALMapperMockFactory.DALTagMapperMock);
 
-			UpdateResponse<ApiTagResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTagServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TagModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTagRequestModel>()));
+			mock.ModelValidatorMockFactory.TagModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTagServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Tag>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITagRepository>();
-			var model = new ApiTagRequestModel();
+			var model = new ApiTagServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TagService(mock.LoggerMock.Object,
 			                             mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b7813e5cf4954e46ff2bbe9267f186a5</Hash>
+    <Hash>462748dd02df1142ddae586aab6e791d</Hash>
 </Codenesium>*/

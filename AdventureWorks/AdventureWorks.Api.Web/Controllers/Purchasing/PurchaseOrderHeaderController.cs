@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PurchaseOrderHeaderController : AbstractPurchaseOrderHeaderController
 	{
 		public PurchaseOrderHeaderController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<PurchaseOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPurchaseOrderHeaderService purchaseOrderHeaderService,
-			IApiPurchaseOrderHeaderModelMapper purchaseOrderHeaderModelMapper
+			IApiPurchaseOrderHeaderServerModelMapper purchaseOrderHeaderModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b16615ecbd3b692684b7a01037c0e71b</Hash>
+    <Hash>1aa0c96092e1505a487e8abda85e1f08</Hash>
 </Codenesium>*/

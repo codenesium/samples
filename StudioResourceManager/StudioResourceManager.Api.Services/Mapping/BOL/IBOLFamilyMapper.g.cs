@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BOFamily MapModelToBO(
 			int id,
-			ApiFamilyRequestModel model);
+			ApiFamilyServerRequestModel model);
 
-		ApiFamilyResponseModel MapBOToModel(
+		ApiFamilyServerResponseModel MapBOToModel(
 			BOFamily boFamily);
 
-		List<ApiFamilyResponseModel> MapBOToModel(
+		List<ApiFamilyServerResponseModel> MapBOToModel(
 			List<BOFamily> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bca31f632eba32d2effe8a796f347e9c</Hash>
+    <Hash>b9fc32741b1dbcbe34b6ec14455ceb28</Hash>
 </Codenesium>*/

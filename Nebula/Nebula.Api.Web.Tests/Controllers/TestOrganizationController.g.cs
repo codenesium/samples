@@ -24,8 +24,8 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			var record = new ApiOrganizationResponseModel();
-			var records = new List<ApiOrganizationResponseModel>();
+			var record = new ApiOrganizationServerResponseModel();
+			var records = new List<ApiOrganizationServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiOrganizationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiOrganizationServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiOrganizationResponseModel>>(new List<ApiOrganizationResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiOrganizationServerResponseModel>>(new List<ApiOrganizationServerResponseModel>()));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiOrganizationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiOrganizationServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationServerResponseModel()));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiOrganizationResponseModel;
+			var record = (response as OkObjectResult).Value as ApiOrganizationServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationServerResponseModel>(null));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiOrganizationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiOrganizationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiOrganizationServerResponseModel>.CreateResponse(null as ApiOrganizationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiOrganizationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationServerResponseModel>>(mockResponse));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiOrganizationRequestModel>();
-			records.Add(new ApiOrganizationRequestModel());
+			var records = new List<ApiOrganizationServerRequestModel>();
+			records.Add(new ApiOrganizationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiOrganizationResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiOrganizationServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiOrganizationResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiOrganizationServerResponseModel>>(null as ApiOrganizationServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationServerResponseModel>>(mockResponse.Object));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiOrganizationRequestModel>();
-			records.Add(new ApiOrganizationRequestModel());
+			var records = new List<ApiOrganizationServerRequestModel>();
+			records.Add(new ApiOrganizationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiOrganizationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiOrganizationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiOrganizationServerResponseModel>.CreateResponse(null as ApiOrganizationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiOrganizationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationServerResponseModel>>(mockResponse));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiOrganizationRequestModel());
+			IActionResult response = await controller.Create(new ApiOrganizationServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiOrganizationResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiOrganizationServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiOrganizationResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiOrganizationResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiOrganizationServerResponseModel>>(null as ApiOrganizationServerResponseModel);
+			var mockRecord = new ApiOrganizationServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOrganizationServerResponseModel>>(mockResponse.Object));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiOrganizationRequestModel());
+			IActionResult response = await controller.Create(new ApiOrganizationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiOrganizationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiOrganizationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>()))
-			.Callback<int, ApiOrganizationRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()))
+			.Callback<int, ApiOrganizationServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiOrganizationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationResponseModel>(new ApiOrganizationResponseModel()));
-			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiOrganizationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationServerResponseModel>(new ApiOrganizationServerResponseModel()));
+			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiOrganizationRequestModel>();
+			var patch = new JsonPatchDocument<ApiOrganizationServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace NebulaNS.Api.Web.Tests
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationServerResponseModel>(null));
 			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiOrganizationRequestModel>();
+			var patch = new JsonPatchDocument<ApiOrganizationServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace NebulaNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiOrganizationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiOrganizationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationResponseModel()));
-			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationServerResponseModel()));
+			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiOrganizationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiOrganizationServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiOrganizationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiOrganizationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationResponseModel()));
-			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOrganizationServerResponseModel()));
+			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiOrganizationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiOrganizationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			OrganizationControllerMockFacade mock = new OrganizationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiOrganizationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiOrganizationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationResponseModel>(null));
-			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiOrganizationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOrganizationServerResponseModel>(null));
+			OrganizationController controller = new OrganizationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiOrganizationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiOrganizationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiOrganizationServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace NebulaNS.Api.Web.Tests
 
 		public Mock<IOrganizationService> ServiceMock { get; set; } = new Mock<IOrganizationService>();
 
-		public Mock<IApiOrganizationModelMapper> ModelMapperMock { get; set; } = new Mock<IApiOrganizationModelMapper>();
+		public Mock<IApiOrganizationServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiOrganizationServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>536b8517f2efe1d0ab4d7640610284e6</Hash>
+    <Hash>33de4e26902a47fc9ef58be7b7878217</Hash>
 </Codenesium>*/

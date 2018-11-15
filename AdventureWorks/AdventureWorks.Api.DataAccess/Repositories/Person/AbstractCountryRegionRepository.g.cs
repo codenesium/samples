@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<CountryRegion> ByName(string name)
+		public async virtual Task<CountryRegion> ByName(string name)
 		{
 			return await this.Context.Set<CountryRegion>().SingleOrDefaultAsync(x => x.Name == name);
 		}
@@ -90,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<CountryRegion, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<CountryRegion, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<CountryRegion, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.CountryRegionCode;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegion>();
-			}
-			else
-			{
-				return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegion>();
-			}
+			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegion>();
 		}
 
 		private async Task<CountryRegion> GetById(string countryRegionCode)
@@ -118,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bdab53289d9faecfef55879e60564639</Hash>
+    <Hash>e3a072c5815207e9e8dbe524c548fd11</Hash>
 </Codenesium>*/

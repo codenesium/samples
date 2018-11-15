@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -9,20 +8,20 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IColumnSameAsFKTableService
 	{
-		Task<CreateResponse<ApiColumnSameAsFKTableResponseModel>> Create(
-			ApiColumnSameAsFKTableRequestModel model);
+		Task<CreateResponse<ApiColumnSameAsFKTableServerResponseModel>> Create(
+			ApiColumnSameAsFKTableServerRequestModel model);
 
-		Task<UpdateResponse<ApiColumnSameAsFKTableResponseModel>> Update(int id,
-		                                                                  ApiColumnSameAsFKTableRequestModel model);
+		Task<UpdateResponse<ApiColumnSameAsFKTableServerResponseModel>> Update(int id,
+		                                                                        ApiColumnSameAsFKTableServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiColumnSameAsFKTableResponseModel> Get(int id);
+		Task<ApiColumnSameAsFKTableServerResponseModel> Get(int id);
 
-		Task<List<ApiColumnSameAsFKTableResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiColumnSameAsFKTableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9692f17272db900a832ad2047dce689b</Hash>
+    <Hash>8d6f8af8deb1f55479f6558c58eb3925</Hash>
 </Codenesium>*/

@@ -14,37 +14,42 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			string @value,
 			int deviceId,
 			int id,
-			string name,
-			string @value)
+			string name)
 		{
+			this.@Value = @value;
 			this.DeviceId = deviceId;
 			this.Id = id;
 			this.Name = name;
-			this.@Value = @value;
 		}
 
 		[Column("deviceId")]
-		public int DeviceId { get; private set; }
+		public virtual int DeviceId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(90)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(4000)]
 		[Column("value")]
-		public string @Value { get; private set; }
+		public virtual string @Value { get; private set; }
 
 		[ForeignKey("DeviceId")]
 		public virtual Device DeviceNavigation { get; private set; }
+
+		public void SetDeviceNavigation(Device item)
+		{
+			this.DeviceNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6bc067bd358615d5414780f3ca860c6a</Hash>
+    <Hash>abdbae40e0db1fa68c1da911460c1a4d</Hash>
 </Codenesium>*/

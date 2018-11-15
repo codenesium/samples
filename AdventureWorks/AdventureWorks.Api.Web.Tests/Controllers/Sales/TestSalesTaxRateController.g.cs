@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			var record = new ApiSalesTaxRateResponseModel();
-			var records = new List<ApiSalesTaxRateResponseModel>();
+			var record = new ApiSalesTaxRateServerResponseModel();
+			var records = new List<ApiSalesTaxRateServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSalesTaxRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSalesTaxRateServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSalesTaxRateResponseModel>>(new List<ApiSalesTaxRateResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSalesTaxRateServerResponseModel>>(new List<ApiSalesTaxRateServerResponseModel>()));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSalesTaxRateResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSalesTaxRateServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateServerResponseModel()));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSalesTaxRateResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSalesTaxRateServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateServerResponseModel>(null));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSalesTaxRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSalesTaxRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.CreateResponse(null as ApiSalesTaxRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSalesTaxRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateServerResponseModel>>(mockResponse));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSalesTaxRateRequestModel>();
-			records.Add(new ApiSalesTaxRateRequestModel());
+			var records = new List<ApiSalesTaxRateServerRequestModel>();
+			records.Add(new ApiSalesTaxRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSalesTaxRateResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSalesTaxRateServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSalesTaxRateResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSalesTaxRateServerResponseModel>>(null as ApiSalesTaxRateServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateServerResponseModel>>(mockResponse.Object));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSalesTaxRateRequestModel>();
-			records.Add(new ApiSalesTaxRateRequestModel());
+			var records = new List<ApiSalesTaxRateServerRequestModel>();
+			records.Add(new ApiSalesTaxRateServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSalesTaxRateResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSalesTaxRateResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.CreateResponse(null as ApiSalesTaxRateServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSalesTaxRateServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateServerResponseModel>>(mockResponse));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSalesTaxRateRequestModel());
+			IActionResult response = await controller.Create(new ApiSalesTaxRateServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSalesTaxRateResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSalesTaxRateServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSalesTaxRateResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSalesTaxRateResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSalesTaxRateServerResponseModel>>(null as ApiSalesTaxRateServerResponseModel);
+			var mockRecord = new ApiSalesTaxRateServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSalesTaxRateServerResponseModel>>(mockResponse.Object));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSalesTaxRateRequestModel());
+			IActionResult response = await controller.Create(new ApiSalesTaxRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>()))
-			.Callback<int, ApiSalesTaxRateRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()))
+			.Callback<int, ApiSalesTaxRateServerRequestModel>(
 				(id, model) => model.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateResponseModel>(new ApiSalesTaxRateResponseModel()));
-			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateServerResponseModel>(new ApiSalesTaxRateServerResponseModel()));
+			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSalesTaxRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiSalesTaxRateServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace AdventureWorksNS.Api.Web.Tests
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateServerResponseModel>(null));
 			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSalesTaxRateRequestModel>();
+			var patch = new JsonPatchDocument<ApiSalesTaxRateServerRequestModel>();
 			patch.Replace(x => x.ModifiedDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace AdventureWorksNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateResponseModel()));
-			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateServerResponseModel()));
+			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateResponseModel()));
-			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSalesTaxRateServerResponseModel()));
+			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SalesTaxRateControllerMockFacade mock = new SalesTaxRateControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSalesTaxRateServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateResponseModel>(null));
-			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSalesTaxRateServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSalesTaxRateServerResponseModel>(null));
+			SalesTaxRateController controller = new SalesTaxRateController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSalesTaxRateServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSalesTaxRateServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 		public Mock<ISalesTaxRateService> ServiceMock { get; set; } = new Mock<ISalesTaxRateService>();
 
-		public Mock<IApiSalesTaxRateModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSalesTaxRateModelMapper>();
+		public Mock<IApiSalesTaxRateServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSalesTaxRateServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccc7d56e5dc3eb05943e42f70af10434</Hash>
+    <Hash>e0a5205581e4f43f7c0a0d4350f10b69</Hash>
 </Codenesium>*/

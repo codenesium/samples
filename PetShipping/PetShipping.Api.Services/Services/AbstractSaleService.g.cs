@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected ISaleRepository SaleRepository { get; private set; }
 
-		protected IApiSaleRequestModelValidator SaleModelValidator { get; private set; }
+		protected IApiSaleServerRequestModelValidator SaleModelValidator { get; private set; }
 
 		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractSaleService(
 			ILogger logger,
 			ISaleRepository saleRepository,
-			IApiSaleRequestModelValidator saleModelValidator,
+			IApiSaleServerRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSaleResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSaleServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SaleRepository.All(limit, offset);
 
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSaleResponseModel> Get(int id)
+		public virtual async Task<ApiSaleServerResponseModel> Get(int id)
 		{
 			var record = await this.SaleRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
-			ApiSaleRequestModel model)
+		public virtual async Task<CreateResponse<ApiSaleServerResponseModel>> Create(
+			ApiSaleServerRequestModel model)
 		{
-			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.SaleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSaleServerResponseModel> response = ValidationResponseFactory<ApiSaleServerResponseModel>.CreateResponse(await this.SaleModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSaleResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSaleServerResponseModel>> Update(
 			int id,
-			ApiSaleRequestModel model)
+			ApiSaleServerRequestModel model)
 		{
 			var validationResult = await this.SaleModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.SaleRepository.Get(id);
 
-				return new UpdateResponse<ApiSaleResponseModel>(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSaleResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.SaleModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SaleModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.SaleRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7a054958ee2ce06262898da7b43de9f5</Hash>
+    <Hash>b7a624b7b82e295ad67db403f4365fd9</Hash>
 </Codenesium>*/

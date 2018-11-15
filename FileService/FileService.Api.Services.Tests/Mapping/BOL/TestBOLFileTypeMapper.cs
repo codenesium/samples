@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLFileTypeMapper();
-			ApiFileTypeRequestModel model = new ApiFileTypeRequestModel();
+			ApiFileTypeServerRequestModel model = new ApiFileTypeServerRequestModel();
 			model.SetProperties("A");
 			BOFileType response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mapper = new BOLFileTypeMapper();
 			BOFileType bo = new BOFileType();
 			bo.SetProperties(1, "A");
-			ApiFileTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiFileTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mapper = new BOLFileTypeMapper();
 			BOFileType bo = new BOFileType();
 			bo.SetProperties(1, "A");
-			List<ApiFileTypeResponseModel> response = mapper.MapBOToModel(new List<BOFileType>() { { bo } });
+			List<ApiFileTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOFileType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b72a34272ab1583c7d8254b652165616</Hash>
+    <Hash>0202d68f2b719b8ed68710e018e8f38a</Hash>
 </Codenesium>*/

@@ -76,36 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Department> ByName(string name)
+		public async virtual Task<Department> ByName(string name)
 		{
 			return await this.Context.Set<Department>().SingleOrDefaultAsync(x => x.Name == name);
-		}
-
-		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.DepartmentID == departmentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
 		}
 
 		protected async Task<List<Department>> Where(
 			Expression<Func<Department, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Department, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Department, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.DepartmentID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Department>();
-			}
-			else
-			{
-				return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Department>();
-			}
+			return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Department>();
 		}
 
 		private async Task<Department> GetById(short departmentID)
@@ -118,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b28d9e3aaa264ddaf2d98f963aef2dfd</Hash>
+    <Hash>73b0e03fe4eb2b722b1c6a035817be55</Hash>
 </Codenesium>*/

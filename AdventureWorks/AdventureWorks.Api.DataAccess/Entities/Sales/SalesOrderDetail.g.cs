@@ -41,48 +41,50 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(25)]
 		[Column("CarrierTrackingNumber")]
-		public string CarrierTrackingNumber { get; private set; }
+		public virtual string CarrierTrackingNumber { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("LineTotal")]
-		public decimal LineTotal { get; private set; }
+		public virtual decimal LineTotal { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("OrderQty")]
-		public short OrderQty { get; private set; }
+		public virtual short OrderQty { get; private set; }
 
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("SalesOrderDetailID")]
-		public int SalesOrderDetailID { get; private set; }
+		public virtual int SalesOrderDetailID { get; private set; }
 
 		[Key]
 		[Column("SalesOrderID")]
-		public int SalesOrderID { get; private set; }
+		public virtual int SalesOrderID { get; private set; }
 
 		[Column("SpecialOfferID")]
-		public int SpecialOfferID { get; private set; }
+		public virtual int SpecialOfferID { get; private set; }
 
 		[Column("UnitPrice")]
-		public decimal UnitPrice { get; private set; }
+		public virtual decimal UnitPrice { get; private set; }
 
 		[Column("UnitPriceDiscount")]
-		public decimal UnitPriceDiscount { get; private set; }
+		public virtual decimal UnitPriceDiscount { get; private set; }
 
 		[ForeignKey("SalesOrderID")]
 		public virtual SalesOrderHeader SalesOrderHeaderNavigation { get; private set; }
+
+		public void SetSalesOrderHeaderNavigation(SalesOrderHeader item)
+		{
+			this.SalesOrderHeaderNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>761ed30eeb3e736826a0561ba5995d29</Hash>
+    <Hash>e99fb72194d35645ca5520baa310769a</Hash>
 </Codenesium>*/

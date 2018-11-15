@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,9 +9,9 @@ namespace AdventureWorksNS.Api.Services
 		public UnitMeasureService(
 			ILogger<IUnitMeasureRepository> logger,
 			IUnitMeasureRepository unitMeasureRepository,
-			IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
-			IBOLUnitMeasureMapper bolunitMeasureMapper,
-			IDALUnitMeasureMapper dalunitMeasureMapper,
+			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
+			IBOLUnitMeasureMapper bolUnitMeasureMapper,
+			IDALUnitMeasureMapper dalUnitMeasureMapper,
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper,
 			IBOLProductMapper bolProductMapper,
@@ -26,8 +19,8 @@ namespace AdventureWorksNS.Api.Services
 			: base(logger,
 			       unitMeasureRepository,
 			       unitMeasureModelValidator,
-			       bolunitMeasureMapper,
-			       dalunitMeasureMapper,
+			       bolUnitMeasureMapper,
+			       dalUnitMeasureMapper,
 			       bolBillOfMaterialMapper,
 			       dalBillOfMaterialMapper,
 			       bolProductMapper,
@@ -38,5 +31,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9f9c94118d02ee39246f57b12279a5a</Hash>
+    <Hash>6c4d8328e13e5b76a62ca9294d0c926b</Hash>
 </Codenesium>*/

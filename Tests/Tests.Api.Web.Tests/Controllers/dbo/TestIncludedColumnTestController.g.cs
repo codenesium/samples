@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			var record = new ApiIncludedColumnTestResponseModel();
-			var records = new List<ApiIncludedColumnTestResponseModel>();
+			var record = new ApiIncludedColumnTestServerResponseModel();
+			var records = new List<ApiIncludedColumnTestServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiIncludedColumnTestResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiIncludedColumnTestServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiIncludedColumnTestResponseModel>>(new List<ApiIncludedColumnTestResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiIncludedColumnTestServerResponseModel>>(new List<ApiIncludedColumnTestServerResponseModel>()));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiIncludedColumnTestResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiIncludedColumnTestServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestServerResponseModel()));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiIncludedColumnTestResponseModel;
+			var record = (response as OkObjectResult).Value as ApiIncludedColumnTestServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestServerResponseModel>(null));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiIncludedColumnTestResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiIncludedColumnTestResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.CreateResponse(null as ApiIncludedColumnTestServerResponseModel);
+
+			mockResponse.SetRecord(new ApiIncludedColumnTestServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResponse));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiIncludedColumnTestRequestModel>();
-			records.Add(new ApiIncludedColumnTestRequestModel());
+			var records = new List<ApiIncludedColumnTestServerRequestModel>();
+			records.Add(new ApiIncludedColumnTestServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiIncludedColumnTestResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiIncludedColumnTestServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiIncludedColumnTestResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(null as ApiIncludedColumnTestServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResponse.Object));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiIncludedColumnTestRequestModel>();
-			records.Add(new ApiIncludedColumnTestRequestModel());
+			var records = new List<ApiIncludedColumnTestServerRequestModel>();
+			records.Add(new ApiIncludedColumnTestServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiIncludedColumnTestResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiIncludedColumnTestResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.CreateResponse(null as ApiIncludedColumnTestServerResponseModel);
+
+			mockResponse.SetRecord(new ApiIncludedColumnTestServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResponse));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiIncludedColumnTestRequestModel());
+			IActionResult response = await controller.Create(new ApiIncludedColumnTestServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiIncludedColumnTestResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiIncludedColumnTestServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiIncludedColumnTestResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiIncludedColumnTestResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(null as ApiIncludedColumnTestServerResponseModel);
+			var mockRecord = new ApiIncludedColumnTestServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResponse.Object));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiIncludedColumnTestRequestModel());
+			IActionResult response = await controller.Create(new ApiIncludedColumnTestServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>()))
-			.Callback<int, ApiIncludedColumnTestRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>()))
+			.Callback<int, ApiIncludedColumnTestServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestResponseModel>(new ApiIncludedColumnTestResponseModel()));
-			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestServerResponseModel>(new ApiIncludedColumnTestServerResponseModel()));
+			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiIncludedColumnTestRequestModel>();
+			var patch = new JsonPatchDocument<ApiIncludedColumnTestServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestServerResponseModel>(null));
 			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiIncludedColumnTestRequestModel>();
+			var patch = new JsonPatchDocument<ApiIncludedColumnTestServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestResponseModel()));
-			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestServerResponseModel()));
+			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestResponseModel()));
-			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiIncludedColumnTestServerResponseModel()));
+			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			IncludedColumnTestControllerMockFacade mock = new IncludedColumnTestControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestResponseModel>(null));
-			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiIncludedColumnTestServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiIncludedColumnTestServerResponseModel>(null));
+			IncludedColumnTestController controller = new IncludedColumnTestController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiIncludedColumnTestServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiIncludedColumnTestServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<IIncludedColumnTestService> ServiceMock { get; set; } = new Mock<IIncludedColumnTestService>();
 
-		public Mock<IApiIncludedColumnTestModelMapper> ModelMapperMock { get; set; } = new Mock<IApiIncludedColumnTestModelMapper>();
+		public Mock<IApiIncludedColumnTestServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiIncludedColumnTestServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ae8f9a5a53ec4eab08d2983f8cf1e75</Hash>
+    <Hash>7788cfed282edeea4834d5cba42a0c45</Hash>
 </Codenesium>*/

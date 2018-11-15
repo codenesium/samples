@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSaleMapper();
-			ApiSaleRequestModel model = new ApiSaleRequestModel();
+			ApiSaleServerRequestModel model = new ApiSaleServerRequestModel();
 			model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			BOSale response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			ApiSaleResponseModel response = mapper.MapBOToModel(bo);
+			ApiSaleServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.IpAddress.Should().Be("A");
@@ -48,7 +48,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			List<ApiSaleResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
+			List<ApiSaleServerResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2786189eb4d667220606a07106b2aab0</Hash>
+    <Hash>0878479cb4d933a2f58729173db152b9</Hash>
 </Codenesium>*/

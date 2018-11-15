@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TwitterNS.Api.DataAccess
 {
-	[Table("Quote_Tweet", Schema="dbo")]
+	[Table("QuoteTweet", Schema="dbo")]
 	public partial class QuoteTweet : AbstractEntity
 	{
 		public QuoteTweet()
@@ -31,32 +31,42 @@ namespace TwitterNS.Api.DataAccess
 
 		[MaxLength(140)]
 		[Column("content")]
-		public string Content { get; private set; }
+		public virtual string Content { get; private set; }
 
 		[Column("date")]
-		public DateTime Date { get; private set; }
+		public virtual DateTime Date { get; private set; }
 
 		[Key]
 		[Column("quote_tweet_id")]
-		public int QuoteTweetId { get; private set; }
+		public virtual int QuoteTweetId { get; private set; }
 
 		[Column("retweeter_user_id")]
-		public int RetweeterUserId { get; private set; }
+		public virtual int RetweeterUserId { get; private set; }
 
 		[Column("source_tweet_id")]
-		public int SourceTweetId { get; private set; }
+		public virtual int SourceTweetId { get; private set; }
 
 		[Column("time")]
-		public TimeSpan Time { get; private set; }
+		public virtual TimeSpan Time { get; private set; }
 
 		[ForeignKey("RetweeterUserId")]
 		public virtual User UserNavigation { get; private set; }
 
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
+
 		[ForeignKey("SourceTweetId")]
 		public virtual Tweet TweetNavigation { get; private set; }
+
+		public void SetTweetNavigation(Tweet item)
+		{
+			this.TweetNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>208ca989f5c89562aa43bc1aa477921a</Hash>
+    <Hash>a297edff1b720fb2a376cf047659fb81</Hash>
 </Codenesium>*/

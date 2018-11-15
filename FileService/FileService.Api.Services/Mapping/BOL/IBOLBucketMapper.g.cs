@@ -9,16 +9,16 @@ namespace FileServiceNS.Api.Services
 	{
 		BOBucket MapModelToBO(
 			int id,
-			ApiBucketRequestModel model);
+			ApiBucketServerRequestModel model);
 
-		ApiBucketResponseModel MapBOToModel(
+		ApiBucketServerResponseModel MapBOToModel(
 			BOBucket boBucket);
 
-		List<ApiBucketResponseModel> MapBOToModel(
+		List<ApiBucketServerResponseModel> MapBOToModel(
 			List<BOBucket> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>18fb93de4452fe5c87e9319c032a8da1</Hash>
+    <Hash>64162a457bca7b26cf6a2cf0c1ff3d07</Hash>
 </Codenesium>*/

@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
-			List<ApiLinkTypeResponseModel> response = await service.All();
+			List<ApiLinkTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
-			ApiLinkTypeResponseModel response = await service.Get(default(int));
+			ApiLinkTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
-			ApiLinkTypeResponseModel response = await service.Get(default(int));
+			ApiLinkTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ILinkTypeRepository>();
-			var model = new ApiLinkTypeRequestModel();
+			var model = new ApiLinkTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkType>())).Returns(Task.FromResult(new LinkType()));
 			var service = new LinkTypeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
-			CreateResponse<ApiLinkTypeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiLinkTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<LinkType>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ILinkTypeRepository>();
-			var model = new ApiLinkTypeRequestModel();
+			var model = new ApiLinkTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkType>())).Returns(Task.FromResult(new LinkType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkType()));
 			var service = new LinkTypeService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
-			UpdateResponse<ApiLinkTypeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiLinkTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<LinkType>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ILinkTypeRepository>();
-			var model = new ApiLinkTypeRequestModel();
+			var model = new ApiLinkTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new LinkTypeService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7ac650575159d195cc1c54b6949e39be</Hash>
+    <Hash>ede10f9ef37107c2fa0508c40eae210a</Hash>
 </Codenesium>*/

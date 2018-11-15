@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ITableRepository TableRepository { get; private set; }
 
-		protected IApiTableRequestModelValidator TableModelValidator { get; private set; }
+		protected IApiTableServerRequestModelValidator TableModelValidator { get; private set; }
 
 		protected IBOLTableMapper BolTableMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractTableService(
 			ILogger logger,
 			ITableRepository tableRepository,
-			IApiTableRequestModelValidator tableModelValidator,
+			IApiTableServerRequestModelValidator tableModelValidator,
 			IBOLTableMapper bolTableMapper,
 			IDALTableMapper dalTableMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTableResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TableRepository.All(limit, offset);
 
 			return this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTableResponseModel> Get(int id)
+		public virtual async Task<ApiTableServerResponseModel> Get(int id)
 		{
 			var record = await this.TableRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTableResponseModel>> Create(
-			ApiTableRequestModel model)
+		public virtual async Task<CreateResponse<ApiTableServerResponseModel>> Create(
+			ApiTableServerRequestModel model)
 		{
-			CreateResponse<ApiTableResponseModel> response = new CreateResponse<ApiTableResponseModel>(await this.TableModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTableServerResponseModel> response = ValidationResponseFactory<ApiTableServerResponseModel>.CreateResponse(await this.TableModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTableMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTableResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTableServerResponseModel>> Update(
 			int id,
-			ApiTableRequestModel model)
+			ApiTableServerRequestModel model)
 		{
 			var validationResult = await this.TableModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TableRepository.Get(id);
 
-				return new UpdateResponse<ApiTableResponseModel>(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTableServerResponseModel>.UpdateResponse(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTableResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTableServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TableModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TableModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TableRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f88d07924a62ddfe472b71b59f561f76</Hash>
+    <Hash>583bfa81e46ddd67e35ba0ef3a6f204b</Hash>
 </Codenesium>*/

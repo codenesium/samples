@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<ProductDescription>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByProductDescriptionID(int productDescriptionID, int limit = int.MaxValue, int offset = 0);
+		Task<ProductDescription> ByRowguid(Guid rowguid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>43e34553e09b261e6ceea2edbee1ea2c</Hash>
+    <Hash>d956f9dc4a21b569b483dc59ef7f1e90</Hash>
 </Codenesium>*/

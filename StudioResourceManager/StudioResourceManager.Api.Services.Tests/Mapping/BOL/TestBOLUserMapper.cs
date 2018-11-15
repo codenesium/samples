@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLUserMapper();
-			ApiUserRequestModel model = new ApiUserRequestModel();
+			ApiUserServerRequestModel model = new ApiUserServerRequestModel();
 			model.SetProperties("A", "A");
 			BOUser response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", "A");
-			ApiUserResponseModel response = mapper.MapBOToModel(bo);
+			ApiUserServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Password.Should().Be("A");
@@ -44,7 +44,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", "A");
-			List<ApiUserResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
+			List<ApiUserServerResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2ded289188d5f9aea47de612806d737e</Hash>
+    <Hash>4c7a57fa55fa72ebbc91fbe9ee80aa9b</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CompositePrimaryKeyController : AbstractCompositePrimaryKeyController
 	{
 		public CompositePrimaryKeyController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<CompositePrimaryKeyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICompositePrimaryKeyService compositePrimaryKeyService,
-			IApiCompositePrimaryKeyModelMapper compositePrimaryKeyModelMapper
+			IApiCompositePrimaryKeyServerModelMapper compositePrimaryKeyModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4d389748ad145fd5dc68a85c32f66554</Hash>
+    <Hash>64aff15d045f55c5ecf7847740393424</Hash>
 </Codenesium>*/

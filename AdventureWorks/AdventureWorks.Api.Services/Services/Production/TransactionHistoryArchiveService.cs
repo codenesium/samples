@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public TransactionHistoryArchiveService(
 			ILogger<ITransactionHistoryArchiveRepository> logger,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-			IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
-			IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
-			IDALTransactionHistoryArchiveMapper daltransactionHistoryArchiveMapper)
+			IApiTransactionHistoryArchiveServerRequestModelValidator transactionHistoryArchiveModelValidator,
+			IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
+			IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper)
 			: base(logger,
 			       transactionHistoryArchiveRepository,
 			       transactionHistoryArchiveModelValidator,
-			       boltransactionHistoryArchiveMapper,
-			       daltransactionHistoryArchiveMapper)
+			       bolTransactionHistoryArchiveMapper,
+			       dalTransactionHistoryArchiveMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>433c1f9bf5824966f3d9519138de9698</Hash>
+    <Hash>d3625eca5aab05894e9301037e8c56a2</Hash>
 </Codenesium>*/

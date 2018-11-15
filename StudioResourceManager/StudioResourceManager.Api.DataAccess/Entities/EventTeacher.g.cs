@@ -23,20 +23,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Key]
 		[Column("eventId")]
-		public int EventId { get; private set; }
+		public virtual int EventId { get; private set; }
 
 		[Key]
 		[Column("teacherId")]
-		public int TeacherId { get; private set; }
-
-		[ForeignKey("EventId")]
-		public virtual Event EventNavigation { get; private set; }
-
-		[ForeignKey("TeacherId")]
-		public virtual Teacher TeacherNavigation { get; private set; }
+		public virtual int TeacherId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c2e947df11cfc64bb25d95a7c6cafaa6</Hash>
+    <Hash>690cc5d7f57495c378d9019b1eddb13b</Hash>
 </Codenesium>*/

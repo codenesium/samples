@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		protected IEventRepository EventRepository { get; private set; }
 
-		protected IApiEventRequestModelValidator EventModelValidator { get; private set; }
+		protected IApiEventServerRequestModelValidator EventModelValidator { get; private set; }
 
 		protected IBOLEventMapper BolEventMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TicketingCRMNS.Api.Services
 		public AbstractEventService(
 			ILogger logger,
 			IEventRepository eventRepository,
-			IApiEventRequestModelValidator eventModelValidator,
+			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TicketingCRMNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiEventResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiEventServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.EventRepository.All(limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEventResponseModel> Get(int id)
+		public virtual async Task<ApiEventServerResponseModel> Get(int id)
 		{
 			var record = await this.EventRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TicketingCRMNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiEventResponseModel>> Create(
-			ApiEventRequestModel model)
+		public virtual async Task<CreateResponse<ApiEventServerResponseModel>> Create(
+			ApiEventServerRequestModel model)
 		{
-			CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.EventModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEventServerResponseModel> response = ValidationResponseFactory<ApiEventServerResponseModel>.CreateResponse(await this.EventModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiEventResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiEventServerResponseModel>> Update(
 			int id,
-			ApiEventRequestModel model)
+			ApiEventServerRequestModel model)
 		{
 			var validationResult = await this.EventModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.EventRepository.Get(id);
 
-				return new UpdateResponse<ApiEventResponseModel>(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiEventResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.EventModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.EventModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.EventRepository.Delete(id);
@@ -108,7 +105,7 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByCityId(int cityId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiEventServerResponseModel>> ByCityId(int cityId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Event> records = await this.EventRepository.ByCityId(cityId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6f5bf55cc7bc367a7b890ae9e059b6a</Hash>
+    <Hash>4137663512134a7f4e6b504462229d03</Hash>
 </Codenesium>*/

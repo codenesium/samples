@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PostController : AbstractPostController
 	{
 		public PostController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<PostController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostService postService,
-			IApiPostModelMapper postModelMapper
+			IApiPostServerModelMapper postModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>17dcb0a1985075e053b7ebcab37b7747</Hash>
+    <Hash>20752691298481a43f2b3710ffa2b989</Hash>
 </Codenesium>*/

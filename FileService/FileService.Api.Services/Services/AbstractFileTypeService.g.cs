@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
@@ -16,7 +11,7 @@ namespace FileServiceNS.Api.Services
 	{
 		protected IFileTypeRepository FileTypeRepository { get; private set; }
 
-		protected IApiFileTypeRequestModelValidator FileTypeModelValidator { get; private set; }
+		protected IApiFileTypeServerRequestModelValidator FileTypeModelValidator { get; private set; }
 
 		protected IBOLFileTypeMapper BolFileTypeMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace FileServiceNS.Api.Services
 		public AbstractFileTypeService(
 			ILogger logger,
 			IFileTypeRepository fileTypeRepository,
-			IApiFileTypeRequestModelValidator fileTypeModelValidator,
+			IApiFileTypeServerRequestModelValidator fileTypeModelValidator,
 			IBOLFileTypeMapper bolFileTypeMapper,
 			IDALFileTypeMapper dalFileTypeMapper,
 			IBOLFileMapper bolFileMapper,
@@ -47,14 +42,14 @@ namespace FileServiceNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiFileTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFileTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.FileTypeRepository.All(limit, offset);
 
 			return this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiFileTypeResponseModel> Get(int id)
+		public virtual async Task<ApiFileTypeServerResponseModel> Get(int id)
 		{
 			var record = await this.FileTypeRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace FileServiceNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiFileTypeResponseModel>> Create(
-			ApiFileTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiFileTypeServerResponseModel>> Create(
+			ApiFileTypeServerRequestModel model)
 		{
-			CreateResponse<ApiFileTypeResponseModel> response = new CreateResponse<ApiFileTypeResponseModel>(await this.FileTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFileTypeServerResponseModel> response = ValidationResponseFactory<ApiFileTypeServerResponseModel>.CreateResponse(await this.FileTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolFileTypeMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace FileServiceNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiFileTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiFileTypeServerResponseModel>> Update(
 			int id,
-			ApiFileTypeRequestModel model)
+			ApiFileTypeServerRequestModel model)
 		{
 			var validationResult = await this.FileTypeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace FileServiceNS.Api.Services
 
 				var record = await this.FileTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiFileTypeResponseModel>(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiFileTypeServerResponseModel>.UpdateResponse(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiFileTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiFileTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.FileTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.FileTypeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.FileTypeRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace FileServiceNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiFileResponseModel>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFileServerResponseModel>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<File> records = await this.FileTypeRepository.FilesByFileTypeId(fileTypeId, limit, offset);
 
@@ -126,5 +123,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84e20e59bd787d43208bec037cb88ebe</Hash>
+    <Hash>30819763cd0d52343e4846d299ab8405</Hash>
 </Codenesium>*/

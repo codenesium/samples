@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Web
 	{
 		protected IClientCommunicationService ClientCommunicationService { get; private set; }
 
-		protected IApiClientCommunicationModelMapper ClientCommunicationModelMapper { get; private set; }
+		protected IApiClientCommunicationServerModelMapper ClientCommunicationModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AbstractClientCommunicationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IClientCommunicationService clientCommunicationService,
-			IApiClientCommunicationModelMapper clientCommunicationModelMapper
+			IApiClientCommunicationServerModelMapper clientCommunicationModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClientCommunicationResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiClientCommunicationServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiClientCommunicationResponseModel> response = await this.ClientCommunicationService.All(query.Limit, query.Offset);
+			List<ApiClientCommunicationServerResponseModel> response = await this.ClientCommunicationService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiClientCommunicationServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiClientCommunicationResponseModel response = await this.ClientCommunicationService.Get(id);
+			ApiClientCommunicationServerResponseModel response = await this.ClientCommunicationService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetShippingNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiClientCommunicationResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiClientCommunicationServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClientCommunicationRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClientCommunicationServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiClientCommunicationResponseModel> records = new List<ApiClientCommunicationResponseModel>();
+			List<ApiClientCommunicationServerResponseModel> records = new List<ApiClientCommunicationServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Create(model);
+				CreateResponse<ApiClientCommunicationServerResponseModel> result = await this.ClientCommunicationService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetShippingNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiClientCommunicationServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiClientCommunicationResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiClientCommunicationServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiClientCommunicationRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiClientCommunicationServerRequestModel model)
 		{
-			CreateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Create(model);
+			CreateResponse<ApiClientCommunicationServerResponseModel> result = await this.ClientCommunicationService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClientCommunicationRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiClientCommunicationServerRequestModel> patch)
 		{
-			ApiClientCommunicationResponseModel record = await this.ClientCommunicationService.Get(id);
+			ApiClientCommunicationServerResponseModel record = await this.ClientCommunicationService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiClientCommunicationRequestModel model = await this.PatchModel(id, patch);
+				ApiClientCommunicationServerRequestModel model = await this.PatchModel(id, patch) as ApiClientCommunicationServerRequestModel;
 
-				UpdateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Update(id, model);
+				UpdateResponse<ApiClientCommunicationServerResponseModel> result = await this.ClientCommunicationService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiClientCommunicationServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientCommunicationRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientCommunicationServerRequestModel model)
 		{
-			ApiClientCommunicationRequestModel request = await this.PatchModel(id, this.ClientCommunicationModelMapper.CreatePatch(model));
+			ApiClientCommunicationServerRequestModel request = await this.PatchModel(id, this.ClientCommunicationModelMapper.CreatePatch(model)) as ApiClientCommunicationServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiClientCommunicationResponseModel> result = await this.ClientCommunicationService.Update(id, request);
+				UpdateResponse<ApiClientCommunicationServerResponseModel> result = await this.ClientCommunicationService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetShippingNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.ClientCommunicationService.Delete(id);
@@ -206,7 +216,7 @@ namespace PetShippingNS.Api.Web
 			}
 		}
 
-		private async Task<ApiClientCommunicationRequestModel> PatchModel(int id, JsonPatchDocument<ApiClientCommunicationRequestModel> patch)
+		private async Task<ApiClientCommunicationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiClientCommunicationServerRequestModel> patch)
 		{
 			var record = await this.ClientCommunicationService.Get(id);
 
@@ -216,7 +226,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiClientCommunicationRequestModel request = this.ClientCommunicationModelMapper.MapResponseToRequest(record);
+				ApiClientCommunicationServerRequestModel request = this.ClientCommunicationModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a951ade5c48b2fcb5d3e1e93c89210b8</Hash>
+    <Hash>f10d17cd0b14226645c3ab7da632ba7a</Hash>
 </Codenesium>*/

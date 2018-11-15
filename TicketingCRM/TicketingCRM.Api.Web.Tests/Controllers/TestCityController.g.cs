@@ -24,8 +24,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			var record = new ApiCityResponseModel();
-			var records = new List<ApiCityResponseModel>();
+			var record = new ApiCityServerResponseModel();
+			var records = new List<ApiCityServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCityResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCityServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCityResponseModel>>(new List<ApiCityResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiCityServerResponseModel>>(new List<ApiCityServerResponseModel>()));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiCityResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiCityServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityServerResponseModel()));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiCityResponseModel;
+			var record = (response as OkObjectResult).Value as ApiCityServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityServerResponseModel>(null));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCityResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCityResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCityServerResponseModel>.CreateResponse(null as ApiCityServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCityServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityServerResponseModel>>(mockResponse));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCityRequestModel>();
-			records.Add(new ApiCityRequestModel());
+			var records = new List<ApiCityServerRequestModel>();
+			records.Add(new ApiCityServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiCityResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiCityServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCityResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiCityServerResponseModel>>(null as ApiCityServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityServerResponseModel>>(mockResponse.Object));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiCityRequestModel>();
-			records.Add(new ApiCityRequestModel());
+			var records = new List<ApiCityServerRequestModel>();
+			records.Add(new ApiCityServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiCityResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiCityResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiCityServerResponseModel>.CreateResponse(null as ApiCityServerResponseModel);
+
+			mockResponse.SetRecord(new ApiCityServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityServerResponseModel>>(mockResponse));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCityRequestModel());
+			IActionResult response = await controller.Create(new ApiCityServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCityResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiCityServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiCityResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiCityResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiCityServerResponseModel>>(null as ApiCityServerResponseModel);
+			var mockRecord = new ApiCityServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiCityServerResponseModel>>(mockResponse.Object));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiCityRequestModel());
+			IActionResult response = await controller.Create(new ApiCityServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCityResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCityServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>()))
-			.Callback<int, ApiCityRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()))
+			.Callback<int, ApiCityServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiCityResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityResponseModel>(new ApiCityResponseModel()));
-			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiCityServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityServerResponseModel>(new ApiCityServerResponseModel()));
+			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCityRequestModel>();
+			var patch = new JsonPatchDocument<ApiCityServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TicketingCRMNS.Api.Web.Tests
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityServerResponseModel>(null));
 			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiCityRequestModel>();
+			var patch = new JsonPatchDocument<ApiCityServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TicketingCRMNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCityResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCityServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityResponseModel()));
-			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityServerResponseModel()));
+			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCityRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCityServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCityResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCityServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityResponseModel()));
-			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiCityServerResponseModel()));
+			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCityRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCityServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			CityControllerMockFacade mock = new CityControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiCityResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiCityServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityResponseModel>(null));
-			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiCityServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiCityServerResponseModel>(null));
+			CityController controller = new CityController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiCityServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiCityRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiCityServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 		public Mock<ICityService> ServiceMock { get; set; } = new Mock<ICityService>();
 
-		public Mock<IApiCityModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCityModelMapper>();
+		public Mock<IApiCityServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiCityServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>77dc7daf72ddc7fb4720db6cc69cfa8a</Hash>
+    <Hash>8012a9b1508832b460fdaad0f9239fa8</Hash>
 </Codenesium>*/

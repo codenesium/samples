@@ -17,7 +17,7 @@ namespace TwitterNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLLocationMapper();
-			ApiLocationRequestModel model = new ApiLocationRequestModel();
+			ApiLocationServerRequestModel model = new ApiLocationServerRequestModel();
 			model.SetProperties(1, 1, "A");
 			BOLocation response = mapper.MapModelToBO(1, model);
 
@@ -32,7 +32,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLLocationMapper();
 			BOLocation bo = new BOLocation();
 			bo.SetProperties(1, 1, 1, "A");
-			ApiLocationResponseModel response = mapper.MapBOToModel(bo);
+			ApiLocationServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.GpsLat.Should().Be(1);
 			response.GpsLong.Should().Be(1);
@@ -46,7 +46,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mapper = new BOLLocationMapper();
 			BOLocation bo = new BOLocation();
 			bo.SetProperties(1, 1, 1, "A");
-			List<ApiLocationResponseModel> response = mapper.MapBOToModel(new List<BOLocation>() { { bo } });
+			List<ApiLocationServerResponseModel> response = mapper.MapBOToModel(new List<BOLocation>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d13e799135b8b177973fec6ecd8e9438</Hash>
+    <Hash>62193334d04db029a3bc0f987723e64f</Hash>
 </Codenesium>*/

@@ -23,14 +23,14 @@ namespace StackOverflowNS.Api.DataAccess
 
 		[Key]
 		[Column("Id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Type")]
-		public string Type { get; private set; }
+		public virtual string Type { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>32fa84879800862bfe6c0eeea75f8dfb</Hash>
+    <Hash>5b685437e524ec8fde7d26f66d3fee21</Hash>
 </Codenesium>*/

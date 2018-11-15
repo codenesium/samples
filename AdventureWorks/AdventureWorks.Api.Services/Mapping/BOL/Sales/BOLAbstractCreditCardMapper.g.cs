@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOCreditCard MapModelToBO(
 			int creditCardID,
-			ApiCreditCardRequestModel model
+			ApiCreditCardServerRequestModel model
 			)
 		{
 			BOCreditCard boCreditCard = new BOCreditCard();
@@ -23,20 +22,20 @@ namespace AdventureWorksNS.Api.Services
 			return boCreditCard;
 		}
 
-		public virtual ApiCreditCardResponseModel MapBOToModel(
+		public virtual ApiCreditCardServerResponseModel MapBOToModel(
 			BOCreditCard boCreditCard)
 		{
-			var model = new ApiCreditCardResponseModel();
+			var model = new ApiCreditCardServerResponseModel();
 
 			model.SetProperties(boCreditCard.CreditCardID, boCreditCard.CardNumber, boCreditCard.CardType, boCreditCard.ExpMonth, boCreditCard.ExpYear, boCreditCard.ModifiedDate);
 
 			return model;
 		}
 
-		public virtual List<ApiCreditCardResponseModel> MapBOToModel(
+		public virtual List<ApiCreditCardServerResponseModel> MapBOToModel(
 			List<BOCreditCard> items)
 		{
-			List<ApiCreditCardResponseModel> response = new List<ApiCreditCardResponseModel>();
+			List<ApiCreditCardServerResponseModel> response = new List<ApiCreditCardServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9693d1b2995062e273de34da74803aa7</Hash>
+    <Hash>b76b66678e881e6afbf36d808aa29e8b</Hash>
 </Codenesium>*/

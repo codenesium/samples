@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SpecialOfferController : AbstractSpecialOfferController
 	{
 		public SpecialOfferController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<SpecialOfferController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpecialOfferService specialOfferService,
-			IApiSpecialOfferModelMapper specialOfferModelMapper
+			IApiSpecialOfferServerModelMapper specialOfferModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85528c3fb6074d87f3b710658de7571c</Hash>
+    <Hash>4ebe0a6cbebc0f8089b0fccda41752ec</Hash>
 </Codenesium>*/

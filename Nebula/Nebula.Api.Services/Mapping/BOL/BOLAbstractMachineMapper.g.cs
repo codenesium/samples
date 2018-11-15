@@ -1,4 +1,3 @@
-using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace NebulaNS.Api.Services
 	{
 		public virtual BOMachine MapModelToBO(
 			int id,
-			ApiMachineRequestModel model
+			ApiMachineServerRequestModel model
 			)
 		{
 			BOMachine boMachine = new BOMachine();
@@ -23,20 +22,20 @@ namespace NebulaNS.Api.Services
 			return boMachine;
 		}
 
-		public virtual ApiMachineResponseModel MapBOToModel(
+		public virtual ApiMachineServerResponseModel MapBOToModel(
 			BOMachine boMachine)
 		{
-			var model = new ApiMachineResponseModel();
+			var model = new ApiMachineServerResponseModel();
 
 			model.SetProperties(boMachine.Id, boMachine.Description, boMachine.JwtKey, boMachine.LastIpAddress, boMachine.MachineGuid, boMachine.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiMachineResponseModel> MapBOToModel(
+		public virtual List<ApiMachineServerResponseModel> MapBOToModel(
 			List<BOMachine> items)
 		{
-			List<ApiMachineResponseModel> response = new List<ApiMachineResponseModel>();
+			List<ApiMachineServerResponseModel> response = new List<ApiMachineServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -49,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b79ad87e6c0db8fbcea34ff7426f359</Hash>
+    <Hash>5e0d76448ab3083fbe97a4bc303ab825</Hash>
 </Codenesium>*/

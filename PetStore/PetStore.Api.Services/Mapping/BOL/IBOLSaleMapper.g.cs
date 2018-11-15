@@ -9,16 +9,16 @@ namespace PetStoreNS.Api.Services
 	{
 		BOSale MapModelToBO(
 			int id,
-			ApiSaleRequestModel model);
+			ApiSaleServerRequestModel model);
 
-		ApiSaleResponseModel MapBOToModel(
+		ApiSaleServerResponseModel MapBOToModel(
 			BOSale boSale);
 
-		List<ApiSaleResponseModel> MapBOToModel(
+		List<ApiSaleServerResponseModel> MapBOToModel(
 			List<BOSale> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea9c9d27387db10bd805759d1f46fb4c</Hash>
+    <Hash>766eeb1a2562a07193b83e03141459e0</Hash>
 </Codenesium>*/

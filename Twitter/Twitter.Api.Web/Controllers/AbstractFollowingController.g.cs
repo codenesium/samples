@@ -20,7 +20,7 @@ namespace TwitterNS.Api.Web
 	{
 		protected IFollowingService FollowingService { get; private set; }
 
-		protected IApiFollowingModelMapper FollowingModelMapper { get; private set; }
+		protected IApiFollowingServerModelMapper FollowingModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TwitterNS.Api.Web
 			ILogger<AbstractFollowingController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFollowingService followingService,
-			IApiFollowingModelMapper followingModelMapper
+			IApiFollowingServerModelMapper followingModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiFollowingResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiFollowingServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFollowingResponseModel> response = await this.FollowingService.All(query.Limit, query.Offset);
+			List<ApiFollowingServerResponseModel> response = await this.FollowingService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TwitterNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiFollowingResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiFollowingServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(string id)
+
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiFollowingResponseModel response = await this.FollowingService.Get(id);
+			ApiFollowingServerResponseModel response = await this.FollowingService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TwitterNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiFollowingResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiFollowingServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFollowingRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFollowingServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiFollowingResponseModel> records = new List<ApiFollowingResponseModel>();
+			List<ApiFollowingServerResponseModel> records = new List<ApiFollowingServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiFollowingResponseModel> result = await this.FollowingService.Create(model);
+				CreateResponse<ApiFollowingServerResponseModel> result = await this.FollowingService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TwitterNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiFollowingServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiFollowingResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiFollowingServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiFollowingRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiFollowingServerRequestModel model)
 		{
-			CreateResponse<ApiFollowingResponseModel> result = await this.FollowingService.Create(model);
+			CreateResponse<ApiFollowingServerResponseModel> result = await this.FollowingService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TwitterNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFollowingResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFollowingServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiFollowingRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFollowingServerRequestModel> patch)
 		{
-			ApiFollowingResponseModel record = await this.FollowingService.Get(id);
+			ApiFollowingServerResponseModel record = await this.FollowingService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiFollowingRequestModel model = await this.PatchModel(id, patch);
+				ApiFollowingServerRequestModel model = await this.PatchModel(id, patch) as ApiFollowingServerRequestModel;
 
-				UpdateResponse<ApiFollowingResponseModel> result = await this.FollowingService.Update(id, model);
+				UpdateResponse<ApiFollowingServerResponseModel> result = await this.FollowingService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TwitterNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiFollowingResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiFollowingServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiFollowingRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFollowingServerRequestModel model)
 		{
-			ApiFollowingRequestModel request = await this.PatchModel(id, this.FollowingModelMapper.CreatePatch(model));
+			ApiFollowingServerRequestModel request = await this.PatchModel(id, this.FollowingModelMapper.CreatePatch(model)) as ApiFollowingServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiFollowingResponseModel> result = await this.FollowingService.Update(id, request);
+				UpdateResponse<ApiFollowingServerResponseModel> result = await this.FollowingService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,7 +201,8 @@ namespace TwitterNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(string id)
+
+		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.FollowingService.Delete(id);
 
@@ -206,7 +216,7 @@ namespace TwitterNS.Api.Web
 			}
 		}
 
-		private async Task<ApiFollowingRequestModel> PatchModel(string id, JsonPatchDocument<ApiFollowingRequestModel> patch)
+		private async Task<ApiFollowingServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiFollowingServerRequestModel> patch)
 		{
 			var record = await this.FollowingService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TwitterNS.Api.Web
 			}
 			else
 			{
-				ApiFollowingRequestModel request = this.FollowingModelMapper.MapResponseToRequest(record);
+				ApiFollowingServerRequestModel request = this.FollowingModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5aaeaf6f557d90061df89ec5ec34e0fc</Hash>
+    <Hash>48a980b56a1031ebd377c9b5ed20d191</Hash>
 </Codenesium>*/

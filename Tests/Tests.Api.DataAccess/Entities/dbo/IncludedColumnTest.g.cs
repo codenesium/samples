@@ -25,18 +25,18 @@ namespace TestsNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(50)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[MaxLength(50)]
 		[Column("name2")]
-		public string Name2 { get; private set; }
+		public virtual string Name2 { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>321439f7cecfe0008a65178b023eb608</Hash>
+    <Hash>cadb68d178ea709447268ad45bbae769</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ICurrencyRateService CurrencyRateService { get; private set; }
 
-		protected IApiCurrencyRateModelMapper CurrencyRateModelMapper { get; private set; }
+		protected IApiCurrencyRateServerModelMapper CurrencyRateModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractCurrencyRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICurrencyRateService currencyRateService,
-			IApiCurrencyRateModelMapper currencyRateModelMapper
+			IApiCurrencyRateServerModelMapper currencyRateModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCurrencyRateServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCurrencyRateResponseModel> response = await this.CurrencyRateService.All(query.Limit, query.Offset);
+			List<ApiCurrencyRateServerResponseModel> response = await this.CurrencyRateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCurrencyRateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCurrencyRateResponseModel response = await this.CurrencyRateService.Get(id);
+			ApiCurrencyRateServerResponseModel response = await this.CurrencyRateService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCurrencyRateServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyRateRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyRateServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCurrencyRateResponseModel> records = new List<ApiCurrencyRateResponseModel>();
+			List<ApiCurrencyRateServerResponseModel> records = new List<ApiCurrencyRateServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Create(model);
+				CreateResponse<ApiCurrencyRateServerResponseModel> result = await this.CurrencyRateService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCurrencyRateServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCurrencyRateResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCurrencyRateServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRateRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRateServerRequestModel model)
 		{
-			CreateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Create(model);
+			CreateResponse<ApiCurrencyRateServerResponseModel> result = await this.CurrencyRateService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCurrencyRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCurrencyRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCurrencyRateRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCurrencyRateServerRequestModel> patch)
 		{
-			ApiCurrencyRateResponseModel record = await this.CurrencyRateService.Get(id);
+			ApiCurrencyRateServerResponseModel record = await this.CurrencyRateService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCurrencyRateRequestModel model = await this.PatchModel(id, patch);
+				ApiCurrencyRateServerRequestModel model = await this.PatchModel(id, patch) as ApiCurrencyRateServerRequestModel;
 
-				UpdateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Update(id, model);
+				UpdateResponse<ApiCurrencyRateServerResponseModel> result = await this.CurrencyRateService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCurrencyRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCurrencyRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCurrencyRateRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCurrencyRateServerRequestModel model)
 		{
-			ApiCurrencyRateRequestModel request = await this.PatchModel(id, this.CurrencyRateModelMapper.CreatePatch(model));
+			ApiCurrencyRateServerRequestModel request = await this.PatchModel(id, this.CurrencyRateModelMapper.CreatePatch(model)) as ApiCurrencyRateServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Update(id, request);
+				UpdateResponse<ApiCurrencyRateServerResponseModel> result = await this.CurrencyRateService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CurrencyRateService.Delete(id);
@@ -209,11 +219,11 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byCurrencyRateDateFromCurrencyCodeToCurrencyCode/{currencyRateDate}/{fromCurrencyCode}/{toCurrencyCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCurrencyRateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
 		{
-			ApiCurrencyRateResponseModel response = await this.CurrencyRateService.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate, fromCurrencyCode, toCurrencyCode);
+			ApiCurrencyRateServerResponseModel response = await this.CurrencyRateService.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate, fromCurrencyCode, toCurrencyCode);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{currencyRateID}/SalesOrderHeadersByCurrencyRateID")]
+		[Route("{currencyRateID}/SalesOrderHeaders")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> SalesOrderHeadersByCurrencyRateID(int currencyRateID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.CurrencyRateService.SalesOrderHeadersByCurrencyRateID(currencyRateID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderServerResponseModel> response = await this.CurrencyRateService.SalesOrderHeadersByCurrencyRateID(currencyRateID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiCurrencyRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiCurrencyRateRequestModel> patch)
+		private async Task<ApiCurrencyRateServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCurrencyRateServerRequestModel> patch)
 		{
 			var record = await this.CurrencyRateService.Get(id);
 
@@ -252,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiCurrencyRateRequestModel request = this.CurrencyRateModelMapper.MapResponseToRequest(record);
+				ApiCurrencyRateServerRequestModel request = this.CurrencyRateModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c2404acf328a613d4f799b60c3855f82</Hash>
+    <Hash>a622ebe1e73ae99aa26b6f6b696d06c8</Hash>
 </Codenesium>*/

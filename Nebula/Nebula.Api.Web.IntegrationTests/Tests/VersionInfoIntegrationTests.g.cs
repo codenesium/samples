@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using NebulaNS.Api.Client;
 using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,64 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VersionInfo")]
 	[Trait("Area", "Integration")]
-	public class VersionInfoIntegrationTests
+	public partial class VersionInfoIntegrationTests
 	{
 		public VersionInfoIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.VersionInfoDeleteAsync(1);
+			var model = new ApiVersionInfoClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			var model2 = new ApiVersionInfoClientRequestModel();
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			var request = new List<ApiVersionInfoClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiVersionInfoClientResponseModel>> result = await client.VersionInfoBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<VersionInfo>().ToList()[1].AppliedOn.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<VersionInfo>().ToList()[1].Description.Should().Be("B");
+
+			context.Set<VersionInfo>().ToList()[2].AppliedOn.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<VersionInfo>().ToList()[2].Description.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiVersionInfoClientRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiVersionInfoClientResponseModel> result = await client.VersionInfoCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<VersionInfo>().ToList()[1].AppliedOn.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<VersionInfo>().ToList()[1].Description.Should().Be("B");
+
+			result.Record.AppliedOn.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.Description.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +83,55 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiVersionInfoServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IVersionInfoService service = testServer.Host.Services.GetService(typeof(IVersionInfoService)) as IVersionInfoService;
+			ApiVersionInfoServerResponseModel model = await service.Get(1);
 
-			ApiVersionInfoResponseModel model = await client.VersionInfoGetAsync(1);
+			ApiVersionInfoClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 
-			ApiVersionInfoModelMapper mapper = new ApiVersionInfoModelMapper();
+			UpdateResponse<ApiVersionInfoClientResponseModel> updateResponse = await client.VersionInfoUpdateAsync(model.Version, request);
 
-			UpdateResponse<ApiVersionInfoResponseModel> updateResponse = await client.VersionInfoUpdateAsync(model.Version, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<VersionInfo>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Version.Should().Be(1);
+			context.Set<VersionInfo>().ToList()[0].AppliedOn.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<VersionInfo>().ToList()[0].Description.Should().Be("B");
+
+			updateResponse.Record.Version.Should().Be(1);
+			updateResponse.Record.AppliedOn.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.Description.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiVersionInfoRequestModel();
-			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiVersionInfoResponseModel> createResult = await client.VersionInfoCreateAsync(createModel);
+			IVersionInfoService service = testServer.Host.Services.GetService(typeof(IVersionInfoService)) as IVersionInfoService;
+			var model = new ApiVersionInfoServerRequestModel();
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiVersionInfoServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiVersionInfoResponseModel getResponse = await client.VersionInfoGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.VersionInfoDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiVersionInfoResponseModel verifyResponse = await client.VersionInfoGetAsync(2);
+			ApiVersionInfoServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +139,32 @@ namespace NebulaNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiVersionInfoResponseModel response = await client.VersionInfoGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiVersionInfoClientResponseModel response = await client.VersionInfoGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.Description.Should().Be("A");
+			response.Version.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVersionInfoClientResponseModel response = await client.VersionInfoGetAsync(default(long));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +173,36 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiVersionInfoResponseModel> response = await client.VersionInfoAllAsync();
+			List<ApiVersionInfoClientResponseModel> response = await client.VersionInfoAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].Description.Should().Be("A");
+			response[0].Version.Should().Be(1);
 		}
 
-		private async Task<ApiVersionInfoResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiVersionInfoRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiVersionInfoResponseModel> result = await client.VersionInfoCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.VersionInfoAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e2c819a41d96822154f894ecf82dc85</Hash>
+    <Hash>39e974f594023b7a6374e82ce086d779</Hash>
 </Codenesium>*/

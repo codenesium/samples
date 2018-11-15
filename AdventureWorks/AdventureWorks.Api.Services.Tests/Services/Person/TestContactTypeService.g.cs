@@ -29,11 +29,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			List<ApiContactTypeResponseModel> response = await service.All();
+			List<ApiContactTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,11 +47,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			ApiContactTypeResponseModel response = await service.Get(default(int));
+			ApiContactTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -68,11 +64,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			ApiContactTypeResponseModel response = await service.Get(default(int));
+			ApiContactTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,20 +76,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IContactTypeRepository>();
-			var model = new ApiContactTypeRequestModel();
+			var model = new ApiContactTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ContactType>())).Returns(Task.FromResult(new ContactType()));
 			var service = new ContactTypeService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			CreateResponse<ApiContactTypeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiContactTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiContactTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ContactType>()));
 		}
 
@@ -103,21 +95,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IContactTypeRepository>();
-			var model = new ApiContactTypeRequestModel();
+			var model = new ApiContactTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ContactType>())).Returns(Task.FromResult(new ContactType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ContactType()));
 			var service = new ContactTypeService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			UpdateResponse<ApiContactTypeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiContactTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiContactTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiContactTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ContactType>()));
 		}
 
@@ -125,15 +115,13 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IContactTypeRepository>();
-			var model = new ApiContactTypeRequestModel();
+			var model = new ApiContactTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ContactTypeService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -152,11 +140,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			ApiContactTypeResponseModel response = await service.ByName(default(string));
+			ApiContactTypeServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -171,58 +157,16 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
+			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
-			ApiContactTypeResponseModel response = await service.ByName(default(string));
+			ApiContactTypeServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
-		}
-
-		[Fact]
-		public async void BusinessEntityContactsByContactTypeID_Exists()
-		{
-			var mock = new ServiceMockFacade<IContactTypeRepository>();
-			var records = new List<BusinessEntityContact>();
-			records.Add(new BusinessEntityContact());
-			mock.RepositoryMock.Setup(x => x.BusinessEntityContactsByContactTypeID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new ContactTypeService(mock.LoggerMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
-
-			List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContactsByContactTypeID(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.BusinessEntityContactsByContactTypeID(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void BusinessEntityContactsByContactTypeID_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IContactTypeRepository>();
-			mock.RepositoryMock.Setup(x => x.BusinessEntityContactsByContactTypeID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
-			var service = new ContactTypeService(mock.LoggerMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
-			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLBusinessEntityContactMapperMock,
-			                                     mock.DALMapperMockFactory.DALBusinessEntityContactMapperMock);
-
-			List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContactsByContactTypeID(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.BusinessEntityContactsByContactTypeID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc99d491a5e5540459d0279245cba3eb</Hash>
+    <Hash>bbf3e858685576b3b8d75e58179cd7db</Hash>
 </Codenesium>*/

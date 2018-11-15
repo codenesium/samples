@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public DocumentService(
 			ILogger<IDocumentRepository> logger,
 			IDocumentRepository documentRepository,
-			IApiDocumentRequestModelValidator documentModelValidator,
-			IBOLDocumentMapper boldocumentMapper,
-			IDALDocumentMapper daldocumentMapper)
+			IApiDocumentServerRequestModelValidator documentModelValidator,
+			IBOLDocumentMapper bolDocumentMapper,
+			IDALDocumentMapper dalDocumentMapper)
 			: base(logger,
 			       documentRepository,
 			       documentModelValidator,
-			       boldocumentMapper,
-			       daldocumentMapper)
+			       bolDocumentMapper,
+			       dalDocumentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>43d66967da7d97c42c038fc5ba0ccd93</Hash>
+    <Hash>af3cf8916540dd00e5dfd69e8ce80a8d</Hash>
 </Codenesium>*/

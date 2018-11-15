@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 		public CurrencyRateService(
 			ILogger<ICurrencyRateRepository> logger,
 			ICurrencyRateRepository currencyRateRepository,
-			IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
-			IBOLCurrencyRateMapper bolcurrencyRateMapper,
-			IDALCurrencyRateMapper dalcurrencyRateMapper,
+			IApiCurrencyRateServerRequestModelValidator currencyRateModelValidator,
+			IBOLCurrencyRateMapper bolCurrencyRateMapper,
+			IDALCurrencyRateMapper dalCurrencyRateMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       currencyRateRepository,
 			       currencyRateModelValidator,
-			       bolcurrencyRateMapper,
-			       dalcurrencyRateMapper,
+			       bolCurrencyRateMapper,
+			       dalCurrencyRateMapper,
 			       bolSalesOrderHeaderMapper,
 			       dalSalesOrderHeaderMapper)
 		{
@@ -34,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a89804e1e4c953ecab28a2f92e4af7d</Hash>
+    <Hash>5e2b670c96283b37207c4b96a7efb4af</Hash>
 </Codenesium>*/

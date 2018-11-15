@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTableMapper();
-			ApiTableRequestModel model = new ApiTableRequestModel();
+			ApiTableServerRequestModel model = new ApiTableServerRequestModel();
 			model.SetProperties("A");
 			BOTable response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLTableMapper();
 			BOTable bo = new BOTable();
 			bo.SetProperties(1, "A");
-			ApiTableResponseModel response = mapper.MapBOToModel(bo);
+			ApiTableServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLTableMapper();
 			BOTable bo = new BOTable();
 			bo.SetProperties(1, "A");
-			List<ApiTableResponseModel> response = mapper.MapBOToModel(new List<BOTable>() { { bo } });
+			List<ApiTableServerResponseModel> response = mapper.MapBOToModel(new List<BOTable>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2edb093b9f2d22953da1226a0757b6e6</Hash>
+    <Hash>219bed8645243b5f174589719a1ebc9c</Hash>
 </Codenesium>*/

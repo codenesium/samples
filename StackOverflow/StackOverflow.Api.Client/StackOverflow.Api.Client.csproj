@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;netstandard2.0;net461</TargetFrameworks>
 	<RootNamespace>StackOverflowNS.Api.Client</RootNamespace>
+	<NuspecFile>StackOverflow.Api.Client.nuspec</NuspecFile>
   </PropertyGroup>
 
  <ItemGroup>

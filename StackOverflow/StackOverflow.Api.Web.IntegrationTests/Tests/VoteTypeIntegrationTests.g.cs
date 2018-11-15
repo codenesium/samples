@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using StackOverflowNS.Api.Client;
 using StackOverflowNS.Api.Contracts;
+using StackOverflowNS.Api.DataAccess;
 using StackOverflowNS.Api.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VoteType")]
 	[Trait("Area", "Integration")]
-	public class VoteTypeIntegrationTests
+	public partial class VoteTypeIntegrationTests
 	{
 		public VoteTypeIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.VoteTypeDeleteAsync(1);
+			var model = new ApiVoteTypeClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiVoteTypeClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiVoteTypeClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiVoteTypeClientResponseModel>> result = await client.VoteTypeBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<VoteType>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<VoteType>().ToList()[2].Name.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiVoteTypeClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiVoteTypeClientResponseModel> result = await client.VoteTypeCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<VoteType>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiVoteTypeServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			IVoteTypeService service = testServer.Host.Services.GetService(typeof(IVoteTypeService)) as IVoteTypeService;
+			ApiVoteTypeServerResponseModel model = await service.Get(1);
 
-			ApiVoteTypeResponseModel model = await client.VoteTypeGetAsync(1);
+			ApiVoteTypeClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiVoteTypeModelMapper mapper = new ApiVoteTypeModelMapper();
+			UpdateResponse<ApiVoteTypeClientResponseModel> updateResponse = await client.VoteTypeUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiVoteTypeResponseModel> updateResponse = await client.VoteTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<VoteType>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<VoteType>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiVoteTypeRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiVoteTypeResponseModel> createResult = await client.VoteTypeCreateAsync(createModel);
+			IVoteTypeService service = testServer.Host.Services.GetService(typeof(IVoteTypeService)) as IVoteTypeService;
+			var model = new ApiVoteTypeServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiVoteTypeServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiVoteTypeResponseModel getResponse = await client.VoteTypeGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.VoteTypeDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiVoteTypeResponseModel verifyResponse = await client.VoteTypeGetAsync(2);
+			ApiVoteTypeServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiVoteTypeResponseModel response = await client.VoteTypeGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiVoteTypeClientResponseModel response = await client.VoteTypeGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVoteTypeClientResponseModel response = await client.VoteTypeGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,35 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiVoteTypeResponseModel> response = await client.VoteTypeAllAsync();
+			List<ApiVoteTypeClientResponseModel> response = await client.VoteTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
 		}
 
-		private async Task<ApiVoteTypeResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual void TestClientCancellationToken()
 		{
-			var model = new ApiVoteTypeRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiVoteTypeResponseModel> result = await client.VoteTypeCreateAsync(model);
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.VoteTypeAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>705f08382c42121c421ac4ff5023755f</Hash>
+    <Hash>5de8656c0f53651060b1c8b434bf0701</Hash>
 </Codenesium>*/

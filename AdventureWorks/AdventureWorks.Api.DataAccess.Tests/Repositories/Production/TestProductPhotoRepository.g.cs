@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
+			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3a6cd93ee63a87694547d17fe2c31dc</Hash>
+    <Hash>3c1e3a25816717700190d5756aa5707b</Hash>
 </Codenesium>*/

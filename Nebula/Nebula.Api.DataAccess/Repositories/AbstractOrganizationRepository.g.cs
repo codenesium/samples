@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Organization> ByName(string name)
+		public async virtual Task<Organization> ByName(string name)
 		{
 			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Name == name);
 		}
@@ -90,22 +90,14 @@ namespace NebulaNS.Api.DataAccess
 			Expression<Func<Organization, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Organization, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Organization, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Organization>();
-			}
-			else
-			{
-				return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Organization>();
-			}
+			return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Organization>();
 		}
 
 		private async Task<Organization> GetById(int id)
@@ -118,5 +110,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74b3ab262e1d8f5d3ec9398d560cdceb</Hash>
+    <Hash>e718fde814739e9c6c2224e806f7f4c9</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class DatabaseLogController : AbstractDatabaseLogController
 	{
 		public DatabaseLogController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<DatabaseLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDatabaseLogService databaseLogService,
-			IApiDatabaseLogModelMapper databaseLogModelMapper
+			IApiDatabaseLogServerModelMapper databaseLogModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>400352f6672beeb14cef5135b3c36b19</Hash>
+    <Hash>f37f2f07c9552f4a55310302ad190ab1</Hash>
 </Codenesium>*/

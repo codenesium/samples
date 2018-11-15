@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLUserMapper();
-			ApiUserRequestModel model = new ApiUserRequestModel();
+			ApiUserServerRequestModel model = new ApiUserServerRequestModel();
 			model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
 			BOUser response = mapper.MapModelToBO(1, model);
 
@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
-			ApiUserResponseModel response = mapper.MapBOToModel(bo);
+			ApiUserServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AboutMe.Should().Be("A");
 			response.AccountId.Should().Be(1);
@@ -66,7 +66,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
 			bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
-			List<ApiUserResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
+			List<ApiUserServerResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -74,5 +74,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>514fb6ea5a1736ff22ced556e09df47c</Hash>
+    <Hash>69a1ddaf8ea7e91b2cec0c0dc37d0d3c</Hash>
 </Codenesium>*/

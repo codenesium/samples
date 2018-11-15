@@ -2,33 +2,32 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
 	public partial interface IClientService
 	{
-		Task<CreateResponse<ApiClientResponseModel>> Create(
-			ApiClientRequestModel model);
+		Task<CreateResponse<ApiClientServerResponseModel>> Create(
+			ApiClientServerRequestModel model);
 
-		Task<UpdateResponse<ApiClientResponseModel>> Update(int id,
-		                                                     ApiClientRequestModel model);
+		Task<UpdateResponse<ApiClientServerResponseModel>> Update(int id,
+		                                                           ApiClientServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiClientResponseModel> Get(int id);
+		Task<ApiClientServerResponseModel> Get(int id);
 
-		Task<List<ApiClientResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiClientServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiClientCommunicationServerResponseModel>> ClientCommunicationsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPetResponseModel>> PetsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPetServerResponseModel>> PetsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> SalesByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleServerResponseModel>> SalesByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b65d714297f9e01fa9d143b77ee249a5</Hash>
+    <Hash>a5a9159177e506e564c767ec958d94ac</Hash>
 </Codenesium>*/

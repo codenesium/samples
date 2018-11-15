@@ -1,4 +1,3 @@
-using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,32 +8,32 @@ namespace ESPIOTNS.Api.Services
 	{
 		public virtual BODeviceAction MapModelToBO(
 			int id,
-			ApiDeviceActionRequestModel model
+			ApiDeviceActionServerRequestModel model
 			)
 		{
 			BODeviceAction boDeviceAction = new BODeviceAction();
 			boDeviceAction.SetProperties(
 				id,
+				model.@Value,
 				model.DeviceId,
-				model.Name,
-				model.@Value);
+				model.Name);
 			return boDeviceAction;
 		}
 
-		public virtual ApiDeviceActionResponseModel MapBOToModel(
+		public virtual ApiDeviceActionServerResponseModel MapBOToModel(
 			BODeviceAction boDeviceAction)
 		{
-			var model = new ApiDeviceActionResponseModel();
+			var model = new ApiDeviceActionServerResponseModel();
 
-			model.SetProperties(boDeviceAction.Id, boDeviceAction.DeviceId, boDeviceAction.Name, boDeviceAction.@Value);
+			model.SetProperties(boDeviceAction.Id, boDeviceAction.@Value, boDeviceAction.DeviceId, boDeviceAction.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiDeviceActionResponseModel> MapBOToModel(
+		public virtual List<ApiDeviceActionServerResponseModel> MapBOToModel(
 			List<BODeviceAction> items)
 		{
-			List<ApiDeviceActionResponseModel> response = new List<ApiDeviceActionResponseModel>();
+			List<ApiDeviceActionServerResponseModel> response = new List<ApiDeviceActionServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -47,5 +46,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e299b79cf8e006c1dba1189983e5b054</Hash>
+    <Hash>75d0b55e120adeb2308c9742c2f15af5</Hash>
 </Codenesium>*/

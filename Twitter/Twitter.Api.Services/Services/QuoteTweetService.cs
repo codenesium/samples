@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TwitterNS.Api.Services
 		public QuoteTweetService(
 			ILogger<IQuoteTweetRepository> logger,
 			IQuoteTweetRepository quoteTweetRepository,
-			IApiQuoteTweetRequestModelValidator quoteTweetModelValidator,
-			IBOLQuoteTweetMapper bolquoteTweetMapper,
-			IDALQuoteTweetMapper dalquoteTweetMapper)
+			IApiQuoteTweetServerRequestModelValidator quoteTweetModelValidator,
+			IBOLQuoteTweetMapper bolQuoteTweetMapper,
+			IDALQuoteTweetMapper dalQuoteTweetMapper)
 			: base(logger,
 			       quoteTweetRepository,
 			       quoteTweetModelValidator,
-			       bolquoteTweetMapper,
-			       dalquoteTweetMapper)
+			       bolQuoteTweetMapper,
+			       dalQuoteTweetMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8ee0f4c41677dc30105adfad9dfaf42</Hash>
+    <Hash>eed0cedf6c0162d443a3484f74137bac</Hash>
 </Codenesium>*/

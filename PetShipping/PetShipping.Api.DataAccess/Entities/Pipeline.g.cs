@@ -25,19 +25,24 @@ namespace PetShippingNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("pipelineStatusId")]
-		public int PipelineStatusId { get; private set; }
+		public virtual int PipelineStatusId { get; private set; }
 
 		[Column("saleId")]
-		public int SaleId { get; private set; }
+		public virtual int SaleId { get; private set; }
 
 		[ForeignKey("PipelineStatusId")]
 		public virtual PipelineStatu PipelineStatuNavigation { get; private set; }
+
+		public void SetPipelineStatuNavigation(PipelineStatu item)
+		{
+			this.PipelineStatuNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c671b5c6d1ae21b27e63a37c2d2eb826</Hash>
+    <Hash>4cf99a5b3d6a89d344a07c7a1de81c91</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLFamilyMapper();
-			ApiFamilyRequestModel model = new ApiFamilyRequestModel();
+			ApiFamilyServerRequestModel model = new ApiFamilyServerRequestModel();
 			model.SetProperties("A", "A", "A", "A", "A");
 			BOFamily response = mapper.MapModelToBO(1, model);
 
@@ -34,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLFamilyMapper();
 			BOFamily bo = new BOFamily();
 			bo.SetProperties(1, "A", "A", "A", "A", "A");
-			ApiFamilyResponseModel response = mapper.MapBOToModel(bo);
+			ApiFamilyServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Note.Should().Be("A");
@@ -50,7 +50,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mapper = new BOLFamilyMapper();
 			BOFamily bo = new BOFamily();
 			bo.SetProperties(1, "A", "A", "A", "A", "A");
-			List<ApiFamilyResponseModel> response = mapper.MapBOToModel(new List<BOFamily>() { { bo } });
+			List<ApiFamilyServerResponseModel> response = mapper.MapBOToModel(new List<BOFamily>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -58,5 +58,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>004f7536294aca66c7b0ea55fcdfe5b7</Hash>
+    <Hash>ad30966369fa6185b801deb21a1425a4</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IBillOfMaterialService BillOfMaterialService { get; private set; }
 
-		protected IApiBillOfMaterialModelMapper BillOfMaterialModelMapper { get; private set; }
+		protected IApiBillOfMaterialServerModelMapper BillOfMaterialModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractBillOfMaterialController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBillOfMaterialService billOfMaterialService,
-			IApiBillOfMaterialModelMapper billOfMaterialModelMapper
+			IApiBillOfMaterialServerModelMapper billOfMaterialModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBillOfMaterialResponseModel> response = await this.BillOfMaterialService.All(query.Limit, query.Offset);
+			List<ApiBillOfMaterialServerResponseModel> response = await this.BillOfMaterialService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBillOfMaterialResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiBillOfMaterialServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiBillOfMaterialResponseModel response = await this.BillOfMaterialService.Get(id);
+			ApiBillOfMaterialServerResponseModel response = await this.BillOfMaterialService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiBillOfMaterialServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBillOfMaterialRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBillOfMaterialServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiBillOfMaterialResponseModel> records = new List<ApiBillOfMaterialResponseModel>();
+			List<ApiBillOfMaterialServerResponseModel> records = new List<ApiBillOfMaterialServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiBillOfMaterialResponseModel> result = await this.BillOfMaterialService.Create(model);
+				CreateResponse<ApiBillOfMaterialServerResponseModel> result = await this.BillOfMaterialService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiBillOfMaterialServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiBillOfMaterialResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiBillOfMaterialServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialServerRequestModel model)
 		{
-			CreateResponse<ApiBillOfMaterialResponseModel> result = await this.BillOfMaterialService.Create(model);
+			CreateResponse<ApiBillOfMaterialServerResponseModel> result = await this.BillOfMaterialService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBillOfMaterialServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBillOfMaterialRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBillOfMaterialServerRequestModel> patch)
 		{
-			ApiBillOfMaterialResponseModel record = await this.BillOfMaterialService.Get(id);
+			ApiBillOfMaterialServerResponseModel record = await this.BillOfMaterialService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiBillOfMaterialRequestModel model = await this.PatchModel(id, patch);
+				ApiBillOfMaterialServerRequestModel model = await this.PatchModel(id, patch) as ApiBillOfMaterialServerRequestModel;
 
-				UpdateResponse<ApiBillOfMaterialResponseModel> result = await this.BillOfMaterialService.Update(id, model);
+				UpdateResponse<ApiBillOfMaterialServerResponseModel> result = await this.BillOfMaterialService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiBillOfMaterialServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBillOfMaterialRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBillOfMaterialServerRequestModel model)
 		{
-			ApiBillOfMaterialRequestModel request = await this.PatchModel(id, this.BillOfMaterialModelMapper.CreatePatch(model));
+			ApiBillOfMaterialServerRequestModel request = await this.PatchModel(id, this.BillOfMaterialModelMapper.CreatePatch(model)) as ApiBillOfMaterialServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiBillOfMaterialResponseModel> result = await this.BillOfMaterialService.Update(id, request);
+				UpdateResponse<ApiBillOfMaterialServerResponseModel> result = await this.BillOfMaterialService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.BillOfMaterialService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByUnitMeasureCode(string unitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBillOfMaterialResponseModel> response = await this.BillOfMaterialService.ByUnitMeasureCode(unitMeasureCode, query.Limit, query.Offset);
+			List<ApiBillOfMaterialServerResponseModel> response = await this.BillOfMaterialService.ByUnitMeasureCode(unitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiBillOfMaterialRequestModel> PatchModel(int id, JsonPatchDocument<ApiBillOfMaterialRequestModel> patch)
+		private async Task<ApiBillOfMaterialServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiBillOfMaterialServerRequestModel> patch)
 		{
 			var record = await this.BillOfMaterialService.Get(id);
 
@@ -233,7 +243,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiBillOfMaterialRequestModel request = this.BillOfMaterialModelMapper.MapResponseToRequest(record);
+				ApiBillOfMaterialServerRequestModel request = this.BillOfMaterialModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>039b8f2e14f1cba6c4002c8393576919</Hash>
+    <Hash>435f3e7d695680c119fd7da2fcc34a63</Hash>
 </Codenesium>*/

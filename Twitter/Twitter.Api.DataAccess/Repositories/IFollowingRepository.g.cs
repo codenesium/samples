@@ -11,14 +11,14 @@ namespace TwitterNS.Api.DataAccess
 
 		Task Update(Following item);
 
-		Task Delete(string userId);
+		Task Delete(int userId);
 
-		Task<Following> Get(string userId);
+		Task<Following> Get(int userId);
 
 		Task<List<Following>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2233f2a103671bbb24571c8ca10d78d8</Hash>
+    <Hash>5da8e5ef9ba14701352bf2551886c2ac</Hash>
 </Codenesium>*/

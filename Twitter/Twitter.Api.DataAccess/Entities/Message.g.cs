@@ -25,20 +25,25 @@ namespace TwitterNS.Api.DataAccess
 
 		[MaxLength(128)]
 		[Column("content")]
-		public string Content { get; private set; }
+		public virtual string Content { get; private set; }
 
 		[Key]
 		[Column("message_id")]
-		public int MessageId { get; private set; }
+		public virtual int MessageId { get; private set; }
 
 		[Column("sender_user_id")]
-		public int? SenderUserId { get; private set; }
+		public virtual int? SenderUserId { get; private set; }
 
 		[ForeignKey("SenderUserId")]
 		public virtual User UserNavigation { get; private set; }
+
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6360d856766b14c2c02343e59d08be1</Hash>
+    <Hash>a321b41855df01c84d96bb1cc376f0f5</Hash>
 </Codenesium>*/

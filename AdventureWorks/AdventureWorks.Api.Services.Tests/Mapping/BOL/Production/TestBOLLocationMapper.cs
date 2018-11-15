@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLLocationMapper();
-			ApiLocationRequestModel model = new ApiLocationRequestModel();
+			ApiLocationServerRequestModel model = new ApiLocationServerRequestModel();
 			model.SetProperties(1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOLocation response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLLocationMapper();
 			BOLocation bo = new BOLocation();
 			bo.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiLocationResponseModel response = mapper.MapBOToModel(bo);
+			ApiLocationServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Availability.Should().Be(1);
 			response.CostRate.Should().Be(1m);
@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLLocationMapper();
 			BOLocation bo = new BOLocation();
 			bo.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiLocationResponseModel> response = mapper.MapBOToModel(new List<BOLocation>() { { bo } });
+			List<ApiLocationServerResponseModel> response = mapper.MapBOToModel(new List<BOLocation>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f94fbadf05c6140cd45565f04a4ff9fd</Hash>
+    <Hash>b459aab553718acf67c7d4f2a7b9f1c6</Hash>
 </Codenesium>*/

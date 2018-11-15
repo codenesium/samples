@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ISchemaAPersonRepository SchemaAPersonRepository { get; private set; }
 
-		protected IApiSchemaAPersonRequestModelValidator SchemaAPersonModelValidator { get; private set; }
+		protected IApiSchemaAPersonServerRequestModelValidator SchemaAPersonModelValidator { get; private set; }
 
 		protected IBOLSchemaAPersonMapper BolSchemaAPersonMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractSchemaAPersonService(
 			ILogger logger,
 			ISchemaAPersonRepository schemaAPersonRepository,
-			IApiSchemaAPersonRequestModelValidator schemaAPersonModelValidator,
+			IApiSchemaAPersonServerRequestModelValidator schemaAPersonModelValidator,
 			IBOLSchemaAPersonMapper bolSchemaAPersonMapper,
 			IDALSchemaAPersonMapper dalSchemaAPersonMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiSchemaAPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSchemaAPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.SchemaAPersonRepository.All(limit, offset);
 
 			return this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiSchemaAPersonResponseModel> Get(int id)
+		public virtual async Task<ApiSchemaAPersonServerResponseModel> Get(int id)
 		{
 			var record = await this.SchemaAPersonRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiSchemaAPersonResponseModel>> Create(
-			ApiSchemaAPersonRequestModel model)
+		public virtual async Task<CreateResponse<ApiSchemaAPersonServerResponseModel>> Create(
+			ApiSchemaAPersonServerRequestModel model)
 		{
-			CreateResponse<ApiSchemaAPersonResponseModel> response = new CreateResponse<ApiSchemaAPersonResponseModel>(await this.SchemaAPersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSchemaAPersonServerResponseModel> response = ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.CreateResponse(await this.SchemaAPersonModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolSchemaAPersonMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiSchemaAPersonResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiSchemaAPersonServerResponseModel>> Update(
 			int id,
-			ApiSchemaAPersonRequestModel model)
+			ApiSchemaAPersonServerRequestModel model)
 		{
 			var validationResult = await this.SchemaAPersonModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.SchemaAPersonRepository.Get(id);
 
-				return new UpdateResponse<ApiSchemaAPersonResponseModel>(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.UpdateResponse(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiSchemaAPersonResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.SchemaAPersonModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.SchemaAPersonModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.SchemaAPersonRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb34871847ba1ae643d784a2e6b04e71</Hash>
+    <Hash>ef861079b0c12f87c4398e13a58257c2</Hash>
 </Codenesium>*/

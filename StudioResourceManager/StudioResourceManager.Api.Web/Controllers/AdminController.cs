@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class AdminController : AbstractAdminController
 	{
 		public AdminController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAdminService adminService,
-			IApiAdminModelMapper adminModelMapper
+			IApiAdminServerModelMapper adminModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b6a8ae6cbeccfb4e52fd99efb9f163a0</Hash>
+    <Hash>8db7c87db2a95c063058ac3b0d8532cc</Hash>
 </Codenesium>*/

@@ -9,16 +9,16 @@ namespace ESPIOTNS.Api.Services
 	{
 		BODevice MapModelToBO(
 			int id,
-			ApiDeviceRequestModel model);
+			ApiDeviceServerRequestModel model);
 
-		ApiDeviceResponseModel MapBOToModel(
+		ApiDeviceServerResponseModel MapBOToModel(
 			BODevice boDevice);
 
-		List<ApiDeviceResponseModel> MapBOToModel(
+		List<ApiDeviceServerResponseModel> MapBOToModel(
 			List<BODevice> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d60024feb9a857eb0a38f228b0b6303</Hash>
+    <Hash>26cbcd2ed02dd07b698dad9dcedd04a9</Hash>
 </Codenesium>*/

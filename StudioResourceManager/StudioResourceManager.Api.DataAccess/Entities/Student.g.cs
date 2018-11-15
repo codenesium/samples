@@ -40,51 +40,61 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		[Column("birthday")]
-		public DateTime Birthday { get; private set; }
+		public virtual DateTime Birthday { get; private set; }
 
 		[MaxLength(128)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[Column("emailRemindersEnabled")]
-		public bool EmailRemindersEnabled { get; private set; }
+		public virtual bool EmailRemindersEnabled { get; private set; }
 
 		[Column("familyId")]
-		public int FamilyId { get; private set; }
+		public virtual int FamilyId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("isAdult")]
-		public bool IsAdult { get; private set; }
+		public virtual bool IsAdult { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(128)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 
 		[Column("smsRemindersEnabled")]
-		public bool SmsRemindersEnabled { get; private set; }
+		public virtual bool SmsRemindersEnabled { get; private set; }
 
 		[Column("userId")]
-		public int UserId { get; private set; }
+		public virtual int UserId { get; private set; }
 
 		[ForeignKey("FamilyId")]
 		public virtual Family FamilyNavigation { get; private set; }
 
+		public void SetFamilyNavigation(Family item)
+		{
+			this.FamilyNavigation = item;
+		}
+
 		[ForeignKey("UserId")]
 		public virtual User UserNavigation { get; private set; }
+
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7bcfa9afd74d0cbedfd20ed3e8e2d552</Hash>
+    <Hash>6e465bb734e2e76709ff9d6a6cb6ad09</Hash>
 </Codenesium>*/

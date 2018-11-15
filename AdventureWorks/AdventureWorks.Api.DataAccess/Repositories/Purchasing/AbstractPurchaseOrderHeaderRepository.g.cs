@@ -76,41 +76,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.EmployeeID == employeeID, limit, offset);
 		}
 
-		public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.VendorID == vendorID, limit, offset);
-		}
-
-		public async virtual Task<List<PurchaseOrderDetail>> PurchaseOrderDetailsByPurchaseOrderID(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<PurchaseOrderDetail>().Where(x => x.PurchaseOrderID == purchaseOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderDetail>();
 		}
 
 		protected async Task<List<PurchaseOrderHeader>> Where(
 			Expression<Func<PurchaseOrderHeader, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<PurchaseOrderHeader, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<PurchaseOrderHeader, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.PurchaseOrderID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-			}
-			else
-			{
-				return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-			}
+			return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
 
 		private async Task<PurchaseOrderHeader> GetById(int purchaseOrderID)
@@ -123,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8febda1d8c9b561be2e24a2120679e28</Hash>
+    <Hash>845605ab4f5a2f9f856d8cf0c5b70bcb</Hash>
 </Codenesium>*/

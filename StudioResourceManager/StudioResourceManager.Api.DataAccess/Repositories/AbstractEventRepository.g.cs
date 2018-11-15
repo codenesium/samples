@@ -76,9 +76,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
+		public async virtual Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<EventStatus>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
+			return await this.Where(x => x.EventStatusId == eventStatusId, limit, offset);
+		}
+
+		public async virtual Task<EventStatu> EventStatuByEventStatusId(int eventStatusId)
+		{
+			return await this.Context.Set<EventStatu>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
 		}
 
 		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
@@ -90,26 +95,57 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		public async virtual Task<EventStudent> CreateEventStudent(EventStudent item)
+		{
+			this.Context.Set<EventStudent>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteEventStudent(EventStudent item)
+		{
+			this.Context.Set<EventStudent>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
+		public async virtual Task<List<Event>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventTeachers
+			              join events in this.Context.Events on
+			              refTable.EventId equals events.Id
+			              where refTable.TeacherId == teacherId
+			              select events).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<EventTeacher> CreateEventTeacher(EventTeacher item)
+		{
+			this.Context.Set<EventTeacher>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteEventTeacher(EventTeacher item)
+		{
+			this.Context.Set<EventTeacher>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Event>> Where(
 			Expression<Func<Event, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Event, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Event, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
-			}
-			else
-			{
-				return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
-			}
+			return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
 		private async Task<Event> GetById(int id)
@@ -122,5 +158,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f08d5a597008c5e74959d579132c12b5</Hash>
+    <Hash>bf4801e03e73b2a9f91b339ed3458a9a</Hash>
 </Codenesium>*/

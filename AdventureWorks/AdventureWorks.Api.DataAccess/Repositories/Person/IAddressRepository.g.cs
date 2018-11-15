@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Address>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<Address> ByRowguid(Guid rowguid);
+
 		Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
 
 		Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<BusinessEntityAddress>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ca155679ee6afc51d18a674bb1c1668</Hash>
+    <Hash>d23a2841adf9a0666293e6f301200cf6</Hash>
 </Codenesium>*/

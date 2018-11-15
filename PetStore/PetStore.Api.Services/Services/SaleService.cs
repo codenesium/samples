@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace PetStoreNS.Api.Services
 		public SaleService(
 			ILogger<ISaleRepository> logger,
 			ISaleRepository saleRepository,
-			IApiSaleRequestModelValidator saleModelValidator,
-			IBOLSaleMapper bolsaleMapper,
-			IDALSaleMapper dalsaleMapper)
+			IApiSaleServerRequestModelValidator saleModelValidator,
+			IBOLSaleMapper bolSaleMapper,
+			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       saleRepository,
 			       saleModelValidator,
-			       bolsaleMapper,
-			       dalsaleMapper)
+			       bolSaleMapper,
+			       dalSaleMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f18a1ed6237250f7cf1e9789811efd38</Hash>
+    <Hash>390d8bdf2e63bad198f8367968cc268c</Hash>
 </Codenesium>*/

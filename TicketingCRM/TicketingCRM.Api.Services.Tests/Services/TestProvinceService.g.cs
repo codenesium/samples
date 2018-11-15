@@ -35,7 +35,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiProvinceResponseModel> response = await service.All();
+			List<ApiProvinceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -57,7 +57,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiProvinceResponseModel response = await service.Get(default(int));
+			ApiProvinceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +78,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			ApiProvinceResponseModel response = await service.Get(default(int));
+			ApiProvinceServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -88,7 +88,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			var model = new ApiProvinceRequestModel();
+			var model = new ApiProvinceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Province>())).Returns(Task.FromResult(new Province()));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -100,10 +100,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			CreateResponse<ApiProvinceResponseModel> response = await service.Create(model);
+			CreateResponse<ApiProvinceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProvinceRequestModel>()));
+			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Province>()));
 		}
 
@@ -111,7 +111,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			var model = new ApiProvinceRequestModel();
+			var model = new ApiProvinceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Province>())).Returns(Task.FromResult(new Province()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 			var service = new ProvinceService(mock.LoggerMock.Object,
@@ -124,10 +124,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			UpdateResponse<ApiProvinceResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiProvinceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceRequestModel>()));
+			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Province>()));
 		}
 
@@ -135,7 +135,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			var model = new ApiProvinceRequestModel();
+			var model = new ApiProvinceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -171,7 +171,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
+			List<ApiProvinceServerResponseModel> response = await service.ByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -192,7 +192,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
+			List<ApiProvinceServerResponseModel> response = await service.ByCountryId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiCityResponseModel> response = await service.CitiesByProvinceId(default(int));
+			List<ApiCityServerResponseModel> response = await service.CitiesByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -236,7 +236,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiCityResponseModel> response = await service.CitiesByProvinceId(default(int));
+			List<ApiCityServerResponseModel> response = await service.CitiesByProvinceId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -259,7 +259,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.VenuesByProvinceId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.VenuesByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -280,7 +280,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.VenuesByProvinceId(default(int));
+			List<ApiVenueServerResponseModel> response = await service.VenuesByProvinceId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -289,5 +289,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a96c0e26d743cd75bc3d741aa8681b2c</Hash>
+    <Hash>95f2d08ac1bb32da93b84d2822305185</Hash>
 </Codenesium>*/

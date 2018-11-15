@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TwitterNS.Api.Services
 	{
 		protected IDirectTweetRepository DirectTweetRepository { get; private set; }
 
-		protected IApiDirectTweetRequestModelValidator DirectTweetModelValidator { get; private set; }
+		protected IApiDirectTweetServerRequestModelValidator DirectTweetModelValidator { get; private set; }
 
 		protected IBOLDirectTweetMapper BolDirectTweetMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TwitterNS.Api.Services
 		public AbstractDirectTweetService(
 			ILogger logger,
 			IDirectTweetRepository directTweetRepository,
-			IApiDirectTweetRequestModelValidator directTweetModelValidator,
+			IApiDirectTweetServerRequestModelValidator directTweetModelValidator,
 			IBOLDirectTweetMapper bolDirectTweetMapper,
 			IDALDirectTweetMapper dalDirectTweetMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TwitterNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiDirectTweetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDirectTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.DirectTweetRepository.All(limit, offset);
 
 			return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiDirectTweetResponseModel> Get(int tweetId)
+		public virtual async Task<ApiDirectTweetServerResponseModel> Get(int tweetId)
 		{
 			var record = await this.DirectTweetRepository.Get(tweetId);
 
@@ -60,10 +55,11 @@ namespace TwitterNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiDirectTweetResponseModel>> Create(
-			ApiDirectTweetRequestModel model)
+		public virtual async Task<CreateResponse<ApiDirectTweetServerResponseModel>> Create(
+			ApiDirectTweetServerRequestModel model)
 		{
-			CreateResponse<ApiDirectTweetResponseModel> response = new CreateResponse<ApiDirectTweetResponseModel>(await this.DirectTweetModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDirectTweetServerResponseModel> response = ValidationResponseFactory<ApiDirectTweetServerResponseModel>.CreateResponse(await this.DirectTweetModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolDirectTweetMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiDirectTweetResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiDirectTweetServerResponseModel>> Update(
 			int tweetId,
-			ApiDirectTweetRequestModel model)
+			ApiDirectTweetServerRequestModel model)
 		{
 			var validationResult = await this.DirectTweetModelValidator.ValidateUpdateAsync(tweetId, model);
 
@@ -88,18 +84,19 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.DirectTweetRepository.Get(tweetId);
 
-				return new UpdateResponse<ApiDirectTweetResponseModel>(this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiDirectTweetServerResponseModel>.UpdateResponse(this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiDirectTweetResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiDirectTweetServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int tweetId)
 		{
-			ActionResponse response = new ActionResponse(await this.DirectTweetModelValidator.ValidateDeleteAsync(tweetId));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.DirectTweetModelValidator.ValidateDeleteAsync(tweetId));
+
 			if (response.Success)
 			{
 				await this.DirectTweetRepository.Delete(tweetId);
@@ -108,7 +105,7 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDirectTweetResponseModel>> ByTaggedUserId(int taggedUserId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiDirectTweetServerResponseModel>> ByTaggedUserId(int taggedUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<DirectTweet> records = await this.DirectTweetRepository.ByTaggedUserId(taggedUserId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86e1278347588f3cbe4c5d7f7be1dd51</Hash>
+    <Hash>e077a1292389ebdd256fd5b360297d77</Hash>
 </Codenesium>*/

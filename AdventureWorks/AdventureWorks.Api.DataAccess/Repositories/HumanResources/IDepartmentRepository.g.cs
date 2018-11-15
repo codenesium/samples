@@ -18,11 +18,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<Department>> All(int limit = int.MaxValue, int offset = 0);
 
 		Task<Department> ByName(string name);
-
-		Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>54eb58b870564fd2e2316228b8416835</Hash>
+    <Hash>4a0e6f2d28d5f1df19853882e32a5917</Hash>
 </Codenesium>*/

@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOProductSubcategory MapModelToBO(
 			int productSubcategoryID,
-			ApiProductSubcategoryRequestModel model);
+			ApiProductSubcategoryServerRequestModel model);
 
-		ApiProductSubcategoryResponseModel MapBOToModel(
+		ApiProductSubcategoryServerResponseModel MapBOToModel(
 			BOProductSubcategory boProductSubcategory);
 
-		List<ApiProductSubcategoryResponseModel> MapBOToModel(
+		List<ApiProductSubcategoryServerResponseModel> MapBOToModel(
 			List<BOProductSubcategory> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b709f80f026d5aead326390d1065d6c</Hash>
+    <Hash>cabcaef5a133a8a4bebb8a655359de89</Hash>
 </Codenesium>*/

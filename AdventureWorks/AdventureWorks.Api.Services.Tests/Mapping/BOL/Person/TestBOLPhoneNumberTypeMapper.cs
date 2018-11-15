@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPhoneNumberTypeMapper();
-			ApiPhoneNumberTypeRequestModel model = new ApiPhoneNumberTypeRequestModel();
+			ApiPhoneNumberTypeServerRequestModel model = new ApiPhoneNumberTypeServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOPhoneNumberType response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPhoneNumberTypeMapper();
 			BOPhoneNumberType bo = new BOPhoneNumberType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiPhoneNumberTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiPhoneNumberTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLPhoneNumberTypeMapper();
 			BOPhoneNumberType bo = new BOPhoneNumberType();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiPhoneNumberTypeResponseModel> response = mapper.MapBOToModel(new List<BOPhoneNumberType>() { { bo } });
+			List<ApiPhoneNumberTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOPhoneNumberType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6488e96abb4083702e4ae6af10e45a9f</Hash>
+    <Hash>e958d0f1b029604445d7dbf1a5a462d3</Hash>
 </Codenesium>*/

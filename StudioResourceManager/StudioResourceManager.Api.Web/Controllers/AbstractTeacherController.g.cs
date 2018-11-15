@@ -20,7 +20,7 @@ namespace StudioResourceManagerNS.Api.Web
 	{
 		protected ITeacherService TeacherService { get; private set; }
 
-		protected IApiTeacherModelMapper TeacherModelMapper { get; private set; }
+		protected IApiTeacherServerModelMapper TeacherModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<AbstractTeacherController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITeacherService teacherService,
-			IApiTeacherModelMapper teacherModelMapper
+			IApiTeacherServerModelMapper teacherModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherResponseModel> response = await this.TeacherService.All(query.Limit, query.Offset);
+			List<ApiTeacherServerResponseModel> response = await this.TeacherService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiTeacherResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiTeacherServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiTeacherResponseModel response = await this.TeacherService.Get(id);
+			ApiTeacherServerResponseModel response = await this.TeacherService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiTeacherServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiTeacherResponseModel> records = new List<ApiTeacherResponseModel>();
+			List<ApiTeacherServerResponseModel> records = new List<ApiTeacherServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
+				CreateResponse<ApiTeacherServerResponseModel> result = await this.TeacherService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StudioResourceManagerNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiTeacherServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiTeacherResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiTeacherServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherServerRequestModel model)
 		{
-			CreateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Create(model);
+			CreateResponse<ApiTeacherServerResponseModel> result = await this.TeacherService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeacherRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeacherServerRequestModel> patch)
 		{
-			ApiTeacherResponseModel record = await this.TeacherService.Get(id);
+			ApiTeacherServerResponseModel record = await this.TeacherService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiTeacherRequestModel model = await this.PatchModel(id, patch);
+				ApiTeacherServerRequestModel model = await this.PatchModel(id, patch) as ApiTeacherServerRequestModel;
 
-				UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, model);
+				UpdateResponse<ApiTeacherServerResponseModel> result = await this.TeacherService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiTeacherServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherServerRequestModel model)
 		{
-			ApiTeacherRequestModel request = await this.PatchModel(id, this.TeacherModelMapper.CreatePatch(model));
+			ApiTeacherServerRequestModel request = await this.PatchModel(id, this.TeacherModelMapper.CreatePatch(model)) as ApiTeacherServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiTeacherResponseModel> result = await this.TeacherService.Update(id, request);
+				UpdateResponse<ApiTeacherServerResponseModel> result = await this.TeacherService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.TeacherService.Delete(id);
@@ -207,9 +217,26 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/RatesByTeacherId")]
+		[Route("byUserId/{userId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherServerResponseModel> response = await this.TeacherService.ByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{teacherId}/Rates")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> RatesByTeacherId(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,16 +245,16 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRateResponseModel> response = await this.TeacherService.RatesByTeacherId(teacherId, query.Limit, query.Offset);
+			List<ApiRateServerResponseModel> response = await this.TeacherService.RatesByTeacherId(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("byTeacherSkillId/{teacherSkillId}")]
+		[Route("byEventId/{eventId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTeacherSkillId(int teacherSkillId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiTeacherServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,12 +262,12 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherResponseModel> response = await this.TeacherService.ByTeacherSkillId(teacherSkillId, query.Limit, query.Offset);
+			List<ApiTeacherServerResponseModel> response = await this.TeacherService.ByEventId(eventId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherRequestModel> patch)
+		private async Task<ApiTeacherServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherServerRequestModel> patch)
 		{
 			var record = await this.TeacherService.Get(id);
 
@@ -250,7 +277,7 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 			else
 			{
-				ApiTeacherRequestModel request = this.TeacherModelMapper.MapResponseToRequest(record);
+				ApiTeacherServerRequestModel request = this.TeacherModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +286,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>72d69cd4a47c5bb9493cf86aee7ec183</Hash>
+    <Hash>1a5027de38e7d64b72d425f4e7920ea5</Hash>
 </Codenesium>*/

@@ -25,22 +25,32 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("saleId")]
-		public int SaleId { get; private set; }
+		public virtual int SaleId { get; private set; }
 
 		[Column("ticketId")]
-		public int TicketId { get; private set; }
+		public virtual int TicketId { get; private set; }
 
 		[ForeignKey("SaleId")]
 		public virtual Sale SaleNavigation { get; private set; }
 
+		public void SetSaleNavigation(Sale item)
+		{
+			this.SaleNavigation = item;
+		}
+
 		[ForeignKey("TicketId")]
 		public virtual Ticket TicketNavigation { get; private set; }
+
+		public void SetTicketNavigation(Ticket item)
+		{
+			this.TicketNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>85941f67c9cde9332e650928cfcc9710</Hash>
+    <Hash>58f2a2d184920edbb7490162e7516004</Hash>
 </Codenesium>*/

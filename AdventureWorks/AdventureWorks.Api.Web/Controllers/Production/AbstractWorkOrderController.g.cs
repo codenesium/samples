@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IWorkOrderService WorkOrderService { get; private set; }
 
-		protected IApiWorkOrderModelMapper WorkOrderModelMapper { get; private set; }
+		protected IApiWorkOrderServerModelMapper WorkOrderModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractWorkOrderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderService workOrderService,
-			IApiWorkOrderModelMapper workOrderModelMapper
+			IApiWorkOrderServerModelMapper workOrderModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.All(query.Limit, query.Offset);
+			List<ApiWorkOrderServerResponseModel> response = await this.WorkOrderService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiWorkOrderResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiWorkOrderServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
+			ApiWorkOrderServerResponseModel response = await this.WorkOrderService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiWorkOrderServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkOrderRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkOrderServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiWorkOrderResponseModel> records = new List<ApiWorkOrderResponseModel>();
+			List<ApiWorkOrderServerResponseModel> records = new List<ApiWorkOrderServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Create(model);
+				CreateResponse<ApiWorkOrderServerResponseModel> result = await this.WorkOrderService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiWorkOrderServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiWorkOrderResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiWorkOrderServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderServerRequestModel model)
 		{
-			CreateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Create(model);
+			CreateResponse<ApiWorkOrderServerResponseModel> result = await this.WorkOrderService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderServerRequestModel> patch)
 		{
-			ApiWorkOrderResponseModel record = await this.WorkOrderService.Get(id);
+			ApiWorkOrderServerResponseModel record = await this.WorkOrderService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiWorkOrderRequestModel model = await this.PatchModel(id, patch);
+				ApiWorkOrderServerRequestModel model = await this.PatchModel(id, patch) as ApiWorkOrderServerRequestModel;
 
-				UpdateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Update(id, model);
+				UpdateResponse<ApiWorkOrderServerResponseModel> result = await this.WorkOrderService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiWorkOrderServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderServerRequestModel model)
 		{
-			ApiWorkOrderRequestModel request = await this.PatchModel(id, this.WorkOrderModelMapper.CreatePatch(model));
+			ApiWorkOrderServerRequestModel request = await this.PatchModel(id, this.WorkOrderModelMapper.CreatePatch(model)) as ApiWorkOrderServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Update(id, request);
+				UpdateResponse<ApiWorkOrderServerResponseModel> result = await this.WorkOrderService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.WorkOrderService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +228,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByProductID(productID, query.Limit, query.Offset);
+			List<ApiWorkOrderServerResponseModel> response = await this.WorkOrderService.ByProductID(productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +236,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byScrapReasonID/{scrapReasonID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByScrapReasonID(short? scrapReasonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,29 +245,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID, query.Limit, query.Offset);
+			List<ApiWorkOrderServerResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("{workOrderID}/WorkOrderRoutingsByWorkOrderID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
-		public async virtual Task<IActionResult> WorkOrderRoutingsByWorkOrderID(int workOrderID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderService.WorkOrderRoutingsByWorkOrderID(workOrderID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiWorkOrderRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderRequestModel> patch)
+		private async Task<ApiWorkOrderServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiWorkOrderServerRequestModel> patch)
 		{
 			var record = await this.WorkOrderService.Get(id);
 
@@ -267,7 +260,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiWorkOrderRequestModel request = this.WorkOrderModelMapper.MapResponseToRequest(record);
+				ApiWorkOrderServerRequestModel request = this.WorkOrderModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -276,5 +269,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>804972e901128e8abc96922fece61352</Hash>
+    <Hash>f8c9d20b1f58d9903a39bb511d202ea7</Hash>
 </Codenesium>*/

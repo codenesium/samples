@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			decimal amount,
-			int clientId,
+			int cutomerId,
 			int id,
 			string note,
 			int petId,
@@ -23,7 +23,7 @@ namespace PetShippingNS.Api.DataAccess
 			int salesPersonId)
 		{
 			this.Amount = amount;
-			this.ClientId = clientId;
+			this.CutomerId = cutomerId;
 			this.Id = id;
 			this.Note = note;
 			this.PetId = petId;
@@ -32,36 +32,38 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("amount")]
-		public decimal Amount { get; private set; }
+		public virtual decimal Amount { get; private set; }
 
-		[Column("clientId")]
-		public int ClientId { get; private set; }
+		[Column("cutomerId")]
+		public virtual int CutomerId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("note")]
-		public string Note { get; private set; }
+		public virtual string Note { get; private set; }
 
 		[Column("petId")]
-		public int PetId { get; private set; }
+		public virtual int PetId { get; private set; }
 
 		[Column("saleDate")]
-		public DateTime SaleDate { get; private set; }
+		public virtual DateTime SaleDate { get; private set; }
 
 		[Column("salesPersonId")]
-		public int SalesPersonId { get; private set; }
-
-		[ForeignKey("ClientId")]
-		public virtual Client ClientNavigation { get; private set; }
+		public virtual int SalesPersonId { get; private set; }
 
 		[ForeignKey("PetId")]
 		public virtual Pet PetNavigation { get; private set; }
+
+		public void SetPetNavigation(Pet item)
+		{
+			this.PetNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>15f18f9c1ae495e79aa28219da31b8e2</Hash>
+    <Hash>439eab2660382a55942216fc5715bb4d</Hash>
 </Codenesium>*/

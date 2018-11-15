@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOVendor MapModelToBO(
 			int businessEntityID,
-			ApiVendorRequestModel model);
+			ApiVendorServerRequestModel model);
 
-		ApiVendorResponseModel MapBOToModel(
+		ApiVendorServerResponseModel MapBOToModel(
 			BOVendor boVendor);
 
-		List<ApiVendorResponseModel> MapBOToModel(
+		List<ApiVendorServerResponseModel> MapBOToModel(
 			List<BOVendor> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>290604c99eda117fc81b1fa76ae8ddf8</Hash>
+    <Hash>886e6dd628a54e32f8718372ea8baf73</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLErrorLogMapper();
-			ApiErrorLogRequestModel model = new ApiErrorLogRequestModel();
+			ApiErrorLogServerRequestModel model = new ApiErrorLogServerRequestModel();
 			model.SetProperties(1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOErrorLog response = mapper.MapModelToBO(1, model);
 
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLErrorLogMapper();
 			BOErrorLog bo = new BOErrorLog();
 			bo.SetProperties(1, 1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiErrorLogResponseModel response = mapper.MapBOToModel(bo);
+			ApiErrorLogServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ErrorLine.Should().Be(1);
 			response.ErrorLogID.Should().Be(1);
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLErrorLogMapper();
 			BOErrorLog bo = new BOErrorLog();
 			bo.SetProperties(1, 1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiErrorLogResponseModel> response = mapper.MapBOToModel(new List<BOErrorLog>() { { bo } });
+			List<ApiErrorLogServerResponseModel> response = mapper.MapBOToModel(new List<BOErrorLog>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1e170fbdcce3c9fe2697ba8a85c2a6e0</Hash>
+    <Hash>3f1e1efc541e27d8fffc0ff59b636ecc</Hash>
 </Codenesium>*/

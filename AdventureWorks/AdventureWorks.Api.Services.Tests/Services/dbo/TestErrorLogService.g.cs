@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-			List<ApiErrorLogResponseModel> response = await service.All();
+			List<ApiErrorLogServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-			ApiErrorLogResponseModel response = await service.Get(default(int));
+			ApiErrorLogServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-			ApiErrorLogResponseModel response = await service.Get(default(int));
+			ApiErrorLogServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IErrorLogRepository>();
-			var model = new ApiErrorLogRequestModel();
+			var model = new ApiErrorLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ErrorLog>())).Returns(Task.FromResult(new ErrorLog()));
 			var service = new ErrorLogService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-			CreateResponse<ApiErrorLogResponseModel> response = await service.Create(model);
+			CreateResponse<ApiErrorLogServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiErrorLogServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ErrorLog>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IErrorLogRepository>();
-			var model = new ApiErrorLogRequestModel();
+			var model = new ApiErrorLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ErrorLog>())).Returns(Task.FromResult(new ErrorLog()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 			var service = new ErrorLogService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
-			UpdateResponse<ApiErrorLogResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiErrorLogServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiErrorLogRequestModel>()));
+			mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiErrorLogServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ErrorLog>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IErrorLogRepository>();
-			var model = new ApiErrorLogRequestModel();
+			var model = new ApiErrorLogServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ErrorLogService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>55895d82307ba39034157ee9003c4a71</Hash>
+    <Hash>a6ae5a9cfa845c72850dadc333ca1d25</Hash>
 </Codenesium>*/

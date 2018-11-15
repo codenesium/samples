@@ -24,21 +24,26 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Column("countryId")]
-		public int CountryId { get; private set; }
+		public virtual int CountryId { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("details")]
-		public string Detail { get; private set; }
+		public virtual string Detail { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[ForeignKey("CountryId")]
 		public virtual Country CountryNavigation { get; private set; }
+
+		public void SetCountryNavigation(Country item)
+		{
+			this.CountryNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>37de71f04bc48049df1bd8cc7aa63e08</Hash>
+    <Hash>5819955975c4e87bba7384a5fff8f5b2</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class LocationController : AbstractLocationController
 	{
 		public LocationController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<LocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILocationService locationService,
-			IApiLocationModelMapper locationModelMapper
+			IApiLocationServerModelMapper locationModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1288f8b55b104593bb411c1e95270d50</Hash>
+    <Hash>e546b5d38f0a09fcda43216787f0c3b3</Hash>
 </Codenesium>*/

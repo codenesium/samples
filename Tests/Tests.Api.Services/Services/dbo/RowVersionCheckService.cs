@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TestsNS.Api.Services
 		public RowVersionCheckService(
 			ILogger<IRowVersionCheckRepository> logger,
 			IRowVersionCheckRepository rowVersionCheckRepository,
-			IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator,
-			IBOLRowVersionCheckMapper bolrowVersionCheckMapper,
-			IDALRowVersionCheckMapper dalrowVersionCheckMapper)
+			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
+			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
+			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base(logger,
 			       rowVersionCheckRepository,
 			       rowVersionCheckModelValidator,
-			       bolrowVersionCheckMapper,
-			       dalrowVersionCheckMapper)
+			       bolRowVersionCheckMapper,
+			       dalRowVersionCheckMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7d934a8c0556d2022ab378b03eabc6c</Hash>
+    <Hash>fd9618d7908670846213725779c47e5a</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<ScrapReason> ByName(string name)
+		public async virtual Task<ScrapReason> ByName(string name)
 		{
 			return await this.Context.Set<ScrapReason>().SingleOrDefaultAsync(x => x.Name == name);
 		}
@@ -90,22 +90,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			Expression<Func<ScrapReason, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<ScrapReason, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<ScrapReason, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ScrapReasonID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
-			}
-			else
-			{
-				return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
-			}
+			return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
 		}
 
 		private async Task<ScrapReason> GetById(short scrapReasonID)
@@ -118,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c85e1af191c7ad5bac85cdea2bb8761e</Hash>
+    <Hash>9789e77ec43830f2573e5e330dd1469d</Hash>
 </Codenesium>*/

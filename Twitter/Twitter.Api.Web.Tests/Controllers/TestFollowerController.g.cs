@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			var record = new ApiFollowerResponseModel();
-			var records = new List<ApiFollowerResponseModel>();
+			var record = new ApiFollowerServerResponseModel();
+			var records = new List<ApiFollowerServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFollowerResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFollowerServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFollowerResponseModel>>(new List<ApiFollowerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFollowerServerResponseModel>>(new List<ApiFollowerServerResponseModel>()));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFollowerResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFollowerServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerServerResponseModel()));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiFollowerResponseModel;
+			var record = (response as OkObjectResult).Value as ApiFollowerServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerServerResponseModel>(null));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFollowerResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFollowerResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFollowerServerResponseModel>.CreateResponse(null as ApiFollowerServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFollowerServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerServerResponseModel>>(mockResponse));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFollowerRequestModel>();
-			records.Add(new ApiFollowerRequestModel());
+			var records = new List<ApiFollowerServerRequestModel>();
+			records.Add(new ApiFollowerServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiFollowerResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiFollowerServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFollowerResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiFollowerServerResponseModel>>(null as ApiFollowerServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerServerResponseModel>>(mockResponse.Object));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFollowerRequestModel>();
-			records.Add(new ApiFollowerRequestModel());
+			var records = new List<ApiFollowerServerRequestModel>();
+			records.Add(new ApiFollowerServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFollowerResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFollowerResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFollowerServerResponseModel>.CreateResponse(null as ApiFollowerServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFollowerServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerServerResponseModel>>(mockResponse));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFollowerRequestModel());
+			IActionResult response = await controller.Create(new ApiFollowerServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFollowerResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFollowerServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFollowerResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiFollowerResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiFollowerServerResponseModel>>(null as ApiFollowerServerResponseModel);
+			var mockRecord = new ApiFollowerServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFollowerServerResponseModel>>(mockResponse.Object));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFollowerRequestModel());
+			IActionResult response = await controller.Create(new ApiFollowerServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFollowerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFollowerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>()))
-			.Callback<int, ApiFollowerRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()))
+			.Callback<int, ApiFollowerServerRequestModel>(
 				(id, model) => model.Blocked.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiFollowerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerResponseModel>(new ApiFollowerResponseModel()));
-			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiFollowerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerServerResponseModel>(new ApiFollowerServerResponseModel()));
+			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFollowerRequestModel>();
+			var patch = new JsonPatchDocument<ApiFollowerServerRequestModel>();
 			patch.Replace(x => x.Blocked, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerServerResponseModel>(null));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFollowerRequestModel>();
+			var patch = new JsonPatchDocument<ApiFollowerServerRequestModel>();
 			patch.Replace(x => x.Blocked, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFollowerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFollowerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerResponseModel()));
-			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerServerResponseModel()));
+			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFollowerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFollowerServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFollowerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFollowerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerResponseModel()));
-			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFollowerServerResponseModel()));
+			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFollowerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFollowerServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFollowerResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFollowerServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerResponseModel>(null));
-			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFollowerServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFollowerServerResponseModel>(null));
+			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFollowerServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFollowerRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFollowerServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<IFollowerService> ServiceMock { get; set; } = new Mock<IFollowerService>();
 
-		public Mock<IApiFollowerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFollowerModelMapper>();
+		public Mock<IApiFollowerServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFollowerServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6e346f274744aea7402461419b7f404</Hash>
+    <Hash>f7b6a60bf425cadc162024a4377bb42a</Hash>
 </Codenesium>*/

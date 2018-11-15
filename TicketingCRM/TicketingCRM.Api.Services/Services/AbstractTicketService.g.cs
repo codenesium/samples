@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		protected ITicketRepository TicketRepository { get; private set; }
 
-		protected IApiTicketRequestModelValidator TicketModelValidator { get; private set; }
+		protected IApiTicketServerRequestModelValidator TicketModelValidator { get; private set; }
 
 		protected IBOLTicketMapper BolTicketMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TicketingCRMNS.Api.Services
 		public AbstractTicketService(
 			ILogger logger,
 			ITicketRepository ticketRepository,
-			IApiTicketRequestModelValidator ticketModelValidator,
+			IApiTicketServerRequestModelValidator ticketModelValidator,
 			IBOLTicketMapper bolTicketMapper,
 			IDALTicketMapper dalTicketMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TicketingCRMNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTicketResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTicketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TicketRepository.All(limit, offset);
 
 			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTicketResponseModel> Get(int id)
+		public virtual async Task<ApiTicketServerResponseModel> Get(int id)
 		{
 			var record = await this.TicketRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TicketingCRMNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTicketResponseModel>> Create(
-			ApiTicketRequestModel model)
+		public virtual async Task<CreateResponse<ApiTicketServerResponseModel>> Create(
+			ApiTicketServerRequestModel model)
 		{
-			CreateResponse<ApiTicketResponseModel> response = new CreateResponse<ApiTicketResponseModel>(await this.TicketModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTicketServerResponseModel> response = ValidationResponseFactory<ApiTicketServerResponseModel>.CreateResponse(await this.TicketModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTicketMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTicketResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTicketServerResponseModel>> Update(
 			int id,
-			ApiTicketRequestModel model)
+			ApiTicketServerRequestModel model)
 		{
 			var validationResult = await this.TicketModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.TicketRepository.Get(id);
 
-				return new UpdateResponse<ApiTicketResponseModel>(this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTicketServerResponseModel>.UpdateResponse(this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTicketResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTicketServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TicketModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TicketModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TicketRepository.Delete(id);
@@ -108,7 +105,7 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiTicketResponseModel>> ByTicketStatusId(int ticketStatusId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiTicketServerResponseModel>> ByTicketStatusId(int ticketStatusId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Ticket> records = await this.TicketRepository.ByTicketStatusId(ticketStatusId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>884bfa2aa436f9366911a11d6aca2e24</Hash>
+    <Hash>babd4a79c5d6ee4a86b798c7b3a60bf6</Hash>
 </Codenesium>*/

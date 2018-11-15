@@ -18,6 +18,7 @@ namespace TestsNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class VPersonController : AbstractVPersonController
 	{
 		public VPersonController(
@@ -25,7 +26,7 @@ namespace TestsNS.Api.Web
 			ILogger<VPersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVPersonService vPersonService,
-			IApiVPersonModelMapper vPersonModelMapper
+			IApiVPersonServerModelMapper vPersonModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1185222aa7e06813e8d104385e2d2fc1</Hash>
+    <Hash>36d715184ab97ad1069fb5420445f643</Hash>
 </Codenesium>*/

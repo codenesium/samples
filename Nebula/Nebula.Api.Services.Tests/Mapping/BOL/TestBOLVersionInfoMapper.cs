@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLVersionInfoMapper();
-			ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
+			ApiVersionInfoServerRequestModel model = new ApiVersionInfoServerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOVersionInfo response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLVersionInfoMapper();
 			BOVersionInfo bo = new BOVersionInfo();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiVersionInfoResponseModel response = mapper.MapBOToModel(bo);
+			ApiVersionInfoServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Description.Should().Be("A");
@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLVersionInfoMapper();
 			BOVersionInfo bo = new BOVersionInfo();
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiVersionInfoResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
+			List<ApiVersionInfoServerResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b9daa6c7557cadd3caec4c15bba84a42</Hash>
+    <Hash>fc307c940020ae5a4138c93957154e28</Hash>
 </Codenesium>*/

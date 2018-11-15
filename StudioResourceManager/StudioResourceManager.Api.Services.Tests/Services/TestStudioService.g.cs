@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
-			List<ApiStudioResponseModel> response = await service.All();
+			List<ApiStudioServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
-			ApiStudioResponseModel response = await service.Get(default(int));
+			ApiStudioServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
-			ApiStudioResponseModel response = await service.Get(default(int));
+			ApiStudioServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
-			var model = new ApiStudioRequestModel();
+			var model = new ApiStudioServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Studio>())).Returns(Task.FromResult(new Studio()));
 			var service = new StudioService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
-			CreateResponse<ApiStudioResponseModel> response = await service.Create(model);
+			CreateResponse<ApiStudioServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudioRequestModel>()));
+			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudioServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Studio>()));
 		}
 
@@ -95,7 +95,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
-			var model = new ApiStudioRequestModel();
+			var model = new ApiStudioServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Studio>())).Returns(Task.FromResult(new Studio()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
 			var service = new StudioService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock);
 
-			UpdateResponse<ApiStudioResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiStudioServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudioRequestModel>()));
+			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Studio>()));
 		}
 
@@ -115,7 +115,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
-			var model = new ApiStudioRequestModel();
+			var model = new ApiStudioServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new StudioService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>806a0dfa2cc7b17a7048e16312b517f8</Hash>
+    <Hash>29ba75201af442f4777f11e55f6164c8</Hash>
 </Codenesium>*/

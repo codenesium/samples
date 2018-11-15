@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
@@ -16,7 +11,7 @@ namespace FileServiceNS.Api.Services
 	{
 		protected IFileRepository FileRepository { get; private set; }
 
-		protected IApiFileRequestModelValidator FileModelValidator { get; private set; }
+		protected IApiFileServerRequestModelValidator FileModelValidator { get; private set; }
 
 		protected IBOLFileMapper BolFileMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace FileServiceNS.Api.Services
 		public AbstractFileService(
 			ILogger logger,
 			IFileRepository fileRepository,
-			IApiFileRequestModelValidator fileModelValidator,
+			IApiFileServerRequestModelValidator fileModelValidator,
 			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace FileServiceNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiFileResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFileServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.FileRepository.All(limit, offset);
 
 			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiFileResponseModel> Get(int id)
+		public virtual async Task<ApiFileServerResponseModel> Get(int id)
 		{
 			var record = await this.FileRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace FileServiceNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiFileResponseModel>> Create(
-			ApiFileRequestModel model)
+		public virtual async Task<CreateResponse<ApiFileServerResponseModel>> Create(
+			ApiFileServerRequestModel model)
 		{
-			CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.FileModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFileServerResponseModel> response = ValidationResponseFactory<ApiFileServerResponseModel>.CreateResponse(await this.FileModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolFileMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace FileServiceNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiFileResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiFileServerResponseModel>> Update(
 			int id,
-			ApiFileRequestModel model)
+			ApiFileServerRequestModel model)
 		{
 			var validationResult = await this.FileModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace FileServiceNS.Api.Services
 
 				var record = await this.FileRepository.Get(id);
 
-				return new UpdateResponse<ApiFileResponseModel>(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiFileServerResponseModel>.UpdateResponse(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiFileResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiFileServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.FileModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.FileModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.FileRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>917e4c7942d29da37dc885bf1e8282d8</Hash>
+    <Hash>ac334564f31ed59ab9593052d66ed885</Hash>
 </Codenesium>*/

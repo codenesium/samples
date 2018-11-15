@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IStoreService StoreService { get; private set; }
 
-		protected IApiStoreModelMapper StoreModelMapper { get; private set; }
+		protected IApiStoreServerModelMapper StoreModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractStoreController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStoreService storeService,
-			IApiStoreModelMapper storeModelMapper
+			IApiStoreServerModelMapper storeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStoreResponseModel> response = await this.StoreService.All(query.Limit, query.Offset);
+			List<ApiStoreServerResponseModel> response = await this.StoreService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiStoreServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiStoreResponseModel response = await this.StoreService.Get(id);
+			ApiStoreServerResponseModel response = await this.StoreService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiStoreServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStoreRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStoreServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiStoreResponseModel> records = new List<ApiStoreResponseModel>();
+			List<ApiStoreServerResponseModel> records = new List<ApiStoreServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiStoreResponseModel> result = await this.StoreService.Create(model);
+				CreateResponse<ApiStoreServerResponseModel> result = await this.StoreService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiStoreServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiStoreResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiStoreServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStoreRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiStoreServerRequestModel model)
 		{
-			CreateResponse<ApiStoreResponseModel> result = await this.StoreService.Create(model);
+			CreateResponse<ApiStoreServerResponseModel> result = await this.StoreService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStoreServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStoreRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStoreServerRequestModel> patch)
 		{
-			ApiStoreResponseModel record = await this.StoreService.Get(id);
+			ApiStoreServerResponseModel record = await this.StoreService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiStoreRequestModel model = await this.PatchModel(id, patch);
+				ApiStoreServerRequestModel model = await this.PatchModel(id, patch) as ApiStoreServerRequestModel;
 
-				UpdateResponse<ApiStoreResponseModel> result = await this.StoreService.Update(id, model);
+				UpdateResponse<ApiStoreServerResponseModel> result = await this.StoreService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiStoreServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreServerRequestModel model)
 		{
-			ApiStoreRequestModel request = await this.PatchModel(id, this.StoreModelMapper.CreatePatch(model));
+			ApiStoreServerRequestModel request = await this.PatchModel(id, this.StoreModelMapper.CreatePatch(model)) as ApiStoreServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiStoreResponseModel> result = await this.StoreService.Update(id, request);
+				UpdateResponse<ApiStoreServerResponseModel> result = await this.StoreService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.StoreService.Delete(id);
@@ -207,9 +217,28 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byRowguid/{rowguid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiStoreServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiStoreServerResponseModel response = await this.StoreService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("bySalesPersonID/{salesPersonID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> BySalesPersonID(int? salesPersonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,7 +247,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStoreResponseModel> response = await this.StoreService.BySalesPersonID(salesPersonID, query.Limit, query.Offset);
+			List<ApiStoreServerResponseModel> response = await this.StoreService.BySalesPersonID(salesPersonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -226,7 +255,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byDemographics/{demographic}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByDemographic(string demographic, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,15 +264,15 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStoreResponseModel> response = await this.StoreService.ByDemographic(demographic, query.Limit, query.Offset);
+			List<ApiStoreServerResponseModel> response = await this.StoreService.ByDemographic(demographic, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{storeID}/CustomersByStoreID")]
+		[Route("{storeID}/Customers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> CustomersByStoreID(int storeID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -252,12 +281,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCustomerResponseModel> response = await this.StoreService.CustomersByStoreID(storeID, query.Limit, query.Offset);
+			List<ApiCustomerServerResponseModel> response = await this.StoreService.CustomersByStoreID(storeID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiStoreRequestModel> PatchModel(int id, JsonPatchDocument<ApiStoreRequestModel> patch)
+		private async Task<ApiStoreServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiStoreServerRequestModel> patch)
 		{
 			var record = await this.StoreService.Get(id);
 
@@ -267,7 +296,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiStoreRequestModel request = this.StoreModelMapper.MapResponseToRequest(record);
+				ApiStoreServerRequestModel request = this.StoreModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -276,5 +305,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aaefa873612f46016eec63864244258f</Hash>
+    <Hash>a92c21b74bfd8ca75a1957efdbdb08d9</Hash>
 </Codenesium>*/

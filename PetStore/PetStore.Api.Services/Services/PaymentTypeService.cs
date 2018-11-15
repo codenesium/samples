@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
@@ -16,16 +9,16 @@ namespace PetStoreNS.Api.Services
 		public PaymentTypeService(
 			ILogger<IPaymentTypeRepository> logger,
 			IPaymentTypeRepository paymentTypeRepository,
-			IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
-			IBOLPaymentTypeMapper bolpaymentTypeMapper,
-			IDALPaymentTypeMapper dalpaymentTypeMapper,
+			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
+			IBOLPaymentTypeMapper bolPaymentTypeMapper,
+			IDALPaymentTypeMapper dalPaymentTypeMapper,
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       paymentTypeRepository,
 			       paymentTypeModelValidator,
-			       bolpaymentTypeMapper,
-			       dalpaymentTypeMapper,
+			       bolPaymentTypeMapper,
+			       dalPaymentTypeMapper,
 			       bolSaleMapper,
 			       dalSaleMapper)
 		{
@@ -34,5 +27,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70ae55409b75b5b935c3fc9d47d0f6c1</Hash>
+    <Hash>87a14019e19c10b3f09c1d3057fe166c</Hash>
 </Codenesium>*/

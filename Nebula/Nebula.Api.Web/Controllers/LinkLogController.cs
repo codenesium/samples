@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class LinkLogController : AbstractLinkLogController
 	{
 		public LinkLogController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<LinkLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkLogService linkLogService,
-			IApiLinkLogModelMapper linkLogModelMapper
+			IApiLinkLogServerModelMapper linkLogModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b83ed373f154071b3030f6064bfd17aa</Hash>
+    <Hash>8ac3d07f66b4623fcfa6699f6fbfebc0</Hash>
 </Codenesium>*/

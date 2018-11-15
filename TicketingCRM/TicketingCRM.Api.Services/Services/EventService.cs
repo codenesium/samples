@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TicketingCRMNS.Api.Services
 		public EventService(
 			ILogger<IEventRepository> logger,
 			IEventRepository eventRepository,
-			IApiEventRequestModelValidator eventModelValidator,
-			IBOLEventMapper boleventMapper,
-			IDALEventMapper daleventMapper)
+			IApiEventServerRequestModelValidator eventModelValidator,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       eventRepository,
 			       eventModelValidator,
-			       boleventMapper,
-			       daleventMapper)
+			       bolEventMapper,
+			       dalEventMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>87594012df6c7af40a9c07bc2c1b2abd</Hash>
+    <Hash>e3a8acc6a010f079d9519ac6953f9ae5</Hash>
 </Codenesium>*/

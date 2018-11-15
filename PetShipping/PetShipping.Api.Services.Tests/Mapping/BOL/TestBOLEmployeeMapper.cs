@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLEmployeeMapper();
-			ApiEmployeeRequestModel model = new ApiEmployeeRequestModel();
+			ApiEmployeeServerRequestModel model = new ApiEmployeeServerRequestModel();
 			model.SetProperties("A", true, true, "A");
 			BOEmployee response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLEmployeeMapper();
 			BOEmployee bo = new BOEmployee();
 			bo.SetProperties(1, "A", true, true, "A");
-			ApiEmployeeResponseModel response = mapper.MapBOToModel(bo);
+			ApiEmployeeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.FirstName.Should().Be("A");
 			response.Id.Should().Be(1);
@@ -48,7 +48,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLEmployeeMapper();
 			BOEmployee bo = new BOEmployee();
 			bo.SetProperties(1, "A", true, true, "A");
-			List<ApiEmployeeResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
+			List<ApiEmployeeServerResponseModel> response = mapper.MapBOToModel(new List<BOEmployee>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f944626a3966754dbd3a4a558dbb658a</Hash>
+    <Hash>da31adff86f19e5e1895004fa8629c8e</Hash>
 </Codenesium>*/

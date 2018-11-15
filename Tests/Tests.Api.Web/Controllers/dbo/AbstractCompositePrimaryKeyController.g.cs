@@ -20,7 +20,7 @@ namespace TestsNS.Api.Web
 	{
 		protected ICompositePrimaryKeyService CompositePrimaryKeyService { get; private set; }
 
-		protected IApiCompositePrimaryKeyModelMapper CompositePrimaryKeyModelMapper { get; private set; }
+		protected IApiCompositePrimaryKeyServerModelMapper CompositePrimaryKeyModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace TestsNS.Api.Web
 			ILogger<AbstractCompositePrimaryKeyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICompositePrimaryKeyService compositePrimaryKeyService,
-			IApiCompositePrimaryKeyModelMapper compositePrimaryKeyModelMapper
+			IApiCompositePrimaryKeyServerModelMapper compositePrimaryKeyModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCompositePrimaryKeyResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiCompositePrimaryKeyServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace TestsNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCompositePrimaryKeyResponseModel> response = await this.CompositePrimaryKeyService.All(query.Limit, query.Offset);
+			List<ApiCompositePrimaryKeyServerResponseModel> response = await this.CompositePrimaryKeyService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace TestsNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCompositePrimaryKeyResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiCompositePrimaryKeyServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiCompositePrimaryKeyResponseModel response = await this.CompositePrimaryKeyService.Get(id);
+			ApiCompositePrimaryKeyServerResponseModel response = await this.CompositePrimaryKeyService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace TestsNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCompositePrimaryKeyResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiCompositePrimaryKeyServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCompositePrimaryKeyRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCompositePrimaryKeyServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiCompositePrimaryKeyResponseModel> records = new List<ApiCompositePrimaryKeyResponseModel>();
+			List<ApiCompositePrimaryKeyServerResponseModel> records = new List<ApiCompositePrimaryKeyServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiCompositePrimaryKeyResponseModel> result = await this.CompositePrimaryKeyService.Create(model);
+				CreateResponse<ApiCompositePrimaryKeyServerResponseModel> result = await this.CompositePrimaryKeyService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace TestsNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiCompositePrimaryKeyServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiCompositePrimaryKeyResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiCompositePrimaryKeyServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCompositePrimaryKeyRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiCompositePrimaryKeyServerRequestModel model)
 		{
-			CreateResponse<ApiCompositePrimaryKeyResponseModel> result = await this.CompositePrimaryKeyService.Create(model);
+			CreateResponse<ApiCompositePrimaryKeyServerResponseModel> result = await this.CompositePrimaryKeyService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace TestsNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCompositePrimaryKeyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCompositePrimaryKeyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCompositePrimaryKeyRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCompositePrimaryKeyServerRequestModel> patch)
 		{
-			ApiCompositePrimaryKeyResponseModel record = await this.CompositePrimaryKeyService.Get(id);
+			ApiCompositePrimaryKeyServerResponseModel record = await this.CompositePrimaryKeyService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiCompositePrimaryKeyRequestModel model = await this.PatchModel(id, patch);
+				ApiCompositePrimaryKeyServerRequestModel model = await this.PatchModel(id, patch) as ApiCompositePrimaryKeyServerRequestModel;
 
-				UpdateResponse<ApiCompositePrimaryKeyResponseModel> result = await this.CompositePrimaryKeyService.Update(id, model);
+				UpdateResponse<ApiCompositePrimaryKeyServerResponseModel> result = await this.CompositePrimaryKeyService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace TestsNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiCompositePrimaryKeyResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiCompositePrimaryKeyServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCompositePrimaryKeyRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCompositePrimaryKeyServerRequestModel model)
 		{
-			ApiCompositePrimaryKeyRequestModel request = await this.PatchModel(id, this.CompositePrimaryKeyModelMapper.CreatePatch(model));
+			ApiCompositePrimaryKeyServerRequestModel request = await this.PatchModel(id, this.CompositePrimaryKeyModelMapper.CreatePatch(model)) as ApiCompositePrimaryKeyServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiCompositePrimaryKeyResponseModel> result = await this.CompositePrimaryKeyService.Update(id, request);
+				UpdateResponse<ApiCompositePrimaryKeyServerResponseModel> result = await this.CompositePrimaryKeyService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace TestsNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.CompositePrimaryKeyService.Delete(id);
@@ -206,7 +216,7 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		private async Task<ApiCompositePrimaryKeyRequestModel> PatchModel(int id, JsonPatchDocument<ApiCompositePrimaryKeyRequestModel> patch)
+		private async Task<ApiCompositePrimaryKeyServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiCompositePrimaryKeyServerRequestModel> patch)
 		{
 			var record = await this.CompositePrimaryKeyService.Get(id);
 
@@ -216,7 +226,7 @@ namespace TestsNS.Api.Web
 			}
 			else
 			{
-				ApiCompositePrimaryKeyRequestModel request = this.CompositePrimaryKeyModelMapper.MapResponseToRequest(record);
+				ApiCompositePrimaryKeyServerRequestModel request = this.CompositePrimaryKeyModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed61fbd626af5621ac1315654f40b02a</Hash>
+    <Hash>522211ff6fc57c0866061188b0760e91</Hash>
 </Codenesium>*/

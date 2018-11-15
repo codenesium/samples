@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SpaceFeatureController : AbstractSpaceFeatureController
 	{
 		public SpaceFeatureController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<SpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpaceFeatureService spaceFeatureService,
-			IApiSpaceFeatureModelMapper spaceFeatureModelMapper
+			IApiSpaceFeatureServerModelMapper spaceFeatureModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>755cfc000a0623fc4a195c62486ca490</Hash>
+    <Hash>e604e52629bb3347960398d2b7e68797</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			var record = new ApiLocationResponseModel();
-			var records = new List<ApiLocationResponseModel>();
+			var record = new ApiLocationServerResponseModel();
+			var records = new List<ApiLocationServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLocationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLocationServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLocationResponseModel>>(new List<ApiLocationResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiLocationServerResponseModel>>(new List<ApiLocationServerResponseModel>()));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiLocationResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiLocationServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationServerResponseModel()));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TwitterNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiLocationResponseModel;
+			var record = (response as OkObjectResult).Value as ApiLocationServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationServerResponseModel>(null));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLocationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLocationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLocationServerResponseModel>.CreateResponse(null as ApiLocationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLocationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationServerResponseModel>>(mockResponse));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLocationRequestModel>();
-			records.Add(new ApiLocationRequestModel());
+			var records = new List<ApiLocationServerRequestModel>();
+			records.Add(new ApiLocationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiLocationResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiLocationServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLocationResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiLocationServerResponseModel>>(null as ApiLocationServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationServerResponseModel>>(mockResponse.Object));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiLocationRequestModel>();
-			records.Add(new ApiLocationRequestModel());
+			var records = new List<ApiLocationServerRequestModel>();
+			records.Add(new ApiLocationServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiLocationResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiLocationResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiLocationServerResponseModel>.CreateResponse(null as ApiLocationServerResponseModel);
+
+			mockResponse.SetRecord(new ApiLocationServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationServerResponseModel>>(mockResponse));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLocationRequestModel());
+			IActionResult response = await controller.Create(new ApiLocationServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLocationResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiLocationServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiLocationResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiLocationResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiLocationServerResponseModel>>(null as ApiLocationServerResponseModel);
+			var mockRecord = new ApiLocationServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiLocationServerResponseModel>>(mockResponse.Object));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiLocationRequestModel());
+			IActionResult response = await controller.Create(new ApiLocationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLocationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLocationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>()))
-			.Callback<int, ApiLocationRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()))
+			.Callback<int, ApiLocationServerRequestModel>(
 				(id, model) => model.GpsLat.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiLocationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationResponseModel>(new ApiLocationResponseModel()));
-			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiLocationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationServerResponseModel>(new ApiLocationServerResponseModel()));
+			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLocationRequestModel>();
+			var patch = new JsonPatchDocument<ApiLocationServerRequestModel>();
 			patch.Replace(x => x.GpsLat, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TwitterNS.Api.Web.Tests
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationServerResponseModel>(null));
 			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiLocationRequestModel>();
+			var patch = new JsonPatchDocument<ApiLocationServerRequestModel>();
 			patch.Replace(x => x.GpsLat, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TwitterNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLocationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLocationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
-			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationServerResponseModel()));
+			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLocationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLocationServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLocationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLocationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationResponseModel()));
-			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiLocationServerResponseModel()));
+			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLocationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLocationServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			LocationControllerMockFacade mock = new LocationControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiLocationResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiLocationServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationResponseModel>(null));
-			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiLocationServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiLocationServerResponseModel>(null));
+			LocationController controller = new LocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiLocationServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiLocationRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiLocationServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TwitterNS.Api.Web.Tests
 
 		public Mock<ILocationService> ServiceMock { get; set; } = new Mock<ILocationService>();
 
-		public Mock<IApiLocationModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLocationModelMapper>();
+		public Mock<IApiLocationServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiLocationServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>23dc80a6b32727e049495b2d045ee819</Hash>
+    <Hash>c0db93ae8218d4180753b6c014b39068</Hash>
 </Codenesium>*/

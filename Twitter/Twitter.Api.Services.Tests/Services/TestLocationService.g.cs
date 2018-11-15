@@ -35,7 +35,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiLocationResponseModel> response = await service.All();
+			List<ApiLocationServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -57,7 +57,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			ApiLocationResponseModel response = await service.Get(default(int));
+			ApiLocationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +78,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			ApiLocationResponseModel response = await service.Get(default(int));
+			ApiLocationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -88,7 +88,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
-			var model = new ApiLocationRequestModel();
+			var model = new ApiLocationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -100,10 +100,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			CreateResponse<ApiLocationResponseModel> response = await service.Create(model);
+			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationRequestModel>()));
+			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Location>()));
 		}
 
@@ -111,7 +111,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
-			var model = new ApiLocationRequestModel();
+			var model = new ApiLocationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Location()));
 			var service = new LocationService(mock.LoggerMock.Object,
@@ -124,10 +124,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			UpdateResponse<ApiLocationResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>()));
+			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Location>()));
 		}
 
@@ -135,7 +135,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
-			var model = new ApiLocationRequestModel();
+			var model = new ApiLocationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
@@ -171,7 +171,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.TweetsByLocationId(default(int));
+			List<ApiTweetServerResponseModel> response = await service.TweetsByLocationId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -192,7 +192,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.TweetsByLocationId(default(int));
+			List<ApiTweetServerResponseModel> response = await service.TweetsByLocationId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -215,7 +215,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiUserResponseModel> response = await service.UsersByLocationLocationId(default(int));
+			List<ApiUserServerResponseModel> response = await service.UsersByLocationLocationId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -236,7 +236,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiUserResponseModel> response = await service.UsersByLocationLocationId(default(int));
+			List<ApiUserServerResponseModel> response = await service.UsersByLocationLocationId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -245,5 +245,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>43a275d8769823afea84d1966a3fa87c</Hash>
+    <Hash>df0d6f4a0a0abb805d2e9fdabc7b88e0</Hash>
 </Codenesium>*/

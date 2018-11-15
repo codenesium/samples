@@ -76,35 +76,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Illustration>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.ProductModelIllustrations
-			              join illustrations in this.Context.Illustrations on
-			              refTable.IllustrationID equals illustrations.IllustrationID
-			              where refTable.ProductModelID == productModelID
-			              select illustrations).Skip(offset).Take(limit).ToListAsync();
-		}
-
 		protected async Task<List<Illustration>> Where(
 			Expression<Func<Illustration, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Illustration, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Illustration, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.IllustrationID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Illustration>();
-			}
-			else
-			{
-				return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Illustration>();
-			}
+			return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Illustration>();
 		}
 
 		private async Task<Illustration> GetById(int illustrationID)
@@ -117,5 +100,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f72ebad8f5550580c1cbae6c5ebbc2d6</Hash>
+    <Hash>e76b613df2078fda21e5d3b532e294e2</Hash>
 </Codenesium>*/

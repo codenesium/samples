@@ -24,8 +24,8 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			var record = new ApiVoteTypeResponseModel();
-			var records = new List<ApiVoteTypeResponseModel>();
+			var record = new ApiVoteTypeServerResponseModel();
+			var records = new List<ApiVoteTypeServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVoteTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVoteTypeServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVoteTypeResponseModel>>(new List<ApiVoteTypeResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiVoteTypeServerResponseModel>>(new List<ApiVoteTypeServerResponseModel>()));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiVoteTypeResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiVoteTypeServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeServerResponseModel()));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiVoteTypeResponseModel;
+			var record = (response as OkObjectResult).Value as ApiVoteTypeServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeServerResponseModel>(null));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVoteTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVoteTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVoteTypeServerResponseModel>.CreateResponse(null as ApiVoteTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVoteTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeServerResponseModel>>(mockResponse));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVoteTypeRequestModel>();
-			records.Add(new ApiVoteTypeRequestModel());
+			var records = new List<ApiVoteTypeServerRequestModel>();
+			records.Add(new ApiVoteTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiVoteTypeResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiVoteTypeServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVoteTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiVoteTypeServerResponseModel>>(null as ApiVoteTypeServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeServerResponseModel>>(mockResponse.Object));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiVoteTypeRequestModel>();
-			records.Add(new ApiVoteTypeRequestModel());
+			var records = new List<ApiVoteTypeServerRequestModel>();
+			records.Add(new ApiVoteTypeServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiVoteTypeResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiVoteTypeResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiVoteTypeServerResponseModel>.CreateResponse(null as ApiVoteTypeServerResponseModel);
+
+			mockResponse.SetRecord(new ApiVoteTypeServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeServerResponseModel>>(mockResponse));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVoteTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiVoteTypeServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVoteTypeResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiVoteTypeServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiVoteTypeResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiVoteTypeResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiVoteTypeServerResponseModel>>(null as ApiVoteTypeServerResponseModel);
+			var mockRecord = new ApiVoteTypeServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiVoteTypeServerResponseModel>>(mockResponse.Object));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiVoteTypeRequestModel());
+			IActionResult response = await controller.Create(new ApiVoteTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVoteTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVoteTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>()))
-			.Callback<int, ApiVoteTypeRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()))
+			.Callback<int, ApiVoteTypeServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiVoteTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeResponseModel>(new ApiVoteTypeResponseModel()));
-			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiVoteTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeServerResponseModel>(new ApiVoteTypeServerResponseModel()));
+			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVoteTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiVoteTypeServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace StackOverflowNS.Api.Web.Tests
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeServerResponseModel>(null));
 			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiVoteTypeRequestModel>();
+			var patch = new JsonPatchDocument<ApiVoteTypeServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace StackOverflowNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVoteTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVoteTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeResponseModel()));
-			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeServerResponseModel()));
+			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVoteTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVoteTypeServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVoteTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVoteTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeResponseModel()));
-			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiVoteTypeServerResponseModel()));
+			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVoteTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVoteTypeServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			VoteTypeControllerMockFacade mock = new VoteTypeControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiVoteTypeResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiVoteTypeServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeResponseModel>(null));
-			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiVoteTypeServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiVoteTypeServerResponseModel>(null));
+			VoteTypeController controller = new VoteTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiVoteTypeServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiVoteTypeRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiVoteTypeServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace StackOverflowNS.Api.Web.Tests
 
 		public Mock<IVoteTypeService> ServiceMock { get; set; } = new Mock<IVoteTypeService>();
 
-		public Mock<IApiVoteTypeModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVoteTypeModelMapper>();
+		public Mock<IApiVoteTypeServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiVoteTypeServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>8da4ff5e7ad7b69e4fc6eefce9c28687</Hash>
+    <Hash>b70545438e0ed828a54bde466768e7b5</Hash>
 </Codenesium>*/

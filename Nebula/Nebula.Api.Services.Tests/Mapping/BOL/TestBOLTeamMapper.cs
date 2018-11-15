@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLTeamMapper();
-			ApiTeamRequestModel model = new ApiTeamRequestModel();
+			ApiTeamServerRequestModel model = new ApiTeamServerRequestModel();
 			model.SetProperties("A", 1);
 			BOTeam response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLTeamMapper();
 			BOTeam bo = new BOTeam();
 			bo.SetProperties(1, "A", 1);
-			ApiTeamResponseModel response = mapper.MapBOToModel(bo);
+			ApiTeamServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mapper = new BOLTeamMapper();
 			BOTeam bo = new BOTeam();
 			bo.SetProperties(1, "A", 1);
-			List<ApiTeamResponseModel> response = mapper.MapBOToModel(new List<BOTeam>() { { bo } });
+			List<ApiTeamServerResponseModel> response = mapper.MapBOToModel(new List<BOTeam>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>70de275c2d242378eec35b7b42ce479b</Hash>
+    <Hash>ec4789497834ee304730316bf058c653</Hash>
 </Codenesium>*/

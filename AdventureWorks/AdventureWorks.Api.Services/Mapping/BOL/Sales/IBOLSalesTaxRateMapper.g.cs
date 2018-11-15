@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOSalesTaxRate MapModelToBO(
 			int salesTaxRateID,
-			ApiSalesTaxRateRequestModel model);
+			ApiSalesTaxRateServerRequestModel model);
 
-		ApiSalesTaxRateResponseModel MapBOToModel(
+		ApiSalesTaxRateServerResponseModel MapBOToModel(
 			BOSalesTaxRate boSalesTaxRate);
 
-		List<ApiSalesTaxRateResponseModel> MapBOToModel(
+		List<ApiSalesTaxRateServerResponseModel> MapBOToModel(
 			List<BOSalesTaxRate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad3bf29dfc56bbd6d45c0e14c7c64523</Hash>
+    <Hash>3a44682daf501166d8f31ff131d78349</Hash>
 </Codenesium>*/

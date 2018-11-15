@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSchemaAPersonMapper();
-			ApiSchemaAPersonRequestModel model = new ApiSchemaAPersonRequestModel();
+			ApiSchemaAPersonServerRequestModel model = new ApiSchemaAPersonServerRequestModel();
 			model.SetProperties("A");
 			BOSchemaAPerson response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLSchemaAPersonMapper();
 			BOSchemaAPerson bo = new BOSchemaAPerson();
 			bo.SetProperties(1, "A");
-			ApiSchemaAPersonResponseModel response = mapper.MapBOToModel(bo);
+			ApiSchemaAPersonServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLSchemaAPersonMapper();
 			BOSchemaAPerson bo = new BOSchemaAPerson();
 			bo.SetProperties(1, "A");
-			List<ApiSchemaAPersonResponseModel> response = mapper.MapBOToModel(new List<BOSchemaAPerson>() { { bo } });
+			List<ApiSchemaAPersonServerResponseModel> response = mapper.MapBOToModel(new List<BOSchemaAPerson>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e85e4f6ac29a34d6a78b94e4c1661403</Hash>
+    <Hash>69b30d21b8787bdfa77caed0f31a1c95</Hash>
 </Codenesium>*/

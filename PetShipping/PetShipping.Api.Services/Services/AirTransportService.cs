@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace PetShippingNS.Api.Services
 		public AirTransportService(
 			ILogger<IAirTransportRepository> logger,
 			IAirTransportRepository airTransportRepository,
-			IApiAirTransportRequestModelValidator airTransportModelValidator,
-			IBOLAirTransportMapper bolairTransportMapper,
-			IDALAirTransportMapper dalairTransportMapper)
+			IApiAirTransportServerRequestModelValidator airTransportModelValidator,
+			IBOLAirTransportMapper bolAirTransportMapper,
+			IDALAirTransportMapper dalAirTransportMapper)
 			: base(logger,
 			       airTransportRepository,
 			       airTransportModelValidator,
-			       bolairTransportMapper,
-			       dalairTransportMapper)
+			       bolAirTransportMapper,
+			       dalAirTransportMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a712eeede8c80e69cad274b2765a901</Hash>
+    <Hash>e2e0d16d08feb576d45168fb1f382a83</Hash>
 </Codenesium>*/

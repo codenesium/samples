@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public JobCandidateService(
 			ILogger<IJobCandidateRepository> logger,
 			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
-			IBOLJobCandidateMapper boljobCandidateMapper,
-			IDALJobCandidateMapper daljobCandidateMapper)
+			IApiJobCandidateServerRequestModelValidator jobCandidateModelValidator,
+			IBOLJobCandidateMapper bolJobCandidateMapper,
+			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base(logger,
 			       jobCandidateRepository,
 			       jobCandidateModelValidator,
-			       boljobCandidateMapper,
-			       daljobCandidateMapper)
+			       bolJobCandidateMapper,
+			       dalJobCandidateMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74945bfd5b1d0b1c00f5583937d8d05d</Hash>
+    <Hash>d5e08083458a852471079cbec4e1a555</Hash>
 </Codenesium>*/

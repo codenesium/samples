@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TeamController : AbstractTeamController
 	{
 		public TeamController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<TeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITeamService teamService,
-			IApiTeamModelMapper teamModelMapper
+			IApiTeamServerModelMapper teamModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0e8dbc50a8df8a82efd604c6bc7a306b</Hash>
+    <Hash>053d5e2cc6c5d8a0e957661c67acea3a</Hash>
 </Codenesium>*/

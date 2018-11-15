@@ -17,15 +17,15 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowerMapper();
 			var bo = new BOFollower();
-			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, "A");
+			bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A");
 
 			Follower response = mapper.MapBOToEF(bo);
 
 			response.Blocked.Should().Be("A");
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.FollowRequestStatu.Should().Be("A");
 			response.FollowedUserId.Should().Be(1);
 			response.FollowingUserId.Should().Be(1);
+			response.FollowRequestStatu.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Muted.Should().Be("A");
 		}
@@ -35,15 +35,15 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowerMapper();
 			Follower entity = new Follower();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1, "A");
 
 			BOFollower response = mapper.MapEFToBO(entity);
 
 			response.Blocked.Should().Be("A");
 			response.DateFollowed.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.FollowRequestStatu.Should().Be("A");
 			response.FollowedUserId.Should().Be(1);
 			response.FollowingUserId.Should().Be(1);
+			response.FollowRequestStatu.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Muted.Should().Be("A");
 		}
@@ -53,7 +53,7 @@ namespace TwitterNS.Api.Services.Tests
 		{
 			var mapper = new DALFollowerMapper();
 			Follower entity = new Follower();
-			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+			entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1, "A");
 
 			List<BOFollower> response = mapper.MapEFToBO(new List<Follower>() { entity });
 
@@ -63,5 +63,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f6e1cb23ac26a5302f80c0afacf04a3d</Hash>
+    <Hash>1f191a4f0bc336288ca3109f754bfdea</Hash>
 </Codenesium>*/

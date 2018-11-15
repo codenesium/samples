@@ -1,13 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,23 +9,19 @@ namespace AdventureWorksNS.Api.Services
 		public PurchaseOrderHeaderService(
 			ILogger<IPurchaseOrderHeaderRepository> logger,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
-			IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
-			IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
-			IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper,
-			IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
-			IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper)
+			IApiPurchaseOrderHeaderServerRequestModelValidator purchaseOrderHeaderModelValidator,
+			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
+			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
 			       purchaseOrderHeaderRepository,
 			       purchaseOrderHeaderModelValidator,
-			       bolpurchaseOrderHeaderMapper,
-			       dalpurchaseOrderHeaderMapper,
-			       bolPurchaseOrderDetailMapper,
-			       dalPurchaseOrderDetailMapper)
+			       bolPurchaseOrderHeaderMapper,
+			       dalPurchaseOrderHeaderMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e5491de7e2a5c945a787a100eb47e6e</Hash>
+    <Hash>dac37f0fabb57695aa0efb9799f86ad0</Hash>
 </Codenesium>*/

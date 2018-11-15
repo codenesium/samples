@@ -1,4 +1,4 @@
-export class ApiDirectTweetRequestModel {
+export class ApiDirectTweetServerRequestModel {
 				content:string;
 date:string;
 taggedUserId:number;
@@ -18,7 +18,7 @@ this.tweetId = 0;
 				}
 			}
 
-			export class ApiDirectTweetResponseModel {
+			export class ApiDirectTweetServerResponseModel {
 				content:string;
 date:string;
 taggedUserId:number;
@@ -37,7 +37,7 @@ this.tweetId = 0;
 		
 				}
 			}
-			export class ApiFollowerRequestModel {
+			export class ApiFollowerServerRequestModel {
 				blocked:string;
 dateFollowed:string;
 followRequestStatu:string;
@@ -62,7 +62,7 @@ this.muted = '';
 				}
 			}
 
-			export class ApiFollowerResponseModel {
+			export class ApiFollowerServerResponseModel {
 				blocked:string;
 dateFollowed:string;
 followRequestStatu:string;
@@ -86,36 +86,36 @@ this.muted = '';
 		
 				}
 			}
-			export class ApiFollowingRequestModel {
+			export class ApiFollowingServerRequestModel {
 				dateFollowed:string;
 muted:string;
-userId:string;
+userId:number;
 
 	
 				constructor() {
 					this.dateFollowed = '';
 this.muted = '';
-this.userId = '';
+this.userId = 0;
 
 		
 				}
 			}
 
-			export class ApiFollowingResponseModel {
+			export class ApiFollowingServerResponseModel {
 				dateFollowed:string;
 muted:string;
-userId:string;
+userId:number;
 
 	
 				constructor() {
 					this.dateFollowed = '';
 this.muted = '';
-this.userId = '';
+this.userId = 0;
 
 		
 				}
 			}
-			export class ApiLocationRequestModel {
+			export class ApiLocationServerRequestModel {
 				gpsLat:number;
 gpsLong:number;
 locationId:number;
@@ -132,7 +132,7 @@ this.locationName = '';
 				}
 			}
 
-			export class ApiLocationResponseModel {
+			export class ApiLocationServerResponseModel {
 				gpsLat:number;
 gpsLong:number;
 locationId:number;
@@ -148,7 +148,7 @@ this.locationName = '';
 		
 				}
 			}
-			export class ApiMessageRequestModel {
+			export class ApiMessageServerRequestModel {
 				content:string;
 messageId:number;
 senderUserId:number;
@@ -164,7 +164,7 @@ this.senderUserId = 0;
 				}
 			}
 
-			export class ApiMessageResponseModel {
+			export class ApiMessageServerResponseModel {
 				content:string;
 messageId:number;
 senderUserId:number;
@@ -179,7 +179,7 @@ this.senderUserId = 0;
 		
 				}
 			}
-			export class ApiMessengerRequestModel {
+			export class ApiMessengerServerRequestModel {
 				date:string;
 fromUserId:number;
 id:number;
@@ -205,7 +205,7 @@ this.userId = 0;
 				}
 			}
 
-			export class ApiMessengerResponseModel {
+			export class ApiMessengerServerResponseModel {
 				date:string;
 fromUserId:number;
 id:number;
@@ -230,7 +230,7 @@ this.userId = 0;
 		
 				}
 			}
-			export class ApiQuoteTweetRequestModel {
+			export class ApiQuoteTweetServerRequestModel {
 				content:string;
 date:string;
 quoteTweetId:number;
@@ -253,7 +253,7 @@ this.time = '';
 				}
 			}
 
-			export class ApiQuoteTweetResponseModel {
+			export class ApiQuoteTweetServerResponseModel {
 				content:string;
 date:string;
 quoteTweetId:number;
@@ -275,7 +275,7 @@ this.time = '';
 		
 				}
 			}
-			export class ApiReplyRequestModel {
+			export class ApiReplyServerRequestModel {
 				content:string;
 date:string;
 replierUserId:number;
@@ -295,7 +295,7 @@ this.time = '';
 				}
 			}
 
-			export class ApiReplyResponseModel {
+			export class ApiReplyServerResponseModel {
 				content:string;
 date:string;
 replierUserId:number;
@@ -314,7 +314,7 @@ this.time = '';
 		
 				}
 			}
-			export class ApiRetweetRequestModel {
+			export class ApiRetweetServerRequestModel {
 				date:string;
 id:number;
 retwitterUserId:number;
@@ -335,7 +335,7 @@ this.tweetTweetId = 0;
 				}
 			}
 
-			export class ApiRetweetResponseModel {
+			export class ApiRetweetServerResponseModel {
 				date:string;
 id:number;
 retwitterUserId:number;
@@ -355,7 +355,7 @@ this.tweetTweetId = 0;
 		
 				}
 			}
-			export class ApiTweetRequestModel {
+			export class ApiTweetServerRequestModel {
 				content:string;
 date:string;
 locationId:number;
@@ -378,7 +378,7 @@ this.userUserId = 0;
 				}
 			}
 
-			export class ApiTweetResponseModel {
+			export class ApiTweetServerResponseModel {
 				content:string;
 date:string;
 locationId:number;
@@ -400,7 +400,7 @@ this.userUserId = 0;
 		
 				}
 			}
-			export class ApiUserRequestModel {
+			export class ApiUserServerRequestModel {
 				bioImgUrl:string;
 birthday:string;
 contentDescription:string;
@@ -438,7 +438,7 @@ this.website = '';
 				}
 			}
 
-			export class ApiUserResponseModel {
+			export class ApiUserServerResponseModel {
 				bioImgUrl:string;
 birthday:string;
 contentDescription:string;

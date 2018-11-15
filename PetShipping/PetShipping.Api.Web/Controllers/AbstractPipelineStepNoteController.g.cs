@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Web
 	{
 		protected IPipelineStepNoteService PipelineStepNoteService { get; private set; }
 
-		protected IApiPipelineStepNoteModelMapper PipelineStepNoteModelMapper { get; private set; }
+		protected IApiPipelineStepNoteServerModelMapper PipelineStepNoteModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<AbstractPipelineStepNoteController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPipelineStepNoteService pipelineStepNoteService,
-			IApiPipelineStepNoteModelMapper pipelineStepNoteModelMapper
+			IApiPipelineStepNoteServerModelMapper pipelineStepNoteModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPipelineStepNoteServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPipelineStepNoteResponseModel> response = await this.PipelineStepNoteService.All(query.Limit, query.Offset);
+			List<ApiPipelineStepNoteServerResponseModel> response = await this.PipelineStepNoteService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetShippingNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPipelineStepNoteServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPipelineStepNoteResponseModel response = await this.PipelineStepNoteService.Get(id);
+			ApiPipelineStepNoteServerResponseModel response = await this.PipelineStepNoteService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetShippingNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPipelineStepNoteServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepNoteRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepNoteServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPipelineStepNoteResponseModel> records = new List<ApiPipelineStepNoteResponseModel>();
+			List<ApiPipelineStepNoteServerResponseModel> records = new List<ApiPipelineStepNoteServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Create(model);
+				CreateResponse<ApiPipelineStepNoteServerResponseModel> result = await this.PipelineStepNoteService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetShippingNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPipelineStepNoteServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPipelineStepNoteResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPipelineStepNoteServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepNoteRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepNoteServerRequestModel model)
 		{
-			CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Create(model);
+			CreateResponse<ApiPipelineStepNoteServerResponseModel> result = await this.PipelineStepNoteService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepNoteResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepNoteServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPipelineStepNoteRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPipelineStepNoteServerRequestModel> patch)
 		{
-			ApiPipelineStepNoteResponseModel record = await this.PipelineStepNoteService.Get(id);
+			ApiPipelineStepNoteServerResponseModel record = await this.PipelineStepNoteService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiPipelineStepNoteRequestModel model = await this.PatchModel(id, patch);
+				ApiPipelineStepNoteServerRequestModel model = await this.PatchModel(id, patch) as ApiPipelineStepNoteServerRequestModel;
 
-				UpdateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Update(id, model);
+				UpdateResponse<ApiPipelineStepNoteServerResponseModel> result = await this.PipelineStepNoteService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetShippingNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepNoteResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPipelineStepNoteServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepNoteRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepNoteServerRequestModel model)
 		{
-			ApiPipelineStepNoteRequestModel request = await this.PatchModel(id, this.PipelineStepNoteModelMapper.CreatePatch(model));
+			ApiPipelineStepNoteServerRequestModel request = await this.PatchModel(id, this.PipelineStepNoteModelMapper.CreatePatch(model)) as ApiPipelineStepNoteServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Update(id, request);
+				UpdateResponse<ApiPipelineStepNoteServerResponseModel> result = await this.PipelineStepNoteService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetShippingNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PipelineStepNoteService.Delete(id);
@@ -206,7 +216,7 @@ namespace PetShippingNS.Api.Web
 			}
 		}
 
-		private async Task<ApiPipelineStepNoteRequestModel> PatchModel(int id, JsonPatchDocument<ApiPipelineStepNoteRequestModel> patch)
+		private async Task<ApiPipelineStepNoteServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPipelineStepNoteServerRequestModel> patch)
 		{
 			var record = await this.PipelineStepNoteService.Get(id);
 
@@ -216,7 +226,7 @@ namespace PetShippingNS.Api.Web
 			}
 			else
 			{
-				ApiPipelineStepNoteRequestModel request = this.PipelineStepNoteModelMapper.MapResponseToRequest(record);
+				ApiPipelineStepNoteServerRequestModel request = this.PipelineStepNoteModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0117a8a7a50e542f3599f7d5c1aca0c9</Hash>
+    <Hash>265992bcacedfb6f1fd79c575bd06d7e</Hash>
 </Codenesium>*/

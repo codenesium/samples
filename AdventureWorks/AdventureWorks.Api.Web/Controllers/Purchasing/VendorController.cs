@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class VendorController : AbstractVendorController
 	{
 		public VendorController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<VendorController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IVendorService vendorService,
-			IApiVendorModelMapper vendorModelMapper
+			IApiVendorServerModelMapper vendorModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9614b096d0d08f104f5b03245be53f0f</Hash>
+    <Hash>d4e95202e7b9b3604a956dfbcfceafc8</Hash>
 </Codenesium>*/

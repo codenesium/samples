@@ -76,14 +76,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Team> ByName(string name)
+		public async virtual Task<Team> ByName(string name)
 		{
 			return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Name == name);
-		}
-
-		public async virtual Task<List<Chain>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
 
 		public async virtual Task<Organization> OrganizationByOrganizationId(int organizationId)
@@ -91,35 +86,42 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
 		}
 
-		public async virtual Task<List<Team>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Team>> ByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await (from refTable in this.Context.MachineRefTeams
+			return await (from refTable in this.Context.Chains
 			              join teams in this.Context.Teams on
 			              refTable.TeamId equals teams.Id
-			              where refTable.MachineId == machineId
+			              where refTable.ChainStatusId == chainStatusId
 			              select teams).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<Chain> CreateChain(Chain item)
+		{
+			this.Context.Set<Chain>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteChain(Chain item)
+		{
+			this.Context.Set<Chain>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<Team>> Where(
 			Expression<Func<Team, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Team, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Team, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
-			}
-			else
-			{
-				return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
-			}
+			return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
 		}
 
 		private async Task<Team> GetById(int id)
@@ -132,5 +134,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3af0f335e6abc59d775d3b0c13a7fcc7</Hash>
+    <Hash>927b899331240ba58966ddb4c0598bcf</Hash>
 </Codenesium>*/

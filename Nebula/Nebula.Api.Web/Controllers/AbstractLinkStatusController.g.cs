@@ -20,7 +20,7 @@ namespace NebulaNS.Api.Web
 	{
 		protected ILinkStatusService LinkStatusService { get; private set; }
 
-		protected IApiLinkStatusModelMapper LinkStatusModelMapper { get; private set; }
+		protected IApiLinkStatusServerModelMapper LinkStatusModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace NebulaNS.Api.Web
 			ILogger<AbstractLinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkStatusService linkStatusService,
-			IApiLinkStatusModelMapper linkStatusModelMapper
+			IApiLinkStatusServerModelMapper linkStatusModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkStatusServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkStatusResponseModel> response = await this.LinkStatusService.All(query.Limit, query.Offset);
+			List<ApiLinkStatusServerResponseModel> response = await this.LinkStatusService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiLinkStatusServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiLinkStatusResponseModel response = await this.LinkStatusService.Get(id);
+			ApiLinkStatusServerResponseModel response = await this.LinkStatusService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace NebulaNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiLinkStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiLinkStatusServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkStatusRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkStatusServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiLinkStatusResponseModel> records = new List<ApiLinkStatusResponseModel>();
+			List<ApiLinkStatusServerResponseModel> records = new List<ApiLinkStatusServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Create(model);
+				CreateResponse<ApiLinkStatusServerResponseModel> result = await this.LinkStatusService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace NebulaNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiLinkStatusServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiLinkStatusResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiLinkStatusServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLinkStatusRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkStatusServerRequestModel model)
 		{
-			CreateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Create(model);
+			CreateResponse<ApiLinkStatusServerResponseModel> result = await this.LinkStatusService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace NebulaNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkStatusRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkStatusServerRequestModel> patch)
 		{
-			ApiLinkStatusResponseModel record = await this.LinkStatusService.Get(id);
+			ApiLinkStatusServerResponseModel record = await this.LinkStatusService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiLinkStatusRequestModel model = await this.PatchModel(id, patch);
+				ApiLinkStatusServerRequestModel model = await this.PatchModel(id, patch) as ApiLinkStatusServerRequestModel;
 
-				UpdateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Update(id, model);
+				UpdateResponse<ApiLinkStatusServerResponseModel> result = await this.LinkStatusService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace NebulaNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiLinkStatusServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusServerRequestModel model)
 		{
-			ApiLinkStatusRequestModel request = await this.PatchModel(id, this.LinkStatusModelMapper.CreatePatch(model));
+			ApiLinkStatusServerRequestModel request = await this.PatchModel(id, this.LinkStatusModelMapper.CreatePatch(model)) as ApiLinkStatusServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiLinkStatusResponseModel> result = await this.LinkStatusService.Update(id, request);
+				UpdateResponse<ApiLinkStatusServerResponseModel> result = await this.LinkStatusService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace NebulaNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.LinkStatusService.Delete(id);
@@ -209,11 +219,11 @@ namespace NebulaNS.Api.Web
 		[HttpGet]
 		[Route("byName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiLinkStatusServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> ByName(string name)
 		{
-			ApiLinkStatusResponseModel response = await this.LinkStatusService.ByName(name);
+			ApiLinkStatusServerResponseModel response = await this.LinkStatusService.ByName(name);
 
 			if (response == null)
 			{
@@ -226,9 +236,9 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{linkStatusId}/LinksByLinkStatusId")]
+		[Route("{linkStatusId}/Links")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> LinksByLinkStatusId(int linkStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -237,12 +247,12 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkResponseModel> response = await this.LinkStatusService.LinksByLinkStatusId(linkStatusId, query.Limit, query.Offset);
+			List<ApiLinkServerResponseModel> response = await this.LinkStatusService.LinksByLinkStatusId(linkStatusId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiLinkStatusRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkStatusRequestModel> patch)
+		private async Task<ApiLinkStatusServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiLinkStatusServerRequestModel> patch)
 		{
 			var record = await this.LinkStatusService.Get(id);
 
@@ -252,7 +262,7 @@ namespace NebulaNS.Api.Web
 			}
 			else
 			{
-				ApiLinkStatusRequestModel request = this.LinkStatusModelMapper.MapResponseToRequest(record);
+				ApiLinkStatusServerRequestModel request = this.LinkStatusModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -261,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>67e52d07e4c11d0f750a6d9a651871be</Hash>
+    <Hash>a9d8c9dc6d400c6733dc03c0aea282ba</Hash>
 </Codenesium>*/

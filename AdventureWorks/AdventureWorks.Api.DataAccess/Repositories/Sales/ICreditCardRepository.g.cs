@@ -20,11 +20,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<CreditCard> ByCardNumber(string cardNumber);
 
 		Task<List<SalesOrderHeader>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<CreditCard>> ByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d7495155111b5f62a16ee04d08527c9</Hash>
+    <Hash>0b6745aa30c4ff6370d4eee0cb182b2d</Hash>
 </Codenesium>*/

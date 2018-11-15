@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StudioResourceManagerNS.Api.Services
 		public StudentService(
 			ILogger<IStudentRepository> logger,
 			IStudentRepository studentRepository,
-			IApiStudentRequestModelValidator studentModelValidator,
-			IBOLStudentMapper bolstudentMapper,
-			IDALStudentMapper dalstudentMapper)
+			IApiStudentServerRequestModelValidator studentModelValidator,
+			IBOLStudentMapper bolStudentMapper,
+			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       studentRepository,
 			       studentModelValidator,
-			       bolstudentMapper,
-			       dalstudentMapper)
+			       bolStudentMapper,
+			       dalStudentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ef8ae853a7d1fe22932689db7fa714d</Hash>
+    <Hash>78d2749e512e51c51b96fb1bc0b87244</Hash>
 </Codenesium>*/

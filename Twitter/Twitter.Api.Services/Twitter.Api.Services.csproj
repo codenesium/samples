@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Twitter.Api.Contracts/Twitter.Api.Contracts.csproj" />
+    <ProjectReference Include="../Twitter.Api.Client/Twitter.Api.Client.csproj" />
     <ProjectReference Include="../Twitter.Api.DataAccess/Twitter.Api.DataAccess.csproj" />
   </ItemGroup>
 

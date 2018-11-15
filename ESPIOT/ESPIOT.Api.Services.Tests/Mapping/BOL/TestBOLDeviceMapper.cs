@@ -17,7 +17,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLDeviceMapper();
-			ApiDeviceRequestModel model = new ApiDeviceRequestModel();
+			ApiDeviceServerRequestModel model = new ApiDeviceServerRequestModel();
 			model.SetProperties("A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			BODevice response = mapper.MapModelToBO(1, model);
 
@@ -31,7 +31,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mapper = new BOLDeviceMapper();
 			BODevice bo = new BODevice();
 			bo.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			ApiDeviceResponseModel response = mapper.MapBOToModel(bo);
+			ApiDeviceServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -44,7 +44,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mapper = new BOLDeviceMapper();
 			BODevice bo = new BODevice();
 			bo.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
-			List<ApiDeviceResponseModel> response = mapper.MapBOToModel(new List<BODevice>() { { bo } });
+			List<ApiDeviceServerResponseModel> response = mapper.MapBOToModel(new List<BODevice>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -52,5 +52,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a4fd0a50d28c4618d43033e93d6ee2eb</Hash>
+    <Hash>17b496991718bc626f08f69617ce0477</Hash>
 </Codenesium>*/

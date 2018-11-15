@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOContactType MapModelToBO(
 			int contactTypeID,
-			ApiContactTypeRequestModel model);
+			ApiContactTypeServerRequestModel model);
 
-		ApiContactTypeResponseModel MapBOToModel(
+		ApiContactTypeServerResponseModel MapBOToModel(
 			BOContactType boContactType);
 
-		List<ApiContactTypeResponseModel> MapBOToModel(
+		List<ApiContactTypeServerResponseModel> MapBOToModel(
 			List<BOContactType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>015e8f708b1828abb0486a4654a598af</Hash>
+    <Hash>7fc9ae5ec1dd68adf0228fd9676d10f2</Hash>
 </Codenesium>*/

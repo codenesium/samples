@@ -44,60 +44,67 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		[Column("assignedMachineId")]
-		public int? AssignedMachineId { get; private set; }
+		public virtual int? AssignedMachineId { get; private set; }
 
 		[Column("chainId")]
-		public int ChainId { get; private set; }
+		public virtual int ChainId { get; private set; }
 
 		[Column("dateCompleted")]
-		public DateTime? DateCompleted { get; private set; }
+		public virtual DateTime? DateCompleted { get; private set; }
 
 		[Column("dateStarted")]
-		public DateTime? DateStarted { get; private set; }
+		public virtual DateTime? DateStarted { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("dynamicParameters")]
-		public string DynamicParameter { get; private set; }
+		public virtual string DynamicParameter { get; private set; }
 
 		[Column("externalId")]
-		public Guid ExternalId { get; private set; }
+		public virtual Guid ExternalId { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[Column("linkStatusId")]
-		public int LinkStatusId { get; private set; }
+		public virtual int LinkStatusId { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Column("order")]
-		public int Order { get; private set; }
+		public virtual int Order { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("response")]
-		public string Response { get; private set; }
+		public virtual string Response { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("staticParameters")]
-		public string StaticParameter { get; private set; }
+		public virtual string StaticParameter { get; private set; }
 
 		[Column("timeoutInSeconds")]
-		public int TimeoutInSecond { get; private set; }
+		public virtual int TimeoutInSecond { get; private set; }
 
 		[ForeignKey("AssignedMachineId")]
 		public virtual Machine MachineNavigation { get; private set; }
 
-		[ForeignKey("ChainId")]
-		public virtual Chain ChainNavigation { get; private set; }
+		public void SetMachineNavigation(Machine item)
+		{
+			this.MachineNavigation = item;
+		}
 
 		[ForeignKey("LinkStatusId")]
 		public virtual LinkStatus LinkStatusNavigation { get; private set; }
+
+		public void SetLinkStatusNavigation(LinkStatus item)
+		{
+			this.LinkStatusNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c506e97e9824da540d5f28381e38ce94</Hash>
+    <Hash>75147ada0275d12d97f114cd390f1d0d</Hash>
 </Codenesium>*/

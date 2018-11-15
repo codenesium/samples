@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IJobCandidateService JobCandidateService { get; private set; }
 
-		protected IApiJobCandidateModelMapper JobCandidateModelMapper { get; private set; }
+		protected IApiJobCandidateServerModelMapper JobCandidateModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractJobCandidateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IJobCandidateService jobCandidateService,
-			IApiJobCandidateModelMapper jobCandidateModelMapper
+			IApiJobCandidateServerModelMapper jobCandidateModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiJobCandidateResponseModel> response = await this.JobCandidateService.All(query.Limit, query.Offset);
+			List<ApiJobCandidateServerResponseModel> response = await this.JobCandidateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiJobCandidateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
+			ApiJobCandidateServerResponseModel response = await this.JobCandidateService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiJobCandidateServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiJobCandidateRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiJobCandidateServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiJobCandidateResponseModel> records = new List<ApiJobCandidateResponseModel>();
+			List<ApiJobCandidateServerResponseModel> records = new List<ApiJobCandidateServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Create(model);
+				CreateResponse<ApiJobCandidateServerResponseModel> result = await this.JobCandidateService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiJobCandidateServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiJobCandidateResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiJobCandidateServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateServerRequestModel model)
 		{
-			CreateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Create(model);
+			CreateResponse<ApiJobCandidateServerResponseModel> result = await this.JobCandidateService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiJobCandidateRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiJobCandidateServerRequestModel> patch)
 		{
-			ApiJobCandidateResponseModel record = await this.JobCandidateService.Get(id);
+			ApiJobCandidateServerResponseModel record = await this.JobCandidateService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiJobCandidateRequestModel model = await this.PatchModel(id, patch);
+				ApiJobCandidateServerRequestModel model = await this.PatchModel(id, patch) as ApiJobCandidateServerRequestModel;
 
-				UpdateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Update(id, model);
+				UpdateResponse<ApiJobCandidateServerResponseModel> result = await this.JobCandidateService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiJobCandidateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateServerRequestModel model)
 		{
-			ApiJobCandidateRequestModel request = await this.PatchModel(id, this.JobCandidateModelMapper.CreatePatch(model));
+			ApiJobCandidateServerRequestModel request = await this.PatchModel(id, this.JobCandidateModelMapper.CreatePatch(model)) as ApiJobCandidateServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Update(id, request);
+				UpdateResponse<ApiJobCandidateServerResponseModel> result = await this.JobCandidateService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.JobCandidateService.Delete(id);
@@ -209,7 +219,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("byBusinessEntityID/{businessEntityID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByBusinessEntityID(int? businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,12 +228,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiJobCandidateResponseModel> response = await this.JobCandidateService.ByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
+			List<ApiJobCandidateServerResponseModel> response = await this.JobCandidateService.ByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		private async Task<ApiJobCandidateRequestModel> PatchModel(int id, JsonPatchDocument<ApiJobCandidateRequestModel> patch)
+		private async Task<ApiJobCandidateServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiJobCandidateServerRequestModel> patch)
 		{
 			var record = await this.JobCandidateService.Get(id);
 
@@ -233,7 +243,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiJobCandidateRequestModel request = this.JobCandidateModelMapper.MapResponseToRequest(record);
+				ApiJobCandidateServerRequestModel request = this.JobCandidateModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +252,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>23dac0d66fc68816305d0d69411cf5f4</Hash>
+    <Hash>c85ece307f064edf03dea8def07e3f47</Hash>
 </Codenesium>*/

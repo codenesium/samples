@@ -293,7 +293,7 @@ namespace StackOverflowNS.Api.Web
                 .InstancePerLifetimeScope();
             
             // register mappers in the contracts assembly
-            var contractsAssembly = typeof(AbstractApiRequestModel).Assembly;
+            var contractsAssembly = typeof(AbstractApiServerRequestModel).Assembly;
             builder.RegisterAssemblyTypes(contractsAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Mapper"))
                 .AsImplementedInterfaces()
@@ -453,7 +453,6 @@ namespace StackOverflowNS.Api.Web
 
                 using (var writer = new StreamWriter(context.Response.Body))
                 {
-                    new JsonSerializer().Serialize(writer, error);
                     await writer.FlushAsync().ConfigureAwait(false);
                 }
             }

@@ -24,18 +24,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
 		[Key]
 		[Column("ScrapReasonID")]
-		public short ScrapReasonID { get; private set; }
+		public virtual short ScrapReasonID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>331ed3cfd8f146225e1e2ad71e6d6030</Hash>
+    <Hash>bfff8507d58fefc6c737d12105725940</Hash>
 </Codenesium>*/

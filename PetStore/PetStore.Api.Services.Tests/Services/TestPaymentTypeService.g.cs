@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiPaymentTypeResponseModel> response = await service.All();
+			List<ApiPaymentTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			ApiPaymentTypeResponseModel response = await service.Get(default(int));
+			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			ApiPaymentTypeResponseModel response = await service.Get(default(int));
+			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
-			var model = new ApiPaymentTypeRequestModel();
+			var model = new ApiPaymentTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PaymentType>())).Returns(Task.FromResult(new PaymentType()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			CreateResponse<ApiPaymentTypeResponseModel> response = await service.Create(model);
+			CreateResponse<ApiPaymentTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PaymentType>()));
 		}
 
@@ -103,7 +103,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
-			var model = new ApiPaymentTypeRequestModel();
+			var model = new ApiPaymentTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PaymentType>())).Returns(Task.FromResult(new PaymentType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			UpdateResponse<ApiPaymentTypeResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiPaymentTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
+			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PaymentType>()));
 		}
 
@@ -125,7 +125,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
-			var model = new ApiPaymentTypeRequestModel();
+			var model = new ApiPaymentTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.SalesByPaymentTypeId(default(int));
+			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.SalesByPaymentTypeId(default(int));
+			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -185,5 +185,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2a86c3b2819d5bdf02b93946a07433c6</Hash>
+    <Hash>c161a9b52613fe6bb8bb5fa244652c9f</Hash>
 </Codenesium>*/

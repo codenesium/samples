@@ -86,26 +86,42 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<User>().Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
+		public async virtual Task<List<Location>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.Tweets
+			              join locations in this.Context.Locations on
+			              refTable.LocationId equals locations.LocationId
+			              where refTable.UserUserId == userUserId
+			              select locations).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		public async virtual Task<Tweet> CreateTweet(Tweet item)
+		{
+			this.Context.Set<Tweet>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task DeleteTweet(Tweet item)
+		{
+			this.Context.Set<Tweet>().Remove(item);
+			await this.Context.SaveChangesAsync();
+		}
+
 		protected async Task<List<Location>> Where(
 			Expression<Func<Location, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Location, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Location, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.LocationId;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
-			}
-			else
-			{
-				return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
-			}
+			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
 		}
 
 		private async Task<Location> GetById(int locationId)
@@ -118,5 +134,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ece793af4469572241bd744fd85cc0d</Hash>
+    <Hash>e1ef3ff4dabcf52e566e4b2acc77fe6a</Hash>
 </Codenesium>*/

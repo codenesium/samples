@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSpecialOfferMapper();
-			ApiSpecialOfferRequestModel model = new ApiSpecialOfferRequestModel();
+			ApiSpecialOfferServerRequestModel model = new ApiSpecialOfferServerRequestModel();
 			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOSpecialOffer response = mapper.MapModelToBO(1, model);
 
@@ -39,7 +39,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSpecialOfferMapper();
 			BOSpecialOffer bo = new BOSpecialOffer();
 			bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiSpecialOfferResponseModel response = mapper.MapBOToModel(bo);
+			ApiSpecialOfferServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Category.Should().Be("A");
 			response.Description.Should().Be("A");
@@ -60,7 +60,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLSpecialOfferMapper();
 			BOSpecialOffer bo = new BOSpecialOffer();
 			bo.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiSpecialOfferResponseModel> response = mapper.MapBOToModel(new List<BOSpecialOffer>() { { bo } });
+			List<ApiSpecialOfferServerResponseModel> response = mapper.MapBOToModel(new List<BOSpecialOffer>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>97899efc89447ef0fe0de4307556b7d6</Hash>
+    <Hash>1dfd3eb71ba8b48cd6e54e7f07a54499</Hash>
 </Codenesium>*/

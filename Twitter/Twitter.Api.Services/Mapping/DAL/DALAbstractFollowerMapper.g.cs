@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -15,9 +14,9 @@ namespace TwitterNS.Api.Services
 			efFollower.SetProperties(
 				bo.Blocked,
 				bo.DateFollowed,
-				bo.FollowRequestStatu,
 				bo.FollowedUserId,
 				bo.FollowingUserId,
+				bo.FollowRequestStatu,
 				bo.Id,
 				bo.Muted);
 			return efFollower;
@@ -32,9 +31,9 @@ namespace TwitterNS.Api.Services
 				ef.Id,
 				ef.Blocked,
 				ef.DateFollowed,
-				ef.FollowRequestStatu,
 				ef.FollowedUserId,
 				ef.FollowingUserId,
+				ef.FollowRequestStatu,
 				ef.Muted);
 			return bo;
 		}
@@ -55,5 +54,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9242e840f47e8d37e33aacc7ec21a9d7</Hash>
+    <Hash>0469c456af2a15e2636741c7667ee434</Hash>
 </Codenesium>*/

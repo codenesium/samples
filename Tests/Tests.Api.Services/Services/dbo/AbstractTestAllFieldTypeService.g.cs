@@ -1,11 +1,6 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -16,7 +11,7 @@ namespace TestsNS.Api.Services
 	{
 		protected ITestAllFieldTypeRepository TestAllFieldTypeRepository { get; private set; }
 
-		protected IApiTestAllFieldTypeRequestModelValidator TestAllFieldTypeModelValidator { get; private set; }
+		protected IApiTestAllFieldTypeServerRequestModelValidator TestAllFieldTypeModelValidator { get; private set; }
 
 		protected IBOLTestAllFieldTypeMapper BolTestAllFieldTypeMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace TestsNS.Api.Services
 		public AbstractTestAllFieldTypeService(
 			ILogger logger,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
-			IApiTestAllFieldTypeRequestModelValidator testAllFieldTypeModelValidator,
+			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
 			IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper,
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace TestsNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTestAllFieldTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TestAllFieldTypeRepository.All(limit, offset);
 
 			return this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTestAllFieldTypeResponseModel> Get(int id)
+		public virtual async Task<ApiTestAllFieldTypeServerResponseModel> Get(int id)
 		{
 			var record = await this.TestAllFieldTypeRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace TestsNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> Create(
-			ApiTestAllFieldTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiTestAllFieldTypeServerResponseModel>> Create(
+			ApiTestAllFieldTypeServerRequestModel model)
 		{
-			CreateResponse<ApiTestAllFieldTypeResponseModel> response = new CreateResponse<ApiTestAllFieldTypeResponseModel>(await this.TestAllFieldTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTestAllFieldTypeServerResponseModel> response = ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.CreateResponse(await this.TestAllFieldTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace TestsNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTestAllFieldTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTestAllFieldTypeServerResponseModel>> Update(
 			int id,
-			ApiTestAllFieldTypeRequestModel model)
+			ApiTestAllFieldTypeServerRequestModel model)
 		{
 			var validationResult = await this.TestAllFieldTypeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TestAllFieldTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiTestAllFieldTypeResponseModel>(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.UpdateResponse(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTestAllFieldTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TestAllFieldTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TestAllFieldTypeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TestAllFieldTypeRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89a9f359925ceac1262ef1d3eadf0e8d</Hash>
+    <Hash>c6fffe7896606f8ded72d932246bebd3</Hash>
 </Codenesium>*/

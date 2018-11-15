@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IPostHistoryTypeRepository PostHistoryTypeRepository { get; private set; }
 
-		protected IApiPostHistoryTypeRequestModelValidator PostHistoryTypeModelValidator { get; private set; }
+		protected IApiPostHistoryTypeServerRequestModelValidator PostHistoryTypeModelValidator { get; private set; }
 
 		protected IBOLPostHistoryTypeMapper BolPostHistoryTypeMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractPostHistoryTypeService(
 			ILogger logger,
 			IPostHistoryTypeRepository postHistoryTypeRepository,
-			IApiPostHistoryTypeRequestModelValidator postHistoryTypeModelValidator,
+			IApiPostHistoryTypeServerRequestModelValidator postHistoryTypeModelValidator,
 			IBOLPostHistoryTypeMapper bolPostHistoryTypeMapper,
 			IDALPostHistoryTypeMapper dalPostHistoryTypeMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPostHistoryTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostHistoryTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PostHistoryTypeRepository.All(limit, offset);
 
 			return this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPostHistoryTypeResponseModel> Get(int id)
+		public virtual async Task<ApiPostHistoryTypeServerResponseModel> Get(int id)
 		{
 			var record = await this.PostHistoryTypeRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPostHistoryTypeResponseModel>> Create(
-			ApiPostHistoryTypeRequestModel model)
+		public virtual async Task<CreateResponse<ApiPostHistoryTypeServerResponseModel>> Create(
+			ApiPostHistoryTypeServerRequestModel model)
 		{
-			CreateResponse<ApiPostHistoryTypeResponseModel> response = new CreateResponse<ApiPostHistoryTypeResponseModel>(await this.PostHistoryTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPostHistoryTypeServerResponseModel> response = ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.CreateResponse(await this.PostHistoryTypeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPostHistoryTypeMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPostHistoryTypeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPostHistoryTypeServerResponseModel>> Update(
 			int id,
-			ApiPostHistoryTypeRequestModel model)
+			ApiPostHistoryTypeServerRequestModel model)
 		{
 			var validationResult = await this.PostHistoryTypeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostHistoryTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiPostHistoryTypeResponseModel>(this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.UpdateResponse(this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPostHistoryTypeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PostHistoryTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PostHistoryTypeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PostHistoryTypeRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f691e2f14a952420cf38011a7190a25c</Hash>
+    <Hash>cc7a0dc71773c920188e17a29087f787</Hash>
 </Codenesium>*/

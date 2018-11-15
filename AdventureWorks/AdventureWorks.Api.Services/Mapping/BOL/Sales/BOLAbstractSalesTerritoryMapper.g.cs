@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,16 +8,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOSalesTerritory MapModelToBO(
 			int territoryID,
-			ApiSalesTerritoryRequestModel model
+			ApiSalesTerritoryServerRequestModel model
 			)
 		{
 			BOSalesTerritory boSalesTerritory = new BOSalesTerritory();
 			boSalesTerritory.SetProperties(
 				territoryID,
+				model.@Group,
 				model.CostLastYear,
 				model.CostYTD,
 				model.CountryRegionCode,
-				model.@Group,
 				model.ModifiedDate,
 				model.Name,
 				model.Rowguid,
@@ -27,20 +26,20 @@ namespace AdventureWorksNS.Api.Services
 			return boSalesTerritory;
 		}
 
-		public virtual ApiSalesTerritoryResponseModel MapBOToModel(
+		public virtual ApiSalesTerritoryServerResponseModel MapBOToModel(
 			BOSalesTerritory boSalesTerritory)
 		{
-			var model = new ApiSalesTerritoryResponseModel();
+			var model = new ApiSalesTerritoryServerResponseModel();
 
-			model.SetProperties(boSalesTerritory.TerritoryID, boSalesTerritory.CostLastYear, boSalesTerritory.CostYTD, boSalesTerritory.CountryRegionCode, boSalesTerritory.@Group, boSalesTerritory.ModifiedDate, boSalesTerritory.Name, boSalesTerritory.Rowguid, boSalesTerritory.SalesLastYear, boSalesTerritory.SalesYTD);
+			model.SetProperties(boSalesTerritory.TerritoryID, boSalesTerritory.@Group, boSalesTerritory.CostLastYear, boSalesTerritory.CostYTD, boSalesTerritory.CountryRegionCode, boSalesTerritory.ModifiedDate, boSalesTerritory.Name, boSalesTerritory.Rowguid, boSalesTerritory.SalesLastYear, boSalesTerritory.SalesYTD);
 
 			return model;
 		}
 
-		public virtual List<ApiSalesTerritoryResponseModel> MapBOToModel(
+		public virtual List<ApiSalesTerritoryServerResponseModel> MapBOToModel(
 			List<BOSalesTerritory> items)
 		{
-			List<ApiSalesTerritoryResponseModel> response = new List<ApiSalesTerritoryResponseModel>();
+			List<ApiSalesTerritoryServerResponseModel> response = new List<ApiSalesTerritoryServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>18f1aba0856a92985367e4a60cd6ff5a</Hash>
+    <Hash>6f545d679e6e22332224d87fc29e6bbb</Hash>
 </Codenesium>*/

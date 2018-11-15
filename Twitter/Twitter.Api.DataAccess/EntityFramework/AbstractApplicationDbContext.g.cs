@@ -80,15 +80,6 @@ namespace TwitterNS.Api.DataAccess
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
-				{
-					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
-					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
-					{
-						entity.CurrentValue = Guid.NewGuid();
-					}
-				}
-
 				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
 				{
 					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
@@ -126,6 +117,11 @@ namespace TwitterNS.Api.DataAccess
 			{
 				c.UserId,
 			});
+
+			modelBuilder.Entity<Following>()
+			.Property("UserId")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Like>()
 			.HasKey(c => new
@@ -222,5 +218,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c9130e01cd8e5fdcf897362370b84ca</Hash>
+    <Hash>3e9c62b186060eae81591880d0942c4b</Hash>
 </Codenesium>*/

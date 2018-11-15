@@ -2,37 +2,36 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface ISalesTerritoryService
 	{
-		Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
-			ApiSalesTerritoryRequestModel model);
+		Task<CreateResponse<ApiSalesTerritoryServerResponseModel>> Create(
+			ApiSalesTerritoryServerRequestModel model);
 
-		Task<UpdateResponse<ApiSalesTerritoryResponseModel>> Update(int territoryID,
-		                                                             ApiSalesTerritoryRequestModel model);
+		Task<UpdateResponse<ApiSalesTerritoryServerResponseModel>> Update(int territoryID,
+		                                                                   ApiSalesTerritoryServerRequestModel model);
 
 		Task<ActionResponse> Delete(int territoryID);
 
-		Task<ApiSalesTerritoryResponseModel> Get(int territoryID);
+		Task<ApiSalesTerritoryServerResponseModel> Get(int territoryID);
 
-		Task<List<ApiSalesTerritoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesTerritoryServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiSalesTerritoryResponseModel> ByName(string name);
+		Task<ApiSalesTerritoryServerResponseModel> ByName(string name);
 
-		Task<List<ApiCustomerResponseModel>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiSalesTerritoryServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerServerResponseModel>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSalesPersonResponseModel>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoriesByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesPersonServerResponseModel>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6318e1cc694d714404bb1a6156afeb8</Hash>
+    <Hash>bfb58d329f735d3d14054da89a4a0f53</Hash>
 </Codenesium>*/

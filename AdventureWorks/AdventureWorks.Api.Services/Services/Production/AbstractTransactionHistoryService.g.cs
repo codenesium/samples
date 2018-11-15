@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected ITransactionHistoryRepository TransactionHistoryRepository { get; private set; }
 
-		protected IApiTransactionHistoryRequestModelValidator TransactionHistoryModelValidator { get; private set; }
+		protected IApiTransactionHistoryServerRequestModelValidator TransactionHistoryModelValidator { get; private set; }
 
 		protected IBOLTransactionHistoryMapper BolTransactionHistoryMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractTransactionHistoryService(
 			ILogger logger,
 			ITransactionHistoryRepository transactionHistoryRepository,
-			IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator,
+			IApiTransactionHistoryServerRequestModelValidator transactionHistoryModelValidator,
 			IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
 			IDALTransactionHistoryMapper dalTransactionHistoryMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTransactionHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTransactionHistoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TransactionHistoryRepository.All(limit, offset);
 
 			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTransactionHistoryResponseModel> Get(int transactionID)
+		public virtual async Task<ApiTransactionHistoryServerResponseModel> Get(int transactionID)
 		{
 			var record = await this.TransactionHistoryRepository.Get(transactionID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTransactionHistoryResponseModel>> Create(
-			ApiTransactionHistoryRequestModel model)
+		public virtual async Task<CreateResponse<ApiTransactionHistoryServerResponseModel>> Create(
+			ApiTransactionHistoryServerRequestModel model)
 		{
-			CreateResponse<ApiTransactionHistoryResponseModel> response = new CreateResponse<ApiTransactionHistoryResponseModel>(await this.TransactionHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTransactionHistoryServerResponseModel> response = ValidationResponseFactory<ApiTransactionHistoryServerResponseModel>.CreateResponse(await this.TransactionHistoryModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTransactionHistoryMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTransactionHistoryResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTransactionHistoryServerResponseModel>> Update(
 			int transactionID,
-			ApiTransactionHistoryRequestModel model)
+			ApiTransactionHistoryServerRequestModel model)
 		{
 			var validationResult = await this.TransactionHistoryModelValidator.ValidateUpdateAsync(transactionID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.TransactionHistoryRepository.Get(transactionID);
 
-				return new UpdateResponse<ApiTransactionHistoryResponseModel>(this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTransactionHistoryServerResponseModel>.UpdateResponse(this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTransactionHistoryResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTransactionHistoryServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int transactionID)
 		{
-			ActionResponse response = new ActionResponse(await this.TransactionHistoryModelValidator.ValidateDeleteAsync(transactionID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TransactionHistoryModelValidator.ValidateDeleteAsync(transactionID));
+
 			if (response.Success)
 			{
 				await this.TransactionHistoryRepository.Delete(transactionID);
@@ -108,14 +105,14 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiTransactionHistoryResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiTransactionHistoryServerResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<TransactionHistory> records = await this.TransactionHistoryRepository.ByProductID(productID, limit, offset);
 
 			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiTransactionHistoryResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiTransactionHistoryServerResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<TransactionHistory> records = await this.TransactionHistoryRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, limit, offset);
 
@@ -125,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34b80c2e7f1c992323acfe9bcc4da7d0</Hash>
+    <Hash>607f624523b9dca78552e883cdc9dfc1</Hash>
 </Codenesium>*/

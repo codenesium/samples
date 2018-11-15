@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOPurchaseOrderHeader MapModelToBO(
 			int purchaseOrderID,
-			ApiPurchaseOrderHeaderRequestModel model
+			ApiPurchaseOrderHeaderServerRequestModel model
 			)
 		{
 			BOPurchaseOrderHeader boPurchaseOrderHeader = new BOPurchaseOrderHeader();
@@ -30,20 +29,20 @@ namespace AdventureWorksNS.Api.Services
 			return boPurchaseOrderHeader;
 		}
 
-		public virtual ApiPurchaseOrderHeaderResponseModel MapBOToModel(
+		public virtual ApiPurchaseOrderHeaderServerResponseModel MapBOToModel(
 			BOPurchaseOrderHeader boPurchaseOrderHeader)
 		{
-			var model = new ApiPurchaseOrderHeaderResponseModel();
+			var model = new ApiPurchaseOrderHeaderServerResponseModel();
 
 			model.SetProperties(boPurchaseOrderHeader.PurchaseOrderID, boPurchaseOrderHeader.EmployeeID, boPurchaseOrderHeader.Freight, boPurchaseOrderHeader.ModifiedDate, boPurchaseOrderHeader.OrderDate, boPurchaseOrderHeader.RevisionNumber, boPurchaseOrderHeader.ShipDate, boPurchaseOrderHeader.ShipMethodID, boPurchaseOrderHeader.Status, boPurchaseOrderHeader.SubTotal, boPurchaseOrderHeader.TaxAmt, boPurchaseOrderHeader.TotalDue, boPurchaseOrderHeader.VendorID);
 
 			return model;
 		}
 
-		public virtual List<ApiPurchaseOrderHeaderResponseModel> MapBOToModel(
+		public virtual List<ApiPurchaseOrderHeaderServerResponseModel> MapBOToModel(
 			List<BOPurchaseOrderHeader> items)
 		{
-			List<ApiPurchaseOrderHeaderResponseModel> response = new List<ApiPurchaseOrderHeaderResponseModel>();
+			List<ApiPurchaseOrderHeaderServerResponseModel> response = new List<ApiPurchaseOrderHeaderServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8eec6b90e08f9d1168d9fe2544145526</Hash>
+    <Hash>272c9c1ef83532e719547b10be3a71fa</Hash>
 </Codenesium>*/

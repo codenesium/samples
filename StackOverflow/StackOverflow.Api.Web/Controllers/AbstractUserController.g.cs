@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Web
 	{
 		protected IUserService UserService { get; private set; }
 
-		protected IApiUserModelMapper UserModelMapper { get; private set; }
+		protected IApiUserServerModelMapper UserModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<AbstractUserController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUserService userService,
-			IApiUserModelMapper userModelMapper
+			IApiUserServerModelMapper userModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiUserServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiUserResponseModel> response = await this.UserService.All(query.Limit, query.Offset);
+			List<ApiUserServerResponseModel> response = await this.UserService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace StackOverflowNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiUserResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiUserServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiUserResponseModel response = await this.UserService.Get(id);
+			ApiUserServerResponseModel response = await this.UserService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace StackOverflowNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiUserServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUserRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUserServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiUserResponseModel> records = new List<ApiUserResponseModel>();
+			List<ApiUserServerResponseModel> records = new List<ApiUserServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiUserResponseModel> result = await this.UserService.Create(model);
+				CreateResponse<ApiUserServerResponseModel> result = await this.UserService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace StackOverflowNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiUserServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiUserResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiUserServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiUserRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiUserServerRequestModel model)
 		{
-			CreateResponse<ApiUserResponseModel> result = await this.UserService.Create(model);
+			CreateResponse<ApiUserServerResponseModel> result = await this.UserService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiUserResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiUserServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiUserRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiUserServerRequestModel> patch)
 		{
-			ApiUserResponseModel record = await this.UserService.Get(id);
+			ApiUserServerResponseModel record = await this.UserService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiUserRequestModel model = await this.PatchModel(id, patch);
+				ApiUserServerRequestModel model = await this.PatchModel(id, patch) as ApiUserServerRequestModel;
 
-				UpdateResponse<ApiUserResponseModel> result = await this.UserService.Update(id, model);
+				UpdateResponse<ApiUserServerResponseModel> result = await this.UserService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace StackOverflowNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiUserResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiUserServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiUserRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiUserServerRequestModel model)
 		{
-			ApiUserRequestModel request = await this.PatchModel(id, this.UserModelMapper.CreatePatch(model));
+			ApiUserServerRequestModel request = await this.PatchModel(id, this.UserModelMapper.CreatePatch(model)) as ApiUserServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiUserResponseModel> result = await this.UserService.Update(id, request);
+				UpdateResponse<ApiUserServerResponseModel> result = await this.UserService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace StackOverflowNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.UserService.Delete(id);
@@ -206,7 +216,7 @@ namespace StackOverflowNS.Api.Web
 			}
 		}
 
-		private async Task<ApiUserRequestModel> PatchModel(int id, JsonPatchDocument<ApiUserRequestModel> patch)
+		private async Task<ApiUserServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiUserServerRequestModel> patch)
 		{
 			var record = await this.UserService.Get(id);
 
@@ -216,7 +226,7 @@ namespace StackOverflowNS.Api.Web
 			}
 			else
 			{
-				ApiUserRequestModel request = this.UserModelMapper.MapResponseToRequest(record);
+				ApiUserServerRequestModel request = this.UserModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b734b488d2bdcbec73e17e7848fa0681</Hash>
+    <Hash>7dde4d189f031aa6689c0f11967fcb78</Hash>
 </Codenesium>*/

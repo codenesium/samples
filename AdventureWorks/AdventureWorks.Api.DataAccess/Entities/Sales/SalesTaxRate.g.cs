@@ -32,31 +32,30 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SalesTaxRateID")]
-		public int SalesTaxRateID { get; private set; }
+		public virtual int SalesTaxRateID { get; private set; }
 
 		[Column("StateProvinceID")]
-		public int StateProvinceID { get; private set; }
+		public virtual int StateProvinceID { get; private set; }
 
 		[Column("TaxRate")]
-		public decimal TaxRate { get; private set; }
+		public virtual decimal TaxRate { get; private set; }
 
 		[Column("TaxType")]
-		public int TaxType { get; private set; }
+		public virtual int TaxType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7158abc0a8f773e954d202e1c1bd7ec8</Hash>
+    <Hash>b41e0dd234000146e779d83a2e283e0a</Hash>
 </Codenesium>*/

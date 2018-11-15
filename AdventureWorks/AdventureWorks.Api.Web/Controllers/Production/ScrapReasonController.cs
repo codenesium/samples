@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class ScrapReasonController : AbstractScrapReasonController
 	{
 		public ScrapReasonController(
@@ -25,7 +26,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<ScrapReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IScrapReasonService scrapReasonService,
-			IApiScrapReasonModelMapper scrapReasonModelMapper
+			IApiScrapReasonServerModelMapper scrapReasonModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7340a253922d203807002cfff15f5a61</Hash>
+    <Hash>bc1589a2cf5a86a6378bf6fde4c32bc4</Hash>
 </Codenesium>*/

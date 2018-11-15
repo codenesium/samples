@@ -1,4 +1,3 @@
-using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public virtual BOStudent MapModelToBO(
 			int id,
-			ApiStudentRequestModel model
+			ApiStudentServerRequestModel model
 			)
 		{
 			BOStudent boStudent = new BOStudent();
@@ -28,20 +27,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return boStudent;
 		}
 
-		public virtual ApiStudentResponseModel MapBOToModel(
+		public virtual ApiStudentServerResponseModel MapBOToModel(
 			BOStudent boStudent)
 		{
-			var model = new ApiStudentResponseModel();
+			var model = new ApiStudentServerResponseModel();
 
 			model.SetProperties(boStudent.Id, boStudent.Birthday, boStudent.Email, boStudent.EmailRemindersEnabled, boStudent.FamilyId, boStudent.FirstName, boStudent.IsAdult, boStudent.LastName, boStudent.Phone, boStudent.SmsRemindersEnabled, boStudent.UserId);
 
 			return model;
 		}
 
-		public virtual List<ApiStudentResponseModel> MapBOToModel(
+		public virtual List<ApiStudentServerResponseModel> MapBOToModel(
 			List<BOStudent> items)
 		{
-			List<ApiStudentResponseModel> response = new List<ApiStudentResponseModel>();
+			List<ApiStudentServerResponseModel> response = new List<ApiStudentServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -54,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>087324b509fd51e02aaa50d22bf3a5ce</Hash>
+    <Hash>f952b3e4460a01a86e6ca33416046506</Hash>
 </Codenesium>*/

@@ -44,51 +44,51 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BirthDate")]
-		public DateTime? BirthDate { get; private set; }
+		public virtual DateTime? BirthDate { get; private set; }
 
 		[Column("BusinessEntityID")]
-		public int BusinessEntityID { get; private set; }
+		public virtual int BusinessEntityID { get; private set; }
 
 		[Column("DateFirstPurchase")]
-		public DateTime? DateFirstPurchase { get; private set; }
+		public virtual DateTime? DateFirstPurchase { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Education")]
-		public string Education { get; private set; }
+		public virtual string Education { get; private set; }
 
 		[MaxLength(1)]
 		[Column("Gender")]
-		public string Gender { get; private set; }
+		public virtual string Gender { get; private set; }
 
 		[Column("HomeOwnerFlag")]
-		public bool? HomeOwnerFlag { get; private set; }
+		public virtual bool? HomeOwnerFlag { get; private set; }
 
 		[MaxLength(1)]
 		[Column("MaritalStatus")]
-		public string MaritalStatu { get; private set; }
+		public virtual string MaritalStatu { get; private set; }
 
 		[Column("NumberCarsOwned")]
-		public int? NumberCarsOwned { get; private set; }
+		public virtual int? NumberCarsOwned { get; private set; }
 
 		[Column("NumberChildrenAtHome")]
-		public int? NumberChildrenAtHome { get; private set; }
+		public virtual int? NumberChildrenAtHome { get; private set; }
 
 		[MaxLength(30)]
 		[Column("Occupation")]
-		public string Occupation { get; private set; }
+		public virtual string Occupation { get; private set; }
 
 		[Column("TotalChildren")]
-		public int? TotalChildren { get; private set; }
+		public virtual int? TotalChildren { get; private set; }
 
 		[Column("TotalPurchaseYTD")]
-		public decimal? TotalPurchaseYTD { get; private set; }
+		public virtual decimal? TotalPurchaseYTD { get; private set; }
 
 		[MaxLength(30)]
 		[Column("YearlyIncome")]
-		public string YearlyIncome { get; private set; }
+		public virtual string YearlyIncome { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>385b46a603d52071b4de151ac07d8a12</Hash>
+    <Hash>45afc92171718954226a79a2123a5965</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace PetStoreNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class BreedController : AbstractBreedController
 	{
 		public BreedController(
@@ -25,7 +26,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<BreedController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBreedService breedService,
-			IApiBreedModelMapper breedModelMapper
+			IApiBreedServerModelMapper breedModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6dd7fda7de28c849c65942b32fde6508</Hash>
+    <Hash>4cfe973ab80eaa3aa3db1f41ff25ece8</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual BOShipMethod MapModelToBO(
 			int shipMethodID,
-			ApiShipMethodRequestModel model
+			ApiShipMethodServerRequestModel model
 			)
 		{
 			BOShipMethod boShipMethod = new BOShipMethod();
@@ -23,20 +22,20 @@ namespace AdventureWorksNS.Api.Services
 			return boShipMethod;
 		}
 
-		public virtual ApiShipMethodResponseModel MapBOToModel(
+		public virtual ApiShipMethodServerResponseModel MapBOToModel(
 			BOShipMethod boShipMethod)
 		{
-			var model = new ApiShipMethodResponseModel();
+			var model = new ApiShipMethodServerResponseModel();
 
 			model.SetProperties(boShipMethod.ShipMethodID, boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipRate);
 
 			return model;
 		}
 
-		public virtual List<ApiShipMethodResponseModel> MapBOToModel(
+		public virtual List<ApiShipMethodServerResponseModel> MapBOToModel(
 			List<BOShipMethod> items)
 		{
-			List<ApiShipMethodResponseModel> response = new List<ApiShipMethodResponseModel>();
+			List<ApiShipMethodServerResponseModel> response = new List<ApiShipMethodServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bfc02e2de59a280bafcd45a4f1f7a372</Hash>
+    <Hash>3f65a003ea43f286018409c5b9f4083c</Hash>
 </Codenesium>*/

@@ -1,4 +1,3 @@
-using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,14 +8,14 @@ namespace PetShippingNS.Api.Services
 	{
 		public virtual BOSale MapModelToBO(
 			int id,
-			ApiSaleRequestModel model
+			ApiSaleServerRequestModel model
 			)
 		{
 			BOSale boSale = new BOSale();
 			boSale.SetProperties(
 				id,
 				model.Amount,
-				model.ClientId,
+				model.CutomerId,
 				model.Note,
 				model.PetId,
 				model.SaleDate,
@@ -24,20 +23,20 @@ namespace PetShippingNS.Api.Services
 			return boSale;
 		}
 
-		public virtual ApiSaleResponseModel MapBOToModel(
+		public virtual ApiSaleServerResponseModel MapBOToModel(
 			BOSale boSale)
 		{
-			var model = new ApiSaleResponseModel();
+			var model = new ApiSaleServerResponseModel();
 
-			model.SetProperties(boSale.Id, boSale.Amount, boSale.ClientId, boSale.Note, boSale.PetId, boSale.SaleDate, boSale.SalesPersonId);
+			model.SetProperties(boSale.Id, boSale.Amount, boSale.CutomerId, boSale.Note, boSale.PetId, boSale.SaleDate, boSale.SalesPersonId);
 
 			return model;
 		}
 
-		public virtual List<ApiSaleResponseModel> MapBOToModel(
+		public virtual List<ApiSaleServerResponseModel> MapBOToModel(
 			List<BOSale> items)
 		{
-			List<ApiSaleResponseModel> response = new List<ApiSaleResponseModel>();
+			List<ApiSaleServerResponseModel> response = new List<ApiSaleServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -50,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc37106956d0de2f0bdc0afe43d14969</Hash>
+    <Hash>3645704656e8e26871c4789b1ab53ca9</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLVoteTypeMapper();
-			ApiVoteTypeRequestModel model = new ApiVoteTypeRequestModel();
+			ApiVoteTypeServerRequestModel model = new ApiVoteTypeServerRequestModel();
 			model.SetProperties("A");
 			BOVoteType response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLVoteTypeMapper();
 			BOVoteType bo = new BOVoteType();
 			bo.SetProperties(1, "A");
-			ApiVoteTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiVoteTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLVoteTypeMapper();
 			BOVoteType bo = new BOVoteType();
 			bo.SetProperties(1, "A");
-			List<ApiVoteTypeResponseModel> response = mapper.MapBOToModel(new List<BOVoteType>() { { bo } });
+			List<ApiVoteTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOVoteType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>167f6bd1627b79ab5d3936252071353e</Hash>
+    <Hash>7fc90e22c844d6095d0051c2d72fe1aa</Hash>
 </Codenesium>*/

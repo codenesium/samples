@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -9,26 +8,26 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface IProvinceService
 	{
-		Task<CreateResponse<ApiProvinceResponseModel>> Create(
-			ApiProvinceRequestModel model);
+		Task<CreateResponse<ApiProvinceServerResponseModel>> Create(
+			ApiProvinceServerRequestModel model);
 
-		Task<UpdateResponse<ApiProvinceResponseModel>> Update(int id,
-		                                                       ApiProvinceRequestModel model);
+		Task<UpdateResponse<ApiProvinceServerResponseModel>> Update(int id,
+		                                                             ApiProvinceServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiProvinceResponseModel> Get(int id);
+		Task<ApiProvinceServerResponseModel> Get(int id);
 
-		Task<List<ApiProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProvinceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProvinceResponseModel>> ByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProvinceServerResponseModel>> ByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCityResponseModel>> CitiesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCityServerResponseModel>> CitiesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiVenueResponseModel>> VenuesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueServerResponseModel>> VenuesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d72e81bfde0457a3942aaed8699424c5</Hash>
+    <Hash>175d85fbafc5f63f45e71bf4d9c00363</Hash>
 </Codenesium>*/

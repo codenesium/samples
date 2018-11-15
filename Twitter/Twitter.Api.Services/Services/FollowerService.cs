@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,19 +9,19 @@ namespace TwitterNS.Api.Services
 		public FollowerService(
 			ILogger<IFollowerRepository> logger,
 			IFollowerRepository followerRepository,
-			IApiFollowerRequestModelValidator followerModelValidator,
-			IBOLFollowerMapper bolfollowerMapper,
-			IDALFollowerMapper dalfollowerMapper)
+			IApiFollowerServerRequestModelValidator followerModelValidator,
+			IBOLFollowerMapper bolFollowerMapper,
+			IDALFollowerMapper dalFollowerMapper)
 			: base(logger,
 			       followerRepository,
 			       followerModelValidator,
-			       bolfollowerMapper,
-			       dalfollowerMapper)
+			       bolFollowerMapper,
+			       dalFollowerMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>adadf42ace19a3e3eb3ef73a62b82cf2</Hash>
+    <Hash>00a4f4501d32bf587abf09ae685cab51</Hash>
 </Codenesium>*/

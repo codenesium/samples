@@ -9,16 +9,16 @@ namespace StackOverflowNS.Api.Services
 	{
 		BOPost MapModelToBO(
 			int id,
-			ApiPostRequestModel model);
+			ApiPostServerRequestModel model);
 
-		ApiPostResponseModel MapBOToModel(
+		ApiPostServerResponseModel MapBOToModel(
 			BOPost boPost);
 
-		List<ApiPostResponseModel> MapBOToModel(
+		List<ApiPostServerResponseModel> MapBOToModel(
 			List<BOPost> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>216053bde7b712536643c3648966995f</Hash>
+    <Hash>79e248a52a806823212c2421821ef0f4</Hash>
 </Codenesium>*/

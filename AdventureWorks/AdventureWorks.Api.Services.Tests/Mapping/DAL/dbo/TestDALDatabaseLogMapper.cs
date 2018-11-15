@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 			DatabaseLog response = mapper.MapBOToEF(bo);
 
-			response.DatabaseLogID.Should().Be(1);
-			response.DatabaseUser.Should().Be("A");
 			response.@Event.Should().Be("A");
 			response.@Object.Should().Be("A");
+			response.DatabaseLogID.Should().Be(1);
+			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
 			response.Tsql.Should().Be("A");
@@ -36,14 +36,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new DALDatabaseLogMapper();
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			entity.SetProperties("A", "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
 			BODatabaseLog response = mapper.MapEFToBO(entity);
 
-			response.DatabaseLogID.Should().Be(1);
-			response.DatabaseUser.Should().Be("A");
 			response.@Event.Should().Be("A");
 			response.@Object.Should().Be("A");
+			response.DatabaseLogID.Should().Be(1);
+			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
 			response.Tsql.Should().Be("A");
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new DALDatabaseLogMapper();
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			entity.SetProperties("A", "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
 			List<BODatabaseLog> response = mapper.MapEFToBO(new List<DatabaseLog>() { entity });
 
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>50726207e31c6defa6c7da4bc970ef1d</Hash>
+    <Hash>7b5fdc6b51f9354ecdf8fd67fcd62a36</Hash>
 </Codenesium>*/

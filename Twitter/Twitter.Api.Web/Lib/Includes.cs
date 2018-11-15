@@ -266,25 +266,6 @@ namespace Codenesium.Foundation.CommonMVC
             actionContext.HttpContext.Response.Headers.Add("x-time-elapsed", stopwatch.Elapsed.ToString());
         }
     }
-  
-    public class ResponseAttribute : ActionFilterAttribute
-    {
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            if (context.Result is OkObjectResult)
-            {
-                OkObjectResult result = context.Result as OkObjectResult;
-                if (result.Value is ApiResponse)
-                {
-                    var response = result.Value as ApiResponse;
-                    response.DisableSerializationOfEmptyFields();
-                    context.Result = new OkObjectResult(response);
-                }
-            }
-
-            base.OnActionExecuted(context);
-        }
-    }
 
     /// <summary>
     /// This filter helps api versioning work with swagger

@@ -26,20 +26,20 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BusinessEntityID")]
-		public int? BusinessEntityID { get; private set; }
+		public virtual int? BusinessEntityID { get; private set; }
 
 		[Key]
 		[Column("JobCandidateID")]
-		public int JobCandidateID { get; private set; }
+		public virtual int JobCandidateID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("Resume")]
-		public string Resume { get; private set; }
+		public virtual string Resume { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd52ed0a70b36c8189d4766cb2004043</Hash>
+    <Hash>75a38a7c19686e04ccb5c4ed36d13823</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOTestAllFieldTypesNullable MapModelToBO(
 			int id,
-			ApiTestAllFieldTypesNullableRequestModel model
+			ApiTestAllFieldTypesNullableServerRequestModel model
 			)
 		{
 			BOTestAllFieldTypesNullable boTestAllFieldTypesNullable = new BOTestAllFieldTypesNullable();
@@ -46,20 +45,20 @@ namespace TestsNS.Api.Services
 			return boTestAllFieldTypesNullable;
 		}
 
-		public virtual ApiTestAllFieldTypesNullableResponseModel MapBOToModel(
+		public virtual ApiTestAllFieldTypesNullableServerResponseModel MapBOToModel(
 			BOTestAllFieldTypesNullable boTestAllFieldTypesNullable)
 		{
-			var model = new ApiTestAllFieldTypesNullableResponseModel();
+			var model = new ApiTestAllFieldTypesNullableServerResponseModel();
 
 			model.SetProperties(boTestAllFieldTypesNullable.Id, boTestAllFieldTypesNullable.FieldBigInt, boTestAllFieldTypesNullable.FieldBinary, boTestAllFieldTypesNullable.FieldBit, boTestAllFieldTypesNullable.FieldChar, boTestAllFieldTypesNullable.FieldDate, boTestAllFieldTypesNullable.FieldDateTime, boTestAllFieldTypesNullable.FieldDateTime2, boTestAllFieldTypesNullable.FieldDateTimeOffset, boTestAllFieldTypesNullable.FieldDecimal, boTestAllFieldTypesNullable.FieldFloat, boTestAllFieldTypesNullable.FieldImage, boTestAllFieldTypesNullable.FieldMoney, boTestAllFieldTypesNullable.FieldNChar, boTestAllFieldTypesNullable.FieldNText, boTestAllFieldTypesNullable.FieldNumeric, boTestAllFieldTypesNullable.FieldNVarchar, boTestAllFieldTypesNullable.FieldReal, boTestAllFieldTypesNullable.FieldSmallDateTime, boTestAllFieldTypesNullable.FieldSmallInt, boTestAllFieldTypesNullable.FieldSmallMoney, boTestAllFieldTypesNullable.FieldText, boTestAllFieldTypesNullable.FieldTime, boTestAllFieldTypesNullable.FieldTimestamp, boTestAllFieldTypesNullable.FieldTinyInt, boTestAllFieldTypesNullable.FieldUniqueIdentifier, boTestAllFieldTypesNullable.FieldVarBinary, boTestAllFieldTypesNullable.FieldVarchar, boTestAllFieldTypesNullable.FieldXML);
 
 			return model;
 		}
 
-		public virtual List<ApiTestAllFieldTypesNullableResponseModel> MapBOToModel(
+		public virtual List<ApiTestAllFieldTypesNullableServerResponseModel> MapBOToModel(
 			List<BOTestAllFieldTypesNullable> items)
 		{
-			List<ApiTestAllFieldTypesNullableResponseModel> response = new List<ApiTestAllFieldTypesNullableResponseModel>();
+			List<ApiTestAllFieldTypesNullableServerResponseModel> response = new List<ApiTestAllFieldTypesNullableServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -72,5 +71,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f73385d8534b80d74444a3665e408c5f</Hash>
+    <Hash>e9878c2ed017ae27d4b9b81a0b6f17ba</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace TicketingCRMNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class CityController : AbstractCityController
 	{
 		public CityController(
@@ -25,7 +26,7 @@ namespace TicketingCRMNS.Api.Web
 			ILogger<CityController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICityService cityService,
-			IApiCityModelMapper cityModelMapper
+			IApiCityServerModelMapper cityModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c6ea09a47d7b76d0c2dc60efb87ef6c6</Hash>
+    <Hash>4051c67e9b3c6b020aeb2b9463687256</Hash>
 </Codenesium>*/

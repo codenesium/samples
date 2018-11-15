@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StudioResourceManagerNS.Api.Services
 {
@@ -16,9 +9,9 @@ namespace StudioResourceManagerNS.Api.Services
 		public UserService(
 			ILogger<IUserRepository> logger,
 			IUserRepository userRepository,
-			IApiUserRequestModelValidator userModelValidator,
-			IBOLUserMapper boluserMapper,
-			IDALUserMapper daluserMapper,
+			IApiUserServerRequestModelValidator userModelValidator,
+			IBOLUserMapper bolUserMapper,
+			IDALUserMapper dalUserMapper,
 			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper,
 			IBOLStudentMapper bolStudentMapper,
@@ -28,8 +21,8 @@ namespace StudioResourceManagerNS.Api.Services
 			: base(logger,
 			       userRepository,
 			       userModelValidator,
-			       boluserMapper,
-			       daluserMapper,
+			       bolUserMapper,
+			       dalUserMapper,
 			       bolAdminMapper,
 			       dalAdminMapper,
 			       bolStudentMapper,
@@ -42,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be7010d0307f9f22c3d08a630df6f2c9</Hash>
+    <Hash>d800a80e749c734b60788c73a64fd7f3</Hash>
 </Codenesium>*/

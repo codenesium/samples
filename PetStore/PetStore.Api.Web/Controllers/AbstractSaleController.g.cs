@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Web
 	{
 		protected ISaleService SaleService { get; private set; }
 
-		protected IApiSaleModelMapper SaleModelMapper { get; private set; }
+		protected IApiSaleServerModelMapper SaleModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Web
 			ILogger<AbstractSaleController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISaleService saleService,
-			IApiSaleModelMapper saleModelMapper
+			IApiSaleServerModelMapper saleModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSaleResponseModel> response = await this.SaleService.All(query.Limit, query.Offset);
+			List<ApiSaleServerResponseModel> response = await this.SaleService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace PetStoreNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSaleServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSaleResponseModel response = await this.SaleService.Get(id);
+			ApiSaleServerResponseModel response = await this.SaleService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace PetStoreNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSaleServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSaleRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSaleServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSaleResponseModel> records = new List<ApiSaleResponseModel>();
+			List<ApiSaleServerResponseModel> records = new List<ApiSaleServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSaleResponseModel> result = await this.SaleService.Create(model);
+				CreateResponse<ApiSaleServerResponseModel> result = await this.SaleService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace PetStoreNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSaleServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSaleResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSaleServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSaleRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSaleServerRequestModel model)
 		{
-			CreateResponse<ApiSaleResponseModel> result = await this.SaleService.Create(model);
+			CreateResponse<ApiSaleServerResponseModel> result = await this.SaleService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSaleServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSaleRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSaleServerRequestModel> patch)
 		{
-			ApiSaleResponseModel record = await this.SaleService.Get(id);
+			ApiSaleServerResponseModel record = await this.SaleService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiSaleRequestModel model = await this.PatchModel(id, patch);
+				ApiSaleServerRequestModel model = await this.PatchModel(id, patch) as ApiSaleServerRequestModel;
 
-				UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, model);
+				UpdateResponse<ApiSaleServerResponseModel> result = await this.SaleService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace PetStoreNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSaleResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSaleServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleServerRequestModel model)
 		{
-			ApiSaleRequestModel request = await this.PatchModel(id, this.SaleModelMapper.CreatePatch(model));
+			ApiSaleServerRequestModel request = await this.PatchModel(id, this.SaleModelMapper.CreatePatch(model)) as ApiSaleServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSaleResponseModel> result = await this.SaleService.Update(id, request);
+				UpdateResponse<ApiSaleServerResponseModel> result = await this.SaleService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace PetStoreNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SaleService.Delete(id);
@@ -206,7 +216,7 @@ namespace PetStoreNS.Api.Web
 			}
 		}
 
-		private async Task<ApiSaleRequestModel> PatchModel(int id, JsonPatchDocument<ApiSaleRequestModel> patch)
+		private async Task<ApiSaleServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSaleServerRequestModel> patch)
 		{
 			var record = await this.SaleService.Get(id);
 
@@ -216,7 +226,7 @@ namespace PetStoreNS.Api.Web
 			}
 			else
 			{
-				ApiSaleRequestModel request = this.SaleModelMapper.MapResponseToRequest(record);
+				ApiSaleServerRequestModel request = this.SaleModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>60290dd2fb06fb8d4aa32598c514b69b</Hash>
+    <Hash>9101e4342411a69ba0658fe2c860d076</Hash>
 </Codenesium>*/

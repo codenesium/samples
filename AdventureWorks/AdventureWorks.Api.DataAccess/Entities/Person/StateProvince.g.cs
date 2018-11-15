@@ -35,35 +35,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[MaxLength(3)]
 		[Column("CountryRegionCode")]
-		public string CountryRegionCode { get; private set; }
+		public virtual string CountryRegionCode { get; private set; }
 
 		[Column("IsOnlyStateProvinceFlag")]
-		public bool IsOnlyStateProvinceFlag { get; private set; }
+		public virtual bool IsOnlyStateProvinceFlag { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[MaxLength(3)]
 		[Column("StateProvinceCode")]
-		public string StateProvinceCode { get; private set; }
+		public virtual string StateProvinceCode { get; private set; }
 
 		[Key]
 		[Column("StateProvinceID")]
-		public int StateProvinceID { get; private set; }
+		public virtual int StateProvinceID { get; private set; }
 
 		[Column("TerritoryID")]
-		public int TerritoryID { get; private set; }
+		public virtual int TerritoryID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6aa06faff504f6569ace54ecd579b17b</Hash>
+    <Hash>c61ff7ce72115b6fe9d8d7f15b937fed</Hash>
 </Codenesium>*/

@@ -1,11 +1,4 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
@@ -16,16 +9,16 @@ namespace TwitterNS.Api.Services
 		public MessageService(
 			ILogger<IMessageRepository> logger,
 			IMessageRepository messageRepository,
-			IApiMessageRequestModelValidator messageModelValidator,
-			IBOLMessageMapper bolmessageMapper,
-			IDALMessageMapper dalmessageMapper,
+			IApiMessageServerRequestModelValidator messageModelValidator,
+			IBOLMessageMapper bolMessageMapper,
+			IDALMessageMapper dalMessageMapper,
 			IBOLMessengerMapper bolMessengerMapper,
 			IDALMessengerMapper dalMessengerMapper)
 			: base(logger,
 			       messageRepository,
 			       messageModelValidator,
-			       bolmessageMapper,
-			       dalmessageMapper,
+			       bolMessageMapper,
+			       dalMessageMapper,
 			       bolMessengerMapper,
 			       dalMessengerMapper)
 		{
@@ -34,5 +27,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1630a2d458ffcb23bc8059e462ed4de3</Hash>
+    <Hash>032da9d0ea8dc9f115fff8698f36201d</Hash>
 </Codenesium>*/

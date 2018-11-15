@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class PostHistoryController : AbstractPostHistoryController
 	{
 		public PostHistoryController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<PostHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPostHistoryService postHistoryService,
-			IApiPostHistoryModelMapper postHistoryModelMapper
+			IApiPostHistoryServerModelMapper postHistoryModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>60f4b4f73b97d05a12d8fc6373031e2b</Hash>
+    <Hash>89cac5fcabd3fc514d569d8e8d2a1af1</Hash>
 </Codenesium>*/

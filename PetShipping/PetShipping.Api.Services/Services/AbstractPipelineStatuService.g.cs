@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected IPipelineStatuRepository PipelineStatuRepository { get; private set; }
 
-		protected IApiPipelineStatuRequestModelValidator PipelineStatuModelValidator { get; private set; }
+		protected IApiPipelineStatuServerRequestModelValidator PipelineStatuModelValidator { get; private set; }
 
 		protected IBOLPipelineStatuMapper BolPipelineStatuMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractPipelineStatuService(
 			ILogger logger,
 			IPipelineStatuRepository pipelineStatuRepository,
-			IApiPipelineStatuRequestModelValidator pipelineStatuModelValidator,
+			IApiPipelineStatuServerRequestModelValidator pipelineStatuModelValidator,
 			IBOLPipelineStatuMapper bolPipelineStatuMapper,
 			IDALPipelineStatuMapper dalPipelineStatuMapper,
 			IBOLPipelineMapper bolPipelineMapper,
@@ -47,14 +42,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPipelineStatuResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PipelineStatuRepository.All(limit, offset);
 
 			return this.BolPipelineStatuMapper.MapBOToModel(this.DalPipelineStatuMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPipelineStatuResponseModel> Get(int id)
+		public virtual async Task<ApiPipelineStatuServerResponseModel> Get(int id)
 		{
 			var record = await this.PipelineStatuRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStatuResponseModel>> Create(
-			ApiPipelineStatuRequestModel model)
+		public virtual async Task<CreateResponse<ApiPipelineStatuServerResponseModel>> Create(
+			ApiPipelineStatuServerRequestModel model)
 		{
-			CreateResponse<ApiPipelineStatuResponseModel> response = new CreateResponse<ApiPipelineStatuResponseModel>(await this.PipelineStatuModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPipelineStatuServerResponseModel> response = ValidationResponseFactory<ApiPipelineStatuServerResponseModel>.CreateResponse(await this.PipelineStatuModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPipelineStatuMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineStatuResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPipelineStatuServerResponseModel>> Update(
 			int id,
-			ApiPipelineStatuRequestModel model)
+			ApiPipelineStatuServerRequestModel model)
 		{
 			var validationResult = await this.PipelineStatuModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.PipelineStatuRepository.Get(id);
 
-				return new UpdateResponse<ApiPipelineStatuResponseModel>(this.BolPipelineStatuMapper.MapBOToModel(this.DalPipelineStatuMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPipelineStatuServerResponseModel>.UpdateResponse(this.BolPipelineStatuMapper.MapBOToModel(this.DalPipelineStatuMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPipelineStatuResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPipelineStatuServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.PipelineStatuModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PipelineStatuModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.PipelineStatuRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiPipelineResponseModel>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineServerResponseModel>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Pipeline> records = await this.PipelineStatuRepository.PipelinesByPipelineStatusId(pipelineStatusId, limit, offset);
 
@@ -126,5 +123,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cdcfcb00a676681e8c54db82ce7608d9</Hash>
+    <Hash>3187cbce747db689fc539345c740b60e</Hash>
 </Codenesium>*/

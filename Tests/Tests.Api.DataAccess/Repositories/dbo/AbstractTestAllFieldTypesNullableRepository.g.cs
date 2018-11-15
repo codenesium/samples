@@ -80,22 +80,14 @@ namespace TestsNS.Api.DataAccess
 			Expression<Func<TestAllFieldTypesNullable, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<TestAllFieldTypesNullable, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<TestAllFieldTypesNullable, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<TestAllFieldTypesNullable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldTypesNullable>();
-			}
-			else
-			{
-				return await this.Context.Set<TestAllFieldTypesNullable>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldTypesNullable>();
-			}
+			return await this.Context.Set<TestAllFieldTypesNullable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldTypesNullable>();
 		}
 
 		private async Task<TestAllFieldTypesNullable> GetById(int id)
@@ -108,5 +100,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>61b0cfcd238327b2883a82d428464741</Hash>
+    <Hash>a2debe334729ebfd219393a44af86b98</Hash>
 </Codenesium>*/

@@ -18,6 +18,7 @@ namespace NebulaNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class MachineController : AbstractMachineController
 	{
 		public MachineController(
@@ -25,7 +26,7 @@ namespace NebulaNS.Api.Web
 			ILogger<MachineController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IMachineService machineService,
-			IApiMachineModelMapper machineModelMapper
+			IApiMachineServerModelMapper machineModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>424f34dbdea196485f2c6291da27103a</Hash>
+    <Hash>0c19bf88f5ecca71ef3919b5ea31a0fe</Hash>
 </Codenesium>*/

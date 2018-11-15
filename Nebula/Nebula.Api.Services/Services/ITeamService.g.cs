@@ -2,33 +2,30 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
 	public partial interface ITeamService
 	{
-		Task<CreateResponse<ApiTeamResponseModel>> Create(
-			ApiTeamRequestModel model);
+		Task<CreateResponse<ApiTeamServerResponseModel>> Create(
+			ApiTeamServerRequestModel model);
 
-		Task<UpdateResponse<ApiTeamResponseModel>> Update(int id,
-		                                                   ApiTeamRequestModel model);
+		Task<UpdateResponse<ApiTeamServerResponseModel>> Update(int id,
+		                                                         ApiTeamServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiTeamResponseModel> Get(int id);
+		Task<ApiTeamServerResponseModel> Get(int id);
 
-		Task<List<ApiTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeamServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiTeamResponseModel> ByName(string name);
+		Task<ApiTeamServerResponseModel> ByName(string name);
 
-		Task<List<ApiChainResponseModel>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTeamResponseModel>> ByMachineId(int teamId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeamServerResponseModel>> ByChainStatusId(int teamId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c42a17d0f0413988027d4606ee7f76ab</Hash>
+    <Hash>33c8a3b50ad7922a0d89778eee49601b</Hash>
 </Codenesium>*/

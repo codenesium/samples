@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
-			List<ApiSpecialOfferResponseModel> response = await service.All();
+			List<ApiSpecialOfferServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
-			ApiSpecialOfferResponseModel response = await service.Get(default(int));
+			ApiSpecialOfferServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
-			ApiSpecialOfferResponseModel response = await service.Get(default(int));
+			ApiSpecialOfferServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
-			var model = new ApiSpecialOfferRequestModel();
+			var model = new ApiSpecialOfferServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SpecialOffer>())).Returns(Task.FromResult(new SpecialOffer()));
 			var service = new SpecialOfferService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
-			CreateResponse<ApiSpecialOfferResponseModel> response = await service.Create(model);
+			CreateResponse<ApiSpecialOfferServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpecialOfferServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SpecialOffer>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
-			var model = new ApiSpecialOfferRequestModel();
+			var model = new ApiSpecialOfferServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SpecialOffer>())).Returns(Task.FromResult(new SpecialOffer()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
 			var service = new SpecialOfferService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
-			UpdateResponse<ApiSpecialOfferResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiSpecialOfferServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpecialOfferRequestModel>()));
+			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpecialOfferServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SpecialOffer>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
-			var model = new ApiSpecialOfferRequestModel();
+			var model = new ApiSpecialOfferServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SpecialOfferService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -129,9 +129,44 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByRowguid_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
+			var record = new SpecialOffer();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new SpecialOfferService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
+
+			ApiSpecialOfferServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByRowguid_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
+			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<SpecialOffer>(null));
+			var service = new SpecialOfferService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
+
+			ApiSpecialOfferServerResponseModel response = await service.ByRowguid(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByRowguid(It.IsAny<Guid>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25db8811df9fc944c9d7db2cbda7e31b</Hash>
+    <Hash>d7f8b31649e3e379d3170de318a48db1</Hash>
 </Codenesium>*/

@@ -23,14 +23,14 @@ namespace PetShippingNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbf5b3e12e09c73ce5aea3d6d4cabcfd</Hash>
+    <Hash>a7afd14e710a8ae953deb611d0debf6f</Hash>
 </Codenesium>*/

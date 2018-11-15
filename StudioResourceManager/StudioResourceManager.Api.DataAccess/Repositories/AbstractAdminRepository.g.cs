@@ -76,6 +76,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Where(x => x.UserId == userId, limit, offset);
+		}
+
 		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
@@ -85,22 +90,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Expression<Func<Admin, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Admin, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Admin, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
-			}
-			else
-			{
-				return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
-			}
+			return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		private async Task<Admin> GetById(int id)
@@ -113,5 +110,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f61c3187cfb4c4a5285bb7929947ac28</Hash>
+    <Hash>243bb92d873224657c0754705090635c</Hash>
 </Codenesium>*/

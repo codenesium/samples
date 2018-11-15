@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			var record = new ApiBreedResponseModel();
-			var records = new List<ApiBreedResponseModel>();
+			var record = new ApiBreedServerResponseModel();
+			var records = new List<ApiBreedServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBreedResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBreedServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBreedResponseModel>>(new List<ApiBreedResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBreedServerResponseModel>>(new List<ApiBreedServerResponseModel>()));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiBreedResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiBreedServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedServerResponseModel()));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiBreedResponseModel;
+			var record = (response as OkObjectResult).Value as ApiBreedServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedServerResponseModel>(null));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBreedResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBreedResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBreedServerResponseModel>.CreateResponse(null as ApiBreedServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBreedServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedServerResponseModel>>(mockResponse));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBreedRequestModel>();
-			records.Add(new ApiBreedRequestModel());
+			var records = new List<ApiBreedServerRequestModel>();
+			records.Add(new ApiBreedServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiBreedResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiBreedServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBreedResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiBreedServerResponseModel>>(null as ApiBreedServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedServerResponseModel>>(mockResponse.Object));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiBreedRequestModel>();
-			records.Add(new ApiBreedRequestModel());
+			var records = new List<ApiBreedServerRequestModel>();
+			records.Add(new ApiBreedServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiBreedResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiBreedResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiBreedServerResponseModel>.CreateResponse(null as ApiBreedServerResponseModel);
+
+			mockResponse.SetRecord(new ApiBreedServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedServerResponseModel>>(mockResponse));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBreedRequestModel());
+			IActionResult response = await controller.Create(new ApiBreedServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBreedResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiBreedServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiBreedResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiBreedResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiBreedServerResponseModel>>(null as ApiBreedServerResponseModel);
+			var mockRecord = new ApiBreedServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiBreedServerResponseModel>>(mockResponse.Object));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiBreedRequestModel());
+			IActionResult response = await controller.Create(new ApiBreedServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBreedResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBreedServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>()))
-			.Callback<int, ApiBreedRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()))
+			.Callback<int, ApiBreedServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiBreedResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedResponseModel>(new ApiBreedResponseModel()));
-			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiBreedServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedServerResponseModel>(new ApiBreedServerResponseModel()));
+			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBreedRequestModel>();
+			var patch = new JsonPatchDocument<ApiBreedServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedServerResponseModel>(null));
 			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiBreedRequestModel>();
+			var patch = new JsonPatchDocument<ApiBreedServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBreedResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBreedServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedResponseModel()));
-			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedServerResponseModel()));
+			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBreedRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBreedServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBreedResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBreedServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedResponseModel()));
-			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiBreedServerResponseModel()));
+			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBreedRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBreedServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			BreedControllerMockFacade mock = new BreedControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiBreedResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiBreedServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedResponseModel>(null));
-			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiBreedServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiBreedServerResponseModel>(null));
+			BreedController controller = new BreedController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiBreedServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiBreedRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiBreedServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<IBreedService> ServiceMock { get; set; } = new Mock<IBreedService>();
 
-		public Mock<IApiBreedModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBreedModelMapper>();
+		public Mock<IApiBreedServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiBreedServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8dd64b2b1a34aad299d9a61567c8f82</Hash>
+    <Hash>ec1c34d7463a5c76b509b16363b183dd</Hash>
 </Codenesium>*/

@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			var record = new ApiSpeciesResponseModel();
-			var records = new List<ApiSpeciesResponseModel>();
+			var record = new ApiSpeciesServerResponseModel();
+			var records = new List<ApiSpeciesServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpeciesResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpeciesServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpeciesResponseModel>>(new List<ApiSpeciesResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSpeciesServerResponseModel>>(new List<ApiSpeciesServerResponseModel>()));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSpeciesResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSpeciesServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesServerResponseModel()));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSpeciesResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSpeciesServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesServerResponseModel>(null));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpeciesResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpeciesResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpeciesServerResponseModel>.CreateResponse(null as ApiSpeciesServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpeciesServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesServerResponseModel>>(mockResponse));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpeciesRequestModel>();
-			records.Add(new ApiSpeciesRequestModel());
+			var records = new List<ApiSpeciesServerRequestModel>();
+			records.Add(new ApiSpeciesServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSpeciesResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSpeciesServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpeciesResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSpeciesServerResponseModel>>(null as ApiSpeciesServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesServerResponseModel>>(mockResponse.Object));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSpeciesRequestModel>();
-			records.Add(new ApiSpeciesRequestModel());
+			var records = new List<ApiSpeciesServerRequestModel>();
+			records.Add(new ApiSpeciesServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSpeciesResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSpeciesResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSpeciesServerResponseModel>.CreateResponse(null as ApiSpeciesServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSpeciesServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesServerResponseModel>>(mockResponse));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpeciesRequestModel());
+			IActionResult response = await controller.Create(new ApiSpeciesServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpeciesResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSpeciesServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSpeciesResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSpeciesResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSpeciesServerResponseModel>>(null as ApiSpeciesServerResponseModel);
+			var mockRecord = new ApiSpeciesServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSpeciesServerResponseModel>>(mockResponse.Object));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSpeciesRequestModel());
+			IActionResult response = await controller.Create(new ApiSpeciesServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpeciesResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpeciesServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>()))
-			.Callback<int, ApiSpeciesRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>()))
+			.Callback<int, ApiSpeciesServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSpeciesResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesResponseModel>(new ApiSpeciesResponseModel()));
-			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSpeciesServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesServerResponseModel>(new ApiSpeciesServerResponseModel()));
+			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpeciesRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpeciesServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesServerResponseModel>(null));
 			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSpeciesRequestModel>();
+			var patch = new JsonPatchDocument<ApiSpeciesServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpeciesResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpeciesServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesResponseModel()));
-			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesServerResponseModel()));
+			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpeciesRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpeciesServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpeciesResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpeciesServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesResponseModel()));
-			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSpeciesServerResponseModel()));
+			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpeciesRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpeciesServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SpeciesControllerMockFacade mock = new SpeciesControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSpeciesResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSpeciesServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesResponseModel>(null));
-			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSpeciesServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSpeciesServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSpeciesServerResponseModel>(null));
+			SpeciesController controller = new SpeciesController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSpeciesServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSpeciesRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSpeciesServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<ISpeciesService> ServiceMock { get; set; } = new Mock<ISpeciesService>();
 
-		public Mock<IApiSpeciesModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpeciesModelMapper>();
+		public Mock<IApiSpeciesServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSpeciesServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>4644eb3bf2a07e39b5175e7e32ba3f74</Hash>
+    <Hash>d0d714aeaea34efc2983eff82ff19f96</Hash>
 </Codenesium>*/

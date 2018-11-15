@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOCreditCard MapModelToBO(
 			int creditCardID,
-			ApiCreditCardRequestModel model);
+			ApiCreditCardServerRequestModel model);
 
-		ApiCreditCardResponseModel MapBOToModel(
+		ApiCreditCardServerResponseModel MapBOToModel(
 			BOCreditCard boCreditCard);
 
-		List<ApiCreditCardResponseModel> MapBOToModel(
+		List<ApiCreditCardServerResponseModel> MapBOToModel(
 			List<BOCreditCard> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c0d63b565c95d4ada35a832c482a9b5</Hash>
+    <Hash>9b3175b71c018e131d85ed176f655d83</Hash>
 </Codenesium>*/

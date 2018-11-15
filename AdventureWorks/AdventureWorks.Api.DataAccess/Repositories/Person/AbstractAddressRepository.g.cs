@@ -76,41 +76,33 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+		public async virtual Task<Address> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<Address>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
+		public async virtual Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
 			return await this.Context.Set<Address>().SingleOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 		}
 
-		public async Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.StateProvinceID == stateProvinceID, limit, offset);
-		}
-
-		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressID == addressID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
 		}
 
 		protected async Task<List<Address>> Where(
 			Expression<Func<Address, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Address, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Address, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.AddressID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
-			}
-			else
-			{
-				return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
-			}
+			return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
 		}
 
 		private async Task<Address> GetById(int addressID)
@@ -123,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>deb7d36a05b0790e6f222387f8d497fd</Hash>
+    <Hash>6bd57549b238cd46c0769b1adaa4650c</Hash>
 </Codenesium>*/

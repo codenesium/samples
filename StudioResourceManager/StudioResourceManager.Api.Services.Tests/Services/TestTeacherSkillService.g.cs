@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			List<ApiTeacherSkillResponseModel> response = await service.All();
+			List<ApiTeacherSkillServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -53,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			ApiTeacherSkillResponseModel response = await service.Get(default(int));
+			ApiTeacherSkillServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -72,7 +72,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			ApiTeacherSkillResponseModel response = await service.Get(default(int));
+			ApiTeacherSkillServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -82,7 +82,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITeacherSkillRepository>();
-			var model = new ApiTeacherSkillRequestModel();
+			var model = new ApiTeacherSkillServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TeacherSkill>())).Returns(Task.FromResult(new TeacherSkill()));
 			var service = new TeacherSkillService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -92,10 +92,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			CreateResponse<ApiTeacherSkillResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTeacherSkillServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherSkillRequestModel>()));
+			mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherSkillServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TeacherSkill>()));
 		}
 
@@ -103,7 +103,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITeacherSkillRepository>();
-			var model = new ApiTeacherSkillRequestModel();
+			var model = new ApiTeacherSkillServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TeacherSkill>())).Returns(Task.FromResult(new TeacherSkill()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TeacherSkill()));
 			var service = new TeacherSkillService(mock.LoggerMock.Object,
@@ -114,10 +114,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			UpdateResponse<ApiTeacherSkillResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTeacherSkillServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherSkillRequestModel>()));
+			mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherSkillServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TeacherSkill>()));
 		}
 
@@ -125,7 +125,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITeacherSkillRepository>();
-			var model = new ApiTeacherSkillRequestModel();
+			var model = new ApiTeacherSkillServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TeacherSkillService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -157,7 +157,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			List<ApiRateResponseModel> response = await service.RatesByTeacherSkillId(default(int));
+			List<ApiRateServerResponseModel> response = await service.RatesByTeacherSkillId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.RatesByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -176,7 +176,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLRateMapperMock,
 			                                      mock.DALMapperMockFactory.DALRateMapperMock);
 
-			List<ApiRateResponseModel> response = await service.RatesByTeacherSkillId(default(int));
+			List<ApiRateServerResponseModel> response = await service.RatesByTeacherSkillId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.RatesByTeacherSkillId(default(int), It.IsAny<int>(), It.IsAny<int>()));
@@ -185,5 +185,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>df58cb8d5205baa712feeecb4781142e</Hash>
+    <Hash>17873f951a4b02e2bb1dba820f3977b0</Hash>
 </Codenesium>*/

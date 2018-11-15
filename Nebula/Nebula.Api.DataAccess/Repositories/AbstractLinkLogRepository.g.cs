@@ -85,22 +85,14 @@ namespace NebulaNS.Api.DataAccess
 			Expression<Func<LinkLog, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<LinkLog, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<LinkLog, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
-			}
-			else
-			{
-				return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
-			}
+			return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
 		private async Task<LinkLog> GetById(int id)
@@ -113,5 +105,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3d382fce3dd71fe453cba292ac96bcb8</Hash>
+    <Hash>c68ca2a94fcbfd33e762b0340d7194fe</Hash>
 </Codenesium>*/

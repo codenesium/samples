@@ -18,13 +18,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0);
 
 		Task<Location> ByName(string name);
-
-		Task<List<ProductInventory>> ProductInventoriesByLocationID(short locationID, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<WorkOrderRouting>> WorkOrderRoutingsByLocationID(short locationID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>862ebe6151edcdc23e4e196ba96af8b1</Hash>
+    <Hash>3a31564c95b4b68488a957d10e5fa822</Hash>
 </Codenesium>*/

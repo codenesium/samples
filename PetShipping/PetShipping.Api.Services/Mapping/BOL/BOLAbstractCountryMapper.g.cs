@@ -1,4 +1,3 @@
-using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public virtual BOCountry MapModelToBO(
 			int id,
-			ApiCountryRequestModel model
+			ApiCountryServerRequestModel model
 			)
 		{
 			BOCountry boCountry = new BOCountry();
@@ -19,20 +18,20 @@ namespace PetShippingNS.Api.Services
 			return boCountry;
 		}
 
-		public virtual ApiCountryResponseModel MapBOToModel(
+		public virtual ApiCountryServerResponseModel MapBOToModel(
 			BOCountry boCountry)
 		{
-			var model = new ApiCountryResponseModel();
+			var model = new ApiCountryServerResponseModel();
 
 			model.SetProperties(boCountry.Id, boCountry.Name);
 
 			return model;
 		}
 
-		public virtual List<ApiCountryResponseModel> MapBOToModel(
+		public virtual List<ApiCountryServerResponseModel> MapBOToModel(
 			List<BOCountry> items)
 		{
-			List<ApiCountryResponseModel> response = new List<ApiCountryResponseModel>();
+			List<ApiCountryServerResponseModel> response = new List<ApiCountryServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -45,5 +44,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7b72ee01f19920240eeaabf7404a58e4</Hash>
+    <Hash>a45d5c0c8274859697e25f94f4b6d6c9</Hash>
 </Codenesium>*/

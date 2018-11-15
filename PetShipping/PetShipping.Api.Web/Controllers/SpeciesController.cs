@@ -18,6 +18,7 @@ namespace PetShippingNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class SpeciesController : AbstractSpeciesController
 	{
 		public SpeciesController(
@@ -25,7 +26,7 @@ namespace PetShippingNS.Api.Web
 			ILogger<SpeciesController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpeciesService speciesService,
-			IApiSpeciesModelMapper speciesModelMapper
+			IApiSpeciesServerModelMapper speciesModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9afc696fcb414629443d9b39b984f728</Hash>
+    <Hash>88d6011fbb4b9ea98cf97936eade3bbf</Hash>
 </Codenesium>*/

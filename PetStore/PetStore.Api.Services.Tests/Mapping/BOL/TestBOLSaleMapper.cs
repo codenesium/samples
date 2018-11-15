@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLSaleMapper();
-			ApiSaleRequestModel model = new ApiSaleRequestModel();
+			ApiSaleServerRequestModel model = new ApiSaleServerRequestModel();
 			model.SetProperties(1m, "A", "A", 1, 1, "A");
 			BOSale response = mapper.MapModelToBO(1, model);
 
@@ -35,7 +35,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, 1m, "A", "A", 1, 1, "A");
-			ApiSaleResponseModel response = mapper.MapBOToModel(bo);
+			ApiSaleServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Amount.Should().Be(1m);
 			response.FirstName.Should().Be("A");
@@ -52,7 +52,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mapper = new BOLSaleMapper();
 			BOSale bo = new BOSale();
 			bo.SetProperties(1, 1m, "A", "A", 1, 1, "A");
-			List<ApiSaleResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
+			List<ApiSaleServerResponseModel> response = mapper.MapBOToModel(new List<BOSale>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -60,5 +60,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fcc173fe813fd70a634934ec66c67168</Hash>
+    <Hash>ba79c4a9387ec4ded543f6e0f1c51385</Hash>
 </Codenesium>*/

@@ -27,7 +27,8 @@ namespace FileServiceNS.Api.Services.Tests
 			var failures = new List<ValidationFailure>();
 			failures.Add(new ValidationFailure("field1", "error"));
 			var result = new ValidationResult(failures);
-			var response = new ActionResponse(result);
+			var response = ValidationResponseFactory<object>.ActionResponse(result);
+
 			response.Success.Should().BeFalse();
 			response.ValidationErrors.Count.Should().Be(1);
 		}
@@ -37,7 +38,8 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 			var failures = new List<ValidationFailure>();
 			var result = new ValidationResult(failures);
-			var response = new ActionResponse(result);
+			var response = ValidationResponseFactory<object>.ActionResponse(result);
+
 			response.Success.Should().BeTrue();
 		}
 
@@ -47,7 +49,8 @@ namespace FileServiceNS.Api.Services.Tests
 			var failures = new List<ValidationFailure>();
 			failures.Add(new ValidationFailure("field1", "error"));
 			var result = new ValidationResult(failures);
-			CreateResponse<int> response = new CreateResponse<int>(result);
+			CreateResponse<int> response = ValidationResponseFactory<int>.CreateResponse(result);
+
 			response.Success.Should().BeFalse();
 			response.ValidationErrors.Count.Should().Be(1);
 		}
@@ -57,7 +60,8 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 			var failures = new List<ValidationFailure>();
 			ValidationResult result = new ValidationResult(failures);
-			CreateResponse<int> response = new CreateResponse<int>(result);
+			CreateResponse<int> response = ValidationResponseFactory<int>.CreateResponse(result);
+
 			response.Success.Should().BeTrue();
 		}
 
@@ -72,7 +76,35 @@ namespace FileServiceNS.Api.Services.Tests
 				id = 1
 			};
 
-			CreateResponse<object> response = new CreateResponse<object>(result);
+			CreateResponse<object> response = ValidationResponseFactory<object>.CreateResponse(result);
+
+			response.SetRecord(item);
+			response.Record.Should().NotBeNull();
+		}
+
+		[Fact]
+		public void UpdateResponse_No_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			ValidationResult result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeTrue();
+		}
+
+		[Fact]
+		public void UpdateResponse_SetRecord()
+		{
+			List<ValidationFailure> failures = new List<ValidationFailure>();
+			ValidationResult result = new ValidationResult(failures);
+
+			var item = new
+			{
+				id = 1
+			};
+
+			UpdateResponse<object> response = ValidationResponseFactory<object>.UpdateResponse(result);
+
 			response.SetRecord(item);
 			response.Record.Should().NotBeNull();
 		}
@@ -80,5 +112,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>af7da5d47f5a1becd826c2d7b9296556</Hash>
+    <Hash>c35f6c435a45f86e7f0a81a177be9416</Hash>
 </Codenesium>*/

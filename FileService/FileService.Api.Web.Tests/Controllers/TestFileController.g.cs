@@ -24,8 +24,8 @@ namespace FileServiceNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			var record = new ApiFileResponseModel();
-			var records = new List<ApiFileResponseModel>();
+			var record = new ApiFileServerResponseModel();
+			var records = new List<ApiFileServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace FileServiceNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFileResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFileServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace FileServiceNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFileResponseModel>>(new List<ApiFileResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFileServerResponseModel>>(new List<ApiFileServerResponseModel>()));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace FileServiceNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiFileResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiFileServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace FileServiceNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileServerResponseModel()));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace FileServiceNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiFileResponseModel;
+			var record = (response as OkObjectResult).Value as ApiFileServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace FileServiceNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileServerResponseModel>(null));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace FileServiceNS.Api.Web.Tests
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFileResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFileResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFileServerResponseModel>.CreateResponse(null as ApiFileServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFileServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileServerResponseModel>>(mockResponse));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFileRequestModel>();
-			records.Add(new ApiFileRequestModel());
+			var records = new List<ApiFileServerRequestModel>();
+			records.Add(new ApiFileServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiFileResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiFileServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace FileServiceNS.Api.Web.Tests
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFileResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiFileServerResponseModel>>(null as ApiFileServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileServerResponseModel>>(mockResponse.Object));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiFileRequestModel>();
-			records.Add(new ApiFileRequestModel());
+			var records = new List<ApiFileServerRequestModel>();
+			records.Add(new ApiFileServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace FileServiceNS.Api.Web.Tests
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiFileResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiFileResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiFileServerResponseModel>.CreateResponse(null as ApiFileServerResponseModel);
+
+			mockResponse.SetRecord(new ApiFileServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileServerResponseModel>>(mockResponse));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFileRequestModel());
+			IActionResult response = await controller.Create(new ApiFileServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFileResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiFileServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace FileServiceNS.Api.Web.Tests
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiFileResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiFileResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiFileServerResponseModel>>(null as ApiFileServerResponseModel);
+			var mockRecord = new ApiFileServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiFileServerResponseModel>>(mockResponse.Object));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiFileRequestModel());
+			IActionResult response = await controller.Create(new ApiFileServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFileResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFileServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()))
-			.Callback<int, ApiFileRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()))
+			.Callback<int, ApiFileServerRequestModel>(
 				(id, model) => model.BucketId.Should().Be(1)
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiFileResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(new ApiFileResponseModel()));
-			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiFileServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileServerResponseModel>(new ApiFileServerResponseModel()));
+			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFileRequestModel>();
+			var patch = new JsonPatchDocument<ApiFileServerRequestModel>();
 			patch.Replace(x => x.BucketId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace FileServiceNS.Api.Web.Tests
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileServerResponseModel>(null));
 			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiFileRequestModel>();
+			var patch = new JsonPatchDocument<ApiFileServerRequestModel>();
 			patch.Replace(x => x.BucketId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace FileServiceNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFileResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFileServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileResponseModel()));
-			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileServerResponseModel()));
+			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFileRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFileServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFileResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFileServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileResponseModel()));
-			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiFileServerResponseModel()));
+			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFileRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFileServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			FileControllerMockFacade mock = new FileControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiFileResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiFileServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(null));
-			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiFileServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileServerResponseModel>(null));
+			FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiFileServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiFileRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiFileServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace FileServiceNS.Api.Web.Tests
 
 		public Mock<IFileService> ServiceMock { get; set; } = new Mock<IFileService>();
 
-		public Mock<IApiFileModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFileModelMapper>();
+		public Mock<IApiFileServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiFileServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>69427477f8d6ba4d9e2559f47633eae1</Hash>
+    <Hash>afba95ecd9a5e7ee1b72c19a038c4e48</Hash>
 </Codenesium>*/

@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Client;
 using TwitterNS.Api.Contracts;
+using TwitterNS.Api.DataAccess;
 using TwitterNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,76 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Tweet")]
 	[Trait("Area", "Integration")]
-	public class TweetIntegrationTests
+	public partial class TweetIntegrationTests
 	{
 		public TweetIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.TweetDeleteAsync(1);
+			var model = new ApiTweetClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
+			var model2 = new ApiTweetClientRequestModel();
+			model2.SetProperties("C", DateTime.Parse("1/1/1989 12:00:00 AM"), 1, TimeSpan.Parse("03:00:00"), 1);
+			var request = new List<ApiTweetClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiTweetClientResponseModel>> result = await client.TweetBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Tweet>().ToList()[1].Content.Should().Be("B");
+			context.Set<Tweet>().ToList()[1].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Tweet>().ToList()[1].LocationId.Should().Be(1);
+			context.Set<Tweet>().ToList()[1].Time.Should().Be(TimeSpan.Parse("02:00:00"));
+			context.Set<Tweet>().ToList()[1].UserUserId.Should().Be(1);
+
+			context.Set<Tweet>().ToList()[2].Content.Should().Be("C");
+			context.Set<Tweet>().ToList()[2].Date.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<Tweet>().ToList()[2].LocationId.Should().Be(1);
+			context.Set<Tweet>().ToList()[2].Time.Should().Be(TimeSpan.Parse("03:00:00"));
+			context.Set<Tweet>().ToList()[2].UserUserId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiTweetClientRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
+			CreateResponse<ApiTweetClientResponseModel> result = await client.TweetCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Tweet>().ToList()[1].Content.Should().Be("B");
+			context.Set<Tweet>().ToList()[1].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Tweet>().ToList()[1].LocationId.Should().Be(1);
+			context.Set<Tweet>().ToList()[1].Time.Should().Be(TimeSpan.Parse("02:00:00"));
+			context.Set<Tweet>().ToList()[1].UserUserId.Should().Be(1);
+
+			result.Record.Content.Should().Be("B");
+			result.Record.Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.LocationId.Should().Be(1);
+			result.Record.Time.Should().Be(TimeSpan.Parse("02:00:00"));
+			result.Record.UserUserId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +95,61 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiTweetServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ITweetService service = testServer.Host.Services.GetService(typeof(ITweetService)) as ITweetService;
+			ApiTweetServerResponseModel model = await service.Get(1);
 
-			ApiTweetResponseModel model = await client.TweetGetAsync(1);
+			ApiTweetClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 
-			ApiTweetModelMapper mapper = new ApiTweetModelMapper();
+			UpdateResponse<ApiTweetClientResponseModel> updateResponse = await client.TweetUpdateAsync(model.TweetId, request);
 
-			UpdateResponse<ApiTweetResponseModel> updateResponse = await client.TweetUpdateAsync(model.TweetId, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Tweet>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.TweetId.Should().Be(1);
+			context.Set<Tweet>().ToList()[0].Content.Should().Be("B");
+			context.Set<Tweet>().ToList()[0].Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Tweet>().ToList()[0].LocationId.Should().Be(1);
+			context.Set<Tweet>().ToList()[0].Time.Should().Be(TimeSpan.Parse("02:00:00"));
+			context.Set<Tweet>().ToList()[0].UserUserId.Should().Be(1);
+
+			updateResponse.Record.TweetId.Should().Be(1);
+			updateResponse.Record.Content.Should().Be("B");
+			updateResponse.Record.Date.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.LocationId.Should().Be(1);
+			updateResponse.Record.Time.Should().Be(TimeSpan.Parse("02:00:00"));
+			updateResponse.Record.UserUserId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiTweetRequestModel();
-			createModel.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"), 1);
-			CreateResponse<ApiTweetResponseModel> createResult = await client.TweetCreateAsync(createModel);
+			ITweetService service = testServer.Host.Services.GetService(typeof(ITweetService)) as ITweetService;
+			var model = new ApiTweetServerRequestModel();
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
+			CreateResponse<ApiTweetServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiTweetResponseModel getResponse = await client.TweetGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.TweetDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiTweetResponseModel verifyResponse = await client.TweetGetAsync(2);
+			ApiTweetServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +157,35 @@ namespace TwitterNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiTweetResponseModel response = await client.TweetGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiTweetClientResponseModel response = await client.TweetGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Content.Should().Be("A");
+			response.Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.LocationId.Should().Be(1);
+			response.Time.Should().Be(TimeSpan.Parse("01:00:00"));
+			response.TweetId.Should().Be(1);
+			response.UserUserId.Should().Be(1);
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTweetClientResponseModel response = await client.TweetGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +194,163 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiTweetResponseModel> response = await client.TweetAllAsync();
+			List<ApiTweetClientResponseModel> response = await client.TweetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Content.Should().Be("A");
+			response[0].Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].LocationId.Should().Be(1);
+			response[0].Time.Should().Be(TimeSpan.Parse("01:00:00"));
+			response[0].TweetId.Should().Be(1);
+			response[0].UserUserId.Should().Be(1);
 		}
 
-		private async Task<ApiTweetResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestByLocationIdFound()
 		{
-			var model = new ApiTweetRequestModel();
-			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"), 1);
-			CreateResponse<ApiTweetResponseModel> result = await client.TweetCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTweetClientResponseModel> response = await client.ByTweetByLocationId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Content.Should().Be("A");
+			response[0].Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].LocationId.Should().Be(1);
+			response[0].Time.Should().Be(TimeSpan.Parse("01:00:00"));
+			response[0].TweetId.Should().Be(1);
+			response[0].UserUserId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestByLocationIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTweetClientResponseModel> response = await client.ByTweetByLocationId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestByUserUserIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTweetClientResponseModel> response = await client.ByTweetByUserUserId(1);
+
+			response.Should().NotBeEmpty();
+			response[0].Content.Should().Be("A");
+			response[0].Date.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response[0].LocationId.Should().Be(1);
+			response[0].Time.Should().Be(TimeSpan.Parse("01:00:00"));
+			response[0].TweetId.Should().Be(1);
+			response[0].UserUserId.Should().Be(1);
+		}
+
+		[Fact]
+		public virtual async void TestByUserUserIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiTweetClientResponseModel> response = await client.ByTweetByUserUserId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyQuoteTweetsBySourceTweetIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiQuoteTweetClientResponseModel> response = await client.QuoteTweetsBySourceTweetId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyQuoteTweetsBySourceTweetIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiQuoteTweetClientResponseModel> response = await client.QuoteTweetsBySourceTweetId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyRetweetsByTweetTweetIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiRetweetClientResponseModel> response = await client.RetweetsByTweetTweetId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyRetweetsByTweetTweetIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiRetweetClientResponseModel> response = await client.RetweetsByTweetTweetId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.TweetAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cca853da202e45a7e533c730af702e9b</Hash>
+    <Hash>e000c205301ba486cf28cd8ff47ea9c3</Hash>
 </Codenesium>*/

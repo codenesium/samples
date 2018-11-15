@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -9,24 +8,24 @@ namespace TicketingCRMNS.Api.Services
 {
 	public partial interface ITransactionService
 	{
-		Task<CreateResponse<ApiTransactionResponseModel>> Create(
-			ApiTransactionRequestModel model);
+		Task<CreateResponse<ApiTransactionServerResponseModel>> Create(
+			ApiTransactionServerRequestModel model);
 
-		Task<UpdateResponse<ApiTransactionResponseModel>> Update(int id,
-		                                                          ApiTransactionRequestModel model);
+		Task<UpdateResponse<ApiTransactionServerResponseModel>> Update(int id,
+		                                                                ApiTransactionServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiTransactionResponseModel> Get(int id);
+		Task<ApiTransactionServerResponseModel> Get(int id);
 
-		Task<List<ApiTransactionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTransactionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTransactionResponseModel>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTransactionServerResponseModel>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleServerResponseModel>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>35df3bded27361d35831a8508de2a528</Hash>
+    <Hash>d5078d3e9fc69651f2757ad3fc10b25a</Hash>
 </Codenesium>*/

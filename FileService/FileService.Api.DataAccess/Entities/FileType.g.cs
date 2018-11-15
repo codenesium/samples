@@ -23,14 +23,14 @@ namespace FileServiceNS.Api.DataAccess
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(255)]
 		[Column("name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa1bef6cdc0b5673acd097ec5cef1920</Hash>
+    <Hash>dfc422d0a9e8692088da2ac6c059ce3b</Hash>
 </Codenesium>*/

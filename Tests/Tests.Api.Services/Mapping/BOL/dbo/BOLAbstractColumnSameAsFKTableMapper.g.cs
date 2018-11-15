@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -9,7 +8,7 @@ namespace TestsNS.Api.Services
 	{
 		public virtual BOColumnSameAsFKTable MapModelToBO(
 			int id,
-			ApiColumnSameAsFKTableRequestModel model
+			ApiColumnSameAsFKTableServerRequestModel model
 			)
 		{
 			BOColumnSameAsFKTable boColumnSameAsFKTable = new BOColumnSameAsFKTable();
@@ -20,20 +19,20 @@ namespace TestsNS.Api.Services
 			return boColumnSameAsFKTable;
 		}
 
-		public virtual ApiColumnSameAsFKTableResponseModel MapBOToModel(
+		public virtual ApiColumnSameAsFKTableServerResponseModel MapBOToModel(
 			BOColumnSameAsFKTable boColumnSameAsFKTable)
 		{
-			var model = new ApiColumnSameAsFKTableResponseModel();
+			var model = new ApiColumnSameAsFKTableServerResponseModel();
 
 			model.SetProperties(boColumnSameAsFKTable.Id, boColumnSameAsFKTable.Person, boColumnSameAsFKTable.PersonId);
 
 			return model;
 		}
 
-		public virtual List<ApiColumnSameAsFKTableResponseModel> MapBOToModel(
+		public virtual List<ApiColumnSameAsFKTableServerResponseModel> MapBOToModel(
 			List<BOColumnSameAsFKTable> items)
 		{
-			List<ApiColumnSameAsFKTableResponseModel> response = new List<ApiColumnSameAsFKTableResponseModel>();
+			List<ApiColumnSameAsFKTableServerResponseModel> response = new List<ApiColumnSameAsFKTableServerResponseModel>();
 
 			items.ForEach(d =>
 			{
@@ -46,5 +45,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>224df4bc3c539cf447efefd75bca5f02</Hash>
+    <Hash>14ffb2b45ece44fddf5eddbe36aeef2e</Hash>
 </Codenesium>*/

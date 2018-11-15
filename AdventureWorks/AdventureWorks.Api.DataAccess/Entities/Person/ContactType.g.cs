@@ -25,17 +25,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("ContactTypeID")]
-		public int ContactTypeID { get; private set; }
+		public virtual int ContactTypeID { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Name")]
-		public string Name { get; private set; }
+		public virtual string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>39933d2b1eaf163093054768252a5554</Hash>
+    <Hash>defdf5166c7f209ab8306daf46414e97</Hash>
 </Codenesium>*/

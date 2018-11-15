@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLBillOfMaterialMapper();
-			ApiBillOfMaterialRequestModel model = new ApiBillOfMaterialRequestModel();
+			ApiBillOfMaterialServerRequestModel model = new ApiBillOfMaterialServerRequestModel();
 			model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			BOBillOfMaterial response = mapper.MapModelToBO(1, model);
 
@@ -37,7 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLBillOfMaterialMapper();
 			BOBillOfMaterial bo = new BOBillOfMaterial();
 			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			ApiBillOfMaterialResponseModel response = mapper.MapBOToModel(bo);
+			ApiBillOfMaterialServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.BillOfMaterialsID.Should().Be(1);
 			response.BOMLevel.Should().Be(1);
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mapper = new BOLBillOfMaterialMapper();
 			BOBillOfMaterial bo = new BOBillOfMaterial();
 			bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
-			List<ApiBillOfMaterialResponseModel> response = mapper.MapBOToModel(new List<BOBillOfMaterial>() { { bo } });
+			List<ApiBillOfMaterialServerResponseModel> response = mapper.MapBOToModel(new List<BOBillOfMaterial>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>782324b1c85423804d6bb0a83f6b5d1d</Hash>
+    <Hash>2aa7ff1fb70e565b91a1c001bce69c6d</Hash>
 </Codenesium>*/

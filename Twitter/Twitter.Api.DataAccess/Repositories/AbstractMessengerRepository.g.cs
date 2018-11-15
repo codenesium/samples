@@ -76,17 +76,17 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Messenger>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.MessageId == messageId, limit, offset);
 		}
 
-		public async Task<List<Messenger>> ByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> ByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ToUserId == toUserId, limit, offset);
 		}
 
-		public async Task<List<Messenger>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
@@ -110,22 +110,14 @@ namespace TwitterNS.Api.DataAccess
 			Expression<Func<Messenger, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Messenger, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Messenger, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Messenger>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Messenger>();
-			}
-			else
-			{
-				return await this.Context.Set<Messenger>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Messenger>();
-			}
+			return await this.Context.Set<Messenger>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
 		private async Task<Messenger> GetById(int id)
@@ -138,5 +130,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>beb89881cd94db2f75795e2a83cab4d9</Hash>
+    <Hash>2fcf7b34d3529a23ef90ac781a903ce8</Hash>
 </Codenesium>*/

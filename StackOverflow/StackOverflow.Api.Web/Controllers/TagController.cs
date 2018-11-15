@@ -18,6 +18,7 @@ namespace StackOverflowNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class TagController : AbstractTagController
 	{
 		public TagController(
@@ -25,7 +26,7 @@ namespace StackOverflowNS.Api.Web
 			ILogger<TagController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITagService tagService,
-			IApiTagModelMapper tagModelMapper
+			IApiTagServerModelMapper tagModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1d2a3bddb793e45402d7814826d80820</Hash>
+    <Hash>fa4bcb20c8f5306c0d74a6091d51a2ff</Hash>
 </Codenesium>*/

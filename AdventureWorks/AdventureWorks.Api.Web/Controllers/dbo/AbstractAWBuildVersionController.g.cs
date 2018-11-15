@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IAWBuildVersionService AWBuildVersionService { get; private set; }
 
-		protected IApiAWBuildVersionModelMapper AWBuildVersionModelMapper { get; private set; }
+		protected IApiAWBuildVersionServerModelMapper AWBuildVersionModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractAWBuildVersionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAWBuildVersionService aWBuildVersionService,
-			IApiAWBuildVersionModelMapper aWBuildVersionModelMapper
+			IApiAWBuildVersionServerModelMapper aWBuildVersionModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiAWBuildVersionResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiAWBuildVersionServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAWBuildVersionResponseModel> response = await this.AWBuildVersionService.All(query.Limit, query.Offset);
+			List<ApiAWBuildVersionServerResponseModel> response = await this.AWBuildVersionService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiAWBuildVersionServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiAWBuildVersionResponseModel response = await this.AWBuildVersionService.Get(id);
+			ApiAWBuildVersionServerResponseModel response = await this.AWBuildVersionService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiAWBuildVersionResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiAWBuildVersionServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAWBuildVersionRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAWBuildVersionServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiAWBuildVersionResponseModel> records = new List<ApiAWBuildVersionResponseModel>();
+			List<ApiAWBuildVersionServerResponseModel> records = new List<ApiAWBuildVersionServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Create(model);
+				CreateResponse<ApiAWBuildVersionServerResponseModel> result = await this.AWBuildVersionService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiAWBuildVersionServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiAWBuildVersionResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiAWBuildVersionServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAWBuildVersionRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiAWBuildVersionServerRequestModel model)
 		{
-			CreateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Create(model);
+			CreateResponse<ApiAWBuildVersionServerResponseModel> result = await this.AWBuildVersionService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAWBuildVersionRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiAWBuildVersionServerRequestModel> patch)
 		{
-			ApiAWBuildVersionResponseModel record = await this.AWBuildVersionService.Get(id);
+			ApiAWBuildVersionServerResponseModel record = await this.AWBuildVersionService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiAWBuildVersionRequestModel model = await this.PatchModel(id, patch);
+				ApiAWBuildVersionServerRequestModel model = await this.PatchModel(id, patch) as ApiAWBuildVersionServerRequestModel;
 
-				UpdateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Update(id, model);
+				UpdateResponse<ApiAWBuildVersionServerResponseModel> result = await this.AWBuildVersionService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiAWBuildVersionServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionServerRequestModel model)
 		{
-			ApiAWBuildVersionRequestModel request = await this.PatchModel(id, this.AWBuildVersionModelMapper.CreatePatch(model));
+			ApiAWBuildVersionServerRequestModel request = await this.PatchModel(id, this.AWBuildVersionModelMapper.CreatePatch(model)) as ApiAWBuildVersionServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiAWBuildVersionResponseModel> result = await this.AWBuildVersionService.Update(id, request);
+				UpdateResponse<ApiAWBuildVersionServerResponseModel> result = await this.AWBuildVersionService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.AWBuildVersionService.Delete(id);
@@ -206,7 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiAWBuildVersionRequestModel> PatchModel(int id, JsonPatchDocument<ApiAWBuildVersionRequestModel> patch)
+		private async Task<ApiAWBuildVersionServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiAWBuildVersionServerRequestModel> patch)
 		{
 			var record = await this.AWBuildVersionService.Get(id);
 
@@ -216,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiAWBuildVersionRequestModel request = this.AWBuildVersionModelMapper.MapResponseToRequest(record);
+				ApiAWBuildVersionServerRequestModel request = this.AWBuildVersionModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -225,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>00d338a76db5c3a492346a6e7168a1cd</Hash>
+    <Hash>c94010ee9f37863e3e5eb9fe32f8fa5c</Hash>
 </Codenesium>*/

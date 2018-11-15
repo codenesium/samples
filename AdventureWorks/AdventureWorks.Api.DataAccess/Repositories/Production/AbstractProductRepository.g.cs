@@ -76,14 +76,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<Product> ByName(string name)
+		public async virtual Task<Product> ByName(string name)
 		{
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async Task<Product> ByProductNumber(string productNumber)
+		public async virtual Task<Product> ByProductNumber(string productNumber)
 		{
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.ProductNumber == productNumber);
+		}
+
+		public async virtual Task<Product> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
@@ -94,26 +99,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.ComponentID == componentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
-		}
-
-		public async virtual Task<List<ProductCostHistory>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductCostHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductCostHistory>();
-		}
-
-		public async virtual Task<List<ProductInventory>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductInventory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
-		}
-
-		public async virtual Task<List<ProductListPriceHistory>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductListPriceHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductListPriceHistory>();
-		}
-
-		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductProductPhoto>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
 		}
 
 		public async virtual Task<List<ProductReview>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
@@ -131,35 +116,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<WorkOrder>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
-		public async virtual Task<List<Product>> ByDocumentNode(int documentNode, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.ProductDocuments
-			              join products in this.Context.Products on
-			              refTable.ProductID equals products.ProductID
-			              where refTable.DocumentNode == documentNode
-			              select products).Skip(offset).Take(limit).ToListAsync();
-		}
-
 		protected async Task<List<Product>> Where(
 			Expression<Func<Product, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<Product, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<Product, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.ProductID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Product>();
-			}
-			else
-			{
-				return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Product>();
-			}
+			return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
 		private async Task<Product> GetById(int productID)
@@ -172,5 +140,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>923a7770cb7c693b26fa6fd5870ccb2b</Hash>
+    <Hash>e612ea59a3476162eead67fb432e9424</Hash>
 </Codenesium>*/

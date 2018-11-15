@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,15 +11,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IVendorRepository VendorRepository { get; private set; }
 
-		protected IApiVendorRequestModelValidator VendorModelValidator { get; private set; }
+		protected IApiVendorServerRequestModelValidator VendorModelValidator { get; private set; }
 
 		protected IBOLVendorMapper BolVendorMapper { get; private set; }
 
 		protected IDALVendorMapper DalVendorMapper { get; private set; }
-
-		protected IBOLProductVendorMapper BolProductVendorMapper { get; private set; }
-
-		protected IDALProductVendorMapper DalProductVendorMapper { get; private set; }
 
 		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
@@ -35,11 +26,9 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractVendorService(
 			ILogger logger,
 			IVendorRepository vendorRepository,
-			IApiVendorRequestModelValidator vendorModelValidator,
+			IApiVendorServerRequestModelValidator vendorModelValidator,
 			IBOLVendorMapper bolVendorMapper,
 			IDALVendorMapper dalVendorMapper,
-			IBOLProductVendorMapper bolProductVendorMapper,
-			IDALProductVendorMapper dalProductVendorMapper,
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base()
@@ -48,21 +37,19 @@ namespace AdventureWorksNS.Api.Services
 			this.VendorModelValidator = vendorModelValidator;
 			this.BolVendorMapper = bolVendorMapper;
 			this.DalVendorMapper = dalVendorMapper;
-			this.BolProductVendorMapper = bolProductVendorMapper;
-			this.DalProductVendorMapper = dalProductVendorMapper;
 			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVendorServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.VendorRepository.All(limit, offset);
 
 			return this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiVendorResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiVendorServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.VendorRepository.Get(businessEntityID);
 
@@ -76,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
-			ApiVendorRequestModel model)
+		public virtual async Task<CreateResponse<ApiVendorServerResponseModel>> Create(
+			ApiVendorServerRequestModel model)
 		{
-			CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.VendorModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVendorServerResponseModel> response = ValidationResponseFactory<ApiVendorServerResponseModel>.CreateResponse(await this.VendorModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolVendorMapper.MapModelToBO(default(int), model);
@@ -91,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiVendorResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiVendorServerResponseModel>> Update(
 			int businessEntityID,
-			ApiVendorRequestModel model)
+			ApiVendorServerRequestModel model)
 		{
 			var validationResult = await this.VendorModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -104,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.VendorRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiVendorResponseModel>(this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiVendorResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.VendorModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.VendorModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.VendorRepository.Delete(businessEntityID);
@@ -124,7 +113,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber)
+		public async virtual Task<ApiVendorServerResponseModel> ByAccountNumber(string accountNumber)
 		{
 			Vendor record = await this.VendorRepository.ByAccountNumber(accountNumber);
 
@@ -138,14 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductVendorResponseModel>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ProductVendor> records = await this.VendorRepository.ProductVendorsByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPurchaseOrderHeaderServerResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PurchaseOrderHeader> records = await this.VendorRepository.PurchaseOrderHeadersByVendorID(vendorID, limit, offset);
 
@@ -155,5 +137,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc7c11aa8be4764723023c7a02a26015</Hash>
+    <Hash>9c59f4ddac8ecc75a5904bbb283e7269</Hash>
 </Codenesium>*/

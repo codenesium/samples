@@ -1,4 +1,4 @@
-export class ApiBucketRequestModel {
+export class ApiBucketServerRequestModel {
 				externalId:string;
 id:number;
 name:string;
@@ -13,7 +13,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiBucketResponseModel {
+			export class ApiBucketServerResponseModel {
 				externalId:string;
 id:number;
 name:string;
@@ -27,7 +27,7 @@ this.name = '';
 		
 				}
 			}
-			export class ApiFileRequestModel {
+			export class ApiFileServerRequestModel {
 				bucketId:number;
 bucketIdEntity:number;
 dateCreated:string;
@@ -62,7 +62,7 @@ this.publicKey = '';
 				}
 			}
 
-			export class ApiFileResponseModel {
+			export class ApiFileServerResponseModel {
 				bucketId:number;
 bucketIdEntity:number;
 dateCreated:string;
@@ -96,7 +96,7 @@ this.publicKey = '';
 		
 				}
 			}
-			export class ApiFileTypeRequestModel {
+			export class ApiFileTypeServerRequestModel {
 				id:number;
 name:string;
 
@@ -109,7 +109,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiFileTypeResponseModel {
+			export class ApiFileTypeServerResponseModel {
 				id:number;
 name:string;
 

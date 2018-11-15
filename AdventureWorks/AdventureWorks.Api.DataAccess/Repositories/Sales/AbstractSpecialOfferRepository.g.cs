@@ -76,26 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<SpecialOffer> ByRowguid(Guid rowguid)
+		{
+			return await this.Context.Set<SpecialOffer>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+		}
+
 		protected async Task<List<SpecialOffer>> Where(
 			Expression<Func<SpecialOffer, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<SpecialOffer, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<SpecialOffer, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.SpecialOfferID;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
-			}
-			else
-			{
-				return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
-			}
+			return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
 		}
 
 		private async Task<SpecialOffer> GetById(int specialOfferID)
@@ -108,5 +105,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eca1856b5d713d3e8f713aae6cf8fdfe</Hash>
+    <Hash>2f978618e7ea4404a859bfa294062ceb</Hash>
 </Codenesium>*/

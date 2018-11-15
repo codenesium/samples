@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,69 +11,45 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IPersonRepository PersonRepository { get; private set; }
 
-		protected IApiPersonRequestModelValidator PersonModelValidator { get; private set; }
+		protected IApiPersonServerRequestModelValidator PersonModelValidator { get; private set; }
 
 		protected IBOLPersonMapper BolPersonMapper { get; private set; }
 
 		protected IDALPersonMapper DalPersonMapper { get; private set; }
 
-		protected IBOLBusinessEntityContactMapper BolBusinessEntityContactMapper { get; private set; }
-
-		protected IDALBusinessEntityContactMapper DalBusinessEntityContactMapper { get; private set; }
-
-		protected IBOLEmailAddressMapper BolEmailAddressMapper { get; private set; }
-
-		protected IDALEmailAddressMapper DalEmailAddressMapper { get; private set; }
-
 		protected IBOLPasswordMapper BolPasswordMapper { get; private set; }
 
 		protected IDALPasswordMapper DalPasswordMapper { get; private set; }
-
-		protected IBOLPersonPhoneMapper BolPersonPhoneMapper { get; private set; }
-
-		protected IDALPersonPhoneMapper DalPersonPhoneMapper { get; private set; }
 
 		private ILogger logger;
 
 		public AbstractPersonService(
 			ILogger logger,
 			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
+			IApiPersonServerRequestModelValidator personModelValidator,
 			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper,
-			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
-			IBOLEmailAddressMapper bolEmailAddressMapper,
-			IDALEmailAddressMapper dalEmailAddressMapper,
 			IBOLPasswordMapper bolPasswordMapper,
-			IDALPasswordMapper dalPasswordMapper,
-			IBOLPersonPhoneMapper bolPersonPhoneMapper,
-			IDALPersonPhoneMapper dalPersonPhoneMapper)
+			IDALPasswordMapper dalPasswordMapper)
 			: base()
 		{
 			this.PersonRepository = personRepository;
 			this.PersonModelValidator = personModelValidator;
 			this.BolPersonMapper = bolPersonMapper;
 			this.DalPersonMapper = dalPersonMapper;
-			this.BolBusinessEntityContactMapper = bolBusinessEntityContactMapper;
-			this.DalBusinessEntityContactMapper = dalBusinessEntityContactMapper;
-			this.BolEmailAddressMapper = bolEmailAddressMapper;
-			this.DalEmailAddressMapper = dalEmailAddressMapper;
 			this.BolPasswordMapper = bolPasswordMapper;
 			this.DalPasswordMapper = dalPasswordMapper;
-			this.BolPersonPhoneMapper = bolPersonPhoneMapper;
-			this.DalPersonPhoneMapper = dalPersonPhoneMapper;
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.PersonRepository.All(limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiPersonResponseModel> Get(int businessEntityID)
+		public virtual async Task<ApiPersonServerResponseModel> Get(int businessEntityID)
 		{
 			var record = await this.PersonRepository.Get(businessEntityID);
 
@@ -92,10 +63,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
-			ApiPersonRequestModel model)
+		public virtual async Task<CreateResponse<ApiPersonServerResponseModel>> Create(
+			ApiPersonServerRequestModel model)
 		{
-			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.PersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonServerResponseModel> response = ValidationResponseFactory<ApiPersonServerResponseModel>.CreateResponse(await this.PersonModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolPersonMapper.MapModelToBO(default(int), model);
@@ -107,9 +79,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiPersonResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiPersonServerResponseModel>> Update(
 			int businessEntityID,
-			ApiPersonRequestModel model)
+			ApiPersonServerRequestModel model)
 		{
 			var validationResult = await this.PersonModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
@@ -120,18 +92,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PersonRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiPersonResponseModel>(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiPersonResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.PersonModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.PersonModelValidator.ValidateDeleteAsync(businessEntityID));
+
 			if (response.Success)
 			{
 				await this.PersonRepository.Delete(businessEntityID);
@@ -140,57 +113,50 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiPersonResponseModel>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<ApiPersonServerResponseModel> ByRowguid(Guid rowguid)
+		{
+			Person record = await this.PersonRepository.ByRowguid(rowguid);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record));
+			}
+		}
+
+		public async virtual Task<List<ApiPersonServerResponseModel>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Person> records = await this.PersonRepository.ByLastNameFirstNameMiddleName(lastName, firstName, middleName, limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiPersonResponseModel>> ByAdditionalContactInfo(string additionalContactInfo, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiPersonServerResponseModel>> ByAdditionalContactInfo(string additionalContactInfo, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Person> records = await this.PersonRepository.ByAdditionalContactInfo(additionalContactInfo, limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiPersonResponseModel>> ByDemographic(string demographic, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiPersonServerResponseModel>> ByDemographic(string demographic, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Person> records = await this.PersonRepository.ByDemographic(demographic, limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByPersonID(int personID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<BusinessEntityContact> records = await this.PersonRepository.BusinessEntityContactsByPersonID(personID, limit, offset);
-
-			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiEmailAddressResponseModel>> EmailAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<EmailAddress> records = await this.PersonRepository.EmailAddressesByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolEmailAddressMapper.MapBOToModel(this.DalEmailAddressMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiPasswordResponseModel>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPasswordServerResponseModel>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Password> records = await this.PersonRepository.PasswordsByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhonesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<PersonPhone> records = await this.PersonRepository.PersonPhonesByBusinessEntityID(businessEntityID, limit, offset);
-
-			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3cd5bfca41c0db44b59e8b9a1ad4fc2c</Hash>
+    <Hash>06147a717296d9d001bf0780c5d83f0b</Hash>
 </Codenesium>*/

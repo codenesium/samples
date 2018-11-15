@@ -2,29 +2,28 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IProductReviewService
 	{
-		Task<CreateResponse<ApiProductReviewResponseModel>> Create(
-			ApiProductReviewRequestModel model);
+		Task<CreateResponse<ApiProductReviewServerResponseModel>> Create(
+			ApiProductReviewServerRequestModel model);
 
-		Task<UpdateResponse<ApiProductReviewResponseModel>> Update(int productReviewID,
-		                                                            ApiProductReviewRequestModel model);
+		Task<UpdateResponse<ApiProductReviewServerResponseModel>> Update(int productReviewID,
+		                                                                  ApiProductReviewServerRequestModel model);
 
 		Task<ActionResponse> Delete(int productReviewID);
 
-		Task<ApiProductReviewResponseModel> Get(int productReviewID);
+		Task<ApiProductReviewServerResponseModel> Get(int productReviewID);
 
-		Task<List<ApiProductReviewResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductReviewServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductReviewServerResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>03c37f20fed362312fbce91665f0a64e</Hash>
+    <Hash>b5451a5a80405f96891f679eb28a665c</Hash>
 </Codenesium>*/

@@ -26,21 +26,21 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		[Column("gps_lat")]
-		public int GpsLat { get; private set; }
+		public virtual int GpsLat { get; private set; }
 
 		[Column("gps_long")]
-		public int GpsLong { get; private set; }
+		public virtual int GpsLong { get; private set; }
 
 		[Key]
 		[Column("location_id")]
-		public int LocationId { get; private set; }
+		public virtual int LocationId { get; private set; }
 
 		[MaxLength(64)]
 		[Column("location_name")]
-		public string LocationName { get; private set; }
+		public virtual string LocationName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e4c381cf4460e5469e5491f27322eac</Hash>
+    <Hash>e9178c72e6ed483ac235abe35c5d7929</Hash>
 </Codenesium>*/

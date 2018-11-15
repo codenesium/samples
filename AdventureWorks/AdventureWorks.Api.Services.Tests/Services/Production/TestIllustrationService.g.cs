@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
 			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
-			List<ApiIllustrationResponseModel> response = await service.All();
+			List<ApiIllustrationServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
 			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
-			ApiIllustrationResponseModel response = await service.Get(default(int));
+			ApiIllustrationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
 			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
-			ApiIllustrationResponseModel response = await service.Get(default(int));
+			ApiIllustrationServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IIllustrationRepository>();
-			var model = new ApiIllustrationRequestModel();
+			var model = new ApiIllustrationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Illustration>())).Returns(Task.FromResult(new Illustration()));
 			var service = new IllustrationService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
 			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
-			CreateResponse<ApiIllustrationResponseModel> response = await service.Create(model);
+			CreateResponse<ApiIllustrationServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiIllustrationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Illustration>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IIllustrationRepository>();
-			var model = new ApiIllustrationRequestModel();
+			var model = new ApiIllustrationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Illustration>())).Returns(Task.FromResult(new Illustration()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Illustration()));
 			var service = new IllustrationService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
 			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
-			UpdateResponse<ApiIllustrationResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiIllustrationServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiIllustrationRequestModel>()));
+			mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiIllustrationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Illustration>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IIllustrationRepository>();
-			var model = new ApiIllustrationRequestModel();
+			var model = new ApiIllustrationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new IllustrationService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f682b7a50bc11372a4fa7bb14430d3c1</Hash>
+    <Hash>55c54a6348cf7e15ff4acd31c5d982f6</Hash>
 </Codenesium>*/

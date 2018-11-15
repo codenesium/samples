@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
@@ -16,7 +11,7 @@ namespace NebulaNS.Api.Services
 	{
 		protected IOrganizationRepository OrganizationRepository { get; private set; }
 
-		protected IApiOrganizationRequestModelValidator OrganizationModelValidator { get; private set; }
+		protected IApiOrganizationServerRequestModelValidator OrganizationModelValidator { get; private set; }
 
 		protected IBOLOrganizationMapper BolOrganizationMapper { get; private set; }
 
@@ -31,7 +26,7 @@ namespace NebulaNS.Api.Services
 		public AbstractOrganizationService(
 			ILogger logger,
 			IOrganizationRepository organizationRepository,
-			IApiOrganizationRequestModelValidator organizationModelValidator,
+			IApiOrganizationServerRequestModelValidator organizationModelValidator,
 			IBOLOrganizationMapper bolOrganizationMapper,
 			IDALOrganizationMapper dalOrganizationMapper,
 			IBOLTeamMapper bolTeamMapper,
@@ -47,14 +42,14 @@ namespace NebulaNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiOrganizationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiOrganizationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.OrganizationRepository.All(limit, offset);
 
 			return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiOrganizationResponseModel> Get(int id)
+		public virtual async Task<ApiOrganizationServerResponseModel> Get(int id)
 		{
 			var record = await this.OrganizationRepository.Get(id);
 
@@ -68,10 +63,11 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
-			ApiOrganizationRequestModel model)
+		public virtual async Task<CreateResponse<ApiOrganizationServerResponseModel>> Create(
+			ApiOrganizationServerRequestModel model)
 		{
-			CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.OrganizationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiOrganizationServerResponseModel> response = ValidationResponseFactory<ApiOrganizationServerResponseModel>.CreateResponse(await this.OrganizationModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolOrganizationMapper.MapModelToBO(default(int), model);
@@ -83,9 +79,9 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiOrganizationResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiOrganizationServerResponseModel>> Update(
 			int id,
-			ApiOrganizationRequestModel model)
+			ApiOrganizationServerRequestModel model)
 		{
 			var validationResult = await this.OrganizationModelValidator.ValidateUpdateAsync(id, model);
 
@@ -96,18 +92,19 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.OrganizationRepository.Get(id);
 
-				return new UpdateResponse<ApiOrganizationResponseModel>(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiOrganizationServerResponseModel>.UpdateResponse(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiOrganizationResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiOrganizationServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.OrganizationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.OrganizationModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.OrganizationRepository.Delete(id);
@@ -116,7 +113,7 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public async Task<ApiOrganizationResponseModel> ByName(string name)
+		public async virtual Task<ApiOrganizationServerResponseModel> ByName(string name)
 		{
 			Organization record = await this.OrganizationRepository.ByName(name);
 
@@ -130,7 +127,7 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiTeamResponseModel>> TeamsByOrganizationId(int organizationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeamServerResponseModel>> TeamsByOrganizationId(int organizationId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Team> records = await this.OrganizationRepository.TeamsByOrganizationId(organizationId, limit, offset);
 
@@ -140,5 +137,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>457d9b24a80aa840537a8175d82ae12e</Hash>
+    <Hash>274b7edf8174400a278ebdb807d23a48</Hash>
 </Codenesium>*/

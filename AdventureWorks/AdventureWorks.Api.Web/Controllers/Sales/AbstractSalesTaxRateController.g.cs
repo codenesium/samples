@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected ISalesTaxRateService SalesTaxRateService { get; private set; }
 
-		protected IApiSalesTaxRateModelMapper SalesTaxRateModelMapper { get; private set; }
+		protected IApiSalesTaxRateServerModelMapper SalesTaxRateModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractSalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTaxRateService salesTaxRateService,
-			IApiSalesTaxRateModelMapper salesTaxRateModelMapper
+			IApiSalesTaxRateServerModelMapper salesTaxRateModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesTaxRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTaxRateServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesTaxRateResponseModel> response = await this.SalesTaxRateService.All(query.Limit, query.Offset);
+			List<ApiSalesTaxRateServerResponseModel> response = await this.SalesTaxRateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesTaxRateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.Get(id);
+			ApiSalesTaxRateServerResponseModel response = await this.SalesTaxRateService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiSalesTaxRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiSalesTaxRateServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTaxRateRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTaxRateServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiSalesTaxRateResponseModel> records = new List<ApiSalesTaxRateResponseModel>();
+			List<ApiSalesTaxRateServerResponseModel> records = new List<ApiSalesTaxRateServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Create(model);
+				CreateResponse<ApiSalesTaxRateServerResponseModel> result = await this.SalesTaxRateService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiSalesTaxRateServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiSalesTaxRateResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiSalesTaxRateServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTaxRateRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTaxRateServerRequestModel model)
 		{
-			CreateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Create(model);
+			CreateResponse<ApiSalesTaxRateServerResponseModel> result = await this.SalesTaxRateService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTaxRateRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesTaxRateServerRequestModel> patch)
 		{
-			ApiSalesTaxRateResponseModel record = await this.SalesTaxRateService.Get(id);
+			ApiSalesTaxRateServerResponseModel record = await this.SalesTaxRateService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesTaxRateRequestModel model = await this.PatchModel(id, patch);
+				ApiSalesTaxRateServerRequestModel model = await this.PatchModel(id, patch) as ApiSalesTaxRateServerRequestModel;
 
-				UpdateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Update(id, model);
+				UpdateResponse<ApiSalesTaxRateServerResponseModel> result = await this.SalesTaxRateService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiSalesTaxRateServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateServerRequestModel model)
 		{
-			ApiSalesTaxRateRequestModel request = await this.PatchModel(id, this.SalesTaxRateModelMapper.CreatePatch(model));
+			ApiSalesTaxRateServerRequestModel request = await this.PatchModel(id, this.SalesTaxRateModelMapper.CreatePatch(model)) as ApiSalesTaxRateServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiSalesTaxRateResponseModel> result = await this.SalesTaxRateService.Update(id, request);
+				UpdateResponse<ApiSalesTaxRateServerResponseModel> result = await this.SalesTaxRateService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.SalesTaxRateService.Delete(id);
@@ -207,13 +217,13 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byStateProvinceIDTaxType/{stateProvinceID}/{taxType}")]
+		[Route("byRowguid/{rowguid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiSalesTaxRateServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
 		{
-			ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.ByStateProvinceIDTaxType(stateProvinceID, taxType);
+			ApiSalesTaxRateServerResponseModel response = await this.SalesTaxRateService.ByRowguid(rowguid);
 
 			if (response == null)
 			{
@@ -225,7 +235,26 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		private async Task<ApiSalesTaxRateRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTaxRateRequestModel> patch)
+		[HttpGet]
+		[Route("byStateProvinceIDTaxType/{stateProvinceID}/{taxType}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiSalesTaxRateServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
+		{
+			ApiSalesTaxRateServerResponseModel response = await this.SalesTaxRateService.ByStateProvinceIDTaxType(stateProvinceID, taxType);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		private async Task<ApiSalesTaxRateServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesTaxRateServerRequestModel> patch)
 		{
 			var record = await this.SalesTaxRateService.Get(id);
 
@@ -235,7 +264,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiSalesTaxRateRequestModel request = this.SalesTaxRateModelMapper.MapResponseToRequest(record);
+				ApiSalesTaxRateServerRequestModel request = this.SalesTaxRateModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -244,5 +273,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>edc522e598d1c3222b121741a7bb9be6</Hash>
+    <Hash>6847277e68cd2b58628637c79cbf17a2</Hash>
 </Codenesium>*/

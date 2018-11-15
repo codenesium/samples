@@ -2,29 +2,28 @@ using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
 	public partial interface IDeviceActionService
 	{
-		Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
-			ApiDeviceActionRequestModel model);
+		Task<CreateResponse<ApiDeviceActionServerResponseModel>> Create(
+			ApiDeviceActionServerRequestModel model);
 
-		Task<UpdateResponse<ApiDeviceActionResponseModel>> Update(int id,
-		                                                           ApiDeviceActionRequestModel model);
+		Task<UpdateResponse<ApiDeviceActionServerResponseModel>> Update(int id,
+		                                                                 ApiDeviceActionServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiDeviceActionResponseModel> Get(int id);
+		Task<ApiDeviceActionServerResponseModel> Get(int id);
 
-		Task<List<ApiDeviceActionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDeviceActionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDeviceActionServerResponseModel>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b6ba03c1966a23c16f84c8ef853f02e</Hash>
+    <Hash>462a91422b616c1dd146bf1797f86583</Hash>
 </Codenesium>*/

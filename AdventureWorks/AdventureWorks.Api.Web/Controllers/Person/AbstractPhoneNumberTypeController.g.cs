@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IPhoneNumberTypeService PhoneNumberTypeService { get; private set; }
 
-		protected IApiPhoneNumberTypeModelMapper PhoneNumberTypeModelMapper { get; private set; }
+		protected IApiPhoneNumberTypeServerModelMapper PhoneNumberTypeModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractPhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPhoneNumberTypeService phoneNumberTypeService,
-			IApiPhoneNumberTypeModelMapper phoneNumberTypeModelMapper
+			IApiPhoneNumberTypeServerModelMapper phoneNumberTypeModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPhoneNumberTypeResponseModel> response = await this.PhoneNumberTypeService.All(query.Limit, query.Offset);
+			List<ApiPhoneNumberTypeServerResponseModel> response = await this.PhoneNumberTypeService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiPhoneNumberTypeServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			ApiPhoneNumberTypeResponseModel response = await this.PhoneNumberTypeService.Get(id);
+			ApiPhoneNumberTypeServerResponseModel response = await this.PhoneNumberTypeService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiPhoneNumberTypeServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiPhoneNumberTypeResponseModel> records = new List<ApiPhoneNumberTypeResponseModel>();
+			List<ApiPhoneNumberTypeServerResponseModel> records = new List<ApiPhoneNumberTypeServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
+				CreateResponse<ApiPhoneNumberTypeServerResponseModel> result = await this.PhoneNumberTypeService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiPhoneNumberTypeServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiPhoneNumberTypeResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiPhoneNumberTypeServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeServerRequestModel model)
 		{
-			CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Create(model);
+			CreateResponse<ApiPhoneNumberTypeServerResponseModel> result = await this.PhoneNumberTypeService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPhoneNumberTypeServerRequestModel> patch)
 		{
-			ApiPhoneNumberTypeResponseModel record = await this.PhoneNumberTypeService.Get(id);
+			ApiPhoneNumberTypeServerResponseModel record = await this.PhoneNumberTypeService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiPhoneNumberTypeRequestModel model = await this.PatchModel(id, patch);
+				ApiPhoneNumberTypeServerRequestModel model = await this.PatchModel(id, patch) as ApiPhoneNumberTypeServerRequestModel;
 
-				UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, model);
+				UpdateResponse<ApiPhoneNumberTypeServerResponseModel> result = await this.PhoneNumberTypeService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiPhoneNumberTypeServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
+
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeServerRequestModel model)
 		{
-			ApiPhoneNumberTypeRequestModel request = await this.PatchModel(id, this.PhoneNumberTypeModelMapper.CreatePatch(model));
+			ApiPhoneNumberTypeServerRequestModel request = await this.PatchModel(id, this.PhoneNumberTypeModelMapper.CreatePatch(model)) as ApiPhoneNumberTypeServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiPhoneNumberTypeResponseModel> result = await this.PhoneNumberTypeService.Update(id, request);
+				UpdateResponse<ApiPhoneNumberTypeServerResponseModel> result = await this.PhoneNumberTypeService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			ActionResponse result = await this.PhoneNumberTypeService.Delete(id);
@@ -206,24 +216,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{phoneNumberTypeID}/PersonPhonesByPhoneNumberTypeID")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
-		public async virtual Task<IActionResult> PersonPhonesByPhoneNumberTypeID(int phoneNumberTypeID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiPersonPhoneResponseModel> response = await this.PhoneNumberTypeService.PersonPhonesByPhoneNumberTypeID(phoneNumberTypeID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiPhoneNumberTypeRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeRequestModel> patch)
+		private async Task<ApiPhoneNumberTypeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiPhoneNumberTypeServerRequestModel> patch)
 		{
 			var record = await this.PhoneNumberTypeService.Get(id);
 
@@ -233,7 +226,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiPhoneNumberTypeRequestModel request = this.PhoneNumberTypeModelMapper.MapResponseToRequest(record);
+				ApiPhoneNumberTypeServerRequestModel request = this.PhoneNumberTypeModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -242,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>994ce891b7114e4cffe76f879d2efcfb</Hash>
+    <Hash>30ea70ab4ddff6ccccd5524c7faa4765</Hash>
 </Codenesium>*/

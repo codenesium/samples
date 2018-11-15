@@ -2,29 +2,28 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IBillOfMaterialService
 	{
-		Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
-			ApiBillOfMaterialRequestModel model);
+		Task<CreateResponse<ApiBillOfMaterialServerResponseModel>> Create(
+			ApiBillOfMaterialServerRequestModel model);
 
-		Task<UpdateResponse<ApiBillOfMaterialResponseModel>> Update(int billOfMaterialsID,
-		                                                             ApiBillOfMaterialRequestModel model);
+		Task<UpdateResponse<ApiBillOfMaterialServerResponseModel>> Update(int billOfMaterialsID,
+		                                                                   ApiBillOfMaterialServerRequestModel model);
 
 		Task<ActionResponse> Delete(int billOfMaterialsID);
 
-		Task<ApiBillOfMaterialResponseModel> Get(int billOfMaterialsID);
+		Task<ApiBillOfMaterialServerResponseModel> Get(int billOfMaterialsID);
 
-		Task<List<ApiBillOfMaterialResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>182c382d6a996cadac49c58d52dd01fe</Hash>
+    <Hash>2bcc78aa908fb0b5b551ddd46623c9b8</Hash>
 </Codenesium>*/

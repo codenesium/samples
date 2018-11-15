@@ -9,16 +9,16 @@ namespace TestsNS.Api.Services
 	{
 		BOColumnSameAsFKTable MapModelToBO(
 			int id,
-			ApiColumnSameAsFKTableRequestModel model);
+			ApiColumnSameAsFKTableServerRequestModel model);
 
-		ApiColumnSameAsFKTableResponseModel MapBOToModel(
+		ApiColumnSameAsFKTableServerResponseModel MapBOToModel(
 			BOColumnSameAsFKTable boColumnSameAsFKTable);
 
-		List<ApiColumnSameAsFKTableResponseModel> MapBOToModel(
+		List<ApiColumnSameAsFKTableServerResponseModel> MapBOToModel(
 			List<BOColumnSameAsFKTable> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>98cf5ad4c00e00dd29ce682ce472fe9d</Hash>
+    <Hash>9b3b0328a4a8e624773ebf3f8fce6cf4</Hash>
 </Codenesium>*/

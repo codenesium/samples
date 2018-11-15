@@ -24,8 +24,8 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			var record = new ApiAirTransportResponseModel();
-			var records = new List<ApiAirTransportResponseModel>();
+			var record = new ApiAirTransportServerResponseModel();
+			var records = new List<ApiAirTransportServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiAirTransportResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiAirTransportServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiAirTransportResponseModel>>(new List<ApiAirTransportResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiAirTransportServerResponseModel>>(new List<ApiAirTransportServerResponseModel>()));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiAirTransportResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiAirTransportServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportServerResponseModel()));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace PetShippingNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiAirTransportResponseModel;
+			var record = (response as OkObjectResult).Value as ApiAirTransportServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportServerResponseModel>(null));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiAirTransportResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiAirTransportResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiAirTransportServerResponseModel>.CreateResponse(null as ApiAirTransportServerResponseModel);
+
+			mockResponse.SetRecord(new ApiAirTransportServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportServerResponseModel>>(mockResponse));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiAirTransportRequestModel>();
-			records.Add(new ApiAirTransportRequestModel());
+			var records = new List<ApiAirTransportServerRequestModel>();
+			records.Add(new ApiAirTransportServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiAirTransportResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiAirTransportServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiAirTransportResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiAirTransportServerResponseModel>>(null as ApiAirTransportServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportServerResponseModel>>(mockResponse.Object));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiAirTransportRequestModel>();
-			records.Add(new ApiAirTransportRequestModel());
+			var records = new List<ApiAirTransportServerRequestModel>();
+			records.Add(new ApiAirTransportServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiAirTransportResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiAirTransportResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiAirTransportServerResponseModel>.CreateResponse(null as ApiAirTransportServerResponseModel);
+
+			mockResponse.SetRecord(new ApiAirTransportServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportServerResponseModel>>(mockResponse));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiAirTransportRequestModel());
+			IActionResult response = await controller.Create(new ApiAirTransportServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiAirTransportResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiAirTransportServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiAirTransportResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiAirTransportResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiAirTransportServerResponseModel>>(null as ApiAirTransportServerResponseModel);
+			var mockRecord = new ApiAirTransportServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiAirTransportServerResponseModel>>(mockResponse.Object));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiAirTransportRequestModel());
+			IActionResult response = await controller.Create(new ApiAirTransportServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAirTransportResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAirTransportServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()))
-			.Callback<int, ApiAirTransportRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()))
+			.Callback<int, ApiAirTransportServerRequestModel>(
 				(id, model) => model.FlightNumber.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiAirTransportResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportResponseModel>(new ApiAirTransportResponseModel()));
-			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiAirTransportServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportServerResponseModel>(new ApiAirTransportServerResponseModel()));
+			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiAirTransportRequestModel>();
+			var patch = new JsonPatchDocument<ApiAirTransportServerRequestModel>();
 			patch.Replace(x => x.FlightNumber, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace PetShippingNS.Api.Web.Tests
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportServerResponseModel>(null));
 			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiAirTransportRequestModel>();
+			var patch = new JsonPatchDocument<ApiAirTransportServerRequestModel>();
 			patch.Replace(x => x.FlightNumber, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace PetShippingNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAirTransportResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAirTransportServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportResponseModel()));
-			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportServerResponseModel()));
+			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAirTransportRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAirTransportServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAirTransportResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAirTransportServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportResponseModel()));
-			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiAirTransportServerResponseModel()));
+			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAirTransportRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAirTransportServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			AirTransportControllerMockFacade mock = new AirTransportControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiAirTransportResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiAirTransportServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportResponseModel>(null));
-			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiAirTransportServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiAirTransportServerResponseModel>(null));
+			AirTransportController controller = new AirTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiAirTransportServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiAirTransportRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiAirTransportServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace PetShippingNS.Api.Web.Tests
 
 		public Mock<IAirTransportService> ServiceMock { get; set; } = new Mock<IAirTransportService>();
 
-		public Mock<IApiAirTransportModelMapper> ModelMapperMock { get; set; } = new Mock<IApiAirTransportModelMapper>();
+		public Mock<IApiAirTransportServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiAirTransportServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>8aeb62c5a13478e451b99ee8a33a0756</Hash>
+    <Hash>47f0cdfc000902059a804df6f9cf6ca9</Hash>
 </Codenesium>*/

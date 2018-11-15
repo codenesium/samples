@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
@@ -16,7 +11,7 @@ namespace NebulaNS.Api.Services
 	{
 		protected IVersionInfoRepository VersionInfoRepository { get; private set; }
 
-		protected IApiVersionInfoRequestModelValidator VersionInfoModelValidator { get; private set; }
+		protected IApiVersionInfoServerRequestModelValidator VersionInfoModelValidator { get; private set; }
 
 		protected IBOLVersionInfoMapper BolVersionInfoMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace NebulaNS.Api.Services
 		public AbstractVersionInfoService(
 			ILogger logger,
 			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+			IApiVersionInfoServerRequestModelValidator versionInfoModelValidator,
 			IBOLVersionInfoMapper bolVersionInfoMapper,
 			IDALVersionInfoMapper dalVersionInfoMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace NebulaNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVersionInfoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.VersionInfoRepository.All(limit, offset);
 
 			return this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
+		public virtual async Task<ApiVersionInfoServerResponseModel> Get(long version)
 		{
 			var record = await this.VersionInfoRepository.Get(version);
 
@@ -60,10 +55,11 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
-			ApiVersionInfoRequestModel model)
+		public virtual async Task<CreateResponse<ApiVersionInfoServerResponseModel>> Create(
+			ApiVersionInfoServerRequestModel model)
 		{
-			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.VersionInfoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVersionInfoServerResponseModel> response = ValidationResponseFactory<ApiVersionInfoServerResponseModel>.CreateResponse(await this.VersionInfoModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolVersionInfoMapper.MapModelToBO(default(long), model);
@@ -75,9 +71,9 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiVersionInfoResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiVersionInfoServerResponseModel>> Update(
 			long version,
-			ApiVersionInfoRequestModel model)
+			ApiVersionInfoServerRequestModel model)
 		{
 			var validationResult = await this.VersionInfoModelValidator.ValidateUpdateAsync(version, model);
 
@@ -88,18 +84,19 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.VersionInfoRepository.Get(version);
 
-				return new UpdateResponse<ApiVersionInfoResponseModel>(this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiVersionInfoServerResponseModel>.UpdateResponse(this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiVersionInfoResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiVersionInfoServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			long version)
 		{
-			ActionResponse response = new ActionResponse(await this.VersionInfoModelValidator.ValidateDeleteAsync(version));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.VersionInfoModelValidator.ValidateDeleteAsync(version));
+
 			if (response.Success)
 			{
 				await this.VersionInfoRepository.Delete(version);
@@ -111,5 +108,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd1489ce5581ff05e19b915deaaf8a42</Hash>
+    <Hash>1c3d94cb4ad281e3e0e589ce3c267b08</Hash>
 </Codenesium>*/

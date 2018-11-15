@@ -17,7 +17,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLPostHistoryTypeMapper();
-			ApiPostHistoryTypeRequestModel model = new ApiPostHistoryTypeRequestModel();
+			ApiPostHistoryTypeServerRequestModel model = new ApiPostHistoryTypeServerRequestModel();
 			model.SetProperties("A");
 			BOPostHistoryType response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostHistoryTypeMapper();
 			BOPostHistoryType bo = new BOPostHistoryType();
 			bo.SetProperties(1, "A");
-			ApiPostHistoryTypeResponseModel response = mapper.MapBOToModel(bo);
+			ApiPostHistoryTypeServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Type.Should().Be("A");
@@ -42,7 +42,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mapper = new BOLPostHistoryTypeMapper();
 			BOPostHistoryType bo = new BOPostHistoryType();
 			bo.SetProperties(1, "A");
-			List<ApiPostHistoryTypeResponseModel> response = mapper.MapBOToModel(new List<BOPostHistoryType>() { { bo } });
+			List<ApiPostHistoryTypeServerResponseModel> response = mapper.MapBOToModel(new List<BOPostHistoryType>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d5cb8b2cd20b5bb2c62c23b7db96b96</Hash>
+    <Hash>d1786723354e7603f281ce2cecf27b55</Hash>
 </Codenesium>*/

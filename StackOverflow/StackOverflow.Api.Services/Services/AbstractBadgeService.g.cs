@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IBadgeRepository BadgeRepository { get; private set; }
 
-		protected IApiBadgeRequestModelValidator BadgeModelValidator { get; private set; }
+		protected IApiBadgeServerRequestModelValidator BadgeModelValidator { get; private set; }
 
 		protected IBOLBadgeMapper BolBadgeMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractBadgeService(
 			ILogger logger,
 			IBadgeRepository badgeRepository,
-			IApiBadgeRequestModelValidator badgeModelValidator,
+			IApiBadgeServerRequestModelValidator badgeModelValidator,
 			IBOLBadgeMapper bolBadgeMapper,
 			IDALBadgeMapper dalBadgeMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiBadgeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBadgeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.BadgeRepository.All(limit, offset);
 
 			return this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiBadgeResponseModel> Get(int id)
+		public virtual async Task<ApiBadgeServerResponseModel> Get(int id)
 		{
 			var record = await this.BadgeRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiBadgeResponseModel>> Create(
-			ApiBadgeRequestModel model)
+		public virtual async Task<CreateResponse<ApiBadgeServerResponseModel>> Create(
+			ApiBadgeServerRequestModel model)
 		{
-			CreateResponse<ApiBadgeResponseModel> response = new CreateResponse<ApiBadgeResponseModel>(await this.BadgeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBadgeServerResponseModel> response = ValidationResponseFactory<ApiBadgeServerResponseModel>.CreateResponse(await this.BadgeModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolBadgeMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiBadgeResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiBadgeServerResponseModel>> Update(
 			int id,
-			ApiBadgeRequestModel model)
+			ApiBadgeServerRequestModel model)
 		{
 			var validationResult = await this.BadgeModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.BadgeRepository.Get(id);
 
-				return new UpdateResponse<ApiBadgeResponseModel>(this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiBadgeServerResponseModel>.UpdateResponse(this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiBadgeResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiBadgeServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.BadgeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.BadgeModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.BadgeRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c053da5988b6feb2bec4bb53183c2ed</Hash>
+    <Hash>ebc6b3db06cb329e2237271fe4a5780c</Hash>
 </Codenesium>*/

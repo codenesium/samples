@@ -85,22 +85,14 @@ namespace FileServiceNS.Api.DataAccess
 			Expression<Func<FileType, bool>> predicate,
 			int limit = int.MaxValue,
 			int offset = 0,
-			Expression<Func<FileType, dynamic>> orderBy = null,
-			ListSortDirection sortDirection = ListSortDirection.Ascending)
+			Expression<Func<FileType, dynamic>> orderBy = null)
 		{
 			if (orderBy == null)
 			{
 				orderBy = x => x.Id;
 			}
 
-			if (sortDirection == ListSortDirection.Ascending)
-			{
-				return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
-			}
-			else
-			{
-				return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
-			}
+			return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
 		}
 
 		private async Task<FileType> GetById(int id)
@@ -113,5 +105,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad706347ad3e706564f8faae20c8c108</Hash>
+    <Hash>e5a85ce994fab6f184bc1ff40a584095</Hash>
 </Codenesium>*/

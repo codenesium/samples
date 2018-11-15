@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -9,20 +8,20 @@ namespace TestsNS.Api.Services
 {
 	public partial interface ISchemaAPersonService
 	{
-		Task<CreateResponse<ApiSchemaAPersonResponseModel>> Create(
-			ApiSchemaAPersonRequestModel model);
+		Task<CreateResponse<ApiSchemaAPersonServerResponseModel>> Create(
+			ApiSchemaAPersonServerRequestModel model);
 
-		Task<UpdateResponse<ApiSchemaAPersonResponseModel>> Update(int id,
-		                                                            ApiSchemaAPersonRequestModel model);
+		Task<UpdateResponse<ApiSchemaAPersonServerResponseModel>> Update(int id,
+		                                                                  ApiSchemaAPersonServerRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<ApiSchemaAPersonResponseModel> Get(int id);
+		Task<ApiSchemaAPersonServerResponseModel> Get(int id);
 
-		Task<List<ApiSchemaAPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSchemaAPersonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>87dd65570cbe2412df2641acdd6f04a9</Hash>
+    <Hash>9441308a6d747752ec2ca918f97844c8</Hash>
 </Codenesium>*/

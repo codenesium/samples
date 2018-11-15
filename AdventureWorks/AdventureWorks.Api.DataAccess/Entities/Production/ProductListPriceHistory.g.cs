@@ -28,24 +28,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("EndDate")]
-		public DateTime? EndDate { get; private set; }
+		public virtual DateTime? EndDate { get; private set; }
 
 		[Column("ListPrice")]
-		public decimal ListPrice { get; private set; }
+		public virtual decimal ListPrice { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID")]
-		public int ProductID { get; private set; }
+		public virtual int ProductID { get; private set; }
 
 		[Key]
 		[Column("StartDate")]
-		public DateTime StartDate { get; private set; }
+		public virtual DateTime StartDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a9cea0417737be5ab78f5d135cc89796</Hash>
+    <Hash>29315def89c7633561694a5593d8cd03</Hash>
 </Codenesium>*/

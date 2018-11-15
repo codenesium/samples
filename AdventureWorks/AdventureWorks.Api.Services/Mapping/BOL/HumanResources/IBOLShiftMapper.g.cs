@@ -9,16 +9,16 @@ namespace AdventureWorksNS.Api.Services
 	{
 		BOShift MapModelToBO(
 			int shiftID,
-			ApiShiftRequestModel model);
+			ApiShiftServerRequestModel model);
 
-		ApiShiftResponseModel MapBOToModel(
+		ApiShiftServerResponseModel MapBOToModel(
 			BOShift boShift);
 
-		List<ApiShiftResponseModel> MapBOToModel(
+		List<ApiShiftServerResponseModel> MapBOToModel(
 			List<BOShift> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>59defaa714f9f21c4e1d3def20156b6c</Hash>
+    <Hash>143dd7dae4045e94f859c9b6ca31d472</Hash>
 </Codenesium>*/

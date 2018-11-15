@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
@@ -16,7 +11,7 @@ namespace PetShippingNS.Api.Services
 	{
 		protected ICountryRepository CountryRepository { get; private set; }
 
-		protected IApiCountryRequestModelValidator CountryModelValidator { get; private set; }
+		protected IApiCountryServerRequestModelValidator CountryModelValidator { get; private set; }
 
 		protected IBOLCountryMapper BolCountryMapper { get; private set; }
 
@@ -35,7 +30,7 @@ namespace PetShippingNS.Api.Services
 		public AbstractCountryService(
 			ILogger logger,
 			ICountryRepository countryRepository,
-			IApiCountryRequestModelValidator countryModelValidator,
+			IApiCountryServerRequestModelValidator countryModelValidator,
 			IBOLCountryMapper bolCountryMapper,
 			IDALCountryMapper dalCountryMapper,
 			IBOLCountryRequirementMapper bolCountryRequirementMapper,
@@ -55,14 +50,14 @@ namespace PetShippingNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiCountryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.CountryRepository.All(limit, offset);
 
 			return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiCountryResponseModel> Get(int id)
+		public virtual async Task<ApiCountryServerResponseModel> Get(int id)
 		{
 			var record = await this.CountryRepository.Get(id);
 
@@ -76,10 +71,11 @@ namespace PetShippingNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
-			ApiCountryRequestModel model)
+		public virtual async Task<CreateResponse<ApiCountryServerResponseModel>> Create(
+			ApiCountryServerRequestModel model)
 		{
-			CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.CountryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryServerResponseModel> response = ValidationResponseFactory<ApiCountryServerResponseModel>.CreateResponse(await this.CountryModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
@@ -91,9 +87,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiCountryResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiCountryServerResponseModel>> Update(
 			int id,
-			ApiCountryRequestModel model)
+			ApiCountryServerRequestModel model)
 		{
 			var validationResult = await this.CountryModelValidator.ValidateUpdateAsync(id, model);
 
@@ -104,18 +100,19 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CountryRepository.Get(id);
 
-				return new UpdateResponse<ApiCountryResponseModel>(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiCountryResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.CountryModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.CountryModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.CountryRepository.Delete(id);
@@ -124,14 +121,14 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiCountryRequirementResponseModel>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCountryRequirementServerResponseModel>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<CountryRequirement> records = await this.CountryRepository.CountryRequirementsByCountryId(countryId, limit, offset);
 
 			return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiDestinationResponseModel>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDestinationServerResponseModel>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Destination> records = await this.CountryRepository.DestinationsByCountryId(countryId, limit, offset);
 
@@ -141,5 +138,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f9f73602515aeb77a1a0d5d713fdedd</Hash>
+    <Hash>c29f0b12d16bf3d0bf8ab5709902fcb4</Hash>
 </Codenesium>*/

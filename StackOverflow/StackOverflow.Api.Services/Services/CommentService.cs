@@ -1,13 +1,6 @@
-using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
@@ -16,19 +9,19 @@ namespace StackOverflowNS.Api.Services
 		public CommentService(
 			ILogger<ICommentRepository> logger,
 			ICommentRepository commentRepository,
-			IApiCommentRequestModelValidator commentModelValidator,
-			IBOLCommentMapper bolcommentMapper,
-			IDALCommentMapper dalcommentMapper)
+			IApiCommentServerRequestModelValidator commentModelValidator,
+			IBOLCommentMapper bolCommentMapper,
+			IDALCommentMapper dalCommentMapper)
 			: base(logger,
 			       commentRepository,
 			       commentModelValidator,
-			       bolcommentMapper,
-			       dalcommentMapper)
+			       bolCommentMapper,
+			       dalCommentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>88f3d207faaf072e6397ca3dabae2c82</Hash>
+    <Hash>121e7c41b53d29b0b653a8fa56ecd5ea</Hash>
 </Codenesium>*/

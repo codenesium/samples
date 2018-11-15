@@ -9,16 +9,16 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		BOEvent MapModelToBO(
 			int id,
-			ApiEventRequestModel model);
+			ApiEventServerRequestModel model);
 
-		ApiEventResponseModel MapBOToModel(
+		ApiEventServerResponseModel MapBOToModel(
 			BOEvent boEvent);
 
-		List<ApiEventResponseModel> MapBOToModel(
+		List<ApiEventServerResponseModel> MapBOToModel(
 			List<BOEvent> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff479b87907233c942063fa47e2ca7f0</Hash>
+    <Hash>854e5e2d9a667ec05d89d34132496cdc</Hash>
 </Codenesium>*/

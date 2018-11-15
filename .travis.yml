@@ -10,8 +10,10 @@ script:
    -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
    -  dotnet build TicketingCRM/TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj
    -  dotnet build StudioResourceManager/StudioResourceManager.Api.Web/StudioResourceManager.Api.Web.csproj
+   -  dotnet build StudioResourceManagerMT/StudioResourceManagerMT.Api.Web/StudioResourceManagerMT.Api.Web.csproj
    -  dotnet build StackOverflow/StackOverflow.Api.Web/StackOverflow.Api.Web.csproj
-
+   -  dotnet build AdventureWorks/AdventureWorks.Api.Web/AdventureWorks.Api.Web.csproj
+   
    -  dotnet test ESPIOT/ESPIOT.Api.DataAccess.Tests/ESPIOT.Api.DataAccess.Tests.csproj
    -  dotnet test FileService/FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj
@@ -20,7 +22,9 @@ script:
    -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
    -  dotnet test StudioResourceManager/StudioResourceManager.Api.DataAccess.Tests/StudioResourceManager.Api.DataAccess.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.DataAccess.Tests/StudioResourceManagerMT.Api.DataAccess.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.DataAccess.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj
    
    -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
    -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
@@ -30,7 +34,9 @@ script:
    -  dotnet test PetStore/PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.Services.Tests/TicketingCRM.Api.Services.Tests.csproj
    -  dotnet test StudioResourceManager/StudioResourceManager.Api.Services.Tests/StudioResourceManager.Api.Services.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Services.Tests/StudioResourceManagerMT.Api.Services.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.Services.Tests/StackOverflow.Api.Services.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj
 
    -  dotnet test ESPIOT/ESPIOT.Api.Client.Tests/ESPIOT.Api.Client.Tests.csproj
    -  dotnet test FileService/FileService.Api.Client.Tests/FileService.Api.Client.Tests.csproj
@@ -40,7 +46,9 @@ script:
    -  dotnet test PetStore/PetStore.Api.Client.Tests/PetStore.Api.Client.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.Client.Tests/TicketingCRM.Api.Client.Tests.csproj
    -  dotnet test StudioResourceManager/StudioResourceManager.Api.Client.Tests/StudioResourceManager.Api.Client.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Client.Tests/StudioResourceManagerMT.Api.Client.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.Client.Tests/StackOverflow.Api.Client.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.Client.Tests/AdventureWorks.Api.Client.Tests.csproj
    
    -  dotnet test ESPIOT/ESPIOT.Api.Web.Tests/ESPIOT.Api.Web.Tests.csproj
    -  dotnet test FileService/FileService.Api.Web.Tests/FileService.Api.Web.Tests.csproj
@@ -50,4 +58,6 @@ script:
    -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
    -  dotnet test StudioResourceManager/StudioResourceManager.Api.Web.Tests/StudioResourceManager.Api.Web.Tests.csproj
+   -  dotnet test StudioResourceManagerMT/StudioResourceManagerMT.Api.Web.Tests/StudioResourceManagerMT.Api.Web.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.Web.Tests/StackOverflow.Api.Web.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj

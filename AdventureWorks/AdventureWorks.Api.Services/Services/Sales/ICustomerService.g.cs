@@ -2,33 +2,34 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
 	public partial interface ICustomerService
 	{
-		Task<CreateResponse<ApiCustomerResponseModel>> Create(
-			ApiCustomerRequestModel model);
+		Task<CreateResponse<ApiCustomerServerResponseModel>> Create(
+			ApiCustomerServerRequestModel model);
 
-		Task<UpdateResponse<ApiCustomerResponseModel>> Update(int customerID,
-		                                                       ApiCustomerRequestModel model);
+		Task<UpdateResponse<ApiCustomerServerResponseModel>> Update(int customerID,
+		                                                             ApiCustomerServerRequestModel model);
 
 		Task<ActionResponse> Delete(int customerID);
 
-		Task<ApiCustomerResponseModel> Get(int customerID);
+		Task<ApiCustomerServerResponseModel> Get(int customerID);
 
-		Task<List<ApiCustomerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiCustomerResponseModel> ByAccountNumber(string accountNumber);
+		Task<ApiCustomerServerResponseModel> ByAccountNumber(string accountNumber);
 
-		Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<ApiCustomerServerResponseModel> ByRowguid(Guid rowguid);
 
-		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerServerResponseModel>> ByTerritoryID(int? territoryID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e6fe8734afd4c28dd4346710ba805a1</Hash>
+    <Hash>91989ba8aae7970e8e4a749959deeda2</Hash>
 </Codenesium>*/

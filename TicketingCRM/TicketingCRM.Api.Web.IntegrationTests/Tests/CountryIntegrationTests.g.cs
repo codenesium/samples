@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
+using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
 using Xunit;
 
@@ -15,31 +18,60 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Country")]
 	[Trait("Area", "Integration")]
-	public class CountryIntegrationTests
+	public partial class CountryIntegrationTests
 	{
 		public CountryIntegrationTests()
 		{
 		}
 
 		[Fact]
-		public async void TestCreate()
+		public virtual async void TestBulkInsert()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			await client.CountryDeleteAsync(1);
+			var model = new ApiCountryClientRequestModel();
+			model.SetProperties("B");
+			var model2 = new ApiCountryClientRequestModel();
+			model2.SetProperties("C");
+			var request = new List<ApiCountryClientRequestModel>() {model, model2};
+			CreateResponse<List<ApiCountryClientResponseModel>> result = await client.CountryBulkInsertAsync(request);
 
-			var response = await this.CreateRecord(client);
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
 
-			response.Should().NotBeNull();
+			context.Set<Country>().ToList()[1].Name.Should().Be("B");
+
+			context.Set<Country>().ToList()[2].Name.Should().Be("C");
 		}
 
 		[Fact]
-		public async void TestUpdate()
+		public virtual async void TestCreate()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			var model = new ApiCountryClientRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiCountryClientResponseModel> result = await client.CountryCreateAsync(model);
+
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeNull();
+			context.Set<Country>().ToList()[1].Name.Should().Be("B");
+
+			result.Record.Name.Should().Be("B");
+		}
+
+		[Fact]
+		public virtual async void TestUpdate()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -47,48 +79,53 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
+			var mapper = new ApiCountryServerModelMapper();
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+			ICountryService service = testServer.Host.Services.GetService(typeof(ICountryService)) as ICountryService;
+			ApiCountryServerResponseModel model = await service.Get(1);
 
-			ApiCountryResponseModel model = await client.CountryGetAsync(1);
+			ApiCountryClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
+			request.SetProperties("B");
 
-			ApiCountryModelMapper mapper = new ApiCountryModelMapper();
+			UpdateResponse<ApiCountryClientResponseModel> updateResponse = await client.CountryUpdateAsync(model.Id, request);
 
-			UpdateResponse<ApiCountryResponseModel> updateResponse = await client.CountryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
-
+			context.Entry(context.Set<Country>().ToList()[0]).Reload();
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
+			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Country>().ToList()[0].Name.Should().Be("B");
+
+			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.Name.Should().Be("B");
 		}
 
 		[Fact]
-		public async void TestDelete()
+		public virtual async void TestDelete()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
 			              .UseStartup<TestStartup>();
 			TestServer testServer = new TestServer(builder);
-
 			var client = new ApiClient(testServer.CreateClient());
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
-			var createModel = new ApiCountryRequestModel();
-			createModel.SetProperties("B");
-			CreateResponse<ApiCountryResponseModel> createResult = await client.CountryCreateAsync(createModel);
+			ICountryService service = testServer.Host.Services.GetService(typeof(ICountryService)) as ICountryService;
+			var model = new ApiCountryServerRequestModel();
+			model.SetProperties("B");
+			CreateResponse<ApiCountryServerResponseModel> createdResponse = await service.Create(model);
 
-			createResult.Success.Should().BeTrue();
-
-			ApiCountryResponseModel getResponse = await client.CountryGetAsync(2);
-
-			getResponse.Should().NotBeNull();
+			createdResponse.Success.Should().BeTrue();
 
 			ActionResponse deleteResult = await client.CountryDeleteAsync(2);
 
 			deleteResult.Success.Should().BeTrue();
-
-			ApiCountryResponseModel verifyResponse = await client.CountryGetAsync(2);
+			ApiCountryServerResponseModel verifyResponse = await service.Get(2);
 
 			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
-		public async void TestGet()
+		public virtual async void TestGetFound()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -96,13 +133,31 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 			TestServer testServer = new TestServer(builder);
 
 			var client = new ApiClient(testServer.CreateClient());
-			ApiCountryResponseModel response = await client.CountryGetAsync(1);
+			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+
+			ApiCountryClientResponseModel response = await client.CountryGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.Id.Should().Be(1);
+			response.Name.Should().Be("A");
 		}
 
 		[Fact]
-		public async void TestAll()
+		public virtual async void TestGetNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCountryClientResponseModel response = await client.CountryGetAsync(default(int));
+
+			response.Should().BeNull();
+		}
+
+		[Fact]
+		public virtual async void TestAll()
 		{
 			var builder = new WebHostBuilder()
 			              .UseEnvironment("Production")
@@ -111,23 +166,63 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			List<ApiCountryResponseModel> response = await client.CountryAllAsync();
+			List<ApiCountryClientResponseModel> response = await client.CountryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].Id.Should().Be(1);
+			response[0].Name.Should().Be("A");
 		}
 
-		private async Task<ApiCountryResponseModel> CreateRecord(ApiClient client)
+		[Fact]
+		public virtual async void TestForeignKeyProvincesByCountryIdFound()
 		{
-			var model = new ApiCountryRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiCountryResponseModel> result = await client.CountryCreateAsync(model);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			result.Success.Should().BeTrue();
-			return result.Record;
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProvinceClientResponseModel> response = await client.ProvincesByCountryId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyProvincesByCountryIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiProvinceClientResponseModel> response = await client.ProvincesByCountryId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
+		public virtual void TestClientCancellationToken()
+		{
+			Func<Task> testCancellation = async () =>
+			{
+				var builder = new WebHostBuilder()
+				              .UseEnvironment("Production")
+				              .UseStartup<TestStartup>();
+				TestServer testServer = new TestServer(builder);
+
+				var client = new ApiClient(testServer.BaseAddress.OriginalString);
+				CancellationTokenSource tokenSource = new CancellationTokenSource();
+				CancellationToken token = tokenSource.Token;
+				tokenSource.Cancel();
+				var result = await client.CountryAllAsync(token);
+			};
+
+			testCancellation.Should().Throw<OperationCanceledException>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b9322b92f06fc1db5afdb6abac473a9</Hash>
+    <Hash>ead52fd178d0dc51cc03e00275cdd677</Hash>
 </Codenesium>*/

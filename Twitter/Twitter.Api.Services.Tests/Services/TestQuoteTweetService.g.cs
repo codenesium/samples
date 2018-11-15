@@ -31,7 +31,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.All();
+			List<ApiQuoteTweetServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			ApiQuoteTweetResponseModel response = await service.Get(default(int));
+			ApiQuoteTweetServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			ApiQuoteTweetResponseModel response = await service.Get(default(int));
+			ApiQuoteTweetServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<IQuoteTweetRepository>();
-			var model = new ApiQuoteTweetRequestModel();
+			var model = new ApiQuoteTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<QuoteTweet>())).Returns(Task.FromResult(new QuoteTweet()));
 			var service = new QuoteTweetService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			CreateResponse<ApiQuoteTweetResponseModel> response = await service.Create(model);
+			CreateResponse<ApiQuoteTweetServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiQuoteTweetRequestModel>()));
+			mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiQuoteTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<QuoteTweet>()));
 		}
 
@@ -95,7 +95,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<IQuoteTweetRepository>();
-			var model = new ApiQuoteTweetRequestModel();
+			var model = new ApiQuoteTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<QuoteTweet>())).Returns(Task.FromResult(new QuoteTweet()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new QuoteTweet()));
 			var service = new QuoteTweetService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			UpdateResponse<ApiQuoteTweetResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiQuoteTweetServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiQuoteTweetRequestModel>()));
+			mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiQuoteTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<QuoteTweet>()));
 		}
 
@@ -115,7 +115,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<IQuoteTweetRepository>();
-			var model = new ApiQuoteTweetRequestModel();
+			var model = new ApiQuoteTweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new QuoteTweetService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.ByRetweeterUserId(default(int));
+			List<ApiQuoteTweetServerResponseModel> response = await service.ByRetweeterUserId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByRetweeterUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.ByRetweeterUserId(default(int));
+			List<ApiQuoteTweetServerResponseModel> response = await service.ByRetweeterUserId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByRetweeterUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -179,7 +179,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.BySourceTweetId(default(int));
+			List<ApiQuoteTweetServerResponseModel> response = await service.BySourceTweetId(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.BySourceTweetId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -196,7 +196,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.BySourceTweetId(default(int));
+			List<ApiQuoteTweetServerResponseModel> response = await service.BySourceTweetId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.BySourceTweetId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -205,5 +205,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3ac778dec2b67ab41a7eab200ecd2263</Hash>
+    <Hash>9047d51a939ad3243b525d7608a75bc9</Hash>
 </Codenesium>*/

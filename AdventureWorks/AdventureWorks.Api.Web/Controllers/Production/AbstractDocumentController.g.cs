@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Web
 	{
 		protected IDocumentService DocumentService { get; private set; }
 
-		protected IApiDocumentModelMapper DocumentModelMapper { get; private set; }
+		protected IApiDocumentServerModelMapper DocumentModelMapper { get; private set; }
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Web
 			ILogger<AbstractDocumentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDocumentService documentService,
-			IApiDocumentModelMapper documentModelMapper
+			IApiDocumentServerModelMapper documentModelMapper
 			)
 			: base(settings, logger, transactionCoordinator)
 		{
@@ -44,7 +44,8 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDocumentServerResponseModel>), 200)]
+
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDocumentResponseModel> response = await this.DocumentService.All(query.Limit, query.Offset);
+			List<ApiDocumentServerResponseModel> response = await this.DocumentService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -61,11 +62,12 @@ namespace AdventureWorksNS.Api.Web
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
+		[ProducesResponseType(typeof(ApiDocumentServerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
+
 		public async virtual Task<IActionResult> Get(Guid id)
 		{
-			ApiDocumentResponseModel response = await this.DocumentService.Get(id);
+			ApiDocumentServerResponseModel response = await this.DocumentService.Get(id);
 
 			if (response == null)
 			{
@@ -80,20 +82,21 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
+		[ProducesResponseType(typeof(CreateResponse<List<ApiDocumentServerResponseModel>>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDocumentRequestModel> models)
+
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDocumentServerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<ApiDocumentResponseModel> records = new List<ApiDocumentResponseModel>();
+			List<ApiDocumentServerResponseModel> records = new List<ApiDocumentServerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Create(model);
+				CreateResponse<ApiDocumentServerResponseModel> result = await this.DocumentService.Create(model);
 
 				if (result.Success)
 				{
@@ -105,17 +108,21 @@ namespace AdventureWorksNS.Api.Web
 				}
 			}
 
-			return this.Ok(records);
+			var response = new CreateResponse<List<ApiDocumentServerResponseModel>>();
+			response.SetRecord(records);
+
+			return this.Ok(response);
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(CreateResponse<ApiDocumentResponseModel>), 201)]
+		[ProducesResponseType(typeof(CreateResponse<ApiDocumentServerResponseModel>), 201)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDocumentRequestModel model)
+
+		public virtual async Task<IActionResult> Create([FromBody] ApiDocumentServerRequestModel model)
 		{
-			CreateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Create(model);
+			CreateResponse<ApiDocumentServerResponseModel> result = await this.DocumentService.Create(model);
 
 			if (result.Success)
 			{
@@ -130,12 +137,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPatch]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDocumentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDocumentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ApiDocumentRequestModel> patch)
+
+		public virtual async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ApiDocumentServerRequestModel> patch)
 		{
-			ApiDocumentResponseModel record = await this.DocumentService.Get(id);
+			ApiDocumentServerResponseModel record = await this.DocumentService.Get(id);
 
 			if (record == null)
 			{
@@ -143,9 +151,9 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDocumentRequestModel model = await this.PatchModel(id, patch);
+				ApiDocumentServerRequestModel model = await this.PatchModel(id, patch) as ApiDocumentServerRequestModel;
 
-				UpdateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Update(id, model);
+				UpdateResponse<ApiDocumentServerResponseModel> result = await this.DocumentService.Update(id, model);
 
 				if (result.Success)
 				{
@@ -161,12 +169,13 @@ namespace AdventureWorksNS.Api.Web
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(UpdateResponse<ApiDocumentResponseModel>), 200)]
+		[ProducesResponseType(typeof(UpdateResponse<ApiDocumentServerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentRequestModel model)
+
+		public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentServerRequestModel model)
 		{
-			ApiDocumentRequestModel request = await this.PatchModel(id, this.DocumentModelMapper.CreatePatch(model));
+			ApiDocumentServerRequestModel request = await this.PatchModel(id, this.DocumentModelMapper.CreatePatch(model)) as ApiDocumentServerRequestModel;
 
 			if (request == null)
 			{
@@ -174,7 +183,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				UpdateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Update(id, request);
+				UpdateResponse<ApiDocumentServerResponseModel> result = await this.DocumentService.Update(id, request);
 
 				if (result.Success)
 				{
@@ -192,6 +201,7 @@ namespace AdventureWorksNS.Api.Web
 		[UnitOfWork]
 		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
+
 		public virtual async Task<IActionResult> Delete(Guid id)
 		{
 			ActionResponse result = await this.DocumentService.Delete(id);
@@ -207,9 +217,28 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byRowguid/{rowguid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiDocumentServerResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByRowguid(Guid rowguid)
+		{
+			ApiDocumentServerResponseModel response = await this.DocumentService.ByRowguid(rowguid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("byFileNameRevision/{fileName}/{revision}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiDocumentServerResponseModel>), 200)]
 		public async virtual Task<IActionResult> ByFileNameRevision(string fileName, string revision, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -218,29 +247,12 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDocumentResponseModel> response = await this.DocumentService.ByFileNameRevision(fileName, revision, query.Limit, query.Offset);
+			List<ApiDocumentServerResponseModel> response = await this.DocumentService.ByFileNameRevision(fileName, revision, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("byProductID/{productID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiDocumentResponseModel> response = await this.DocumentService.ByProductID(productID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		private async Task<ApiDocumentRequestModel> PatchModel(Guid id, JsonPatchDocument<ApiDocumentRequestModel> patch)
+		private async Task<ApiDocumentServerRequestModel> PatchModel(Guid id, JsonPatchDocument<ApiDocumentServerRequestModel> patch)
 		{
 			var record = await this.DocumentService.Get(id);
 
@@ -250,7 +262,7 @@ namespace AdventureWorksNS.Api.Web
 			}
 			else
 			{
-				ApiDocumentRequestModel request = this.DocumentModelMapper.MapResponseToRequest(record);
+				ApiDocumentServerRequestModel request = this.DocumentModelMapper.MapServerResponseToRequest(record);
 				patch.ApplyTo(request);
 				return request;
 			}
@@ -259,5 +271,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>979d533fdd6177c86d75aa241135e269</Hash>
+    <Hash>6a9eb56ab252e3bd8507a8458f6d2df1</Hash>
 </Codenesium>*/

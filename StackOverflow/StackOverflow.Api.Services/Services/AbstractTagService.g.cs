@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected ITagRepository TagRepository { get; private set; }
 
-		protected IApiTagRequestModelValidator TagModelValidator { get; private set; }
+		protected IApiTagServerRequestModelValidator TagModelValidator { get; private set; }
 
 		protected IBOLTagMapper BolTagMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractTagService(
 			ILogger logger,
 			ITagRepository tagRepository,
-			IApiTagRequestModelValidator tagModelValidator,
+			IApiTagServerRequestModelValidator tagModelValidator,
 			IBOLTagMapper bolTagMapper,
 			IDALTagMapper dalTagMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiTagResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTagServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.TagRepository.All(limit, offset);
 
 			return this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTagResponseModel> Get(int id)
+		public virtual async Task<ApiTagServerResponseModel> Get(int id)
 		{
 			var record = await this.TagRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiTagResponseModel>> Create(
-			ApiTagRequestModel model)
+		public virtual async Task<CreateResponse<ApiTagServerResponseModel>> Create(
+			ApiTagServerRequestModel model)
 		{
-			CreateResponse<ApiTagResponseModel> response = new CreateResponse<ApiTagResponseModel>(await this.TagModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTagServerResponseModel> response = ValidationResponseFactory<ApiTagServerResponseModel>.CreateResponse(await this.TagModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolTagMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiTagResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiTagServerResponseModel>> Update(
 			int id,
-			ApiTagRequestModel model)
+			ApiTagServerRequestModel model)
 		{
 			var validationResult = await this.TagModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.TagRepository.Get(id);
 
-				return new UpdateResponse<ApiTagResponseModel>(this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiTagServerResponseModel>.UpdateResponse(this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiTagResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiTagServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.TagModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.TagModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.TagRepository.Delete(id);
@@ -111,5 +108,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68d83b42c04e2d9b6a98064fc4fc8750</Hash>
+    <Hash>e23fc6f088f7ca8a692772fd54447196</Hash>
 </Codenesium>*/

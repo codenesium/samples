@@ -1,13 +1,8 @@
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
@@ -16,7 +11,7 @@ namespace StackOverflowNS.Api.Services
 	{
 		protected IVoteRepository VoteRepository { get; private set; }
 
-		protected IApiVoteRequestModelValidator VoteModelValidator { get; private set; }
+		protected IApiVoteServerRequestModelValidator VoteModelValidator { get; private set; }
 
 		protected IBOLVoteMapper BolVoteMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace StackOverflowNS.Api.Services
 		public AbstractVoteService(
 			ILogger logger,
 			IVoteRepository voteRepository,
-			IApiVoteRequestModelValidator voteModelValidator,
+			IApiVoteServerRequestModelValidator voteModelValidator,
 			IBOLVoteMapper bolVoteMapper,
 			IDALVoteMapper dalVoteMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace StackOverflowNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiVoteResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVoteServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.VoteRepository.All(limit, offset);
 
 			return this.BolVoteMapper.MapBOToModel(this.DalVoteMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiVoteResponseModel> Get(int id)
+		public virtual async Task<ApiVoteServerResponseModel> Get(int id)
 		{
 			var record = await this.VoteRepository.Get(id);
 
@@ -60,10 +55,11 @@ namespace StackOverflowNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiVoteResponseModel>> Create(
-			ApiVoteRequestModel model)
+		public virtual async Task<CreateResponse<ApiVoteServerResponseModel>> Create(
+			ApiVoteServerRequestModel model)
 		{
-			CreateResponse<ApiVoteResponseModel> response = new CreateResponse<ApiVoteResponseModel>(await this.VoteModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVoteServerResponseModel> response = ValidationResponseFactory<ApiVoteServerResponseModel>.CreateResponse(await this.VoteModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolVoteMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiVoteResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiVoteServerResponseModel>> Update(
 			int id,
-			ApiVoteRequestModel model)
+			ApiVoteServerRequestModel model)
 		{
 			var validationResult = await this.VoteModelValidator.ValidateUpdateAsync(id, model);
 
@@ -88,18 +84,19 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.VoteRepository.Get(id);
 
-				return new UpdateResponse<ApiVoteResponseModel>(this.BolVoteMapper.MapBOToModel(this.DalVoteMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiVoteServerResponseModel>.UpdateResponse(this.BolVoteMapper.MapBOToModel(this.DalVoteMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiVoteResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiVoteServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.VoteModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.VoteModelValidator.ValidateDeleteAsync(id));
+
 			if (response.Success)
 			{
 				await this.VoteRepository.Delete(id);
@@ -108,7 +105,7 @@ namespace StackOverflowNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiVoteResponseModel>> ByUserId(int? userId, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiVoteServerResponseModel>> ByUserId(int? userId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Vote> records = await this.VoteRepository.ByUserId(userId, limit, offset);
 
@@ -118,5 +115,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a60dac732d73284ed2a2ebc660b9b27</Hash>
+    <Hash>b1c5c85b8caf4e6fd83f91fdb72b3f4f</Hash>
 </Codenesium>*/

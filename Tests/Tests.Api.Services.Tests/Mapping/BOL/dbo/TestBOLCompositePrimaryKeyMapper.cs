@@ -17,7 +17,7 @@ namespace TestsNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLCompositePrimaryKeyMapper();
-			ApiCompositePrimaryKeyRequestModel model = new ApiCompositePrimaryKeyRequestModel();
+			ApiCompositePrimaryKeyServerRequestModel model = new ApiCompositePrimaryKeyServerRequestModel();
 			model.SetProperties(1);
 			BOCompositePrimaryKey response = mapper.MapModelToBO(1, model);
 
@@ -30,7 +30,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLCompositePrimaryKeyMapper();
 			BOCompositePrimaryKey bo = new BOCompositePrimaryKey();
 			bo.SetProperties(1, 1);
-			ApiCompositePrimaryKeyResponseModel response = mapper.MapBOToModel(bo);
+			ApiCompositePrimaryKeyServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Id2.Should().Be(1);
@@ -42,7 +42,7 @@ namespace TestsNS.Api.Services.Tests
 			var mapper = new BOLCompositePrimaryKeyMapper();
 			BOCompositePrimaryKey bo = new BOCompositePrimaryKey();
 			bo.SetProperties(1, 1);
-			List<ApiCompositePrimaryKeyResponseModel> response = mapper.MapBOToModel(new List<BOCompositePrimaryKey>() { { bo } });
+			List<ApiCompositePrimaryKeyServerResponseModel> response = mapper.MapBOToModel(new List<BOCompositePrimaryKey>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -50,5 +50,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7f1c4f59ab94c2cd2a8129ca03225bfb</Hash>
+    <Hash>5817eaad2caae979c66a17934293838e</Hash>
 </Codenesium>*/

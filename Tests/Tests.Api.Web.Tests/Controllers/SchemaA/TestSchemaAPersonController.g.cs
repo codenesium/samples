@@ -24,8 +24,8 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Exists()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			var record = new ApiSchemaAPersonResponseModel();
-			var records = new List<ApiSchemaAPersonResponseModel>();
+			var record = new ApiSchemaAPersonServerResponseModel();
+			var records = new List<ApiSchemaAPersonServerResponseModel>();
 			records.Add(record);
 			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
@@ -36,7 +36,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSchemaAPersonResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSchemaAPersonServerResponseModel>;
 			items.Count.Should().Be(1);
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -45,7 +45,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void All_Not_Exists()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSchemaAPersonResponseModel>>(new List<ApiSchemaAPersonResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiSchemaAPersonServerResponseModel>>(new List<ApiSchemaAPersonServerResponseModel>()));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var items = (response as OkObjectResult).Value as List<ApiSchemaAPersonResponseModel>;
+			var items = (response as OkObjectResult).Value as List<ApiSchemaAPersonServerResponseModel>;
 			items.Should().BeEmpty();
 			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
 		}
@@ -63,7 +63,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Exists()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonResponseModel()));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonServerResponseModel()));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -72,7 +72,7 @@ namespace TestsNS.Api.Web.Tests
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var record = (response as OkObjectResult).Value as ApiSchemaAPersonResponseModel;
+			var record = (response as OkObjectResult).Value as ApiSchemaAPersonServerResponseModel;
 			record.Should().NotBeNull();
 			mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.Tests
 		public async void Get_Not_Exists()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonServerResponseModel>(null));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -98,22 +98,24 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSchemaAPersonResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSchemaAPersonResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.CreateResponse(null as ApiSchemaAPersonServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSchemaAPersonServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonServerResponseModel>>(mockResponse));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSchemaAPersonRequestModel>();
-			records.Add(new ApiSchemaAPersonRequestModel());
+			var records = new List<ApiSchemaAPersonServerRequestModel>();
+			records.Add(new ApiSchemaAPersonServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			var result = (response as OkObjectResult).Value as List<ApiSchemaAPersonResponseModel>;
-			result.Should().NotBeEmpty();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>()));
+			var result = (response as OkObjectResult).Value as CreateResponse<List<ApiSchemaAPersonServerResponseModel>>;
+			result.Success.Should().BeTrue();
+			result.Record.Should().NotBeEmpty();
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
@@ -121,21 +123,21 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSchemaAPersonResponseModel>>(new FluentValidation.Results.ValidationResult());
+			var mockResponse = new Mock<CreateResponse<ApiSchemaAPersonServerResponseModel>>(null as ApiSchemaAPersonServerResponseModel);
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonServerResponseModel>>(mockResponse.Object));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var records = new List<ApiSchemaAPersonRequestModel>();
-			records.Add(new ApiSchemaAPersonRequestModel());
+			var records = new List<ApiSchemaAPersonServerRequestModel>();
+			records.Add(new ApiSchemaAPersonServerRequestModel());
 			IActionResult response = await controller.BulkInsert(records);
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
@@ -143,21 +145,22 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
 
-			var mockResponse = new CreateResponse<ApiSchemaAPersonResponseModel>(new FluentValidation.Results.ValidationResult());
-			mockResponse.SetRecord(new ApiSchemaAPersonResponseModel());
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonResponseModel>>(mockResponse));
+			var mockResponse = ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.CreateResponse(null as ApiSchemaAPersonServerResponseModel);
+
+			mockResponse.SetRecord(new ApiSchemaAPersonServerResponseModel());
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonServerResponseModel>>(mockResponse));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSchemaAPersonRequestModel());
+			IActionResult response = await controller.Create(new ApiSchemaAPersonServerRequestModel());
 
 			response.Should().BeOfType<CreatedResult>();
 			(response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
-			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSchemaAPersonResponseModel>;
+			var createResponse = (response as CreatedResult).Value as CreateResponse<ApiSchemaAPersonServerResponseModel>;
 			createResponse.Record.Should().NotBeNull();
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
@@ -165,48 +168,48 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
 
-			var mockResponse = new Mock<CreateResponse<ApiSchemaAPersonResponseModel>>(new FluentValidation.Results.ValidationResult());
-			var mockRecord = new ApiSchemaAPersonResponseModel();
+			var mockResponse = new Mock<CreateResponse<ApiSchemaAPersonServerResponseModel>>(null as ApiSchemaAPersonServerResponseModel);
+			var mockRecord = new ApiSchemaAPersonServerResponseModel();
 
 			mockResponse.SetupGet(x => x.Success).Returns(false);
 
-			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonResponseModel>>(mockResponse.Object));
+			mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiSchemaAPersonServerResponseModel>>(mockResponse.Object));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Create(new ApiSchemaAPersonRequestModel());
+			IActionResult response = await controller.Create(new ApiSchemaAPersonServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Patch_No_Errors()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>()))
-			.Callback<int, ApiSchemaAPersonRequestModel>(
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>()))
+			.Callback<int, ApiSchemaAPersonServerRequestModel>(
 				(id, model) => model.Name.Should().Be("A")
 				)
-			.Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonResponseModel>(new ApiSchemaAPersonResponseModel()));
-			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonModelMapper());
+			.Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonServerResponseModel>(new ApiSchemaAPersonServerResponseModel()));
+			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSchemaAPersonRequestModel>();
+			var patch = new JsonPatchDocument<ApiSchemaAPersonServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
@@ -214,12 +217,12 @@ namespace TestsNS.Api.Web.Tests
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
 			var mockResult = new Mock<ActionResponse>();
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonResponseModel>(null));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonServerResponseModel>(null));
 			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			var patch = new JsonPatchDocument<ApiSchemaAPersonRequestModel>();
+			var patch = new JsonPatchDocument<ApiSchemaAPersonServerRequestModel>();
 			patch.Replace(x => x.Name, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
@@ -233,53 +236,53 @@ namespace TestsNS.Api.Web.Tests
 		public async void Update_No_Errors()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(true);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonResponseModel()));
-			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonServerResponseModel()));
+			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonServerRequestModel());
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_Errors()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonResponseModel()));
-			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiSchemaAPersonServerResponseModel()));
+			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonServerRequestModel());
 
 			response.Should().BeOfType<ObjectResult>();
 			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
-			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>()));
+			mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>()));
 		}
 
 		[Fact]
 		public async void Update_NotFound()
 		{
 			SchemaAPersonControllerMockFacade mock = new SchemaAPersonControllerMockFacade();
-			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonResponseModel>>();
+			var mockResult = new Mock<UpdateResponse<ApiSchemaAPersonServerResponseModel>>();
 			mockResult.SetupGet(x => x.Success).Returns(false);
-			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonResponseModel>>(mockResult.Object));
-			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonResponseModel>(null));
-			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonModelMapper());
+			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonServerRequestModel>())).Returns(Task.FromResult<UpdateResponse<ApiSchemaAPersonServerResponseModel>>(mockResult.Object));
+			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaAPersonServerResponseModel>(null));
+			SchemaAPersonController controller = new SchemaAPersonController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, new ApiSchemaAPersonServerModelMapper());
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonRequestModel());
+			IActionResult response = await controller.Update(default(int), new ApiSchemaAPersonServerRequestModel());
 
 			response.Should().BeOfType<StatusCodeResult>();
 			(response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -333,10 +336,10 @@ namespace TestsNS.Api.Web.Tests
 
 		public Mock<ISchemaAPersonService> ServiceMock { get; set; } = new Mock<ISchemaAPersonService>();
 
-		public Mock<IApiSchemaAPersonModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSchemaAPersonModelMapper>();
+		public Mock<IApiSchemaAPersonServerModelMapper> ModelMapperMock { get; set; } = new Mock<IApiSchemaAPersonServerModelMapper>();
 	}
 }
 
 /*<Codenesium>
-    <Hash>0154e8bf8062609e4e596c5fc3da607f</Hash>
+    <Hash>e9d8139e8a16f0fd917a3fc2fa2a87a5</Hash>
 </Codenesium>*/

@@ -32,36 +32,41 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		[Column("birthday")]
-		public DateTime? Birthday { get; private set; }
+		public virtual DateTime? Birthday { get; private set; }
 
 		[MaxLength(128)]
 		[Column("email")]
-		public string Email { get; private set; }
+		public virtual string Email { get; private set; }
 
 		[MaxLength(128)]
 		[Column("firstName")]
-		public string FirstName { get; private set; }
+		public virtual string FirstName { get; private set; }
 
 		[Key]
 		[Column("id")]
-		public int Id { get; private set; }
+		public virtual int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
-		public string LastName { get; private set; }
+		public virtual string LastName { get; private set; }
 
 		[MaxLength(128)]
 		[Column("phone")]
-		public string Phone { get; private set; }
+		public virtual string Phone { get; private set; }
 
 		[Column("userId")]
-		public int UserId { get; private set; }
+		public virtual int UserId { get; private set; }
 
 		[ForeignKey("UserId")]
 		public virtual User UserNavigation { get; private set; }
+
+		public void SetUserNavigation(User item)
+		{
+			this.UserNavigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c07ae32dba26fad0c57890f670534d7a</Hash>
+    <Hash>b01f8e191dd77b0b5a0b56c0a9dd7372</Hash>
 </Codenesium>*/

@@ -1,13 +1,8 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
@@ -16,7 +11,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		protected IProductReviewRepository ProductReviewRepository { get; private set; }
 
-		protected IApiProductReviewRequestModelValidator ProductReviewModelValidator { get; private set; }
+		protected IApiProductReviewServerRequestModelValidator ProductReviewModelValidator { get; private set; }
 
 		protected IBOLProductReviewMapper BolProductReviewMapper { get; private set; }
 
@@ -27,7 +22,7 @@ namespace AdventureWorksNS.Api.Services
 		public AbstractProductReviewService(
 			ILogger logger,
 			IProductReviewRepository productReviewRepository,
-			IApiProductReviewRequestModelValidator productReviewModelValidator,
+			IApiProductReviewServerRequestModelValidator productReviewModelValidator,
 			IBOLProductReviewMapper bolProductReviewMapper,
 			IDALProductReviewMapper dalProductReviewMapper)
 			: base()
@@ -39,14 +34,14 @@ namespace AdventureWorksNS.Api.Services
 			this.logger = logger;
 		}
 
-		public virtual async Task<List<ApiProductReviewResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductReviewServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
 			var records = await this.ProductReviewRepository.All(limit, offset);
 
 			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiProductReviewResponseModel> Get(int productReviewID)
+		public virtual async Task<ApiProductReviewServerResponseModel> Get(int productReviewID)
 		{
 			var record = await this.ProductReviewRepository.Get(productReviewID);
 
@@ -60,10 +55,11 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public virtual async Task<CreateResponse<ApiProductReviewResponseModel>> Create(
-			ApiProductReviewRequestModel model)
+		public virtual async Task<CreateResponse<ApiProductReviewServerResponseModel>> Create(
+			ApiProductReviewServerRequestModel model)
 		{
-			CreateResponse<ApiProductReviewResponseModel> response = new CreateResponse<ApiProductReviewResponseModel>(await this.ProductReviewModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductReviewServerResponseModel> response = ValidationResponseFactory<ApiProductReviewServerResponseModel>.CreateResponse(await this.ProductReviewModelValidator.ValidateCreateAsync(model));
+
 			if (response.Success)
 			{
 				var bo = this.BolProductReviewMapper.MapModelToBO(default(int), model);
@@ -75,9 +71,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public virtual async Task<UpdateResponse<ApiProductReviewResponseModel>> Update(
+		public virtual async Task<UpdateResponse<ApiProductReviewServerResponseModel>> Update(
 			int productReviewID,
-			ApiProductReviewRequestModel model)
+			ApiProductReviewServerRequestModel model)
 		{
 			var validationResult = await this.ProductReviewModelValidator.ValidateUpdateAsync(productReviewID, model);
 
@@ -88,18 +84,19 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductReviewRepository.Get(productReviewID);
 
-				return new UpdateResponse<ApiProductReviewResponseModel>(this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(record)));
+				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(record)));
 			}
 			else
 			{
-				return new UpdateResponse<ApiProductReviewResponseModel>(validationResult);
+				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(validationResult);
 			}
 		}
 
 		public virtual async Task<ActionResponse> Delete(
 			int productReviewID)
 		{
-			ActionResponse response = new ActionResponse(await this.ProductReviewModelValidator.ValidateDeleteAsync(productReviewID));
+			ActionResponse response = ValidationResponseFactory<object>.ActionResponse(await this.ProductReviewModelValidator.ValidateDeleteAsync(productReviewID));
+
 			if (response.Success)
 			{
 				await this.ProductReviewRepository.Delete(productReviewID);
@@ -108,7 +105,7 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = 0, int offset = int.MaxValue)
+		public async virtual Task<List<ApiProductReviewServerResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = 0, int offset = int.MaxValue)
 		{
 			List<ProductReview> records = await this.ProductReviewRepository.ByProductIDReviewerName(productID, reviewerName, limit, offset);
 
@@ -118,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff521c49d054568b673178a3e7571836</Hash>
+    <Hash>ba87beb4363d36ba29d789db816ca9c5</Hash>
 </Codenesium>*/

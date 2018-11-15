@@ -44,52 +44,51 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ChangeNumber")]
-		public int ChangeNumber { get; private set; }
+		public virtual int ChangeNumber { get; private set; }
 
 		[Column("Document")]
-		public byte[] Document1 { get; private set; }
+		public virtual byte[] Document1 { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("DocumentLevel")]
-		public short? DocumentLevel { get; private set; }
+		public virtual short? DocumentLevel { get; private set; }
 
 		[Column("DocumentSummary")]
-		public string DocumentSummary { get; private set; }
+		public virtual string DocumentSummary { get; private set; }
 
 		[MaxLength(8)]
 		[Column("FileExtension")]
-		public string FileExtension { get; private set; }
+		public virtual string FileExtension { get; private set; }
 
 		[MaxLength(400)]
 		[Column("FileName")]
-		public string FileName { get; private set; }
+		public virtual string FileName { get; private set; }
 
 		[Column("FolderFlag")]
-		public bool FolderFlag { get; private set; }
+		public virtual bool FolderFlag { get; private set; }
 
 		[Column("ModifiedDate")]
-		public DateTime ModifiedDate { get; private set; }
+		public virtual DateTime ModifiedDate { get; private set; }
 
 		[Column("Owner")]
-		public int Owner { get; private set; }
+		public virtual int Owner { get; private set; }
 
 		[MaxLength(5)]
 		[Column("Revision")]
-		public string Revision { get; private set; }
+		public virtual string Revision { get; private set; }
 
 		[Key]
 		[Column("rowguid")]
-		public Guid Rowguid { get; private set; }
+		public virtual Guid Rowguid { get; private set; }
 
 		[Column("Status")]
-		public int Status { get; private set; }
+		public virtual int Status { get; private set; }
 
 		[MaxLength(50)]
 		[Column("Title")]
-		public string Title { get; private set; }
+		public virtual string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>805c3f3ddbff17eeb15efb52cf4482aa</Hash>
+    <Hash>ce5b7d2754dceddb3ba2f6182ddae321</Hash>
 </Codenesium>*/

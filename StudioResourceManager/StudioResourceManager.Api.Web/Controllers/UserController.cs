@@ -18,6 +18,7 @@ namespace StudioResourceManagerNS.Api.Web
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Authorize(Policy = "DefaultAccess")]
+
 	public class UserController : AbstractUserController
 	{
 		public UserController(
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Web
 			ILogger<UserController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUserService userService,
-			IApiUserModelMapper userModelMapper
+			IApiUserServerModelMapper userModelMapper
 			)
 			: base(settings,
 			       logger,
@@ -41,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bc78eb6c27eeb4bf9a45b4f62dc14d28</Hash>
+    <Hash>f653dc499bc0575996ddb69f052ce59c</Hash>
 </Codenesium>*/

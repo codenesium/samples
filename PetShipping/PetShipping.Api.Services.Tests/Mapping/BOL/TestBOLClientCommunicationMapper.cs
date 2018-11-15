@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public void MapModelToBO()
 		{
 			var mapper = new BOLClientCommunicationMapper();
-			ApiClientCommunicationRequestModel model = new ApiClientCommunicationRequestModel();
+			ApiClientCommunicationServerRequestModel model = new ApiClientCommunicationServerRequestModel();
 			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 			BOClientCommunication response = mapper.MapModelToBO(1, model);
 
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLClientCommunicationMapper();
 			BOClientCommunication bo = new BOClientCommunication();
 			bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
-			ApiClientCommunicationResponseModel response = mapper.MapBOToModel(bo);
+			ApiClientCommunicationServerResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ClientId.Should().Be(1);
 			response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,7 +48,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mapper = new BOLClientCommunicationMapper();
 			BOClientCommunication bo = new BOClientCommunication();
 			bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
-			List<ApiClientCommunicationResponseModel> response = mapper.MapBOToModel(new List<BOClientCommunication>() { { bo } });
+			List<ApiClientCommunicationServerResponseModel> response = mapper.MapBOToModel(new List<BOClientCommunication>() { { bo } });
 
 			response.Count.Should().Be(1);
 		}
@@ -56,5 +56,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5bea241bd15c601fec27ef62ff09608e</Hash>
+    <Hash>7b7937c1b3c17c2891842c0c75f3f268</Hash>
 </Codenesium>*/

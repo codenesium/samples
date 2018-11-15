@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await service.All();
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
 			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
+			ApiTransactionHistoryArchiveServerResponseModel response = await service.Get(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -66,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			ApiTransactionHistoryArchiveResponseModel response = await service.Get(default(int));
+			ApiTransactionHistoryArchiveServerResponseModel response = await service.Get(default(int));
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Create()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-			var model = new ApiTransactionHistoryArchiveRequestModel();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
 			                                                   mock.RepositoryMock.Object,
@@ -84,10 +84,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			CreateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Create(model);
+			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
+			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TransactionHistoryArchive>()));
 		}
 
@@ -95,7 +95,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Update()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-			var model = new ApiTransactionHistoryArchiveRequestModel();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
@@ -104,10 +104,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			UpdateResponse<ApiTransactionHistoryArchiveResponseModel> response = await service.Update(default(int), model);
+			UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
-			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveRequestModel>()));
+			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TransactionHistoryArchive>()));
 		}
 
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void Delete()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
-			var model = new ApiTransactionHistoryArchiveRequestModel();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
 			                                                   mock.RepositoryMock.Object,
@@ -143,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByProductID(default(int));
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -179,7 +179,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
 			response.Should().NotBeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -196,7 +196,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
-			List<ApiTransactionHistoryArchiveResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
+			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
@@ -205,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>96f1a9a0c87ce575ac7696b9c8613458</Hash>
+    <Hash>42ed5d36b7e9276cf498a56ca1c02c47</Hash>
 </Codenesium>*/

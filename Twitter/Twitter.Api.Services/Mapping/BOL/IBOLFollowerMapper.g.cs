@@ -9,16 +9,16 @@ namespace TwitterNS.Api.Services
 	{
 		BOFollower MapModelToBO(
 			int id,
-			ApiFollowerRequestModel model);
+			ApiFollowerServerRequestModel model);
 
-		ApiFollowerResponseModel MapBOToModel(
+		ApiFollowerServerResponseModel MapBOToModel(
 			BOFollower boFollower);
 
-		List<ApiFollowerResponseModel> MapBOToModel(
+		List<ApiFollowerServerResponseModel> MapBOToModel(
 			List<BOFollower> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0541f63d1c4736319a8c7b39c58476c8</Hash>
+    <Hash>3ed6916ff4a61b2c0dba0fc0fc038c00</Hash>
 </Codenesium>*/

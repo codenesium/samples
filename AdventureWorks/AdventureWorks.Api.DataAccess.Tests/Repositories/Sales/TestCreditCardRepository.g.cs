@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -112,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void DeleteFound()
 		{
 			Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
@@ -127,9 +128,24 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			modifiedRecord.Should().BeNull();
 		}
+
+		[Fact]
+		public void DeleteNotFound()
+		{
+			Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
+			var repository = new CreditCardRepository(loggerMoc.Object, context);
+
+			Func<Task> delete = async () =>
+			{
+				await repository.Delete(default(int));
+			};
+
+			delete.Should().NotThrow();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>620aec84204df8e8633c83ebdfc48958</Hash>
+    <Hash>2b339424b868c2e6fae87ffbae548f53</Hash>
 </Codenesium>*/
