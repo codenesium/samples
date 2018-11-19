@@ -49,7 +49,7 @@
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManager/Codenesium/Project.json"
 },
 {
-	"Id":"61b1ba69-41c4-45f0-b5f5-961b4a482ad29",
+	"Id":"83e3c53f-ff2a-4a4b-9d67-eba21547d38a,
 	"Name":"Studio Resource Manager Multi-Tenant",
 	"Description":"A multi-tenant CRM to manage dance, music, yoga studio.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManagerMT/Codenesium/Project.json"
