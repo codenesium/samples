@@ -1,11 +1,70 @@
 {
 "Projects" : [
 {
-	"Id":"3ff2b284-1f8f-40da-9293-4ac8fe90eb79",
-	"Name":"test",
-	"Description":"testing",
+	"Id":"6b9cf39a-8347-4475-95b4-a363c99d9e12",
+	"Name":"AdventureWorks",
+	"Description":"Microsoft sample database",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/AdventureWorks/Codenesium/Project.json"
+},
+{
+	"Id":"a211eeab-39a3-4cbc-81c0-3636d01fe227",
+	"Name":"ESPIOT",
+	"Description":"IOT backend",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/ESPIOT/Codenesium/Project.json"
+},
+{
+	"Id":"7a02837b-86dd-4da6-8568-463dee08a855",
+	"Name":"File Service",
+	"Description":"File microservice that powers Codenesium",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/FileService/Codenesium/Project.json"
+},
+{
+	"Id":"9186055b-107f-4cd5-b128-5effff156c3b",
+	"Name":"Nebula",
+	"Description":"Deployment system that powers Codenesium. Similar to Octopus Deploy.",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/Nebula/Codenesium/Project.json"
+},
+{
+	"Id":"a724a2c2-372a-4ce4-b454-c415ca71c670",
+	"Name":"Pet Shipping",
+	"Description":"Sample application that would power a business that ships pets",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/PetShipping/Codenesium/Project.json"
+},
+{
+	"Id":"a36d770e-26a6-4c2c-aff1-517754b8cefb",
+	"Name":"Pet Store",
+	"Description":"Sample application that would be used by a pet store",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/PetStore/Codenesium/Project.json"
+},
+{
+	"Id":"3868a0a0-6aa6-4723-aa7c-ed3d3facf144",
+	"Name":"Stack Overflow",
+	"Description":"The Stack Overflow database",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StackOverflow/Codenesium/Project.json"
+},
+{
+	"Id":"af2dad47-81a5-4f4b-9195-dff13ce04e57",
+	"Name":"Studio Resource Manager",
+	"Description":"A CRM to manage dance, music, yoga studio.",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManager/Codenesium/Project.json"
+},
+{
+	"Id":"61b1ba69-41c4-45f0-b5f5-961b4a482ad29",
+	"Name":"Studio Resource Manager Multi-Tenant",
+	"Description":"A multi-tenant CRM to manage dance, music, yoga studio.",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManagerMT/Codenesium/Project.json"
+},
+{
+	"Id":"04670daa-8a76-44ae-b126-b6a8332137be",
+	"Name":"Ticketing CRM",
+	"Description":"A CRM for a ticket company",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/TicketCRM/Codenesium/Project.json"
+},
+{
+	"Id":"c6472d25-4006-4001-b3ca-9033b0689a62",
+	"Name":"Twitter",
+	"Description":"The Twitter database",
+	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/Twitter/Codenesium/Project.json"
 }
-
 ]
 }
