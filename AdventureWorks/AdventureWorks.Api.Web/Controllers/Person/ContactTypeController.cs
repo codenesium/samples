@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/contactTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ContactTypeController : AbstractContactTypeController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9d04d53ba08a7ec14771c781a6fadc8a</Hash>
+    <Hash>4fb3b1b107807e75f14837dc8b803867</Hash>
 </Codenesium>*/

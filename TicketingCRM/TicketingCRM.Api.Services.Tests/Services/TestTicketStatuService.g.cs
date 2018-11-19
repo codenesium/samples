@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
 			var model = new ApiTicketStatuServerRequestModel();
@@ -95,12 +96,35 @@ namespace TicketingCRMNS.Api.Services.Tests
 			CreateResponse<ApiTicketStatuServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TicketStatu>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ITicketStatuRepository>();
+			var model = new ApiTicketStatuServerRequestModel();
+			var validatorMock = new Mock<IApiTicketStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TicketStatuService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLTicketStatuMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketStatuMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
+
+			CreateResponse<ApiTicketStatuServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketStatuServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
 			var model = new ApiTicketStatuServerRequestModel();
@@ -117,12 +141,36 @@ namespace TicketingCRMNS.Api.Services.Tests
 			UpdateResponse<ApiTicketStatuServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TicketStatu>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ITicketStatuRepository>();
+			var model = new ApiTicketStatuServerRequestModel();
+			var validatorMock = new Mock<IApiTicketStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TicketStatu()));
+			var service = new TicketStatuService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLTicketStatuMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketStatuMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
+
+			UpdateResponse<ApiTicketStatuServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketStatuServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
 			var model = new ApiTicketStatuServerRequestModel();
@@ -138,8 +186,31 @@ namespace TicketingCRMNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ITicketStatuRepository>();
+			var model = new ApiTicketStatuServerRequestModel();
+			var validatorMock = new Mock<IApiTicketStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TicketStatuService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLTicketStatuMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketStatuMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
+			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -185,5 +256,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>083028b3bdb48f3b048faf3b02a93a81</Hash>
+    <Hash>a970dc086e89ff9dcb4e6753d7c67eda</Hash>
 </Codenesium>*/

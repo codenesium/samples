@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/rowVersionChecks")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class RowVersionCheckController : AbstractRowVersionCheckController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8459c86f439415a9309594b346aa3754</Hash>
+    <Hash>68464ac6693ab35b7082205e3bc54d6b</Hash>
 </Codenesium>*/

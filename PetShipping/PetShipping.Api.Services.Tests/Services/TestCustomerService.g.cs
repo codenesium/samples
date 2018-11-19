@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
 			var model = new ApiCustomerServerRequestModel();
@@ -95,12 +96,35 @@ namespace PetShippingNS.Api.Services.Tests
 			CreateResponse<ApiCustomerServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Customer>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ICustomerRepository>();
+			var model = new ApiCustomerServerRequestModel();
+			var validatorMock = new Mock<IApiCustomerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CustomerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
+
+			CreateResponse<ApiCustomerServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
 			var model = new ApiCustomerServerRequestModel();
@@ -117,12 +141,36 @@ namespace PetShippingNS.Api.Services.Tests
 			UpdateResponse<ApiCustomerServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Customer>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ICustomerRepository>();
+			var model = new ApiCustomerServerRequestModel();
+			var validatorMock = new Mock<IApiCustomerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
+			var service = new CustomerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
+
+			UpdateResponse<ApiCustomerServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
 			var model = new ApiCustomerServerRequestModel();
@@ -138,8 +186,31 @@ namespace PetShippingNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ICustomerRepository>();
+			var model = new ApiCustomerServerRequestModel();
+			var validatorMock = new Mock<IApiCustomerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CustomerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
+			                                  mock.DALMapperMockFactory.DALCustomerCommunicationMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -185,5 +256,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>56d788b577582f190c52dab1bc0df30c</Hash>
+    <Hash>3433112e7bcc3848812fb9e4107124f9</Hash>
 </Codenesium>*/

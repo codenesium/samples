@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,14 +28,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CategoryRules()
 		{
-			this.RuleFor(x => x.Category).NotNull();
-			this.RuleFor(x => x.Category).Length(0, 50);
+			this.RuleFor(x => x.Category).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Category).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 255);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 255).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DiscountPctRules()
@@ -59,7 +60,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSpecialOfferServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSpecialOfferServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void StartDateRules()
@@ -68,8 +69,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TypeRules()
 		{
-			this.RuleFor(x => x.Type).NotNull();
-			this.RuleFor(x => x.Type).Length(0, 50);
+			this.RuleFor(x => x.Type).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Type).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByRowguid(ApiSpecialOfferServerRequestModel model,  CancellationToken cancellationToken)
@@ -89,5 +90,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>199350c05bcd66e97b5a931805c04dbc</Hash>
+    <Hash>6623f1dd833ca6423d847f46fcada329</Hash>
 </Codenesium>*/

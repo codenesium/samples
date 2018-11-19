@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/departments")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class DepartmentController : AbstractDepartmentController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>425e3e27c2cc76ca2fa53185e02a5451</Hash>
+    <Hash>388d1a2673a23b2c80ae76ec2a1c94c4</Hash>
 </Codenesium>*/

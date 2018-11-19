@@ -57,12 +57,12 @@ namespace ESPIOTNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDeviceClientResponseModel>> > DeviceBulkInsertAsync(List<ApiDeviceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDeviceClientResponseModel>>> DeviceBulkInsertAsync(List<ApiDeviceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Devices/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDeviceClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDeviceClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDeviceClientResponseModel>> DeviceCreateAsync(ApiDeviceClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -138,12 +138,12 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDeviceActionClientResponseModel>> > DeviceActionBulkInsertAsync(List<ApiDeviceActionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDeviceActionClientResponseModel>>> DeviceActionBulkInsertAsync(List<ApiDeviceActionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDeviceActionClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDeviceActionClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDeviceActionClientResponseModel>> DeviceActionCreateAsync(ApiDeviceActionClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -239,5 +239,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a491720d646918c1c9531e41c2f12667</Hash>
+    <Hash>6c702b43a073bda1dcae95d3fd6491fd</Hash>
 </Codenesium>*/

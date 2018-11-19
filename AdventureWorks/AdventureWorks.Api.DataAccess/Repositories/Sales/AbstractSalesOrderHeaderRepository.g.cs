@@ -76,46 +76,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_SalesOrderHeader_rowguid.
 		public async virtual Task<SalesOrderHeader> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// unique constraint AK_SalesOrderHeader_SalesOrderNumber.
 		public async virtual Task<SalesOrderHeader> BySalesOrderNumber(string salesOrderNumber)
 		{
 			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderNumber == salesOrderNumber);
 		}
 
+		// Non-unique constraint IX_SalesOrderHeader_CustomerID.
 		public async virtual Task<List<SalesOrderHeader>> ByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.CustomerID == customerID, limit, offset);
 		}
 
+		// Non-unique constraint IX_SalesOrderHeader_SalesPersonID.
 		public async virtual Task<List<SalesOrderHeader>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
 		}
 
+		// Foreign key reference to table CreditCard via creditCardID.
 		public async virtual Task<CreditCard> CreditCardByCreditCardID(int? creditCardID)
 		{
 			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
 		}
 
+		// Foreign key reference to table CurrencyRate via currencyRateID.
 		public async virtual Task<CurrencyRate> CurrencyRateByCurrencyRateID(int? currencyRateID)
 		{
 			return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateID == currencyRateID);
 		}
 
+		// Foreign key reference to table Customer via customerID.
 		public async virtual Task<Customer> CustomerByCustomerID(int customerID)
 		{
 			return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.CustomerID == customerID);
 		}
 
+		// Foreign key reference to table SalesPerson via salesPersonID.
 		public async virtual Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID)
 		{
 			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
 		}
 
+		// Foreign key reference to table SalesTerritory via territoryID.
 		public async virtual Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
@@ -145,5 +154,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c41240b8683ed93f324a276914ae93d0</Hash>
+    <Hash>a942d533fb4793222849394adaaa5d51</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/aWBuildVersions")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class AWBuildVersionController : AbstractAWBuildVersionController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dca8bc451b7fc7b29744c81c43208ae8</Hash>
+    <Hash>a1b4fe9974f815f47a2f293365859685</Hash>
 </Codenesium>*/

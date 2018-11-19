@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_CountryRegion_Name.
 		public async virtual Task<CountryRegion> ByName(string name)
 		{
 			return await this.Context.Set<CountryRegion>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table StateProvince via countryRegionCode.
 		public async virtual Task<List<StateProvince>> StateProvincesByCountryRegionCode(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<StateProvince>().Where(x => x.CountryRegionCode == countryRegionCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<StateProvince>();
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3a072c5815207e9e8dbe524c548fd11</Hash>
+    <Hash>e2c140112d6cb572c624118e24514786</Hash>
 </Codenesium>*/

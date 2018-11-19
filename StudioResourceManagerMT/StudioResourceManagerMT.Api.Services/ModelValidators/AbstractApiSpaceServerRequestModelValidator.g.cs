@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,18 +28,18 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 128);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5165c7846339c472474728cdcfdba44</Hash>
+    <Hash>1e531a1b54fa8f6a4ecd78cb5473ee46</Hash>
 </Codenesium>*/

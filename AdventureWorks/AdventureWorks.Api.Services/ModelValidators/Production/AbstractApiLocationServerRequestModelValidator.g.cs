@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -39,9 +40,9 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationServerRequestModel.Name));
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByName(ApiLocationServerRequestModel model,  CancellationToken cancellationToken)
@@ -61,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54cefc07102e41f4ee5405d790c33e02</Hash>
+    <Hash>a171700402369275b7cb5b798c0617dd</Hash>
 </Codenesium>*/

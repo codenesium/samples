@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/countryRegions")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CountryRegionController : AbstractCountryRegionController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f3d147fe13117b3625bc5e0d547aaec8</Hash>
+    <Hash>d9e7025a8bb39e7f74e4ea9a9a4d1fc5</Hash>
 </Codenesium>*/

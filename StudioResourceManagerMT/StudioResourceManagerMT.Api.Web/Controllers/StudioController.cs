@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/studios")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class StudioController : AbstractStudioController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8fe7a9d2d971768dcaf40ef7474886f6</Hash>
+    <Hash>36d7d1263013263e1059fbf04e42ad6a</Hash>
 </Codenesium>*/

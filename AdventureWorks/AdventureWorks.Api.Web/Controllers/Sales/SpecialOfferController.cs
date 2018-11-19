@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/specialOffers")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SpecialOfferController : AbstractSpecialOfferController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4ebe0a6cbebc0f8089b0fccda41752ec</Hash>
+    <Hash>78d9ff3dbeb577abb9a499e8777ec08a</Hash>
 </Codenesium>*/

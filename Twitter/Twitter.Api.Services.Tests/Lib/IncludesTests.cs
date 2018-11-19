@@ -83,6 +83,18 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public void UpdateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public void UpdateResponse_No_Error()
 		{
 			var failures = new List<ValidationFailure>();
@@ -112,5 +124,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>60ff22329d093fa566423d84664266e5</Hash>
+    <Hash>4710459ec16c919cb87d6021488d4247</Hash>
 </Codenesium>*/

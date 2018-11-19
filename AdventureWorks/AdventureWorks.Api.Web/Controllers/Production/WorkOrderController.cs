@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/workOrders")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class WorkOrderController : AbstractWorkOrderController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>620d2ba66558971d9fd8070b1e9dbc16</Hash>
+    <Hash>0f126bfdf70cad1afec658d29308438c</Hash>
 </Codenesium>*/

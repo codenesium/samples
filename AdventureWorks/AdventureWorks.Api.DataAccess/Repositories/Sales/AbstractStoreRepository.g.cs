@@ -76,26 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Store_rowguid.
 		public async virtual Task<Store> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Non-unique constraint IX_Store_SalesPersonID.
 		public async virtual Task<List<Store>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
 		}
 
+		// Non-unique constraint PXML_Store_Demographics.
 		public async virtual Task<List<Store>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.Demographic == demographic, limit, offset);
 		}
 
+		// Foreign key reference to this table Customer via storeID.
 		public async virtual Task<List<Customer>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>().Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
+		// Foreign key reference to table SalesPerson via salesPersonID.
 		public async virtual Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID)
 		{
 			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
@@ -125,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>59e9b1ed953560fdf4b0295ef0fce6e5</Hash>
+    <Hash>019a107e18fa1c4973c76461c1358f18</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -31,13 +32,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void GatewayConfirmationNumberRules()
 		{
-			this.RuleFor(x => x.GatewayConfirmationNumber).NotNull();
-			this.RuleFor(x => x.GatewayConfirmationNumber).Length(0, 1);
+			this.RuleFor(x => x.GatewayConfirmationNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.GatewayConfirmationNumber).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TransactionStatusIdRules()
 		{
-			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatuByTransactionStatusId).When(x => !x?.TransactionStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatuByTransactionStatusId).When(x => !x?.TransactionStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidTransactionStatuByTransactionStatusId(int id,  CancellationToken cancellationToken)
@@ -50,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6838df11533453c29a647e00c0d2bac</Hash>
+    <Hash>3ae31331c2e146dde108321453e9af9a</Hash>
 </Codenesium>*/

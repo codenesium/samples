@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
 			var model = new ApiDirectTweetServerRequestModel();
@@ -87,12 +88,33 @@ namespace TwitterNS.Api.Services.Tests
 			CreateResponse<ApiDirectTweetServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DirectTweet>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IDirectTweetRepository>();
+			var model = new ApiDirectTweetServerRequestModel();
+			var validatorMock = new Mock<IApiDirectTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DirectTweetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
+
+			CreateResponse<ApiDirectTweetServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDirectTweetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
 			var model = new ApiDirectTweetServerRequestModel();
@@ -107,12 +129,34 @@ namespace TwitterNS.Api.Services.Tests
 			UpdateResponse<ApiDirectTweetServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DirectTweet>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IDirectTweetRepository>();
+			var model = new ApiDirectTweetServerRequestModel();
+			var validatorMock = new Mock<IApiDirectTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DirectTweet()));
+			var service = new DirectTweetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
+
+			UpdateResponse<ApiDirectTweetServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDirectTweetRepository>();
 			var model = new ApiDirectTweetServerRequestModel();
@@ -126,8 +170,29 @@ namespace TwitterNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.DirectTweetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IDirectTweetRepository>();
+			var model = new ApiDirectTweetServerRequestModel();
+			var validatorMock = new Mock<IApiDirectTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DirectTweetService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                                     mock.DALMapperMockFactory.DALDirectTweetMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b6c33fa9152e6a1c41163b0e80fcab95</Hash>
+    <Hash>54cc9fcc244bb69209cf9397cab14830</Hash>
 </Codenesium>*/

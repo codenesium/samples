@@ -76,11 +76,13 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_event_cityId.
 		public async virtual Task<List<Event>> ByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.CityId == cityId, limit, offset);
 		}
 
+		// Foreign key reference to table City via cityId.
 		public async virtual Task<City> CityByCityId(int cityId)
 		{
 			return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
@@ -110,5 +112,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f51aa2f065d7fe2057f5b19dcc29a58</Hash>
+    <Hash>5f5fdd113031a219fd370426d292b880</Hash>
 </Codenesium>*/

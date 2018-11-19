@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/postHistoryTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PostHistoryTypeController : AbstractPostHistoryTypeController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>76d81e419cb33c5801f7283540438180</Hash>
+    <Hash>2a4b459c996e1519041affb14ccaada4</Hash>
 </Codenesium>*/

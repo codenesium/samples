@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStoreRepository>();
 			var model = new ApiStoreServerRequestModel();
@@ -95,12 +96,35 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiStoreServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StoreModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStoreServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Store>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IStoreRepository>();
+			var model = new ApiStoreServerRequestModel();
+			var validatorMock = new Mock<IApiStoreServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStoreServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StoreService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                               mock.DALMapperMockFactory.DALStoreMapperMock,
+			                               mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                               mock.DALMapperMockFactory.DALCustomerMapperMock);
+
+			CreateResponse<ApiStoreServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStoreServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStoreRepository>();
 			var model = new ApiStoreServerRequestModel();
@@ -117,12 +141,36 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiStoreServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StoreModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStoreServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Store>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IStoreRepository>();
+			var model = new ApiStoreServerRequestModel();
+			var validatorMock = new Mock<IApiStoreServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStoreServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
+			var service = new StoreService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                               mock.DALMapperMockFactory.DALStoreMapperMock,
+			                               mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                               mock.DALMapperMockFactory.DALCustomerMapperMock);
+
+			UpdateResponse<ApiStoreServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStoreServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStoreRepository>();
 			var model = new ApiStoreServerRequestModel();
@@ -138,8 +186,31 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StoreModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IStoreRepository>();
+			var model = new ApiStoreServerRequestModel();
+			var validatorMock = new Mock<IApiStoreServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StoreService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                               mock.DALMapperMockFactory.DALStoreMapperMock,
+			                               mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                               mock.DALMapperMockFactory.DALCustomerMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -304,5 +375,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7f379e8e0eb4cdd43f7ed6b3f1a3625</Hash>
+    <Hash>b7ad8adf3e2f2bc48e94f5a77a7f160e</Hash>
 </Codenesium>*/

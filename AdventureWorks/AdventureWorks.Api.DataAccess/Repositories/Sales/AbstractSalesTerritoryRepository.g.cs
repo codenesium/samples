@@ -76,26 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_SalesTerritory_Name.
 		public async virtual Task<SalesTerritory> ByName(string name)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_SalesTerritory_rowguid.
 		public async virtual Task<SalesTerritory> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Foreign key reference to this table Customer via territoryID.
 		public async virtual Task<List<Customer>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
+		// Foreign key reference to this table SalesOrderHeader via territoryID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
+		// Foreign key reference to this table SalesPerson via territoryID.
 		public async virtual Task<List<SalesPerson>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
@@ -125,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c518c1e1651ea1197f66a994f58c2322</Hash>
+    <Hash>a96f157391e98efbf9270008040e8ed1</Hash>
 </Codenesium>*/

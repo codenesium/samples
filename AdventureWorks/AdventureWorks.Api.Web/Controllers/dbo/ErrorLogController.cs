@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/errorLogs")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ErrorLogController : AbstractErrorLogController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4fe66bc8fc4ea3149dbbe505e8c444d</Hash>
+    <Hash>0209d0c71f321252e3422e1f58028d4e</Hash>
 </Codenesium>*/

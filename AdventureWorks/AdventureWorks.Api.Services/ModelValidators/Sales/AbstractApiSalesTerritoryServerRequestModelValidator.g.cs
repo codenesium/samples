@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -35,14 +36,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CountryRegionCodeRules()
 		{
-			this.RuleFor(x => x.CountryRegionCode).NotNull();
-			this.RuleFor(x => x.CountryRegionCode).Length(0, 3);
+			this.RuleFor(x => x.CountryRegionCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.CountryRegionCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @GroupRules()
 		{
-			this.RuleFor(x => x.@Group).NotNull();
-			this.RuleFor(x => x.@Group).Length(0, 50);
+			this.RuleFor(x => x.@Group).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.@Group).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -51,14 +52,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Name));
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesLastYearRules()
@@ -100,5 +101,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9effce9b1bb5c981bf5c24d7f412cc9a</Hash>
+    <Hash>177b1ef6c02e1dc494ca3ee86469e1f6</Hash>
 </Codenesium>*/

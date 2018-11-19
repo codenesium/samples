@@ -76,16 +76,19 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_sale_transactionId.
 		public async virtual Task<List<Sale>> ByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TransactionId == transactionId, limit, offset);
 		}
 
+		// Foreign key reference to table Transaction via transactionId.
 		public async virtual Task<Transaction> TransactionByTransactionId(int transactionId)
 		{
 			return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
 		}
 
+		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
 		public async virtual Task<List<Sale>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.SaleTickets
@@ -134,5 +137,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f4e7eb01dce9ce1b018216b79233954</Hash>
+    <Hash>231b1f6584f4dbdc7f5becf269364857</Hash>
 </Codenesium>*/

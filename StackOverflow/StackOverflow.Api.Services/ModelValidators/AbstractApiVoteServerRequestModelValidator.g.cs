@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -48,5 +49,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e6da1844f31794e1a9b87224b560dfd</Hash>
+    <Hash>7d8638fb8529c46f0cb9cc056ba49ff1</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,8 +28,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void Database_VersionRules()
 		{
-			this.RuleFor(x => x.Database_Version).NotNull();
-			this.RuleFor(x => x.Database_Version).Length(0, 25);
+			this.RuleFor(x => x.Database_Version).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Database_Version).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -42,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5e82b0c13f5617577aabcdd66ed3a58</Hash>
+    <Hash>be933e4ee5e55593334ce23cbc594345</Hash>
 </Codenesium>*/

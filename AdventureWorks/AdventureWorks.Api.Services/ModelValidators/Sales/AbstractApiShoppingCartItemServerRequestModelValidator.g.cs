@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -43,12 +44,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ShoppingCartIDRules()
 		{
-			this.RuleFor(x => x.ShoppingCartID).NotNull();
-			this.RuleFor(x => x.ShoppingCartID).Length(0, 50);
+			this.RuleFor(x => x.ShoppingCartID).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.ShoppingCartID).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>08d420abe586d748fb13ceeea47b12c9</Hash>
+    <Hash>8d240eaa0db858cf07228ae158abed56</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			var model = new ApiLinkServerRequestModel();
@@ -95,12 +96,35 @@ namespace NebulaNS.Api.Services.Tests
 			CreateResponse<ApiLinkServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Link>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			var model = new ApiLinkServerRequestModel();
+			var validatorMock = new Mock<IApiLinkServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			CreateResponse<ApiLinkServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			var model = new ApiLinkServerRequestModel();
@@ -117,12 +141,36 @@ namespace NebulaNS.Api.Services.Tests
 			UpdateResponse<ApiLinkServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Link>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			var model = new ApiLinkServerRequestModel();
+			var validatorMock = new Mock<IApiLinkServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			UpdateResponse<ApiLinkServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			var model = new ApiLinkServerRequestModel();
@@ -138,8 +186,31 @@ namespace NebulaNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			var model = new ApiLinkServerRequestModel();
+			var validatorMock = new Mock<IApiLinkServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -264,5 +335,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>98be99924bc6b2bf0514edc5b51cdddf</Hash>
+    <Hash>a88cc685b812e1a469fb0a44525bfaf2</Hash>
 </Codenesium>*/

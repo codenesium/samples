@@ -76,11 +76,13 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Direct_Tweets_tagged_user_id.
 		public async virtual Task<List<DirectTweet>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TaggedUserId == taggedUserId, limit, offset);
 		}
 
+		// Foreign key reference to table User via taggedUserId.
 		public async virtual Task<User> UserByTaggedUserId(int taggedUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == taggedUserId);
@@ -110,5 +112,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3cab04da8e7c6ff8393ee71a81503a3d</Hash>
+    <Hash>af169740e2f14c15a84ebcf0f88d75b8</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			var model = new ApiShiftServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiShiftServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Shift>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IShiftRepository>();
+			var model = new ApiShiftServerRequestModel();
+			var validatorMock = new Mock<IApiShiftServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
+
+			CreateResponse<ApiShiftServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			var model = new ApiShiftServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiShiftServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Shift>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IShiftRepository>();
+			var model = new ApiShiftServerRequestModel();
+			var validatorMock = new Mock<IApiShiftServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
+			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
+
+			UpdateResponse<ApiShiftServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			var model = new ApiShiftServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IShiftRepository>();
+			var model = new ApiShiftServerRequestModel();
+			var validatorMock = new Mock<IApiShiftServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
+			                               mock.DALMapperMockFactory.DALShiftMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -203,5 +268,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4fc6859e88d440a749aaa985ca266fc0</Hash>
+    <Hash>e98e676048161d196b91861e138ba471</Hash>
 </Codenesium>*/

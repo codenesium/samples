@@ -5,6 +5,14 @@ using System.Text;
 
 namespace FileServiceNS.Api.Contracts
 {
+	public class ValidationErrorCodes
+	{
+		public const string ViolatesShouldNotBeNullRule = "ViolatesShouldNotBeNullRule";
+		public const string ViolatesLengthRule = "ViolatesLengthRule";
+		public const string ViolatesUniqueConstraintRule = "ViolatesUniqueConstraintRule";
+		public const string ViolatesForeignKeyConstraintRule = "ViolatesForeignKeyConstraintRule";
+	}
+
     public class ValidationError
     {
         public ValidationError(string errorCode, string errorMessage, string propertyName)
@@ -69,7 +77,7 @@ namespace FileServiceNS.Api.Contracts
 
     public interface IActionResponse
     {
-        bool Success { get; set;}
+        bool Success { get; set; }
 
         List<ValidationError> ValidationErrors { get; }
     }

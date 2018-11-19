@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -35,8 +36,8 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void TagNameRules()
 		{
-			this.RuleFor(x => x.TagName).NotNull();
-			this.RuleFor(x => x.TagName).Length(0, 150);
+			this.RuleFor(x => x.TagName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.TagName).Length(0, 150).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void WikiPostIdRules()
@@ -46,5 +47,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b53a6732cb838c699023f2c380934dc</Hash>
+    <Hash>86d1b4153044069dc71cfeec5b3bbff7</Hash>
 </Codenesium>*/

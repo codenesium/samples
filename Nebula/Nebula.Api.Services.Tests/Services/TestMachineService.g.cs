@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			var model = new ApiMachineServerRequestModel();
@@ -95,12 +96,35 @@ namespace NebulaNS.Api.Services.Tests
 			CreateResponse<ApiMachineServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Machine>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			var model = new ApiMachineServerRequestModel();
+			var validatorMock = new Mock<IApiMachineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+
+			CreateResponse<ApiMachineServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			var model = new ApiMachineServerRequestModel();
@@ -117,12 +141,36 @@ namespace NebulaNS.Api.Services.Tests
 			UpdateResponse<ApiMachineServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Machine>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			var model = new ApiMachineServerRequestModel();
+			var validatorMock = new Mock<IApiMachineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+
+			UpdateResponse<ApiMachineServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			var model = new ApiMachineServerRequestModel();
@@ -138,8 +186,31 @@ namespace NebulaNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			var model = new ApiMachineServerRequestModel();
+			var validatorMock = new Mock<IApiMachineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -224,5 +295,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d983feb06db4945082fdaff38cf8a2a7</Hash>
+    <Hash>640e30e5d7fe9e0cc786412149300688</Hash>
 </Codenesium>*/

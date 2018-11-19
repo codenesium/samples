@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Vendor_AccountNumber.
 		public async virtual Task<Vendor> ByAccountNumber(string accountNumber)
 		{
 			return await this.Context.Set<Vendor>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
+		// Foreign key reference to this table PurchaseOrderHeader via vendorID.
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9039af93e1d3f40233ddac8b726d3387</Hash>
+    <Hash>57f722ebda131ecbb65b3431ce97b979</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -31,13 +32,13 @@ namespace NebulaNS.Api.Services
 
 		public virtual void LinkIdRules()
 		{
-			this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLinkByLinkId).When(x => !x?.LinkId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLinkByLinkId).When(x => !x?.LinkId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void LogRules()
 		{
-			this.RuleFor(x => x.Log).NotNull();
-			this.RuleFor(x => x.Log).Length(0, 2147483647);
+			this.RuleFor(x => x.Log).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Log).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidLinkByLinkId(int id,  CancellationToken cancellationToken)
@@ -50,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df22f4e903eab3518bd94cdfbf5cb22c</Hash>
+    <Hash>c94496b9ae0377e1f4cb3258e408ffb1</Hash>
 </Codenesium>*/

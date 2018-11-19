@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,7 +28,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void BucketIdRules()
 		{
-			this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucketByBucketId).When(x => !x?.BucketId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucketByBucketId).When(x => !x?.BucketId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void DateCreatedRules()
@@ -36,7 +37,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).Length(0, 255);
+			this.RuleFor(x => x.Description).Length(0, 255).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ExpirationRules()
@@ -45,8 +46,8 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void ExtensionRules()
 		{
-			this.RuleFor(x => x.Extension).NotNull();
-			this.RuleFor(x => x.Extension).Length(0, 32);
+			this.RuleFor(x => x.Extension).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Extension).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ExternalIdRules()
@@ -59,25 +60,25 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void FileTypeIdRules()
 		{
-			this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileTypeByFileTypeId).When(x => !x?.FileTypeId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileTypeByFileTypeId).When(x => !x?.FileTypeId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void LocationRules()
 		{
-			this.RuleFor(x => x.Location).NotNull();
-			this.RuleFor(x => x.Location).Length(0, 255);
+			this.RuleFor(x => x.Location).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Location).Length(0, 255).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrivateKeyRules()
 		{
-			this.RuleFor(x => x.PrivateKey).NotNull();
-			this.RuleFor(x => x.PrivateKey).Length(0, 64);
+			this.RuleFor(x => x.PrivateKey).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PrivateKey).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PublicKeyRules()
 		{
-			this.RuleFor(x => x.PublicKey).NotNull();
-			this.RuleFor(x => x.PublicKey).Length(0, 64);
+			this.RuleFor(x => x.PublicKey).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PublicKey).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidBucketByBucketId(int? id,  CancellationToken cancellationToken)
@@ -97,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bf6d61ae4b02991420054cba26f59c63</Hash>
+    <Hash>9ced199dbe83cedf61f6e00abfc4a73f</Hash>
 </Codenesium>*/

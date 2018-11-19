@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/replies")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ReplyController : AbstractReplyController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>338a56f00e14e6e8ad5eb9b46e53750a</Hash>
+    <Hash>21b68ffa314d941961355867a32976fa</Hash>
 </Codenesium>*/

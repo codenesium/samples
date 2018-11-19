@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			var model = new ApiStateProvinceServerRequestModel();
@@ -95,12 +96,35 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiStateProvinceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<StateProvince>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IStateProvinceRepository>();
+			var model = new ApiStateProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiStateProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
+			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock,
+			                                       mock.BOLMapperMockFactory.BOLAddressMapperMock,
+			                                       mock.DALMapperMockFactory.DALAddressMapperMock);
+
+			CreateResponse<ApiStateProvinceServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			var model = new ApiStateProvinceServerRequestModel();
@@ -117,12 +141,36 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiStateProvinceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<StateProvince>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IStateProvinceRepository>();
+			var model = new ApiStateProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiStateProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
+			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
+			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock,
+			                                       mock.BOLMapperMockFactory.BOLAddressMapperMock,
+			                                       mock.DALMapperMockFactory.DALAddressMapperMock);
+
+			UpdateResponse<ApiStateProvinceServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			var model = new ApiStateProvinceServerRequestModel();
@@ -138,8 +186,31 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IStateProvinceRepository>();
+			var model = new ApiStateProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiStateProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
+			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock,
+			                                       mock.BOLMapperMockFactory.BOLAddressMapperMock,
+			                                       mock.DALMapperMockFactory.DALAddressMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -302,5 +373,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5bf0e9403c2b0a6cc5e54ad77bb421d9</Hash>
+    <Hash>6fe2d85fef8f5cf86f9fab702deb1a0f</Hash>
 </Codenesium>*/

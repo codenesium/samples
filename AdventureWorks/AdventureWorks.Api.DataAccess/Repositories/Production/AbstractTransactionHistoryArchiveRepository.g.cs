@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_TransactionHistoryArchive_ProductID.
 		public async virtual Task<List<TransactionHistoryArchive>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
+		// Non-unique constraint IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID.
 		public async virtual Task<List<TransactionHistoryArchive>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID, limit, offset);
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23410e2f0076534431d8dbf3006852f5</Hash>
+    <Hash>be919cb93155a9066773afc01b02b2f2</Hash>
 </Codenesium>*/

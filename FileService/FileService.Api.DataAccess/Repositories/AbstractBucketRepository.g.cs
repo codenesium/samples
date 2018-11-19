@@ -76,16 +76,19 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint IX_Bucket_externalId.
 		public async virtual Task<Bucket> ByExternalId(Guid externalId)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
+		// unique constraint IX_Bucket_name.
 		public async virtual Task<Bucket> ByName(string name)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table File via bucketId.
 		public async virtual Task<List<File>> FilesByBucketId(int bucketId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<File>().Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
@@ -115,5 +118,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2eb1c98bc25dd320bcae423fba1cf08</Hash>
+    <Hash>3358d90854590a3d2a8ed581cf870d3f</Hash>
 </Codenesium>*/

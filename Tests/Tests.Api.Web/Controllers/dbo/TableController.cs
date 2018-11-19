@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/tables")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TableController : AbstractTableController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6c6f428d60f6a756f8df4912aa0821a7</Hash>
+    <Hash>04c8f06794333cb5d5b3de6467bfd662</Hash>
 </Codenesium>*/

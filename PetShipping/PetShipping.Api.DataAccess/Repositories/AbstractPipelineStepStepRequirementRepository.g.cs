@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table PipelineStep via pipelineStepId.
 		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
 			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b341112e3bf4719dfbb72554f700f253</Hash>
+    <Hash>e42d578a5a68b3a11af12b5e5e228a66</Hash>
 </Codenesium>*/

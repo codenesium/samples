@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/countries")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CountryController : AbstractCountryController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>82e980ba0d8cfb302ee761d524129f01</Hash>
+    <Hash>3e58b6e637a6b1a4638f173a5bc3547b</Hash>
 </Codenesium>*/

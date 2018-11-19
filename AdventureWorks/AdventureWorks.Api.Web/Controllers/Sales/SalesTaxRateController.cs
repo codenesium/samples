@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/salesTaxRates")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SalesTaxRateController : AbstractSalesTaxRateController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>41e3a586639072c59f4106337e3b4553</Hash>
+    <Hash>1284609d6a5dda31f324380caf651407</Hash>
 </Codenesium>*/

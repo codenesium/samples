@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/pipelineSteps")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PipelineStepController : AbstractPipelineStepController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4c103359aef8a70caf6fae87900732da</Hash>
+    <Hash>b4f8346b7e1b9a87875feeb1647f038c</Hash>
 </Codenesium>*/

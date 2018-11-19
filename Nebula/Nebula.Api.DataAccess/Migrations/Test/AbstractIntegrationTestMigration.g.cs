@@ -16,7 +16,7 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var chainStatusItem1 = new ChainStatus();
 			chainStatusItem1.SetProperties(1, "A");
@@ -56,5 +56,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>16f4eee73b3b8782c01bd42ed5ac6c16</Hash>
+    <Hash>59c8daa29b42198a0f61f1f54e784aae</Hash>
 </Codenesium>*/

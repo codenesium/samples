@@ -76,26 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ProductModel_Name.
 		public async virtual Task<ProductModel> ByName(string name)
 		{
 			return await this.Context.Set<ProductModel>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_ProductModel_rowguid.
 		public async virtual Task<ProductModel> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<ProductModel>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Non-unique constraint PXML_ProductModel_CatalogDescription.
 		public async virtual Task<List<ProductModel>> ByCatalogDescription(string catalogDescription, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.CatalogDescription == catalogDescription, limit, offset);
 		}
 
+		// Non-unique constraint PXML_ProductModel_Instructions.
 		public async virtual Task<List<ProductModel>> ByInstruction(string instruction, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.Instruction == instruction, limit, offset);
 		}
 
+		// Foreign key reference to this table Product via productModelID.
 		public async virtual Task<List<Product>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
@@ -125,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8863133f43b5b665cfa45f0e943c183b</Hash>
+    <Hash>5cfd5f3e6dbc940bd3b1ff8dc896f621</Hash>
 </Codenesium>*/

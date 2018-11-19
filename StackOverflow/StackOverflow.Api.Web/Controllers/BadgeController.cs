@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/badges")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BadgeController : AbstractBadgeController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce7d369bb91ee07fabe1f766818c1419</Hash>
+    <Hash>d75946233dd35191f290e49e50fe8298</Hash>
 </Codenesium>*/

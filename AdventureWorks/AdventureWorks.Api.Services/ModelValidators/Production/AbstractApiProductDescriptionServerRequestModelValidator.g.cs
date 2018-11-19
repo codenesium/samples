@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,8 +28,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 400);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 400).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductDescriptionServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductDescriptionServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		private async Task<bool> BeUniqueByRowguid(ApiProductDescriptionServerRequestModel model,  CancellationToken cancellationToken)
@@ -57,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>562a38e58cf4669821b0efe4dc8e7577</Hash>
+    <Hash>1761fe5090e4a85e6145de4c0f4f353c</Hash>
 </Codenesium>*/

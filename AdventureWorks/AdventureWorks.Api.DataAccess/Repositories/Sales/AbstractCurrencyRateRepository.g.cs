@@ -76,21 +76,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode.
 		public async virtual Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
 		{
 			return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 		}
 
+		// Foreign key reference to this table SalesOrderHeader via currencyRateID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCurrencyRateID(int currencyRateID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CurrencyRateID == currencyRateID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
+		// Foreign key reference to table Currency via fromCurrencyCode.
 		public async virtual Task<Currency> CurrencyByFromCurrencyCode(string fromCurrencyCode)
 		{
 			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == fromCurrencyCode);
 		}
 
+		// Foreign key reference to table Currency via toCurrencyCode.
 		public async virtual Task<Currency> CurrencyByToCurrencyCode(string toCurrencyCode)
 		{
 			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == toCurrencyCode);
@@ -120,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8c2636a359186ccd05f0851bf95699d</Hash>
+    <Hash>317ea8b16edb9b2dfb6bab3f73e0c9b8</Hash>
 </Codenesium>*/

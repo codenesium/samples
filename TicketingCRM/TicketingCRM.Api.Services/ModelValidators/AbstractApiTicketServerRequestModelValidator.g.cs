@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -27,13 +28,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void PublicIdRules()
 		{
-			this.RuleFor(x => x.PublicId).NotNull();
-			this.RuleFor(x => x.PublicId).Length(0, 8);
+			this.RuleFor(x => x.PublicId).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PublicId).Length(0, 8).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TicketStatusIdRules()
 		{
-			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatuByTicketStatusId).When(x => !x?.TicketStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatuByTicketStatusId).When(x => !x?.TicketStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidTicketStatuByTicketStatusId(int id,  CancellationToken cancellationToken)
@@ -46,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0fd1d15dad1867f974ce33572dc505df</Hash>
+    <Hash>357793e200c17d571415b317c73adc52</Hash>
 </Codenesium>*/

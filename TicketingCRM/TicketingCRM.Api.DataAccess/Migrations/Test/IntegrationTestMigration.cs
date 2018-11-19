@@ -14,13 +14,13 @@ namespace TicketingCRMNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>82f575324d687c6f27da0c824be70d78</Hash>
+    <Hash>5071c3922e785ee126c698690dea2199</Hash>
 </Codenesium>*/

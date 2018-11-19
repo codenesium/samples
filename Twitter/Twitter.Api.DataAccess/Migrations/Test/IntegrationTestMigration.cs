@@ -14,13 +14,13 @@ namespace TwitterNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3289f7a868bbe50f10ebd1672366089c</Hash>
+    <Hash>4d5c146efb96df2b115ad19923a0dbd4</Hash>
 </Codenesium>*/

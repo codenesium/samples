@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/customers")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CustomerController : AbstractCustomerController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>95c22b428a5ed4f3c264d2043fa2c652</Hash>
+    <Hash>fc4cfdf2857a44a8535bb53b06ac2d7b</Hash>
 </Codenesium>*/

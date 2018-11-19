@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -35,8 +36,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void GenderRules()
 		{
-			this.RuleFor(x => x.Gender).NotNull();
-			this.RuleFor(x => x.Gender).Length(0, 1);
+			this.RuleFor(x => x.Gender).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Gender).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void HireDateRules()
@@ -45,21 +46,21 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void JobTitleRules()
 		{
-			this.RuleFor(x => x.JobTitle).NotNull();
-			this.RuleFor(x => x.JobTitle).Length(0, 50);
+			this.RuleFor(x => x.JobTitle).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.JobTitle).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LoginIDRules()
 		{
-			this.RuleFor(x => x.LoginID).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByLoginID).When(x => !x?.LoginID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.LoginID));
-			this.RuleFor(x => x.LoginID).Length(0, 256);
+			this.RuleFor(x => x.LoginID).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByLoginID).When(x => !x?.LoginID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.LoginID)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.LoginID).Length(0, 256).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void MaritalStatuRules()
 		{
-			this.RuleFor(x => x.MaritalStatu).NotNull();
-			this.RuleFor(x => x.MaritalStatu).Length(0, 1);
+			this.RuleFor(x => x.MaritalStatu).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.MaritalStatu).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -68,9 +69,9 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void NationalIDNumberRules()
 		{
-			this.RuleFor(x => x.NationalIDNumber).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByNationalIDNumber).When(x => !x?.NationalIDNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.NationalIDNumber));
-			this.RuleFor(x => x.NationalIDNumber).Length(0, 15);
+			this.RuleFor(x => x.NationalIDNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByNationalIDNumber).When(x => !x?.NationalIDNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.NationalIDNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.NationalIDNumber).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void OrganizationLevelRules()
@@ -79,7 +80,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalariedFlagRules()
@@ -139,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>78383c73309a2d048685e12ca9a134eb</Hash>
+    <Hash>8611c397bdabe685c5faf8bf7b308c19</Hash>
 </Codenesium>*/

@@ -76,11 +76,13 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_ticket_ticketStatusId.
 		public async virtual Task<List<Ticket>> ByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TicketStatusId == ticketStatusId, limit, offset);
 		}
 
+		// Foreign key reference to table TicketStatu via ticketStatusId.
 		public async virtual Task<TicketStatu> TicketStatuByTicketStatusId(int ticketStatusId)
 		{
 			return await this.Context.Set<TicketStatu>().SingleOrDefaultAsync(x => x.Id == ticketStatusId);
@@ -110,5 +112,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>88dcc4629417b3327733ba1896a22dc5</Hash>
+    <Hash>fcee3ab6e75416d34ba865399958df4d</Hash>
 </Codenesium>*/

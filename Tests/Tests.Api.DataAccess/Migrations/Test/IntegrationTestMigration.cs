@@ -14,13 +14,13 @@ namespace TestsNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff26bea6e99db3da9b7eb871dbc549a6</Hash>
+    <Hash>4d32b4f199cf87536b6f9a878657f6b4</Hash>
 </Codenesium>*/

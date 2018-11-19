@@ -76,11 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AX_organization_Name.
 		public async virtual Task<Organization> ByName(string name)
 		{
 			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table Team via organizationId.
 		public async virtual Task<List<Team>> TeamsByOrganizationId(int organizationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Team>().Where(x => x.OrganizationId == organizationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Team>();
@@ -110,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e718fde814739e9c6c2224e806f7f4c9</Hash>
+    <Hash>dc86ccb04b729cd2d53c2dcf1daef407</Hash>
 </Codenesium>*/

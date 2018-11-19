@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/databaseLogs")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class DatabaseLogController : AbstractDatabaseLogController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f37f2f07c9552f4a55310302ad190ab1</Hash>
+    <Hash>6e7c2aeb9682e66e1a4dbdf886511e92</Hash>
 </Codenesium>*/

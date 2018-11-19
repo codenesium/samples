@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/stateProvinces")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class StateProvinceController : AbstractStateProvinceController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>919d923ccb2a6fa32bc10e1879520105</Hash>
+    <Hash>b861d6e443ce06df03abafbf06e7d9e5</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/people")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PersonController : AbstractPersonController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e4b041d5a0b2a24d6d2b121594186ae2</Hash>
+    <Hash>7e9d65546841b00e2f9462dff2b295e5</Hash>
 </Codenesium>*/

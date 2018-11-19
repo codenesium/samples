@@ -76,16 +76,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Admin via userId.
 		public async virtual Task<List<Admin>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Admin>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
+		// Foreign key reference to this table Student via userId.
 		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Student>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
+		// Foreign key reference to this table Teacher via userId.
 		public async virtual Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Teacher>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
@@ -115,5 +118,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>50b8986e793fedbd2134b7c93dde44b8</Hash>
+    <Hash>31ab0157addc758b6e58de449cb9df55</Hash>
 </Codenesium>*/

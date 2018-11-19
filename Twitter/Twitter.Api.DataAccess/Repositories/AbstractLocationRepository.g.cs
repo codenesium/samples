@@ -76,16 +76,19 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Tweet via locationId.
 		public async virtual Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tweet>().Where(x => x.LocationId == locationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
+		// Foreign key reference to this table User via locationLocationId.
 		public async virtual Task<List<User>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<User>().Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table Tweet. Foreign Table Location.
 		public async virtual Task<List<Location>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.Tweets
@@ -134,5 +137,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1ef3ff4dabcf52e566e4b2acc77fe6a</Hash>
+    <Hash>9107ece31ad24573bc6f5cd804112189</Hash>
 </Codenesium>*/

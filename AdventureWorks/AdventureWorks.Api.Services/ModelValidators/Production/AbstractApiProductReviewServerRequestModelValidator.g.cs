@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,13 +28,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CommentRules()
 		{
-			this.RuleFor(x => x.Comment).Length(0, 3850);
+			this.RuleFor(x => x.Comment).Length(0, 3850).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void EmailAddressRules()
 		{
-			this.RuleFor(x => x.EmailAddress).NotNull();
-			this.RuleFor(x => x.EmailAddress).Length(0, 50);
+			this.RuleFor(x => x.EmailAddress).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.EmailAddress).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -54,12 +55,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ReviewerNameRules()
 		{
-			this.RuleFor(x => x.ReviewerName).NotNull();
-			this.RuleFor(x => x.ReviewerName).Length(0, 50);
+			this.RuleFor(x => x.ReviewerName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.ReviewerName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9dc940012b3b7e306cfc659ac02a18fb</Hash>
+    <Hash>bba429ccc562d767870eefdd3a15f5da</Hash>
 </Codenesium>*/

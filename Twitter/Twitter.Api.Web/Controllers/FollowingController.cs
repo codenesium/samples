@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/followings")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class FollowingController : AbstractFollowingController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1cdd0d0f338ad9edf1495bdb3df7e8a2</Hash>
+    <Hash>509d8569cf6d869aed12a59c6624664f</Hash>
 </Codenesium>*/

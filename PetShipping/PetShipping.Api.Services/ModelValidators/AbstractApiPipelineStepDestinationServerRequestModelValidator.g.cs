@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void DestinationIdRules()
 		{
-			this.RuleFor(x => x.DestinationId).MustAsync(this.BeValidDestinationByDestinationId).When(x => !x?.DestinationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.DestinationId).MustAsync(this.BeValidDestinationByDestinationId).When(x => !x?.DestinationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void PipelineStepIdRules()
 		{
-			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidDestinationByDestinationId(int id,  CancellationToken cancellationToken)
@@ -52,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01c531229e664f9efe8ed26c20f94db8</Hash>
+    <Hash>d4a40b1880989b701a49b5ff6786b757</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/versionInfoes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class VersionInfoController : AbstractVersionInfoController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>84ff93ad3599ff1b045c1f2654da6fbc</Hash>
+    <Hash>7d38f5c67871b32e175b87b6bea5a002</Hash>
 </Codenesium>*/

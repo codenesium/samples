@@ -14,13 +14,13 @@ namespace FileServiceNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d215b9ade22223873f88d5d5b4b4c58</Hash>
+    <Hash>1e03f023e48b0e79d48562bdb6cd32e0</Hash>
 </Codenesium>*/

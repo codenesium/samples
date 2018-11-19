@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/families")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class FamilyController : AbstractFamilyController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>44bfa1cbdc5e6d43dc48d187eac02b86</Hash>
+    <Hash>fa0c2e7492883429df69644233633590</Hash>
 </Codenesium>*/

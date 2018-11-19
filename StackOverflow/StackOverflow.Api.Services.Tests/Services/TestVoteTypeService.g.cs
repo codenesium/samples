@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IVoteTypeRepository>();
 			var model = new ApiVoteTypeServerRequestModel();
@@ -87,12 +88,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			CreateResponse<ApiVoteTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVoteTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<VoteType>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IVoteTypeRepository>();
+			var model = new ApiVoteTypeServerRequestModel();
+			var validatorMock = new Mock<IApiVoteTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new VoteTypeService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
+			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
+
+			CreateResponse<ApiVoteTypeServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVoteTypeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IVoteTypeRepository>();
 			var model = new ApiVoteTypeServerRequestModel();
@@ -107,12 +129,34 @@ namespace StackOverflowNS.Api.Services.Tests
 			UpdateResponse<ApiVoteTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<VoteType>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IVoteTypeRepository>();
+			var model = new ApiVoteTypeServerRequestModel();
+			var validatorMock = new Mock<IApiVoteTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VoteType()));
+			var service = new VoteTypeService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
+			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
+
+			UpdateResponse<ApiVoteTypeServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVoteTypeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IVoteTypeRepository>();
 			var model = new ApiVoteTypeServerRequestModel();
@@ -126,12 +170,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IVoteTypeRepository>();
+			var model = new ApiVoteTypeServerRequestModel();
+			var validatorMock = new Mock<IApiVoteTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new VoteTypeService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
+			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af3e0d81d3ec931f1262dbe3289eb1e8</Hash>
+    <Hash>a295820e41ac0fb46a98e26b3a1f60d4</Hash>
 </Codenesium>*/

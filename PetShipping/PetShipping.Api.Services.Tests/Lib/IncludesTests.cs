@@ -83,6 +83,18 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public void UpdateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public void UpdateResponse_No_Error()
 		{
 			var failures = new List<ValidationFailure>();
@@ -112,5 +124,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b421afc049e3654a215b9af0c39eb081</Hash>
+    <Hash>5bc2e40471972c0ccbc1e8f157d2c1b9</Hash>
 </Codenesium>*/

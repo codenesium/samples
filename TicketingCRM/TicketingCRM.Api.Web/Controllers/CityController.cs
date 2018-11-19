@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/cities")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CityController : AbstractCityController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4051c67e9b3c6b020aeb2b9463687256</Hash>
+    <Hash>1a47900ec12d81c30436b62470d597ad</Hash>
 </Codenesium>*/

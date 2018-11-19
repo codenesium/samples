@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -35,12 +36,12 @@ namespace TwitterNS.Api.Services
 
 		public virtual void LocationNameRules()
 		{
-			this.RuleFor(x => x.LocationName).NotNull();
-			this.RuleFor(x => x.LocationName).Length(0, 64);
+			this.RuleFor(x => x.LocationName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LocationName).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e86755ea2cf7db9c6846aad7dcef9464</Hash>
+    <Hash>a3d673e7e75e2cc1e59df120ab483c40</Hash>
 </Codenesium>*/

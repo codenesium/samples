@@ -76,6 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Province via countryId.
 		public async virtual Task<List<Province>> ProvincesByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Province>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Province>();
@@ -105,5 +106,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee23c3c31206c7158a849820d4ccbffd</Hash>
+    <Hash>6472d47308d9ac3c96a9c7b2d84dd926</Hash>
 </Codenesium>*/

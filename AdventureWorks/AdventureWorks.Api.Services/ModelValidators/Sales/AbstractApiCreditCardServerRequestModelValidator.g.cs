@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,15 +28,15 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CardNumberRules()
 		{
-			this.RuleFor(x => x.CardNumber).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByCardNumber).When(x => !x?.CardNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardServerRequestModel.CardNumber));
-			this.RuleFor(x => x.CardNumber).Length(0, 25);
+			this.RuleFor(x => x.CardNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByCardNumber).When(x => !x?.CardNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardServerRequestModel.CardNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.CardNumber).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CardTypeRules()
 		{
-			this.RuleFor(x => x.CardType).NotNull();
-			this.RuleFor(x => x.CardType).Length(0, 50);
+			this.RuleFor(x => x.CardType).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.CardType).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ExpMonthRules()
@@ -67,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d856758ab0545873af359adf4cede65e</Hash>
+    <Hash>5c042526faaf97f5f456a6ef83b4fafa</Hash>
 </Codenesium>*/

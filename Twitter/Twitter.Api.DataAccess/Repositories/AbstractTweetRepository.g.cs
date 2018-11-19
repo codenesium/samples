@@ -76,36 +76,43 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Tweet_location_id.
 		public async virtual Task<List<Tweet>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.LocationId == locationId, limit, offset);
 		}
 
+		// Non-unique constraint IX_Tweet_user_user_id.
 		public async virtual Task<List<Tweet>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserUserId == userUserId, limit, offset);
 		}
 
+		// Foreign key reference to this table QuoteTweet via sourceTweetId.
 		public async virtual Task<List<QuoteTweet>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<QuoteTweet>().Where(x => x.SourceTweetId == sourceTweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
+		// Foreign key reference to this table Retweet via tweetTweetId.
 		public async virtual Task<List<Retweet>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Retweet>().Where(x => x.TweetTweetId == tweetTweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
+		// Foreign key reference to table Location via locationId.
 		public async virtual Task<Location> LocationByLocationId(int locationId)
 		{
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationId);
 		}
 
+		// Foreign key reference to table User via userUserId.
 		public async virtual Task<User> UserByUserUserId(int userUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userUserId);
 		}
 
+		// Foreign key reference pass-though. Pass-thru table QuoteTweet. Foreign Table Tweet.
 		public async virtual Task<List<Tweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.QuoteTweets
@@ -154,5 +161,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>345bc49e32bb62f340f93b504e93bde9</Hash>
+    <Hash>25808f36f69d43aa96b380131ac8deb6</Hash>
 </Codenesium>*/

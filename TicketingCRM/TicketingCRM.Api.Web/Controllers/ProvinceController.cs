@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/provinces")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ProvinceController : AbstractProvinceController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8dbebe6e361ac021adef84e105fa804e</Hash>
+    <Hash>6d910517bb4b116ef2e1cb33ee25254f</Hash>
 </Codenesium>*/

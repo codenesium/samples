@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
 			var model = new ApiStudioServerRequestModel();
@@ -87,12 +88,33 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			CreateResponse<ApiStudioServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudioServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Studio>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var model = new ApiStudioServerRequestModel();
+			var validatorMock = new Mock<IApiStudioServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock);
+
+			CreateResponse<ApiStudioServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudioServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
 			var model = new ApiStudioServerRequestModel();
@@ -107,12 +129,34 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			UpdateResponse<ApiStudioServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Studio>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var model = new ApiStudioServerRequestModel();
+			var validatorMock = new Mock<IApiStudioServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Studio()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock);
+
+			UpdateResponse<ApiStudioServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudioServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
 			var model = new ApiStudioServerRequestModel();
@@ -126,12 +170,33 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var model = new ApiStudioServerRequestModel();
+			var validatorMock = new Mock<IApiStudioServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>191f4319418df5113e2ce6f8f9ac7a2f</Hash>
+    <Hash>ec148c1a92951141388499b87ef30c4d</Hash>
 </Codenesium>*/

@@ -76,6 +76,7 @@ namespace StackOverflowNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint NonClusteredIndex-20180824-125907.
 		public async virtual Task<List<Vote>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
@@ -105,5 +106,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3d103cb21a745e39450717b60ce147b</Hash>
+    <Hash>0684e4c5ac6814e7482e222073326a32</Hash>
 </Codenesium>*/

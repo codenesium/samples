@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/customerCommunications")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CustomerCommunicationController : AbstractCustomerCommunicationController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>369235189bb8625d708a64ad7ed5b97a</Hash>
+    <Hash>a01645cb227cd7e66c87b185708ec40f</Hash>
 </Codenesium>*/

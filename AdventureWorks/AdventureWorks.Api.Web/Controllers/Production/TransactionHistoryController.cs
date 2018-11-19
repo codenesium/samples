@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/transactionHistories")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TransactionHistoryController : AbstractTransactionHistoryController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bb88749a906a968894db39ad606805bc</Hash>
+    <Hash>077ea17b053277abb3410d57552e80f4</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
 			var model = new ApiBadgeServerRequestModel();
@@ -87,12 +88,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			CreateResponse<ApiBadgeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Badge>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IBadgeRepository>();
+			var model = new ApiBadgeServerRequestModel();
+			var validatorMock = new Mock<IApiBadgeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
+			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
+
+			CreateResponse<ApiBadgeServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
 			var model = new ApiBadgeServerRequestModel();
@@ -107,12 +129,34 @@ namespace StackOverflowNS.Api.Services.Tests
 			UpdateResponse<ApiBadgeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Badge>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IBadgeRepository>();
+			var model = new ApiBadgeServerRequestModel();
+			var validatorMock = new Mock<IApiBadgeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badge()));
+			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
+			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
+
+			UpdateResponse<ApiBadgeServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBadgeRepository>();
 			var model = new ApiBadgeServerRequestModel();
@@ -126,12 +170,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IBadgeRepository>();
+			var model = new ApiBadgeServerRequestModel();
+			var validatorMock = new Mock<IApiBadgeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
+			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ae008434479ed58be5581144976f642</Hash>
+    <Hash>91f5f91f37b59509ffad15eb71f10622</Hash>
 </Codenesium>*/

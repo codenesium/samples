@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Country via countryId.
 		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
 			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e93243870fc12978e5623f9bcfdd7abe</Hash>
+    <Hash>ff92acf8a6a3726a319fe5bc44671d78</Hash>
 </Codenesium>*/

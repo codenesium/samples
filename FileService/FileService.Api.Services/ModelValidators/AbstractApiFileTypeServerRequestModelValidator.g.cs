@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,12 +28,12 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 255);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 255).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c7b22de6822c2e3674b3e924eb1885c</Hash>
+    <Hash>701b1abcbd7e61700ce706f54651ac82</Hash>
 </Codenesium>*/

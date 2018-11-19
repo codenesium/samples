@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table CustomerCommunication via customerId.
 		public async virtual Task<List<CustomerCommunication>> CustomerCommunicationsByCustomerId(int customerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CustomerCommunication>().Where(x => x.CustomerId == customerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CustomerCommunication>();
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b1272ee0b474130f744e69ce22406a9</Hash>
+    <Hash>d06fc2cecc9a85dcfdebad7247c060f3</Hash>
 </Codenesium>*/

@@ -76,6 +76,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Link via linkId.
 		public async virtual Task<Link> LinkByLinkId(int linkId)
 		{
 			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.Id == linkId);
@@ -105,5 +106,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c68ca2a94fcbfd33e762b0340d7194fe</Hash>
+    <Hash>86734dda516d3954ea05af75e7c026cf</Hash>
 </Codenesium>*/

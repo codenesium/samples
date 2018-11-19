@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/messages")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class MessageController : AbstractMessageController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>96f34938cfb4643ab1b796dcc72d923b</Hash>
+    <Hash>ef1673db2b2ec073769491f48f6ad6cf</Hash>
 </Codenesium>*/

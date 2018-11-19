@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -35,7 +36,7 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void BodyRules()
 		{
-			this.RuleFor(x => x.Body).NotNull();
+			this.RuleFor(x => x.Body).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 		}
 
 		public virtual void ClosedDateRules()
@@ -68,7 +69,7 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void LastEditorDisplayNameRules()
 		{
-			this.RuleFor(x => x.LastEditorDisplayName).Length(0, 40);
+			this.RuleFor(x => x.LastEditorDisplayName).Length(0, 40).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastEditorUserIdRules()
@@ -93,12 +94,12 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void TagRules()
 		{
-			this.RuleFor(x => x.Tag).Length(0, 150);
+			this.RuleFor(x => x.Tag).Length(0, 150).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TitleRules()
 		{
-			this.RuleFor(x => x.Title).Length(0, 250);
+			this.RuleFor(x => x.Title).Length(0, 250).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ViewCountRules()
@@ -108,5 +109,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a26eeed980d8a2d3a153568cbd23bdf7</Hash>
+    <Hash>ac8fe36a5940dc87c7a1f98fa096d08b</Hash>
 </Codenesium>*/

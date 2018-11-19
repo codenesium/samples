@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -85,7 +86,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var model = new ApiSalesPersonServerRequestModel();
@@ -103,12 +104,37 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiSalesPersonServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SalesPerson>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesPersonRepository>();
+			var model = new ApiSalesPersonServerRequestModel();
+			var validatorMock = new Mock<IApiSalesPersonServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesPersonServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SalesPersonService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesPersonMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
+
+			CreateResponse<ApiSalesPersonServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesPersonServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var model = new ApiSalesPersonServerRequestModel();
@@ -127,12 +153,38 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiSalesPersonServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SalesPerson>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesPersonRepository>();
+			var model = new ApiSalesPersonServerRequestModel();
+			var validatorMock = new Mock<IApiSalesPersonServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesPersonServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesPerson()));
+			var service = new SalesPersonService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesPersonMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
+
+			UpdateResponse<ApiSalesPersonServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesPersonServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var model = new ApiSalesPersonServerRequestModel();
@@ -150,8 +202,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesPersonRepository>();
+			var model = new ApiSalesPersonServerRequestModel();
+			var validatorMock = new Mock<IApiSalesPersonServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SalesPersonService(mock.LoggerMock.Object,
+			                                     mock.RepositoryMock.Object,
+			                                     validatorMock.Object,
+			                                     mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesPersonMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                     mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
+			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -288,5 +365,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a85e33f241ff67a01945afa0d648207c</Hash>
+    <Hash>fc42531587776a85b196a208331a3292</Hash>
 </Codenesium>*/

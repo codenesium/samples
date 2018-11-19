@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var airlineItem1 = new Airline();
 			airlineItem1.SetProperties(1, "A");
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a02e1a8062d6be3142128e4b9e7951b8</Hash>
+    <Hash>3c4e064f9dd7bd19a86c1d098870604e</Hash>
 </Codenesium>*/

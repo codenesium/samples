@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TestsNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
@@ -87,12 +88,33 @@ namespace TestsNS.Api.Services.Tests
 			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TestAllFieldTypesNullable>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
+			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
+			var validatorMock = new Mock<IApiTestAllFieldTypesNullableServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
+
+			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
@@ -107,12 +129,34 @@ namespace TestsNS.Api.Services.Tests
 			UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TestAllFieldTypesNullable>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
+			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
+			var validatorMock = new Mock<IApiTestAllFieldTypesNullableServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldTypesNullable()));
+			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
+
+			UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
@@ -126,12 +170,33 @@ namespace TestsNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
+			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
+			var validatorMock = new Mock<IApiTestAllFieldTypesNullableServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d6af93642a880384878b309a1bfa3454</Hash>
+    <Hash>5a4930c30183cfad80efb785e5da935b</Hash>
 </Codenesium>*/

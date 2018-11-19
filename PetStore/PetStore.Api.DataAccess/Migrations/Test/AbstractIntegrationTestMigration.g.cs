@@ -16,7 +16,7 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var breedItem1 = new Breed();
 			breedItem1.SetProperties(1, "A");
@@ -48,5 +48,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>487844866bff97ac91507ef111872d8c</Hash>
+    <Hash>6e62a6d1c31d73c503bf2a229ab100f8</Hash>
 </Codenesium>*/

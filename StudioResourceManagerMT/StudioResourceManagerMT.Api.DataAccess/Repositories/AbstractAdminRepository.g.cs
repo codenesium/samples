@@ -76,11 +76,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Admin_userId.
 		public async virtual Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
+		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
@@ -110,5 +112,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3e09cd282e84e797bb75b47eac11d33</Hash>
+    <Hash>10fe2da0e670ed76c885342d18d947ec</Hash>
 </Codenesium>*/

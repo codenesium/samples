@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/venues")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class VenueController : AbstractVenueController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>97d13e4879734ea6c1c703e3b4b70614</Hash>
+    <Hash>f1b719f87c39150f220b095df77620ee</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -27,30 +28,30 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void EmailRules()
 		{
-			this.RuleFor(x => x.Email).NotNull();
-			this.RuleFor(x => x.Email).Length(0, 128);
+			this.RuleFor(x => x.Email).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Email).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FirstNameRules()
 		{
-			this.RuleFor(x => x.FirstName).NotNull();
-			this.RuleFor(x => x.FirstName).Length(0, 128);
+			this.RuleFor(x => x.FirstName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FirstName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastNameRules()
 		{
-			this.RuleFor(x => x.LastName).NotNull();
-			this.RuleFor(x => x.LastName).Length(0, 128);
+			this.RuleFor(x => x.LastName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PhoneRules()
 		{
-			this.RuleFor(x => x.Phone).NotNull();
-			this.RuleFor(x => x.Phone).Length(0, 128);
+			this.RuleFor(x => x.Phone).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Phone).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>badc70c0e6fe34bccfd5a2cd4db40e44</Hash>
+    <Hash>eb7a27414b293e8e0d7ed6978214bb48</Hash>
 </Codenesium>*/

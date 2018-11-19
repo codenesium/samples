@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -85,7 +86,7 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var model = new ApiTweetServerRequestModel();
@@ -103,12 +104,37 @@ namespace TwitterNS.Api.Services.Tests
 			CreateResponse<ApiTweetServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Tweet>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ITweetRepository>();
+			var model = new ApiTweetServerRequestModel();
+			var validatorMock = new Mock<IApiTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TweetService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
+
+			CreateResponse<ApiTweetServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTweetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var model = new ApiTweetServerRequestModel();
@@ -127,12 +153,38 @@ namespace TwitterNS.Api.Services.Tests
 			UpdateResponse<ApiTweetServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Tweet>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ITweetRepository>();
+			var model = new ApiTweetServerRequestModel();
+			var validatorMock = new Mock<IApiTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Tweet()));
+			var service = new TweetService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
+
+			UpdateResponse<ApiTweetServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTweetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var model = new ApiTweetServerRequestModel();
@@ -150,8 +202,33 @@ namespace TwitterNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TweetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ITweetRepository>();
+			var model = new ApiTweetServerRequestModel();
+			var validatorMock = new Mock<IApiTweetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TweetService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               validatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -333,5 +410,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a30f4a115ceff995c6fa76146933be72</Hash>
+    <Hash>3e93db9bdd0a43ab27bddbdb501f1375</Hash>
 </Codenesium>*/

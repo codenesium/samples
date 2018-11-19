@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void PipelineStatusIdRules()
 		{
-			this.RuleFor(x => x.PipelineStatusId).MustAsync(this.BeValidPipelineStatuByPipelineStatusId).When(x => !x?.PipelineStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PipelineStatusId).MustAsync(this.BeValidPipelineStatuByPipelineStatusId).When(x => !x?.PipelineStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void SaleIdRules()
@@ -44,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87d8bf2642902d9a317d0d1f31f3981e</Hash>
+    <Hash>d3c3fea12a4677a8a96f50914df8cc6a</Hash>
 </Codenesium>*/

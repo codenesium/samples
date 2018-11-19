@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -27,12 +28,12 @@ namespace TestsNS.Api.Services
 
 		public virtual void PersonNameRules()
 		{
-			this.RuleFor(x => x.PersonName).NotNull();
-			this.RuleFor(x => x.PersonName).Length(0, 50);
+			this.RuleFor(x => x.PersonName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PersonName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4aa3bcfbc076fdfa29aa34a863173f4</Hash>
+    <Hash>94ac3362abf539c837a8e3b5d677b1d5</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -31,11 +32,11 @@ namespace NebulaNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).Length(0, 1024);
+			this.RuleFor(x => x.Description).Length(0, 1024).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>891b8b40e323fef73dabd163495488f5</Hash>
+    <Hash>4200a1906ee2ff33ec73a731037339d1</Hash>
 </Codenesium>*/

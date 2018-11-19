@@ -1,6 +1,7 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFileRepository>();
 			var model = new ApiFileServerRequestModel();
@@ -87,12 +88,33 @@ namespace FileServiceNS.Api.Services.Tests
 			CreateResponse<ApiFileServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FileModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFileServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<File>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IFileRepository>();
+			var model = new ApiFileServerRequestModel();
+			var validatorMock = new Mock<IApiFileServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new FileService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                              mock.DALMapperMockFactory.DALFileMapperMock);
+
+			CreateResponse<ApiFileServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFileServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFileRepository>();
 			var model = new ApiFileServerRequestModel();
@@ -107,12 +129,34 @@ namespace FileServiceNS.Api.Services.Tests
 			UpdateResponse<ApiFileServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FileModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<File>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IFileRepository>();
+			var model = new ApiFileServerRequestModel();
+			var validatorMock = new Mock<IApiFileServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+			var service = new FileService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                              mock.DALMapperMockFactory.DALFileMapperMock);
+
+			UpdateResponse<ApiFileServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFileRepository>();
 			var model = new ApiFileServerRequestModel();
@@ -126,12 +170,33 @@ namespace FileServiceNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.FileModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IFileRepository>();
+			var model = new ApiFileServerRequestModel();
+			var validatorMock = new Mock<IApiFileServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new FileService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                              mock.DALMapperMockFactory.DALFileMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>235d261030aa215627e41616c7ca68b3</Hash>
+    <Hash>e28900c1717fea4a57e1f481e8f64cb5</Hash>
 </Codenesium>*/

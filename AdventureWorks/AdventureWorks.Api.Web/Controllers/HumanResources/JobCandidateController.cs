@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/jobCandidates")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class JobCandidateController : AbstractJobCandidateController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b72a7b84066aae405c3e69f1ca16fa39</Hash>
+    <Hash>17cbca5898636976c08f73294cf9de04</Hash>
 </Codenesium>*/

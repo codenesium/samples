@@ -76,6 +76,7 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Sale via paymentTypeId.
 		public async virtual Task<List<Sale>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
@@ -105,5 +106,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>906da389d80d5044ec4a4952a1b28783</Hash>
+    <Hash>3fa6be6fcc18a7bf2b5b1977f2d92377</Hash>
 </Codenesium>*/

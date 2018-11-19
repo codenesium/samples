@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_ProductReview_ProductID_Name.
 		public async virtual Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName, limit, offset);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81840dbe8de08c18aa5adc355661d160</Hash>
+    <Hash>c4f71729bab54ae740334db081899f5b</Hash>
 </Codenesium>*/

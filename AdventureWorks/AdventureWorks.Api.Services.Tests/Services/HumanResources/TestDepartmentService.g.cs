@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDepartmentRepository>();
 			var model = new ApiDepartmentServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiDepartmentServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Department>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IDepartmentRepository>();
+			var model = new ApiDepartmentServerRequestModel();
+			var validatorMock = new Mock<IApiDepartmentServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
+			                                    mock.DALMapperMockFactory.DALDepartmentMapperMock);
+
+			CreateResponse<ApiDepartmentServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDepartmentRepository>();
 			var model = new ApiDepartmentServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiDepartmentServerResponseModel> response = await service.Update(default(short), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Department>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IDepartmentRepository>();
+			var model = new ApiDepartmentServerRequestModel();
+			var validatorMock = new Mock<IApiDepartmentServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
+			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
+			                                    mock.DALMapperMockFactory.DALDepartmentMapperMock);
+
+			UpdateResponse<ApiDepartmentServerResponseModel> response = await service.Update(default(short), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDepartmentRepository>();
 			var model = new ApiDepartmentServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(short));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<short>()));
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IDepartmentRepository>();
+			var model = new ApiDepartmentServerRequestModel();
+			var validatorMock = new Mock<IApiDepartmentServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<short>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
+			                                    mock.DALMapperMockFactory.DALDepartmentMapperMock);
+
+			ActionResponse response = await service.Delete(default(short));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
 		}
 
 		[Fact]
@@ -168,5 +233,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>add11c2bae075660a95e9b4dc366c354</Hash>
+    <Hash>9e1713f5f4af58916a46b79a126bcc4d</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace ESPIOTNS.Api.Web
 	[Route("api/devices")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class DeviceController : AbstractDeviceController
 	{
@@ -42,5 +41,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9a25a1e009be33166cd04e63c8d6a67b</Hash>
+    <Hash>9c93ae531c8990babab14f18e0c13994</Hash>
 </Codenesium>*/

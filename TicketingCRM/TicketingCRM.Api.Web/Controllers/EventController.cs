@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/events")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class EventController : AbstractEventController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f492caf5503b5572bde48c41293f7c8c</Hash>
+    <Hash>24dc9dbd1918bafdcff1cc63ce0fb545</Hash>
 </Codenesium>*/

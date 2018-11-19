@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -85,7 +86,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var model = new ApiCountryServerRequestModel();
@@ -103,12 +104,37 @@ namespace PetShippingNS.Api.Services.Tests
 			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Country>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ICountryRepository>();
+			var model = new ApiCountryServerRequestModel();
+			var validatorMock = new Mock<IApiCountryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
+			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
+
+			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var model = new ApiCountryServerRequestModel();
@@ -127,12 +153,38 @@ namespace PetShippingNS.Api.Services.Tests
 			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Country>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ICountryRepository>();
+			var model = new ApiCountryServerRequestModel();
+			var validatorMock = new Mock<IApiCountryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
+			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
+			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
+
+			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var model = new ApiCountryServerRequestModel();
@@ -150,8 +202,33 @@ namespace PetShippingNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ICountryRepository>();
+			var model = new ApiCountryServerRequestModel();
+			var validatorMock = new Mock<IApiCountryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
+			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
+			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -245,5 +322,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>86e6eebab9480553f7b93b43ba7fb115</Hash>
+    <Hash>64c68730d8621536fe6391d34ba37d0e</Hash>
 </Codenesium>*/

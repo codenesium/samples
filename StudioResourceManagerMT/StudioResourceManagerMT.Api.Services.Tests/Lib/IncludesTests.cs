@@ -83,6 +83,18 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public void UpdateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public void UpdateResponse_No_Error()
 		{
 			var failures = new List<ValidationFailure>();
@@ -112,5 +124,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6f9338b47e1f51e9c212cf33feeddc7c</Hash>
+    <Hash>6cc6fb1c8b0f9e178ea8a44a92ce6ebe</Hash>
 </Codenesium>*/

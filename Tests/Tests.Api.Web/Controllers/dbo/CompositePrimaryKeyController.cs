@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/compositePrimaryKeys")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CompositePrimaryKeyController : AbstractCompositePrimaryKeyController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>64aff15d045f55c5ecf7847740393424</Hash>
+    <Hash>2662393ac1951e293551044dc2c8bccd</Hash>
 </Codenesium>*/

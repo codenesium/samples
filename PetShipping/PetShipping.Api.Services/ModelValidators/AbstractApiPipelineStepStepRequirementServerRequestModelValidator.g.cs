@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,13 +28,13 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void DetailRules()
 		{
-			this.RuleFor(x => x.Detail).NotNull();
-			this.RuleFor(x => x.Detail).Length(0, 2147483647);
+			this.RuleFor(x => x.Detail).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Detail).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PipelineStepIdRules()
 		{
-			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void RequirementMetRules()
@@ -50,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b87198383b6c796d0b651a8b8ecf8e2</Hash>
+    <Hash>bad2667d3f1830d3012a37340b699605</Hash>
 </Codenesium>*/

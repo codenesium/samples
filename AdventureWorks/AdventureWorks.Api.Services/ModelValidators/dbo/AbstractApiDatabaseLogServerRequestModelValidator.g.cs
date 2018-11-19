@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,19 +28,19 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void DatabaseUserRules()
 		{
-			this.RuleFor(x => x.DatabaseUser).NotNull();
-			this.RuleFor(x => x.DatabaseUser).Length(0, 128);
+			this.RuleFor(x => x.DatabaseUser).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.DatabaseUser).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @EventRules()
 		{
-			this.RuleFor(x => x.@Event).NotNull();
-			this.RuleFor(x => x.@Event).Length(0, 128);
+			this.RuleFor(x => x.@Event).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.@Event).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @ObjectRules()
 		{
-			this.RuleFor(x => x.@Object).Length(0, 128);
+			this.RuleFor(x => x.@Object).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PostTimeRules()
@@ -48,21 +49,21 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void SchemaRules()
 		{
-			this.RuleFor(x => x.Schema).Length(0, 128);
+			this.RuleFor(x => x.Schema).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TsqlRules()
 		{
-			this.RuleFor(x => x.Tsql).NotNull();
+			this.RuleFor(x => x.Tsql).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 		}
 
 		public virtual void XmlEventRules()
 		{
-			this.RuleFor(x => x.XmlEvent).NotNull();
+			this.RuleFor(x => x.XmlEvent).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0cef7affff9e4eca0e61272ffff9ed75</Hash>
+    <Hash>f6bc74acec3924f224b0991a2f66b12c</Hash>
 </Codenesium>*/

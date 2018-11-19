@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,47 +28,47 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void Address1Rules()
 		{
-			this.RuleFor(x => x.Address1).NotNull();
-			this.RuleFor(x => x.Address1).Length(0, 128);
+			this.RuleFor(x => x.Address1).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Address1).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void Address2Rules()
 		{
-			this.RuleFor(x => x.Address2).NotNull();
-			this.RuleFor(x => x.Address2).Length(0, 128);
+			this.RuleFor(x => x.Address2).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Address2).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CityRules()
 		{
-			this.RuleFor(x => x.City).NotNull();
-			this.RuleFor(x => x.City).Length(0, 128);
+			this.RuleFor(x => x.City).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.City).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ProvinceRules()
 		{
-			this.RuleFor(x => x.Province).NotNull();
-			this.RuleFor(x => x.Province).Length(0, 90);
+			this.RuleFor(x => x.Province).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Province).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void WebsiteRules()
 		{
-			this.RuleFor(x => x.Website).NotNull();
-			this.RuleFor(x => x.Website).Length(0, 128);
+			this.RuleFor(x => x.Website).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Website).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ZipRules()
 		{
-			this.RuleFor(x => x.Zip).Length(0, 128);
+			this.RuleFor(x => x.Zip).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d828acbf4fc590eec03fb8e5facdbe0c</Hash>
+    <Hash>034a2a46865f4dbb1419baa09eaae6e2</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/linkLogs")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class LinkLogController : AbstractLinkLogController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8ac3d07f66b4623fcfa6699f6fbfebc0</Hash>
+    <Hash>52da9c2aa618d75e3a318d77ce6dcce1</Hash>
 </Codenesium>*/

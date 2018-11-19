@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/products")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ProductController : AbstractProductController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d9812553128065bf86676d218af46dee</Hash>
+    <Hash>65aa41b152b848e0f53a7e15bbb44139</Hash>
 </Codenesium>*/

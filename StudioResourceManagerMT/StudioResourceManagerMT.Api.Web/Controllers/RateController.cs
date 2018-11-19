@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/rates")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class RateController : AbstractRateController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>901a7cbaacaa66933fa578a9badfb1cb</Hash>
+    <Hash>6f5cf15d40609606b072b7b23241b0cb</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -39,8 +40,8 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void TextRules()
 		{
-			this.RuleFor(x => x.Text).NotNull();
-			this.RuleFor(x => x.Text).Length(0, 700);
+			this.RuleFor(x => x.Text).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Text).Length(0, 700).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void UserIdRules()
@@ -50,5 +51,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>877480897eed5157d92922dd96ffdfe1</Hash>
+    <Hash>e4a80b9b288b10b69290e884eeb750a9</Hash>
 </Codenesium>*/

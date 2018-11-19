@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/personRefs")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PersonRefController : AbstractPersonRefController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8fed5584621df5f0fff70fd51cf63e2a</Hash>
+    <Hash>18084598802683000a42dc27be00a4a2</Hash>
 </Codenesium>*/

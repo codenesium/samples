@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Handler via handlerId.
 		public async virtual Task<Handler> HandlerByHandlerId(int handlerId)
 		{
 			return await this.Context.Set<Handler>().SingleOrDefaultAsync(x => x.Id == handlerId);
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>103f93048af692f576ac97dfbc8f6a26</Hash>
+    <Hash>c9ef71435c598a19bc2c6aa5111c7878</Hash>
 </Codenesium>*/

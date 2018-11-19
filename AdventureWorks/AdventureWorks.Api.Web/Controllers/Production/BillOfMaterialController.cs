@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/billOfMaterials")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BillOfMaterialController : AbstractBillOfMaterialController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>317acf16fcc1847ae51b6d4d34bad651</Hash>
+    <Hash>0bf5b7a2e779d6a1661d4ffd55c1411a</Hash>
 </Codenesium>*/

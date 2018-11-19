@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/organizations")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class OrganizationController : AbstractOrganizationController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9a3131d067bfcfaf42f6e8b942804ffd</Hash>
+    <Hash>a17930eb94e9c3015d0c158ef97afc0a</Hash>
 </Codenesium>*/

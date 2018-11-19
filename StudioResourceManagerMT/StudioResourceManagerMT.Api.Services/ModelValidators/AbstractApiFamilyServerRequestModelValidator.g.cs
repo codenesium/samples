@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,32 +28,32 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void NoteRules()
 		{
-			this.RuleFor(x => x.Note).Length(0, 2147483647);
+			this.RuleFor(x => x.Note).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrimaryContactEmailRules()
 		{
-			this.RuleFor(x => x.PrimaryContactEmail).Length(0, 128);
+			this.RuleFor(x => x.PrimaryContactEmail).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrimaryContactFirstNameRules()
 		{
-			this.RuleFor(x => x.PrimaryContactFirstName).Length(0, 128);
+			this.RuleFor(x => x.PrimaryContactFirstName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrimaryContactLastNameRules()
 		{
-			this.RuleFor(x => x.PrimaryContactLastName).Length(0, 128);
+			this.RuleFor(x => x.PrimaryContactLastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrimaryContactPhoneRules()
 		{
-			this.RuleFor(x => x.PrimaryContactPhone).NotNull();
-			this.RuleFor(x => x.PrimaryContactPhone).Length(0, 128);
+			this.RuleFor(x => x.PrimaryContactPhone).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PrimaryContactPhone).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69fd1550a97dafcb083cb2b135019863</Hash>
+    <Hash>dbdcaa53bbd6c6a3b848b5800b704d1f</Hash>
 </Codenesium>*/

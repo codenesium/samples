@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/businessEntities")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BusinessEntityController : AbstractBusinessEntityController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9a3ed5401168de75dae6135803054e34</Hash>
+    <Hash>5d24c48e252131f076afbcca46b8b8a7</Hash>
 </Codenesium>*/

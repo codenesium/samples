@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			var model = new ApiShipMethodServerRequestModel();
@@ -95,12 +96,35 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiShipMethodServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ShipMethod>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IShipMethodRepository>();
+			var model = new ApiShipMethodServerRequestModel();
+			var validatorMock = new Mock<IApiShipMethodServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
+			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
+			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
+
+			CreateResponse<ApiShipMethodServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			var model = new ApiShipMethodServerRequestModel();
@@ -117,12 +141,36 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiShipMethodServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ShipMethod>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IShipMethodRepository>();
+			var model = new ApiShipMethodServerRequestModel();
+			var validatorMock = new Mock<IApiShipMethodServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
+			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
+			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
+			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
+
+			UpdateResponse<ApiShipMethodServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			var model = new ApiShipMethodServerRequestModel();
@@ -138,8 +186,31 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IShipMethodRepository>();
+			var model = new ApiShipMethodServerRequestModel();
+			var validatorMock = new Mock<IApiShipMethodServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
+			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
+			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -263,5 +334,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>828142e1fe703588a3e1583cc865a8ef</Hash>
+    <Hash>21295e4bbb5cfa4d2e356b5938b1ea5c</Hash>
 </Codenesium>*/

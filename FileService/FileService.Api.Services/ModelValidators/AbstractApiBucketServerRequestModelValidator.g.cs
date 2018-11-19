@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,14 +28,14 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void ExternalIdRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => !x?.ExternalId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketServerRequestModel.ExternalId));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => !x?.ExternalId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketServerRequestModel.ExternalId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketServerRequestModel.Name));
-			this.RuleFor(x => x.Name).Length(0, 255);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.Name).Length(0, 255).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByExternalId(ApiBucketServerRequestModel model,  CancellationToken cancellationToken)
@@ -68,5 +69,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d5ff16a136294bc59e20dfc327172dc</Hash>
+    <Hash>e85d2fa15c46ee525837b4ab7e3df88f</Hash>
 </Codenesium>*/

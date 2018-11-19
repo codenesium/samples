@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/customers")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CustomerController : AbstractCustomerController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>43d0440b2785c600dc8db2123d1afa94</Hash>
+    <Hash>1a2d7cc794ab35439c70d6c590c52a6d</Hash>
 </Codenesium>*/

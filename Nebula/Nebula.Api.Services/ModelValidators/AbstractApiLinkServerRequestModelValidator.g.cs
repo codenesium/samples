@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void AssignedMachineIdRules()
 		{
-			this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachineByAssignedMachineId).When(x => !x?.AssignedMachineId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachineByAssignedMachineId).When(x => !x?.AssignedMachineId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ChainIdRules()
@@ -44,23 +45,23 @@ namespace NebulaNS.Api.Services
 
 		public virtual void DynamicParameterRules()
 		{
-			this.RuleFor(x => x.DynamicParameter).Length(0, 2147483647);
+			this.RuleFor(x => x.DynamicParameter).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ExternalIdRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => !x?.ExternalId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkServerRequestModel.ExternalId));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => !x?.ExternalId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkServerRequestModel.ExternalId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void LinkStatusIdRules()
 		{
-			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatusByLinkStatusId).When(x => !x?.LinkStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatusByLinkStatusId).When(x => !x?.LinkStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void OrderRules()
@@ -69,12 +70,12 @@ namespace NebulaNS.Api.Services
 
 		public virtual void ResponseRules()
 		{
-			this.RuleFor(x => x.Response).Length(0, 2147483647);
+			this.RuleFor(x => x.Response).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void StaticParameterRules()
 		{
-			this.RuleFor(x => x.StaticParameter).Length(0, 2147483647);
+			this.RuleFor(x => x.StaticParameter).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TimeoutInSecondRules()
@@ -112,5 +113,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bdd561cc1e5313413e24405299f1abdb</Hash>
+    <Hash>c6adcbd6a1b75c32a179a11724e94790</Hash>
 </Codenesium>*/

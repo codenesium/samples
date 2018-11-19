@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/linkTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class LinkTypeController : AbstractLinkTypeController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>58d2108404912082f33a6605be66d21c</Hash>
+    <Hash>53346c1aa90d2b1eb5c0e7405b9327d0</Hash>
 </Codenesium>*/

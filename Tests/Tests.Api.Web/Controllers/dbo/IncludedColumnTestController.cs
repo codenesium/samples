@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/includedColumnTests")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class IncludedColumnTestController : AbstractIncludedColumnTestController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7587fcde57da47b68857d32556a4e5ff</Hash>
+    <Hash>76de9c2b439860737124046f5f56168d</Hash>
 </Codenesium>*/

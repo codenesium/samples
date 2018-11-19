@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/locations")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class LocationController : AbstractLocationController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2c4758993d77060240f2ce2d28fba1ee</Hash>
+    <Hash>90db0c92d024d8bcb50606b67996b288</Hash>
 </Codenesium>*/

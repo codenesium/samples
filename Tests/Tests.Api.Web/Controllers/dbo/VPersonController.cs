@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/vPersons")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class VPersonController : AbstractVPersonController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>36d715184ab97ad1069fb5420445f643</Hash>
+    <Hash>ecdc271bc0b1d7a1ee6f1638d7396395</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/employees")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class EmployeeController : AbstractEmployeeController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0009f9ae92049adc3cc83d2400d156b1</Hash>
+    <Hash>07e35ac6473ee70be4f465d91ac9212c</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/shoppingCartItems")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ShoppingCartItemController : AbstractShoppingCartItemController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ec68278901754d5f96b59c18a14b8242</Hash>
+    <Hash>361442ccfff9ae7dc9aa7058989468a5</Hash>
 </Codenesium>*/

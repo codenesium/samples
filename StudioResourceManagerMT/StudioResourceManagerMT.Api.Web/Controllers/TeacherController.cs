@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/teachers")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TeacherController : AbstractTeacherController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c4f7acd56faebc38d0af6bf54b584d5f</Hash>
+    <Hash>cc68924bfe5932a49ec225bea7413831</Hash>
 </Codenesium>*/

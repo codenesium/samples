@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/passwords")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PasswordController : AbstractPasswordController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7c09be5150ddecf0f500b621235f7afa</Hash>
+    <Hash>204ac952fa65a54d6eacc6591b447283</Hash>
 </Codenesium>*/

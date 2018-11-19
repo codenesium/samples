@@ -17,7 +17,6 @@ namespace PetStoreNS.Api.Web
 	[Route("api/breeds")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BreedController : AbstractBreedController
 	{
@@ -42,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4cfe973ab80eaa3aa3db1f41ff25ece8</Hash>
+    <Hash>e18a9f3e5754973b20b5a00c8d4c7801</Hash>
 </Codenesium>*/

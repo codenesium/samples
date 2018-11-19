@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -55,12 +56,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void UnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.UnitMeasureCode).NotNull();
-			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
+			this.RuleFor(x => x.UnitMeasureCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>11cab824e025666635ad463c0adcc6ed</Hash>
+    <Hash>415ee56a1e395a4a9c747d6e7a7996f3</Hash>
 </Codenesium>*/

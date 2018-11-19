@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -43,14 +44,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void FileExtensionRules()
 		{
-			this.RuleFor(x => x.FileExtension).NotNull();
-			this.RuleFor(x => x.FileExtension).Length(0, 8);
+			this.RuleFor(x => x.FileExtension).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FileExtension).Length(0, 8).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FileNameRules()
 		{
-			this.RuleFor(x => x.FileName).NotNull();
-			this.RuleFor(x => x.FileName).Length(0, 400);
+			this.RuleFor(x => x.FileName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FileName).Length(0, 400).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FolderFlagRules()
@@ -67,8 +68,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RevisionRules()
 		{
-			this.RuleFor(x => x.Revision).NotNull();
-			this.RuleFor(x => x.Revision).Length(0, 5);
+			this.RuleFor(x => x.Revision).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Revision).Length(0, 5).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void StatusRules()
@@ -77,12 +78,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TitleRules()
 		{
-			this.RuleFor(x => x.Title).NotNull();
-			this.RuleFor(x => x.Title).Length(0, 50);
+			this.RuleFor(x => x.Title).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Title).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc73639af0024f948acdd6475217a1ef</Hash>
+    <Hash>0b01f9a0ca80871f5830cce10df09ea0</Hash>
 </Codenesium>*/

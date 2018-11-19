@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/quoteTweets")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class QuoteTweetController : AbstractQuoteTweetController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ec9e15cc3931f724f03104754adce94d</Hash>
+    <Hash>5731862c519871d4f3863604b5dc7f95</Hash>
 </Codenesium>*/

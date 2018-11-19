@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var model = new ApiUserServerRequestModel();
@@ -87,12 +88,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			var model = new ApiUserServerRequestModel();
+			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
+
+			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var model = new ApiUserServerRequestModel();
@@ -107,12 +129,34 @@ namespace StackOverflowNS.Api.Services.Tests
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<User>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			var model = new ApiUserServerRequestModel();
+			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
+
+			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var model = new ApiUserServerRequestModel();
@@ -126,12 +170,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			var model = new ApiUserServerRequestModel();
+			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc9e8e5042ef4563a3c6497591057779</Hash>
+    <Hash>e61415c8150e56282cf527d2d1db13e6</Hash>
 </Codenesium>*/

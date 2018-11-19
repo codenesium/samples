@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/sales")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SaleController : AbstractSaleController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>638180eb525b6f7c77de1947dd283a35</Hash>
+    <Hash>0eee5bd2b0681ae3816c29596df9307a</Hash>
 </Codenesium>*/

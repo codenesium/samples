@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -43,8 +44,8 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void DisplayNameRules()
 		{
-			this.RuleFor(x => x.DisplayName).NotNull();
-			this.RuleFor(x => x.DisplayName).Length(0, 40);
+			this.RuleFor(x => x.DisplayName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.DisplayName).Length(0, 40).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DownVoteRules()
@@ -53,7 +54,7 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void EmailHashRules()
 		{
-			this.RuleFor(x => x.EmailHash).Length(0, 40);
+			this.RuleFor(x => x.EmailHash).Length(0, 40).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastAccessDateRules()
@@ -62,7 +63,7 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void LocationRules()
 		{
-			this.RuleFor(x => x.Location).Length(0, 100);
+			this.RuleFor(x => x.Location).Length(0, 100).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ReputationRules()
@@ -79,11 +80,11 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void WebsiteUrlRules()
 		{
-			this.RuleFor(x => x.WebsiteUrl).Length(0, 200);
+			this.RuleFor(x => x.WebsiteUrl).Length(0, 200).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ed9b66993ffa115339cbbabfffdfa61</Hash>
+    <Hash>261b08838f0df553a897dbf741b56fa7</Hash>
 </Codenesium>*/

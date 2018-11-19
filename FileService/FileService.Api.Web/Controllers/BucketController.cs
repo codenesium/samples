@@ -17,7 +17,6 @@ namespace FileServiceNS.Api.Web
 	[Route("api/buckets")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BucketController : AbstractBucketController
 	{
@@ -42,5 +41,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7304ae1458fe4da67e9a6cafe1979ca6</Hash>
+    <Hash>0e53df345b135700a399a8243de756b6</Hash>
 </Codenesium>*/

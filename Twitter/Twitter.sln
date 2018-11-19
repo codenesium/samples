@@ -35,7 +35,9 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Twitter.Api.Client.Tests", 
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Twitter.Api.Contracts.Tests", "Twitter.Api.Contracts.Tests/Twitter.Api.Contracts.Tests.csproj", "{8346f9b6-60ff-4979-b214-0ab7c090dcc5}"
 	EndProject
 	
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Twitter.Api.TypeScript", "Twitter.Api.TypeScript/Twitter.Api.TypeScript.csproj", "{64d85b0e-5241-4120-a0a4-405ce6c47a49}"
+	EndProject
+	
 
 
 Global
@@ -96,6 +98,10 @@ Global
 		{8346f9b6-60ff-4979-b214-0ab7c090dcc5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8346f9b6-60ff-4979-b214-0ab7c090dcc5}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {64d85b0e-5241-4120-a0a4-405ce6c47a49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64d85b0e-5241-4120-a0a4-405ce6c47a49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64d85b0e-5241-4120-a0a4-405ce6c47a49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64d85b0e-5241-4120-a0a4-405ce6c47a49}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 		
 		

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -27,12 +28,12 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ContentRules()
 		{
-			this.RuleFor(x => x.Content).Length(0, 128);
+			this.RuleFor(x => x.Content).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void SenderUserIdRules()
 		{
-			this.RuleFor(x => x.SenderUserId).MustAsync(this.BeValidUserBySenderUserId).When(x => !x?.SenderUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SenderUserId).MustAsync(this.BeValidUserBySenderUserId).When(x => !x?.SenderUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidUserBySenderUserId(int? id,  CancellationToken cancellationToken)
@@ -45,5 +46,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f48aa3a03b2dc5df4b397a6fb75af388</Hash>
+    <Hash>bbf4eece534e8d13e96d0d1480e9df51</Hash>
 </Codenesium>*/

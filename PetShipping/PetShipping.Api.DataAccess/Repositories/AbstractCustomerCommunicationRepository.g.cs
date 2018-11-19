@@ -76,21 +76,25 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_CustomerCommunication_customerId.
 		public async virtual Task<List<CustomerCommunication>> ByCustomerId(int customerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.CustomerId == customerId, limit, offset);
 		}
 
+		// Non-unique constraint IX_CustomerCommunication_employeeId.
 		public async virtual Task<List<CustomerCommunication>> ByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.EmployeeId == employeeId, limit, offset);
 		}
 
+		// Foreign key reference to table Customer via customerId.
 		public async virtual Task<Customer> CustomerByCustomerId(int customerId)
 		{
 			return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.Id == customerId);
 		}
 
+		// Foreign key reference to table Employee via employeeId.
 		public async virtual Task<Employee> EmployeeByEmployeeId(int employeeId)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
@@ -120,5 +124,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ed70fac230d1a6891cb679182eb81ce</Hash>
+    <Hash>d8d3be8ce4f5e5766e5ecdbaa8eff88d</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -85,7 +86,7 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var model = new ApiLocationServerRequestModel();
@@ -103,12 +104,37 @@ namespace TwitterNS.Api.Services.Tests
 			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Location>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ILocationRepository>();
+			var model = new ApiLocationServerRequestModel();
+			var validatorMock = new Mock<IApiLocationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
+			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                                  mock.DALMapperMockFactory.DALUserMapperMock);
+
+			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var model = new ApiLocationServerRequestModel();
@@ -127,12 +153,38 @@ namespace TwitterNS.Api.Services.Tests
 			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Location>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ILocationRepository>();
+			var model = new ApiLocationServerRequestModel();
+			var validatorMock = new Mock<IApiLocationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Location()));
+			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
+			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                                  mock.DALMapperMockFactory.DALUserMapperMock);
+
+			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var model = new ApiLocationServerRequestModel();
@@ -150,8 +202,33 @@ namespace TwitterNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ILocationRepository>();
+			var model = new ApiLocationServerRequestModel();
+			var validatorMock = new Mock<IApiLocationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
+			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                                  mock.DALMapperMockFactory.DALUserMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -245,5 +322,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>df0d6f4a0a0abb805d2e9fdabc7b88e0</Hash>
+    <Hash>6aeb46ac446ea2920aecc74b8dbaf1e9</Hash>
 </Codenesium>*/

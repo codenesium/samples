@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var aWBuildVersionItem1 = new AWBuildVersion();
 			aWBuildVersionItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -226,5 +226,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7215f493b82e7c0e4646a0b21a0729a3</Hash>
+    <Hash>7d5cff6e64d1f986cf8c40be48166560</Hash>
 </Codenesium>*/

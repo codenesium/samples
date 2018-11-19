@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
 			var model = new ApiProductReviewServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiProductReviewServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductReviewServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductReview>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductReviewRepository>();
+			var model = new ApiProductReviewServerRequestModel();
+			var validatorMock = new Mock<IApiProductReviewServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductReviewServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductReviewService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
+			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
+
+			CreateResponse<ApiProductReviewServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductReviewServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
 			var model = new ApiProductReviewServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiProductReviewServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductReview>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductReviewRepository>();
+			var model = new ApiProductReviewServerRequestModel();
+			var validatorMock = new Mock<IApiProductReviewServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductReview()));
+			var service = new ProductReviewService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
+			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
+
+			UpdateResponse<ApiProductReviewServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductReviewServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
 			var model = new ApiProductReviewServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductReviewRepository>();
+			var model = new ApiProductReviewServerRequestModel();
+			var validatorMock = new Mock<IApiProductReviewServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductReviewService(mock.LoggerMock.Object,
+			                                       mock.RepositoryMock.Object,
+			                                       validatorMock.Object,
+			                                       mock.BOLMapperMockFactory.BOLProductReviewMapperMock,
+			                                       mock.DALMapperMockFactory.DALProductReviewMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>42bcd351928f3d84544b2afcd09a1fb4</Hash>
+    <Hash>5dd4d36073e97f5bd3f6e9eff8da8d93</Hash>
 </Codenesium>*/

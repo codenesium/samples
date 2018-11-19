@@ -16,7 +16,7 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var directTweetItem1 = new DirectTweet();
 			directTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
@@ -68,5 +68,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>42c124473da4ebf2c64fc73d5af62a61</Hash>
+    <Hash>5886cb9354c703fe1a7563871f81b7e4</Hash>
 </Codenesium>*/

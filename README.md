@@ -8,6 +8,9 @@ https://www.codenesium.com
 
 [![Build Status](https://travis-ci.org/codenesium/samples.svg?branch=master)](https://travis-ci.org/codenesium/samples)
 
+[![Build Status](https://dev.azure.com/codenesium0978/Samples/_apis/build/status/Samples-ASP.NET%20Core-CI
+)
+
 #### StudioResourceManager
 CRM for a a music or dance studio.
 This project is multi-tenant.

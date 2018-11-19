@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/creditCards")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CreditCardController : AbstractCreditCardController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5c914184a7d08ae14264772cfa0491f2</Hash>
+    <Hash>ff7cc26b4bcbad463899b41501ca8bf9</Hash>
 </Codenesium>*/

@@ -83,6 +83,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public void UpdateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public void UpdateResponse_No_Error()
 		{
 			var failures = new List<ValidationFailure>();
@@ -112,5 +124,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>173168fc9317dd44d291ab2952a59b5b</Hash>
+    <Hash>23ed68f96a439e7684803c0531789720</Hash>
 </Codenesium>*/

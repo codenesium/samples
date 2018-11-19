@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/teams")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TeamController : AbstractTeamController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>053d5e2cc6c5d8a0e957661c67acea3a</Hash>
+    <Hash>648fe102cd8e0fe97907d3220597f138</Hash>
 </Codenesium>*/

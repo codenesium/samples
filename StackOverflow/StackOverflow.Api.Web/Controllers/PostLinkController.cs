@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/postLinks")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PostLinkController : AbstractPostLinkController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5238ab02d71fe2442f74058a8d4fbe27</Hash>
+    <Hash>f903aeb19bd47c7ac81b26519d1186bd</Hash>
 </Codenesium>*/

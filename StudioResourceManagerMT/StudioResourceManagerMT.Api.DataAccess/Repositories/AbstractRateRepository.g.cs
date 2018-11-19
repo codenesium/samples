@@ -76,21 +76,25 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Rate_teacherId.
 		public async virtual Task<List<Rate>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TeacherId == teacherId, limit, offset);
 		}
 
+		// Non-unique constraint IX_Rate_teacherSkillId.
 		public async virtual Task<List<Rate>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.TeacherSkillId == teacherSkillId, limit, offset);
 		}
 
+		// Foreign key reference to table Teacher via teacherId.
 		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
 		{
 			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
 		}
 
+		// Foreign key reference to table TeacherSkill via teacherSkillId.
 		public async virtual Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId)
 		{
 			return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
@@ -120,5 +124,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7be96d1fa5c4292339b7767b087042ad</Hash>
+    <Hash>61ed419756179861097edc86dce113d5</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -31,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CurrencyRateDateRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.CurrencyRateDate));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.CurrencyRateDate)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void EndOfDayRateRules()
@@ -40,10 +41,10 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void FromCurrencyCodeRules()
 		{
-			this.RuleFor(x => x.FromCurrencyCode).NotNull();
-			this.RuleFor(x => x.FromCurrencyCode).MustAsync(this.BeValidCurrencyByFromCurrencyCode).When(x => !x?.FromCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.FromCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.FromCurrencyCode));
-			this.RuleFor(x => x.FromCurrencyCode).Length(0, 3);
+			this.RuleFor(x => x.FromCurrencyCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FromCurrencyCode).MustAsync(this.BeValidCurrencyByFromCurrencyCode).When(x => !x?.FromCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.FromCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.FromCurrencyCode)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.FromCurrencyCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -52,10 +53,10 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ToCurrencyCodeRules()
 		{
-			this.RuleFor(x => x.ToCurrencyCode).NotNull();
-			this.RuleFor(x => x.ToCurrencyCode).MustAsync(this.BeValidCurrencyByToCurrencyCode).When(x => !x?.ToCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.ToCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.ToCurrencyCode));
-			this.RuleFor(x => x.ToCurrencyCode).Length(0, 3);
+			this.RuleFor(x => x.ToCurrencyCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.ToCurrencyCode).MustAsync(this.BeValidCurrencyByToCurrencyCode).When(x => !x?.ToCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => !x?.ToCurrencyCode.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.ToCurrencyCode)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.ToCurrencyCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidCurrencyByFromCurrencyCode(string id,  CancellationToken cancellationToken)
@@ -89,5 +90,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04d1b6558e5f2f4d1e10fc28bcdea24d</Hash>
+    <Hash>6eab39f6056a68c9a8785d43088b6acc</Hash>
 </Codenesium>*/

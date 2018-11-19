@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			var model = new ApiOrganizationServerRequestModel();
@@ -95,12 +96,35 @@ namespace NebulaNS.Api.Services.Tests
 			CreateResponse<ApiOrganizationServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Organization>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IOrganizationRepository>();
+			var model = new ApiOrganizationServerRequestModel();
+			var validatorMock = new Mock<IApiOrganizationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
+			                                      mock.DALMapperMockFactory.DALOrganizationMapperMock,
+			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
+
+			CreateResponse<ApiOrganizationServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			var model = new ApiOrganizationServerRequestModel();
@@ -117,12 +141,36 @@ namespace NebulaNS.Api.Services.Tests
 			UpdateResponse<ApiOrganizationServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Organization>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IOrganizationRepository>();
+			var model = new ApiOrganizationServerRequestModel();
+			var validatorMock = new Mock<IApiOrganizationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
+			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
+			                                      mock.DALMapperMockFactory.DALOrganizationMapperMock,
+			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
+
+			UpdateResponse<ApiOrganizationServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			var model = new ApiOrganizationServerRequestModel();
@@ -138,8 +186,31 @@ namespace NebulaNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IOrganizationRepository>();
+			var model = new ApiOrganizationServerRequestModel();
+			var validatorMock = new Mock<IApiOrganizationServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
+			                                      mock.DALMapperMockFactory.DALOrganizationMapperMock,
+			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -224,5 +295,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>44ad72bf93e8e8c0b9c4a254a70c2e44</Hash>
+    <Hash>5c2b59a3ed3b894a80811b3d6de0259b</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace Codenesium.Foundation.CommonMVC
     /// Simple controller that tests that you're able to connect to the database.
     /// </summary>
     [Route("api/apihealth")]
+	[AllowAnonymous]
     public class ApiHealthController : AbstractApiController
     {
         private DbContext context;

@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/users")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class UserController : AbstractUserController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f2e0d9474cd6cbf895f1a56be2cfca07</Hash>
+    <Hash>7df8e0504aee010b04db1f6f0bb3a5e2</Hash>
 </Codenesium>*/

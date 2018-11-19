@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
@@ -27,19 +28,19 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void Address1Rules()
 		{
-			this.RuleFor(x => x.Address1).NotNull();
-			this.RuleFor(x => x.Address1).Length(0, 128);
+			this.RuleFor(x => x.Address1).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Address1).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void Address2Rules()
 		{
-			this.RuleFor(x => x.Address2).NotNull();
-			this.RuleFor(x => x.Address2).Length(0, 128);
+			this.RuleFor(x => x.Address2).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Address2).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CityIdRules()
 		{
-			this.RuleFor(x => x.CityId).MustAsync(this.BeValidCityByCityId).When(x => !x?.CityId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CityId).MustAsync(this.BeValidCityByCityId).When(x => !x?.CityId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void DateRules()
@@ -48,8 +49,8 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 2147483647);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void EndDateRules()
@@ -58,14 +59,14 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void FacebookRules()
 		{
-			this.RuleFor(x => x.Facebook).NotNull();
-			this.RuleFor(x => x.Facebook).Length(0, 128);
+			this.RuleFor(x => x.Facebook).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Facebook).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void StartDateRules()
@@ -74,8 +75,8 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void WebsiteRules()
 		{
-			this.RuleFor(x => x.Website).NotNull();
-			this.RuleFor(x => x.Website).Length(0, 128);
+			this.RuleFor(x => x.Website).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Website).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidCityByCityId(int id,  CancellationToken cancellationToken)
@@ -88,5 +89,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9db6f82be2778ca22c8360339ee94eb</Hash>
+    <Hash>7bda68072c8c826fd7aa75e61912a301</Hash>
 </Codenesium>*/

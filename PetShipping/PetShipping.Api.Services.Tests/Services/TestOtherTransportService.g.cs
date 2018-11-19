@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOtherTransportRepository>();
 			var model = new ApiOtherTransportServerRequestModel();
@@ -87,12 +88,33 @@ namespace PetShippingNS.Api.Services.Tests
 			CreateResponse<ApiOtherTransportServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOtherTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<OtherTransport>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportServerRequestModel();
+			var validatorMock = new Mock<IApiOtherTransportServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOtherTransportServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+
+			CreateResponse<ApiOtherTransportServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOtherTransportServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOtherTransportRepository>();
 			var model = new ApiOtherTransportServerRequestModel();
@@ -107,12 +129,34 @@ namespace PetShippingNS.Api.Services.Tests
 			UpdateResponse<ApiOtherTransportServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOtherTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<OtherTransport>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportServerRequestModel();
+			var validatorMock = new Mock<IApiOtherTransportServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOtherTransportServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new OtherTransport()));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+
+			UpdateResponse<ApiOtherTransportServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOtherTransportServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IOtherTransportRepository>();
 			var model = new ApiOtherTransportServerRequestModel();
@@ -126,12 +170,33 @@ namespace PetShippingNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IOtherTransportRepository>();
+			var model = new ApiOtherTransportServerRequestModel();
+			var validatorMock = new Mock<IApiOtherTransportServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new OtherTransportService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
+			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f89852749beb3125b15bcd49dd12d625</Hash>
+    <Hash>e937098f546d44f856b822d58b428906</Hash>
 </Codenesium>*/

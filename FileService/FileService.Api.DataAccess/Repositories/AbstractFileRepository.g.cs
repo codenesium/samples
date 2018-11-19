@@ -76,11 +76,13 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Bucket via bucketId.
 		public async virtual Task<Bucket> BucketByBucketId(int? bucketId)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Id == bucketId);
 		}
 
+		// Foreign key reference to table FileType via fileTypeId.
 		public async virtual Task<FileType> FileTypeByFileTypeId(int fileTypeId)
 		{
 			return await this.Context.Set<FileType>().SingleOrDefaultAsync(x => x.Id == fileTypeId);
@@ -110,5 +112,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>31a85c7b5be024563df437b039de190a</Hash>
+    <Hash>ebd21a7020cb40b61662b43585aa50e0</Hash>
 </Codenesium>*/

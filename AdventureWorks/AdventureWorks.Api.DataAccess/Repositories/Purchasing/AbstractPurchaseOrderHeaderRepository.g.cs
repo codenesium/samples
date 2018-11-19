@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_PurchaseOrderHeader_EmployeeID.
 		public async virtual Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.EmployeeID == employeeID, limit, offset);
 		}
 
+		// Non-unique constraint IX_PurchaseOrderHeader_VendorID.
 		public async virtual Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.VendorID == vendorID, limit, offset);
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>845605ab4f5a2f9f856d8cf0c5b70bcb</Hash>
+    <Hash>125c8b4b584855eea0a2b1aabbda2315</Hash>
 </Codenesium>*/

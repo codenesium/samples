@@ -76,6 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Transaction via transactionStatusId.
 		public async virtual Task<List<Transaction>> TransactionsByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Transaction>().Where(x => x.TransactionStatusId == transactionStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Transaction>();
@@ -105,5 +106,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81a543b0e58bf2d88aff9d9b49ff0d32</Hash>
+    <Hash>2641cbaacdfd2fbf076fafd0f17730a1</Hash>
 </Codenesium>*/

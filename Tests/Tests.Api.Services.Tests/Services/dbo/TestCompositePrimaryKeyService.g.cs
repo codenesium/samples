@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TestsNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
 			var model = new ApiCompositePrimaryKeyServerRequestModel();
@@ -87,12 +88,33 @@ namespace TestsNS.Api.Services.Tests
 			CreateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CompositePrimaryKey>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
+			var validatorMock = new Mock<IApiCompositePrimaryKeyServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.RepositoryMock.Object,
+			                                             validatorMock.Object,
+			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
+			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
+
+			CreateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
 			var model = new ApiCompositePrimaryKeyServerRequestModel();
@@ -107,12 +129,34 @@ namespace TestsNS.Api.Services.Tests
 			UpdateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CompositePrimaryKey>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
+			var validatorMock = new Mock<IApiCompositePrimaryKeyServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CompositePrimaryKey()));
+			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.RepositoryMock.Object,
+			                                             validatorMock.Object,
+			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
+			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
+
+			UpdateResponse<ApiCompositePrimaryKeyServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
 			var model = new ApiCompositePrimaryKeyServerRequestModel();
@@ -126,12 +170,33 @@ namespace TestsNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
+			var model = new ApiCompositePrimaryKeyServerRequestModel();
+			var validatorMock = new Mock<IApiCompositePrimaryKeyServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.RepositoryMock.Object,
+			                                             validatorMock.Object,
+			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
+			                                             mock.DALMapperMockFactory.DALCompositePrimaryKeyMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>191d39e5133b5e83725048933d5fa826</Hash>
+    <Hash>cde52433558987f1bbd7ddcebbfe4b36</Hash>
 </Codenesium>*/

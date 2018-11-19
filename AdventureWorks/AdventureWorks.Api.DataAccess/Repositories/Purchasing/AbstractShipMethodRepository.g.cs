@@ -76,16 +76,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ShipMethod_Name.
 		public async virtual Task<ShipMethod> ByName(string name)
 		{
 			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_ShipMethod_rowguid.
 		public async virtual Task<ShipMethod> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Foreign key reference to this table PurchaseOrderHeader via shipMethodID.
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
@@ -115,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cc5a63c63a3be59e9ccd8e27f20b04e</Hash>
+    <Hash>72029650f73c1eacbdb61cccb37173cd</Hash>
 </Codenesium>*/

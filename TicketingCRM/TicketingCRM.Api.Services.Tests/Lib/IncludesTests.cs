@@ -83,6 +83,18 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public void UpdateResponse_Error()
+		{
+			var failures = new List<ValidationFailure>();
+			failures.Add(new ValidationFailure("field1", "error"));
+			var result = new ValidationResult(failures);
+			UpdateResponse<int> response = ValidationResponseFactory<int>.UpdateResponse(result);
+
+			response.Success.Should().BeFalse();
+			response.ValidationErrors.Count.Should().Be(1);
+		}
+
+		[Fact]
 		public void UpdateResponse_No_Error()
 		{
 			var failures = new List<ValidationFailure>();
@@ -112,5 +124,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d017b1f1b0374c008f3bdc0404208aaf</Hash>
+    <Hash>8d2907f10fca493efd318594aed426d8</Hash>
 </Codenesium>*/

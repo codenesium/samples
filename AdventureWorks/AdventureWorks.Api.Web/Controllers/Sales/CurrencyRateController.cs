@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/currencyRates")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CurrencyRateController : AbstractCurrencyRateController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8b00c5282cc633cfaee16b3e1f6f278f</Hash>
+    <Hash>a41be67c0b7a8a897310919af65e73c2</Hash>
 </Codenesium>*/

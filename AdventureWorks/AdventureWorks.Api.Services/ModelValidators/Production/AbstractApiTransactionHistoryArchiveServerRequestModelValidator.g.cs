@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -55,12 +56,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TransactionTypeRules()
 		{
-			this.RuleFor(x => x.TransactionType).NotNull();
-			this.RuleFor(x => x.TransactionType).Length(0, 1);
+			this.RuleFor(x => x.TransactionType).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.TransactionType).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0a098a4ea19165334005b3205d365780</Hash>
+    <Hash>ce6ccf7348c2372552d57d5d5354e3f3</Hash>
 </Codenesium>*/

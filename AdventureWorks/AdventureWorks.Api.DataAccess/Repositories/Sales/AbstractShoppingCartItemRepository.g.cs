@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_ShoppingCartItem_ShoppingCartID_ProductID.
 		public async virtual Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID, limit, offset);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b1b297de04e5d87b37b7dcd912a7846</Hash>
+    <Hash>78aa92946dce2302d0086ba5f3f296b0</Hash>
 </Codenesium>*/

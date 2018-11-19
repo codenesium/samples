@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/shipMethods")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ShipMethodController : AbstractShipMethodController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bf3392fdb3d5de051136ae62a83e18fc</Hash>
+    <Hash>d1b65f1275afd8be68abf68a8bf4d77e</Hash>
 </Codenesium>*/

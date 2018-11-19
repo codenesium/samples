@@ -76,26 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Person_rowguid.
 		public async virtual Task<Person> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Person>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Non-unique constraint IX_Person_LastName_FirstName_MiddleName.
 		public async virtual Task<List<Person>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.LastName == lastName && x.FirstName == firstName && x.MiddleName == middleName, limit, offset);
 		}
 
+		// Non-unique constraint PXML_Person_AddContact.
 		public async virtual Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.AdditionalContactInfo == additionalContactInfo, limit, offset);
 		}
 
+		// Non-unique constraint PXML_Person_Demographics.
 		public async virtual Task<List<Person>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.Demographic == demographic, limit, offset);
 		}
 
+		// Foreign key reference to this table Password via businessEntityID.
 		public async virtual Task<List<Password>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Password>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
@@ -125,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>25c99e597bb847e354f257035ef5454a</Hash>
+    <Hash>e991ff9e6c28a9ad67769481239b1800</Hash>
 </Codenesium>*/

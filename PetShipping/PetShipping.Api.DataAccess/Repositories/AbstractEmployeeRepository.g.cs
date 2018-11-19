@@ -76,16 +76,19 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table PipelineStep via shipperId.
 		public async virtual Task<List<PipelineStep>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStep>().Where(x => x.ShipperId == shipperId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStep>();
 		}
 
+		// Foreign key reference to this table PipelineStepNote via employeeId.
 		public async virtual Task<List<PipelineStepNote>> PipelineStepNotesByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepNote>().Where(x => x.EmployeeId == employeeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
 		}
 
+		// Foreign key reference to this table CustomerCommunication via employeeId.
 		public async virtual Task<List<CustomerCommunication>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CustomerCommunication>().Where(x => x.EmployeeId == employeeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CustomerCommunication>();
@@ -115,5 +118,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8f3f9b9f7114f5ad3eea315b7f3af7ee</Hash>
+    <Hash>e3a018149e63d3c017e9018b03553140</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/admins")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class AdminController : AbstractAdminController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7440bc8583d282eaff557a3bb1f0db91</Hash>
+    <Hash>f7920982e62d97910912dcf2a4fcb5e6</Hash>
 </Codenesium>*/

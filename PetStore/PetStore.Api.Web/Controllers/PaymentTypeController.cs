@@ -17,7 +17,6 @@ namespace PetStoreNS.Api.Web
 	[Route("api/paymentTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PaymentTypeController : AbstractPaymentTypeController
 	{
@@ -42,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c2c69d899719200aec3239066d46c41c</Hash>
+    <Hash>858ef7fb0215e776ab08973cfe4afb66</Hash>
 </Codenesium>*/

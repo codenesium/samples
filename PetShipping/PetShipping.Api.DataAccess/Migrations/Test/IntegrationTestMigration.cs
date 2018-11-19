@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>253e620809927fc58b277930a19aa3fe</Hash>
+    <Hash>e183baed22159d67cdf1dceddf5216ea</Hash>
 </Codenesium>*/

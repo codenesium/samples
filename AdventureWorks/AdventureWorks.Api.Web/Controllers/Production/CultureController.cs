@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/cultures")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CultureController : AbstractCultureController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c52a258715d6964469a876f2f05f16f9</Hash>
+    <Hash>41a993421137178bd30f2c116b20de19</Hash>
 </Codenesium>*/

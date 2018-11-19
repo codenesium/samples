@@ -76,16 +76,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Currency_Name.
 		public async virtual Task<Currency> ByName(string name)
 		{
 			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table CurrencyRate via fromCurrencyCode.
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CurrencyRate>().Where(x => x.FromCurrencyCode == fromCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
 		}
 
+		// Foreign key reference to this table CurrencyRate via toCurrencyCode.
 		public async virtual Task<List<CurrencyRate>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CurrencyRate>().Where(x => x.ToCurrencyCode == toCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
@@ -115,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f3076e80a0d47590d1c74b830adc5a9</Hash>
+    <Hash>c796ea1c48e6926f5c9885383a1f5e3e</Hash>
 </Codenesium>*/

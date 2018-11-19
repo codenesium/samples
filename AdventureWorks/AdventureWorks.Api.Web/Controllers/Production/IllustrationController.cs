@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/illustrations")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class IllustrationController : AbstractIllustrationController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f663a1d00367d00a93f0215eea6bfdae</Hash>
+    <Hash>0d07e54c84ad174a6d8f76ad7a019793</Hash>
 </Codenesium>*/

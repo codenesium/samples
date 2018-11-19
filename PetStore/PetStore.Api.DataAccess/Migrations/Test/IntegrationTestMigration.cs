@@ -14,13 +14,13 @@ namespace PetStoreNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4bd7b1f6a09decbf52927f2855768b2d</Hash>
+    <Hash>6f4e3a39afea9c3b3c4ca89a0ea83959</Hash>
 </Codenesium>*/

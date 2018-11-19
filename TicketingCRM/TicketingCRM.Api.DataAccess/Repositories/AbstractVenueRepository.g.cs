@@ -76,21 +76,25 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_venue_adminId.
 		public async virtual Task<List<Venue>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.AdminId == adminId, limit, offset);
 		}
 
+		// Non-unique constraint IX_venue_provinceId.
 		public async virtual Task<List<Venue>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProvinceId == provinceId, limit, offset);
 		}
 
+		// Foreign key reference to table Admin via adminId.
 		public async virtual Task<Admin> AdminByAdminId(int adminId)
 		{
 			return await this.Context.Set<Admin>().SingleOrDefaultAsync(x => x.Id == adminId);
 		}
 
+		// Foreign key reference to table Province via provinceId.
 		public async virtual Task<Province> ProvinceByProvinceId(int provinceId)
 		{
 			return await this.Context.Set<Province>().SingleOrDefaultAsync(x => x.Id == provinceId);
@@ -120,5 +124,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f8f7d6e1f0333456a489922d24e543f</Hash>
+    <Hash>a4462e534d60cb0466dc4b7756be2f63</Hash>
 </Codenesium>*/

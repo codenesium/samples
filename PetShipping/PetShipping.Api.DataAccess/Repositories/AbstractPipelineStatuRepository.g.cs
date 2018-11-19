@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Pipeline via pipelineStatusId.
 		public async virtual Task<List<Pipeline>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Pipeline>().Where(x => x.PipelineStatusId == pipelineStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pipeline>();
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a5293e09cf11d91eb7a7b727ab087ee</Hash>
+    <Hash>f2e48c9c8984bdba41c5ce39c5dbfcff</Hash>
 </Codenesium>*/

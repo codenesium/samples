@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -91,7 +92,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			var model = new ApiSalesTerritoryServerRequestModel();
@@ -111,12 +112,39 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiSalesTerritoryServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SalesTerritory>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
+			var model = new ApiSalesTerritoryServerRequestModel();
+			var validatorMock = new Mock<IApiSalesTerritoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesTerritoryMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                        mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesPersonMapperMock);
+
+			CreateResponse<ApiSalesTerritoryServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			var model = new ApiSalesTerritoryServerRequestModel();
@@ -137,12 +165,40 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiSalesTerritoryServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SalesTerritory>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
+			var model = new ApiSalesTerritoryServerRequestModel();
+			var validatorMock = new Mock<IApiSalesTerritoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
+			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesTerritoryMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                        mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesPersonMapperMock);
+
+			UpdateResponse<ApiSalesTerritoryServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			var model = new ApiSalesTerritoryServerRequestModel();
@@ -162,8 +218,35 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
+			var model = new ApiSalesTerritoryServerRequestModel();
+			var validatorMock = new Mock<IApiSalesTerritoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        validatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesTerritoryMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
+			                                        mock.DALMapperMockFactory.DALCustomerMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
+			                                        mock.BOLMapperMockFactory.BOLSalesPersonMapperMock,
+			                                        mock.DALMapperMockFactory.DALSalesPersonMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -407,5 +490,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>83302b3c49de79fe52292b3fb2816346</Hash>
+    <Hash>f6b2786f40c6013f9661bdf2a4b14a5a</Hash>
 </Codenesium>*/

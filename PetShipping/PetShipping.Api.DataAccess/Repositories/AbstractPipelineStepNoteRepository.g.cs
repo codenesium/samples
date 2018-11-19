@@ -76,11 +76,13 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Employee via employeeId.
 		public async virtual Task<Employee> EmployeeByEmployeeId(int employeeId)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
 		}
 
+		// Foreign key reference to table PipelineStep via pipelineStepId.
 		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
 			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
@@ -110,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d53b947819ba8ea2a5192917fa042f6</Hash>
+    <Hash>d8d4d909f248e7cfde3c61eb78c09274</Hash>
 </Codenesium>*/

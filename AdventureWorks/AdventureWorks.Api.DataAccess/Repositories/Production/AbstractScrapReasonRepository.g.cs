@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ScrapReason_Name.
 		public async virtual Task<ScrapReason> ByName(string name)
 		{
 			return await this.Context.Set<ScrapReason>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table WorkOrder via scrapReasonID.
 		public async virtual Task<List<WorkOrder>> WorkOrdersByScrapReasonID(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrder>().Where(x => x.ScrapReasonID == scrapReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9789e77ec43830f2573e5e330dd1469d</Hash>
+    <Hash>c65d9b6f239361da6dc7e49eb081cf59</Hash>
 </Codenesium>*/

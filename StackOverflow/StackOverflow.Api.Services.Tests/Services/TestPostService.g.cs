@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
 			var model = new ApiPostServerRequestModel();
@@ -87,12 +88,33 @@ namespace StackOverflowNS.Api.Services.Tests
 			CreateResponse<ApiPostServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Post>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IPostRepository>();
+			var model = new ApiPostServerRequestModel();
+			var validatorMock = new Mock<IApiPostServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PostService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
+			                              mock.DALMapperMockFactory.DALPostMapperMock);
+
+			CreateResponse<ApiPostServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
 			var model = new ApiPostServerRequestModel();
@@ -107,12 +129,34 @@ namespace StackOverflowNS.Api.Services.Tests
 			UpdateResponse<ApiPostServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Post>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IPostRepository>();
+			var model = new ApiPostServerRequestModel();
+			var validatorMock = new Mock<IApiPostServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Post()));
+			var service = new PostService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
+			                              mock.DALMapperMockFactory.DALPostMapperMock);
+
+			UpdateResponse<ApiPostServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPostRepository>();
 			var model = new ApiPostServerRequestModel();
@@ -126,8 +170,29 @@ namespace StackOverflowNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PostModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IPostRepository>();
+			var model = new ApiPostServerRequestModel();
+			var validatorMock = new Mock<IApiPostServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PostService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLPostMapperMock,
+			                              mock.DALMapperMockFactory.DALPostMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f569544c64c6dd4a1adf4d5dc6880c9</Hash>
+    <Hash>5bd0e2e48064ae5e0cfe1a00a19547b8</Hash>
 </Codenesium>*/

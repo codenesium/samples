@@ -57,12 +57,12 @@ namespace TwitterNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDirectTweetClientResponseModel>> > DirectTweetBulkInsertAsync(List<ApiDirectTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDirectTweetClientResponseModel>>> DirectTweetBulkInsertAsync(List<ApiDirectTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/DirectTweets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDirectTweetClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDirectTweetClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDirectTweetClientResponseModel>> DirectTweetCreateAsync(ApiDirectTweetClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -130,12 +130,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDirectTweetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiFollowerClientResponseModel>> > FollowerBulkInsertAsync(List<ApiFollowerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiFollowerClientResponseModel>>> FollowerBulkInsertAsync(List<ApiFollowerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Followers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFollowerClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFollowerClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFollowerClientResponseModel>> FollowerCreateAsync(ApiFollowerClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -211,12 +211,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFollowerClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiFollowingClientResponseModel>> > FollowingBulkInsertAsync(List<ApiFollowingClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiFollowingClientResponseModel>>> FollowingBulkInsertAsync(List<ApiFollowingClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Followings/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFollowingClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFollowingClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFollowingClientResponseModel>> FollowingCreateAsync(ApiFollowingClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -276,12 +276,12 @@ namespace TwitterNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLocationClientResponseModel>> > LocationBulkInsertAsync(List<ApiLocationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLocationClientResponseModel>>> LocationBulkInsertAsync(List<ApiLocationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Locations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLocationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLocationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLocationClientResponseModel>> LocationCreateAsync(ApiLocationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -357,12 +357,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiUserClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiMessageClientResponseModel>> > MessageBulkInsertAsync(List<ApiMessageClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiMessageClientResponseModel>>> MessageBulkInsertAsync(List<ApiMessageClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Messages/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMessageClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMessageClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiMessageClientResponseModel>> MessageCreateAsync(ApiMessageClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -438,12 +438,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiMessengerClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiMessengerClientResponseModel>> > MessengerBulkInsertAsync(List<ApiMessengerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiMessengerClientResponseModel>>> MessengerBulkInsertAsync(List<ApiMessengerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Messengers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMessengerClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMessengerClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiMessengerClientResponseModel>> MessengerCreateAsync(ApiMessengerClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -527,12 +527,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiMessengerClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiQuoteTweetClientResponseModel>> > QuoteTweetBulkInsertAsync(List<ApiQuoteTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiQuoteTweetClientResponseModel>>> QuoteTweetBulkInsertAsync(List<ApiQuoteTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/QuoteTweets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiQuoteTweetClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiQuoteTweetClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiQuoteTweetClientResponseModel>> QuoteTweetCreateAsync(ApiQuoteTweetClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -608,12 +608,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiQuoteTweetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiReplyClientResponseModel>> > ReplyBulkInsertAsync(List<ApiReplyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiReplyClientResponseModel>>> ReplyBulkInsertAsync(List<ApiReplyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Replies/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiReplyClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiReplyClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiReplyClientResponseModel>> ReplyCreateAsync(ApiReplyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -681,12 +681,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiReplyClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiRetweetClientResponseModel>> > RetweetBulkInsertAsync(List<ApiRetweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiRetweetClientResponseModel>>> RetweetBulkInsertAsync(List<ApiRetweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Retweets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRetweetClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRetweetClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRetweetClientResponseModel>> RetweetCreateAsync(ApiRetweetClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -762,12 +762,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRetweetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTweetClientResponseModel>> > TweetBulkInsertAsync(List<ApiTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTweetClientResponseModel>>> TweetBulkInsertAsync(List<ApiTweetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tweets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTweetClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTweetClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTweetClientResponseModel>> TweetCreateAsync(ApiTweetClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -859,12 +859,12 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRetweetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>> > UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>>> UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Users/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUserClientResponseModel>> UserCreateAsync(ApiUserClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1040,5 +1040,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fbcad4f559f9f2759ac1d21fba6311d6</Hash>
+    <Hash>a3d32b2f019db5803f7ccc13ea0b772a</Hash>
 </Codenesium>*/

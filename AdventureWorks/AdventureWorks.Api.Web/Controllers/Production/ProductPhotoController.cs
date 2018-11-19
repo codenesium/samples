@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/productPhotoes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ProductPhotoController : AbstractProductPhotoController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>937bc063a344a1d931c3bf03bd5ebe68</Hash>
+    <Hash>7e6e091930c52ba4175472f8d7063c3c</Hash>
 </Codenesium>*/

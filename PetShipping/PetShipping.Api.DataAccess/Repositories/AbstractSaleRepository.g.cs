@@ -76,6 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table Pet via petId.
 		public async virtual Task<Pet> PetByPetId(int petId)
 		{
 			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
@@ -105,5 +106,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72d1dde00311ffc50985b4f9fa75ff75</Hash>
+    <Hash>0a8b9dfda2f930e722fa89ddfc80be86</Hash>
 </Codenesium>*/

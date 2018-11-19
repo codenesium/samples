@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IAirlineRepository>();
 			var model = new ApiAirlineServerRequestModel();
@@ -87,12 +88,33 @@ namespace PetShippingNS.Api.Services.Tests
 			CreateResponse<ApiAirlineServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AirlineModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirlineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Airline>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IAirlineRepository>();
+			var model = new ApiAirlineServerRequestModel();
+			var validatorMock = new Mock<IApiAirlineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiAirlineServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new AirlineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLAirlineMapperMock,
+			                                 mock.DALMapperMockFactory.DALAirlineMapperMock);
+
+			CreateResponse<ApiAirlineServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirlineServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IAirlineRepository>();
 			var model = new ApiAirlineServerRequestModel();
@@ -107,12 +129,34 @@ namespace PetShippingNS.Api.Services.Tests
 			UpdateResponse<ApiAirlineServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AirlineModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirlineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Airline>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IAirlineRepository>();
+			var model = new ApiAirlineServerRequestModel();
+			var validatorMock = new Mock<IApiAirlineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirlineServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Airline()));
+			var service = new AirlineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLAirlineMapperMock,
+			                                 mock.DALMapperMockFactory.DALAirlineMapperMock);
+
+			UpdateResponse<ApiAirlineServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirlineServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IAirlineRepository>();
 			var model = new ApiAirlineServerRequestModel();
@@ -126,12 +170,33 @@ namespace PetShippingNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.AirlineModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IAirlineRepository>();
+			var model = new ApiAirlineServerRequestModel();
+			var validatorMock = new Mock<IApiAirlineServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new AirlineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLAirlineMapperMock,
+			                                 mock.DALMapperMockFactory.DALAirlineMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3e12cf7ce3bad4bbdc1807e81a05b2b</Hash>
+    <Hash>425d2e31fb6dc65cd0c6732dd6dab653</Hash>
 </Codenesium>*/

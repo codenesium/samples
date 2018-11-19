@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/salesPersons")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SalesPersonController : AbstractSalesPersonController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>315446fd29bb048d0fa986bd62850ac4</Hash>
+    <Hash>ce357558a295700ffce2e72691bec2e6</Hash>
 </Codenesium>*/

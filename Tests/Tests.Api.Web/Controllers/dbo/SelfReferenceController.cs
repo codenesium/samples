@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/selfReferences")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SelfReferenceController : AbstractSelfReferenceController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fd01151b9c7215f7136197463a3f25fd</Hash>
+    <Hash>bc502bb6233bf409c04f98fe9be71e4f</Hash>
 </Codenesium>*/

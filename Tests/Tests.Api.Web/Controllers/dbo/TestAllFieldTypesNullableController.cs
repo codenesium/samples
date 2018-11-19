@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/testAllFieldTypesNullables")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TestAllFieldTypesNullableController : AbstractTestAllFieldTypesNullableController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>28994d4dc16d39e4bd5bc4f2f7df4fc0</Hash>
+    <Hash>9ba3a662d634c80db2a83ce8e31d167a</Hash>
 </Codenesium>*/

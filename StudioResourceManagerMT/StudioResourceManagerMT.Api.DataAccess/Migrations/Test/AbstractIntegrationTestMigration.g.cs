@@ -16,7 +16,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var adminItem1 = new Admin();
 			adminItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
@@ -72,5 +72,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>88edc8a7fb23a8b27be8ce319f260113</Hash>
+    <Hash>d6a15c60c2a42030afc3b6dc1ed23177</Hash>
 </Codenesium>*/

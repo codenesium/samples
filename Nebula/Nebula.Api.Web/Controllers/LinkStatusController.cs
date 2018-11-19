@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/linkStatuses")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class LinkStatusController : AbstractLinkStatusController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>43253b4cde8770eabdcd99c72e103b1c</Hash>
+    <Hash>c5ef227587ab46cc6cefed33c712bdb2</Hash>
 </Codenesium>*/

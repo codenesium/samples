@@ -17,7 +17,6 @@ namespace PetStoreNS.Api.Web
 	[Route("api/species")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SpeciesController : AbstractSpeciesController
 	{
@@ -42,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4cacd8f1494c39331a8df8669ac0ab4</Hash>
+    <Hash>13b8ef0e76d9617236b7fbfd70bd5630</Hash>
 </Codenesium>*/

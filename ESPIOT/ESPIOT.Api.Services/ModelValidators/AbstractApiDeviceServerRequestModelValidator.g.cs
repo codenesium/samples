@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,13 +28,13 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 90);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PublicIdRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => !x?.PublicId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceServerRequestModel.PublicId));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => !x?.PublicId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceServerRequestModel.PublicId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		private async Task<bool> BeUniqueByPublicId(ApiDeviceServerRequestModel model,  CancellationToken cancellationToken)
@@ -53,5 +54,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bc4a5da3c2f7e30a47bf81ec9345ff8</Hash>
+    <Hash>ea1d28332417b130a10cddb18cbd5465</Hash>
 </Codenesium>*/

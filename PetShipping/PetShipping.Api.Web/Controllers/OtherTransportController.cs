@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/otherTransports")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class OtherTransportController : AbstractOtherTransportController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>579d1d3ff2b8f20b6e226b414492aa80</Hash>
+    <Hash>410ff0d33edec0871ec85675ae5121f6</Hash>
 </Codenesium>*/

@@ -57,12 +57,12 @@ namespace FileServiceNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiBucketClientResponseModel>> > BucketBulkInsertAsync(List<ApiBucketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiBucketClientResponseModel>>> BucketBulkInsertAsync(List<ApiBucketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Buckets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBucketClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBucketClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBucketClientResponseModel>> BucketCreateAsync(ApiBucketClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -146,12 +146,12 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFileClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiFileClientResponseModel>> > FileBulkInsertAsync(List<ApiFileClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiFileClientResponseModel>>> FileBulkInsertAsync(List<ApiFileClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Files/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFileClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFileClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFileClientResponseModel>> FileCreateAsync(ApiFileClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -211,12 +211,12 @@ namespace FileServiceNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiFileTypeClientResponseModel>> > FileTypeBulkInsertAsync(List<ApiFileTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiFileTypeClientResponseModel>>> FileTypeBulkInsertAsync(List<ApiFileTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFileTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFileTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFileTypeClientResponseModel>> FileTypeCreateAsync(ApiFileTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -312,5 +312,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>4099673a1d0fc58167eab41e9585fbd4</Hash>
+    <Hash>8587e09d75a0fd42d23b95b82888600c</Hash>
 </Codenesium>*/

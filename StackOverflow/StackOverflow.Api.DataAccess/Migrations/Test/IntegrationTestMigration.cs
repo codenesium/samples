@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56d75d9aef344a75292c93865b5ebf92</Hash>
+    <Hash>786e6bc55e816a938c56c6f2cc0bd450</Hash>
 </Codenesium>*/

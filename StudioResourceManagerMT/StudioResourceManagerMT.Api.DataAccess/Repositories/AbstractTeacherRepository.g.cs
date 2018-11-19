@@ -76,16 +76,19 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Teacher_userId.
 		public async virtual Task<List<Teacher>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
+		// Foreign key reference to this table Rate via teacherId.
 		public async virtual Task<List<Rate>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Rate>().Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
+		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
@@ -115,5 +118,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9a943c3c9898db1650a9ef361742007f</Hash>
+    <Hash>40e00c57c13e8dc82b901dc1ebce4e3a</Hash>
 </Codenesium>*/

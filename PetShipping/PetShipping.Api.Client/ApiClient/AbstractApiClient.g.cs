@@ -57,12 +57,12 @@ namespace PetShippingNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAirlineClientResponseModel>> > AirlineBulkInsertAsync(List<ApiAirlineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAirlineClientResponseModel>>> AirlineBulkInsertAsync(List<ApiAirlineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Airlines/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAirlineClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAirlineClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAirlineClientResponseModel>> AirlineCreateAsync(ApiAirlineClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -122,12 +122,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAirTransportClientResponseModel>> > AirTransportBulkInsertAsync(List<ApiAirTransportClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAirTransportClientResponseModel>>> AirTransportBulkInsertAsync(List<ApiAirTransportClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/AirTransports/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAirTransportClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAirTransportClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAirTransportClientResponseModel>> AirTransportCreateAsync(ApiAirTransportClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -187,12 +187,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiBreedClientResponseModel>> > BreedBulkInsertAsync(List<ApiBreedClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiBreedClientResponseModel>>> BreedBulkInsertAsync(List<ApiBreedClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Breeds/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBreedClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBreedClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBreedClientResponseModel>> BreedCreateAsync(ApiBreedClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -260,12 +260,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCustomerClientResponseModel>> > CustomerBulkInsertAsync(List<ApiCustomerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCustomerClientResponseModel>>> CustomerBulkInsertAsync(List<ApiCustomerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Customers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCustomerClientResponseModel>> CustomerCreateAsync(ApiCustomerClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -333,12 +333,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCustomerCommunicationClientResponseModel>> > CustomerCommunicationBulkInsertAsync(List<ApiCustomerCommunicationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCustomerCommunicationClientResponseModel>>> CustomerCommunicationBulkInsertAsync(List<ApiCustomerCommunicationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CustomerCommunications/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerCommunicationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerCommunicationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCustomerCommunicationClientResponseModel>> CustomerCommunicationCreateAsync(ApiCustomerCommunicationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -414,12 +414,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCountryClientResponseModel>> > CountryBulkInsertAsync(List<ApiCountryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCountryClientResponseModel>>> CountryBulkInsertAsync(List<ApiCountryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Countries/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryClientResponseModel>> CountryCreateAsync(ApiCountryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -495,12 +495,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDestinationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCountryRequirementClientResponseModel>> > CountryRequirementBulkInsertAsync(List<ApiCountryRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCountryRequirementClientResponseModel>>> CountryRequirementBulkInsertAsync(List<ApiCountryRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRequirementClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRequirementClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRequirementClientResponseModel>> CountryRequirementCreateAsync(ApiCountryRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -560,12 +560,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDestinationClientResponseModel>> > DestinationBulkInsertAsync(List<ApiDestinationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDestinationClientResponseModel>>> DestinationBulkInsertAsync(List<ApiDestinationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Destinations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDestinationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDestinationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDestinationClientResponseModel>> DestinationCreateAsync(ApiDestinationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -633,12 +633,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepDestinationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiEmployeeClientResponseModel>> > EmployeeBulkInsertAsync(List<ApiEmployeeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiEmployeeClientResponseModel>>> EmployeeBulkInsertAsync(List<ApiEmployeeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Employees/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEmployeeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEmployeeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeClientResponseModel>> EmployeeCreateAsync(ApiEmployeeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -722,12 +722,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiHandlerClientResponseModel>> > HandlerBulkInsertAsync(List<ApiHandlerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiHandlerClientResponseModel>>> HandlerBulkInsertAsync(List<ApiHandlerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Handlers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiHandlerClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiHandlerClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiHandlerClientResponseModel>> HandlerCreateAsync(ApiHandlerClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -811,12 +811,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiOtherTransportClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiHandlerPipelineStepClientResponseModel>> > HandlerPipelineStepBulkInsertAsync(List<ApiHandlerPipelineStepClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiHandlerPipelineStepClientResponseModel>>> HandlerPipelineStepBulkInsertAsync(List<ApiHandlerPipelineStepClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/HandlerPipelineSteps/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiHandlerPipelineStepClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiHandlerPipelineStepClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiHandlerPipelineStepClientResponseModel>> HandlerPipelineStepCreateAsync(ApiHandlerPipelineStepClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -876,12 +876,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiOtherTransportClientResponseModel>> > OtherTransportBulkInsertAsync(List<ApiOtherTransportClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiOtherTransportClientResponseModel>>> OtherTransportBulkInsertAsync(List<ApiOtherTransportClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/OtherTransports/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOtherTransportClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOtherTransportClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiOtherTransportClientResponseModel>> OtherTransportCreateAsync(ApiOtherTransportClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -941,12 +941,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPetClientResponseModel>> > PetBulkInsertAsync(List<ApiPetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPetClientResponseModel>>> PetBulkInsertAsync(List<ApiPetClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Pets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPetClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPetClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPetClientResponseModel>> PetCreateAsync(ApiPetClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1014,12 +1014,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineClientResponseModel>> > PipelineBulkInsertAsync(List<ApiPipelineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineClientResponseModel>>> PipelineBulkInsertAsync(List<ApiPipelineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Pipelines/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineClientResponseModel>> PipelineCreateAsync(ApiPipelineClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1079,12 +1079,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStatuClientResponseModel>> > PipelineStatuBulkInsertAsync(List<ApiPipelineStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStatuClientResponseModel>>> PipelineStatuBulkInsertAsync(List<ApiPipelineStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStatuClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStatuClientResponseModel>> PipelineStatuCreateAsync(ApiPipelineStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1152,12 +1152,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepClientResponseModel>> > PipelineStepBulkInsertAsync(List<ApiPipelineStepClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepClientResponseModel>>> PipelineStepBulkInsertAsync(List<ApiPipelineStepClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineSteps/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepClientResponseModel>> PipelineStepCreateAsync(ApiPipelineStepClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1257,12 +1257,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepDestinationClientResponseModel>> > PipelineStepDestinationBulkInsertAsync(List<ApiPipelineStepDestinationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepDestinationClientResponseModel>>> PipelineStepDestinationBulkInsertAsync(List<ApiPipelineStepDestinationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepDestinations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepDestinationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepDestinationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepDestinationClientResponseModel>> PipelineStepDestinationCreateAsync(ApiPipelineStepDestinationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1322,12 +1322,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepNoteClientResponseModel>> > PipelineStepNoteBulkInsertAsync(List<ApiPipelineStepNoteClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepNoteClientResponseModel>>> PipelineStepNoteBulkInsertAsync(List<ApiPipelineStepNoteClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepNotes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepNoteClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepNoteClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepNoteClientResponseModel>> PipelineStepNoteCreateAsync(ApiPipelineStepNoteClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1387,12 +1387,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>> > PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>>> PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStatuClientResponseModel>> PipelineStepStatuCreateAsync(ApiPipelineStepStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1460,12 +1460,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPipelineStepStepRequirementClientResponseModel>> > PipelineStepStepRequirementBulkInsertAsync(List<ApiPipelineStepStepRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPipelineStepStepRequirementClientResponseModel>>> PipelineStepStepRequirementBulkInsertAsync(List<ApiPipelineStepStepRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PipelineStepStepRequirements/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStepRequirementClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPipelineStepStepRequirementClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStepRequirementClientResponseModel>> PipelineStepStepRequirementCreateAsync(ApiPipelineStepStepRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1525,12 +1525,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSaleClientResponseModel>> > SaleBulkInsertAsync(List<ApiSaleClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSaleClientResponseModel>>> SaleBulkInsertAsync(List<ApiSaleClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Sales/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSaleClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSaleClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleClientResponseModel>> SaleCreateAsync(ApiSaleClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1590,12 +1590,12 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSpeciesClientResponseModel>> > SpeciesBulkInsertAsync(List<ApiSpeciesClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSpeciesClientResponseModel>>> SpeciesBulkInsertAsync(List<ApiSpeciesClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Species/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpeciesClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpeciesClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSpeciesClientResponseModel>> SpeciesCreateAsync(ApiSpeciesClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1691,5 +1691,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a7d043ed2142c9c5b32641c613155cf5</Hash>
+    <Hash>27c0f64a6c4ac0a41298016970436285</Hash>
 </Codenesium>*/

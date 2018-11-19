@@ -16,7 +16,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var adminItem1 = new Admin();
 			adminItem1.SetProperties("A", "A", 1, "A", "A", "A", "A");
@@ -72,5 +72,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6c726f6137cf5f06f14b0e389b739e7e</Hash>
+    <Hash>853e691c23ebc8f73717109a7b178fdb</Hash>
 </Codenesium>*/

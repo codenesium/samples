@@ -76,41 +76,49 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Product_Name.
 		public async virtual Task<Product> ByName(string name)
 		{
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_Product_ProductNumber.
 		public async virtual Task<Product> ByProductNumber(string productNumber)
 		{
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.ProductNumber == productNumber);
 		}
 
+		// unique constraint AK_Product_rowguid.
 		public async virtual Task<Product> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Foreign key reference to this table BillOfMaterial via productAssemblyID.
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.ProductAssemblyID == productAssemblyID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
+		// Foreign key reference to this table BillOfMaterial via componentID.
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.ComponentID == componentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
+		// Foreign key reference to this table ProductReview via productID.
 		public async virtual Task<List<ProductReview>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductReview>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductReview>();
 		}
 
+		// Foreign key reference to this table TransactionHistory via productID.
 		public async virtual Task<List<TransactionHistory>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TransactionHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
 		}
 
+		// Foreign key reference to this table WorkOrder via productID.
 		public async virtual Task<List<WorkOrder>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrder>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
@@ -140,5 +148,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e612ea59a3476162eead67fb432e9424</Hash>
+    <Hash>c1e9f5f7b97180a661e39ab660eabf80</Hash>
 </Codenesium>*/

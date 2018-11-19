@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -39,19 +40,19 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void FirstNameRules()
 		{
-			this.RuleFor(x => x.FirstName).NotNull();
-			this.RuleFor(x => x.FirstName).Length(0, 50);
+			this.RuleFor(x => x.FirstName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FirstName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastNameRules()
 		{
-			this.RuleFor(x => x.LastName).NotNull();
-			this.RuleFor(x => x.LastName).Length(0, 50);
+			this.RuleFor(x => x.LastName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LastName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void MiddleNameRules()
 		{
-			this.RuleFor(x => x.MiddleName).Length(0, 50);
+			this.RuleFor(x => x.MiddleName).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -64,23 +65,23 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void PersonTypeRules()
 		{
-			this.RuleFor(x => x.PersonType).NotNull();
-			this.RuleFor(x => x.PersonType).Length(0, 2);
+			this.RuleFor(x => x.PersonType).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PersonType).Length(0, 2).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiPersonServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiPersonServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SuffixRules()
 		{
-			this.RuleFor(x => x.Suffix).Length(0, 10);
+			this.RuleFor(x => x.Suffix).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TitleRules()
 		{
-			this.RuleFor(x => x.Title).Length(0, 8);
+			this.RuleFor(x => x.Title).Length(0, 8).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByRowguid(ApiPersonServerRequestModel model,  CancellationToken cancellationToken)
@@ -100,5 +101,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ccecb0a875f26cb3f0bdcf50846fa91d</Hash>
+    <Hash>5915cdd587d5bc63b7ff8782c50da74a</Hash>
 </Codenesium>*/

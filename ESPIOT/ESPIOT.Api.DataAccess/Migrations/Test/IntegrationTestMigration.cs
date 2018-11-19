@@ -14,13 +14,13 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b18c86acd0ba128f9cf75691b5a893f3</Hash>
+    <Hash>551aa670bd2e55a076b55c7929c5f122</Hash>
 </Codenesium>*/

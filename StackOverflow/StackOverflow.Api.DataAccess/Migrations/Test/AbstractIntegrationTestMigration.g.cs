@@ -16,7 +16,7 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var badgeItem1 = new Badge();
 			badgeItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1);
@@ -72,5 +72,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>35b4559ef889e00d200b9983159d8698</Hash>
+    <Hash>677a3102c7320b85b39605b792b15e0e</Hash>
 </Codenesium>*/

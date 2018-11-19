@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -31,8 +32,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void EmailRules()
 		{
-			this.RuleFor(x => x.Email).NotNull();
-			this.RuleFor(x => x.Email).Length(0, 128);
+			this.RuleFor(x => x.Email).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Email).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void EmailRemindersEnabledRules()
@@ -41,13 +42,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void FamilyIdRules()
 		{
-			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamilyByFamilyId).When(x => !x?.FamilyId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamilyByFamilyId).When(x => !x?.FamilyId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void FirstNameRules()
 		{
-			this.RuleFor(x => x.FirstName).NotNull();
-			this.RuleFor(x => x.FirstName).Length(0, 128);
+			this.RuleFor(x => x.FirstName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FirstName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void IsAdultRules()
@@ -56,14 +57,14 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void LastNameRules()
 		{
-			this.RuleFor(x => x.LastName).NotNull();
-			this.RuleFor(x => x.LastName).Length(0, 128);
+			this.RuleFor(x => x.LastName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PhoneRules()
 		{
-			this.RuleFor(x => x.Phone).NotNull();
-			this.RuleFor(x => x.Phone).Length(0, 128);
+			this.RuleFor(x => x.Phone).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Phone).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void SmsRemindersEnabledRules()
@@ -72,7 +73,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
-			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
@@ -92,5 +93,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66c3dc7152f873b26efab75048c1dc4d</Hash>
+    <Hash>20935baaedd9dcab0aa530ac64a60d6f</Hash>
 </Codenesium>*/

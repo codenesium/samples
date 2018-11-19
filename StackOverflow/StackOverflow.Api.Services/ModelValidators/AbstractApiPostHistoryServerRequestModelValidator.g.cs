@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void CommentRules()
 		{
-			this.RuleFor(x => x.Comment).Length(0, 1073741823);
+			this.RuleFor(x => x.Comment).Length(0, 1073741823).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CreationDateRules()
@@ -44,18 +45,18 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void RevisionGUIDRules()
 		{
-			this.RuleFor(x => x.RevisionGUID).NotNull();
-			this.RuleFor(x => x.RevisionGUID).Length(0, 36);
+			this.RuleFor(x => x.RevisionGUID).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.RevisionGUID).Length(0, 36).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TextRules()
 		{
-			this.RuleFor(x => x.Text).Length(0, 1073741823);
+			this.RuleFor(x => x.Text).Length(0, 1073741823).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void UserDisplayNameRules()
 		{
-			this.RuleFor(x => x.UserDisplayName).Length(0, 40);
+			this.RuleFor(x => x.UserDisplayName).Length(0, 40).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void UserIdRules()
@@ -65,5 +66,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b241160093babcf006e053e3d84971e</Hash>
+    <Hash>cd6ac5d709b4a3ad4c598ae085c4bfea</Hash>
 </Codenesium>*/

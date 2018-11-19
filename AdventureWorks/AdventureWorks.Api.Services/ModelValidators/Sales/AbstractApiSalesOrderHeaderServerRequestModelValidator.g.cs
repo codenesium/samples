@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void AccountNumberRules()
 		{
-			this.RuleFor(x => x.AccountNumber).Length(0, 15);
+			this.RuleFor(x => x.AccountNumber).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void BillToAddressIDRules()
@@ -36,27 +37,27 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CommentRules()
 		{
-			this.RuleFor(x => x.Comment).Length(0, 128);
+			this.RuleFor(x => x.Comment).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CreditCardApprovalCodeRules()
 		{
-			this.RuleFor(x => x.CreditCardApprovalCode).Length(0, 15);
+			this.RuleFor(x => x.CreditCardApprovalCode).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void CreditCardIDRules()
 		{
-			this.RuleFor(x => x.CreditCardID).MustAsync(this.BeValidCreditCardByCreditCardID).When(x => !x?.CreditCardID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CreditCardID).MustAsync(this.BeValidCreditCardByCreditCardID).When(x => !x?.CreditCardID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void CurrencyRateIDRules()
 		{
-			this.RuleFor(x => x.CurrencyRateID).MustAsync(this.BeValidCurrencyRateByCurrencyRateID).When(x => !x?.CurrencyRateID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CurrencyRateID).MustAsync(this.BeValidCurrencyRateByCurrencyRateID).When(x => !x?.CurrencyRateID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void CustomerIDRules()
 		{
-			this.RuleFor(x => x.CustomerID).MustAsync(this.BeValidCustomerByCustomerID).When(x => !x?.CustomerID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CustomerID).MustAsync(this.BeValidCustomerByCustomerID).When(x => !x?.CustomerID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void DueDateRules()
@@ -81,7 +82,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void PurchaseOrderNumberRules()
 		{
-			this.RuleFor(x => x.PurchaseOrderNumber).Length(0, 25);
+			this.RuleFor(x => x.PurchaseOrderNumber).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RevisionNumberRules()
@@ -90,19 +91,19 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesOrderNumberRules()
 		{
-			this.RuleFor(x => x.SalesOrderNumber).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueBySalesOrderNumber).When(x => !x?.SalesOrderNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.SalesOrderNumber));
-			this.RuleFor(x => x.SalesOrderNumber).Length(0, 25);
+			this.RuleFor(x => x.SalesOrderNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueBySalesOrderNumber).When(x => !x?.SalesOrderNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.SalesOrderNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.SalesOrderNumber).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void SalesPersonIDRules()
 		{
-			this.RuleFor(x => x.SalesPersonID).MustAsync(this.BeValidSalesPersonBySalesPersonID).When(x => !x?.SalesPersonID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SalesPersonID).MustAsync(this.BeValidSalesPersonBySalesPersonID).When(x => !x?.SalesPersonID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ShipDateRules()
@@ -131,7 +132,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TerritoryIDRules()
 		{
-			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritoryByTerritoryID).When(x => !x?.TerritoryID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritoryByTerritoryID).When(x => !x?.TerritoryID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void TotalDueRules()
@@ -204,5 +205,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df1d3a3598555687f5dd8f56e6ee710f</Hash>
+    <Hash>98bf56c49d8664bb776999abf305a1f8</Hash>
 </Codenesium>*/

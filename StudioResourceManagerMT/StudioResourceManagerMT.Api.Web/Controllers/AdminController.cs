@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/admins")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class AdminController : AbstractAdminController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7e7488c9e862737b31c5bb712439f79a</Hash>
+    <Hash>8a391fcc03825c3d7432e2f702587a1d</Hash>
 </Codenesium>*/

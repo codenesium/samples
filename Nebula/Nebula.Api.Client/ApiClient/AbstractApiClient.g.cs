@@ -57,12 +57,12 @@ namespace NebulaNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiChainStatusClientResponseModel>> > ChainStatusBulkInsertAsync(List<ApiChainStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiChainStatusClientResponseModel>>> ChainStatusBulkInsertAsync(List<ApiChainStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ChainStatuses/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiChainStatusClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiChainStatusClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiChainStatusClientResponseModel>> ChainStatusCreateAsync(ApiChainStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -130,12 +130,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiChainStatusClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLinkClientResponseModel>> > LinkBulkInsertAsync(List<ApiLinkClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLinkClientResponseModel>>> LinkBulkInsertAsync(List<ApiLinkClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Links/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkClientResponseModel>> LinkCreateAsync(ApiLinkClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -219,12 +219,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkLogClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLinkLogClientResponseModel>> > LinkLogBulkInsertAsync(List<ApiLinkLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLinkLogClientResponseModel>>> LinkLogBulkInsertAsync(List<ApiLinkLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkLogs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkLogClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkLogClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkLogClientResponseModel>> LinkLogCreateAsync(ApiLinkLogClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -284,12 +284,12 @@ namespace NebulaNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLinkStatusClientResponseModel>> > LinkStatusBulkInsertAsync(List<ApiLinkStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLinkStatusClientResponseModel>>> LinkStatusBulkInsertAsync(List<ApiLinkStatusClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkStatuses/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkStatusClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkStatusClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkStatusClientResponseModel>> LinkStatusCreateAsync(ApiLinkStatusClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -365,12 +365,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiMachineClientResponseModel>> > MachineBulkInsertAsync(List<ApiMachineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiMachineClientResponseModel>>> MachineBulkInsertAsync(List<ApiMachineClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Machines/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMachineClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiMachineClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiMachineClientResponseModel>> MachineCreateAsync(ApiMachineClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -446,12 +446,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiOrganizationClientResponseModel>> > OrganizationBulkInsertAsync(List<ApiOrganizationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiOrganizationClientResponseModel>>> OrganizationBulkInsertAsync(List<ApiOrganizationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Organizations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOrganizationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiOrganizationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiOrganizationClientResponseModel>> OrganizationCreateAsync(ApiOrganizationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -527,12 +527,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTeamClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTeamClientResponseModel>> > TeamBulkInsertAsync(List<ApiTeamClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTeamClientResponseModel>>> TeamBulkInsertAsync(List<ApiTeamClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Teams/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeamClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeamClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTeamClientResponseModel>> TeamCreateAsync(ApiTeamClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -600,12 +600,12 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiTeamClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVersionInfoClientResponseModel>> > VersionInfoBulkInsertAsync(List<ApiVersionInfoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVersionInfoClientResponseModel>>> VersionInfoBulkInsertAsync(List<ApiVersionInfoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVersionInfoClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVersionInfoClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVersionInfoClientResponseModel>> VersionInfoCreateAsync(ApiVersionInfoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -693,5 +693,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ef5e5c46a1cd527611d6996cd6774a5c</Hash>
+    <Hash>aea36ce370abf28eba8731f6ce234065</Hash>
 </Codenesium>*/

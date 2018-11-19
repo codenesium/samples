@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -31,8 +32,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ErrorMessageRules()
 		{
-			this.RuleFor(x => x.ErrorMessage).NotNull();
-			this.RuleFor(x => x.ErrorMessage).Length(0, 4000);
+			this.RuleFor(x => x.ErrorMessage).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.ErrorMessage).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ErrorNumberRules()
@@ -41,7 +42,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ErrorProcedureRules()
 		{
-			this.RuleFor(x => x.ErrorProcedure).Length(0, 126);
+			this.RuleFor(x => x.ErrorProcedure).Length(0, 126).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ErrorSeverityRules()
@@ -58,12 +59,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void UserNameRules()
 		{
-			this.RuleFor(x => x.UserName).NotNull();
-			this.RuleFor(x => x.UserName).Length(0, 128);
+			this.RuleFor(x => x.UserName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.UserName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e61a07112800cde0a2294106093d594</Hash>
+    <Hash>b8c1b526482268c05e13fe342cb9ebe4</Hash>
 </Codenesium>*/

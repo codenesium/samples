@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/pipelineStepNotes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PipelineStepNoteController : AbstractPipelineStepNoteController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>89331ea900a8e5abbaf7f98c65bc009b</Hash>
+    <Hash>e946e6e2c2907564eb341e7c630138ad</Hash>
 </Codenesium>*/

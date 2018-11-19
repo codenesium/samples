@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -31,30 +32,30 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void EmailRules()
 		{
-			this.RuleFor(x => x.Email).NotNull();
-			this.RuleFor(x => x.Email).Length(0, 128);
+			this.RuleFor(x => x.Email).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Email).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FirstNameRules()
 		{
-			this.RuleFor(x => x.FirstName).NotNull();
-			this.RuleFor(x => x.FirstName).Length(0, 128);
+			this.RuleFor(x => x.FirstName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FirstName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastNameRules()
 		{
-			this.RuleFor(x => x.LastName).NotNull();
-			this.RuleFor(x => x.LastName).Length(0, 128);
+			this.RuleFor(x => x.LastName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LastName).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PhoneRules()
 		{
-			this.RuleFor(x => x.Phone).NotNull();
-			this.RuleFor(x => x.Phone).Length(0, 10);
+			this.RuleFor(x => x.Phone).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Phone).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f19af4973a53aefd74c5f44b363b62a</Hash>
+    <Hash>b35c95e74445f4760146a6aef334bc6a</Hash>
 </Codenesium>*/

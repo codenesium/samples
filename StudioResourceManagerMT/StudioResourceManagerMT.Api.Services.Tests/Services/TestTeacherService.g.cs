@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITeacherRepository>();
 			var model = new ApiTeacherServerRequestModel();
@@ -95,12 +96,35 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			CreateResponse<ApiTeacherServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Teacher>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ITeacherRepository>();
+			var model = new ApiTeacherServerRequestModel();
+			var validatorMock = new Mock<IApiTeacherServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TeacherService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
+
+			CreateResponse<ApiTeacherServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITeacherRepository>();
 			var model = new ApiTeacherServerRequestModel();
@@ -117,12 +141,36 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			UpdateResponse<ApiTeacherServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Teacher>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ITeacherRepository>();
+			var model = new ApiTeacherServerRequestModel();
+			var validatorMock = new Mock<IApiTeacherServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Teacher()));
+			var service = new TeacherService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
+
+			UpdateResponse<ApiTeacherServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITeacherRepository>();
 			var model = new ApiTeacherServerRequestModel();
@@ -138,8 +186,31 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ITeacherRepository>();
+			var model = new ApiTeacherServerRequestModel();
+			var validatorMock = new Mock<IApiTeacherServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TeacherService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 validatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -225,5 +296,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b37ef775ab4ecc7170260bb6af4fa4ee</Hash>
+    <Hash>2dca67692621ebb5cc9ee3308ea87fdd</Hash>
 </Codenesium>*/

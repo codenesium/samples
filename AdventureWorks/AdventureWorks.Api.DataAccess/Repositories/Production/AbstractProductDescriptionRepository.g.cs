@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ProductDescription_rowguid.
 		public async virtual Task<ProductDescription> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<ProductDescription>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ab9e35338bca54ba6364de9b40e3bf9</Hash>
+    <Hash>76f0500114e1fa1dd94a00ad97d9cc59</Hash>
 </Codenesium>*/

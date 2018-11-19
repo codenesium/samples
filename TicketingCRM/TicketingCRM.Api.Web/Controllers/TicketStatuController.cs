@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/ticketStatus")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TicketStatuController : AbstractTicketStatuController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8988562df69c5f7e8dc59795011874f8</Hash>
+    <Hash>26e0d59efa2a1a7f9ff5c1e32f847c76</Hash>
 </Codenesium>*/

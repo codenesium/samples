@@ -16,7 +16,7 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var columnSameAsFKTableItem1 = new ColumnSameAsFKTable();
 			columnSameAsFKTableItem1.SetProperties(1, 1, 1);
@@ -84,5 +84,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>832bfca7b62c94470cf6df144d736738</Hash>
+    <Hash>74c81dcf115efc79406bb19a8e476800</Hash>
 </Codenesium>*/

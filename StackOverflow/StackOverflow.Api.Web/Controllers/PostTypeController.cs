@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/postTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PostTypeController : AbstractPostTypeController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5b67f435b1120fa028cfea3a006b10d9</Hash>
+    <Hash>b6bca0efd581cb59cd28f424aeab4d46</Hash>
 </Codenesium>*/

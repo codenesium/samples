@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ContactType_Name.
 		public async virtual Task<ContactType> ByName(string name)
 		{
 			return await this.Context.Set<ContactType>().SingleOrDefaultAsync(x => x.Name == name);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb243515cc3e1358e12e25709275ba9a</Hash>
+    <Hash>d6fc09dd58d06da424a90bff60e6c210</Hash>
 </Codenesium>*/

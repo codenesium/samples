@@ -14,13 +14,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2672cf5ef3e2b6c7d9999293ba34309c</Hash>
+    <Hash>29ae04e67382e08c9ed3d5be9932b84b</Hash>
 </Codenesium>*/

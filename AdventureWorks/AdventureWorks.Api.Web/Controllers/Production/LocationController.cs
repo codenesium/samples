@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/locations")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class LocationController : AbstractLocationController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e546b5d38f0a09fcda43216787f0c3b3</Hash>
+    <Hash>41f4f66e3f74cc0e10447dc7f702e128</Hash>
 </Codenesium>*/

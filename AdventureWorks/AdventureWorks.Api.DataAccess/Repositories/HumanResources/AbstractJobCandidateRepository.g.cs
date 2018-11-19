@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_JobCandidate_BusinessEntityID.
 		public async virtual Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.BusinessEntityID == businessEntityID, limit, offset);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4955923c90be15740d26bccf431e49ba</Hash>
+    <Hash>1071f10ba4ba540cb53c50253341f5e4</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/airTransports")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class AirTransportController : AbstractAirTransportController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>349c29e409f45061ea14802df60435c9</Hash>
+    <Hash>ac598650a49bcec3e80003521008a837</Hash>
 </Codenesium>*/

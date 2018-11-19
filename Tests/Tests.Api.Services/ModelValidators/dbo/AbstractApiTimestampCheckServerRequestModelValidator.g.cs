@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -27,7 +28,7 @@ namespace TestsNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TimestampRules()
@@ -37,5 +38,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52ecca1aad63193e7a534b3855b47a6e</Hash>
+    <Hash>f38a92751a8a33c84fe6536248375435</Hash>
 </Codenesium>*/

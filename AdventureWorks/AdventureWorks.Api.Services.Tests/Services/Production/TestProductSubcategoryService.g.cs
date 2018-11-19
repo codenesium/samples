@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			var model = new ApiProductSubcategoryServerRequestModel();
@@ -95,12 +96,35 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiProductSubcategoryServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductSubcategory>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
+			var model = new ApiProductSubcategoryServerRequestModel();
+			var validatorMock = new Mock<IApiProductSubcategoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            validatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductSubcategoryMapperMock,
+			                                            mock.BOLMapperMockFactory.BOLProductMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductMapperMock);
+
+			CreateResponse<ApiProductSubcategoryServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			var model = new ApiProductSubcategoryServerRequestModel();
@@ -117,12 +141,36 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiProductSubcategoryServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductSubcategory>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
+			var model = new ApiProductSubcategoryServerRequestModel();
+			var validatorMock = new Mock<IApiProductSubcategoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductSubcategory()));
+			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            validatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductSubcategoryMapperMock,
+			                                            mock.BOLMapperMockFactory.BOLProductMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductMapperMock);
+
+			UpdateResponse<ApiProductSubcategoryServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			var model = new ApiProductSubcategoryServerRequestModel();
@@ -138,8 +186,31 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
+			var model = new ApiProductSubcategoryServerRequestModel();
+			var validatorMock = new Mock<IApiProductSubcategoryServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            validatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductSubcategoryMapperMock,
+			                                            mock.BOLMapperMockFactory.BOLProductMapperMock,
+			                                            mock.DALMapperMockFactory.DALProductMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -263,5 +334,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>325a689c22aaf7ff9653dc550e9abadc</Hash>
+    <Hash>15b4e66a59a9e788f2aebf625b895e86</Hash>
 </Codenesium>*/

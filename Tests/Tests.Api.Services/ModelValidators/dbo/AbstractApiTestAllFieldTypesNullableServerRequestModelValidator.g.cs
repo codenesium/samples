@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
@@ -31,7 +32,7 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldBinaryRules()
 		{
-			this.RuleFor(x => x.FieldBinary).Must(x => x == null || x.Length < 50).WithMessage($"Exceeds maximum length of {50}");
+			this.RuleFor(x => x.FieldBinary).Must(x => x == null || x.Length < 50).WithMessage($"Exceeds maximum length of {50}").WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldBitRules()
@@ -40,7 +41,7 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldCharRules()
 		{
-			this.RuleFor(x => x.FieldChar).Length(0, 10);
+			this.RuleFor(x => x.FieldChar).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldDateRules()
@@ -77,12 +78,12 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldNCharRules()
 		{
-			this.RuleFor(x => x.FieldNChar).Length(0, 10);
+			this.RuleFor(x => x.FieldNChar).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldNTextRules()
 		{
-			this.RuleFor(x => x.FieldNText).Length(0, 1073741823);
+			this.RuleFor(x => x.FieldNText).Length(0, 1073741823).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldNumericRules()
@@ -91,7 +92,7 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldNVarcharRules()
 		{
-			this.RuleFor(x => x.FieldNVarchar).Length(0, 50);
+			this.RuleFor(x => x.FieldNVarchar).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldRealRules()
@@ -112,7 +113,7 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldTextRules()
 		{
-			this.RuleFor(x => x.FieldText).Length(0, 2147483647);
+			this.RuleFor(x => x.FieldText).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldTimeRules()
@@ -133,12 +134,12 @@ namespace TestsNS.Api.Services
 
 		public virtual void FieldVarBinaryRules()
 		{
-			this.RuleFor(x => x.FieldVarBinary).Must(x => x == null || x.Length < 50).WithMessage($"Exceeds maximum length of {50}");
+			this.RuleFor(x => x.FieldVarBinary).Must(x => x == null || x.Length < 50).WithMessage($"Exceeds maximum length of {50}").WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldVarcharRules()
 		{
-			this.RuleFor(x => x.FieldVarchar).Length(0, 50);
+			this.RuleFor(x => x.FieldVarchar).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FieldXMLRules()
@@ -148,5 +149,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e0ed6dd846d1eb2fd178375c7cd2592</Hash>
+    <Hash>2fe54f3b6af1244a1437eef7e2e77578</Hash>
 </Codenesium>*/

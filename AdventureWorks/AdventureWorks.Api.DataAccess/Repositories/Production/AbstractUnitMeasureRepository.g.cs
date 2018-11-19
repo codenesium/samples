@@ -76,21 +76,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_UnitMeasure_Name.
 		public async virtual Task<UnitMeasure> ByName(string name)
 		{
 			return await this.Context.Set<UnitMeasure>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table BillOfMaterial via unitMeasureCode.
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
+		// Foreign key reference to this table Product via sizeUnitMeasureCode.
 		public async virtual Task<List<Product>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
+		// Foreign key reference to this table Product via weightUnitMeasureCode.
 		public async virtual Task<List<Product>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>().Where(x => x.WeightUnitMeasureCode == weightUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
@@ -120,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>14a8e7c7c19feefb089ffaf65c3c7699</Hash>
+    <Hash>a0977e2e99cf15e47fa947a955c900e0</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -31,18 +32,18 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void BreedIdRules()
 		{
-			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreedByBreedId).When(x => !x?.BreedId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreedByBreedId).When(x => !x?.BreedId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 2147483647);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PenIdRules()
 		{
-			this.RuleFor(x => x.PenId).MustAsync(this.BeValidPenByPenId).When(x => !x?.PenId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PenId).MustAsync(this.BeValidPenByPenId).When(x => !x?.PenId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void PriceRules()
@@ -51,7 +52,7 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void SpeciesIdRules()
 		{
-			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
@@ -78,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>815b2a0a8200281cf082154ea19a6a62</Hash>
+    <Hash>8de255aab68e9551051ab1c397fbcdc7</Hash>
 </Codenesium>*/

@@ -76,6 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Ticket via ticketStatusId.
 		public async virtual Task<List<Ticket>> TicketsByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Ticket>().Where(x => x.TicketStatusId == ticketStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Ticket>();
@@ -105,5 +106,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a3b081c84347185bd10a4d36326fb417</Hash>
+    <Hash>ff64b1da60accd67f168bbf85a55709f</Hash>
 </Codenesium>*/

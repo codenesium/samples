@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
 			var model = new ApiProductPhotoServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiProductPhotoServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductPhotoServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductPhoto>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductPhotoRepository>();
+			var model = new ApiProductPhotoServerRequestModel();
+			var validatorMock = new Mock<IApiProductPhotoServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductPhotoServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductPhotoService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
+
+			CreateResponse<ApiProductPhotoServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductPhotoServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
 			var model = new ApiProductPhotoServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiProductPhotoServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductPhotoServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductPhoto>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductPhotoRepository>();
+			var model = new ApiProductPhotoServerRequestModel();
+			var validatorMock = new Mock<IApiProductPhotoServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductPhotoServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
+			var service = new ProductPhotoService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
+
+			UpdateResponse<ApiProductPhotoServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductPhotoServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProductPhotoRepository>();
 			var model = new ApiProductPhotoServerRequestModel();
@@ -126,12 +170,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProductPhotoModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IProductPhotoRepository>();
+			var model = new ApiProductPhotoServerRequestModel();
+			var validatorMock = new Mock<IApiProductPhotoServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProductPhotoService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLProductPhotoMapperMock,
+			                                      mock.DALMapperMockFactory.DALProductPhotoMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2a5c3943bec6f6d047e1df189bdc448</Hash>
+    <Hash>6dce0a50c191e6a78b6f757dcd47a706</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,31 +28,31 @@ namespace NebulaNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 2147483647);
+			this.RuleFor(x => x.Description).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Description).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void JwtKeyRules()
 		{
-			this.RuleFor(x => x.JwtKey).NotNull();
-			this.RuleFor(x => x.JwtKey).Length(0, 128);
+			this.RuleFor(x => x.JwtKey).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.JwtKey).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LastIpAddressRules()
 		{
-			this.RuleFor(x => x.LastIpAddress).NotNull();
-			this.RuleFor(x => x.LastIpAddress).Length(0, 128);
+			this.RuleFor(x => x.LastIpAddress).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.LastIpAddress).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void MachineGuidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByMachineGuid).When(x => !x?.MachineGuid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineServerRequestModel.MachineGuid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByMachineGuid).When(x => !x?.MachineGuid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineServerRequestModel.MachineGuid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByMachineGuid(ApiMachineServerRequestModel model,  CancellationToken cancellationToken)
@@ -71,5 +72,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>008e825c3fddb88c7891e71d4d542311</Hash>
+    <Hash>55636f83b8c55d139336be901e48db0f</Hash>
 </Codenesium>*/

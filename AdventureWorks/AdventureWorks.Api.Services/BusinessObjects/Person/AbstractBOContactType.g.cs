@@ -1,32 +1,35 @@
 using Codenesium.DataConversionExtensions;
 using System;
 
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractBOContactType : AbstractBusinessObject
-	{
-		public AbstractBOContactType()
+    public abstract class AbstractBOContactType : AbstractBusinessObject
+    {
+	    public AbstractBOContactType() 
 			: base()
-		{
+        {
+
+        }
+
+	    public virtual void SetProperties(int contactTypeID,
+		DateTime modifiedDate,
+string name)
+        {
+		this.ContactTypeID = contactTypeID;
+this.ModifiedDate = modifiedDate;
+this.Name = name;
+
 		}
 
-		public virtual void SetProperties(int contactTypeID,
-		                                  DateTime modifiedDate,
-		                                  string name)
-		{
-			this.ContactTypeID = contactTypeID;
-			this.ModifiedDate = modifiedDate;
-			this.Name = name;
-		}
+		        public int ContactTypeID{ get; private set; }
 
-		public int ContactTypeID { get; private set; }
+        public DateTime ModifiedDate{ get; private set; }
 
-		public DateTime ModifiedDate { get; private set; }
-
-		public string Name { get; private set; }
-	}
+        public string Name{ get; private set; }
+    }
 }
 
 /*<Codenesium>
-    <Hash>f947453f2ff32c525c035f12e563b3b6</Hash>
+    <Hash>04fcd229c5e62f9d9232b7a06e7b9b56</Hash>
 </Codenesium>*/

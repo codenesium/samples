@@ -76,11 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AX_ChainStatus_Name.
 		public async virtual Task<ChainStatus> ByName(string name)
 		{
 			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference pass-though. Pass-thru table Chain. Foreign Table ChainStatus.
 		public async virtual Task<List<ChainStatus>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.Chains
@@ -129,5 +131,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>969fdbfaab71f235988be4c6991eb0f9</Hash>
+    <Hash>f24b6a3d5ef2ad9f127bbab38610b5c2</Hash>
 </Codenesium>*/

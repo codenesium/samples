@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/comments")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CommentController : AbstractCommentController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>05b7928b657f52da12018f318fd6373c</Hash>
+    <Hash>bf7149481b8ed3b60660e68288e31cc3</Hash>
 </Codenesium>*/

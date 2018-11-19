@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -31,11 +32,11 @@ namespace TwitterNS.Api.Services
 
 		public virtual void MutedRules()
 		{
-			this.RuleFor(x => x.Muted).Length(0, 1);
+			this.RuleFor(x => x.Muted).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>60a9cbec4aebaae362d7955b0b121c05</Hash>
+    <Hash>c0487b3e07a14bbc123233089036d5ca</Hash>
 </Codenesium>*/

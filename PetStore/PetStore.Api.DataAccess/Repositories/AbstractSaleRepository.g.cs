@@ -76,11 +76,13 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to table PaymentType via paymentTypeId.
 		public async virtual Task<PaymentType> PaymentTypeByPaymentTypeId(int paymentTypeId)
 		{
 			return await this.Context.Set<PaymentType>().SingleOrDefaultAsync(x => x.Id == paymentTypeId);
 		}
 
+		// Foreign key reference to table Pet via petId.
 		public async virtual Task<Pet> PetByPetId(int petId)
 		{
 			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
@@ -110,5 +112,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cc55f45618de20811cda13997f8e67e</Hash>
+    <Hash>884f6dd399bbc51f0570b415a8720250</Hash>
 </Codenesium>*/

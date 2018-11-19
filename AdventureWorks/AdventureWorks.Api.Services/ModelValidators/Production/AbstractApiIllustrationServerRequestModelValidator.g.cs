@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dc064f715d4c0837f2c807a3f06aeaf</Hash>
+    <Hash>85f03ab7adfc323585cddce7115942e8</Hash>
 </Codenesium>*/

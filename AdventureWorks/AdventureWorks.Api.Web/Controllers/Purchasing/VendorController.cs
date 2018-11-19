@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/vendors")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class VendorController : AbstractVendorController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d4e95202e7b9b3604a956dfbcfceafc8</Hash>
+    <Hash>8a97b02cb5a6f40ca2952eedd7705724</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/productReviews")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ProductReviewController : AbstractProductReviewController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b6b857e1a71e912a1dde0a63d9884d7e</Hash>
+    <Hash>0a1a25082859850945266f9756f07cf8</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IEventStatuRepository>();
 			var model = new ApiEventStatuServerRequestModel();
@@ -95,12 +96,35 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			CreateResponse<ApiEventStatuServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<EventStatu>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IEventStatuRepository>();
+			var model = new ApiEventStatuServerRequestModel();
+			var validatorMock = new Mock<IApiEventStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
+
+			CreateResponse<ApiEventStatuServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IEventStatuRepository>();
 			var model = new ApiEventStatuServerRequestModel();
@@ -117,12 +141,36 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			UpdateResponse<ApiEventStatuServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<EventStatu>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IEventStatuRepository>();
+			var model = new ApiEventStatuServerRequestModel();
+			var validatorMock = new Mock<IApiEventStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventStatu()));
+			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
+
+			UpdateResponse<ApiEventStatuServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IEventStatuRepository>();
 			var model = new ApiEventStatuServerRequestModel();
@@ -138,8 +186,31 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IEventStatuRepository>();
+			var model = new ApiEventStatuServerRequestModel();
+			var validatorMock = new Mock<IApiEventStatuServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.RepositoryMock.Object,
+			                                    validatorMock.Object,
+			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventStatuMapperMock,
+			                                    mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                                    mock.DALMapperMockFactory.DALEventMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -185,5 +256,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b5f00e75a1aad75294f04638aad519d4</Hash>
+    <Hash>8f9b052d89eb0b92051fdb9ca510a1c6</Hash>
 </Codenesium>*/

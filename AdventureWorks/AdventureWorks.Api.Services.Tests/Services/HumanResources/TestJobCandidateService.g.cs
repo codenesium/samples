@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
 			var model = new ApiJobCandidateServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiJobCandidateServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<JobCandidate>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IJobCandidateRepository>();
+			var model = new ApiJobCandidateServerRequestModel();
+			var validatorMock = new Mock<IApiJobCandidateServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
+			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
+
+			CreateResponse<ApiJobCandidateServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
 			var model = new ApiJobCandidateServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiJobCandidateServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<JobCandidate>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IJobCandidateRepository>();
+			var model = new ApiJobCandidateServerRequestModel();
+			var validatorMock = new Mock<IApiJobCandidateServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new JobCandidate()));
+			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
+			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
+
+			UpdateResponse<ApiJobCandidateServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
 			var model = new ApiJobCandidateServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IJobCandidateRepository>();
+			var model = new ApiJobCandidateServerRequestModel();
+			var validatorMock = new Mock<IApiJobCandidateServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
+			                                      mock.DALMapperMockFactory.DALJobCandidateMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7856864868f46623cd02069aaa4286b5</Hash>
+    <Hash>b2c0b29861ec189ab59275130718c960</Hash>
 </Codenesium>*/

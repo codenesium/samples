@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/machines")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class MachineController : AbstractMachineController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0c19bf88f5ecca71ef3919b5ea31a0fe</Hash>
+    <Hash>b39cc50eaf8b91692d7bcb935794733e</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
 			var model = new ApiPhoneNumberTypeServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PhoneNumberType>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
+			var model = new ApiPhoneNumberTypeServerRequestModel();
+			var validatorMock = new Mock<IApiPhoneNumberTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
+			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
+
+			CreateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
 			var model = new ApiPhoneNumberTypeServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PhoneNumberType>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
+			var model = new ApiPhoneNumberTypeServerRequestModel();
+			var validatorMock = new Mock<IApiPhoneNumberTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
+			var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
+			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
+
+			UpdateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
 			var model = new ApiPhoneNumberTypeServerRequestModel();
@@ -126,12 +170,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
+			var model = new ApiPhoneNumberTypeServerRequestModel();
+			var validatorMock = new Mock<IApiPhoneNumberTypeServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
+			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c12b36455551b9fcd696b7bc2d9e78a0</Hash>
+    <Hash>325a2dfa69c9c0af1c3728e4724fade1</Hash>
 </Codenesium>*/

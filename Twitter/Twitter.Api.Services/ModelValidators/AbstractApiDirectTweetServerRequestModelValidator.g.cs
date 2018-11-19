@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -27,8 +28,8 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ContentRules()
 		{
-			this.RuleFor(x => x.Content).NotNull();
-			this.RuleFor(x => x.Content).Length(0, 140);
+			this.RuleFor(x => x.Content).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Content).Length(0, 140).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DateRules()
@@ -37,7 +38,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void TaggedUserIdRules()
 		{
-			this.RuleFor(x => x.TaggedUserId).MustAsync(this.BeValidUserByTaggedUserId).When(x => !x?.TaggedUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TaggedUserId).MustAsync(this.BeValidUserByTaggedUserId).When(x => !x?.TaggedUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void TimeRules()
@@ -54,5 +55,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39a68620eb09182eb20ebc557975f2a5</Hash>
+    <Hash>65f43b6a6fe16eb2db2736b330ffce0b</Hash>
 </Codenesium>*/

@@ -57,12 +57,12 @@ namespace AdventureWorksNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAWBuildVersionClientResponseModel>> > AWBuildVersionBulkInsertAsync(List<ApiAWBuildVersionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAWBuildVersionClientResponseModel>>> AWBuildVersionBulkInsertAsync(List<ApiAWBuildVersionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/AWBuildVersions/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAWBuildVersionClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAWBuildVersionClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAWBuildVersionClientResponseModel>> AWBuildVersionCreateAsync(ApiAWBuildVersionClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -122,12 +122,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDatabaseLogClientResponseModel>> > DatabaseLogBulkInsertAsync(List<ApiDatabaseLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDatabaseLogClientResponseModel>>> DatabaseLogBulkInsertAsync(List<ApiDatabaseLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/DatabaseLogs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDatabaseLogClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDatabaseLogClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDatabaseLogClientResponseModel>> DatabaseLogCreateAsync(ApiDatabaseLogClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -187,12 +187,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiErrorLogClientResponseModel>> > ErrorLogBulkInsertAsync(List<ApiErrorLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiErrorLogClientResponseModel>>> ErrorLogBulkInsertAsync(List<ApiErrorLogClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ErrorLogs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiErrorLogClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiErrorLogClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiErrorLogClientResponseModel>> ErrorLogCreateAsync(ApiErrorLogClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -252,12 +252,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDepartmentClientResponseModel>> > DepartmentBulkInsertAsync(List<ApiDepartmentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDepartmentClientResponseModel>>> DepartmentBulkInsertAsync(List<ApiDepartmentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Departments/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDepartmentClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDepartmentClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDepartmentClientResponseModel>> DepartmentCreateAsync(ApiDepartmentClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -325,12 +325,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiDepartmentClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiEmployeeClientResponseModel>> > EmployeeBulkInsertAsync(List<ApiEmployeeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiEmployeeClientResponseModel>>> EmployeeBulkInsertAsync(List<ApiEmployeeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Employees/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEmployeeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEmployeeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeClientResponseModel>> EmployeeCreateAsync(ApiEmployeeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -422,12 +422,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiJobCandidateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiJobCandidateClientResponseModel>> > JobCandidateBulkInsertAsync(List<ApiJobCandidateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiJobCandidateClientResponseModel>>> JobCandidateBulkInsertAsync(List<ApiJobCandidateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/JobCandidates/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiJobCandidateClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiJobCandidateClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiJobCandidateClientResponseModel>> JobCandidateCreateAsync(ApiJobCandidateClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -495,12 +495,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiJobCandidateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiShiftClientResponseModel>> > ShiftBulkInsertAsync(List<ApiShiftClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiShiftClientResponseModel>>> ShiftBulkInsertAsync(List<ApiShiftClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Shifts/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShiftClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShiftClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiShiftClientResponseModel>> ShiftCreateAsync(ApiShiftClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -576,12 +576,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiShiftClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAddressClientResponseModel>> > AddressBulkInsertAsync(List<ApiAddressClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAddressClientResponseModel>>> AddressBulkInsertAsync(List<ApiAddressClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Addresses/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAddressClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAddressClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAddressClientResponseModel>> AddressCreateAsync(ApiAddressClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -665,12 +665,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAddressClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAddressTypeClientResponseModel>> > AddressTypeBulkInsertAsync(List<ApiAddressTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAddressTypeClientResponseModel>>> AddressTypeBulkInsertAsync(List<ApiAddressTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/AddressTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAddressTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAddressTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAddressTypeClientResponseModel>> AddressTypeCreateAsync(ApiAddressTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -746,12 +746,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiAddressTypeClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiBusinessEntityClientResponseModel>> > BusinessEntityBulkInsertAsync(List<ApiBusinessEntityClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiBusinessEntityClientResponseModel>>> BusinessEntityBulkInsertAsync(List<ApiBusinessEntityClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/BusinessEntities/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBusinessEntityClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBusinessEntityClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBusinessEntityClientResponseModel>> BusinessEntityCreateAsync(ApiBusinessEntityClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -827,12 +827,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPersonClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiContactTypeClientResponseModel>> > ContactTypeBulkInsertAsync(List<ApiContactTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiContactTypeClientResponseModel>>> ContactTypeBulkInsertAsync(List<ApiContactTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ContactTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiContactTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiContactTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiContactTypeClientResponseModel>> ContactTypeCreateAsync(ApiContactTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -900,12 +900,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiContactTypeClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCountryRegionClientResponseModel>> > CountryRegionBulkInsertAsync(List<ApiCountryRegionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCountryRegionClientResponseModel>>> CountryRegionBulkInsertAsync(List<ApiCountryRegionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRegions/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRegionClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRegionClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRegionClientResponseModel>> CountryRegionCreateAsync(ApiCountryRegionClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -981,12 +981,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiStateProvinceClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPasswordClientResponseModel>> > PasswordBulkInsertAsync(List<ApiPasswordClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPasswordClientResponseModel>>> PasswordBulkInsertAsync(List<ApiPasswordClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Passwords/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPasswordClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPasswordClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPasswordClientResponseModel>> PasswordCreateAsync(ApiPasswordClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1046,12 +1046,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPersonClientResponseModel>> > PersonBulkInsertAsync(List<ApiPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPersonClientResponseModel>>> PersonBulkInsertAsync(List<ApiPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/People/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonClientResponseModel>> PersonCreateAsync(ApiPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1151,12 +1151,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPasswordClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPhoneNumberTypeClientResponseModel>> > PhoneNumberTypeBulkInsertAsync(List<ApiPhoneNumberTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPhoneNumberTypeClientResponseModel>>> PhoneNumberTypeBulkInsertAsync(List<ApiPhoneNumberTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PhoneNumberTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPhoneNumberTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPhoneNumberTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPhoneNumberTypeClientResponseModel>> PhoneNumberTypeCreateAsync(ApiPhoneNumberTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1216,12 +1216,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiStateProvinceClientResponseModel>> > StateProvinceBulkInsertAsync(List<ApiStateProvinceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiStateProvinceClientResponseModel>>> StateProvinceBulkInsertAsync(List<ApiStateProvinceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/StateProvinces/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStateProvinceClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStateProvinceClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiStateProvinceClientResponseModel>> StateProvinceCreateAsync(ApiStateProvinceClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1313,12 +1313,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAddressClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiBillOfMaterialClientResponseModel>> > BillOfMaterialBulkInsertAsync(List<ApiBillOfMaterialClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiBillOfMaterialClientResponseModel>>> BillOfMaterialBulkInsertAsync(List<ApiBillOfMaterialClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/BillOfMaterials/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBillOfMaterialClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBillOfMaterialClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBillOfMaterialClientResponseModel>> BillOfMaterialCreateAsync(ApiBillOfMaterialClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1386,12 +1386,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBillOfMaterialClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCultureClientResponseModel>> > CultureBulkInsertAsync(List<ApiCultureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCultureClientResponseModel>>> CultureBulkInsertAsync(List<ApiCultureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Cultures/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCultureClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCultureClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCultureClientResponseModel>> CultureCreateAsync(ApiCultureClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1459,12 +1459,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiCultureClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiDocumentClientResponseModel>> > DocumentBulkInsertAsync(List<ApiDocumentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiDocumentClientResponseModel>>> DocumentBulkInsertAsync(List<ApiDocumentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Documents/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDocumentClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiDocumentClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDocumentClientResponseModel>> DocumentCreateAsync(ApiDocumentClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1540,12 +1540,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDocumentClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiIllustrationClientResponseModel>> > IllustrationBulkInsertAsync(List<ApiIllustrationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiIllustrationClientResponseModel>>> IllustrationBulkInsertAsync(List<ApiIllustrationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Illustrations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiIllustrationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiIllustrationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiIllustrationClientResponseModel>> IllustrationCreateAsync(ApiIllustrationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1605,12 +1605,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLocationClientResponseModel>> > LocationBulkInsertAsync(List<ApiLocationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLocationClientResponseModel>>> LocationBulkInsertAsync(List<ApiLocationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Locations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLocationClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLocationClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLocationClientResponseModel>> LocationCreateAsync(ApiLocationClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1678,12 +1678,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiLocationClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductClientResponseModel>> > ProductBulkInsertAsync(List<ApiProductClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductClientResponseModel>>> ProductBulkInsertAsync(List<ApiProductClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Products/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductClientResponseModel>> ProductCreateAsync(ApiProductClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1807,12 +1807,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiWorkOrderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductCategoryClientResponseModel>> > ProductCategoryBulkInsertAsync(List<ApiProductCategoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductCategoryClientResponseModel>>> ProductCategoryBulkInsertAsync(List<ApiProductCategoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductCategories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductCategoryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductCategoryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductCategoryClientResponseModel>> ProductCategoryCreateAsync(ApiProductCategoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1896,12 +1896,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProductSubcategoryClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductDescriptionClientResponseModel>> > ProductDescriptionBulkInsertAsync(List<ApiProductDescriptionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductDescriptionClientResponseModel>>> ProductDescriptionBulkInsertAsync(List<ApiProductDescriptionClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductDescriptions/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductDescriptionClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductDescriptionClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductDescriptionClientResponseModel>> ProductDescriptionCreateAsync(ApiProductDescriptionClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -1969,12 +1969,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiProductDescriptionClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductModelClientResponseModel>> > ProductModelBulkInsertAsync(List<ApiProductModelClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductModelClientResponseModel>>> ProductModelBulkInsertAsync(List<ApiProductModelClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductModels/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductModelClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductModelClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductModelClientResponseModel>> ProductModelCreateAsync(ApiProductModelClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2074,12 +2074,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProductClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductPhotoClientResponseModel>> > ProductPhotoBulkInsertAsync(List<ApiProductPhotoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductPhotoClientResponseModel>>> ProductPhotoBulkInsertAsync(List<ApiProductPhotoClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductPhotoes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductPhotoClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductPhotoClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductPhotoClientResponseModel>> ProductPhotoCreateAsync(ApiProductPhotoClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2139,12 +2139,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductReviewClientResponseModel>> > ProductReviewBulkInsertAsync(List<ApiProductReviewClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductReviewClientResponseModel>>> ProductReviewBulkInsertAsync(List<ApiProductReviewClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductReviews/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductReviewClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductReviewClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductReviewClientResponseModel>> ProductReviewCreateAsync(ApiProductReviewClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2212,12 +2212,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProductReviewClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiProductSubcategoryClientResponseModel>> > ProductSubcategoryBulkInsertAsync(List<ApiProductSubcategoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiProductSubcategoryClientResponseModel>>> ProductSubcategoryBulkInsertAsync(List<ApiProductSubcategoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ProductSubcategories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductSubcategoryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiProductSubcategoryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiProductSubcategoryClientResponseModel>> ProductSubcategoryCreateAsync(ApiProductSubcategoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2301,12 +2301,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProductClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiScrapReasonClientResponseModel>> > ScrapReasonBulkInsertAsync(List<ApiScrapReasonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiScrapReasonClientResponseModel>>> ScrapReasonBulkInsertAsync(List<ApiScrapReasonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ScrapReasons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiScrapReasonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiScrapReasonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiScrapReasonClientResponseModel>> ScrapReasonCreateAsync(ApiScrapReasonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2382,12 +2382,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiWorkOrderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTransactionHistoryClientResponseModel>> > TransactionHistoryBulkInsertAsync(List<ApiTransactionHistoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTransactionHistoryClientResponseModel>>> TransactionHistoryBulkInsertAsync(List<ApiTransactionHistoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TransactionHistories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTransactionHistoryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTransactionHistoryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTransactionHistoryClientResponseModel>> TransactionHistoryCreateAsync(ApiTransactionHistoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2463,12 +2463,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTransactionHistoryClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTransactionHistoryArchiveClientResponseModel>> > TransactionHistoryArchiveBulkInsertAsync(List<ApiTransactionHistoryArchiveClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTransactionHistoryArchiveClientResponseModel>>> TransactionHistoryArchiveBulkInsertAsync(List<ApiTransactionHistoryArchiveClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TransactionHistoryArchives/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTransactionHistoryArchiveClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTransactionHistoryArchiveClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTransactionHistoryArchiveClientResponseModel>> TransactionHistoryArchiveCreateAsync(ApiTransactionHistoryArchiveClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2544,12 +2544,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTransactionHistoryArchiveClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiUnitMeasureClientResponseModel>> > UnitMeasureBulkInsertAsync(List<ApiUnitMeasureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiUnitMeasureClientResponseModel>>> UnitMeasureBulkInsertAsync(List<ApiUnitMeasureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/UnitMeasures/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUnitMeasureClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUnitMeasureClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUnitMeasureClientResponseModel>> UnitMeasureCreateAsync(ApiUnitMeasureClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2641,12 +2641,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProductClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiWorkOrderClientResponseModel>> > WorkOrderBulkInsertAsync(List<ApiWorkOrderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiWorkOrderClientResponseModel>>> WorkOrderBulkInsertAsync(List<ApiWorkOrderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/WorkOrders/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiWorkOrderClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiWorkOrderClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkOrderClientResponseModel>> WorkOrderCreateAsync(ApiWorkOrderClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2722,12 +2722,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiWorkOrderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPurchaseOrderHeaderClientResponseModel>> > PurchaseOrderHeaderBulkInsertAsync(List<ApiPurchaseOrderHeaderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPurchaseOrderHeaderClientResponseModel>>> PurchaseOrderHeaderBulkInsertAsync(List<ApiPurchaseOrderHeaderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PurchaseOrderHeaders/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPurchaseOrderHeaderClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPurchaseOrderHeaderClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPurchaseOrderHeaderClientResponseModel>> PurchaseOrderHeaderCreateAsync(ApiPurchaseOrderHeaderClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2803,12 +2803,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiShipMethodClientResponseModel>> > ShipMethodBulkInsertAsync(List<ApiShipMethodClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiShipMethodClientResponseModel>>> ShipMethodBulkInsertAsync(List<ApiShipMethodClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ShipMethods/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShipMethodClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShipMethodClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiShipMethodClientResponseModel>> ShipMethodCreateAsync(ApiShipMethodClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2892,12 +2892,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVendorClientResponseModel>> > VendorBulkInsertAsync(List<ApiVendorClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVendorClientResponseModel>>> VendorBulkInsertAsync(List<ApiVendorClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Vendors/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVendorClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVendorClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVendorClientResponseModel>> VendorCreateAsync(ApiVendorClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -2973,12 +2973,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCreditCardClientResponseModel>> > CreditCardBulkInsertAsync(List<ApiCreditCardClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCreditCardClientResponseModel>>> CreditCardBulkInsertAsync(List<ApiCreditCardClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CreditCards/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCreditCardClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCreditCardClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCreditCardClientResponseModel>> CreditCardCreateAsync(ApiCreditCardClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3054,12 +3054,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCurrencyClientResponseModel>> > CurrencyBulkInsertAsync(List<ApiCurrencyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCurrencyClientResponseModel>>> CurrencyBulkInsertAsync(List<ApiCurrencyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Currencies/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCurrencyClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCurrencyClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCurrencyClientResponseModel>> CurrencyCreateAsync(ApiCurrencyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3143,12 +3143,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCurrencyRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCurrencyRateClientResponseModel>> > CurrencyRateBulkInsertAsync(List<ApiCurrencyRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCurrencyRateClientResponseModel>>> CurrencyRateBulkInsertAsync(List<ApiCurrencyRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CurrencyRates/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCurrencyRateClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCurrencyRateClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCurrencyRateClientResponseModel>> CurrencyRateCreateAsync(ApiCurrencyRateClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3224,12 +3224,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCustomerClientResponseModel>> > CustomerBulkInsertAsync(List<ApiCustomerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCustomerClientResponseModel>>> CustomerBulkInsertAsync(List<ApiCustomerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Customers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCustomerClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCustomerClientResponseModel>> CustomerCreateAsync(ApiCustomerClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3321,12 +3321,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSalesOrderHeaderClientResponseModel>> > SalesOrderHeaderBulkInsertAsync(List<ApiSalesOrderHeaderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSalesOrderHeaderClientResponseModel>>> SalesOrderHeaderBulkInsertAsync(List<ApiSalesOrderHeaderClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SalesOrderHeaders/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesOrderHeaderClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesOrderHeaderClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesOrderHeaderClientResponseModel>> SalesOrderHeaderCreateAsync(ApiSalesOrderHeaderClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3418,12 +3418,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSalesPersonClientResponseModel>> > SalesPersonBulkInsertAsync(List<ApiSalesPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSalesPersonClientResponseModel>>> SalesPersonBulkInsertAsync(List<ApiSalesPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SalesPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesPersonClientResponseModel>> SalesPersonCreateAsync(ApiSalesPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3507,12 +3507,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiStoreClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSalesReasonClientResponseModel>> > SalesReasonBulkInsertAsync(List<ApiSalesReasonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSalesReasonClientResponseModel>>> SalesReasonBulkInsertAsync(List<ApiSalesReasonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SalesReasons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesReasonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesReasonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesReasonClientResponseModel>> SalesReasonCreateAsync(ApiSalesReasonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3572,12 +3572,12 @@ namespace AdventureWorksNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSalesTaxRateClientResponseModel>> > SalesTaxRateBulkInsertAsync(List<ApiSalesTaxRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSalesTaxRateClientResponseModel>>> SalesTaxRateBulkInsertAsync(List<ApiSalesTaxRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SalesTaxRates/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesTaxRateClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesTaxRateClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTaxRateClientResponseModel>> SalesTaxRateCreateAsync(ApiSalesTaxRateClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3653,12 +3653,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiSalesTaxRateClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSalesTerritoryClientResponseModel>> > SalesTerritoryBulkInsertAsync(List<ApiSalesTerritoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSalesTerritoryClientResponseModel>>> SalesTerritoryBulkInsertAsync(List<ApiSalesTerritoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SalesTerritories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesTerritoryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSalesTerritoryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTerritoryClientResponseModel>> SalesTerritoryCreateAsync(ApiSalesTerritoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3758,12 +3758,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSalesPersonClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiShoppingCartItemClientResponseModel>> > ShoppingCartItemBulkInsertAsync(List<ApiShoppingCartItemClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiShoppingCartItemClientResponseModel>>> ShoppingCartItemBulkInsertAsync(List<ApiShoppingCartItemClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ShoppingCartItems/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShoppingCartItemClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiShoppingCartItemClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiShoppingCartItemClientResponseModel>> ShoppingCartItemCreateAsync(ApiShoppingCartItemClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3831,12 +3831,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiShoppingCartItemClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSpecialOfferClientResponseModel>> > SpecialOfferBulkInsertAsync(List<ApiSpecialOfferClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSpecialOfferClientResponseModel>>> SpecialOfferBulkInsertAsync(List<ApiSpecialOfferClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SpecialOffers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpecialOfferClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpecialOfferClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSpecialOfferClientResponseModel>> SpecialOfferCreateAsync(ApiSpecialOfferClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -3904,12 +3904,12 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiSpecialOfferClientResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiStoreClientResponseModel>> > StoreBulkInsertAsync(List<ApiStoreClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiStoreClientResponseModel>>> StoreBulkInsertAsync(List<ApiStoreClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Stores/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStoreClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStoreClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiStoreClientResponseModel>> StoreCreateAsync(ApiStoreClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -4029,5 +4029,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d65bfbc44a0bf06a2b3eec9db31af6fa</Hash>
+    <Hash>9a86a182f6e099cb359f51c34801c7b6</Hash>
 </Codenesium>*/

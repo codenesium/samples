@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/sales")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SaleController : AbstractSaleController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7a2f50164227ff68d30fce5ac251cdd9</Hash>
+    <Hash>367eebf24d7237ab8fd1df285f58a57b</Hash>
 </Codenesium>*/

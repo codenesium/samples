@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/testAllFieldTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TestAllFieldTypeController : AbstractTestAllFieldTypeController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>14b9566b24dd387c7051ed4ee98f0d6f</Hash>
+    <Hash>0c1de2df0035bfd4131da9fddbe621ba</Hash>
 </Codenesium>*/

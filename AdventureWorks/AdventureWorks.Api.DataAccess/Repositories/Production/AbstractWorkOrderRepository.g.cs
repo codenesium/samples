@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_WorkOrder_ProductID.
 		public async virtual Task<List<WorkOrder>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
+		// Non-unique constraint IX_WorkOrder_ScrapReasonID.
 		public async virtual Task<List<WorkOrder>> ByScrapReasonID(short? scrapReasonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ScrapReasonID == scrapReasonID, limit, offset);
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5c498fabd6baf3aa5d197f5b1cd82635</Hash>
+    <Hash>eab5ffcad1ee30a24de68065a1c17072</Hash>
 </Codenesium>*/

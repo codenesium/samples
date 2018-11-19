@@ -57,12 +57,12 @@ namespace StackOverflowNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiBadgeClientResponseModel>> > BadgeBulkInsertAsync(List<ApiBadgeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiBadgeClientResponseModel>>> BadgeBulkInsertAsync(List<ApiBadgeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Badges/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBadgeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiBadgeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBadgeClientResponseModel>> BadgeCreateAsync(ApiBadgeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -122,12 +122,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCommentClientResponseModel>> > CommentBulkInsertAsync(List<ApiCommentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCommentClientResponseModel>>> CommentBulkInsertAsync(List<ApiCommentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Comments/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCommentClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCommentClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCommentClientResponseModel>> CommentCreateAsync(ApiCommentClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -187,12 +187,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiLinkTypeClientResponseModel>> > LinkTypeBulkInsertAsync(List<ApiLinkTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiLinkTypeClientResponseModel>>> LinkTypeBulkInsertAsync(List<ApiLinkTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/LinkTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiLinkTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkTypeClientResponseModel>> LinkTypeCreateAsync(ApiLinkTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -252,12 +252,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPostHistoryClientResponseModel>> > PostHistoryBulkInsertAsync(List<ApiPostHistoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPostHistoryClientResponseModel>>> PostHistoryBulkInsertAsync(List<ApiPostHistoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PostHistories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostHistoryClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostHistoryClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostHistoryClientResponseModel>> PostHistoryCreateAsync(ApiPostHistoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -317,12 +317,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPostHistoryTypeClientResponseModel>> > PostHistoryTypeBulkInsertAsync(List<ApiPostHistoryTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPostHistoryTypeClientResponseModel>>> PostHistoryTypeBulkInsertAsync(List<ApiPostHistoryTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PostHistoryTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostHistoryTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostHistoryTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostHistoryTypeClientResponseModel>> PostHistoryTypeCreateAsync(ApiPostHistoryTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -382,12 +382,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPostLinkClientResponseModel>> > PostLinkBulkInsertAsync(List<ApiPostLinkClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPostLinkClientResponseModel>>> PostLinkBulkInsertAsync(List<ApiPostLinkClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PostLinks/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostLinkClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostLinkClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostLinkClientResponseModel>> PostLinkCreateAsync(ApiPostLinkClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -447,12 +447,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPostClientResponseModel>> > PostBulkInsertAsync(List<ApiPostClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPostClientResponseModel>>> PostBulkInsertAsync(List<ApiPostClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Posts/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostClientResponseModel>> PostCreateAsync(ApiPostClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -520,12 +520,12 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPostTypeClientResponseModel>> > PostTypeBulkInsertAsync(List<ApiPostTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPostTypeClientResponseModel>>> PostTypeBulkInsertAsync(List<ApiPostTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PostTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPostTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostTypeClientResponseModel>> PostTypeCreateAsync(ApiPostTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -585,12 +585,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTagClientResponseModel>> > TagBulkInsertAsync(List<ApiTagClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTagClientResponseModel>>> TagBulkInsertAsync(List<ApiTagClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tags/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTagClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTagClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTagClientResponseModel>> TagCreateAsync(ApiTagClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -650,12 +650,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>> > UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>>> UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Users/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUserClientResponseModel>> UserCreateAsync(ApiUserClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -715,12 +715,12 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVoteClientResponseModel>> > VoteBulkInsertAsync(List<ApiVoteClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVoteClientResponseModel>>> VoteBulkInsertAsync(List<ApiVoteClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Votes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVoteClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVoteClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVoteClientResponseModel>> VoteCreateAsync(ApiVoteClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -788,12 +788,12 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiVoteClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVoteTypeClientResponseModel>> > VoteTypeBulkInsertAsync(List<ApiVoteTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVoteTypeClientResponseModel>>> VoteTypeBulkInsertAsync(List<ApiVoteTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VoteTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVoteTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVoteTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVoteTypeClientResponseModel>> VoteTypeCreateAsync(ApiVoteTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -881,5 +881,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7a020150efc6b4b051ba46f1a7367e22</Hash>
+    <Hash>40559d52cd3892347345d76e20de5a2f</Hash>
 </Codenesium>*/

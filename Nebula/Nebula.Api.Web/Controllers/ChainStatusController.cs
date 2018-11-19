@@ -17,7 +17,6 @@ namespace NebulaNS.Api.Web
 	[Route("api/chainStatuses")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ChainStatusController : AbstractChainStatusController
 	{
@@ -42,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8e9d0480e545461045da15a1e6764246</Hash>
+    <Hash>ad8eddf6287de943fe686aa7c82dc10b</Hash>
 </Codenesium>*/

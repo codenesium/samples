@@ -76,21 +76,25 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Quote_Tweet_retweeter_user_id.
 		public async virtual Task<List<QuoteTweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.RetweeterUserId == retweeterUserId, limit, offset);
 		}
 
+		// Non-unique constraint IX_Quote_Tweet_source_tweet_id.
 		public async virtual Task<List<QuoteTweet>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.SourceTweetId == sourceTweetId, limit, offset);
 		}
 
+		// Foreign key reference to table User via retweeterUserId.
 		public async virtual Task<User> UserByRetweeterUserId(int retweeterUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == retweeterUserId);
 		}
 
+		// Foreign key reference to table Tweet via sourceTweetId.
 		public async virtual Task<Tweet> TweetBySourceTweetId(int sourceTweetId)
 		{
 			return await this.Context.Set<Tweet>().SingleOrDefaultAsync(x => x.TweetId == sourceTweetId);
@@ -120,5 +124,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b229e74aeda010b4169d24606e0bf6c</Hash>
+    <Hash>0ea3b01da5918d658749e7ebdc870eff</Hash>
 </Codenesium>*/

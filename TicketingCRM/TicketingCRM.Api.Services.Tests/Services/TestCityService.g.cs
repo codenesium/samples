@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICityRepository>();
 			var model = new ApiCityServerRequestModel();
@@ -95,12 +96,35 @@ namespace TicketingCRMNS.Api.Services.Tests
 			CreateResponse<ApiCityServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<City>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ICityRepository>();
+			var model = new ApiCityServerRequestModel();
+			var validatorMock = new Mock<IApiCityServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                              mock.DALMapperMockFactory.DALCityMapperMock,
+			                              mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                              mock.DALMapperMockFactory.DALEventMapperMock);
+
+			CreateResponse<ApiCityServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICityRepository>();
 			var model = new ApiCityServerRequestModel();
@@ -117,12 +141,36 @@ namespace TicketingCRMNS.Api.Services.Tests
 			UpdateResponse<ApiCityServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<City>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ICityRepository>();
+			var model = new ApiCityServerRequestModel();
+			var validatorMock = new Mock<IApiCityServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
+			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                              mock.DALMapperMockFactory.DALCityMapperMock,
+			                              mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                              mock.DALMapperMockFactory.DALEventMapperMock);
+
+			UpdateResponse<ApiCityServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ICityRepository>();
 			var model = new ApiCityServerRequestModel();
@@ -138,8 +186,31 @@ namespace TicketingCRMNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ICityRepository>();
+			var model = new ApiCityServerRequestModel();
+			var validatorMock = new Mock<IApiCityServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              validatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                              mock.DALMapperMockFactory.DALCityMapperMock,
+			                              mock.BOLMapperMockFactory.BOLEventMapperMock,
+			                              mock.DALMapperMockFactory.DALEventMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -225,5 +296,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1bfae6bb529d7412172a79f25490e217</Hash>
+    <Hash>7ab44f441f20e00acdf959907c907e0f</Hash>
 </Codenesium>*/

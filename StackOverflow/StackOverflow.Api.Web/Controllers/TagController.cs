@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/tags")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TagController : AbstractTagController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fa4bcb20c8f5306c0d74a6091d51a2ff</Hash>
+    <Hash>c808a0350c9b33ff28ad33d1e748a244</Hash>
 </Codenesium>*/

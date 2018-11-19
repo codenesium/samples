@@ -1,6 +1,7 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			var model = new ApiBucketServerRequestModel();
@@ -95,12 +96,35 @@ namespace FileServiceNS.Api.Services.Tests
 			CreateResponse<ApiBucketServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Bucket>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IBucketRepository>();
+			var model = new ApiBucketServerRequestModel();
+			var validatorMock = new Mock<IApiBucketServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
+			                                mock.DALMapperMockFactory.DALBucketMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                                mock.DALMapperMockFactory.DALFileMapperMock);
+
+			CreateResponse<ApiBucketServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			var model = new ApiBucketServerRequestModel();
@@ -117,12 +141,36 @@ namespace FileServiceNS.Api.Services.Tests
 			UpdateResponse<ApiBucketServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Bucket>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IBucketRepository>();
+			var model = new ApiBucketServerRequestModel();
+			var validatorMock = new Mock<IApiBucketServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
+			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
+			                                mock.DALMapperMockFactory.DALBucketMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                                mock.DALMapperMockFactory.DALFileMapperMock);
+
+			UpdateResponse<ApiBucketServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			var model = new ApiBucketServerRequestModel();
@@ -138,8 +186,31 @@ namespace FileServiceNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IBucketRepository>();
+			var model = new ApiBucketServerRequestModel();
+			var validatorMock = new Mock<IApiBucketServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                validatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
+			                                mock.DALMapperMockFactory.DALBucketMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFileMapperMock,
+			                                mock.DALMapperMockFactory.DALFileMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -263,5 +334,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d24c4c881f7fd611a3cfa49d5835923d</Hash>
+    <Hash>3e9c0292760a316db0e9fe98c92583c3</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/countries")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class CountryController : AbstractCountryController
 	{
@@ -42,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bb2163d009568234bbfb2eb1e2716c44</Hash>
+    <Hash>f25042b6e1f84b7bdf6814eb3baf0a8f</Hash>
 </Codenesium>*/

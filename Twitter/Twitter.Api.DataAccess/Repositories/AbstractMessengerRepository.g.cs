@@ -76,31 +76,37 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Messenger_message_id.
 		public async virtual Task<List<Messenger>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.MessageId == messageId, limit, offset);
 		}
 
+		// Non-unique constraint IX_Messenger_to_user_id.
 		public async virtual Task<List<Messenger>> ByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ToUserId == toUserId, limit, offset);
 		}
 
+		// Non-unique constraint IX_Messenger_user_id.
 		public async virtual Task<List<Messenger>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
+		// Foreign key reference to table Message via messageId.
 		public async virtual Task<Message> MessageByMessageId(int? messageId)
 		{
 			return await this.Context.Set<Message>().SingleOrDefaultAsync(x => x.MessageId == messageId);
 		}
 
+		// Foreign key reference to table User via toUserId.
 		public async virtual Task<User> UserByToUserId(int toUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == toUserId);
 		}
 
+		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int? userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userId);
@@ -130,5 +136,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2fcf7b34d3529a23ef90ac781a903ce8</Hash>
+    <Hash>b549331f99c8e03d10c2727a923bed6e</Hash>
 </Codenesium>*/

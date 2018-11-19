@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions;
+using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,19 +28,19 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void DeviceIdRules()
 		{
-			this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDeviceByDeviceId).When(x => !x?.DeviceId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDeviceByDeviceId).When(x => !x?.DeviceId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 90);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @ValueRules()
 		{
-			this.RuleFor(x => x.@Value).NotNull();
-			this.RuleFor(x => x.@Value).Length(0, 4000);
+			this.RuleFor(x => x.@Value).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.@Value).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidDeviceByDeviceId(int id,  CancellationToken cancellationToken)
@@ -52,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f73a386aa288648136550bbe9feb077</Hash>
+    <Hash>1eae55ad57b78f52b849ecdcbbfef37b</Hash>
 </Codenesium>*/

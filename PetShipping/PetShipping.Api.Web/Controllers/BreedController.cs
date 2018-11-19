@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/breeds")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class BreedController : AbstractBreedController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2529f7bc6ba1ffc7bc495cf867a99428</Hash>
+    <Hash>010d3dc9bbbb457cb521da0616c0fc7a</Hash>
 </Codenesium>*/

@@ -1,0 +1,1640 @@
+{
+  "$id": "1",
+  "Database": {
+    "$id": "2",
+    "Name": "Demo_PetStore",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Breed",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "6",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "7",
+                "Name": "PK_Breed",
+                "TableName": "Breed",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "8",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "9",
+            "Name": "PaymentType",
+            "Columns": [
+              {
+                "$id": "10",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "11",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "12",
+                "Name": "PK_PaymentType",
+                "TableName": "PaymentType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "13",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "14",
+            "Name": "Pen",
+            "Columns": [
+              {
+                "$id": "15",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "16",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "17",
+                "Name": "PK_Pen",
+                "TableName": "Pen",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "18",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "19",
+            "Name": "Pet",
+            "Columns": [
+              {
+                "$id": "20",
+                "Name": "acquiredDate",
+                "DataType": "date",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "21",
+                "Name": "breedId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "22",
+                "Name": "description",
+                "DataType": "text",
+                "NumericPrecision": 0,
+                "MaxLength": 2147483647,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "23",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "24",
+                "Name": "penId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "25",
+                "Name": "price",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "26",
+                "Name": "speciesId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "27",
+                "Name": "PK_Pet",
+                "TableName": "Pet",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "28",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "29",
+            "Name": "Sale",
+            "Columns": [
+              {
+                "$id": "30",
+                "Name": "amount",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "31",
+                "Name": "firstName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "32",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "33",
+                "Name": "lastName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "34",
+                "Name": "paymentTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "35",
+                "Name": "petId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "36",
+                "Name": "phone",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 10,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "37",
+                "Name": "PK_Sale",
+                "TableName": "Sale",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "38",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "39",
+            "Name": "Species",
+            "Columns": [
+              {
+                "$id": "40",
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "41",
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "42",
+                "Name": "PK_Species",
+                "TableName": "Species",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "43",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "44",
+            "Columns": [
+              {
+                "$id": "45",
+                "ForeignKeyTableName": "Pet",
+                "ForeignKeyColumnName": "breedId",
+                "PrimaryKeyTableName": "Breed",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Pet_breedId_Breed_id"
+          },
+          {
+            "$id": "46",
+            "Columns": [
+              {
+                "$id": "47",
+                "ForeignKeyTableName": "Pet",
+                "ForeignKeyColumnName": "penId",
+                "PrimaryKeyTableName": "Pen",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Pet_penId_Pen_id"
+          },
+          {
+            "$id": "48",
+            "Columns": [
+              {
+                "$id": "49",
+                "ForeignKeyTableName": "Pet",
+                "ForeignKeyColumnName": "speciesId",
+                "PrimaryKeyTableName": "Species",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Pet_speciesId_Species_id"
+          },
+          {
+            "$id": "50",
+            "Columns": [
+              {
+                "$id": "51",
+                "ForeignKeyTableName": "Sale",
+                "ForeignKeyColumnName": "paymentTypeId",
+                "PrimaryKeyTableName": "PaymentType",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Sale_paymentTypeId_PaymentType_id"
+          },
+          {
+            "$id": "52",
+            "Columns": [
+              {
+                "$id": "53",
+                "ForeignKeyTableName": "Sale",
+                "ForeignKeyColumnName": "petId",
+                "PrimaryKeyTableName": "Pet",
+                "PrimaryKeyColumnName": "id",
+                "PrimaryKeySchemaName": "dbo",
+                "ForeignKeySchemaName": "dbo",
+                "Order": 1
+              }
+            ],
+            "ForeignKeyName": "FK_Sale_petId_Pet_id"
+          }
+        ]
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "MSSQL"
+  },
+  "Project": {
+    "$id": "54",
+    "Schemas": [
+      {
+        "$id": "55",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "7ca5801b-3bbf-449c-97b4-fb0ba944c067",
+        "Tables": [
+          {
+            "$id": "56",
+            "AppTableName": "Breed",
+            "AppTableNamePlural": "Breeds",
+            "AppDoNotProcess": false,
+            "AppTableId": "750a3f9c-379a-4eb8-9683-ae322cd7194c",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "57",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "c8189163-1564-4a6f-847c-4f09f3053286",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "58",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "5cbb9be9-f189-4d75-86a8-cb8dcf2c4c25",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "56"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "59",
+                "Columns": [
+                  {
+                    "$id": "60",
+                    "Column": {
+                      "$ref": "57"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Breed",
+                "Table": {
+                  "$ref": "56"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Breed",
+                "TableName": "Breed",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Breed",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "61",
+            "AppTableName": "PaymentType",
+            "AppTableNamePlural": "PaymentTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "948fe72c-bb9e-4283-82af-f880d7064dc8",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "62",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "02ad8a61-da0b-4607-be68-b2ea357b9526",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "61"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "63",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8a22b2da-3274-4218-acf5-72b6a1e8c5fd",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "61"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "64",
+                "Columns": [
+                  {
+                    "$id": "65",
+                    "Column": {
+                      "$ref": "62"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_PaymentType",
+                "Table": {
+                  "$ref": "61"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PaymentType",
+                "TableName": "PaymentType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "PaymentType",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "66",
+            "AppTableName": "Pen",
+            "AppTableNamePlural": "Pens",
+            "AppDoNotProcess": false,
+            "AppTableId": "3a12c93a-a650-47be-a8f2-b9789cc68aaa",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "67",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "036b15f1-7c1a-45aa-b47e-a4e3d33e89af",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "66"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "68",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "0410ab95-225b-4509-b758-a9d90b00700f",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "66"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "69",
+                "Columns": [
+                  {
+                    "$id": "70",
+                    "Column": {
+                      "$ref": "67"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Pen",
+                "Table": {
+                  "$ref": "66"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Pen",
+                "TableName": "Pen",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Pen",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "71",
+            "AppTableName": "Pet",
+            "AppTableNamePlural": "Pets",
+            "AppDoNotProcess": false,
+            "AppTableId": "524793a8-1354-436d-9ca8-ce50a6c89cb1",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "72",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AcquiredDate",
+                "AppNamePlural": "AcquiredDates",
+                "AppFieldType": "date",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a7f252cc-2d58-44fb-b549-8fd187af4476",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "acquiredDate",
+                "DataType": "date",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "73",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "BreedId",
+                "AppNamePlural": "BreedIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "f4846f19-0601-40a6-a6ce-071fd5d9390a",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "breedId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "74",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Description",
+                "AppNamePlural": "Descriptions",
+                "AppFieldType": "text",
+                "AppFieldMaxLength": 2147483647,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "9abc2235-c394-4f13-9db7-24eca1bf7f60",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "description",
+                "DataType": "text",
+                "NumericPrecision": 0,
+                "MaxLength": 2147483647,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "75",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "e21ad95b-8e0e-4b0e-938f-a83e70e1027a",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "76",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PenId",
+                "AppNamePlural": "PenIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "4ce987ad-2cf6-4062-9bdf-60e97ba6cb12",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "penId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "77",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Price",
+                "AppNamePlural": "Prices",
+                "AppFieldType": "money",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "19541607-fea9-4355-9cb5-56b51ed45dda",
+                "AppCLRType": "decimal",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "price",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "78",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "SpeciesId",
+                "AppNamePlural": "SpeciesIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "77c78c9c-0241-462b-b9e0-0030f3117852",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "71"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "speciesId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "79",
+                "Columns": [
+                  {
+                    "$id": "80",
+                    "Column": {
+                      "$ref": "75"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Pet",
+                "Table": {
+                  "$ref": "71"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Pet",
+                "TableName": "Pet",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Pet",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "81",
+            "AppTableName": "Sale",
+            "AppTableNamePlural": "Sales",
+            "AppDoNotProcess": false,
+            "AppTableId": "dc1361c5-f3a9-40a4-adea-c9871aeb6f9f",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "82",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Amount",
+                "AppNamePlural": "Amounts",
+                "AppFieldType": "money",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "2dc86255-92be-4d7f-b399-57d1d395bd2a",
+                "AppCLRType": "decimal",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "amount",
+                "DataType": "money",
+                "NumericPrecision": 19,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "83",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FirstName",
+                "AppNamePlural": "FirstNames",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 90,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "73a6e353-084d-48a0-83d3-655d3fd42644",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "firstName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "84",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "102ad664-8396-4b38-977b-4e630dae079d",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "85",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastName",
+                "AppNamePlural": "LastNames",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 90,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8f3c1200-5820-47d6-b7c9-535aca518c25",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "lastName",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 90,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "86",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PaymentTypeId",
+                "AppNamePlural": "PaymentTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "5a0095c9-c7b0-4e2a-9e16-a7850df3ca88",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "paymentTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "87",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PetId",
+                "AppNamePlural": "PetIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "34d0b527-333f-43d5-86a8-a58f952bad61",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "petId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "88",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Phone",
+                "AppNamePlural": "Phones",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 10,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "150429fc-52cd-4f00-b3c9-046f0c6b747e",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "81"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "phone",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 10,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "89",
+                "Columns": [
+                  {
+                    "$id": "90",
+                    "Column": {
+                      "$ref": "84"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Sale",
+                "Table": {
+                  "$ref": "81"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Sale",
+                "TableName": "Sale",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Sale",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "91",
+            "AppTableName": "Species",
+            "AppTableNamePlural": "Species",
+            "AppDoNotProcess": false,
+            "AppTableId": "c7bdab2c-2c69-4b17-8e34-226722dfd4fe",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "92",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "c3b89dda-38ba-4243-a1ca-1f8001e80b48",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "91"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "93",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 128,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "ca73ce32-feda-47b6-8086-58280d47fedf",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "91"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 128,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "94",
+                "Columns": [
+                  {
+                    "$id": "95",
+                    "Column": {
+                      "$ref": "92"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Species",
+                "Table": {
+                  "$ref": "91"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Species",
+                "TableName": "Species",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "55"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Species",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [
+          {
+            "$id": "96",
+            "Columns": [
+              {
+                "$id": "97",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "73"
+                },
+                "PrimaryColumn": {
+                  "$ref": "57"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Pet_BreedId_Breed_Id"
+          },
+          {
+            "$id": "98",
+            "Columns": [
+              {
+                "$id": "99",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "76"
+                },
+                "PrimaryColumn": {
+                  "$ref": "67"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Pet_PenId_Pen_Id"
+          },
+          {
+            "$id": "100",
+            "Columns": [
+              {
+                "$id": "101",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "78"
+                },
+                "PrimaryColumn": {
+                  "$ref": "92"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Pet_SpeciesId_Species_Id"
+          },
+          {
+            "$id": "102",
+            "Columns": [
+              {
+                "$id": "103",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "86"
+                },
+                "PrimaryColumn": {
+                  "$ref": "62"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Sale_PaymentTypeId_PaymentType_Id"
+          },
+          {
+            "$id": "104",
+            "Columns": [
+              {
+                "$id": "105",
+                "AppDoNotProcess": false,
+                "ForeignColumn": {
+                  "$ref": "87"
+                },
+                "PrimaryColumn": {
+                  "$ref": "75"
+                }
+              }
+            ],
+            "Virtual": false,
+            "AppDoNotProcess": false,
+            "ForeignKeyName": "FK_Sale_PetId_Pet_Id"
+          }
+        ],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "54"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "106",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "107",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [],
+    "ColumnParameterSettings": [],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}

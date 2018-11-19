@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/spaces")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SpaceController : AbstractSpaceController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>91b8e1c4cb12e1520e38fb6cf9b1e5d3</Hash>
+    <Hash>fcd908cbd287b90a8d3fe0e083a6a317</Hash>
 </Codenesium>*/

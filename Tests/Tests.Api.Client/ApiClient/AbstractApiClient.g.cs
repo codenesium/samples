@@ -57,12 +57,12 @@ namespace TestsNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiColumnSameAsFKTableClientResponseModel>> > ColumnSameAsFKTableBulkInsertAsync(List<ApiColumnSameAsFKTableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiColumnSameAsFKTableClientResponseModel>>> ColumnSameAsFKTableBulkInsertAsync(List<ApiColumnSameAsFKTableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/ColumnSameAsFKTables/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiColumnSameAsFKTableClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiColumnSameAsFKTableClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiColumnSameAsFKTableClientResponseModel>> ColumnSameAsFKTableCreateAsync(ApiColumnSameAsFKTableClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -122,12 +122,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>> > CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>>> CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CompositePrimaryKeys/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyClientResponseModel>> CompositePrimaryKeyCreateAsync(ApiCompositePrimaryKeyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -187,12 +187,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiIncludedColumnTestClientResponseModel>> > IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiIncludedColumnTestClientResponseModel>>> IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/IncludedColumnTests/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiIncludedColumnTestClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiIncludedColumnTestClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiIncludedColumnTestClientResponseModel>> IncludedColumnTestCreateAsync(ApiIncludedColumnTestClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -252,12 +252,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPersonClientResponseModel>> > PersonBulkInsertAsync(List<ApiPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPersonClientResponseModel>>> PersonBulkInsertAsync(List<ApiPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/People/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonClientResponseModel>> PersonCreateAsync(ApiPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -317,12 +317,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiRowVersionCheckClientResponseModel>> > RowVersionCheckBulkInsertAsync(List<ApiRowVersionCheckClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiRowVersionCheckClientResponseModel>>> RowVersionCheckBulkInsertAsync(List<ApiRowVersionCheckClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/RowVersionChecks/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRowVersionCheckClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRowVersionCheckClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRowVersionCheckClientResponseModel>> RowVersionCheckCreateAsync(ApiRowVersionCheckClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -382,12 +382,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSelfReferenceClientResponseModel>> > SelfReferenceBulkInsertAsync(List<ApiSelfReferenceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSelfReferenceClientResponseModel>>> SelfReferenceBulkInsertAsync(List<ApiSelfReferenceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SelfReferences/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSelfReferenceClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSelfReferenceClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSelfReferenceClientResponseModel>> SelfReferenceCreateAsync(ApiSelfReferenceClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -447,12 +447,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTableClientResponseModel>> > TableBulkInsertAsync(List<ApiTableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTableClientResponseModel>>> TableBulkInsertAsync(List<ApiTableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tables/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTableClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTableClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTableClientResponseModel>> TableCreateAsync(ApiTableClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -512,12 +512,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTestAllFieldTypeClientResponseModel>> > TestAllFieldTypeBulkInsertAsync(List<ApiTestAllFieldTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTestAllFieldTypeClientResponseModel>>> TestAllFieldTypeBulkInsertAsync(List<ApiTestAllFieldTypeClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TestAllFieldTypes/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTestAllFieldTypeClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTestAllFieldTypeClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTestAllFieldTypeClientResponseModel>> TestAllFieldTypeCreateAsync(ApiTestAllFieldTypeClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -577,12 +577,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTestAllFieldTypesNullableClientResponseModel>> > TestAllFieldTypesNullableBulkInsertAsync(List<ApiTestAllFieldTypesNullableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTestAllFieldTypesNullableClientResponseModel>>> TestAllFieldTypesNullableBulkInsertAsync(List<ApiTestAllFieldTypesNullableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TestAllFieldTypesNullables/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTestAllFieldTypesNullableClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTestAllFieldTypesNullableClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTestAllFieldTypesNullableClientResponseModel>> TestAllFieldTypesNullableCreateAsync(ApiTestAllFieldTypesNullableClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -642,12 +642,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTimestampCheckClientResponseModel>> > TimestampCheckBulkInsertAsync(List<ApiTimestampCheckClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTimestampCheckClientResponseModel>>> TimestampCheckBulkInsertAsync(List<ApiTimestampCheckClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TimestampChecks/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTimestampCheckClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTimestampCheckClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTimestampCheckClientResponseModel>> TimestampCheckCreateAsync(ApiTimestampCheckClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -707,12 +707,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVPersonClientResponseModel>> > VPersonBulkInsertAsync(List<ApiVPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiVPersonClientResponseModel>>> VPersonBulkInsertAsync(List<ApiVPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVPersonClientResponseModel>> VPersonCreateAsync(ApiVPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -772,12 +772,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSchemaAPersonClientResponseModel>> > SchemaAPersonBulkInsertAsync(List<ApiSchemaAPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSchemaAPersonClientResponseModel>>> SchemaAPersonBulkInsertAsync(List<ApiSchemaAPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaAPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaAPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaAPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaAPersonClientResponseModel>> SchemaAPersonCreateAsync(ApiSchemaAPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -837,12 +837,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSchemaBPersonClientResponseModel>> > SchemaBPersonBulkInsertAsync(List<ApiSchemaBPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSchemaBPersonClientResponseModel>>> SchemaBPersonBulkInsertAsync(List<ApiSchemaBPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaBPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaBPersonClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaBPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaBPersonClientResponseModel>> SchemaBPersonCreateAsync(ApiSchemaBPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -902,12 +902,12 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiPersonRefClientResponseModel>> > PersonRefBulkInsertAsync(List<ApiPersonRefClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiPersonRefClientResponseModel>>> PersonRefBulkInsertAsync(List<ApiPersonRefClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PersonRefs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonRefClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonRefClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonRefClientResponseModel>> PersonRefCreateAsync(ApiPersonRefClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -995,5 +995,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c18c1bdab13c7ace1794a82cc19eed9c</Hash>
+    <Hash>5007d5dbc4c6f550749df05ee347d996</Hash>
 </Codenesium>*/

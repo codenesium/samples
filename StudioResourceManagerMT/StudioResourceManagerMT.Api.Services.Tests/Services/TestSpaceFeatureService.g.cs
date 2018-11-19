@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
 			var model = new ApiSpaceFeatureServerRequestModel();
@@ -87,12 +88,33 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceFeatureServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SpaceFeature>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
+			var model = new ApiSpaceFeatureServerRequestModel();
+			var validatorMock = new Mock<IApiSpaceFeatureServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceFeatureServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SpaceFeatureService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+
+			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceFeatureServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
 			var model = new ApiSpaceFeatureServerRequestModel();
@@ -107,12 +129,34 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceFeatureServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SpaceFeature>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
+			var model = new ApiSpaceFeatureServerRequestModel();
+			var validatorMock = new Mock<IApiSpaceFeatureServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceFeatureServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpaceFeature()));
+			var service = new SpaceFeatureService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+
+			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceFeatureServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
 			var model = new ApiSpaceFeatureServerRequestModel();
@@ -126,12 +170,33 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
+			var model = new ApiSpaceFeatureServerRequestModel();
+			var validatorMock = new Mock<IApiSpaceFeatureServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new SpaceFeatureService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1e3859ff624f94765ffd45fa094e8e10</Hash>
+    <Hash>28f294d47a21def3f65d96e52af17f87</Hash>
 </Codenesium>*/

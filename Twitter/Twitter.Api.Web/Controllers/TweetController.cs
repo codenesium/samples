@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/tweets")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TweetController : AbstractTweetController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fc875290b5f861afbc055535b1283037</Hash>
+    <Hash>e95738845741670689660adf75f2c06c</Hash>
 </Codenesium>*/

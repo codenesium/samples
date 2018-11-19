@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/handlers")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class HandlerController : AbstractHandlerController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>475b04fcb8266b081820cd778de60cd6</Hash>
+    <Hash>70caa5975e36067795b732510509adc7</Hash>
 </Codenesium>*/

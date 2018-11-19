@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/shifts")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ShiftController : AbstractShiftController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7ed8a517f1b99bd33bce4d6ad220cc97</Hash>
+    <Hash>c5d88689d1cb57ab8302feff5d7252b6</Hash>
 </Codenesium>*/

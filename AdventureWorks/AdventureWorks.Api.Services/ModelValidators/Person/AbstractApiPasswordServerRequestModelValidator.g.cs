@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -31,14 +32,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void PasswordHashRules()
 		{
-			this.RuleFor(x => x.PasswordHash).NotNull();
-			this.RuleFor(x => x.PasswordHash).Length(0, 128);
+			this.RuleFor(x => x.PasswordHash).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PasswordHash).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PasswordSaltRules()
 		{
-			this.RuleFor(x => x.PasswordSalt).NotNull();
-			this.RuleFor(x => x.PasswordSalt).Length(0, 10);
+			this.RuleFor(x => x.PasswordSalt).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.PasswordSalt).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
@@ -48,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa49c4c93403bf2e786723262f69202c</Hash>
+    <Hash>2ead6ef10a3a19a7dfd301da26c4e8a0</Hash>
 </Codenesium>*/

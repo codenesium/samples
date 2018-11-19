@@ -76,6 +76,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table File via fileTypeId.
 		public async virtual Task<List<File>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<File>().Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
@@ -105,5 +106,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e5a85ce994fab6f184bc1ff40a584095</Hash>
+    <Hash>308d916187673c1aa8104c3445b4e98f</Hash>
 </Codenesium>*/

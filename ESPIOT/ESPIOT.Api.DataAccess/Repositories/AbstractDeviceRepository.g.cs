@@ -76,11 +76,13 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint IX_Device.
 		public async virtual Task<Device> ByPublicId(Guid publicId)
 		{
 			return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.PublicId == publicId);
 		}
 
+		// Foreign key reference to this table DeviceAction via deviceId.
 		public async virtual Task<List<DeviceAction>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<DeviceAction>().Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
@@ -110,5 +112,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54ea6329c353ec144eab4202133c4a50</Hash>
+    <Hash>05b7a996c7e3f8890dd62d4c3299f848</Hash>
 </Codenesium>*/

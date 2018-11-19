@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -85,7 +86,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var model = new ApiProvinceServerRequestModel();
@@ -103,12 +104,37 @@ namespace TicketingCRMNS.Api.Services.Tests
 			CreateResponse<ApiProvinceServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Province>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IProvinceRepository>();
+			var model = new ApiProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProvinceService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLProvinceMapperMock,
+			                                  mock.DALMapperMockFactory.DALProvinceMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                                  mock.DALMapperMockFactory.DALCityMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
+			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
+
+			CreateResponse<ApiProvinceServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProvinceServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var model = new ApiProvinceServerRequestModel();
@@ -127,12 +153,38 @@ namespace TicketingCRMNS.Api.Services.Tests
 			UpdateResponse<ApiProvinceServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Province>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IProvinceRepository>();
+			var model = new ApiProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
+			var service = new ProvinceService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLProvinceMapperMock,
+			                                  mock.DALMapperMockFactory.DALProvinceMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                                  mock.DALMapperMockFactory.DALCityMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
+			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
+
+			UpdateResponse<ApiProvinceServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProvinceServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var model = new ApiProvinceServerRequestModel();
@@ -150,8 +202,33 @@ namespace TicketingCRMNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IProvinceRepository>();
+			var model = new ApiProvinceServerRequestModel();
+			var validatorMock = new Mock<IApiProvinceServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ProvinceService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLProvinceMapperMock,
+			                                  mock.DALMapperMockFactory.DALProvinceMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCityMapperMock,
+			                                  mock.DALMapperMockFactory.DALCityMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
+			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -289,5 +366,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>95f2d08ac1bb32da93b84d2822305185</Hash>
+    <Hash>d347f2fdc1b42074f2aa377f82fa8ee6</Hash>
 </Codenesium>*/

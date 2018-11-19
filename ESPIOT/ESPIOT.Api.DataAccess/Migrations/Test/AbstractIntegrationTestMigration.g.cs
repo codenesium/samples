@@ -16,7 +16,7 @@ namespace ESPIOTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var deviceItem1 = new Device();
 			deviceItem1.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -32,5 +32,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e6af55dafebbfafacd4f67939791ab1</Hash>
+    <Hash>1b1db372615c54e75a36011f80f41c93</Hash>
 </Codenesium>*/

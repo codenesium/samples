@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/timestampChecks")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class TimestampCheckController : AbstractTimestampCheckController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3a44d807c1a69cc20357d1ef4a0fefda</Hash>
+    <Hash>9ac6a3331a1529080f66f55bb8620f88</Hash>
 </Codenesium>*/

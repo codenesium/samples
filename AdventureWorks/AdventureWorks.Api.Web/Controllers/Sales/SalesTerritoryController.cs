@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/salesTerritories")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SalesTerritoryController : AbstractSalesTerritoryController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8d3d387400243cdd45155f5b8f7866de</Hash>
+    <Hash>8840ae9aca18891c88906167a873f12d</Hash>
 </Codenesium>*/

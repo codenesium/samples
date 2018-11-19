@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/salesOrderHeaders")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SalesOrderHeaderController : AbstractSalesOrderHeaderController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fdeff7ef35af5acaeb6e97ac5108f915</Hash>
+    <Hash>04df29e4f5da8a4902785e3252e71bf0</Hash>
 </Codenesium>*/

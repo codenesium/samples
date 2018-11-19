@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,9 +28,9 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void AccountNumberRules()
 		{
-			this.RuleFor(x => x.AccountNumber).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => !x?.AccountNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorServerRequestModel.AccountNumber));
-			this.RuleFor(x => x.AccountNumber).Length(0, 15);
+			this.RuleFor(x => x.AccountNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => !x?.AccountNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorServerRequestModel.AccountNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.AccountNumber).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ActiveFlagRules()
@@ -46,8 +47,8 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PreferredVendorStatuRules()
@@ -56,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void PurchasingWebServiceURLRules()
 		{
-			this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024);
+			this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByAccountNumber(ApiVendorServerRequestModel model,  CancellationToken cancellationToken)
@@ -76,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5b46d51a895c887071a0d7c973a26bf</Hash>
+    <Hash>b18bb07d7ad07539ed7638bb569ed187</Hash>
 </Codenesium>*/

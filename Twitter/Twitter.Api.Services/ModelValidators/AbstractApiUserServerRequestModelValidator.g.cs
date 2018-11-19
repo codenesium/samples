@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -27,7 +28,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void BioImgUrlRules()
 		{
-			this.RuleFor(x => x.BioImgUrl).Length(0, 32);
+			this.RuleFor(x => x.BioImgUrl).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void BirthdayRules()
@@ -36,62 +37,62 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ContentDescriptionRules()
 		{
-			this.RuleFor(x => x.ContentDescription).Length(0, 128);
+			this.RuleFor(x => x.ContentDescription).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void EmailRules()
 		{
-			this.RuleFor(x => x.Email).NotNull();
-			this.RuleFor(x => x.Email).Length(0, 32);
+			this.RuleFor(x => x.Email).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Email).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void FullNameRules()
 		{
-			this.RuleFor(x => x.FullName).NotNull();
-			this.RuleFor(x => x.FullName).Length(0, 64);
+			this.RuleFor(x => x.FullName).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.FullName).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void HeaderImgUrlRules()
 		{
-			this.RuleFor(x => x.HeaderImgUrl).Length(0, 32);
+			this.RuleFor(x => x.HeaderImgUrl).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void InterestRules()
 		{
-			this.RuleFor(x => x.Interest).Length(0, 128);
+			this.RuleFor(x => x.Interest).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void LocationLocationIdRules()
 		{
-			this.RuleFor(x => x.LocationLocationId).MustAsync(this.BeValidLocationByLocationLocationId).When(x => !x?.LocationLocationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationLocationId).MustAsync(this.BeValidLocationByLocationLocationId).When(x => !x?.LocationLocationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void PasswordRules()
 		{
-			this.RuleFor(x => x.Password).NotNull();
-			this.RuleFor(x => x.Password).Length(0, 32);
+			this.RuleFor(x => x.Password).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Password).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PhoneNumberRules()
 		{
-			this.RuleFor(x => x.PhoneNumber).Length(0, 32);
+			this.RuleFor(x => x.PhoneNumber).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PrivacyRules()
 		{
-			this.RuleFor(x => x.Privacy).NotNull();
-			this.RuleFor(x => x.Privacy).Length(0, 1);
+			this.RuleFor(x => x.Privacy).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Privacy).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void UsernameRules()
 		{
-			this.RuleFor(x => x.Username).NotNull();
-			this.RuleFor(x => x.Username).Length(0, 64);
+			this.RuleFor(x => x.Username).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Username).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void WebsiteRules()
 		{
-			this.RuleFor(x => x.Website).Length(0, 32);
+			this.RuleFor(x => x.Website).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidLocationByLocationLocationId(int id,  CancellationToken cancellationToken)
@@ -104,5 +105,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7448ac9ce97a7061fc8413dff74b9fb3</Hash>
+    <Hash>572aac0b684ed18ac87722cbff3139d7</Hash>
 </Codenesium>*/

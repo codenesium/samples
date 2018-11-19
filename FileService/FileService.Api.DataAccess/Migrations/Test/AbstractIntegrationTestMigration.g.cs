@@ -16,7 +16,7 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual async void Migrate()
+		public virtual async Task Migrate()
 		{
 			var bucketItem1 = new Bucket();
 			bucketItem1.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
@@ -36,5 +36,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>99e4adec23c07d3bb39b5dd5f6008aae</Hash>
+    <Hash>78d55db52f281987a7d2bec1f84f62df</Hash>
 </Codenesium>*/

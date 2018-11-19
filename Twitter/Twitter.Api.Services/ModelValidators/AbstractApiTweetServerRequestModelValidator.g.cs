@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
 
 namespace TwitterNS.Api.Services
@@ -27,8 +28,8 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ContentRules()
 		{
-			this.RuleFor(x => x.Content).NotNull();
-			this.RuleFor(x => x.Content).Length(0, 140);
+			this.RuleFor(x => x.Content).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Content).Length(0, 140).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DateRules()
@@ -37,7 +38,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void LocationIdRules()
 		{
-			this.RuleFor(x => x.LocationId).MustAsync(this.BeValidLocationByLocationId).When(x => !x?.LocationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationId).MustAsync(this.BeValidLocationByLocationId).When(x => !x?.LocationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void TimeRules()
@@ -46,7 +47,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void UserUserIdRules()
 		{
-			this.RuleFor(x => x.UserUserId).MustAsync(this.BeValidUserByUserUserId).When(x => !x?.UserUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserUserId).MustAsync(this.BeValidUserByUserUserId).When(x => !x?.UserUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		private async Task<bool> BeValidLocationByLocationId(int id,  CancellationToken cancellationToken)
@@ -66,5 +67,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe14f8caf771acf7623d6de3542cbb73</Hash>
+    <Hash>3c8f2a1adc1dfe4320f04318c771ebea</Hash>
 </Codenesium>*/

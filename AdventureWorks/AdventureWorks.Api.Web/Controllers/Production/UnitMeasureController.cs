@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/unitMeasures")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class UnitMeasureController : AbstractUnitMeasureController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7b99db3fc4fc35834db1a9d14467cc83</Hash>
+    <Hash>2fa82cd155dab2c180bdab54a711b0fa</Hash>
 </Codenesium>*/

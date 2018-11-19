@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c406b8716f4c680ec3317263673beab</Hash>
+    <Hash>17c36151080878d014da032bd6cc8e20</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -39,7 +40,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void EventStatusIdRules()
 		{
-			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatuByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference");
+			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatuByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -52,12 +53,12 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public virtual void StudentNoteRules()
 		{
-			this.RuleFor(x => x.StudentNote).Length(0, 2147483647);
+			this.RuleFor(x => x.StudentNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void TeacherNoteRules()
 		{
-			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647);
+			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
@@ -70,5 +71,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3fb0e5490807a59b3ca69f1289918754</Hash>
+    <Hash>22fcd30270ad6a71543118edb4e96e3f</Hash>
 </Codenesium>*/

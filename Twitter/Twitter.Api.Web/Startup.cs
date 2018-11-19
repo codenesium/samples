@@ -57,6 +57,7 @@ namespace TwitterNS.Api.Web
 
         public IConfigurationRoot Configuration { get; protected set; }
 
+		// Logging for Entity Framework
         public static readonly LoggerFactory LoggerFactory
             = new LoggerFactory(new List<ILoggerProvider>()
             {
@@ -73,6 +74,7 @@ namespace TwitterNS.Api.Web
         public virtual DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+
             if (enableSensitiveDataLogging)
             {
                 options.EnableSensitiveDataLogging();
@@ -81,7 +83,7 @@ namespace TwitterNS.Api.Web
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
             
-			// options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
+			// enable to use Posgres options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
             return options.Options;
         }
 
@@ -137,24 +139,10 @@ namespace TwitterNS.Api.Web
 			{
 				services.AddAuthorization(options =>
 				{
-				    // set up the DefaultAccess to require an authenticated user only
+				    // set up your policies here
 					// this can be modified to require claims or roles
-					options.AddPolicy("DefaultAccess", policy =>
-									  	policy.RequireAuthenticatedUser());
-				});
-			}
-			else
-			{
-				services.AddAuthorization(options =>
-				{
-					// remove the requirement that a user be authenticated
-					options.DefaultPolicy = new AuthorizationPolicyBuilder()
-				   .RequireAssertion(_ => true)
-				   .Build();
-
-				    // set up the DefaultAccess policy to always allow access
-					options.AddPolicy("DefaultAccess", policy =>
-					 policy.RequireAssertion(_ => true));
+					// options.AddPolicy("RequireAuthenticatedUser", policy =>
+					// policy.RequireAuthenticatedUser());
 				});
 			}
 		}
@@ -167,12 +155,11 @@ namespace TwitterNS.Api.Web
             }
         }
 
-        // ConfigureServices is where you register dependencies. This gets
-        // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
            services.Configure<ApiSettings>(this.Configuration);
 
+		   // enable CORS for all requests
            services.AddCors(config =>
            {
                 var policy = new CorsPolicy();
@@ -190,9 +177,15 @@ namespace TwitterNS.Api.Web
                      var policy = new AuthorizationPolicyBuilder()
                                   .RequireAuthenticatedUser()
                                   .Build();
+
+					 // add a policy requiring a an authenticated user to hit any controller
                      config.Filters.Add(new AuthorizeFilter(policy));
                  }
+
+				 // add a total request time item to the response header collection
                  config.Filters.Add(new BenchmarkAttribute());
+
+				 // reject requests with a null model
                  config.Filters.Add(new NullModelValidaterAttribute());
             }).AddVersionedApiExplorer(
             o =>

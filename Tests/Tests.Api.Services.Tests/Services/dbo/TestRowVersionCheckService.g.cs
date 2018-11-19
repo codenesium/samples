@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TestsNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
 			var model = new ApiRowVersionCheckServerRequestModel();
@@ -87,12 +88,33 @@ namespace TestsNS.Api.Services.Tests
 			CreateResponse<ApiRowVersionCheckServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<RowVersionCheck>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
+			var model = new ApiRowVersionCheckServerRequestModel();
+			var validatorMock = new Mock<IApiRowVersionCheckServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
+			                                         mock.DALMapperMockFactory.DALRowVersionCheckMapperMock);
+
+			CreateResponse<ApiRowVersionCheckServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
 			var model = new ApiRowVersionCheckServerRequestModel();
@@ -107,12 +129,34 @@ namespace TestsNS.Api.Services.Tests
 			UpdateResponse<ApiRowVersionCheckServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<RowVersionCheck>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
+			var model = new ApiRowVersionCheckServerRequestModel();
+			var validatorMock = new Mock<IApiRowVersionCheckServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
+			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
+			                                         mock.DALMapperMockFactory.DALRowVersionCheckMapperMock);
+
+			UpdateResponse<ApiRowVersionCheckServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
 			var model = new ApiRowVersionCheckServerRequestModel();
@@ -126,12 +170,33 @@ namespace TestsNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
+			var model = new ApiRowVersionCheckServerRequestModel();
+			var validatorMock = new Mock<IApiRowVersionCheckServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.RepositoryMock.Object,
+			                                         validatorMock.Object,
+			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
+			                                         mock.DALMapperMockFactory.DALRowVersionCheckMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc474f0d5f3a07deb10aa672d5eeea31</Hash>
+    <Hash>56737639f90607e7f5c4270b3c8ba5ef</Hash>
 </Codenesium>*/

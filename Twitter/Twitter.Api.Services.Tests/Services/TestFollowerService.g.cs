@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
 			var model = new ApiFollowerServerRequestModel();
@@ -87,12 +88,33 @@ namespace TwitterNS.Api.Services.Tests
 			CreateResponse<ApiFollowerServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Follower>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IFollowerRepository>();
+			var model = new ApiFollowerServerRequestModel();
+			var validatorMock = new Mock<IApiFollowerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new FollowerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
+
+			CreateResponse<ApiFollowerServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
 			var model = new ApiFollowerServerRequestModel();
@@ -107,12 +129,34 @@ namespace TwitterNS.Api.Services.Tests
 			UpdateResponse<ApiFollowerServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Follower>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IFollowerRepository>();
+			var model = new ApiFollowerServerRequestModel();
+			var validatorMock = new Mock<IApiFollowerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Follower()));
+			var service = new FollowerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
+
+			UpdateResponse<ApiFollowerServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IFollowerRepository>();
 			var model = new ApiFollowerServerRequestModel();
@@ -126,8 +170,29 @@ namespace TwitterNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.FollowerModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IFollowerRepository>();
+			var model = new ApiFollowerServerRequestModel();
+			var validatorMock = new Mock<IApiFollowerServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new FollowerService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  validatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                                  mock.DALMapperMockFactory.DALFollowerMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -205,5 +270,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d220330f56c11351fa1cdd4f1ecaec9b</Hash>
+    <Hash>1c8ae590e447a7ec9b15535b568757a3</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -79,7 +80,7 @@ namespace PetStoreNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPetRepository>();
 			var model = new ApiPetServerRequestModel();
@@ -95,12 +96,35 @@ namespace PetStoreNS.Api.Services.Tests
 			CreateResponse<ApiPetServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Pet>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IPetRepository>();
+			var model = new ApiPetServerRequestModel();
+			var validatorMock = new Mock<IApiPetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PetService(mock.LoggerMock.Object,
+			                             mock.RepositoryMock.Object,
+			                             validatorMock.Object,
+			                             mock.BOLMapperMockFactory.BOLPetMapperMock,
+			                             mock.DALMapperMockFactory.DALPetMapperMock,
+			                             mock.BOLMapperMockFactory.BOLSaleMapperMock,
+			                             mock.DALMapperMockFactory.DALSaleMapperMock);
+
+			CreateResponse<ApiPetServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPetRepository>();
 			var model = new ApiPetServerRequestModel();
@@ -117,12 +141,36 @@ namespace PetStoreNS.Api.Services.Tests
 			UpdateResponse<ApiPetServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Pet>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IPetRepository>();
+			var model = new ApiPetServerRequestModel();
+			var validatorMock = new Mock<IApiPetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPetServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
+			var service = new PetService(mock.LoggerMock.Object,
+			                             mock.RepositoryMock.Object,
+			                             validatorMock.Object,
+			                             mock.BOLMapperMockFactory.BOLPetMapperMock,
+			                             mock.DALMapperMockFactory.DALPetMapperMock,
+			                             mock.BOLMapperMockFactory.BOLSaleMapperMock,
+			                             mock.DALMapperMockFactory.DALSaleMapperMock);
+
+			UpdateResponse<ApiPetServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPetServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IPetRepository>();
 			var model = new ApiPetServerRequestModel();
@@ -138,8 +186,31 @@ namespace PetStoreNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IPetRepository>();
+			var model = new ApiPetServerRequestModel();
+			var validatorMock = new Mock<IApiPetServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new PetService(mock.LoggerMock.Object,
+			                             mock.RepositoryMock.Object,
+			                             validatorMock.Object,
+			                             mock.BOLMapperMockFactory.BOLPetMapperMock,
+			                             mock.DALMapperMockFactory.DALPetMapperMock,
+			                             mock.BOLMapperMockFactory.BOLSaleMapperMock,
+			                             mock.DALMapperMockFactory.DALSaleMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -185,5 +256,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5dd56fbe14ddc6cdcf03502cd538f731</Hash>
+    <Hash>a07d52fd6a24fae5bbe0863d132f4930</Hash>
 </Codenesium>*/

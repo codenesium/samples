@@ -76,11 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AX_Machine_MachineGuid.
 		public async virtual Task<Machine> ByMachineGuid(Guid machineGuid)
 		{
 			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.MachineGuid == machineGuid);
 		}
 
+		// Foreign key reference to this table Link via assignedMachineId.
 		public async virtual Task<List<Link>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Link>().Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
@@ -110,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>01e797ae7ea83deadb205e4436fbf97b</Hash>
+    <Hash>1619b0a18d865ea37d662542e7dc1ecf</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace NebulaNS.Api.DataAccess
 		{
 		}
 
-		public override async void Migrate()
+		public override async Task Migrate()
 		{
-			base.Migrate();
+			await base.Migrate();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad6198859583a8002b9eb7c20d00e6fe</Hash>
+    <Hash>3696c5ff6f1e5057a1868019a62edfca</Hash>
 </Codenesium>*/

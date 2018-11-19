@@ -76,6 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_BillOfMaterials_UnitMeasureCode.
 		public async virtual Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
@@ -105,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c2d171ccb549f864412c3b2d87d3b9ab</Hash>
+    <Hash>9bec6ff5c20f4f9a6b484f2990b6ae4f</Hash>
 </Codenesium>*/

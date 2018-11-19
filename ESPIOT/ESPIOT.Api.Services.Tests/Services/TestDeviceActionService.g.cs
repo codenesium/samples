@@ -1,6 +1,7 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			var model = new ApiDeviceActionServerRequestModel();
@@ -87,12 +88,33 @@ namespace ESPIOTNS.Api.Services.Tests
 			CreateResponse<ApiDeviceActionServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DeviceAction>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IDeviceActionRepository>();
+			var model = new ApiDeviceActionServerRequestModel();
+			var validatorMock = new Mock<IApiDeviceActionServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
+			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
+
+			CreateResponse<ApiDeviceActionServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			var model = new ApiDeviceActionServerRequestModel();
@@ -107,12 +129,34 @@ namespace ESPIOTNS.Api.Services.Tests
 			UpdateResponse<ApiDeviceActionServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DeviceAction>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IDeviceActionRepository>();
+			var model = new ApiDeviceActionServerRequestModel();
+			var validatorMock = new Mock<IApiDeviceActionServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
+			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
+
+			UpdateResponse<ApiDeviceActionServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			var model = new ApiDeviceActionServerRequestModel();
@@ -126,8 +170,29 @@ namespace ESPIOTNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IDeviceActionRepository>();
+			var model = new ApiDeviceActionServerRequestModel();
+			var validatorMock = new Mock<IApiDeviceActionServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      validatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
+			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6d74ce772375e9a505b7a7f012c663c1</Hash>
+    <Hash>7747e96371cba11d3d2ac4b6d054ad8f</Hash>
 </Codenesium>*/

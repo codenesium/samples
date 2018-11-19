@@ -17,7 +17,6 @@ namespace PetStoreNS.Api.Web
 	[Route("api/pens")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PenController : AbstractPenController
 	{
@@ -42,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>931a28f4b00e7c34dcdf45264520f40c</Hash>
+    <Hash>730957a27ce964e2d656c8dbba784dd1</Hash>
 </Codenesium>*/

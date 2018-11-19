@@ -76,16 +76,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_ProductCategory_Name.
 		public async virtual Task<ProductCategory> ByName(string name)
 		{
 			return await this.Context.Set<ProductCategory>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_ProductCategory_rowguid.
 		public async virtual Task<ProductCategory> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<ProductCategory>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Foreign key reference to this table ProductSubcategory via productCategoryID.
 		public async virtual Task<List<ProductSubcategory>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductSubcategory>().Where(x => x.ProductCategoryID == productCategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
@@ -115,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f05330c2e6c6440fb3074279bbf531b7</Hash>
+    <Hash>1c7b36c274c7f4902a990f5bb085b2cb</Hash>
 </Codenesium>*/

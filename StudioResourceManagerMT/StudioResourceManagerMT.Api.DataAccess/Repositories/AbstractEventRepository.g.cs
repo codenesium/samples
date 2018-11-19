@@ -76,11 +76,13 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Event_eventStatusId.
 		public async virtual Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.EventStatusId == eventStatusId, limit, offset);
 		}
 
+		// Foreign key reference to table EventStatu via eventStatusId.
 		public async virtual Task<EventStatu> EventStatuByEventStatusId(int eventStatusId)
 		{
 			return await this.Context.Set<EventStatu>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
@@ -110,5 +112,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f3b7a44d83c74d62b31ffc6cea4de88</Hash>
+    <Hash>bd385df45bb9e65cb459d23e53bda43f</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/columnSameAsFKTables")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ColumnSameAsFKTableController : AbstractColumnSameAsFKTableController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>008f61ef401aece19261c0c2ab173c54</Hash>
+    <Hash>daa741466a22176f96b97edd4d1a7f38</Hash>
 </Codenesium>*/

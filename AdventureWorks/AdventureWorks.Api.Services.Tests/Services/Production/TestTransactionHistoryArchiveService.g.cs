@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			var model = new ApiTransactionHistoryArchiveServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TransactionHistoryArchive>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
+			var validatorMock = new Mock<IApiTransactionHistoryArchiveServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+
+			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			var model = new ApiTransactionHistoryArchiveServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TransactionHistoryArchive>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
+			var validatorMock = new Mock<IApiTransactionHistoryArchiveServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+
+			UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			var model = new ApiTransactionHistoryArchiveServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
+			var model = new ApiTransactionHistoryArchiveServerRequestModel();
+			var validatorMock = new Mock<IApiTransactionHistoryArchiveServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.RepositoryMock.Object,
+			                                                   validatorMock.Object,
+			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
+			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -205,5 +270,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>42ed5d36b7e9276cf498a56ca1c02c47</Hash>
+    <Hash>dd64aed718f3dfb3b9b30d8fe023a7ad</Hash>
 </Codenesium>*/

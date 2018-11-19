@@ -76,11 +76,13 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
+		// Foreign key reference to this table Pet via breedId.
 		public async virtual Task<List<Pet>> PetsByBreedId(int breedId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Pet>().Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
+		// Foreign key reference to table Species via speciesId.
 		public async virtual Task<Species> SpeciesBySpeciesId(int speciesId)
 		{
 			return await this.Context.Set<Species>().SingleOrDefaultAsync(x => x.Id == speciesId);
@@ -110,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39dd9e328e3218dc129b625e8f2580c9</Hash>
+    <Hash>1e3a6ec47c4dc31bd828e87ce2073aee</Hash>
 </Codenesium>*/

@@ -76,11 +76,13 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
+		// Non-unique constraint IX_Reply_replier_user_id.
 		public async virtual Task<List<Reply>> ByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ReplierUserId == replierUserId, limit, offset);
 		}
 
+		// Foreign key reference to table User via replierUserId.
 		public async virtual Task<User> UserByReplierUserId(int replierUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == replierUserId);
@@ -110,5 +112,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c73c0ea1e78e1df90f042858c7443285</Hash>
+    <Hash>7a850ef3a7463037e4605241dc0795a6</Hash>
 </Codenesium>*/

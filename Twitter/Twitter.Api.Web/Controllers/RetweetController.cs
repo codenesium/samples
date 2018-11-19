@@ -17,7 +17,6 @@ namespace TwitterNS.Api.Web
 	[Route("api/retweets")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class RetweetController : AbstractRetweetController
 	{
@@ -42,5 +41,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d358f227ce06cdcaeb078fa5ed1a75e3</Hash>
+    <Hash>8a8b0639b48932f01d8e647855378fbf</Hash>
 </Codenesium>*/

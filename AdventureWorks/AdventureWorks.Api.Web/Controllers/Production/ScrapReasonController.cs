@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/scrapReasons")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class ScrapReasonController : AbstractScrapReasonController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bc1589a2cf5a86a6378bf6fde4c32bc4</Hash>
+    <Hash>c4b841783f69b982c726a78354504a23</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
@@ -27,12 +28,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void @ClassRules()
 		{
-			this.RuleFor(x => x.@Class).Length(0, 2);
+			this.RuleFor(x => x.@Class).Length(0, 2).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ColorRules()
 		{
-			this.RuleFor(x => x.Color).Length(0, 15);
+			this.RuleFor(x => x.Color).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void DaysToManufactureRules()
@@ -61,14 +62,14 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.Name));
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ProductLineRules()
 		{
-			this.RuleFor(x => x.ProductLine).Length(0, 2);
+			this.RuleFor(x => x.ProductLine).Length(0, 2).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ProductModelIDRules()
@@ -77,9 +78,9 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductNumberRules()
 		{
-			this.RuleFor(x => x.ProductNumber).NotNull();
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByProductNumber).When(x => !x?.ProductNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.ProductNumber));
-			this.RuleFor(x => x.ProductNumber).Length(0, 25);
+			this.RuleFor(x => x.ProductNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByProductNumber).When(x => !x?.ProductNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.ProductNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x.ProductNumber).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void ProductSubcategoryIDRules()
@@ -92,7 +93,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.Rowguid));
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SafetyStockLevelRules()
@@ -109,12 +110,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void SizeRules()
 		{
-			this.RuleFor(x => x.Size).Length(0, 5);
+			this.RuleFor(x => x.Size).Length(0, 5).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void SizeUnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.SizeUnitMeasureCode).Length(0, 3);
+			this.RuleFor(x => x.SizeUnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void StandardCostRules()
@@ -123,7 +124,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void StyleRules()
 		{
-			this.RuleFor(x => x.Style).Length(0, 2);
+			this.RuleFor(x => x.Style).Length(0, 2).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void WeightRules()
@@ -132,7 +133,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void WeightUnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
+			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		private async Task<bool> BeUniqueByName(ApiProductServerRequestModel model,  CancellationToken cancellationToken)
@@ -180,5 +181,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>18c909b44913b9c1872b6a389a69d5e1</Hash>
+    <Hash>369125e5f211a43db4d5ba63911cfbaf</Hash>
 </Codenesium>*/

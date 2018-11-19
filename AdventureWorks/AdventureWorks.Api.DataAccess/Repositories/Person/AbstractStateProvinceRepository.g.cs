@@ -76,21 +76,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_StateProvince_Name.
 		public async virtual Task<StateProvince> ByName(string name)
 		{
 			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// unique constraint AK_StateProvince_rowguid.
 		public async virtual Task<StateProvince> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// unique constraint AK_StateProvince_StateProvinceCode_CountryRegionCode.
 		public async virtual Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
 			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 		}
 
+		// Foreign key reference to this table Address via stateProvinceID.
 		public async virtual Task<List<Address>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Address>().Where(x => x.StateProvinceID == stateProvinceID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Address>();
@@ -120,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c5a60462182e3392cc9e3c5f874372fd</Hash>
+    <Hash>71ef1aa6b36e328648571f8aa1655cd3</Hash>
 </Codenesium>*/

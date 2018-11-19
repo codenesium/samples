@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_SalesTaxRate_rowguid.
 		public async virtual Task<SalesTaxRate> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// unique constraint AK_SalesTaxRate_StateProvinceID_TaxType.
 		public async virtual Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
 			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cee544cc7b7da250261cf963c38da13</Hash>
+    <Hash>2c44afb35213ab84b8615bf24f961a1a</Hash>
 </Codenesium>*/

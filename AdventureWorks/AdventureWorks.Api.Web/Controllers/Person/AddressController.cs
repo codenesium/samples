@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/addresses")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class AddressController : AbstractAddressController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>94311426a052f856993c107d087af412</Hash>
+    <Hash>b2cb03fb74e0b72243f53ac9f736f012</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/votes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class VoteController : AbstractVoteController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>525b43ca9af1f12ae8c5d5c1ab32149c</Hash>
+    <Hash>31a0ebbf69f5b198f3df530693f01a20</Hash>
 </Codenesium>*/

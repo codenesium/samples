@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/documents")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class DocumentController : AbstractDocumentController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>322cd3c30a3d408e324a301e01571742</Hash>
+    <Hash>81a1da79c0e78ddc1e890072bed8a564</Hash>
 </Codenesium>*/

@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_Document_rowguid.
 		public async virtual Task<Document> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<Document>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Non-unique constraint IX_Document_FileName_Revision.
 		public async virtual Task<List<Document>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8cb3ccb7bfd9a33b043b60f2b54bbc85</Hash>
+    <Hash>fcb007bd7bd9e3ad9bc32505c85061f0</Hash>
 </Codenesium>*/

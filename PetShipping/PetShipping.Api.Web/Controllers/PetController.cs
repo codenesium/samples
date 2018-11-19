@@ -17,7 +17,6 @@ namespace PetShippingNS.Api.Web
 	[Route("api/pets")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PetController : AbstractPetController
 	{
@@ -42,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b03395c4ad98b8998dc217b3dd46fcad</Hash>
+    <Hash>1b9c4d7674bad0f48d535229564ca2d1</Hash>
 </Codenesium>*/

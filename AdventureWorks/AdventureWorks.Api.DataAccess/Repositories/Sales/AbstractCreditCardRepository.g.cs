@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_CreditCard_CardNumber.
 		public async virtual Task<CreditCard> ByCardNumber(string cardNumber)
 		{
 			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CardNumber == cardNumber);
 		}
 
+		// Foreign key reference to this table SalesOrderHeader via creditCardID.
 		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8cc630977b2c5b2ccb9549559d8b3d71</Hash>
+    <Hash>d731f4593bd5f4e34bab7c223759dadc</Hash>
 </Codenesium>*/

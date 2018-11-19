@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Threading;
@@ -27,12 +28,12 @@ namespace StackOverflowNS.Api.Services
 
 		public virtual void TypeRules()
 		{
-			this.RuleFor(x => x.Type).NotNull();
-			this.RuleFor(x => x.Type).Length(0, 50);
+			this.RuleFor(x => x.Type).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Type).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d03b6acfa909fd204432c5591ab50c61</Hash>
+    <Hash>a6ebea67ff6444f430b3e2010e19849b</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/eventStatus")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class EventStatuController : AbstractEventStatuController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a20570a92d5be4ea51a868bb22fbbcfb</Hash>
+    <Hash>3c3177061072ea096e290f0f98b0acb7</Hash>
 </Codenesium>*/

@@ -17,7 +17,6 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/users")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class UserController : AbstractUserController
 	{
@@ -42,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a98ac4660ccbfd102f81aed0260e4f58</Hash>
+    <Hash>e32fe61aba4c1a2e3d94a7458c8ba949</Hash>
 </Codenesium>*/

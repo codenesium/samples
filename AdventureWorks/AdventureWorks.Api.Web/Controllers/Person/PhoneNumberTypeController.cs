@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/phoneNumberTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class PhoneNumberTypeController : AbstractPhoneNumberTypeController
 	{
@@ -42,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7a615245e9a5b5fa1644b0fd79284195</Hash>
+    <Hash>0aeae5e4dfec4745a852ac8efed66216</Hash>
 </Codenesium>*/

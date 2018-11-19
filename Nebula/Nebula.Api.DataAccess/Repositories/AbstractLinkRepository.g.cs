@@ -76,26 +76,31 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AX_Link_ExternalId.
 		public async virtual Task<Link> ByExternalId(Guid externalId)
 		{
 			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
+		// Non-unique constraint AX_Link_ChainId.
 		public async virtual Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Where(x => x.ChainId == chainId, limit, offset);
 		}
 
+		// Foreign key reference to this table LinkLog via linkId.
 		public async virtual Task<List<LinkLog>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
+		// Foreign key reference to table Machine via assignedMachineId.
 		public async virtual Task<Machine> MachineByAssignedMachineId(int? assignedMachineId)
 		{
 			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
 		}
 
+		// Foreign key reference to table LinkStatus via linkStatusId.
 		public async virtual Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId)
 		{
 			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
@@ -125,5 +130,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4c6080a40c663617986dbf48ed7af3ca</Hash>
+    <Hash>cfd1282c02ee542c9508387a0a222f20</Hash>
 </Codenesium>*/

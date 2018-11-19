@@ -17,7 +17,6 @@ namespace TestsNS.Api.Web
 	[Route("api/schemaBPersons")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class SchemaBPersonController : AbstractSchemaBPersonController
 	{
@@ -42,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>181d29558c1139dc5721743e47b025b1</Hash>
+    <Hash>1305149b718d7ecef1937e75381fa0ab</Hash>
 </Codenesium>*/

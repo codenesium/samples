@@ -17,7 +17,6 @@ namespace FileServiceNS.Api.Web
 	[Route("api/files")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class FileController : AbstractFileController
 	{
@@ -42,5 +41,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b6f2cc90770af7b2f818aead7aa9cd37</Hash>
+    <Hash>e9819ba4cc4ab613cafe2b9d7a21a16d</Hash>
 </Codenesium>*/

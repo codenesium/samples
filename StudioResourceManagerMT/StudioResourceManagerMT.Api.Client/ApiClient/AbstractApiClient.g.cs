@@ -57,12 +57,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
-		public virtual async Task<CreateResponse<List<ApiAdminClientResponseModel>> > AdminBulkInsertAsync(List<ApiAdminClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiAdminClientResponseModel>>> AdminBulkInsertAsync(List<ApiAdminClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Admins/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAdminClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiAdminClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAdminClientResponseModel>> AdminCreateAsync(ApiAdminClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -130,12 +130,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAdminClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiEventClientResponseModel>> > EventBulkInsertAsync(List<ApiEventClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiEventClientResponseModel>>> EventBulkInsertAsync(List<ApiEventClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Events/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiEventClientResponseModel>> EventCreateAsync(ApiEventClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -203,12 +203,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEventClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiEventStatuClientResponseModel>> > EventStatuBulkInsertAsync(List<ApiEventStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiEventStatuClientResponseModel>>> EventStatuBulkInsertAsync(List<ApiEventStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/EventStatus/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventStatuClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEventStatuClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiEventStatuClientResponseModel>> EventStatuCreateAsync(ApiEventStatuClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -276,12 +276,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEventClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiFamilyClientResponseModel>> > FamilyBulkInsertAsync(List<ApiFamilyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiFamilyClientResponseModel>>> FamilyBulkInsertAsync(List<ApiFamilyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Families/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFamilyClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiFamilyClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFamilyClientResponseModel>> FamilyCreateAsync(ApiFamilyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -349,12 +349,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiRateClientResponseModel>> > RateBulkInsertAsync(List<ApiRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiRateClientResponseModel>>> RateBulkInsertAsync(List<ApiRateClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Rates/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRateClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiRateClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRateClientResponseModel>> RateCreateAsync(ApiRateClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -430,12 +430,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSpaceClientResponseModel>> > SpaceBulkInsertAsync(List<ApiSpaceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSpaceClientResponseModel>>> SpaceBulkInsertAsync(List<ApiSpaceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Spaces/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpaceClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpaceClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSpaceClientResponseModel>> SpaceCreateAsync(ApiSpaceClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -495,12 +495,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiSpaceFeatureClientResponseModel>> > SpaceFeatureBulkInsertAsync(List<ApiSpaceFeatureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiSpaceFeatureClientResponseModel>>> SpaceFeatureBulkInsertAsync(List<ApiSpaceFeatureClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SpaceFeatures/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpaceFeatureClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSpaceFeatureClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSpaceFeatureClientResponseModel>> SpaceFeatureCreateAsync(ApiSpaceFeatureClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -560,12 +560,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiStudentClientResponseModel>> > StudentBulkInsertAsync(List<ApiStudentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiStudentClientResponseModel>>> StudentBulkInsertAsync(List<ApiStudentClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Students/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStudentClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStudentClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiStudentClientResponseModel>> StudentCreateAsync(ApiStudentClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -641,12 +641,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiStudentClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiStudioClientResponseModel>> > StudioBulkInsertAsync(List<ApiStudioClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiStudioClientResponseModel>>> StudioBulkInsertAsync(List<ApiStudioClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Studios/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStudioClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiStudioClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiStudioClientResponseModel>> StudioCreateAsync(ApiStudioClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -706,12 +706,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTeacherClientResponseModel>> > TeacherBulkInsertAsync(List<ApiTeacherClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTeacherClientResponseModel>>> TeacherBulkInsertAsync(List<ApiTeacherClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Teachers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeacherClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeacherClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTeacherClientResponseModel>> TeacherCreateAsync(ApiTeacherClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -787,12 +787,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiTeacherSkillClientResponseModel>> > TeacherSkillBulkInsertAsync(List<ApiTeacherSkillClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiTeacherSkillClientResponseModel>>> TeacherSkillBulkInsertAsync(List<ApiTeacherSkillClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/TeacherSkills/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeacherSkillClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiTeacherSkillClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTeacherSkillClientResponseModel>> TeacherSkillCreateAsync(ApiTeacherSkillClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -860,12 +860,12 @@ namespace StudioResourceManagerMTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRateClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>> > UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual async Task<CreateResponse<List<ApiUserClientResponseModel>>> UserBulkInsertAsync(List<ApiUserClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Users/BulkInsert", items, cancellationToken).ConfigureAwait(false);
 
 			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>> >(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiUserClientResponseModel>>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUserClientResponseModel>> UserCreateAsync(ApiUserClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
@@ -977,5 +977,5 @@ namespace StudioResourceManagerMTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>04d6f857918aae59883bb7d7db081c7a</Hash>
+    <Hash>163c722de914c4ae4c73a7f75e7e32d7</Hash>
 </Codenesium>*/

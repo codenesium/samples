@@ -1,6 +1,7 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Create()
+		public async void Create_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
 			var model = new ApiShoppingCartItemServerRequestModel();
@@ -87,12 +88,33 @@ namespace AdventureWorksNS.Api.Services.Tests
 			CreateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Create(model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShoppingCartItemServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ShoppingCartItem>()));
 		}
 
 		[Fact]
-		public async void Update()
+		public async void Create_Errors()
+		{
+			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
+			var model = new ApiShoppingCartItemServerRequestModel();
+			var validatorMock = new Mock<IApiShoppingCartItemServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiShoppingCartItemServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
+			                                          mock.RepositoryMock.Object,
+			                                          validatorMock.Object,
+			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
+			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
+
+			CreateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShoppingCartItemServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Update_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
 			var model = new ApiShoppingCartItemServerRequestModel();
@@ -107,12 +129,34 @@ namespace AdventureWorksNS.Api.Services.Tests
 			UpdateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Update(default(int), model);
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ShoppingCartItem>()));
 		}
 
 		[Fact]
-		public async void Delete()
+		public async void Update_Errors()
+		{
+			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
+			var model = new ApiShoppingCartItemServerRequestModel();
+			var validatorMock = new Mock<IApiShoppingCartItemServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
+			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
+			                                          mock.RepositoryMock.Object,
+			                                          validatorMock.Object,
+			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
+			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
+
+			UpdateResponse<ApiShoppingCartItemServerResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemServerRequestModel>()));
+		}
+
+		[Fact]
+		public async void Delete_NoErrors()
 		{
 			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
 			var model = new ApiShoppingCartItemServerRequestModel();
@@ -126,8 +170,29 @@ namespace AdventureWorksNS.Api.Services.Tests
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
+			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Delete_Errors()
+		{
+			var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
+			var model = new ApiShoppingCartItemServerRequestModel();
+			var validatorMock = new Mock<IApiShoppingCartItemServerRequestModelValidator>();
+			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
+			var service = new ShoppingCartItemService(mock.LoggerMock.Object,
+			                                          mock.RepositoryMock.Object,
+			                                          validatorMock.Object,
+			                                          mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
+			                                          mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			response.Success.Should().BeFalse();
+			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -169,5 +234,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d6fe00aa24f73bce4aa797f078f90c92</Hash>
+    <Hash>0e321a6fc8f58fc2b110853ce4a9dc8c</Hash>
 </Codenesium>*/

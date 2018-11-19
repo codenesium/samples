@@ -17,7 +17,6 @@ namespace StudioResourceManagerMTNS.Api.Web
 	[Route("api/users")]
 	[ApiController]
 	[ApiVersion("1.0")]
-	[Authorize(Policy = "DefaultAccess")]
 
 	public class UserController : AbstractUserController
 	{
@@ -42,5 +41,5 @@ namespace StudioResourceManagerMTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>babcbd84ec18bc8dbc81736026b983d0</Hash>
+    <Hash>3e7cf74ec717ad69b149b4faa9be0d87</Hash>
 </Codenesium>*/

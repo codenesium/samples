@@ -76,11 +76,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		// unique constraint AK_BusinessEntity_rowguid.
 		public async virtual Task<BusinessEntity> ByRowguid(Guid rowguid)
 		{
 			return await this.Context.Set<BusinessEntity>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
+		// Foreign key reference to this table Person via businessEntityID.
 		public async virtual Task<List<Person>> PeopleByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Person>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Person>();
@@ -110,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23e42562208cf3f0d3d913a745a9cc3f</Hash>
+    <Hash>590ee79355ef3331703f16b4964d187c</Hash>
 </Codenesium>*/

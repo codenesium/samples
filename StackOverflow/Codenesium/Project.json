@@ -1,0 +1,4258 @@
+{
+  "$id": "1",
+  "Database": {
+    "$id": "2",
+    "Name": "Demo_StackOverflow",
+    "Schemas": [
+      {
+        "$id": "3",
+        "Name": "dbo",
+        "Tables": [
+          {
+            "$id": "4",
+            "Name": "Badges",
+            "Columns": [
+              {
+                "$id": "5",
+                "Name": "Date",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "6",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "7",
+                "Name": "Name",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "8",
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "9",
+                "Name": "PK_Badges__Id",
+                "TableName": "Badges",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "10",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "11",
+            "Name": "Comments",
+            "Columns": [
+              {
+                "$id": "12",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "13",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "14",
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "15",
+                "Name": "Score",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "16",
+                "Name": "Text",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 700,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "17",
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "18",
+                "Name": "PK_Comments__Id",
+                "TableName": "Comments",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "19",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "20",
+            "Name": "LinkTypes",
+            "Columns": [
+              {
+                "$id": "21",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "22",
+                "Name": "Type",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "23",
+                "Name": "PK_LinkTypes__Id",
+                "TableName": "LinkTypes",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "24",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "25",
+            "Name": "PostHistory",
+            "Columns": [
+              {
+                "$id": "26",
+                "Name": "Comment",
+                "DataType": "ntext",
+                "NumericPrecision": 0,
+                "MaxLength": 1073741823,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "27",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "28",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "29",
+                "Name": "PostHistoryTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "30",
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "31",
+                "Name": "RevisionGUID",
+                "DataType": "char",
+                "NumericPrecision": 0,
+                "MaxLength": 36,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "32",
+                "Name": "Text",
+                "DataType": "ntext",
+                "NumericPrecision": 0,
+                "MaxLength": 1073741823,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "33",
+                "Name": "UserDisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "34",
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "35",
+                "Name": "PK_PostHistory__Id",
+                "TableName": "PostHistory",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "36",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "37",
+            "Name": "PostHistoryTypes",
+            "Columns": [
+              {
+                "$id": "38",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "39",
+                "Name": "Type",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "40",
+                "Name": "PK_PostHistoryTypes__Id",
+                "TableName": "PostHistoryTypes",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "41",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "42",
+            "Name": "PostLinks",
+            "Columns": [
+              {
+                "$id": "43",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "44",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "45",
+                "Name": "LinkTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "46",
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "47",
+                "Name": "RelatedPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "48",
+                "Name": "PK_PostLinks__Id",
+                "TableName": "PostLinks",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "49",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "50",
+            "Name": "Posts",
+            "Columns": [
+              {
+                "$id": "51",
+                "Name": "AcceptedAnswerId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "52",
+                "Name": "AnswerCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "53",
+                "Name": "Body",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": -1,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "54",
+                "Name": "ClosedDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "55",
+                "Name": "CommentCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "56",
+                "Name": "CommunityOwnedDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "57",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "58",
+                "Name": "FavoriteCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "59",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "60",
+                "Name": "LastActivityDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "61",
+                "Name": "LastEditDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "62",
+                "Name": "LastEditorDisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "63",
+                "Name": "LastEditorUserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "64",
+                "Name": "OwnerUserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "65",
+                "Name": "ParentId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "66",
+                "Name": "PostTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "67",
+                "Name": "Score",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "68",
+                "Name": "Tags",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 150,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "69",
+                "Name": "Title",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 250,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "70",
+                "Name": "ViewCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "71",
+                "Name": "PK_Posts__Id",
+                "TableName": "Posts",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "72",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "73",
+                "Name": "NonClusteredIndex-20180824-123547",
+                "TableName": "Posts",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "74",
+                    "Name": "AnswerCount",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "75",
+                    "Name": "OwnerUserId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "76",
+            "Name": "PostTypes",
+            "Columns": [
+              {
+                "$id": "77",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "78",
+                "Name": "Type",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "79",
+                "Name": "PK_PostTypes__Id",
+                "TableName": "PostTypes",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "80",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "81",
+            "Name": "Tags",
+            "Columns": [
+              {
+                "$id": "82",
+                "Name": "Count",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "83",
+                "Name": "ExcerptPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "84",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "85",
+                "Name": "TagName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 150,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "86",
+                "Name": "WikiPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "87",
+                "Name": "PK_Tags__Id",
+                "TableName": "Tags",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "88",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "89",
+            "Name": "Users",
+            "Columns": [
+              {
+                "$id": "90",
+                "Name": "AboutMe",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": -1,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "91",
+                "Name": "AccountId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "92",
+                "Name": "Age",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "93",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "94",
+                "Name": "DisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "95",
+                "Name": "DownVotes",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "96",
+                "Name": "EmailHash",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "97",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "98",
+                "Name": "LastAccessDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "99",
+                "Name": "Location",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 100,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "100",
+                "Name": "Reputation",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "101",
+                "Name": "UpVotes",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "102",
+                "Name": "Views",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "103",
+                "Name": "WebsiteUrl",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 200,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "104",
+                "Name": "PK_Users_Id",
+                "TableName": "Users",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "105",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "106",
+            "Name": "Votes",
+            "Columns": [
+              {
+                "$id": "107",
+                "Name": "BountyAmount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "108",
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "109",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "110",
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "111",
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "112",
+                "Name": "VoteTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "113",
+                "Name": "PK_Votes__Id",
+                "TableName": "Votes",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "114",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "115",
+                "Name": "NonClusteredIndex-20180824-125907",
+                "TableName": "Votes",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "116",
+                    "Name": "PostId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "117",
+                    "Name": "VoteTypeId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "118",
+                    "Name": "UserId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "119",
+            "Name": "VoteTypes",
+            "Columns": [
+              {
+                "$id": "120",
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "121",
+                "Name": "Name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "122",
+                "Name": "PK_VoteType__Id",
+                "TableName": "VoteTypes",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "123",
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": []
+      }
+    ],
+    "Version": "1.0",
+    "DatabaseType": "MSSQL"
+  },
+  "Project": {
+    "$id": "124",
+    "Schemas": [
+      {
+        "$id": "125",
+        "AppSchemaName": "dbo",
+        "AppSchemaId": "7d3b4207-e546-4f30-9687-b496b3074ecf",
+        "Tables": [
+          {
+            "$id": "126",
+            "AppTableName": "Badge",
+            "AppTableNamePlural": "Badges",
+            "AppDoNotProcess": false,
+            "AppTableId": "cc72ae65-1fd0-4486-9e9d-3a2efb791a84",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "127",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Date",
+                "AppNamePlural": "Dates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1ecb2cc2-a1ef-4137-a27b-f27a67b8d5d3",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "126"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Date",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "128",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1799ab52-09ae-4def-9f00-0ad8225d9b83",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "126"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "129",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 40,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "c6ca3ab8-e1eb-4523-b364-9decf7b75ac3",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "126"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Name",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "130",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UserId",
+                "AppNamePlural": "UserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8aed0758-271e-48ac-bfef-9beabd7969ed",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "126"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "131",
+                "Columns": [
+                  {
+                    "$id": "132",
+                    "Column": {
+                      "$ref": "128"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Badges__Id",
+                "Table": {
+                  "$ref": "126"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Badges__Id",
+                "TableName": "Badge",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Badges",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "133",
+            "AppTableName": "Comment",
+            "AppTableNamePlural": "Comments",
+            "AppDoNotProcess": false,
+            "AppTableId": "7362fbab-8e19-4d16-8be0-26bb04ad2000",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "134",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "86ea19bf-3f2c-4889-9e66-883e57e6032e",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "135",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "3e1fe91b-ecc2-4b6c-aa3b-c4b8799c8ff5",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "136",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostId",
+                "AppNamePlural": "PostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1034533e-f57c-4349-969a-a7acc6e6ca06",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "137",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Score",
+                "AppNamePlural": "Scores",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "fcf83f6e-5124-4115-813d-5a43d8c2d35a",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Score",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "138",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Text",
+                "AppNamePlural": "Texts",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 700,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "3b3c81d9-95ad-4c20-b5f3-c81d6de1789f",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Text",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 700,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "139",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UserId",
+                "AppNamePlural": "UserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "7747b9c9-875e-4ab7-affc-a83e9b91aade",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "133"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "140",
+                "Columns": [
+                  {
+                    "$id": "141",
+                    "Column": {
+                      "$ref": "135"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Comments__Id",
+                "Table": {
+                  "$ref": "133"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Comments__Id",
+                "TableName": "Comment",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Comments",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "142",
+            "AppTableName": "LinkType",
+            "AppTableNamePlural": "LinkTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "38192bd0-9a94-4f66-99e0-a755a9b5ca59",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "143",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "39450ff6-92c5-492f-ae7e-3236a06b9ccc",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "142"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "144",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Type",
+                "AppNamePlural": "Types",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 50,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "66a3ce60-294c-489a-ab2e-d682d249f3a8",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "142"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Type",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "145",
+                "Columns": [
+                  {
+                    "$id": "146",
+                    "Column": {
+                      "$ref": "143"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_LinkTypes__Id",
+                "Table": {
+                  "$ref": "142"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_LinkTypes__Id",
+                "TableName": "LinkType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "LinkTypes",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "147",
+            "AppTableName": "PostHistory",
+            "AppTableNamePlural": "PostHistories",
+            "AppDoNotProcess": false,
+            "AppTableId": "e38e87b8-e082-4b24-b50a-d2fdf8fa1d5c",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "148",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Comment",
+                "AppNamePlural": "Comments",
+                "AppFieldType": "ntext",
+                "AppFieldMaxLength": 1073741823,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "bef9c653-0f28-4170-8368-ee369a70f580",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Comment",
+                "DataType": "ntext",
+                "NumericPrecision": 0,
+                "MaxLength": 1073741823,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "149",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "7b2f47f1-0471-4d14-a159-b3ff9a673fc8",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "150",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "93c91af2-3b64-4e38-a076-40f0c4332779",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "151",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostHistoryTypeId",
+                "AppNamePlural": "PostHistoryTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "04f5000f-7569-4444-abb5-c33a9b0463b4",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostHistoryTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "152",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostId",
+                "AppNamePlural": "PostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "c1e4af52-7828-4d13-a587-12b5b0077f6f",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "153",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "RevisionGUID",
+                "AppNamePlural": "RevisionGUIDs",
+                "AppFieldType": "char",
+                "AppFieldMaxLength": 36,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "b223a42c-d01b-44b6-9d77-8854f3b001b8",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "RevisionGUID",
+                "DataType": "char",
+                "NumericPrecision": 0,
+                "MaxLength": 36,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "154",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Text",
+                "AppNamePlural": "Texts",
+                "AppFieldType": "ntext",
+                "AppFieldMaxLength": 1073741823,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "75f5c695-0a6e-473d-80f7-d6b32e1c9fc6",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Text",
+                "DataType": "ntext",
+                "NumericPrecision": 0,
+                "MaxLength": 1073741823,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "155",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UserDisplayName",
+                "AppNamePlural": "UserDisplayNames",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 40,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "ba0577e4-5b9b-40be-afa3-c32198900f53",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UserDisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "156",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UserId",
+                "AppNamePlural": "UserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "3b1fdfb0-a816-4d93-89ae-18e808b38f35",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "147"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "157",
+                "Columns": [
+                  {
+                    "$id": "158",
+                    "Column": {
+                      "$ref": "150"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_PostHistory__Id",
+                "Table": {
+                  "$ref": "147"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PostHistory__Id",
+                "TableName": "PostHistory",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "PostHistory",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "159",
+            "AppTableName": "PostHistoryType",
+            "AppTableNamePlural": "PostHistoryTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "09f60cc3-9b7f-4704-b82a-6d475c1b2f3a",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "160",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "fea3d979-b4e1-44a3-9fd1-57e56e5142b3",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "159"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "161",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Type",
+                "AppNamePlural": "Types",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 50,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1ae44b36-7560-46c2-b69e-2aad8c786b5d",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "159"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Type",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "162",
+                "Columns": [
+                  {
+                    "$id": "163",
+                    "Column": {
+                      "$ref": "160"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_PostHistoryTypes__Id",
+                "Table": {
+                  "$ref": "159"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PostHistoryTypes__Id",
+                "TableName": "PostHistoryType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "PostHistoryTypes",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "164",
+            "AppTableName": "PostLink",
+            "AppTableNamePlural": "PostLinks",
+            "AppDoNotProcess": false,
+            "AppTableId": "9fe3297b-16a1-4628-9edd-6eb615945e84",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "165",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "bac68f2c-df5c-44df-b108-f95c676e89c1",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "164"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "166",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8d1e84ec-6bc4-40db-84c7-048966accf47",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "164"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "167",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LinkTypeId",
+                "AppNamePlural": "LinkTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "56404cb9-ced6-4d6e-a9b6-85709f63bfc4",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "164"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LinkTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "168",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostId",
+                "AppNamePlural": "PostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "256e929f-dd97-40f2-8875-5bf29ef67719",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "164"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "169",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "RelatedPostId",
+                "AppNamePlural": "RelatedPostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "9fff3b87-63f5-4c41-90f0-1971a56e8247",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "164"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "RelatedPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "170",
+                "Columns": [
+                  {
+                    "$id": "171",
+                    "Column": {
+                      "$ref": "166"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_PostLinks__Id",
+                "Table": {
+                  "$ref": "164"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PostLinks__Id",
+                "TableName": "PostLink",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "PostLinks",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "172",
+            "AppTableName": "Post",
+            "AppTableNamePlural": "Posts",
+            "AppDoNotProcess": false,
+            "AppTableId": "8d7e99f6-c879-4698-8bce-d06c3f3afe31",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "173",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AcceptedAnswerId",
+                "AppNamePlural": "AcceptedAnswerIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "66f9a045-8bdc-4125-87e6-c6b810038639",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "AcceptedAnswerId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "174",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AnswerCount",
+                "AppNamePlural": "AnswerCounts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "c0b82837-f484-48a9-b826-99e22228e7ea",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "AnswerCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "175",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Body",
+                "AppNamePlural": "Bodies",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": -1,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "3c575885-838d-49e3-95e1-571cc5e2904e",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Body",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": -1,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "176",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ClosedDate",
+                "AppNamePlural": "ClosedDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "d00e0b63-5bb6-4a3e-a937-2b625c573257",
+                "AppCLRType": "DateTime?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "ClosedDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "177",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CommentCount",
+                "AppNamePlural": "CommentCounts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "619785c8-6681-46ec-81df-c88a66900619",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CommentCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "178",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CommunityOwnedDate",
+                "AppNamePlural": "CommunityOwnedDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "a7748a4e-3a72-4dd5-9153-d38943a0bcbe",
+                "AppCLRType": "DateTime?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CommunityOwnedDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "179",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a45cae11-d9a9-4f13-a766-65e143c45bfc",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "180",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "FavoriteCount",
+                "AppNamePlural": "FavoriteCounts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "7c021dbc-cecf-4c10-b017-ad1fe4cc8ab5",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "FavoriteCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "181",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "bf4210c1-59ff-44c0-9067-c42f8cd3dc22",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "182",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastActivityDate",
+                "AppNamePlural": "LastActivityDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "23bada13-329b-40f9-852c-5d71c7b7ebaa",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LastActivityDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "183",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastEditDate",
+                "AppNamePlural": "LastEditDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "056c62d8-5d9a-4be0-a6f1-13d7f910c6bd",
+                "AppCLRType": "DateTime?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LastEditDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "184",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastEditorDisplayName",
+                "AppNamePlural": "LastEditorDisplayNames",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 40,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "f61abaa7-9bb7-4e8f-8b9a-42cb9e9ba2ed",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LastEditorDisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "185",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastEditorUserId",
+                "AppNamePlural": "LastEditorUserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "58c47777-5dd9-40e3-824b-ac91c1a3adb7",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LastEditorUserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "186",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "OwnerUserId",
+                "AppNamePlural": "OwnerUserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "4ea0bbc2-8ba8-4ca0-8e78-b788d4fc44c6",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "OwnerUserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "187",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ParentId",
+                "AppNamePlural": "ParentIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "709a5c42-7634-4eca-877b-a76175fbe22a",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "ParentId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "188",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostTypeId",
+                "AppNamePlural": "PostTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "173dceb1-7fda-42b3-a27d-02988fb938d8",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "189",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Score",
+                "AppNamePlural": "Scores",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a142cbe1-fbab-492c-8261-636babf01c24",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Score",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "190",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Tag",
+                "AppNamePlural": "Tags",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 150,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "6521b53d-91b8-4038-8882-4f68fe06cf04",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Tags",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 150,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "191",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Title",
+                "AppNamePlural": "Titles",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 250,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "6687eecb-7290-4a17-8329-c11fd328d160",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Title",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 250,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "192",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ViewCount",
+                "AppNamePlural": "ViewCounts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a65c66fe-2c2e-4516-a038-5e2cf3e2c4f5",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "172"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "ViewCount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "193",
+                "Columns": [
+                  {
+                    "$id": "194",
+                    "Column": {
+                      "$ref": "181"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Posts__Id",
+                "Table": {
+                  "$ref": "172"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Posts__Id",
+                "TableName": "Post",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "195",
+                "Columns": [
+                  {
+                    "$id": "196",
+                    "Column": {
+                      "$ref": "174"
+                    },
+                    "Name": "AnswerCount",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "197",
+                    "Column": {
+                      "$ref": "186"
+                    },
+                    "Name": "OwnerUserId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByOwnerUserId",
+                "ControllerRoute": "byOwnerUserId",
+                "AppName": "NonClusteredIndex-20180824-123547",
+                "Table": {
+                  "$ref": "172"
+                },
+                "GenerationEnabled": true,
+                "Name": "NonClusteredIndex-20180824-123547",
+                "TableName": "Post",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Posts",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "198",
+            "AppTableName": "PostType",
+            "AppTableNamePlural": "PostTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "fad188ab-ab33-46a1-8c87-6f12e7d72542",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "199",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1cbafd31-aef0-4e7c-90d4-991f106c68bb",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "198"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "200",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Type",
+                "AppNamePlural": "Types",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 50,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "1fd02657-19fe-455f-b0e8-0c33684aae6e",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "198"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Type",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "201",
+                "Columns": [
+                  {
+                    "$id": "202",
+                    "Column": {
+                      "$ref": "199"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_PostTypes__Id",
+                "Table": {
+                  "$ref": "198"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_PostTypes__Id",
+                "TableName": "PostType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "PostTypes",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "203",
+            "AppTableName": "Tag",
+            "AppTableNamePlural": "Tags",
+            "AppDoNotProcess": false,
+            "AppTableId": "88d85cc6-a0a4-4ac1-8f49-7fbc295ee81f",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "204",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Count",
+                "AppNamePlural": "Counts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8a639766-2c3f-4657-abd5-e8df82b4a56a",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "203"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Count",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "205",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "ExcerptPostId",
+                "AppNamePlural": "ExcerptPostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "8c6690d4-954a-4668-b137-e710910267a6",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "203"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "ExcerptPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "206",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "7f721d39-ac39-4a7b-bc0e-efa9d1569342",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "203"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "207",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "TagName",
+                "AppNamePlural": "TagNames",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 150,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "c1266fee-1a16-4243-a86e-c48dd943735d",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "203"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "TagName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 150,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "208",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "WikiPostId",
+                "AppNamePlural": "WikiPostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "f4020fd7-bd87-4b74-9bcb-189b9dec96fd",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "203"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "WikiPostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "209",
+                "Columns": [
+                  {
+                    "$id": "210",
+                    "Column": {
+                      "$ref": "206"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Tags__Id",
+                "Table": {
+                  "$ref": "203"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Tags__Id",
+                "TableName": "Tag",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Tags",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "211",
+            "AppTableName": "User",
+            "AppTableNamePlural": "Users",
+            "AppDoNotProcess": false,
+            "AppTableId": "b44ed611-9161-408b-a465-d51eac8234e1",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "212",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AboutMe",
+                "AppNamePlural": "AboutMes",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": -1,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "8174dd90-36ce-4f85-9d7e-6351c9708708",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "AboutMe",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": -1,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "213",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "AccountId",
+                "AppNamePlural": "AccountIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "3565e35d-960e-4f5c-a4bb-c1a9a17448f2",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "AccountId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "214",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Age",
+                "AppNamePlural": "Ages",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "80e79520-2fc0-4fa6-aa80-c3f112efe830",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Age",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "215",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "08760a99-f070-45fb-a80d-0725765b2cc2",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "216",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "DisplayName",
+                "AppNamePlural": "DisplayNames",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 40,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "a1d6be10-ae7f-4f9e-a4fa-76b90a153017",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "DisplayName",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "217",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "DownVote",
+                "AppNamePlural": "DownVotes",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "fb83a0e9-12e6-4987-82de-930973d8e0b5",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "DownVotes",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "218",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "EmailHash",
+                "AppNamePlural": "EmailHashes",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 40,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "4d7b4708-b13e-44a2-9c12-457a9bfe982d",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "EmailHash",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 40,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "219",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "bb29ff40-a259-4939-b091-c881c4a1b44e",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "220",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "LastAccessDate",
+                "AppNamePlural": "LastAccessDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "78f0d1bc-2169-432b-98a4-160f6c3c053e",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "LastAccessDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "221",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Location",
+                "AppNamePlural": "Locations",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 100,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "f8de31cb-6c60-4116-87bc-884d5cf5579b",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Location",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 100,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "222",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Reputation",
+                "AppNamePlural": "Reputations",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "9349fedc-d14e-4076-930c-c2887ac30de0",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Reputation",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "223",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UpVote",
+                "AppNamePlural": "UpVotes",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "030cfe91-20dd-49d1-b5e0-a190d3bc08b3",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UpVotes",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "224",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "View",
+                "AppNamePlural": "Views",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "70ac7de5-b295-4f76-8732-a76473c041ec",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Views",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "225",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "WebsiteUrl",
+                "AppNamePlural": "WebsiteUrls",
+                "AppFieldType": "nvarchar",
+                "AppFieldMaxLength": 200,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "5289b1dc-11e9-4a38-8acd-c782fc6b9439",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "211"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "WebsiteUrl",
+                "DataType": "nvarchar",
+                "NumericPrecision": 0,
+                "MaxLength": 200,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "226",
+                "Columns": [
+                  {
+                    "$id": "227",
+                    "Column": {
+                      "$ref": "219"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Users_Id",
+                "Table": {
+                  "$ref": "211"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Users_Id",
+                "TableName": "User",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Users",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "228",
+            "AppTableName": "Vote",
+            "AppTableNamePlural": "Votes",
+            "AppDoNotProcess": false,
+            "AppTableId": "e62b46d4-7573-4fc8-96f9-0141017da1d0",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "229",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "BountyAmount",
+                "AppNamePlural": "BountyAmounts",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "043c16ac-24fa-416c-91f8-466ffeb0a5a1",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "BountyAmount",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "230",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "CreationDate",
+                "AppNamePlural": "CreationDates",
+                "AppFieldType": "datetime",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "58ea1943-8f41-4a7f-9602-df7c97c7a295",
+                "AppCLRType": "DateTime",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "CreationDate",
+                "DataType": "datetime",
+                "NumericPrecision": 0,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "231",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "abf46960-c5f8-4ec7-a2ed-a5d0bcd51c63",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "232",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "PostId",
+                "AppNamePlural": "PostIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "9aba33da-a027-4940-b505-5bc02f5c9cef",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "PostId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "233",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": false,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "UserId",
+                "AppNamePlural": "UserIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": true,
+                "AppFieldId": "7ede0db5-e113-4c2d-be1e-3235cf0b88c1",
+                "AppCLRType": "int?",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "UserId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": true,
+                "DatabaseGenerated": false
+              },
+              {
+                "$id": "234",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "VoteTypeId",
+                "AppNamePlural": "VoteTypeIds",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "7b78ce7e-5b9b-4d75-b228-4eafe2d21b0e",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "228"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "VoteTypeId",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "235",
+                "Columns": [
+                  {
+                    "$id": "236",
+                    "Column": {
+                      "$ref": "231"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Votes__Id",
+                "Table": {
+                  "$ref": "228"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Votes__Id",
+                "TableName": "Vote",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "237",
+                "Columns": [
+                  {
+                    "$id": "238",
+                    "Column": {
+                      "$ref": "232"
+                    },
+                    "Name": "PostId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "239",
+                    "Column": {
+                      "$ref": "234"
+                    },
+                    "Name": "VoteTypeId",
+                    "Order": 0,
+                    "Descending": false,
+                    "IsIncludedColumn": true,
+                    "IsIdentity": false
+                  },
+                  {
+                    "$id": "240",
+                    "Column": {
+                      "$ref": "233"
+                    },
+                    "Name": "UserId",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": false
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ByUserId",
+                "ControllerRoute": "byUserId",
+                "AppName": "NonClusteredIndex-20180824-125907",
+                "Table": {
+                  "$ref": "228"
+                },
+                "GenerationEnabled": true,
+                "Name": "NonClusteredIndex-20180824-125907",
+                "TableName": "Vote",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": false
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "Votes",
+            "DefaultConstraints": [],
+            "IsView": false
+          },
+          {
+            "$id": "241",
+            "AppTableName": "VoteType",
+            "AppTableNamePlural": "VoteTypes",
+            "AppDoNotProcess": false,
+            "AppTableId": "59b35708-63cb-4bfa-bff8-05568e270296",
+            "AppGenerationEnabled": true,
+            "Columns": [
+              {
+                "$id": "242",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Id",
+                "AppNamePlural": "Ids",
+                "AppFieldType": "int",
+                "AppFieldMaxLength": 0,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "85af783c-43ac-4e0e-8ed0-c58999d4c266",
+                "AppCLRType": "int",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "241"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Id",
+                "DataType": "int",
+                "NumericPrecision": 10,
+                "MaxLength": 0,
+                "IsNullable": false,
+                "DatabaseGenerated": true
+              },
+              {
+                "$id": "243",
+                "AppIsBooleanWithYNConversion": false,
+                "AppIsRequired": true,
+                "AppShowInRequestModel": true,
+                "AppShowInResponseModel": true,
+                "AppName": "Name",
+                "AppNamePlural": "Names",
+                "AppFieldType": "varchar",
+                "AppFieldMaxLength": 50,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppIsNullable": false,
+                "AppFieldId": "f26ebd87-f335-4ddd-a225-3c7470a61b45",
+                "AppCLRType": "string",
+                "AppIsConcurrencyColumn": false,
+                "Table": {
+                  "$ref": "241"
+                },
+                "AppDefaultValue": null,
+                "GenerationEnabled": true,
+                "Name": "Name",
+                "DataType": "varchar",
+                "NumericPrecision": 0,
+                "MaxLength": 50,
+                "IsNullable": false,
+                "DatabaseGenerated": false
+              }
+            ],
+            "Constraints": [
+              {
+                "$id": "244",
+                "Columns": [
+                  {
+                    "$id": "245",
+                    "Column": {
+                      "$ref": "242"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_VoteType__Id",
+                "Table": {
+                  "$ref": "241"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_VoteType__Id",
+                "TableName": "VoteType",
+                "IsPrimaryKey": true,
+                "ConstraintType": "CLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              }
+            ],
+            "Schema": {
+              "$ref": "125"
+            },
+            "AppParentTable": null,
+            "AppReferenceTable": false,
+            "AppIsView": false,
+            "AppControllerAttribute": "",
+            "AppGenerateBulkInsertMethod": true,
+            "AppGenerateCreateMethod": true,
+            "AppGenerateUpdateMethod": true,
+            "AppGenerateDeleteMethod": true,
+            "AppGenerateAllMethod": true,
+            "AppGenerateGetMethod": true,
+            "AppGeneratePatchMethod": true,
+            "AppBulkInsertMethodAttribute": "",
+            "AppCreateMethodAttribute": "",
+            "AppUpdateMethodAttribute": "",
+            "AppDeleteMethodAttribute": "",
+            "AppAllMethodAttribute": "",
+            "AppGetMethodAttribute": "",
+            "AppPatchMethodAttribute": "",
+            "GenerationEnabled": true,
+            "Name": "VoteTypes",
+            "DefaultConstraints": [],
+            "IsView": false
+          }
+        ],
+        "ForeignKeys": [],
+        "ReferenceForeignKeys": [],
+        "ApplicationApiContainer": {
+          "$ref": "124"
+        },
+        "Name": "dbo"
+      }
+    ],
+    "ApplicationVersion": "1.0",
+    "ApiSettings": {
+      "$id": "246",
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "Name": "",
+    "Version": "",
+    "DatabaseType": ""
+  },
+  "Settings": {
+    "$id": "247",
+    "ApiSettings": {
+      "NamespacePrefix": "",
+      "IsMultiTenant": false,
+      "UseSoftDeletes": false
+    },
+    "TableParameterSettings": [],
+    "ColumnParameterSettings": [],
+    "VirtualForeignKeys": [],
+    "ForeignKeyParameterSettings": [],
+    "VirtualConstraints": [],
+    "ConstraintParameterSettings": []
+  }
+}
