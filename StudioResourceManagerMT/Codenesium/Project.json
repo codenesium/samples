@@ -1,5 +1,8 @@
 {
   "$id": "1",
+  "Name": "StudioResourceManagerMT",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\StudioResourceManagerMT",
   "Database": {
     "$id": "2",
     "Name": "StudioResourceManagerMultiTenant",
@@ -8451,6 +8454,7 @@
   },
   "Settings": {
     "$id": "605",
+    "SettingsVersion": "1.0",
     "ApiSettings": {
       "NamespacePrefix": "",
       "IsMultiTenant": true,

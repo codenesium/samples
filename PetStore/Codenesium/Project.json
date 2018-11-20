@@ -1,5 +1,8 @@
 {
   "$id": "1",
+  "Name": "PetStore",
+  "ProjectType": ".NET Core REST API 1.0.0",
+  "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\PetStore",
   "Database": {
     "$id": "2",
     "Name": "Demo_PetStore",
@@ -1625,6 +1628,7 @@
   },
   "Settings": {
     "$id": "107",
+    "SettingsVersion": "1.0",
     "ApiSettings": {
       "NamespacePrefix": "",
       "IsMultiTenant": false,
