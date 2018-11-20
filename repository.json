@@ -3,24 +3,32 @@
 {
 	"Id":"6b9cf39a-8347-4475-95b4-a363c99d9e12",
 	"Name":"AdventureWorks",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"Microsoft sample database",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/AdventureWorks/Codenesium/Project.json"
 },
 {
 	"Id":"a211eeab-39a3-4cbc-81c0-3636d01fe227",
 	"Name":"ESPIOT",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"IOT backend. Devices and Device actions are used to control IOT devices like the ESP8266 or Arduino.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/ESPIOT/Codenesium/Project.json"
 },
 {
 	"Id":"7a02837b-86dd-4da6-8568-463dee08a855",
 	"Name":"File Service",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"File microservice that powers Codenesium. Files are uploaded and placed in buckets. Functionally this looks like S3 on AWS.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/FileService/Codenesium/Project.json"
 },
 {
 	"Id":"9186055b-107f-4cd5-b128-5effff156c3b",
 	"Name":"Nebula",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"Deployment system that powers Codenesium. Similar to Octopus Deploy. Tasks are assigned to links and linked together to form a chain.
 	The tasks are then executed and the responses logged.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/Nebula/Codenesium/Project.json"
@@ -28,42 +36,56 @@
 {
 	"Id":"a724a2c2-372a-4ce4-b454-c415ca71c670",
 	"Name":"Pet Shipping",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"CRM that could power a business that ships pets. ",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/PetShipping/Codenesium/Project.json"
 },
 {
 	"Id":"a36d770e-26a6-4c2c-aff1-517754b8cefb",
 	"Name":"Pet Store",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"CRM that could be used by a pet store.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/PetStore/Codenesium/Project.json"
 },
 {
 	"Id":"3868a0a0-6aa6-4723-aa7c-ed3d3facf144",
 	"Name":"Stack Overflow",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"The Stack Overflow database.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StackOverflow/Codenesium/Project.json"
 },
 {
 	"Id":"af2dad47-81a5-4f4b-9195-dff13ce04e57",
 	"Name":"Studio Resource Manager",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"A CRM to manage a dance, music or yoga studio.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManager/Codenesium/Project.json"
 },
 {
 	"Id":"83e3c53f-ff2a-4a4b-9d67-eba21547d38a",
 	"Name":"Studio Resource Manager Multi-Tenant",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"A multi-tenant CRM to manage dance, music, yoga studio.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/StudioResourceManagerMT/Codenesium/Project.json"
 },
 {
 	"Id":"04670daa-8a76-44ae-b126-b6a8332137be",
 	"Name":"Ticketing CRM",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"A CRM for a ticket company.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/TicketCRM/Codenesium/Project.json"
 },
 {
 	"Id":"c6472d25-4006-4001-b3ca-9033b0689a62",
 	"Name":"Twitter",
+	"ProjectType" : ".NET Core REST API 1.0.0",
+	"LocalDestinationDirectory":"",
 	"Description":"The Twitter database.",
 	"Url":"https://raw.githubusercontent.com/codenesium/samples/master/Twitter/Codenesium/Project.json"
 }
