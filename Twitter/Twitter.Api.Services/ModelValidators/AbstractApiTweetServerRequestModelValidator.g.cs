@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITweetRepository tweetRepository;
+		protected ITweetRepository TweetRepository { get; private set; }
 
 		public AbstractApiTweetServerRequestModelValidator(ITweetRepository tweetRepository)
 		{
-			this.tweetRepository = tweetRepository;
+			this.TweetRepository = tweetRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTweetServerRequestModel model, int id)
@@ -50,16 +50,16 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.UserUserId).MustAsync(this.BeValidUserByUserUserId).When(x => !x?.UserUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidLocationByLocationId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidLocationByLocationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.tweetRepository.LocationByLocationId(id);
+			var record = await this.TweetRepository.LocationByLocationId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUserByUserUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByUserUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.tweetRepository.UserByUserUserId(id);
+			var record = await this.TweetRepository.UserByUserUserId(id);
 
 			return record != null;
 		}
@@ -67,5 +67,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c8f2a1adc1dfe4320f04318c771ebea</Hash>
+    <Hash>f8986e542af8b5ec761c205c32c5d536</Hash>
 </Codenesium>*/

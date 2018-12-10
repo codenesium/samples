@@ -25,11 +25,9 @@ namespace StudioResourceManagerNS.Api.Services
 		Task<List<ApiStudentServerResponseModel>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiTeacherServerResponseModel>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiUserServerResponseModel>> ByFamilyId(int userId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>74b38d03d89cc4132afaf905c376d7b4</Hash>
+    <Hash>a5555a628a9278c0cdd5604b703e8972</Hash>
 </Codenesium>*/

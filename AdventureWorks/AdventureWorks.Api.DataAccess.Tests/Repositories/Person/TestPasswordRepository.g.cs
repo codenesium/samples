@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<PasswordRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 
-			Password entity = new Password();
-			context.Set<Password>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 
 			Password entity = new Password();
+			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Password>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 
 			var entity = new Password();
+			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			await repository.Create(entity);
 
-			var record = await context.Set<Password>().FirstOrDefaultAsync();
+			var records = await context.Set<Password>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 			Password entity = new Password();
+			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Password>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Password>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Password>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 			Password entity = new Password();
+			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Password>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Password());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Password>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Password>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
 			var repository = new PasswordRepository(loggerMoc.Object, context);
 			Password entity = new Password();
+			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Password>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.BusinessEntityID);
 
-			Password modifiedRecord = await context.Set<Password>().FirstOrDefaultAsync();
+			var records = await context.Set<Password>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0531a2d6f5e327830d656c64169cadf1</Hash>
+    <Hash>75b9de8cc31db68e4b74af3b025df0c4</Hash>
 </Codenesium>*/

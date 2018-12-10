@@ -148,16 +148,9 @@ namespace TwitterNS.Api.Services
 
 			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiTweetServerResponseModel>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Tweet> records = await this.TweetRepository.ByRetweeterUserId(retweeterUserId, limit, offset);
-
-			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b067ce8475f377a6de89db7a4585ef55</Hash>
+    <Hash>7ca15a3c3b9b7721790672410a6080ac</Hash>
 </Codenesium>*/

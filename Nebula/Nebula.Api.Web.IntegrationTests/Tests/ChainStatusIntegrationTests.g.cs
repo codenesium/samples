@@ -205,6 +205,34 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
+		public virtual async void TestForeignKeyChainsByChainStatusIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiChainClientResponseModel> response = await client.ChainsByChainStatusId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyChainsByChainStatusIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiChainClientResponseModel> response = await client.ChainsByChainStatusId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -227,5 +255,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b6f2614fd59593995aa71a9485ccde2b</Hash>
+    <Hash>8e6355832b1888fbb2dd9472834eb320</Hash>
 </Codenesium>*/

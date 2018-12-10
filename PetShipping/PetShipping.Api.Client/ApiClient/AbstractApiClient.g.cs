@@ -1663,7 +1663,7 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBreedClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -1691,5 +1691,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>27c0f64a6c4ac0a41298016970436285</Hash>
+    <Hash>005758c311f6e681bddd711564e67e35</Hash>
 </Codenesium>*/

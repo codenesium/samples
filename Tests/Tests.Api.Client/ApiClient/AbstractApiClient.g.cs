@@ -967,7 +967,7 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -995,5 +995,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5007d5dbc4c6f550749df05ee347d996</Hash>
+    <Hash>ad4c7ecb769b1333b0c8520bbb7e84d1</Hash>
 </Codenesium>*/

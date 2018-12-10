@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ILinkLogRepository linkLogRepository;
+		protected ILinkLogRepository LinkLogRepository { get; private set; }
 
 		public AbstractApiLinkLogServerRequestModelValidator(ILinkLogRepository linkLogRepository)
 		{
-			this.linkLogRepository = linkLogRepository;
+			this.LinkLogRepository = linkLogRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLinkLogServerRequestModel model, int id)
@@ -41,9 +41,9 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.Log).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidLinkByLinkId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidLinkByLinkId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkLogRepository.LinkByLinkId(id);
+			var record = await this.LinkLogRepository.LinkByLinkId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c94496b9ae0377e1f4cb3258e408ffb1</Hash>
+    <Hash>f7583b091dbe10a244c866773569acd7</Hash>
 </Codenesium>*/

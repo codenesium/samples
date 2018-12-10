@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace StudioResourceManagerNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<FamilyRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 
-			Family entity = new Family();
-			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 
 			Family entity = new Family();
+			entity.SetProperties(2, "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 
 			var entity = new Family();
+			entity.SetProperties(2, "B", "B", "B", "B", "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Family>().FirstOrDefaultAsync();
+			var records = await context.Set<Family>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
+			entity.SetProperties(2, "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Family>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
+			entity.SetProperties(2, "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Family());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Family>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Family>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
 			var repository = new FamilyRepository(loggerMoc.Object, context);
 			Family entity = new Family();
+			entity.SetProperties(2, "B", "B", "B", "B", "B");
 			context.Set<Family>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Family modifiedRecord = await context.Set<Family>().FirstOrDefaultAsync();
+			var records = await context.Set<Family>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4da1f2bc87539115cb237c91e084d5de</Hash>
+    <Hash>47510eabd291d0324f41f992fe803b0d</Hash>
 </Codenesium>*/

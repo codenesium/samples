@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository;
+		protected ITestAllFieldTypesNullableRepository TestAllFieldTypesNullableRepository { get; private set; }
 
 		public AbstractApiTestAllFieldTypesNullableServerRequestModelValidator(ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository)
 		{
-			this.testAllFieldTypesNullableRepository = testAllFieldTypesNullableRepository;
+			this.TestAllFieldTypesNullableRepository = testAllFieldTypesNullableRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTestAllFieldTypesNullableServerRequestModel model, int id)
@@ -149,5 +149,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fe54f3b6af1244a1437eef7e2e77578</Hash>
+    <Hash>e88bdf1b0d319e90642c6d87ed532ae0</Hash>
 </Codenesium>*/

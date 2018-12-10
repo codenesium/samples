@@ -1012,7 +1012,7 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTweetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -1040,5 +1040,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a3d32b2f019db5803f7ccc13ea0b772a</Hash>
+    <Hash>06248bcd5a23ec52d4058e9c0899f42e</Hash>
 </Codenesium>*/

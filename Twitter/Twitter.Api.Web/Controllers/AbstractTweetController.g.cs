@@ -284,23 +284,6 @@ namespace TwitterNS.Api.Web
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("byRetweeterUserId/{retweeterUserId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTweetServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByRetweeterUserId(int retweeterUserId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiTweetServerResponseModel> response = await this.TweetService.ByRetweeterUserId(retweeterUserId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiTweetServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiTweetServerRequestModel> patch)
 		{
 			var record = await this.TweetService.Get(id);
@@ -320,5 +303,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bcf2dafa2d0df6217581d4986acd7ae</Hash>
+    <Hash>215a30a884ecdb7c6cfd0ebc67d7013e</Hash>
 </Codenesium>*/

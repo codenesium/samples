@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IOrganizationRepository organizationRepository;
+		protected IOrganizationRepository OrganizationRepository { get; private set; }
 
 		public AbstractApiOrganizationServerRequestModelValidator(IOrganizationRepository organizationRepository)
 		{
-			this.organizationRepository = organizationRepository;
+			this.OrganizationRepository = organizationRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiOrganizationServerRequestModel model, int id)
@@ -29,13 +29,13 @@ namespace NebulaNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiOrganizationServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiOrganizationServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiOrganizationServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiOrganizationServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Organization record = await this.organizationRepository.ByName(model.Name);
+			Organization record = await this.OrganizationRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68f9e86821a76c27374931c59456802b</Hash>
+    <Hash>35613b534055f028a91f7324dece3fde</Hash>
 </Codenesium>*/

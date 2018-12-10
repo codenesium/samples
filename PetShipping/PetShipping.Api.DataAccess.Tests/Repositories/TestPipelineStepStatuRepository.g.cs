@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<PipelineStepStatuRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStatuRepositoryMoc.GetContext();
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 
-			PipelineStepStatu entity = new PipelineStepStatu();
-			context.Set<PipelineStepStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 
 			PipelineStepStatu entity = new PipelineStepStatu();
+			entity.SetProperties(2, "B");
 			context.Set<PipelineStepStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 
 			var entity = new PipelineStepStatu();
+			entity.SetProperties(2, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<PipelineStepStatu>().FirstOrDefaultAsync();
+			var records = await context.Set<PipelineStepStatu>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStatuRepositoryMoc.GetContext();
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 			PipelineStepStatu entity = new PipelineStepStatu();
+			entity.SetProperties(2, "B");
 			context.Set<PipelineStepStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<PipelineStepStatu>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PipelineStepStatu>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStatuRepositoryMoc.GetContext();
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 			PipelineStepStatu entity = new PipelineStepStatu();
+			entity.SetProperties(2, "B");
 			context.Set<PipelineStepStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new PipelineStepStatu());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<PipelineStepStatu>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PipelineStepStatu>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStatuRepositoryMoc.GetContext();
 			var repository = new PipelineStepStatuRepository(loggerMoc.Object, context);
 			PipelineStepStatu entity = new PipelineStepStatu();
+			entity.SetProperties(2, "B");
 			context.Set<PipelineStepStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			PipelineStepStatu modifiedRecord = await context.Set<PipelineStepStatu>().FirstOrDefaultAsync();
+			var records = await context.Set<PipelineStepStatu>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b4a9e2ce63f850dd8190a5faa690aa1</Hash>
+    <Hash>18369b7b9dc51e1c1947473f292c26ec</Hash>
 </Codenesium>*/

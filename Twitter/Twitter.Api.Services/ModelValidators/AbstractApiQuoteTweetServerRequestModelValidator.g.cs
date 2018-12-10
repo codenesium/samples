@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IQuoteTweetRepository quoteTweetRepository;
+		protected IQuoteTweetRepository QuoteTweetRepository { get; private set; }
 
 		public AbstractApiQuoteTweetServerRequestModelValidator(IQuoteTweetRepository quoteTweetRepository)
 		{
-			this.quoteTweetRepository = quoteTweetRepository;
+			this.QuoteTweetRepository = quoteTweetRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiQuoteTweetServerRequestModel model, int id)
@@ -50,16 +50,16 @@ namespace TwitterNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidUserByRetweeterUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByRetweeterUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.quoteTweetRepository.UserByRetweeterUserId(id);
+			var record = await this.QuoteTweetRepository.UserByRetweeterUserId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTweetBySourceTweetId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTweetBySourceTweetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.quoteTweetRepository.TweetBySourceTweetId(id);
+			var record = await this.QuoteTweetRepository.TweetBySourceTweetId(id);
 
 			return record != null;
 		}
@@ -67,5 +67,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d90f80c543008143ad2c5add893b2c5b</Hash>
+    <Hash>917c8c87f0b6bfb050b9803fd3a3e9fb</Hash>
 </Codenesium>*/

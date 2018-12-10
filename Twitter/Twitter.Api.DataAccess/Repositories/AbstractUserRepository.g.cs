@@ -148,56 +148,6 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
 		}
 
-		// Foreign key reference pass-though. Pass-thru table Tweet. Foreign Table User.
-		public async virtual Task<List<User>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.Tweets
-			              join users in this.Context.Users on
-			              refTable.UserUserId equals users.UserId
-			              where refTable.LocationId == locationId
-			              select users).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<Tweet> CreateTweet(Tweet item)
-		{
-			this.Context.Set<Tweet>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteTweet(Tweet item)
-		{
-			this.Context.Set<Tweet>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table QuoteTweet. Foreign Table User.
-		public async virtual Task<List<User>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.QuoteTweets
-			              join users in this.Context.Users on
-			              refTable.RetweeterUserId equals users.UserId
-			              where refTable.SourceTweetId == sourceTweetId
-			              select users).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<QuoteTweet> CreateQuoteTweet(QuoteTweet item)
-		{
-			this.Context.Set<QuoteTweet>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteQuoteTweet(QuoteTweet item)
-		{
-			this.Context.Set<QuoteTweet>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
 		protected async Task<List<User>> Where(
 			Expression<Func<User, bool>> predicate,
 			int limit = int.MaxValue,
@@ -222,5 +172,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a0ae714cd2b9249346cc46534263d3d</Hash>
+    <Hash>4d25e7ce64e4905d62ad5fb528ca28af</Hash>
 </Codenesium>*/

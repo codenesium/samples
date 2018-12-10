@@ -345,6 +345,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("ShiftID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<VEmployee>()
 			.HasKey(c => new
 			{
@@ -367,6 +368,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Suffix,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VEmployeeDepartment>()
 			.HasKey(c => new
 			{
@@ -381,6 +383,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Suffix,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VEmployeeDepartmentHistory>()
 			.HasKey(c => new
 			{
@@ -396,6 +399,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Suffix,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VJobCandidate>()
 			.HasKey(c => new
 			{
@@ -416,6 +420,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Skill,
 				c.WebSite,
 			});
+
 			modelBuilder.Entity<VJobCandidateEducation>()
 			.HasKey(c => new
 			{
@@ -433,6 +438,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.EduStartDate,
 				c.JobCandidateID,
 			});
+
 			modelBuilder.Entity<VJobCandidateEmployment>()
 			.HasKey(c => new
 			{
@@ -568,6 +574,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("StateProvinceID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<VAdditionalContactInfo>()
 			.HasKey(c => new
 			{
@@ -681,6 +688,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			.Property("ProductDescriptionID")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<ProductDocument>()
 			.HasKey(c => new
 			{
@@ -838,6 +846,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.WarrantyPeriod,
 				c.Wheel,
 			});
+
 			modelBuilder.Entity<VProductModelInstruction>()
 			.HasKey(c => new
 			{
@@ -933,6 +942,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.PostalCode,
 				c.StateProvinceName,
 			});
+
 			modelBuilder.Entity<VVendorWithContact>()
 			.HasKey(c => new
 			{
@@ -1144,6 +1154,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Suffix,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VPersonDemographic>()
 			.HasKey(c => new
 			{
@@ -1161,6 +1172,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.TotalPurchaseYTD,
 				c.YearlyIncome,
 			});
+
 			modelBuilder.Entity<VSalesPerson>()
 			.HasKey(c => new
 			{
@@ -1187,6 +1199,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.TerritoryName,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VSalesPersonSalesByFiscalYear>()
 			.HasKey(c => new
 			{
@@ -1198,6 +1211,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.SalesPersonID,
 				c.SalesTerritory,
 			});
+
 			modelBuilder.Entity<VStoreWithAddress>()
 			.HasKey(c => new
 			{
@@ -1211,6 +1225,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.PostalCode,
 				c.StateProvinceName,
 			});
+
 			modelBuilder.Entity<VStoreWithContact>()
 			.HasKey(c => new
 			{
@@ -1227,6 +1242,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.Suffix,
 				c.Title,
 			});
+
 			modelBuilder.Entity<VStoreWithDemographic>()
 			.HasKey(c => new
 			{
@@ -1274,5 +1290,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d02c360e74d738283b5bb054c3ef52a6</Hash>
+    <Hash>775182636a397253083863bae4e79460</Hash>
 </Codenesium>*/

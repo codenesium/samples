@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IFollowingRepository followingRepository;
+		protected IFollowingRepository FollowingRepository { get; private set; }
 
 		public AbstractApiFollowingServerRequestModelValidator(IFollowingRepository followingRepository)
 		{
-			this.followingRepository = followingRepository;
+			this.FollowingRepository = followingRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiFollowingServerRequestModel model, int id)
@@ -38,5 +38,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0487b3e07a14bbc123233089036d5ca</Hash>
+    <Hash>8ba4cc576efa35cff90e400bb5ffcf32</Hash>
 </Codenesium>*/

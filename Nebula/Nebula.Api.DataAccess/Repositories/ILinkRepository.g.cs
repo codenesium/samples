@@ -25,10 +25,12 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Machine> MachineByAssignedMachineId(int? assignedMachineId);
 
+		Task<Chain> ChainByChainId(int chainId);
+
 		Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6f459edd1cdb6a396ec6630212f9633</Hash>
+    <Hash>c5b95d0a2c87079f6011dd57608ede7e</Hash>
 </Codenesium>*/

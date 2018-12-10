@@ -89,5 +89,10 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[JsonProperty]
         public virtual List<ValidationError> ValidationErrors { get; private set; } = new List<ValidationError>();
+
+		public void AddValidationError(ValidationError validationError)
+        {
+            this.ValidationErrors.Add(validationError);
+        }
     }
 }

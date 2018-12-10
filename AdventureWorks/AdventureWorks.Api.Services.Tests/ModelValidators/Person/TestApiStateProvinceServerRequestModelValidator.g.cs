@@ -169,55 +169,55 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		private async void BeUniqueByStateProvinceCodeCountryRegionCode_Create_Exists()
+		private async void BeUniqueByName_Create_Exists()
 		{
 			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-			stateProvinceRepository.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
+			stateProvinceRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
 			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
 
 			await validator.ValidateCreateAsync(new ApiStateProvinceServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStateProvinceCodeCountryRegionCode_Create_Not_Exists()
+		private async void BeUniqueByName_Create_Not_Exists()
 		{
 			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-			stateProvinceRepository.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
+			stateProvinceRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
 			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
 
 			await validator.ValidateCreateAsync(new ApiStateProvinceServerRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStateProvinceCodeCountryRegionCode_Update_Exists()
+		private async void BeUniqueByName_Update_Exists()
 		{
 			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-			stateProvinceRepository.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
+			stateProvinceRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(new StateProvince()));
 			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiStateProvinceServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStateProvinceCodeCountryRegionCode_Update_Not_Exists()
+		private async void BeUniqueByName_Update_Not_Exists()
 		{
 			Mock<IStateProvinceRepository> stateProvinceRepository = new Mock<IStateProvinceRepository>();
-			stateProvinceRepository.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
+			stateProvinceRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
 			var validator = new ApiStateProvinceServerRequestModelValidator(stateProvinceRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiStateProvinceServerRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.CountryRegionCode, "A");
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b150e7a23bd0c44b25e88a7ed588b426</Hash>
+    <Hash>d7e15ef7fe6d30a6d4ead544df4ff2c2</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISpaceFeatureRepository spaceFeatureRepository;
+		protected ISpaceFeatureRepository SpaceFeatureRepository { get; private set; }
 
 		public AbstractApiSpaceFeatureServerRequestModelValidator(ISpaceFeatureRepository spaceFeatureRepository)
 		{
-			this.spaceFeatureRepository = spaceFeatureRepository;
+			this.SpaceFeatureRepository = spaceFeatureRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSpaceFeatureServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c096d27550565400ad9b49002f2ce2fd</Hash>
+    <Hash>f58234ed3b0bd27b2b5447bc11508b8d</Hash>
 </Codenesium>*/

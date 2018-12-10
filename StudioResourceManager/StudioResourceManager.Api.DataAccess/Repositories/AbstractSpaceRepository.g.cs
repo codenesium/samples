@@ -86,6 +86,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select spaces).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table SpaceSpaceFeature. Foreign Table Space.
 		public async virtual Task<SpaceSpaceFeature> CreateSpaceSpaceFeature(SpaceSpaceFeature item)
 		{
 			this.Context.Set<SpaceSpaceFeature>().Add(item);
@@ -95,6 +96,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return item;
 		}
 
+		// Foreign key reference pass-though. Pass-thru table SpaceSpaceFeature. Foreign Table Space.
 		public async virtual Task DeleteSpaceSpaceFeature(SpaceSpaceFeature item)
 		{
 			this.Context.Set<SpaceSpaceFeature>().Remove(item);
@@ -125,5 +127,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9063623a061ee5bbfab05ea5008036a6</Hash>
+    <Hash>fc1555b5da2db40a2dc072136eec0116</Hash>
 </Codenesium>*/

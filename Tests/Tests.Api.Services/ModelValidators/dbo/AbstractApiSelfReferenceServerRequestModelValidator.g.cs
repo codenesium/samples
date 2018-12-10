@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISelfReferenceRepository selfReferenceRepository;
+		protected ISelfReferenceRepository SelfReferenceRepository { get; private set; }
 
 		public AbstractApiSelfReferenceServerRequestModelValidator(ISelfReferenceRepository selfReferenceRepository)
 		{
-			this.selfReferenceRepository = selfReferenceRepository;
+			this.SelfReferenceRepository = selfReferenceRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSelfReferenceServerRequestModel model, int id)
@@ -37,5 +37,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9559a8d528eee9f85ce445b510a8cf8</Hash>
+    <Hash>d4e3ff37da787d17095a78c2e8ad8698</Hash>
 </Codenesium>*/

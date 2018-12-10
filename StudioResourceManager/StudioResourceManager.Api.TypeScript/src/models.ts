@@ -1,474 +1,420 @@
-export class ApiAdminServerRequestModel {
-				birthday:string;
-email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
-userId:number;
-userIdEntity:number;
+export class ApiAdminClientRequestModel {
+	birthday : string;
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
+	userId : number;
+	userIdEntity : string;
 
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
-this.userId = 0;
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiAdminClientResponseModel {
+	birthday : string;
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
+	userId : number;
+	userIdEntity : string;
 
-			export class ApiAdminServerResponseModel {
-				birthday:string;
-email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
-userId:number;
-userIdEntity:number;
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
+export class ApiEventClientRequestModel {
+	actualEndDate : string;
+	actualStartDate : string;
+	billAmount : number;
+	eventStatusId : number;
+	eventStatusIdEntity : string;
+	id : number;
+	scheduledEndDate : string;
+	scheduledStartDate : string;
+	studentNote : string;
+	teacherNote : string;
 
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
-this.userId = 0;
+	constructor() {
+		this.actualEndDate = '';
+		this.actualStartDate = '';
+		this.billAmount = 0;
+		this.eventStatusId = 0;
+		this.eventStatusIdEntity = '';
+		this.id = 0;
+		this.scheduledEndDate = '';
+		this.scheduledStartDate = '';
+		this.studentNote = '';
+		this.teacherNote = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiEventServerRequestModel {
-				actualEndDate:string;
-actualStartDate:string;
-billAmount:number;
-eventStatusId:number;
-eventStatusIdEntity:number;
-id:number;
-scheduledEndDate:string;
-scheduledStartDate:string;
-studentNote:string;
-teacherNote:string;
+export class ApiEventClientResponseModel {
+	actualEndDate : string;
+	actualStartDate : string;
+	billAmount : number;
+	eventStatusId : number;
+	eventStatusIdEntity : string;
+	id : number;
+	scheduledEndDate : string;
+	scheduledStartDate : string;
+	studentNote : string;
+	teacherNote : string;
 
-	
-				constructor() {
-					this.actualEndDate = '';
-this.actualStartDate = '';
-this.billAmount = 0;
-this.eventStatusId = 0;
-this.id = 0;
-this.scheduledEndDate = '';
-this.scheduledStartDate = '';
-this.studentNote = '';
-this.teacherNote = '';
+	constructor() {
+		this.actualEndDate = '';
+		this.actualStartDate = '';
+		this.billAmount = 0;
+		this.eventStatusId = 0;
+		this.eventStatusIdEntity = '';
+		this.id = 0;
+		this.scheduledEndDate = '';
+		this.scheduledStartDate = '';
+		this.studentNote = '';
+		this.teacherNote = '';
+	}
+}
+export class ApiEventStatuClientRequestModel {
+	id : number;
+	name : string;
 
-		
-				}
-			}
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-			export class ApiEventServerResponseModel {
-				actualEndDate:string;
-actualStartDate:string;
-billAmount:number;
-eventStatusId:number;
-eventStatusIdEntity:number;
-id:number;
-scheduledEndDate:string;
-scheduledStartDate:string;
-studentNote:string;
-teacherNote:string;
+export class ApiEventStatuClientResponseModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.actualEndDate = '';
-this.actualStartDate = '';
-this.billAmount = 0;
-this.eventStatusId = 0;
-this.id = 0;
-this.scheduledEndDate = '';
-this.scheduledStartDate = '';
-this.studentNote = '';
-this.teacherNote = '';
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiFamilyClientRequestModel {
+	id : number;
+	note : string;
+	primaryContactEmail : string;
+	primaryContactFirstName : string;
+	primaryContactLastName : string;
+	primaryContactPhone : string;
 
-		
-				}
-			}
-			export class ApiEventStatuServerRequestModel {
-				id:number;
-name:string;
+	constructor() {
+		this.id = 0;
+		this.note = '';
+		this.primaryContactEmail = '';
+		this.primaryContactFirstName = '';
+		this.primaryContactLastName = '';
+		this.primaryContactPhone = '';
+	}
+}
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+export class ApiFamilyClientResponseModel {
+	id : number;
+	note : string;
+	primaryContactEmail : string;
+	primaryContactFirstName : string;
+	primaryContactLastName : string;
+	primaryContactPhone : string;
 
-		
-				}
-			}
+	constructor() {
+		this.id = 0;
+		this.note = '';
+		this.primaryContactEmail = '';
+		this.primaryContactFirstName = '';
+		this.primaryContactLastName = '';
+		this.primaryContactPhone = '';
+	}
+}
+export class ApiRateClientRequestModel {
+	amountPerMinute : number;
+	id : number;
+	teacherId : number;
+	teacherIdEntity : string;
+	teacherSkillId : number;
+	teacherSkillIdEntity : string;
 
-			export class ApiEventStatuServerResponseModel {
-				id:number;
-name:string;
+	constructor() {
+		this.amountPerMinute = 0;
+		this.id = 0;
+		this.teacherId = 0;
+		this.teacherIdEntity = '';
+		this.teacherSkillId = 0;
+		this.teacherSkillIdEntity = '';
+	}
+}
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+export class ApiRateClientResponseModel {
+	amountPerMinute : number;
+	id : number;
+	teacherId : number;
+	teacherIdEntity : string;
+	teacherSkillId : number;
+	teacherSkillIdEntity : string;
 
-		
-				}
-			}
-			export class ApiFamilyServerRequestModel {
-				id:number;
-note:string;
-primaryContactEmail:string;
-primaryContactFirstName:string;
-primaryContactLastName:string;
-primaryContactPhone:string;
+	constructor() {
+		this.amountPerMinute = 0;
+		this.id = 0;
+		this.teacherId = 0;
+		this.teacherIdEntity = '';
+		this.teacherSkillId = 0;
+		this.teacherSkillIdEntity = '';
+	}
+}
+export class ApiSpaceClientRequestModel {
+	description : string;
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.note = '';
-this.primaryContactEmail = '';
-this.primaryContactFirstName = '';
-this.primaryContactLastName = '';
-this.primaryContactPhone = '';
+	constructor() {
+		this.description = '';
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiSpaceClientResponseModel {
+	description : string;
+	id : number;
+	name : string;
 
-			export class ApiFamilyServerResponseModel {
-				id:number;
-note:string;
-primaryContactEmail:string;
-primaryContactFirstName:string;
-primaryContactLastName:string;
-primaryContactPhone:string;
+	constructor() {
+		this.description = '';
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiSpaceFeatureClientRequestModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.note = '';
-this.primaryContactEmail = '';
-this.primaryContactFirstName = '';
-this.primaryContactLastName = '';
-this.primaryContactPhone = '';
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiRateServerRequestModel {
-				amountPerMinute:number;
-id:number;
-teacherId:number;
-teacherIdEntity:number;
-teacherSkillId:number;
-teacherSkillIdEntity:number;
+export class ApiSpaceFeatureClientResponseModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.amountPerMinute = 0;
-this.id = 0;
-this.teacherId = 0;
-this.teacherSkillId = 0;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiStudentClientRequestModel {
+	birthday : string;
+	email : string;
+	emailRemindersEnabled : boolean;
+	familyId : number;
+	familyIdEntity : string;
+	firstName : string;
+	id : number;
+	isAdult : boolean;
+	lastName : string;
+	phone : string;
+	smsRemindersEnabled : boolean;
+	userId : number;
+	userIdEntity : string;
 
-		
-				}
-			}
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.emailRemindersEnabled = false;
+		this.familyId = 0;
+		this.familyIdEntity = '';
+		this.firstName = '';
+		this.id = 0;
+		this.isAdult = false;
+		this.lastName = '';
+		this.phone = '';
+		this.smsRemindersEnabled = false;
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
 
-			export class ApiRateServerResponseModel {
-				amountPerMinute:number;
-id:number;
-teacherId:number;
-teacherIdEntity:number;
-teacherSkillId:number;
-teacherSkillIdEntity:number;
+export class ApiStudentClientResponseModel {
+	birthday : string;
+	email : string;
+	emailRemindersEnabled : boolean;
+	familyId : number;
+	familyIdEntity : string;
+	firstName : string;
+	id : number;
+	isAdult : boolean;
+	lastName : string;
+	phone : string;
+	smsRemindersEnabled : boolean;
+	userId : number;
+	userIdEntity : string;
 
-	
-				constructor() {
-					this.amountPerMinute = 0;
-this.id = 0;
-this.teacherId = 0;
-this.teacherSkillId = 0;
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.emailRemindersEnabled = false;
+		this.familyId = 0;
+		this.familyIdEntity = '';
+		this.firstName = '';
+		this.id = 0;
+		this.isAdult = false;
+		this.lastName = '';
+		this.phone = '';
+		this.smsRemindersEnabled = false;
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
+export class ApiStudioClientRequestModel {
+	address1 : string;
+	address2 : string;
+	city : string;
+	id : number;
+	name : string;
+	province : string;
+	website : string;
+	zip : string;
 
-		
-				}
-			}
-			export class ApiSpaceServerRequestModel {
-				description:string;
-id:number;
-name:string;
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.city = '';
+		this.id = 0;
+		this.name = '';
+		this.province = '';
+		this.website = '';
+		this.zip = '';
+	}
+}
 
-	
-				constructor() {
-					this.description = '';
-this.id = 0;
-this.name = '';
+export class ApiStudioClientResponseModel {
+	address1 : string;
+	address2 : string;
+	city : string;
+	id : number;
+	name : string;
+	province : string;
+	website : string;
+	zip : string;
 
-		
-				}
-			}
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.city = '';
+		this.id = 0;
+		this.name = '';
+		this.province = '';
+		this.website = '';
+		this.zip = '';
+	}
+}
+export class ApiTeacherClientRequestModel {
+	birthday : string;
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
+	userId : number;
+	userIdEntity : string;
 
-			export class ApiSpaceServerResponseModel {
-				description:string;
-id:number;
-name:string;
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
 
-	
-				constructor() {
-					this.description = '';
-this.id = 0;
-this.name = '';
+export class ApiTeacherClientResponseModel {
+	birthday : string;
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
+	userId : number;
+	userIdEntity : string;
 
-		
-				}
-			}
-			export class ApiSpaceFeatureServerRequestModel {
-				id:number;
-name:string;
+	constructor() {
+		this.birthday = '';
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+		this.userId = 0;
+		this.userIdEntity = '';
+	}
+}
+export class ApiTeacherSkillClientRequestModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiTeacherSkillClientResponseModel {
+	id : number;
+	name : string;
 
-			export class ApiSpaceFeatureServerResponseModel {
-				id:number;
-name:string;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiUserClientRequestModel {
+	id : number;
+	password : string;
+	username : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+	constructor() {
+		this.id = 0;
+		this.password = '';
+		this.username = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiStudentServerRequestModel {
-				birthday:string;
-email:string;
-emailRemindersEnabled:boolean;
-familyId:number;
-familyIdEntity:number;
-firstName:string;
-id:number;
-isAdult:boolean;
-lastName:string;
-phone:string;
-smsRemindersEnabled:boolean;
-userId:number;
-userIdEntity:number;
+export class ApiUserClientResponseModel {
+	id : number;
+	password : string;
+	username : string;
 
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.emailRemindersEnabled = false;
-this.familyId = 0;
-this.firstName = '';
-this.id = 0;
-this.isAdult = false;
-this.lastName = '';
-this.phone = '';
-this.smsRemindersEnabled = false;
-this.userId = 0;
+	constructor() {
+		this.id = 0;
+		this.password = '';
+		this.username = '';
+	}
+}
 
-		
-				}
-			}
-
-			export class ApiStudentServerResponseModel {
-				birthday:string;
-email:string;
-emailRemindersEnabled:boolean;
-familyId:number;
-familyIdEntity:number;
-firstName:string;
-id:number;
-isAdult:boolean;
-lastName:string;
-phone:string;
-smsRemindersEnabled:boolean;
-userId:number;
-userIdEntity:number;
-
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.emailRemindersEnabled = false;
-this.familyId = 0;
-this.firstName = '';
-this.id = 0;
-this.isAdult = false;
-this.lastName = '';
-this.phone = '';
-this.smsRemindersEnabled = false;
-this.userId = 0;
-
-		
-				}
-			}
-			export class ApiStudioServerRequestModel {
-				address1:string;
-address2:string;
-city:string;
-id:number;
-name:string;
-province:string;
-website:string;
-zip:string;
-
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.city = '';
-this.id = 0;
-this.name = '';
-this.province = '';
-this.website = '';
-this.zip = '';
-
-		
-				}
-			}
-
-			export class ApiStudioServerResponseModel {
-				address1:string;
-address2:string;
-city:string;
-id:number;
-name:string;
-province:string;
-website:string;
-zip:string;
-
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.city = '';
-this.id = 0;
-this.name = '';
-this.province = '';
-this.website = '';
-this.zip = '';
-
-		
-				}
-			}
-			export class ApiTeacherServerRequestModel {
-				birthday:string;
-email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
-userId:number;
-userIdEntity:number;
-
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
-this.userId = 0;
-
-		
-				}
-			}
-
-			export class ApiTeacherServerResponseModel {
-				birthday:string;
-email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
-userId:number;
-userIdEntity:number;
-
-	
-				constructor() {
-					this.birthday = '';
-this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
-this.userId = 0;
-
-		
-				}
-			}
-			export class ApiTeacherSkillServerRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-
-			export class ApiTeacherSkillServerResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-			export class ApiUserServerRequestModel {
-				id:number;
-password:string;
-username:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.password = '';
-this.username = '';
-
-		
-				}
-			}
-
-			export class ApiUserServerResponseModel {
-				id:number;
-password:string;
-username:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.password = '';
-this.username = '';
-
-		
-				}
-			}
+/*<Codenesium>
+    <Hash>850b0975b842dbbdbe92eeff1f8c5a4c</Hash>
+</Codenesium>*/

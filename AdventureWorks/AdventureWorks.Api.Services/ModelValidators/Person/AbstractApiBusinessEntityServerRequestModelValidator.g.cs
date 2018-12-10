@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IBusinessEntityRepository businessEntityRepository;
+		protected IBusinessEntityRepository BusinessEntityRepository { get; private set; }
 
 		public AbstractApiBusinessEntityServerRequestModelValidator(IBusinessEntityRepository businessEntityRepository)
 		{
-			this.businessEntityRepository = businessEntityRepository;
+			this.BusinessEntityRepository = businessEntityRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiBusinessEntityServerRequestModel model, int id)
@@ -32,12 +32,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiBusinessEntityServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiBusinessEntityServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiBusinessEntityServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiBusinessEntityServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			BusinessEntity record = await this.businessEntityRepository.ByRowguid(model.Rowguid);
+			BusinessEntity record = await this.BusinessEntityRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
 			{
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1dba82cad1b7a2839d298a7495150f3d</Hash>
+    <Hash>f341ba422b2cdeeac20eb589ff8beae0</Hash>
 </Codenesium>*/

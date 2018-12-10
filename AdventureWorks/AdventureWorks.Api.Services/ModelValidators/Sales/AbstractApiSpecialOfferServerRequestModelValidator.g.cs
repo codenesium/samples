@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISpecialOfferRepository specialOfferRepository;
+		protected ISpecialOfferRepository SpecialOfferRepository { get; private set; }
 
 		public AbstractApiSpecialOfferServerRequestModelValidator(ISpecialOfferRepository specialOfferRepository)
 		{
-			this.specialOfferRepository = specialOfferRepository;
+			this.SpecialOfferRepository = specialOfferRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSpecialOfferServerRequestModel model, int id)
@@ -60,7 +60,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSpecialOfferServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSpecialOfferServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void StartDateRules()
@@ -73,9 +73,9 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.Type).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiSpecialOfferServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiSpecialOfferServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SpecialOffer record = await this.specialOfferRepository.ByRowguid(model.Rowguid);
+			SpecialOffer record = await this.SpecialOfferRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.SpecialOfferID == this.existingRecordId))
 			{
@@ -90,5 +90,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6623f1dd833ca6423d847f46fcada329</Hash>
+    <Hash>bed31a95f470f900e5c8231f8f02af48</Hash>
 </Codenesium>*/

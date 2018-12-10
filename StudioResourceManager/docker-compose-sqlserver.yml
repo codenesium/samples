@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'studioresourcemanager-app'
+    image: 'studioresourcemanager'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    networks:
+      - studioresourcemanager-network
+	extra_hosts:
+      - "localhost:10.0.2.2"
+networks:
+    studioresourcemanager-network:
+       driver: bridge

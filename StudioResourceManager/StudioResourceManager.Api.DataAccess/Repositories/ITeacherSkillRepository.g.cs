@@ -18,15 +18,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<TeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
-
-		Task<Rate> CreateRate(Rate item);
-
-		Task DeleteRate(Rate item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>db0cea852f13b8b3e97600b84a1afcf3</Hash>
+    <Hash>6da0d057cac727a43b45a9ac32a834ef</Hash>
 </Codenesium>*/

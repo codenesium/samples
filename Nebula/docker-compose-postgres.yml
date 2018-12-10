@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'nebula-app'
+    image: 'nebula'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=nebula-db;Persist Security Info=False;User ID=postgres;Password=test;Database=nebula;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - nebula-network
+
+  postgres:
+    container_name: 'nebula-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: nebula
+    networks:
+      - nebula-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    nebula-network:
+       driver: bridge

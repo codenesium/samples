@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IColumnSameAsFKTableRepository columnSameAsFKTableRepository;
+		protected IColumnSameAsFKTableRepository ColumnSameAsFKTableRepository { get; private set; }
 
 		public AbstractApiColumnSameAsFKTableServerRequestModelValidator(IColumnSameAsFKTableRepository columnSameAsFKTableRepository)
 		{
-			this.columnSameAsFKTableRepository = columnSameAsFKTableRepository;
+			this.ColumnSameAsFKTableRepository = columnSameAsFKTableRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiColumnSameAsFKTableServerRequestModel model, int id)
@@ -37,5 +37,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>99b85f47bdedf87b5db2afdce6a87c4b</Hash>
+    <Hash>6d954e7043b8d31cbcee031c70fcc800</Hash>
 </Codenesium>*/

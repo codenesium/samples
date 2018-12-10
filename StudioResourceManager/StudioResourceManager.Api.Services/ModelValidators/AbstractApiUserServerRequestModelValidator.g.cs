@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IUserRepository userRepository;
+		protected IUserRepository UserRepository { get; private set; }
 
 		public AbstractApiUserServerRequestModelValidator(IUserRepository userRepository)
 		{
-			this.userRepository = userRepository;
+			this.UserRepository = userRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiUserServerRequestModel model, int id)
@@ -41,5 +41,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24e00bf5e9636fa99a3c7b9c30e8a90e</Hash>
+    <Hash>9fa5f36c872e6abf75abb65610449b55</Hash>
 </Codenesium>*/

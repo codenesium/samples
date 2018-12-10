@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPipelineStatuRepository pipelineStatuRepository;
+		protected IPipelineStatuRepository PipelineStatuRepository { get; private set; }
 
 		public AbstractApiPipelineStatuServerRequestModelValidator(IPipelineStatuRepository pipelineStatuRepository)
 		{
-			this.pipelineStatuRepository = pipelineStatuRepository;
+			this.PipelineStatuRepository = pipelineStatuRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPipelineStatuServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9d62694ea8a3f3aa7b8082e5706b944</Hash>
+    <Hash>bb6088892ea2533b412bf0106ac3a051</Hash>
 </Codenesium>*/

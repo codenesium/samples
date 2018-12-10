@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IFollowerRepository followerRepository;
+		protected IFollowerRepository FollowerRepository { get; private set; }
 
 		public AbstractApiFollowerServerRequestModelValidator(IFollowerRepository followerRepository)
 		{
-			this.followerRepository = followerRepository;
+			this.FollowerRepository = followerRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiFollowerServerRequestModel model, int id)
@@ -58,16 +58,16 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.Muted).Length(0, 1).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidUserByFollowedUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByFollowedUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.followerRepository.UserByFollowedUserId(id);
+			var record = await this.FollowerRepository.UserByFollowedUserId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUserByFollowingUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByFollowingUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.followerRepository.UserByFollowingUserId(id);
+			var record = await this.FollowerRepository.UserByFollowingUserId(id);
 
 			return record != null;
 		}
@@ -75,5 +75,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10577f0a3cc92797f126b7b2489b7b2e</Hash>
+    <Hash>eb6c31684faf81ec75cf0f2caf7886ab</Hash>
 </Codenesium>*/

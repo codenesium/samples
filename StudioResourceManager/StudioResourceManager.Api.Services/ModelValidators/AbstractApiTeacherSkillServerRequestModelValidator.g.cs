@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITeacherSkillRepository teacherSkillRepository;
+		protected ITeacherSkillRepository TeacherSkillRepository { get; private set; }
 
 		public AbstractApiTeacherSkillServerRequestModelValidator(ITeacherSkillRepository teacherSkillRepository)
 		{
-			this.teacherSkillRepository = teacherSkillRepository;
+			this.TeacherSkillRepository = teacherSkillRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTeacherSkillServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6179ce48f6948de1f7dda73b4a7c93b5</Hash>
+    <Hash>36d1a7f0c2f5bb69034181858b9880d2</Hash>
 </Codenesium>*/

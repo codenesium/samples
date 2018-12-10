@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IAWBuildVersionRepository aWBuildVersionRepository;
+		protected IAWBuildVersionRepository AWBuildVersionRepository { get; private set; }
 
 		public AbstractApiAWBuildVersionServerRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
 		{
-			this.aWBuildVersionRepository = aWBuildVersionRepository;
+			this.AWBuildVersionRepository = aWBuildVersionRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiAWBuildVersionServerRequestModel model, int id)
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be933e4ee5e55593334ce23cbc594345</Hash>
+    <Hash>1df199703d118a881995bbabe7f9814c</Hash>
 </Codenesium>*/

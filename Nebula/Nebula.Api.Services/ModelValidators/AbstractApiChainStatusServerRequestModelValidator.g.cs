@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IChainStatusRepository chainStatusRepository;
+		protected IChainStatusRepository ChainStatusRepository { get; private set; }
 
 		public AbstractApiChainStatusServerRequestModelValidator(IChainStatusRepository chainStatusRepository)
 		{
-			this.chainStatusRepository = chainStatusRepository;
+			this.ChainStatusRepository = chainStatusRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiChainStatusServerRequestModel model, int id)
@@ -29,13 +29,13 @@ namespace NebulaNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiChainStatusServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiChainStatusServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiChainStatusServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiChainStatusServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ChainStatus record = await this.chainStatusRepository.ByName(model.Name);
+			ChainStatus record = await this.ChainStatusRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c8d27e44fa14a1696c3a515fb6e70ef</Hash>
+    <Hash>bc6fc0edb32579e70a8c85aef10f1486</Hash>
 </Codenesium>*/

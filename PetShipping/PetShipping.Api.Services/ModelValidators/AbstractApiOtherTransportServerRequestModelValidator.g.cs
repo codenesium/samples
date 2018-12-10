@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IOtherTransportRepository otherTransportRepository;
+		protected IOtherTransportRepository OtherTransportRepository { get; private set; }
 
 		public AbstractApiOtherTransportServerRequestModelValidator(IOtherTransportRepository otherTransportRepository)
 		{
-			this.otherTransportRepository = otherTransportRepository;
+			this.OtherTransportRepository = otherTransportRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiOtherTransportServerRequestModel model, int id)
@@ -36,16 +36,16 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidHandlerByHandlerId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidHandlerByHandlerId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.otherTransportRepository.HandlerByHandlerId(id);
+			var record = await this.OtherTransportRepository.HandlerByHandlerId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.otherTransportRepository.PipelineStepByPipelineStepId(id);
+			var record = await this.OtherTransportRepository.PipelineStepByPipelineStepId(id);
 
 			return record != null;
 		}
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c7bf331b077751c2021362a6af4854b</Hash>
+    <Hash>9a7afad892e4bd6d9ca0e6de68263e48</Hash>
 </Codenesium>*/

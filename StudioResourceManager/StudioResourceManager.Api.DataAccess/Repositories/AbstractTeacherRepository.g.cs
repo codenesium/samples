@@ -104,6 +104,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select teachers).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Teacher.
 		public async virtual Task<EventTeacher> CreateEventTeacher(EventTeacher item)
 		{
 			this.Context.Set<EventTeacher>().Add(item);
@@ -113,34 +114,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return item;
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Teacher.
 		public async virtual Task DeleteEventTeacher(EventTeacher item)
 		{
 			this.Context.Set<EventTeacher>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table Rate. Foreign Table Teacher.
-		public async virtual Task<List<Teacher>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.Rates
-			              join teachers in this.Context.Teachers on
-			              refTable.TeacherId equals teachers.Id
-			              where refTable.TeacherSkillId == teacherSkillId
-			              select teachers).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<Rate> CreateRate(Rate item)
-		{
-			this.Context.Set<Rate>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteRate(Rate item)
-		{
-			this.Context.Set<Rate>().Remove(item);
 			await this.Context.SaveChangesAsync();
 		}
 
@@ -168,5 +145,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>774c3af5a092d0c43670ec2e80dec3d2</Hash>
+    <Hash>ac95ddc8b819819948088cba5aef0177</Hash>
 </Codenesium>*/

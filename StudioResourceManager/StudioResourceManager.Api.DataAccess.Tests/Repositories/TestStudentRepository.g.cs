@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace StudioResourceManagerNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<StudentRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 
-			Student entity = new Student();
-			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new StudentRepository(loggerMoc.Object, context);
 
 			Student entity = new Student();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", 2, true, "B", "B", true, 1);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new StudentRepository(loggerMoc.Object, context);
 
 			var entity = new Student();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", 2, true, "B", "B", true, 1);
 			await repository.Create(entity);
 
-			var record = await context.Set<Student>().FirstOrDefaultAsync();
+			var records = await context.Set<Student>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", 2, true, "B", "B", true, 1);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Student>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Student>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", 2, true, "B", "B", true, 1);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Student());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Student>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Student>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudentRepositoryMoc.GetContext();
 			var repository = new StudentRepository(loggerMoc.Object, context);
 			Student entity = new Student();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", 2, true, "B", "B", true, 1);
 			context.Set<Student>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Student modifiedRecord = await context.Set<Student>().FirstOrDefaultAsync();
+			var records = await context.Set<Student>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>817f570299e9cc32a9c0d30ab5c35055</Hash>
+    <Hash>987cdb8706c937a9615a5295c576a59d</Hash>
 </Codenesium>*/

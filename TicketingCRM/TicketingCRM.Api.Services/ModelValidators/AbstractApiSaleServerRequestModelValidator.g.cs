@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISaleRepository saleRepository;
+		protected ISaleRepository SaleRepository { get; private set; }
 
 		public AbstractApiSaleServerRequestModelValidator(ISaleRepository saleRepository)
 		{
-			this.saleRepository = saleRepository;
+			this.SaleRepository = saleRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSaleServerRequestModel model, int id)
@@ -47,9 +47,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.TransactionId).MustAsync(this.BeValidTransactionByTransactionId).When(x => !x?.TransactionId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidTransactionByTransactionId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTransactionByTransactionId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.TransactionByTransactionId(id);
+			var record = await this.SaleRepository.TransactionByTransactionId(id);
 
 			return record != null;
 		}
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbf385f66c1936ecbd9f14694779fe74</Hash>
+    <Hash>f4c3c09fa00716c65438ed59e456d345</Hash>
 </Codenesium>*/

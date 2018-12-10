@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace StackOverflowNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<CommentRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = CommentRepositoryMoc.GetContext();
 			var repository = new CommentRepository(loggerMoc.Object, context);
 
-			Comment entity = new Comment();
-			context.Set<Comment>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new CommentRepository(loggerMoc.Object, context);
 
 			Comment entity = new Comment();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, "B", 2);
 			context.Set<Comment>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new CommentRepository(loggerMoc.Object, context);
 
 			var entity = new Comment();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, "B", 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<Comment>().FirstOrDefaultAsync();
+			var records = await context.Set<Comment>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = CommentRepositoryMoc.GetContext();
 			var repository = new CommentRepository(loggerMoc.Object, context);
 			Comment entity = new Comment();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, "B", 2);
 			context.Set<Comment>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace StackOverflowNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Comment>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Comment>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = CommentRepositoryMoc.GetContext();
 			var repository = new CommentRepository(loggerMoc.Object, context);
 			Comment entity = new Comment();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, "B", 2);
 			context.Set<Comment>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Comment());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Comment>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Comment>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = CommentRepositoryMoc.GetContext();
 			var repository = new CommentRepository(loggerMoc.Object, context);
 			Comment entity = new Comment();
+			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, "B", 2);
 			context.Set<Comment>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Comment modifiedRecord = await context.Set<Comment>().FirstOrDefaultAsync();
+			var records = await context.Set<Comment>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd2ac1e4b7a1def99db06927bfc6b617</Hash>
+    <Hash>624ec1996f67e47e5966f6abfebbe39b</Hash>
 </Codenesium>*/

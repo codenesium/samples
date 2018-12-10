@@ -134,16 +134,9 @@ namespace TwitterNS.Api.Services
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiLocationServerResponseModel>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Location> records = await this.LocationRepository.ByUserUserId(userUserId, limit, offset);
-
-			return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e64e33a492b233b5741661601ca20d8</Hash>
+    <Hash>d8f68792a5ea43adeb2128cf2beaf884</Hash>
 </Codenesium>*/

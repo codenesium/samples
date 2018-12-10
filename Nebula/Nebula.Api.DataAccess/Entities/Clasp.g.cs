@@ -32,9 +32,25 @@ namespace NebulaNS.Api.DataAccess
 
 		[Column("previousChainId")]
 		public virtual int PreviousChainId { get; private set; }
+
+		[ForeignKey("NextChainId")]
+		public virtual Chain ChainNavigation { get; private set; }
+
+		public void SetChainNavigation(Chain item)
+		{
+			this.ChainNavigation = item;
+		}
+
+		[ForeignKey("PreviousChainId")]
+		public virtual Chain Chain1Navigation { get; private set; }
+
+		public void SetChain1Navigation(Chain item)
+		{
+			this.Chain1Navigation = item;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9b0f0fb18b40c7d047b42bfaaec86b6</Hash>
+    <Hash>8b2fc6755e70da8c65de3109bd41fed2</Hash>
 </Codenesium>*/

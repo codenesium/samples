@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISalesPersonRepository salesPersonRepository;
+		protected ISalesPersonRepository SalesPersonRepository { get; private set; }
 
 		public AbstractApiSalesPersonServerRequestModelValidator(ISalesPersonRepository salesPersonRepository)
 		{
-			this.salesPersonRepository = salesPersonRepository;
+			this.SalesPersonRepository = salesPersonRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSalesPersonServerRequestModel model, int id)
@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesPersonServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesPersonServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesLastYearRules()
@@ -60,16 +60,16 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritoryByTerritoryID).When(x => !x?.TerritoryID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidSalesTerritoryByTerritoryID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidSalesTerritoryByTerritoryID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesPersonRepository.SalesTerritoryByTerritoryID(id.GetValueOrDefault());
+			var record = await this.SalesPersonRepository.SalesTerritoryByTerritoryID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiSalesPersonServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiSalesPersonServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesPerson record = await this.salesPersonRepository.ByRowguid(model.Rowguid);
+			SalesPerson record = await this.SalesPersonRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
 			{
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61e711667bcb82f5f4ed774864981ddf</Hash>
+    <Hash>996b2e89251f749ff05e2465c7ae866e</Hash>
 </Codenesium>*/

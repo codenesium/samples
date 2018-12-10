@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICompositePrimaryKeyRepository compositePrimaryKeyRepository;
+		protected ICompositePrimaryKeyRepository CompositePrimaryKeyRepository { get; private set; }
 
 		public AbstractApiCompositePrimaryKeyServerRequestModelValidator(ICompositePrimaryKeyRepository compositePrimaryKeyRepository)
 		{
-			this.compositePrimaryKeyRepository = compositePrimaryKeyRepository;
+			this.CompositePrimaryKeyRepository = compositePrimaryKeyRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCompositePrimaryKeyServerRequestModel model, int id)
@@ -33,5 +33,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55d4141dcc85a5cf554231d1d8712876</Hash>
+    <Hash>2438522c3b929ec531e5a3c82da2c05b</Hash>
 </Codenesium>*/

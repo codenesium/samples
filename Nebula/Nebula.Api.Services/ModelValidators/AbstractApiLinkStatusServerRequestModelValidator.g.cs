@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ILinkStatusRepository linkStatusRepository;
+		protected ILinkStatusRepository LinkStatusRepository { get; private set; }
 
 		public AbstractApiLinkStatusServerRequestModelValidator(ILinkStatusRepository linkStatusRepository)
 		{
-			this.linkStatusRepository = linkStatusRepository;
+			this.LinkStatusRepository = linkStatusRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLinkStatusServerRequestModel model, int id)
@@ -29,13 +29,13 @@ namespace NebulaNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkStatusServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkStatusServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiLinkStatusServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiLinkStatusServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			LinkStatus record = await this.linkStatusRepository.ByName(model.Name);
+			LinkStatus record = await this.LinkStatusRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89f7534f7e744fc34a7de1219ffbdfcc</Hash>
+    <Hash>a8e0dea1374fd6679b72c3d00abff6c5</Hash>
 </Codenesium>*/

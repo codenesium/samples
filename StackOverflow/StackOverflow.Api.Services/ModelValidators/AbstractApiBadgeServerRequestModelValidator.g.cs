@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IBadgeRepository badgeRepository;
+		protected IBadgeRepository BadgeRepository { get; private set; }
 
 		public AbstractApiBadgeServerRequestModelValidator(IBadgeRepository badgeRepository)
 		{
-			this.badgeRepository = badgeRepository;
+			this.BadgeRepository = badgeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiBadgeServerRequestModel model, int id)
@@ -43,5 +43,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d4f9645b4aca5d0a2ea0d68711eb601</Hash>
+    <Hash>30045e992641a44560966396fcef30b4</Hash>
 </Codenesium>*/

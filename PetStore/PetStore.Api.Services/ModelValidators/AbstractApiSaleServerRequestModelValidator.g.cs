@@ -13,11 +13,11 @@ namespace PetStoreNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISaleRepository saleRepository;
+		protected ISaleRepository SaleRepository { get; private set; }
 
 		public AbstractApiSaleServerRequestModelValidator(ISaleRepository saleRepository)
 		{
-			this.saleRepository = saleRepository;
+			this.SaleRepository = saleRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSaleServerRequestModel model, int id)
@@ -58,16 +58,16 @@ namespace PetStoreNS.Api.Services
 			this.RuleFor(x => x.Phone).Length(0, 10).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidPaymentTypeByPaymentTypeId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPaymentTypeByPaymentTypeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.PaymentTypeByPaymentTypeId(id);
+			var record = await this.SaleRepository.PaymentTypeByPaymentTypeId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPetByPetId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPetByPetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.PetByPetId(id);
+			var record = await this.SaleRepository.PetByPetId(id);
 
 			return record != null;
 		}
@@ -75,5 +75,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29e169f072c25f34fbbc0738f435ed58</Hash>
+    <Hash>f19368da4b0221d0746a51490b9ff94a</Hash>
 </Codenesium>*/

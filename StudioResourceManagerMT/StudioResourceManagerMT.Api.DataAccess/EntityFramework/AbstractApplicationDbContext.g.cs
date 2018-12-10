@@ -282,7 +282,6 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
-
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Event>().HasQueryFilter(x => !x.IsDeleted);
@@ -344,5 +343,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>525709857ac5b8c8b396e57c5c0c1802</Hash>
+    <Hash>881a9ce74393f15cb10afc2c6b2ec496</Hash>
 </Codenesium>*/

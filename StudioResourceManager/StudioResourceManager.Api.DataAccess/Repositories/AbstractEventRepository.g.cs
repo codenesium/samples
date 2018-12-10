@@ -98,6 +98,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Event.
 		public async virtual Task<EventStudent> CreateEventStudent(EventStudent item)
 		{
 			this.Context.Set<EventStudent>().Add(item);
@@ -107,6 +108,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return item;
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Event.
 		public async virtual Task DeleteEventStudent(EventStudent item)
 		{
 			this.Context.Set<EventStudent>().Remove(item);
@@ -123,6 +125,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Event.
 		public async virtual Task<EventTeacher> CreateEventTeacher(EventTeacher item)
 		{
 			this.Context.Set<EventTeacher>().Add(item);
@@ -132,6 +135,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return item;
 		}
 
+		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Event.
 		public async virtual Task DeleteEventTeacher(EventTeacher item)
 		{
 			this.Context.Set<EventTeacher>().Remove(item);
@@ -162,5 +166,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>084256f0080f4e8c13cfea282c514ae4</Hash>
+    <Hash>3967151de0b82df1aae6a79f591025d5</Hash>
 </Codenesium>*/

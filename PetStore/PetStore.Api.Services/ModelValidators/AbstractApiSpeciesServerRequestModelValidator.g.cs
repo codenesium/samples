@@ -13,11 +13,11 @@ namespace PetStoreNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISpeciesRepository speciesRepository;
+		protected ISpeciesRepository SpeciesRepository { get; private set; }
 
 		public AbstractApiSpeciesServerRequestModelValidator(ISpeciesRepository speciesRepository)
 		{
-			this.speciesRepository = speciesRepository;
+			this.SpeciesRepository = speciesRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSpeciesServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6dce3b69f8aea3320babaebc92a630c</Hash>
+    <Hash>0efe79f9c831acb1b41e8c909db20030</Hash>
 </Codenesium>*/

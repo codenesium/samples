@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IStudentRepository studentRepository;
+		protected IStudentRepository StudentRepository { get; private set; }
 
 		public AbstractApiStudentServerRequestModelValidator(IStudentRepository studentRepository)
 		{
-			this.studentRepository = studentRepository;
+			this.StudentRepository = studentRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiStudentServerRequestModel model, int id)
@@ -76,16 +76,16 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.studentRepository.FamilyByFamilyId(id);
+			var record = await this.StudentRepository.FamilyByFamilyId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.studentRepository.UserByUserId(id);
+			var record = await this.StudentRepository.UserByUserId(id);
 
 			return record != null;
 		}
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86d71847f463990707e0a7d38f3a7732</Hash>
+    <Hash>50396b0189614cd751f33fab867757b7</Hash>
 </Codenesium>*/

@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<CreditCardRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 
-			CreditCard entity = new CreditCard();
-			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 
 			CreditCard entity = new CreditCard();
+			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 
 			var entity = new CreditCard();
+			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
-			var record = await context.Set<CreditCard>().FirstOrDefaultAsync();
+			var records = await context.Set<CreditCard>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
+			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<CreditCard>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<CreditCard>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
+			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new CreditCard());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<CreditCard>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<CreditCard>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
+			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.CreditCardID);
 
-			CreditCard modifiedRecord = await context.Set<CreditCard>().FirstOrDefaultAsync();
+			var records = await context.Set<CreditCard>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b339424b868c2e6fae87ffbae548f53</Hash>
+    <Hash>473d7a07c1b9f0700ec8f29b6d33b271</Hash>
 </Codenesium>*/

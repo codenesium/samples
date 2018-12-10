@@ -112,31 +112,6 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userUserId);
 		}
 
-		// Foreign key reference pass-though. Pass-thru table QuoteTweet. Foreign Table Tweet.
-		public async virtual Task<List<Tweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.QuoteTweets
-			              join tweets in this.Context.Tweets on
-			              refTable.SourceTweetId equals tweets.TweetId
-			              where refTable.RetweeterUserId == retweeterUserId
-			              select tweets).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<QuoteTweet> CreateQuoteTweet(QuoteTweet item)
-		{
-			this.Context.Set<QuoteTweet>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteQuoteTweet(QuoteTweet item)
-		{
-			this.Context.Set<QuoteTweet>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
 		protected async Task<List<Tweet>> Where(
 			Expression<Func<Tweet, bool>> predicate,
 			int limit = int.MaxValue,
@@ -161,5 +136,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>25808f36f69d43aa96b380131ac8deb6</Hash>
+    <Hash>a6fe43f6d22f7845cacb18c3a32a10e7</Hash>
 </Codenesium>*/

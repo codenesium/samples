@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITimestampCheckRepository timestampCheckRepository;
+		protected ITimestampCheckRepository TimestampCheckRepository { get; private set; }
 
 		public AbstractApiTimestampCheckServerRequestModelValidator(ITimestampCheckRepository timestampCheckRepository)
 		{
-			this.timestampCheckRepository = timestampCheckRepository;
+			this.TimestampCheckRepository = timestampCheckRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTimestampCheckServerRequestModel model, int id)
@@ -38,5 +38,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f38a92751a8a33c84fe6536248375435</Hash>
+    <Hash>c5260b68e043cc151000cfbb582f1b6f</Hash>
 </Codenesium>*/

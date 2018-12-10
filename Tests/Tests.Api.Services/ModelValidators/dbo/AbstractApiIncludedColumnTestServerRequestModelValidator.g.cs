@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IIncludedColumnTestRepository includedColumnTestRepository;
+		protected IIncludedColumnTestRepository IncludedColumnTestRepository { get; private set; }
 
 		public AbstractApiIncludedColumnTestServerRequestModelValidator(IIncludedColumnTestRepository includedColumnTestRepository)
 		{
-			this.includedColumnTestRepository = includedColumnTestRepository;
+			this.IncludedColumnTestRepository = includedColumnTestRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiIncludedColumnTestServerRequestModel model, int id)
@@ -41,5 +41,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c96be99c8452af27d0eee07c691255b</Hash>
+    <Hash>e45cae6ecb2fd3eacb04c5d8110e3c46</Hash>
 </Codenesium>*/

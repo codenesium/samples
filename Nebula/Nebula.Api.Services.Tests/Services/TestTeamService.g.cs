@@ -30,7 +30,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			List<ApiTeamServerResponseModel> response = await service.All();
 
@@ -48,7 +50,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiTeamServerResponseModel response = await service.Get(default(int));
 
@@ -65,7 +69,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiTeamServerResponseModel response = await service.Get(default(int));
 
@@ -83,7 +89,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			CreateResponse<ApiTeamServerResponseModel> response = await service.Create(model);
 
@@ -104,7 +112,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			CreateResponse<ApiTeamServerResponseModel> response = await service.Create(model);
 
@@ -124,7 +134,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			UpdateResponse<ApiTeamServerResponseModel> response = await service.Update(default(int), model);
 
@@ -146,7 +158,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			UpdateResponse<ApiTeamServerResponseModel> response = await service.Update(default(int), model);
 
@@ -165,7 +179,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -186,7 +202,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -205,7 +223,9 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiTeamServerResponseModel response = await service.ByName("test_value");
 
@@ -222,16 +242,58 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
-			                              mock.DALMapperMockFactory.DALTeamMapperMock);
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiTeamServerResponseModel response = await service.ByName("test_value");
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
 		}
+
+		[Fact]
+		public async void ChainsByTeamId_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeamRepository>();
+			var records = new List<Chain>();
+			records.Add(new Chain());
+			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
+
+			List<ApiChainServerResponseModel> response = await service.ChainsByTeamId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ChainsByTeamId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeamRepository>();
+			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Chain>>(new List<Chain>()));
+			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock);
+
+			List<ApiChainServerResponseModel> response = await service.ChainsByTeamId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b496f635e9966453cd1247fefa52d6f1</Hash>
+    <Hash>5c0bf214acb3f9a6296ef3ef43da3deb</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private string existingRecordId;
 
-		private ICountryRegionRepository countryRegionRepository;
+		protected ICountryRegionRepository CountryRegionRepository { get; private set; }
 
 		public AbstractApiCountryRegionServerRequestModelValidator(ICountryRegionRepository countryRegionRepository)
 		{
-			this.countryRegionRepository = countryRegionRepository;
+			this.CountryRegionRepository = countryRegionRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCountryRegionServerRequestModel model, string id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiCountryRegionServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiCountryRegionServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			CountryRegion record = await this.countryRegionRepository.ByName(model.Name);
+			CountryRegion record = await this.CountryRegionRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(string) && record.CountryRegionCode == this.existingRecordId))
 			{
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>086b6b8d50f9896bdfaa74913dd037a8</Hash>
+    <Hash>faa24d86de27b530898d051e0e68c25e</Hash>
 </Codenesium>*/

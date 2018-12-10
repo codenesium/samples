@@ -13,11 +13,11 @@ namespace ESPIOTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IDeviceActionRepository deviceActionRepository;
+		protected IDeviceActionRepository DeviceActionRepository { get; private set; }
 
 		public AbstractApiDeviceActionServerRequestModelValidator(IDeviceActionRepository deviceActionRepository)
 		{
-			this.deviceActionRepository = deviceActionRepository;
+			this.DeviceActionRepository = deviceActionRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiDeviceActionServerRequestModel model, int id)
@@ -33,19 +33,17 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @ValueRules()
 		{
-			this.RuleFor(x => x.@Value).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.@Value).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidDeviceByDeviceId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidDeviceByDeviceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.deviceActionRepository.DeviceByDeviceId(id);
+			var record = await this.DeviceActionRepository.DeviceByDeviceId(id);
 
 			return record != null;
 		}
@@ -53,5 +51,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1eae55ad57b78f52b849ecdcbbfef37b</Hash>
+    <Hash>779b5a10f2bb117321189554f7c2d82b</Hash>
 </Codenesium>*/

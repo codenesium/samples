@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPostHistoryTypeRepository postHistoryTypeRepository;
+		protected IPostHistoryTypeRepository PostHistoryTypeRepository { get; private set; }
 
 		public AbstractApiPostHistoryTypeServerRequestModelValidator(IPostHistoryTypeRepository postHistoryTypeRepository)
 		{
-			this.postHistoryTypeRepository = postHistoryTypeRepository;
+			this.PostHistoryTypeRepository = postHistoryTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPostHistoryTypeServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6ebea67ff6444f430b3e2010e19849b</Hash>
+    <Hash>3c44647eb12496d6ea3d0359f8b1b6d8</Hash>
 </Codenesium>*/

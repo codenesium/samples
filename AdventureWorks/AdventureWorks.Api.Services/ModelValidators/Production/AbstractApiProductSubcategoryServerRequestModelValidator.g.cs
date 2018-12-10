@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProductSubcategoryRepository productSubcategoryRepository;
+		protected IProductSubcategoryRepository ProductSubcategoryRepository { get; private set; }
 
 		public AbstractApiProductSubcategoryServerRequestModelValidator(IProductSubcategoryRepository productSubcategoryRepository)
 		{
-			this.productSubcategoryRepository = productSubcategoryRepository;
+			this.ProductSubcategoryRepository = productSubcategoryRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProductSubcategoryServerRequestModel model, int id)
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -43,12 +43,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiProductSubcategoryServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiProductSubcategoryServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ProductSubcategory record = await this.productSubcategoryRepository.ByName(model.Name);
+			ProductSubcategory record = await this.ProductSubcategoryRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ProductSubcategoryID == this.existingRecordId))
 			{
@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiProductSubcategoryServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiProductSubcategoryServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ProductSubcategory record = await this.productSubcategoryRepository.ByRowguid(model.Rowguid);
+			ProductSubcategory record = await this.ProductSubcategoryRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ProductSubcategoryID == this.existingRecordId))
 			{
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36f5e76522fb65a9b45a16509f7107ce</Hash>
+    <Hash>ee803128e517fed434e00bf2009eac43</Hash>
 </Codenesium>*/

@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<BucketRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 
-			Bucket entity = new Bucket();
-			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new BucketRepository(loggerMoc.Object, context);
 
 			Bucket entity = new Bucket();
+			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new BucketRepository(loggerMoc.Object, context);
 
 			var entity = new Bucket();
+			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Bucket>().FirstOrDefaultAsync();
+			var records = await context.Set<Bucket>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
+			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace FileServiceNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Bucket>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Bucket>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
+			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Bucket());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Bucket>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Bucket>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
+			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Bucket modifiedRecord = await context.Set<Bucket>().FirstOrDefaultAsync();
+			var records = await context.Set<Bucket>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc0e3db9e309585f0fbf443dcddf25fd</Hash>
+    <Hash>c3190a5660f482125eb773e08bcff0f4</Hash>
 </Codenesium>*/

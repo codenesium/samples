@@ -13,11 +13,11 @@ namespace PetStoreNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPetRepository petRepository;
+		protected IPetRepository PetRepository { get; private set; }
 
 		public AbstractApiPetServerRequestModelValidator(IPetRepository petRepository)
 		{
-			this.petRepository = petRepository;
+			this.PetRepository = petRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPetServerRequestModel model, int id)
@@ -55,23 +55,23 @@ namespace PetStoreNS.Api.Services
 			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => !x?.SpeciesId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.BreedByBreedId(id);
+			var record = await this.PetRepository.BreedByBreedId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPenByPenId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPenByPenId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.PenByPenId(id);
+			var record = await this.PetRepository.PenByPenId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.SpeciesBySpeciesId(id);
+			var record = await this.PetRepository.SpeciesBySpeciesId(id);
 
 			return record != null;
 		}
@@ -79,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8de255aab68e9551051ab1c397fbcdc7</Hash>
+    <Hash>cca539b1c5d24253beaa866e35d566e4</Hash>
 </Codenesium>*/

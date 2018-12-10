@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IVendorRepository vendorRepository;
+		protected IVendorRepository VendorRepository { get; private set; }
 
 		public AbstractApiVendorServerRequestModelValidator(IVendorRepository vendorRepository)
 		{
-			this.vendorRepository = vendorRepository;
+			this.VendorRepository = vendorRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiVendorServerRequestModel model, int id)
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void AccountNumberRules()
 		{
 			this.RuleFor(x => x.AccountNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => !x?.AccountNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorServerRequestModel.AccountNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => (!x?.AccountNumber.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorServerRequestModel.AccountNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.AccountNumber).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByAccountNumber(ApiVendorServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByAccountNumber(ApiVendorServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Vendor record = await this.vendorRepository.ByAccountNumber(model.AccountNumber);
+			Vendor record = await this.VendorRepository.ByAccountNumber(model.AccountNumber);
 
 			if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
 			{
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b18bb07d7ad07539ed7638bb569ed187</Hash>
+    <Hash>3896cb70f78cde1eeeba6f12968d8387</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IVoteTypeRepository voteTypeRepository;
+		protected IVoteTypeRepository VoteTypeRepository { get; private set; }
 
 		public AbstractApiVoteTypeServerRequestModelValidator(IVoteTypeRepository voteTypeRepository)
 		{
-			this.voteTypeRepository = voteTypeRepository;
+			this.VoteTypeRepository = voteTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiVoteTypeServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ed6da86b25f501b467876d6fb3729ff</Hash>
+    <Hash>a5461daa5c3fd4ca74042b32d5aeeb96</Hash>
 </Codenesium>*/

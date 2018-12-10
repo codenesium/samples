@@ -250,23 +250,6 @@ namespace TwitterNS.Api.Web
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("byUserUserId/{userUserId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLocationServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByUserUserId(int userUserId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiLocationServerResponseModel> response = await this.LocationService.ByUserUserId(userUserId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiLocationServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiLocationServerRequestModel> patch)
 		{
 			var record = await this.LocationService.Get(id);
@@ -286,5 +269,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3de166617ddb8e15f4c3a495a6004304</Hash>
+    <Hash>4530893380ab9b59b6ba4c5792ba215c</Hash>
 </Codenesium>*/

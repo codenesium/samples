@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<LocationRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
-			Location entity = new Location();
-			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			Location entity = new Location();
+			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			var entity = new Location();
+			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Location>().FirstOrDefaultAsync();
+			var records = await context.Set<Location>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
+			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Location>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
+			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Location());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Location>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Location>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
+			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.LocationID);
 
-			Location modifiedRecord = await context.Set<Location>().FirstOrDefaultAsync();
+			var records = await context.Set<Location>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5393f19f023364f97cdd6b4173c24010</Hash>
+    <Hash>5de4c8e25a3bc98a31dd822344117a8c</Hash>
 </Codenesium>*/

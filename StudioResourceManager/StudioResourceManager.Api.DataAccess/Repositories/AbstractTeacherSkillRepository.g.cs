@@ -82,31 +82,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<Rate>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table Rate. Foreign Table TeacherSkill.
-		public async virtual Task<List<TeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.Rates
-			              join teacherSkills in this.Context.TeacherSkills on
-			              refTable.TeacherSkillId equals teacherSkills.Id
-			              where refTable.TeacherId == teacherId
-			              select teacherSkills).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<Rate> CreateRate(Rate item)
-		{
-			this.Context.Set<Rate>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteRate(Rate item)
-		{
-			this.Context.Set<Rate>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
 		protected async Task<List<TeacherSkill>> Where(
 			Expression<Func<TeacherSkill, bool>> predicate,
 			int limit = int.MaxValue,
@@ -131,5 +106,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e134d651bf75d0006f4b5210abbd7d8f</Hash>
+    <Hash>8b07c6f4ea256217f4b87dc3e6d20c9d</Hash>
 </Codenesium>*/

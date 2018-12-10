@@ -13,11 +13,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IRateRepository rateRepository;
+		protected IRateRepository RateRepository { get; private set; }
 
 		public AbstractApiRateServerRequestModelValidator(IRateRepository rateRepository)
 		{
-			this.rateRepository = rateRepository;
+			this.RateRepository = rateRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiRateServerRequestModel model, int id)
@@ -40,16 +40,16 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkillByTeacherSkillId).When(x => !x?.TeacherSkillId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidTeacherByTeacherId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTeacherByTeacherId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.rateRepository.TeacherByTeacherId(id);
+			var record = await this.RateRepository.TeacherByTeacherId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTeacherSkillByTeacherSkillId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTeacherSkillByTeacherSkillId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.rateRepository.TeacherSkillByTeacherSkillId(id);
+			var record = await this.RateRepository.TeacherSkillByTeacherSkillId(id);
 
 			return record != null;
 		}
@@ -57,5 +57,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>262d82a9019f447f355f026b8553c781</Hash>
+    <Hash>bd66066bff82130df77d2ed6a6d35fd7</Hash>
 </Codenesium>*/

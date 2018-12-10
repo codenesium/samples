@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TestsNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<CompositePrimaryKeyRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = CompositePrimaryKeyRepositoryMoc.GetContext();
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 
-			CompositePrimaryKey entity = new CompositePrimaryKey();
-			context.Set<CompositePrimaryKey>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 
 			CompositePrimaryKey entity = new CompositePrimaryKey();
+			entity.SetProperties(2, 2);
 			context.Set<CompositePrimaryKey>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TestsNS.Api.DataAccess
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 
 			var entity = new CompositePrimaryKey();
+			entity.SetProperties(2, 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<CompositePrimaryKey>().FirstOrDefaultAsync();
+			var records = await context.Set<CompositePrimaryKey>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = CompositePrimaryKeyRepositoryMoc.GetContext();
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 			CompositePrimaryKey entity = new CompositePrimaryKey();
+			entity.SetProperties(2, 2);
 			context.Set<CompositePrimaryKey>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<CompositePrimaryKey>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<CompositePrimaryKey>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = CompositePrimaryKeyRepositoryMoc.GetContext();
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 			CompositePrimaryKey entity = new CompositePrimaryKey();
+			entity.SetProperties(2, 2);
 			context.Set<CompositePrimaryKey>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new CompositePrimaryKey());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<CompositePrimaryKey>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<CompositePrimaryKey>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = CompositePrimaryKeyRepositoryMoc.GetContext();
 			var repository = new CompositePrimaryKeyRepository(loggerMoc.Object, context);
 			CompositePrimaryKey entity = new CompositePrimaryKey();
+			entity.SetProperties(2, 2);
 			context.Set<CompositePrimaryKey>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			CompositePrimaryKey modifiedRecord = await context.Set<CompositePrimaryKey>().FirstOrDefaultAsync();
+			var records = await context.Set<CompositePrimaryKey>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>63a9b02b9ad776035370f9eaa19d3f1f</Hash>
+    <Hash>e357f44d8a8846aee26624a9fa70800a</Hash>
 </Codenesium>*/

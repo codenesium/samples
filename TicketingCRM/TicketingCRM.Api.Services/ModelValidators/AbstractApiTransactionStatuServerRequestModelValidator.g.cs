@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITransactionStatuRepository transactionStatuRepository;
+		protected ITransactionStatuRepository TransactionStatuRepository { get; private set; }
 
 		public AbstractApiTransactionStatuServerRequestModelValidator(ITransactionStatuRepository transactionStatuRepository)
 		{
-			this.transactionStatuRepository = transactionStatuRepository;
+			this.TransactionStatuRepository = transactionStatuRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTransactionStatuServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e97fa230479161e1661985de9f9b29b0</Hash>
+    <Hash>4eed323e570c0574f52fb0924f57d8e2</Hash>
 </Codenesium>*/

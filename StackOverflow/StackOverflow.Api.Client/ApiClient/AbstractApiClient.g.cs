@@ -853,7 +853,7 @@ namespace StackOverflowNS.Api.Client
 			return response;
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -881,5 +881,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>40559d52cd3892347345d76e20de5a2f</Hash>
+    <Hash>f75d055ada7347c6013663de4d415b60</Hash>
 </Codenesium>*/

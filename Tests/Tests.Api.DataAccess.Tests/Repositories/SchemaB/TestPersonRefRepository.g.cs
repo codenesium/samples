@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TestsNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<PersonRefRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRefRepositoryMoc.GetContext();
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 
-			PersonRef entity = new PersonRef();
-			context.Set<PersonRef>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 
 			PersonRef entity = new PersonRef();
+			entity.SetProperties(2, 2, 2);
 			context.Set<PersonRef>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TestsNS.Api.DataAccess
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 
 			var entity = new PersonRef();
+			entity.SetProperties(2, 2, 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<PersonRef>().FirstOrDefaultAsync();
+			var records = await context.Set<PersonRef>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRefRepositoryMoc.GetContext();
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 			PersonRef entity = new PersonRef();
+			entity.SetProperties(2, 2, 2);
 			context.Set<PersonRef>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<PersonRef>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PersonRef>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRefRepositoryMoc.GetContext();
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 			PersonRef entity = new PersonRef();
+			entity.SetProperties(2, 2, 2);
 			context.Set<PersonRef>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new PersonRef());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<PersonRef>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PersonRef>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRefRepositoryMoc.GetContext();
 			var repository = new PersonRefRepository(loggerMoc.Object, context);
 			PersonRef entity = new PersonRef();
+			entity.SetProperties(2, 2, 2);
 			context.Set<PersonRef>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			PersonRef modifiedRecord = await context.Set<PersonRef>().FirstOrDefaultAsync();
+			var records = await context.Set<PersonRef>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>afd3b5a5e5ef1e5bfea33f2b4dd7fea8</Hash>
+    <Hash>58b4c56e9683e69be3929ba35ac408f2</Hash>
 </Codenesium>*/

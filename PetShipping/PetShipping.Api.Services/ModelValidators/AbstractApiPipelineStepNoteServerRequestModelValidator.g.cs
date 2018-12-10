@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPipelineStepNoteRepository pipelineStepNoteRepository;
+		protected IPipelineStepNoteRepository PipelineStepNoteRepository { get; private set; }
 
 		public AbstractApiPipelineStepNoteServerRequestModelValidator(IPipelineStepNoteRepository pipelineStepNoteRepository)
 		{
-			this.pipelineStepNoteRepository = pipelineStepNoteRepository;
+			this.PipelineStepNoteRepository = pipelineStepNoteRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPipelineStepNoteServerRequestModel model, int id)
@@ -42,16 +42,16 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidEmployeeByEmployeeId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEmployeeByEmployeeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepNoteRepository.EmployeeByEmployeeId(id);
+			var record = await this.PipelineStepNoteRepository.EmployeeByEmployeeId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepNoteRepository.PipelineStepByPipelineStepId(id);
+			var record = await this.PipelineStepNoteRepository.PipelineStepByPipelineStepId(id);
 
 			return record != null;
 		}
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48442d36b73cfa36eb57f575a630bd39</Hash>
+    <Hash>dc437280c5098049388c1a6fcef0c85c</Hash>
 </Codenesium>*/

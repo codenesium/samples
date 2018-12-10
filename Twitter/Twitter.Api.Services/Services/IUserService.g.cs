@@ -41,13 +41,9 @@ namespace TwitterNS.Api.Services
 		Task<List<ApiRetweetServerResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiTweetServerResponseModel>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiUserServerResponseModel>> ByLocationId(int userUserId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiUserServerResponseModel>> BySourceTweetId(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>07afbaf890728f7dd23de00f6ad16f9c</Hash>
+    <Hash>4d6517d9392ea3b3139a94d00f101775</Hash>
 </Codenesium>*/

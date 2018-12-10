@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IEventStatuRepository eventStatuRepository;
+		protected IEventStatuRepository EventStatuRepository { get; private set; }
 
 		public AbstractApiEventStatuServerRequestModelValidator(IEventStatuRepository eventStatuRepository)
 		{
-			this.eventStatuRepository = eventStatuRepository;
+			this.EventStatuRepository = eventStatuRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiEventStatuServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da2d42d694eec5df473b9d64298999f5</Hash>
+    <Hash>69b6547d48e0a97918973830768eb995</Hash>
 </Codenesium>*/

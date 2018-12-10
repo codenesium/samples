@@ -949,7 +949,7 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTeacherClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -977,5 +977,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ed132026a28dd011ceccef2c4733590a</Hash>
+    <Hash>0880d218daf44577032632a256096c17</Hash>
 </Codenesium>*/

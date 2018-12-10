@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IShiftRepository shiftRepository;
+		protected IShiftRepository ShiftRepository { get; private set; }
 
 		public AbstractApiShiftServerRequestModelValidator(IShiftRepository shiftRepository)
 		{
-			this.shiftRepository = shiftRepository;
+			this.ShiftRepository = shiftRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiShiftServerRequestModel model, int id)
@@ -28,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void EndTimeRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => !x?.EndTime.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.EndTime)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void ModifiedDateRules()
@@ -38,18 +37,18 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void StartTimeRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => !x?.StartTime.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.StartTime)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => (!x?.StartTime.IsEmptyOrZeroOrNull() ?? false) || (!x?.StartTime.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.StartTime)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiShiftServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiShiftServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Shift record = await this.shiftRepository.ByName(model.Name);
+			Shift record = await this.ShiftRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ShiftID == this.existingRecordId))
 			{
@@ -61,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByStartTimeEndTime(ApiShiftServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByStartTimeEndTime(ApiShiftServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Shift record = await this.shiftRepository.ByStartTimeEndTime(model.StartTime, model.EndTime);
+			Shift record = await this.ShiftRepository.ByStartTimeEndTime(model.StartTime, model.EndTime);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ShiftID == this.existingRecordId))
 			{
@@ -78,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>164e462bdc0623adba098e39d10628d2</Hash>
+    <Hash>98fc7b1d5e7d9685e91fb3794d196698</Hash>
 </Codenesium>*/

@@ -4416,7 +4416,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "272"
-            }
+            },
+            "AppDoNotProcess": false
           }
         ],
         "ApplicationApiContainer": {

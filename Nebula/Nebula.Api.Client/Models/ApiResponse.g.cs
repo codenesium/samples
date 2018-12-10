@@ -13,17 +13,22 @@ namespace NebulaNS.Api.Client
 
 		public void Merge(ApiResponse from)
 		{
+			from.Chains.ForEach(x => this.AddChain(x));
 			from.ChainStatuses.ForEach(x => this.AddChainStatus(x));
+			from.Clasps.ForEach(x => this.AddClasp(x));
 			from.Links.ForEach(x => this.AddLink(x));
 			from.LinkLogs.ForEach(x => this.AddLinkLog(x));
 			from.LinkStatuses.ForEach(x => this.AddLinkStatus(x));
 			from.Machines.ForEach(x => this.AddMachine(x));
 			from.Organizations.ForEach(x => this.AddOrganization(x));
 			from.Teams.ForEach(x => this.AddTeam(x));
-			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
+		public List<ApiChainClientResponseModel> Chains { get; private set; } = new List<ApiChainClientResponseModel>();
+
 		public List<ApiChainStatusClientResponseModel> ChainStatuses { get; private set; } = new List<ApiChainStatusClientResponseModel>();
+
+		public List<ApiClaspClientResponseModel> Clasps { get; private set; } = new List<ApiClaspClientResponseModel>();
 
 		public List<ApiLinkClientResponseModel> Links { get; private set; } = new List<ApiLinkClientResponseModel>();
 
@@ -37,13 +42,27 @@ namespace NebulaNS.Api.Client
 
 		public List<ApiTeamClientResponseModel> Teams { get; private set; } = new List<ApiTeamClientResponseModel>();
 
-		public List<ApiVersionInfoClientResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoClientResponseModel>();
+		public void AddChain(ApiChainClientResponseModel item)
+		{
+			if (!this.Chains.Any(x => x.Id == item.Id))
+			{
+				this.Chains.Add(item);
+			}
+		}
 
 		public void AddChainStatus(ApiChainStatusClientResponseModel item)
 		{
 			if (!this.ChainStatuses.Any(x => x.Id == item.Id))
 			{
 				this.ChainStatuses.Add(item);
+			}
+		}
+
+		public void AddClasp(ApiClaspClientResponseModel item)
+		{
+			if (!this.Clasps.Any(x => x.Id == item.Id))
+			{
+				this.Clasps.Add(item);
 			}
 		}
 
@@ -94,17 +113,9 @@ namespace NebulaNS.Api.Client
 				this.Teams.Add(item);
 			}
 		}
-
-		public void AddVersionInfo(ApiVersionInfoClientResponseModel item)
-		{
-			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
-			{
-				this.VersionInfoes.Add(item);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73208e08b34b688f3d3bcadcbb9e8cc6</Hash>
+    <Hash>8697a780f20c85b94114e7777957f88e</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private short existingRecordId;
 
-		private IScrapReasonRepository scrapReasonRepository;
+		protected IScrapReasonRepository ScrapReasonRepository { get; private set; }
 
 		public AbstractApiScrapReasonServerRequestModelValidator(IScrapReasonRepository scrapReasonRepository)
 		{
-			this.scrapReasonRepository = scrapReasonRepository;
+			this.ScrapReasonRepository = scrapReasonRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiScrapReasonServerRequestModel model, short id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiScrapReasonServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiScrapReasonServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ScrapReason record = await this.scrapReasonRepository.ByName(model.Name);
+			ScrapReason record = await this.ScrapReasonRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(short) && record.ScrapReasonID == this.existingRecordId))
 			{
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75c53f617d21c8241ac3834795e548cd</Hash>
+    <Hash>88b5d6b6e0dadd4fbf2f378b911c05b0</Hash>
 </Codenesium>*/

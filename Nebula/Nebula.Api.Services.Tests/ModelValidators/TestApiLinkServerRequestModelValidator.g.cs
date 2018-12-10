@@ -75,6 +75,56 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ChainId_Create_Valid_Reference()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+
+			var validator = new ApiLinkServerRequestModelValidator(linkRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLinkServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ChainId, 1);
+		}
+
+		[Fact]
+		public async void ChainId_Create_Invalid_Reference()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+
+			var validator = new ApiLinkServerRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiLinkServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ChainId, 1);
+		}
+
+		[Fact]
+		public async void ChainId_Update_Valid_Reference()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+
+			var validator = new ApiLinkServerRequestModelValidator(linkRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkServerRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ChainId, 1);
+		}
+
+		[Fact]
+		public async void ChainId_Update_Invalid_Reference()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+
+			var validator = new ApiLinkServerRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkServerRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ChainId, 1);
+		}
+
+		[Fact]
 		public async void LinkStatusId_Create_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
@@ -223,5 +273,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>11719612de3f8f55c6f39a08f613b2d4</Hash>
+    <Hash>f9cd544323321248cd6b51190e55c127</Hash>
 </Codenesium>*/

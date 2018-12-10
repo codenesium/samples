@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITicketRepository ticketRepository;
+		protected ITicketRepository TicketRepository { get; private set; }
 
 		public AbstractApiTicketServerRequestModelValidator(ITicketRepository ticketRepository)
 		{
-			this.ticketRepository = ticketRepository;
+			this.TicketRepository = ticketRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTicketServerRequestModel model, int id)
@@ -37,9 +37,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatuByTicketStatusId).When(x => !x?.TicketStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidTicketStatuByTicketStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTicketStatuByTicketStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.ticketRepository.TicketStatuByTicketStatusId(id);
+			var record = await this.TicketRepository.TicketStatuByTicketStatusId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>357793e200c17d571415b317c73adc52</Hash>
+    <Hash>a87cf8acef6793ffd69bded06d451578</Hash>
 </Codenesium>*/

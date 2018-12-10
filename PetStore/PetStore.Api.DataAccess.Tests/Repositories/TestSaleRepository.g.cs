@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<SaleRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 
-			Sale entity = new Sale();
-			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new SaleRepository(loggerMoc.Object, context);
 
 			Sale entity = new Sale();
+			entity.SetProperties(2m, "B", 2, "B", 1, 1, "B");
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new SaleRepository(loggerMoc.Object, context);
 
 			var entity = new Sale();
+			entity.SetProperties(2m, "B", 2, "B", 1, 1, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Sale>().FirstOrDefaultAsync();
+			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
+			entity.SetProperties(2m, "B", 2, "B", 1, 1, "B");
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace PetStoreNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Sale>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
+			entity.SetProperties(2m, "B", 2, "B", 1, 1, "B");
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Sale());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Sale>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
+			entity.SetProperties(2m, "B", 2, "B", 1, 1, "B");
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Sale modifiedRecord = await context.Set<Sale>().FirstOrDefaultAsync();
+			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>df5f09bb119e2d2c6ab15918d163c6dc</Hash>
+    <Hash>dc6c992dac092ee49ed0a9f51f329ef1</Hash>
 </Codenesium>*/

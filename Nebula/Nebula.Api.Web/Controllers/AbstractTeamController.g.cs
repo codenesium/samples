@@ -236,10 +236,10 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byChainStatusId/{chainStatusId}")]
+		[Route("{teamId}/Chains")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeamServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByChainStatusId(int chainStatusId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiChainServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ChainsByTeamId(int teamId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -247,7 +247,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeamServerResponseModel> response = await this.TeamService.ByChainStatusId(chainStatusId, query.Limit, query.Offset);
+			List<ApiChainServerResponseModel> response = await this.TeamService.ChainsByTeamId(teamId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -271,5 +271,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>181dda001c00e145326c0e3e70fb67d5</Hash>
+    <Hash>9be5833408dbdd6d9f984b7e82240f7c</Hash>
 </Codenesium>*/

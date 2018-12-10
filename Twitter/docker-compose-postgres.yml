@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'twitter-app'
+    image: 'twitter'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=twitter-db;Persist Security Info=False;User ID=postgres;Password=test;Database=twitter;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - twitter-network
+
+  postgres:
+    container_name: 'twitter-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: twitter
+    networks:
+      - twitter-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    twitter-network:
+       driver: bridge

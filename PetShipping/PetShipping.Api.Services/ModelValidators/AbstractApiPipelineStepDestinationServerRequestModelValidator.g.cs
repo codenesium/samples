@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPipelineStepDestinationRepository pipelineStepDestinationRepository;
+		protected IPipelineStepDestinationRepository PipelineStepDestinationRepository { get; private set; }
 
 		public AbstractApiPipelineStepDestinationServerRequestModelValidator(IPipelineStepDestinationRepository pipelineStepDestinationRepository)
 		{
-			this.pipelineStepDestinationRepository = pipelineStepDestinationRepository;
+			this.PipelineStepDestinationRepository = pipelineStepDestinationRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPipelineStepDestinationServerRequestModel model, int id)
@@ -36,16 +36,16 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => !x?.PipelineStepId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidDestinationByDestinationId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidDestinationByDestinationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepDestinationRepository.DestinationByDestinationId(id);
+			var record = await this.PipelineStepDestinationRepository.DestinationByDestinationId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepDestinationRepository.PipelineStepByPipelineStepId(id);
+			var record = await this.PipelineStepDestinationRepository.PipelineStepByPipelineStepId(id);
 
 			return record != null;
 		}
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4a40b1880989b701a49b5ff6786b757</Hash>
+    <Hash>af6dc90fe830a6b262b2bca5e062abee</Hash>
 </Codenesium>*/

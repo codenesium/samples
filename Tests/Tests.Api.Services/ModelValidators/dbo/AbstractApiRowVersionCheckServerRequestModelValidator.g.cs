@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IRowVersionCheckRepository rowVersionCheckRepository;
+		protected IRowVersionCheckRepository RowVersionCheckRepository { get; private set; }
 
 		public AbstractApiRowVersionCheckServerRequestModelValidator(IRowVersionCheckRepository rowVersionCheckRepository)
 		{
-			this.rowVersionCheckRepository = rowVersionCheckRepository;
+			this.RowVersionCheckRepository = rowVersionCheckRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiRowVersionCheckServerRequestModel model, int id)
@@ -39,5 +39,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65d12305410466dc34fa1ec448fa89c2</Hash>
+    <Hash>b1b5d0ffb36b8c982a3cef3af42ae3b5</Hash>
 </Codenesium>*/

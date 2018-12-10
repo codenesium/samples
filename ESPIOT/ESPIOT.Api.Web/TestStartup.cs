@@ -4,6 +4,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Web
@@ -36,7 +37,7 @@ namespace ESPIOTNS.Api.Web
             return options.Options;
         }
 
-        public override void MigrateDatabase(ApplicationDbContext context)
+        public override void MigrateDatabase(ApplicationDbContext context, ILogger<Startup> logger)
         {
             context.Database.OpenConnection();
             context.Database.EnsureCreated();

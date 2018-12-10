@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProductDescriptionRepository productDescriptionRepository;
+		protected IProductDescriptionRepository ProductDescriptionRepository { get; private set; }
 
 		public AbstractApiProductDescriptionServerRequestModelValidator(IProductDescriptionRepository productDescriptionRepository)
 		{
-			this.productDescriptionRepository = productDescriptionRepository;
+			this.ProductDescriptionRepository = productDescriptionRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProductDescriptionServerRequestModel model, int id)
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductDescriptionServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductDescriptionServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiProductDescriptionServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiProductDescriptionServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ProductDescription record = await this.productDescriptionRepository.ByRowguid(model.Rowguid);
+			ProductDescription record = await this.ProductDescriptionRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ProductDescriptionID == this.existingRecordId))
 			{
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1761fe5090e4a85e6145de4c0f4f353c</Hash>
+    <Hash>9c93abec338d48c53d19a315a921c893</Hash>
 </Codenesium>*/

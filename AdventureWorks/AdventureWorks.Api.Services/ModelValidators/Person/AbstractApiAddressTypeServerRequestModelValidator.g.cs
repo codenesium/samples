@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IAddressTypeRepository addressTypeRepository;
+		protected IAddressTypeRepository AddressTypeRepository { get; private set; }
 
 		public AbstractApiAddressTypeServerRequestModelValidator(IAddressTypeRepository addressTypeRepository)
 		{
-			this.addressTypeRepository = addressTypeRepository;
+			this.AddressTypeRepository = addressTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiAddressTypeServerRequestModel model, int id)
@@ -33,18 +33,18 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiAddressTypeServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiAddressTypeServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			AddressType record = await this.addressTypeRepository.ByName(model.Name);
+			AddressType record = await this.AddressTypeRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.AddressTypeID == this.existingRecordId))
 			{
@@ -56,9 +56,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiAddressTypeServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiAddressTypeServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			AddressType record = await this.addressTypeRepository.ByRowguid(model.Rowguid);
+			AddressType record = await this.AddressTypeRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.AddressTypeID == this.existingRecordId))
 			{
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c9c8cccfd4fc44e852ec5dfa3dc6440</Hash>
+    <Hash>7ae47daf575a47c80c5661be8977c085</Hash>
 </Codenesium>*/

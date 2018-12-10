@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ILocationRepository locationRepository;
+		protected ILocationRepository LocationRepository { get; private set; }
 
 		public AbstractApiLocationServerRequestModelValidator(ILocationRepository locationRepository)
 		{
-			this.locationRepository = locationRepository;
+			this.LocationRepository = locationRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLocationServerRequestModel model, int id)
@@ -43,5 +43,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3d673e7e75e2cc1e59df120ab483c40</Hash>
+    <Hash>57ce8205c0b2d706069daa13fef5ea29</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICountryRepository countryRepository;
+		protected ICountryRepository CountryRepository { get; private set; }
 
 		public AbstractApiCountryServerRequestModelValidator(ICountryRepository countryRepository)
 		{
-			this.countryRepository = countryRepository;
+			this.CountryRepository = countryRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCountryServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d98776bfc5404f419f5b5e5453d8c89</Hash>
+    <Hash>6b40081dea6326c0d382dbc82801268b</Hash>
 </Codenesium>*/

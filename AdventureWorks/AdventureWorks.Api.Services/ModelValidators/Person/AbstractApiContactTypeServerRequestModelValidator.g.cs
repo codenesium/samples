@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IContactTypeRepository contactTypeRepository;
+		protected IContactTypeRepository ContactTypeRepository { get; private set; }
 
 		public AbstractApiContactTypeServerRequestModelValidator(IContactTypeRepository contactTypeRepository)
 		{
-			this.contactTypeRepository = contactTypeRepository;
+			this.ContactTypeRepository = contactTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiContactTypeServerRequestModel model, int id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiContactTypeServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiContactTypeServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ContactType record = await this.contactTypeRepository.ByName(model.Name);
+			ContactType record = await this.ContactTypeRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ContactTypeID == this.existingRecordId))
 			{
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50f84f77f55a8be696e6d52005799f44</Hash>
+    <Hash>17e080440b66903e581bba77c99fc9ae</Hash>
 </Codenesium>*/

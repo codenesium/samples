@@ -13,11 +13,11 @@ namespace PetStoreNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPenRepository penRepository;
+		protected IPenRepository PenRepository { get; private set; }
 
 		public AbstractApiPenServerRequestModelValidator(IPenRepository penRepository)
 		{
-			this.penRepository = penRepository;
+			this.PenRepository = penRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPenServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00c6c21fa0507d05c4dcd35651af45d5</Hash>
+    <Hash>9b3cc7b2a2a6d531bf8b36e33d2af7e4</Hash>
 </Codenesium>*/

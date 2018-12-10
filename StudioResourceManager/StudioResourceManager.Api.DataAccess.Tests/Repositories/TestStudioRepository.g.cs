@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace StudioResourceManagerNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<StudioRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 
-			Studio entity = new Studio();
-			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new StudioRepository(loggerMoc.Object, context);
 
 			Studio entity = new Studio();
+			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new StudioRepository(loggerMoc.Object, context);
 
 			var entity = new Studio();
+			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Studio>().FirstOrDefaultAsync();
+			var records = await context.Set<Studio>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
+			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Studio>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Studio>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
+			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Studio());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Studio>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Studio>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = StudioRepositoryMoc.GetContext();
 			var repository = new StudioRepository(loggerMoc.Object, context);
 			Studio entity = new Studio();
+			entity.SetProperties("B", "B", "B", 2, "B", "B", "B", "B");
 			context.Set<Studio>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Studio modifiedRecord = await context.Set<Studio>().FirstOrDefaultAsync();
+			var records = await context.Set<Studio>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49cd9df1ce5c7d5ce637ebb6b179c427</Hash>
+    <Hash>3e66cd44f84311d7a733b61555c5c2da</Hash>
 </Codenesium>*/

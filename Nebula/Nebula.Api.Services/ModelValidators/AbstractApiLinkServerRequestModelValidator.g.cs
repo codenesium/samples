@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ILinkRepository linkRepository;
+		protected ILinkRepository LinkRepository { get; private set; }
 
 		public AbstractApiLinkServerRequestModelValidator(ILinkRepository linkRepository)
 		{
-			this.linkRepository = linkRepository;
+			this.LinkRepository = linkRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLinkServerRequestModel model, int id)
@@ -33,6 +33,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void ChainIdRules()
 		{
+			this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChainByChainId).When(x => !x?.ChainId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void DateCompletedRules()
@@ -50,7 +51,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void ExternalIdRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => !x?.ExternalId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkServerRequestModel.ExternalId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => (!x?.ExternalId.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkServerRequestModel.ExternalId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void LinkStatusIdRules()
@@ -82,23 +83,30 @@ namespace NebulaNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidMachineByAssignedMachineId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidMachineByAssignedMachineId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.MachineByAssignedMachineId(id.GetValueOrDefault());
+			var record = await this.LinkRepository.MachineByAssignedMachineId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidLinkStatusByLinkStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidChainByChainId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.LinkStatusByLinkStatusId(id);
+			var record = await this.LinkRepository.ChainByChainId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeUniqueByExternalId(ApiLinkServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidLinkStatusByLinkStatusId(int id,  CancellationToken cancellationToken)
 		{
-			Link record = await this.linkRepository.ByExternalId(model.ExternalId);
+			var record = await this.LinkRepository.LinkStatusByLinkStatusId(id);
+
+			return record != null;
+		}
+
+		protected async Task<bool> BeUniqueByExternalId(ApiLinkServerRequestModel model,  CancellationToken cancellationToken)
+		{
+			Link record = await this.LinkRepository.ByExternalId(model.ExternalId);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -113,5 +121,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6adcbd6a1b75c32a179a11724e94790</Hash>
+    <Hash>776aa21328bab152487a81653c436918</Hash>
 </Codenesium>*/

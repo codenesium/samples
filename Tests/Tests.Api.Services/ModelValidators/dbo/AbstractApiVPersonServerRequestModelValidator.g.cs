@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IVPersonRepository vPersonRepository;
+		protected IVPersonRepository VPersonRepository { get; private set; }
 
 		public AbstractApiVPersonServerRequestModelValidator(IVPersonRepository vPersonRepository)
 		{
-			this.vPersonRepository = vPersonRepository;
+			this.VPersonRepository = vPersonRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiVPersonServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6578ed48fb518a9d48cf77094581e373</Hash>
+    <Hash>d25f205bf2e02f5ac4d0b22e9a663b8f</Hash>
 </Codenesium>*/

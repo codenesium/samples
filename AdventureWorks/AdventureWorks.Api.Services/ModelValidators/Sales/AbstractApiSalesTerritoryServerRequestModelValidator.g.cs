@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISalesTerritoryRepository salesTerritoryRepository;
+		protected ISalesTerritoryRepository SalesTerritoryRepository { get; private set; }
 
 		public AbstractApiSalesTerritoryServerRequestModelValidator(ISalesTerritoryRepository salesTerritoryRepository)
 		{
-			this.salesTerritoryRepository = salesTerritoryRepository;
+			this.SalesTerritoryRepository = salesTerritoryRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSalesTerritoryServerRequestModel model, int id)
@@ -53,13 +53,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesLastYearRules()
@@ -70,9 +70,9 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeUniqueByName(ApiSalesTerritoryServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiSalesTerritoryServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesTerritory record = await this.salesTerritoryRepository.ByName(model.Name);
+			SalesTerritory record = await this.SalesTerritoryRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.TerritoryID == this.existingRecordId))
 			{
@@ -84,9 +84,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiSalesTerritoryServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiSalesTerritoryServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesTerritory record = await this.salesTerritoryRepository.ByRowguid(model.Rowguid);
+			SalesTerritory record = await this.SalesTerritoryRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.TerritoryID == this.existingRecordId))
 			{
@@ -101,5 +101,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>177b1ef6c02e1dc494ca3ee86469e1f6</Hash>
+    <Hash>e8d640041b0838f13795a92134770009</Hash>
 </Codenesium>*/

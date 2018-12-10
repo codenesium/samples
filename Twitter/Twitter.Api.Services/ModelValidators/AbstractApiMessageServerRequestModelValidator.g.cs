@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IMessageRepository messageRepository;
+		protected IMessageRepository MessageRepository { get; private set; }
 
 		public AbstractApiMessageServerRequestModelValidator(IMessageRepository messageRepository)
 		{
-			this.messageRepository = messageRepository;
+			this.MessageRepository = messageRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiMessageServerRequestModel model, int id)
@@ -36,9 +36,9 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.SenderUserId).MustAsync(this.BeValidUserBySenderUserId).When(x => !x?.SenderUserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidUserBySenderUserId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserBySenderUserId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messageRepository.UserBySenderUserId(id.GetValueOrDefault());
+			var record = await this.MessageRepository.UserBySenderUserId(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -46,5 +46,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbf4eece534e8d13e96d0d1480e9df51</Hash>
+    <Hash>62761d69b6b94f4d2633184170fe53dc</Hash>
 </Codenesium>*/

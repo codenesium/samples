@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TwitterNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<QuoteTweetRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = QuoteTweetRepositoryMoc.GetContext();
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 
-			QuoteTweet entity = new QuoteTweet();
-			context.Set<QuoteTweet>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 
 			QuoteTweet entity = new QuoteTweet();
+			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 1, TimeSpan.Parse("02:00:00"));
 			context.Set<QuoteTweet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 
 			var entity = new QuoteTweet();
+			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 1, TimeSpan.Parse("02:00:00"));
 			await repository.Create(entity);
 
-			var record = await context.Set<QuoteTweet>().FirstOrDefaultAsync();
+			var records = await context.Set<QuoteTweet>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = QuoteTweetRepositoryMoc.GetContext();
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 			QuoteTweet entity = new QuoteTweet();
+			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 1, TimeSpan.Parse("02:00:00"));
 			context.Set<QuoteTweet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TwitterNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<QuoteTweet>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<QuoteTweet>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = QuoteTweetRepositoryMoc.GetContext();
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 			QuoteTweet entity = new QuoteTweet();
+			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 1, TimeSpan.Parse("02:00:00"));
 			context.Set<QuoteTweet>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new QuoteTweet());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<QuoteTweet>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<QuoteTweet>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = QuoteTweetRepositoryMoc.GetContext();
 			var repository = new QuoteTweetRepository(loggerMoc.Object, context);
 			QuoteTweet entity = new QuoteTweet();
+			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, 1, TimeSpan.Parse("02:00:00"));
 			context.Set<QuoteTweet>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.QuoteTweetId);
 
-			QuoteTweet modifiedRecord = await context.Set<QuoteTweet>().FirstOrDefaultAsync();
+			var records = await context.Set<QuoteTweet>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>93cb7d72fbb68225d491d500f813e591</Hash>
+    <Hash>7bea7321beb53afe5dad15314b5b9efa</Hash>
 </Codenesium>*/

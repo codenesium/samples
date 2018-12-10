@@ -23,11 +23,9 @@ namespace TwitterNS.Api.Services
 		Task<List<ApiTweetServerResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiUserServerResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiLocationServerResponseModel>> ByUserUserId(int locationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa7640274c907589fbb3e688c8772a3d</Hash>
+    <Hash>e960775d861e79cdfff2aeb00b9c1196</Hash>
 </Codenesium>*/

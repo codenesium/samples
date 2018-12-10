@@ -1,9 +1,9 @@
 
 # to run this with docker
 # build a container named PetStore with 
-# docker build -t aspnetapp .
+# docker build -t PetStore .
 # run with
-# docker run -d -p 8000:8000  --add-host="localhost:10.0.2.2" --rm --name petstore aspnetapp
+# docker run -d -p 8000:8000  --add-host="localhost:10.0.2.2" --rm --name petstoreapp PetStore
 # this will run your app exposed on the docker network and will forward port 8000 on the local machine to port 8000 in the container.
 # On this machine it's http://192.168.99.100:8000 but it could be different for you.
 # with the rm option the container will be deleted when it exits

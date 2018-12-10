@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TicketingCRMNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<CountryRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 
-			Country entity = new Country();
-			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new CountryRepository(loggerMoc.Object, context);
 
 			Country entity = new Country();
+			entity.SetProperties(2, "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new CountryRepository(loggerMoc.Object, context);
 
 			var entity = new Country();
+			entity.SetProperties(2, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Country>().FirstOrDefaultAsync();
+			var records = await context.Set<Country>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
+			entity.SetProperties(2, "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Country>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Country>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
+			entity.SetProperties(2, "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Country());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Country>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Country>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
+			entity.SetProperties(2, "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Country modifiedRecord = await context.Set<Country>().FirstOrDefaultAsync();
+			var records = await context.Set<Country>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9982b23ce36e891298bee1b7b5c08a1f</Hash>
+    <Hash>b95e1d537ddfbecde042301dc60dfdcb</Hash>
 </Codenesium>*/

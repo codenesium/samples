@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICommentRepository commentRepository;
+		protected ICommentRepository CommentRepository { get; private set; }
 
 		public AbstractApiCommentServerRequestModelValidator(ICommentRepository commentRepository)
 		{
-			this.commentRepository = commentRepository;
+			this.CommentRepository = commentRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCommentServerRequestModel model, int id)
@@ -51,5 +51,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e4a80b9b288b10b69290e884eeb750a9</Hash>
+    <Hash>727920ad364a27f514ec18a7635b1fdb</Hash>
 </Codenesium>*/

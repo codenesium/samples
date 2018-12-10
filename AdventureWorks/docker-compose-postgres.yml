@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'adventureworks-app'
+    image: 'adventureworks'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=adventureworks-db;Persist Security Info=False;User ID=postgres;Password=test;Database=adventureworks;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - adventureworks-network
+
+  postgres:
+    container_name: 'adventureworks-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: adventureworks
+    networks:
+      - adventureworks-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    adventureworks-network:
+       driver: bridge

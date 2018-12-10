@@ -28,25 +28,9 @@ namespace NebulaNS.Api.DataAccess
 		[Key]
 		[Column("teamId")]
 		public virtual int TeamId { get; private set; }
-
-		[ForeignKey("MachineId")]
-		public virtual Machine MachineNavigation { get; private set; }
-
-		public void SetMachineNavigation(Machine item)
-		{
-			this.MachineNavigation = item;
-		}
-
-		[ForeignKey("TeamId")]
-		public virtual Team TeamNavigation { get; private set; }
-
-		public void SetTeamNavigation(Team item)
-		{
-			this.TeamNavigation = item;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76188a1b7785838e0bf8b8be3c7d54fe</Hash>
+    <Hash>5150863930cd95d5ed81f9958944b28d</Hash>
 </Codenesium>*/

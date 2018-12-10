@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISaleRepository saleRepository;
+		protected ISaleRepository SaleRepository { get; private set; }
 
 		public AbstractApiSaleServerRequestModelValidator(ISaleRepository saleRepository)
 		{
-			this.saleRepository = saleRepository;
+			this.SaleRepository = saleRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSaleServerRequestModel model, int id)
@@ -53,9 +53,9 @@ namespace PetShippingNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidPetByPetId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPetByPetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.PetByPetId(id);
+			var record = await this.SaleRepository.PetByPetId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c43098411d099ff2a13e93cf6b97566</Hash>
+    <Hash>089aea391f5fa55f8aaa3129b57a69a1</Hash>
 </Codenesium>*/

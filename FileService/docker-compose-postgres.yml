@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'fileservice-app'
+    image: 'fileservice'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=fileservice-db;Persist Security Info=False;User ID=postgres;Password=test;Database=fileservice;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - fileservice-network
+
+  postgres:
+    container_name: 'fileservice-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: fileservice
+    networks:
+      - fileservice-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    fileservice-network:
+       driver: bridge

@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISchemaBPersonRepository schemaBPersonRepository;
+		protected ISchemaBPersonRepository SchemaBPersonRepository { get; private set; }
 
 		public AbstractApiSchemaBPersonServerRequestModelValidator(ISchemaBPersonRepository schemaBPersonRepository)
 		{
-			this.schemaBPersonRepository = schemaBPersonRepository;
+			this.SchemaBPersonRepository = schemaBPersonRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSchemaBPersonServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>514fd0f0df1a4d5d44ad7a5246ae8433</Hash>
+    <Hash>833465671c18e0af892908f99d2d4083</Hash>
 </Codenesium>*/

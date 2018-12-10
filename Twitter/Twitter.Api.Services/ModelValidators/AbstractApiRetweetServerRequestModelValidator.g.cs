@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IRetweetRepository retweetRepository;
+		protected IRetweetRepository RetweetRepository { get; private set; }
 
 		public AbstractApiRetweetServerRequestModelValidator(IRetweetRepository retweetRepository)
 		{
-			this.retweetRepository = retweetRepository;
+			this.RetweetRepository = retweetRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiRetweetServerRequestModel model, int id)
@@ -44,16 +44,16 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.TweetTweetId).MustAsync(this.BeValidTweetByTweetTweetId).When(x => !x?.TweetTweetId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidUserByRetwitterUserId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByRetwitterUserId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.retweetRepository.UserByRetwitterUserId(id.GetValueOrDefault());
+			var record = await this.RetweetRepository.UserByRetwitterUserId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTweetByTweetTweetId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTweetByTweetTweetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.retweetRepository.TweetByTweetTweetId(id);
+			var record = await this.RetweetRepository.TweetByTweetTweetId(id);
 
 			return record != null;
 		}
@@ -61,5 +61,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e47ed2547c2bd3167fa88a67d7465b6</Hash>
+    <Hash>c7cd740836b3aa37e77499bc81392411</Hash>
 </Codenesium>*/

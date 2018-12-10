@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IMessengerRepository messengerRepository;
+		protected IMessengerRepository MessengerRepository { get; private set; }
 
 		public AbstractApiMessengerServerRequestModelValidator(IMessengerRepository messengerRepository)
 		{
-			this.messengerRepository = messengerRepository;
+			this.MessengerRepository = messengerRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiMessengerServerRequestModel model, int id)
@@ -53,23 +53,23 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidMessageByMessageId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidMessageByMessageId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.MessageByMessageId(id.GetValueOrDefault());
+			var record = await this.MessengerRepository.MessageByMessageId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUserByToUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByToUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.UserByToUserId(id);
+			var record = await this.MessengerRepository.UserByToUserId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUserByUserId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByUserId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.UserByUserId(id.GetValueOrDefault());
+			var record = await this.MessengerRepository.UserByUserId(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -77,5 +77,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79d3e9ae528f8d443830e7a833eab5b6</Hash>
+    <Hash>2901fe98528d34f3a34e1a9471e44779</Hash>
 </Codenesium>*/

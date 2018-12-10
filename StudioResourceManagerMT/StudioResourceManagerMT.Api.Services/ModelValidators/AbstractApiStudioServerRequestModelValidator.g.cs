@@ -13,11 +13,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IStudioRepository studioRepository;
+		protected IStudioRepository StudioRepository { get; private set; }
 
 		public AbstractApiStudioServerRequestModelValidator(IStudioRepository studioRepository)
 		{
-			this.studioRepository = studioRepository;
+			this.StudioRepository = studioRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiStudioServerRequestModel model, int id)
@@ -70,5 +70,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>034a2a46865f4dbb1419baa09eaae6e2</Hash>
+    <Hash>672132aad7a09e975de12f4c20de60d7</Hash>
 </Codenesium>*/

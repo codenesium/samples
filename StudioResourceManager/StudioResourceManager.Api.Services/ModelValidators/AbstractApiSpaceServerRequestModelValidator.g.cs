@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISpaceRepository spaceRepository;
+		protected ISpaceRepository SpaceRepository { get; private set; }
 
 		public AbstractApiSpaceServerRequestModelValidator(ISpaceRepository spaceRepository)
 		{
-			this.spaceRepository = spaceRepository;
+			this.SpaceRepository = spaceRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSpaceServerRequestModel model, int id)
@@ -41,5 +41,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ff233ebebc74b11d47367a159d0efd8</Hash>
+    <Hash>af4bfed8e670ef684824299c1e8d8a60</Hash>
 </Codenesium>*/

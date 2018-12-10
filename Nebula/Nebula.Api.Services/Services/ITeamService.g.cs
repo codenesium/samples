@@ -22,10 +22,10 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiTeamServerResponseModel> ByName(string name);
 
-		Task<List<ApiTeamServerResponseModel>> ByChainStatusId(int teamId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiChainServerResponseModel>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>33c8a3b50ad7922a0d89778eee49601b</Hash>
+    <Hash>10c33c43cffe2ca36959ad2243ad63f9</Hash>
 </Codenesium>*/

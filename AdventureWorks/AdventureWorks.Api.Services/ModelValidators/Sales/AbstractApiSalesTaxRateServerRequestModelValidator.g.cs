@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISalesTaxRateRepository salesTaxRateRepository;
+		protected ISalesTaxRateRepository SalesTaxRateRepository { get; private set; }
 
 		public AbstractApiSalesTaxRateServerRequestModelValidator(ISalesTaxRateRepository salesTaxRateRepository)
 		{
-			this.salesTaxRateRepository = salesTaxRateRepository;
+			this.SalesTaxRateRepository = salesTaxRateRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSalesTaxRateServerRequestModel model, int id)
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void StateProvinceIDRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceIDTaxType).When(x => !x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.StateProvinceID)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceIDTaxType).When(x => (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false) || (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.StateProvinceID)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void TaxRateRules()
@@ -52,12 +52,11 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TaxTypeRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceIDTaxType).When(x => !x?.TaxType.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.TaxType)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiSalesTaxRateServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiSalesTaxRateServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesTaxRate record = await this.salesTaxRateRepository.ByRowguid(model.Rowguid);
+			SalesTaxRate record = await this.SalesTaxRateRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.SalesTaxRateID == this.existingRecordId))
 			{
@@ -69,9 +68,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByStateProvinceIDTaxType(ApiSalesTaxRateServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByStateProvinceIDTaxType(ApiSalesTaxRateServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesTaxRate record = await this.salesTaxRateRepository.ByStateProvinceIDTaxType(model.StateProvinceID, model.TaxType);
+			SalesTaxRate record = await this.SalesTaxRateRepository.ByStateProvinceIDTaxType(model.StateProvinceID, model.TaxType);
 
 			if (record == null || (this.existingRecordId != default(int) && record.SalesTaxRateID == this.existingRecordId))
 			{
@@ -86,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>289eface643ffd6098c26156dbd96efb</Hash>
+    <Hash>06e5b3b78e636ab6f78e1d6a8ac37059</Hash>
 </Codenesium>*/

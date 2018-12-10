@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProductReviewRepository productReviewRepository;
+		protected IProductReviewRepository ProductReviewRepository { get; private set; }
 
 		public AbstractApiProductReviewServerRequestModelValidator(IProductReviewRepository productReviewRepository)
 		{
-			this.productReviewRepository = productReviewRepository;
+			this.ProductReviewRepository = productReviewRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProductReviewServerRequestModel model, int id)
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bba429ccc562d767870eefdd3a15f5da</Hash>
+    <Hash>9e73ee1c8ebb63dab96739e62f8853bb</Hash>
 </Codenesium>*/

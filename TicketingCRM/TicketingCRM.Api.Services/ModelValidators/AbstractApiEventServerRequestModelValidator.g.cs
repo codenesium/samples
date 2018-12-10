@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IEventRepository eventRepository;
+		protected IEventRepository EventRepository { get; private set; }
 
 		public AbstractApiEventServerRequestModelValidator(IEventRepository eventRepository)
 		{
-			this.eventRepository = eventRepository;
+			this.EventRepository = eventRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiEventServerRequestModel model, int id)
@@ -79,9 +79,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidCityByCityId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCityByCityId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.eventRepository.CityByCityId(id);
+			var record = await this.EventRepository.CityByCityId(id);
 
 			return record != null;
 		}
@@ -89,5 +89,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7bda68072c8c826fd7aa75e61912a301</Hash>
+    <Hash>7d1b4fb8185ac305f519220a204e0c43</Hash>
 </Codenesium>*/

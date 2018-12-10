@@ -6255,7 +6255,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "382"
-            }
+            },
+            "AppDoNotProcess": false
           },
           {
             "$id": "407",
@@ -6275,7 +6276,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "386"
-            }
+            },
+            "AppDoNotProcess": false
           },
           {
             "$id": "408",
@@ -6295,7 +6297,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "398"
-            }
+            },
+            "AppDoNotProcess": false
           },
           {
             "$id": "409",
@@ -6315,7 +6318,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "394"
-            }
+            },
+            "AppDoNotProcess": false
           },
           {
             "$id": "410",
@@ -6335,7 +6339,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "390"
-            }
+            },
+            "AppDoNotProcess": false
           }
         ],
         "ApplicationApiContainer": {

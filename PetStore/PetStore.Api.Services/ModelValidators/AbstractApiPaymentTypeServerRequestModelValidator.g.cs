@@ -13,11 +13,11 @@ namespace PetStoreNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPaymentTypeRepository paymentTypeRepository;
+		protected IPaymentTypeRepository PaymentTypeRepository { get; private set; }
 
 		public AbstractApiPaymentTypeServerRequestModelValidator(IPaymentTypeRepository paymentTypeRepository)
 		{
-			this.paymentTypeRepository = paymentTypeRepository;
+			this.PaymentTypeRepository = paymentTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPaymentTypeServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5ac248f673a323ea9bfd5fe905ee430</Hash>
+    <Hash>a56c59979a27fafb202e7a106dd9b894</Hash>
 </Codenesium>*/

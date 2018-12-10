@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPersonRepository personRepository;
+		protected IPersonRepository PersonRepository { get; private set; }
 
 		public AbstractApiPersonServerRequestModelValidator(IPersonRepository personRepository)
 		{
-			this.personRepository = personRepository;
+			this.PersonRepository = personRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPersonServerRequestModel model, int id)
@@ -71,7 +71,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiPersonServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiPersonServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SuffixRules()
@@ -84,9 +84,9 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.Title).Length(0, 8).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiPersonServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiPersonServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Person record = await this.personRepository.ByRowguid(model.Rowguid);
+			Person record = await this.PersonRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
 			{
@@ -101,5 +101,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5915cdd587d5bc63b7ff8782c50da74a</Hash>
+    <Hash>4e63d382ebe1cdf31baf8add993e8125</Hash>
 </Codenesium>*/

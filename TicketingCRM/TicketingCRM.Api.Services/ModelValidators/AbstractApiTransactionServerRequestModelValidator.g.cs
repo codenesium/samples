@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITransactionRepository transactionRepository;
+		protected ITransactionRepository TransactionRepository { get; private set; }
 
 		public AbstractApiTransactionServerRequestModelValidator(ITransactionRepository transactionRepository)
 		{
-			this.transactionRepository = transactionRepository;
+			this.TransactionRepository = transactionRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTransactionServerRequestModel model, int id)
@@ -41,9 +41,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatuByTransactionStatusId).When(x => !x?.TransactionStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidTransactionStatuByTransactionStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidTransactionStatuByTransactionStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.transactionRepository.TransactionStatuByTransactionStatusId(id);
+			var record = await this.TransactionRepository.TransactionStatuByTransactionStatusId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ae31331c2e146dde108321453e9af9a</Hash>
+    <Hash>31c92d0ed72730a1a1cb339d8cbdb5a9</Hash>
 </Codenesium>*/

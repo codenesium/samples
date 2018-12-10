@@ -98,6 +98,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			              select sales).Skip(offset).Take(limit).ToListAsync();
 		}
 
+		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
 		public async virtual Task<SaleTicket> CreateSaleTicket(SaleTicket item)
 		{
 			this.Context.Set<SaleTicket>().Add(item);
@@ -107,6 +108,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			return item;
 		}
 
+		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
 		public async virtual Task DeleteSaleTicket(SaleTicket item)
 		{
 			this.Context.Set<SaleTicket>().Remove(item);
@@ -137,5 +139,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>231b1f6584f4dbdc7f5becf269364857</Hash>
+    <Hash>941055cb13fd75243c40f97515f11eb0</Hash>
 </Codenesium>*/

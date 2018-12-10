@@ -100,6 +100,12 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
 		}
 
+		// Foreign key reference to table Chain via chainId.
+		public async virtual Task<Chain> ChainByChainId(int chainId)
+		{
+			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
+		}
+
 		// Foreign key reference to table LinkStatus via linkStatusId.
 		public async virtual Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId)
 		{
@@ -130,5 +136,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cfd1282c02ee542c9508387a0a222f20</Hash>
+    <Hash>f362bbe181c4cffd4b99fbe2ca8b1d0d</Hash>
 </Codenesium>*/

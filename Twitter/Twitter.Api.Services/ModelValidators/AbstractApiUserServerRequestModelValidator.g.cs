@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IUserRepository userRepository;
+		protected IUserRepository UserRepository { get; private set; }
 
 		public AbstractApiUserServerRequestModelValidator(IUserRepository userRepository)
 		{
-			this.userRepository = userRepository;
+			this.UserRepository = userRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiUserServerRequestModel model, int id)
@@ -95,9 +95,9 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 32).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidLocationByLocationLocationId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidLocationByLocationLocationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.userRepository.LocationByLocationLocationId(id);
+			var record = await this.UserRepository.LocationByLocationLocationId(id);
 
 			return record != null;
 		}
@@ -105,5 +105,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>572aac0b684ed18ac87722cbff3139d7</Hash>
+    <Hash>e84d87f567ce6323d65f03166c05013a</Hash>
 </Codenesium>*/

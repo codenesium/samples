@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'petstore-app'
+    image: 'petstore'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=petstore-db;Persist Security Info=False;User ID=postgres;Password=test;Database=petstore;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - petstore-network
+
+  postgres:
+    container_name: 'petstore-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: petstore
+    networks:
+      - petstore-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    petstore-network:
+       driver: bridge

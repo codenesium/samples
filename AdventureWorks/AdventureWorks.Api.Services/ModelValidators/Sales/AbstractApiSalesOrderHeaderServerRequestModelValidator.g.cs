@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ISalesOrderHeaderRepository salesOrderHeaderRepository;
+		protected ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; private set; }
 
 		public AbstractApiSalesOrderHeaderServerRequestModelValidator(ISalesOrderHeaderRepository salesOrderHeaderRepository)
 		{
-			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
+			this.SalesOrderHeaderRepository = salesOrderHeaderRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiSalesOrderHeaderServerRequestModel model, int id)
@@ -91,13 +91,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesOrderNumberRules()
 		{
 			this.RuleFor(x => x.SalesOrderNumber).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueBySalesOrderNumber).When(x => !x?.SalesOrderNumber.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.SalesOrderNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueBySalesOrderNumber).When(x => (!x?.SalesOrderNumber.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderServerRequestModel.SalesOrderNumber)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.SalesOrderNumber).Length(0, 25).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -139,44 +139,44 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidCreditCardByCreditCardID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCreditCardByCreditCardID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderHeaderRepository.CreditCardByCreditCardID(id.GetValueOrDefault());
+			var record = await this.SalesOrderHeaderRepository.CreditCardByCreditCardID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidCurrencyRateByCurrencyRateID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCurrencyRateByCurrencyRateID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderHeaderRepository.CurrencyRateByCurrencyRateID(id.GetValueOrDefault());
+			var record = await this.SalesOrderHeaderRepository.CurrencyRateByCurrencyRateID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidCustomerByCustomerID(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCustomerByCustomerID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderHeaderRepository.CustomerByCustomerID(id);
+			var record = await this.SalesOrderHeaderRepository.CustomerByCustomerID(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSalesPersonBySalesPersonID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidSalesPersonBySalesPersonID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderHeaderRepository.SalesPersonBySalesPersonID(id.GetValueOrDefault());
+			var record = await this.SalesOrderHeaderRepository.SalesPersonBySalesPersonID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSalesTerritoryByTerritoryID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidSalesTerritoryByTerritoryID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderHeaderRepository.SalesTerritoryByTerritoryID(id.GetValueOrDefault());
+			var record = await this.SalesOrderHeaderRepository.SalesTerritoryByTerritoryID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiSalesOrderHeaderServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiSalesOrderHeaderServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesOrderHeader record = await this.salesOrderHeaderRepository.ByRowguid(model.Rowguid);
+			SalesOrderHeader record = await this.SalesOrderHeaderRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.SalesOrderID == this.existingRecordId))
 			{
@@ -188,9 +188,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueBySalesOrderNumber(ApiSalesOrderHeaderServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueBySalesOrderNumber(ApiSalesOrderHeaderServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			SalesOrderHeader record = await this.salesOrderHeaderRepository.BySalesOrderNumber(model.SalesOrderNumber);
+			SalesOrderHeader record = await this.SalesOrderHeaderRepository.BySalesOrderNumber(model.SalesOrderNumber);
 
 			if (record == null || (this.existingRecordId != default(int) && record.SalesOrderID == this.existingRecordId))
 			{
@@ -205,5 +205,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98bf56c49d8664bb776999abf305a1f8</Hash>
+    <Hash>4d4824f526ae62be4b09f547c2ef71a3</Hash>
 </Codenesium>*/

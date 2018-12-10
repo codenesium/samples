@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPostRepository postRepository;
+		protected IPostRepository PostRepository { get; private set; }
 
 		public AbstractApiPostServerRequestModelValidator(IPostRepository postRepository)
 		{
-			this.postRepository = postRepository;
+			this.PostRepository = postRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPostServerRequestModel model, int id)
@@ -109,5 +109,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac8fe36a5940dc87c7a1f98fa096d08b</Hash>
+    <Hash>2e820f42dd1a0304107a6650cfd8173e</Hash>
 </Codenesium>*/

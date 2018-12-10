@@ -17,6 +17,10 @@ namespace NebulaNS.Api.Services
 
 		protected IDALChainStatusMapper DalChainStatusMapper { get; private set; }
 
+		protected IBOLChainMapper BolChainMapper { get; private set; }
+
+		protected IDALChainMapper DalChainMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractChainStatusService(
@@ -24,13 +28,17 @@ namespace NebulaNS.Api.Services
 			IChainStatusRepository chainStatusRepository,
 			IApiChainStatusServerRequestModelValidator chainStatusModelValidator,
 			IBOLChainStatusMapper bolChainStatusMapper,
-			IDALChainStatusMapper dalChainStatusMapper)
+			IDALChainStatusMapper dalChainStatusMapper,
+			IBOLChainMapper bolChainMapper,
+			IDALChainMapper dalChainMapper)
 			: base()
 		{
 			this.ChainStatusRepository = chainStatusRepository;
 			this.ChainStatusModelValidator = chainStatusModelValidator;
 			this.BolChainStatusMapper = bolChainStatusMapper;
 			this.DalChainStatusMapper = dalChainStatusMapper;
+			this.BolChainMapper = bolChainMapper;
+			this.DalChainMapper = dalChainMapper;
 			this.logger = logger;
 		}
 
@@ -119,15 +127,15 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiChainStatusServerResponseModel>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiChainServerResponseModel>> ChainsByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ChainStatus> records = await this.ChainStatusRepository.ByTeamId(teamId, limit, offset);
+			List<Chain> records = await this.ChainStatusRepository.ChainsByChainStatusId(chainStatusId, limit, offset);
 
-			return this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(records));
+			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>64a5ec710a72d1016c109252a9d70143</Hash>
+    <Hash>b78a8db3911828724720b846098ec85f</Hash>
 </Codenesium>*/

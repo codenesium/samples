@@ -94,31 +94,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<Teacher>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
 
-		// Foreign key reference pass-though. Pass-thru table Student. Foreign Table User.
-		public async virtual Task<List<User>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.Students
-			              join users in this.Context.Users on
-			              refTable.UserId equals users.Id
-			              where refTable.FamilyId == familyId
-			              select users).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<Student> CreateStudent(Student item)
-		{
-			this.Context.Set<Student>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteStudent(Student item)
-		{
-			this.Context.Set<Student>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
 		protected async Task<List<User>> Where(
 			Expression<Func<User, bool>> predicate,
 			int limit = int.MaxValue,
@@ -143,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>01bf91addd648cf35f1295983f33ad6c</Hash>
+    <Hash>29d85a2f48b771ffa02025578837a55f</Hash>
 </Codenesium>*/

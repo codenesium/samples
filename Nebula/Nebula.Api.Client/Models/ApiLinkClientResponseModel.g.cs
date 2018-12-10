@@ -37,6 +37,7 @@ namespace NebulaNS.Api.Client
 			this.TimeoutInSecond = timeoutInSecond;
 
 			this.AssignedMachineIdEntity = nameof(ApiResponse.Machines);
+			this.ChainIdEntity = nameof(ApiResponse.Chains);
 			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatuses);
 		}
 
@@ -91,5 +92,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fb9fb3a3c227fa0a009be14aafa05a11</Hash>
+    <Hash>bd0d610541272dd35aac141a55a995e9</Hash>
 </Codenesium>*/

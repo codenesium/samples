@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private short existingRecordId;
 
-		private IDepartmentRepository departmentRepository;
+		protected IDepartmentRepository DepartmentRepository { get; private set; }
 
 		public AbstractApiDepartmentServerRequestModelValidator(IDepartmentRepository departmentRepository)
 		{
-			this.departmentRepository = departmentRepository;
+			this.DepartmentRepository = departmentRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiDepartmentServerRequestModel model, short id)
@@ -39,13 +39,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiDepartmentServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiDepartmentServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Department record = await this.departmentRepository.ByName(model.Name);
+			Department record = await this.DepartmentRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(short) && record.DepartmentID == this.existingRecordId))
 			{
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c032c0e43e5c5b7ea8b7fe81f6e7bf4</Hash>
+    <Hash>ea61dda0301ba590361849aae2184e10</Hash>
 </Codenesium>*/

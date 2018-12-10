@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProductModelRepository productModelRepository;
+		protected IProductModelRepository ProductModelRepository { get; private set; }
 
 		public AbstractApiProductModelServerRequestModelValidator(IProductModelRepository productModelRepository)
 		{
-			this.productModelRepository = productModelRepository;
+			this.ProductModelRepository = productModelRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProductModelServerRequestModel model, int id)
@@ -41,18 +41,18 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiProductModelServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiProductModelServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ProductModel record = await this.productModelRepository.ByName(model.Name);
+			ProductModel record = await this.ProductModelRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ProductModelID == this.existingRecordId))
 			{
@@ -64,9 +64,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiProductModelServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiProductModelServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ProductModel record = await this.productModelRepository.ByRowguid(model.Rowguid);
+			ProductModel record = await this.ProductModelRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ProductModelID == this.existingRecordId))
 			{
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e26dadfc67fafbedee1908d4d59cb07c</Hash>
+    <Hash>f7c0ee67cc587d80cf8895f59df5e51c</Hash>
 </Codenesium>*/

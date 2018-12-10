@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<ProductReviewRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
-			ProductReview entity = new ProductReview();
-			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
 			ProductReview entity = new ProductReview();
+			entity.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
 			var entity = new ProductReview();
+			entity.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<ProductReview>().FirstOrDefaultAsync();
+			var records = await context.Set<ProductReview>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
+			entity.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<ProductReview>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
+			entity.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new ProductReview());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<ProductReview>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<ProductReview>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
 			var repository = new ProductReviewRepository(loggerMoc.Object, context);
 			ProductReview entity = new ProductReview();
+			entity.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ProductReview>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.ProductReviewID);
 
-			ProductReview modifiedRecord = await context.Set<ProductReview>().FirstOrDefaultAsync();
+			var records = await context.Set<ProductReview>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b3f379b0b975d71e549ee64fce358951</Hash>
+    <Hash>57511a4d3f967debe431e01f10464248</Hash>
 </Codenesium>*/

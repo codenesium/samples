@@ -487,7 +487,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -515,5 +515,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5936db3c29b1043825176497b8af44bd</Hash>
+    <Hash>2f3bc2fe9e255bdfe0a4ff2a30d33181</Hash>
 </Codenesium>*/

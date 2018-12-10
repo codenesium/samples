@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<EventStatuRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 
-			EventStatu entity = new EventStatu();
-			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 
 			EventStatu entity = new EventStatu();
+			entity.SetProperties(2, "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 
 			var entity = new EventStatu();
+			entity.SetProperties(2, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<EventStatu>().FirstOrDefaultAsync();
+			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
+			entity.SetProperties(2, "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<EventStatu>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
+			entity.SetProperties(2, "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new EventStatu());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<EventStatu>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 			ApplicationDbContext context = EventStatuRepositoryMoc.GetContext();
 			var repository = new EventStatuRepository(loggerMoc.Object, context);
 			EventStatu entity = new EventStatu();
+			entity.SetProperties(2, "B");
 			context.Set<EventStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			EventStatu modifiedRecord = await context.Set<EventStatu>().FirstOrDefaultAsync();
+			var records = await context.Set<EventStatu>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e58e480e11f73b2cf3c4972171ac5b62</Hash>
+    <Hash>a2e9932bfa8ffd491db1bb7cc8ce2643</Hash>
 </Codenesium>*/

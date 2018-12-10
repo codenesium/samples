@@ -23,6 +23,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -82,17 +83,29 @@ namespace NebulaNS.Api.Web
 
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
-            
-			// enable to use Posgres options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
             return options.Options;
         }
 
-        public virtual void MigrateDatabase(ApplicationDbContext context)
+        public virtual void MigrateDatabase(ApplicationDbContext context, ILogger<Startup> logger)
         {
-            if (this.Configuration.GetValue<bool>("MigrateDatabase"))
-            {
-                context.Database.Migrate();
-            }
+			Policy policy = Policy
+			  .Handle<Exception>()
+			  .WaitAndRetry(
+				   10,
+				   retryAttempt => TimeSpan.FromSeconds(3),
+				   (exception, timeSpan, retryCount, pollyContext) =>
+				   {
+					   logger.LogInformation($"Retrying database connection RetryCount={retryCount}. Error={exception.Message}.");
+				   });
+
+			policy.Execute(() =>
+		    {
+				if (this.Configuration.GetValue<bool>("MigrateDatabase"))
+				{
+					context.Database.EnsureCreated();
+					context.Database.Migrate();
+				}
+			});
         }
 
         public virtual void SetupLogging(IServiceCollection services)
@@ -338,7 +351,7 @@ namespace NebulaNS.Api.Web
                 ExceptionHandler = new ExceptionMiddleWare(env, loggerFactory).Invoke
             });
 
-            this.MigrateDatabase(context);
+            this.MigrateDatabase(context, loggerFactory.CreateLogger<Startup>());
 
             this.EnableSecurity(app);
 

@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IShipMethodRepository shipMethodRepository;
+		protected IShipMethodRepository ShipMethodRepository { get; private set; }
 
 		public AbstractApiShipMethodServerRequestModelValidator(IShipMethodRepository shipMethodRepository)
 		{
-			this.shipMethodRepository = shipMethodRepository;
+			this.ShipMethodRepository = shipMethodRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiShipMethodServerRequestModel model, int id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void ShipBaseRules()
@@ -50,9 +50,9 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeUniqueByName(ApiShipMethodServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiShipMethodServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ShipMethod record = await this.shipMethodRepository.ByName(model.Name);
+			ShipMethod record = await this.ShipMethodRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ShipMethodID == this.existingRecordId))
 			{
@@ -64,9 +64,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiShipMethodServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiShipMethodServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			ShipMethod record = await this.shipMethodRepository.ByRowguid(model.Rowguid);
+			ShipMethod record = await this.ShipMethodRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.ShipMethodID == this.existingRecordId))
 			{
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f38cab975484a2f5ba48195ea9ff09d</Hash>
+    <Hash>b620b3ee6ab4728d2c89dc7ab2084ad1</Hash>
 </Codenesium>*/

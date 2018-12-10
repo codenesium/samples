@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITagRepository tagRepository;
+		protected ITagRepository TagRepository { get; private set; }
 
 		public AbstractApiTagServerRequestModelValidator(ITagRepository tagRepository)
 		{
-			this.tagRepository = tagRepository;
+			this.TagRepository = tagRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTagServerRequestModel model, int id)
@@ -47,5 +47,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86d1b4153044069dc71cfeec5b3bbff7</Hash>
+    <Hash>2f5735c877cf5907f85b24d201319b1c</Hash>
 </Codenesium>*/

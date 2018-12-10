@@ -5249,7 +5249,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "350"
-            }
+            },
+            "AppDoNotProcess": false
           },
           {
             "$id": "355",
@@ -5269,7 +5270,8 @@
             },
             "SecondForeignKeyInReferenceTable": {
               "$ref": "340"
-            }
+            },
+            "AppDoNotProcess": false
           }
         ],
         "ApplicationApiContainer": {

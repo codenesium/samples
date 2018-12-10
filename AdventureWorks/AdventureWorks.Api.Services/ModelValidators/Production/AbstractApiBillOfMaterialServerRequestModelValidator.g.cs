@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IBillOfMaterialRepository billOfMaterialRepository;
+		protected IBillOfMaterialRepository BillOfMaterialRepository { get; private set; }
 
 		public AbstractApiBillOfMaterialServerRequestModelValidator(IBillOfMaterialRepository billOfMaterialRepository)
 		{
-			this.billOfMaterialRepository = billOfMaterialRepository;
+			this.BillOfMaterialRepository = billOfMaterialRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiBillOfMaterialServerRequestModel model, int id)
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>415ee56a1e395a4a9c747d6e7a7996f3</Hash>
+    <Hash>505af56875de96be8263b9bac9d25cbc</Hash>
 </Codenesium>*/

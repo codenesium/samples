@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TestsNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<TestAllFieldTypesNullableRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
-			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
-			context.Set<TestAllFieldTypesNullable>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			entity.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", 2);
 			context.Set<TestAllFieldTypesNullable>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 
 			var entity = new TestAllFieldTypesNullable();
+			entity.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			var records = await context.Set<TestAllFieldTypesNullable>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			entity.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", 2);
 			context.Set<TestAllFieldTypesNullable>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TestsNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<TestAllFieldTypesNullable>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			entity.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", 2);
 			context.Set<TestAllFieldTypesNullable>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new TestAllFieldTypesNullable());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<TestAllFieldTypesNullable>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TestAllFieldTypesNullableRepositoryMoc.GetContext();
 			var repository = new TestAllFieldTypesNullableRepository(loggerMoc.Object, context);
 			TestAllFieldTypesNullable entity = new TestAllFieldTypesNullable();
+			entity.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B", 2);
 			context.Set<TestAllFieldTypesNullable>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			TestAllFieldTypesNullable modifiedRecord = await context.Set<TestAllFieldTypesNullable>().FirstOrDefaultAsync();
+			var records = await context.Set<TestAllFieldTypesNullable>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c5f3a142191b8a19b4f0e8937b34d82</Hash>
+    <Hash>f6c929c50d75cdc7a2e159a84d8e5a43</Hash>
 </Codenesium>*/

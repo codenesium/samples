@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IStoreRepository storeRepository;
+		protected IStoreRepository StoreRepository { get; private set; }
 
 		public AbstractApiStoreServerRequestModelValidator(IStoreRepository storeRepository)
 		{
-			this.storeRepository = storeRepository;
+			this.StoreRepository = storeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiStoreServerRequestModel model, int id)
@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => !x?.Rowguid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiStoreServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByRowguid).When(x => (!x?.Rowguid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiStoreServerRequestModel.Rowguid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void SalesPersonIDRules()
@@ -50,16 +50,16 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.SalesPersonID).MustAsync(this.BeValidSalesPersonBySalesPersonID).When(x => !x?.SalesPersonID.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidSalesPersonBySalesPersonID(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidSalesPersonBySalesPersonID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.storeRepository.SalesPersonBySalesPersonID(id.GetValueOrDefault());
+			var record = await this.StoreRepository.SalesPersonBySalesPersonID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeUniqueByRowguid(ApiStoreServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByRowguid(ApiStoreServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Store record = await this.storeRepository.ByRowguid(model.Rowguid);
+			Store record = await this.StoreRepository.ByRowguid(model.Rowguid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
 			{
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a765feebf8d66d1a3fb6f7dfbf86b5a2</Hash>
+    <Hash>bfa4db0e76ccda46b5dff89fceac58fa</Hash>
 </Codenesium>*/

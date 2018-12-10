@@ -13,11 +13,11 @@ namespace TestsNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITableRepository tableRepository;
+		protected ITableRepository TableRepository { get; private set; }
 
 		public AbstractApiTableServerRequestModelValidator(ITableRepository tableRepository)
 		{
-			this.tableRepository = tableRepository;
+			this.TableRepository = tableRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTableServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0cd978a39e2b93f871735b18b601698e</Hash>
+    <Hash>2728b150807778f2a0929e02072f88f0</Hash>
 </Codenesium>*/

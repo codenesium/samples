@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITeacherRepository teacherRepository;
+		protected ITeacherRepository TeacherRepository { get; private set; }
 
 		public AbstractApiTeacherServerRequestModelValidator(ITeacherRepository teacherRepository)
 		{
-			this.teacherRepository = teacherRepository;
+			this.TeacherRepository = teacherRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTeacherServerRequestModel model, int id)
@@ -58,9 +58,9 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.teacherRepository.UserByUserId(id);
+			var record = await this.TeacherRepository.UserByUserId(id);
 
 			return record != null;
 		}
@@ -68,5 +68,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93c6c9be312f180a49ba2aefae0c3ac4</Hash>
+    <Hash>ddefb7ccc3da11b9d40233394504b054</Hash>
 </Codenesium>*/

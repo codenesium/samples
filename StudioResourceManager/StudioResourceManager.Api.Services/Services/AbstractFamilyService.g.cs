@@ -119,16 +119,9 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiFamilyServerResponseModel>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Family> records = await this.FamilyRepository.ByUserId(userId, limit, offset);
-
-			return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>809a46537f5ca73e452d4a5043466b7b</Hash>
+    <Hash>8ce9881d23c8d49c17f9dac211bfa31a</Hash>
 </Codenesium>*/

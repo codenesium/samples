@@ -965,7 +965,7 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiVenueClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -993,5 +993,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7c4cff88162eecb88df953ca8e14ea65</Hash>
+    <Hash>47c38dae12f98b43a178f14b5b85ac5a</Hash>
 </Codenesium>*/

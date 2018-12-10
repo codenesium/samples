@@ -13,11 +13,11 @@ namespace FileServiceNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IFileRepository fileRepository;
+		protected IFileRepository FileRepository { get; private set; }
 
 		public AbstractApiFileServerRequestModelValidator(IFileRepository fileRepository)
 		{
-			this.fileRepository = fileRepository;
+			this.FileRepository = fileRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiFileServerRequestModel model, int id)
@@ -81,16 +81,16 @@ namespace FileServiceNS.Api.Services
 			this.RuleFor(x => x.PublicKey).Length(0, 64).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidBucketByBucketId(int? id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidBucketByBucketId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.fileRepository.BucketByBucketId(id.GetValueOrDefault());
+			var record = await this.FileRepository.BucketByBucketId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidFileTypeByFileTypeId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidFileTypeByFileTypeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.fileRepository.FileTypeByFileTypeId(id);
+			var record = await this.FileRepository.FileTypeByFileTypeId(id);
 
 			return record != null;
 		}
@@ -98,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ced199dbe83cedf61f6e00abfc4a73f</Hash>
+    <Hash>20fe309bcfda137af1e28229bac1e5ee</Hash>
 </Codenesium>*/

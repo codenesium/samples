@@ -13,11 +13,11 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IAdminRepository adminRepository;
+		protected IAdminRepository AdminRepository { get; private set; }
 
 		public AbstractApiAdminServerRequestModelValidator(IAdminRepository adminRepository)
 		{
-			this.adminRepository = adminRepository;
+			this.AdminRepository = adminRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiAdminServerRequestModel model, int id)
@@ -58,9 +58,9 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => !x?.UserId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.adminRepository.UserByUserId(id);
+			var record = await this.AdminRepository.UserByUserId(id);
 
 			return record != null;
 		}
@@ -68,5 +68,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1870a258498692e168131e972f285411</Hash>
+    <Hash>266f867aa7c05eb495b1bbdd061932cd</Hash>
 </Codenesium>*/

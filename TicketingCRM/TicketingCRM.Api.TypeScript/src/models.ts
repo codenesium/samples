@@ -1,448 +1,396 @@
-export class ApiAdminServerRequestModel {
-				email:string;
-firstName:string;
-id:number;
-lastName:string;
-password:string;
-phone:string;
-username:string;
+export class ApiAdminClientRequestModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	password : string;
+	phone : string;
+	username : string;
 
-	
-				constructor() {
-					this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.password = '';
-this.phone = '';
-this.username = '';
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.password = '';
+		this.phone = '';
+		this.username = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiAdminClientResponseModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	password : string;
+	phone : string;
+	username : string;
 
-			export class ApiAdminServerResponseModel {
-				email:string;
-firstName:string;
-id:number;
-lastName:string;
-password:string;
-phone:string;
-username:string;
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.password = '';
+		this.phone = '';
+		this.username = '';
+	}
+}
+export class ApiCityClientRequestModel {
+	id : number;
+	name : string;
+	provinceId : number;
+	provinceIdEntity : string;
 
-	
-				constructor() {
-					this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.password = '';
-this.phone = '';
-this.username = '';
+	constructor() {
+		this.id = 0;
+		this.name = '';
+		this.provinceId = 0;
+		this.provinceIdEntity = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiCityServerRequestModel {
-				id:number;
-name:string;
-provinceId:number;
-provinceIdEntity:number;
+export class ApiCityClientResponseModel {
+	id : number;
+	name : string;
+	provinceId : number;
+	provinceIdEntity : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-this.provinceId = 0;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+		this.provinceId = 0;
+		this.provinceIdEntity = '';
+	}
+}
+export class ApiCountryClientRequestModel {
+	id : number;
+	name : string;
 
-		
-				}
-			}
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-			export class ApiCityServerResponseModel {
-				id:number;
-name:string;
-provinceId:number;
-provinceIdEntity:number;
+export class ApiCountryClientResponseModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-this.provinceId = 0;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiCustomerClientRequestModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
 
-		
-				}
-			}
-			export class ApiCountryServerRequestModel {
-				id:number;
-name:string;
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+	}
+}
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+export class ApiCustomerClientResponseModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	phone : string;
 
-		
-				}
-			}
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.phone = '';
+	}
+}
+export class ApiEventClientRequestModel {
+	address1 : string;
+	address2 : string;
+	cityId : number;
+	cityIdEntity : string;
+	date : string;
+	description : string;
+	endDate : string;
+	facebook : string;
+	id : number;
+	name : string;
+	startDate : string;
+	website : string;
 
-			export class ApiCountryServerResponseModel {
-				id:number;
-name:string;
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.cityId = 0;
+		this.cityIdEntity = '';
+		this.date = '';
+		this.description = '';
+		this.endDate = '';
+		this.facebook = '';
+		this.id = 0;
+		this.name = '';
+		this.startDate = '';
+		this.website = '';
+	}
+}
 
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+export class ApiEventClientResponseModel {
+	address1 : string;
+	address2 : string;
+	cityId : number;
+	cityIdEntity : string;
+	date : string;
+	description : string;
+	endDate : string;
+	facebook : string;
+	id : number;
+	name : string;
+	startDate : string;
+	website : string;
 
-		
-				}
-			}
-			export class ApiCustomerServerRequestModel {
-				email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.cityId = 0;
+		this.cityIdEntity = '';
+		this.date = '';
+		this.description = '';
+		this.endDate = '';
+		this.facebook = '';
+		this.id = 0;
+		this.name = '';
+		this.startDate = '';
+		this.website = '';
+	}
+}
+export class ApiProvinceClientRequestModel {
+	countryId : number;
+	countryIdEntity : string;
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
+	constructor() {
+		this.countryId = 0;
+		this.countryIdEntity = '';
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiProvinceClientResponseModel {
+	countryId : number;
+	countryIdEntity : string;
+	id : number;
+	name : string;
 
-			export class ApiCustomerServerResponseModel {
-				email:string;
-firstName:string;
-id:number;
-lastName:string;
-phone:string;
+	constructor() {
+		this.countryId = 0;
+		this.countryIdEntity = '';
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiSaleClientRequestModel {
+	id : number;
+	ipAddress : string;
+	note : string;
+	saleDate : string;
+	transactionId : number;
+	transactionIdEntity : string;
 
-	
-				constructor() {
-					this.email = '';
-this.firstName = '';
-this.id = 0;
-this.lastName = '';
-this.phone = '';
+	constructor() {
+		this.id = 0;
+		this.ipAddress = '';
+		this.note = '';
+		this.saleDate = '';
+		this.transactionId = 0;
+		this.transactionIdEntity = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiEventServerRequestModel {
-				address1:string;
-address2:string;
-cityId:number;
-cityIdEntity:number;
-date:string;
-description:string;
-endDate:string;
-facebook:string;
-id:number;
-name:string;
-startDate:string;
-website:string;
+export class ApiSaleClientResponseModel {
+	id : number;
+	ipAddress : string;
+	note : string;
+	saleDate : string;
+	transactionId : number;
+	transactionIdEntity : string;
 
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.cityId = 0;
-this.date = '';
-this.description = '';
-this.endDate = '';
-this.facebook = '';
-this.id = 0;
-this.name = '';
-this.startDate = '';
-this.website = '';
+	constructor() {
+		this.id = 0;
+		this.ipAddress = '';
+		this.note = '';
+		this.saleDate = '';
+		this.transactionId = 0;
+		this.transactionIdEntity = '';
+	}
+}
+export class ApiTicketClientRequestModel {
+	id : number;
+	publicId : string;
+	ticketStatusId : number;
+	ticketStatusIdEntity : string;
 
-		
-				}
-			}
+	constructor() {
+		this.id = 0;
+		this.publicId = '';
+		this.ticketStatusId = 0;
+		this.ticketStatusIdEntity = '';
+	}
+}
 
-			export class ApiEventServerResponseModel {
-				address1:string;
-address2:string;
-cityId:number;
-cityIdEntity:number;
-date:string;
-description:string;
-endDate:string;
-facebook:string;
-id:number;
-name:string;
-startDate:string;
-website:string;
+export class ApiTicketClientResponseModel {
+	id : number;
+	publicId : string;
+	ticketStatusId : number;
+	ticketStatusIdEntity : string;
 
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.cityId = 0;
-this.date = '';
-this.description = '';
-this.endDate = '';
-this.facebook = '';
-this.id = 0;
-this.name = '';
-this.startDate = '';
-this.website = '';
+	constructor() {
+		this.id = 0;
+		this.publicId = '';
+		this.ticketStatusId = 0;
+		this.ticketStatusIdEntity = '';
+	}
+}
+export class ApiTicketStatuClientRequestModel {
+	id : number;
+	name : string;
 
-		
-				}
-			}
-			export class ApiProvinceServerRequestModel {
-				countryId:number;
-countryIdEntity:number;
-id:number;
-name:string;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-	
-				constructor() {
-					this.countryId = 0;
-this.id = 0;
-this.name = '';
+export class ApiTicketStatuClientResponseModel {
+	id : number;
+	name : string;
 
-		
-				}
-			}
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiTransactionClientRequestModel {
+	amount : number;
+	gatewayConfirmationNumber : string;
+	id : number;
+	transactionStatusId : number;
+	transactionStatusIdEntity : string;
 
-			export class ApiProvinceServerResponseModel {
-				countryId:number;
-countryIdEntity:number;
-id:number;
-name:string;
+	constructor() {
+		this.amount = 0;
+		this.gatewayConfirmationNumber = '';
+		this.id = 0;
+		this.transactionStatusId = 0;
+		this.transactionStatusIdEntity = '';
+	}
+}
 
-	
-				constructor() {
-					this.countryId = 0;
-this.id = 0;
-this.name = '';
+export class ApiTransactionClientResponseModel {
+	amount : number;
+	gatewayConfirmationNumber : string;
+	id : number;
+	transactionStatusId : number;
+	transactionStatusIdEntity : string;
 
-		
-				}
-			}
-			export class ApiSaleServerRequestModel {
-				id:number;
-ipAddress:string;
-note:string;
-saleDate:string;
-transactionId:number;
-transactionIdEntity:number;
+	constructor() {
+		this.amount = 0;
+		this.gatewayConfirmationNumber = '';
+		this.id = 0;
+		this.transactionStatusId = 0;
+		this.transactionStatusIdEntity = '';
+	}
+}
+export class ApiTransactionStatuClientRequestModel {
+	id : number;
+	name : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.ipAddress = '';
-this.note = '';
-this.saleDate = '';
-this.transactionId = 0;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
 
-		
-				}
-			}
+export class ApiTransactionStatuClientResponseModel {
+	id : number;
+	name : string;
 
-			export class ApiSaleServerResponseModel {
-				id:number;
-ipAddress:string;
-note:string;
-saleDate:string;
-transactionId:number;
-transactionIdEntity:number;
+	constructor() {
+		this.id = 0;
+		this.name = '';
+	}
+}
+export class ApiVenueClientRequestModel {
+	address1 : string;
+	address2 : string;
+	adminId : number;
+	adminIdEntity : string;
+	email : string;
+	facebook : string;
+	id : number;
+	name : string;
+	phone : string;
+	provinceId : number;
+	provinceIdEntity : string;
+	website : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.ipAddress = '';
-this.note = '';
-this.saleDate = '';
-this.transactionId = 0;
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.adminId = 0;
+		this.adminIdEntity = '';
+		this.email = '';
+		this.facebook = '';
+		this.id = 0;
+		this.name = '';
+		this.phone = '';
+		this.provinceId = 0;
+		this.provinceIdEntity = '';
+		this.website = '';
+	}
+}
 
-		
-				}
-			}
-			export class ApiTicketServerRequestModel {
-				id:number;
-publicId:string;
-ticketStatusId:number;
-ticketStatusIdEntity:number;
+export class ApiVenueClientResponseModel {
+	address1 : string;
+	address2 : string;
+	adminId : number;
+	adminIdEntity : string;
+	email : string;
+	facebook : string;
+	id : number;
+	name : string;
+	phone : string;
+	provinceId : number;
+	provinceIdEntity : string;
+	website : string;
 
-	
-				constructor() {
-					this.id = 0;
-this.publicId = '';
-this.ticketStatusId = 0;
+	constructor() {
+		this.address1 = '';
+		this.address2 = '';
+		this.adminId = 0;
+		this.adminIdEntity = '';
+		this.email = '';
+		this.facebook = '';
+		this.id = 0;
+		this.name = '';
+		this.phone = '';
+		this.provinceId = 0;
+		this.provinceIdEntity = '';
+		this.website = '';
+	}
+}
 
-		
-				}
-			}
-
-			export class ApiTicketServerResponseModel {
-				id:number;
-publicId:string;
-ticketStatusId:number;
-ticketStatusIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.publicId = '';
-this.ticketStatusId = 0;
-
-		
-				}
-			}
-			export class ApiTicketStatuServerRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-
-			export class ApiTicketStatuServerResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-			export class ApiTransactionServerRequestModel {
-				amount:number;
-gatewayConfirmationNumber:string;
-id:number;
-transactionStatusId:number;
-transactionStatusIdEntity:number;
-
-	
-				constructor() {
-					this.amount = 0;
-this.gatewayConfirmationNumber = '';
-this.id = 0;
-this.transactionStatusId = 0;
-
-		
-				}
-			}
-
-			export class ApiTransactionServerResponseModel {
-				amount:number;
-gatewayConfirmationNumber:string;
-id:number;
-transactionStatusId:number;
-transactionStatusIdEntity:number;
-
-	
-				constructor() {
-					this.amount = 0;
-this.gatewayConfirmationNumber = '';
-this.id = 0;
-this.transactionStatusId = 0;
-
-		
-				}
-			}
-			export class ApiTransactionStatuServerRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-
-			export class ApiTransactionStatuServerResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-			export class ApiVenueServerRequestModel {
-				address1:string;
-address2:string;
-adminId:number;
-adminIdEntity:number;
-email:string;
-facebook:string;
-id:number;
-name:string;
-phone:string;
-provinceId:number;
-provinceIdEntity:number;
-website:string;
-
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.adminId = 0;
-this.email = '';
-this.facebook = '';
-this.id = 0;
-this.name = '';
-this.phone = '';
-this.provinceId = 0;
-this.website = '';
-
-		
-				}
-			}
-
-			export class ApiVenueServerResponseModel {
-				address1:string;
-address2:string;
-adminId:number;
-adminIdEntity:number;
-email:string;
-facebook:string;
-id:number;
-name:string;
-phone:string;
-provinceId:number;
-provinceIdEntity:number;
-website:string;
-
-	
-				constructor() {
-					this.address1 = '';
-this.address2 = '';
-this.adminId = 0;
-this.email = '';
-this.facebook = '';
-this.id = 0;
-this.name = '';
-this.phone = '';
-this.provinceId = 0;
-this.website = '';
-
-		
-				}
-			}
+/*<Codenesium>
+    <Hash>16fed79c0b0a05574ed235dba64e8410</Hash>
+</Codenesium>*/

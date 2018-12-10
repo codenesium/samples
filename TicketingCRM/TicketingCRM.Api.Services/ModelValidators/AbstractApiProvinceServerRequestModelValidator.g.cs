@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProvinceRepository provinceRepository;
+		protected IProvinceRepository ProvinceRepository { get; private set; }
 
 		public AbstractApiProvinceServerRequestModelValidator(IProvinceRepository provinceRepository)
 		{
-			this.provinceRepository = provinceRepository;
+			this.ProvinceRepository = provinceRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProvinceServerRequestModel model, int id)
@@ -37,9 +37,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidCountryByCountryId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCountryByCountryId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.provinceRepository.CountryByCountryId(id);
+			var record = await this.ProvinceRepository.CountryByCountryId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac7ea69ab58f03cdfd521182b2e628f1</Hash>
+    <Hash>1b651be31a22a422f9fc0ca92ffd4f15</Hash>
 </Codenesium>*/

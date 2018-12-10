@@ -18,9 +18,17 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual async Task Migrate()
 		{
+			var chainItem1 = new Chain();
+			chainItem1.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
+			this.Context.Chains.Add(chainItem1);
+
 			var chainStatusItem1 = new ChainStatus();
 			chainStatusItem1.SetProperties(1, "A");
 			this.Context.ChainStatuses.Add(chainStatusItem1);
+
+			var claspItem1 = new Clasp();
+			claspItem1.SetProperties(1, 1, 1);
+			this.Context.Clasps.Add(claspItem1);
 
 			var linkItem1 = new Link();
 			linkItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", 1, "A", "A", 1);
@@ -46,15 +54,11 @@ namespace NebulaNS.Api.DataAccess
 			teamItem1.SetProperties(1, "A", 1);
 			this.Context.Teams.Add(teamItem1);
 
-			var versionInfoItem1 = new VersionInfo();
-			versionInfoItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-			this.Context.VersionInfoes.Add(versionInfoItem1);
-
 			await this.Context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59c8daa29b42198a0f61f1f54e784aae</Hash>
+    <Hash>b5170d1130f301fee6aa3a2ad67f066c</Hash>
 </Codenesium>*/

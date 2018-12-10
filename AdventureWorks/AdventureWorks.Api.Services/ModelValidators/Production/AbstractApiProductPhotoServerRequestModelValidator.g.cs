@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IProductPhotoRepository productPhotoRepository;
+		protected IProductPhotoRepository ProductPhotoRepository { get; private set; }
 
 		public AbstractApiProductPhotoServerRequestModelValidator(IProductPhotoRepository productPhotoRepository)
 		{
-			this.productPhotoRepository = productPhotoRepository;
+			this.ProductPhotoRepository = productPhotoRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiProductPhotoServerRequestModel model, int id)
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25344b519507ecdd33ff3df511b1cf7b</Hash>
+    <Hash>d10f9bb12f33d927c9adccb8dbdf4efb</Hash>
 </Codenesium>*/

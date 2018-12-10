@@ -13,11 +13,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IEventRepository eventRepository;
+		protected IEventRepository EventRepository { get; private set; }
 
 		public AbstractApiEventServerRequestModelValidator(IEventRepository eventRepository)
 		{
-			this.eventRepository = eventRepository;
+			this.EventRepository = eventRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiEventServerRequestModel model, int id)
@@ -61,9 +61,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.eventRepository.EventStatuByEventStatusId(id);
+			var record = await this.EventRepository.EventStatuByEventStatusId(id);
 
 			return record != null;
 		}
@@ -71,5 +71,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22fcd30270ad6a71543118edb4e96e3f</Hash>
+    <Hash>3b3156fcca796b364bef5b187157b66b</Hash>
 </Codenesium>*/

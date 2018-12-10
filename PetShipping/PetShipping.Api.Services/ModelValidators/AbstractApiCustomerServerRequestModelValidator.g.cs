@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICustomerRepository customerRepository;
+		protected ICustomerRepository CustomerRepository { get; private set; }
 
 		public AbstractApiCustomerServerRequestModelValidator(ICustomerRepository customerRepository)
 		{
-			this.customerRepository = customerRepository;
+			this.CustomerRepository = customerRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCustomerServerRequestModel model, int id)
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c468e7b9ce628aa73064b1b484f87d83</Hash>
+    <Hash>5c6ce3c69b222dd1201a9deb51187b37</Hash>
 </Codenesium>*/

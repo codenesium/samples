@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
+		protected IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; private set; }
 
 		public AbstractApiPhoneNumberTypeServerRequestModelValidator(IPhoneNumberTypeRepository phoneNumberTypeRepository)
 		{
-			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
+			this.PhoneNumberTypeRepository = phoneNumberTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPhoneNumberTypeServerRequestModel model, int id)
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9886162908cf90e313ef626b10a040d</Hash>
+    <Hash>0bab7650faaa1fc7dbb5b88fda0a04ae</Hash>
 </Codenesium>*/

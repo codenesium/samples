@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ILinkTypeRepository linkTypeRepository;
+		protected ILinkTypeRepository LinkTypeRepository { get; private set; }
 
 		public AbstractApiLinkTypeServerRequestModelValidator(ILinkTypeRepository linkTypeRepository)
 		{
-			this.linkTypeRepository = linkTypeRepository;
+			this.LinkTypeRepository = linkTypeRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLinkTypeServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7a99fcf5721036739bce645e64d6095f</Hash>
+    <Hash>7f3bfe523b1eb7d4d6366fe11fcb830a</Hash>
 </Codenesium>*/

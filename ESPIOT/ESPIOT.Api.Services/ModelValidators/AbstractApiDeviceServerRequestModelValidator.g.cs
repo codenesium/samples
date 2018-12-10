@@ -13,11 +13,11 @@ namespace ESPIOTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IDeviceRepository deviceRepository;
+		protected IDeviceRepository DeviceRepository { get; private set; }
 
 		public AbstractApiDeviceServerRequestModelValidator(IDeviceRepository deviceRepository)
 		{
-			this.deviceRepository = deviceRepository;
+			this.DeviceRepository = deviceRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiDeviceServerRequestModel model, int id)
@@ -28,18 +28,17 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void PublicIdRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => !x?.PublicId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceServerRequestModel.PublicId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => (!x?.PublicId.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceServerRequestModel.PublicId)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
-		private async Task<bool> BeUniqueByPublicId(ApiDeviceServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByPublicId(ApiDeviceServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Device record = await this.deviceRepository.ByPublicId(model.PublicId);
+			Device record = await this.DeviceRepository.ByPublicId(model.PublicId);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -54,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea1d28332417b130a10cddb18cbd5465</Hash>
+    <Hash>3db5a89a80eb9eb0c8a624587fce9cf7</Hash>
 </Codenesium>*/

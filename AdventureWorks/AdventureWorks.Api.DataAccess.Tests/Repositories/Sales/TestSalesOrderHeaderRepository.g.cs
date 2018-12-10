@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<SalesOrderHeaderRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
-			SalesOrderHeader entity = new SalesOrderHeader();
-			context.Set<SalesOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
 			SalesOrderHeader entity = new SalesOrderHeader();
+			entity.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
 			context.Set<SalesOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
 			var entity = new SalesOrderHeader();
+			entity.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
 			await repository.Create(entity);
 
-			var record = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			var records = await context.Set<SalesOrderHeader>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 			SalesOrderHeader entity = new SalesOrderHeader();
+			entity.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
 			context.Set<SalesOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<SalesOrderHeader>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 			SalesOrderHeader entity = new SalesOrderHeader();
+			entity.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
 			context.Set<SalesOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new SalesOrderHeader());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<SalesOrderHeader>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
 			var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 			SalesOrderHeader entity = new SalesOrderHeader();
+			entity.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
 			context.Set<SalesOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.SalesOrderID);
 
-			SalesOrderHeader modifiedRecord = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+			var records = await context.Set<SalesOrderHeader>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>413d9062c08de02a6c83fd8a3f371e1f</Hash>
+    <Hash>e1dd514808bbd6e8eb43bde1bd33e0b6</Hash>
 </Codenesium>*/

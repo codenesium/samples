@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<PipelineRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineRepositoryMoc.GetContext();
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 
-			Pipeline entity = new Pipeline();
-			context.Set<Pipeline>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 
 			Pipeline entity = new Pipeline();
+			entity.SetProperties(2, 1, 2);
 			context.Set<Pipeline>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 
 			var entity = new Pipeline();
+			entity.SetProperties(2, 1, 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<Pipeline>().FirstOrDefaultAsync();
+			var records = await context.Set<Pipeline>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineRepositoryMoc.GetContext();
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 			Pipeline entity = new Pipeline();
+			entity.SetProperties(2, 1, 2);
 			context.Set<Pipeline>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Pipeline>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Pipeline>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineRepositoryMoc.GetContext();
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 			Pipeline entity = new Pipeline();
+			entity.SetProperties(2, 1, 2);
 			context.Set<Pipeline>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Pipeline());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Pipeline>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Pipeline>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineRepositoryMoc.GetContext();
 			var repository = new PipelineRepository(loggerMoc.Object, context);
 			Pipeline entity = new Pipeline();
+			entity.SetProperties(2, 1, 2);
 			context.Set<Pipeline>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Pipeline modifiedRecord = await context.Set<Pipeline>().FirstOrDefaultAsync();
+			var records = await context.Set<Pipeline>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3bde6b6399aa5367a99181f4a63c188d</Hash>
+    <Hash>96f54ce332846c82220aa84f6ea7bcdd</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IMachineRepository machineRepository;
+		protected IMachineRepository MachineRepository { get; private set; }
 
 		public AbstractApiMachineServerRequestModelValidator(IMachineRepository machineRepository)
 		{
-			this.machineRepository = machineRepository;
+			this.MachineRepository = machineRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiMachineServerRequestModel model, int id)
@@ -46,7 +46,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void MachineGuidRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByMachineGuid).When(x => !x?.MachineGuid.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineServerRequestModel.MachineGuid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByMachineGuid).When(x => (!x?.MachineGuid.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineServerRequestModel.MachineGuid)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void NameRules()
@@ -55,9 +55,9 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByMachineGuid(ApiMachineServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByMachineGuid(ApiMachineServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Machine record = await this.machineRepository.ByMachineGuid(model.MachineGuid);
+			Machine record = await this.MachineRepository.ByMachineGuid(model.MachineGuid);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -72,5 +72,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55636f83b8c55d139336be901e48db0f</Hash>
+    <Hash>8caea53c10719806b46c65e2af54efd4</Hash>
 </Codenesium>*/

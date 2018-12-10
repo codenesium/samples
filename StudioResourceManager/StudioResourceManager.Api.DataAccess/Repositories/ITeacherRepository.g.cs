@@ -28,15 +28,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<EventTeacher> CreateEventTeacher(EventTeacher item);
 
 		Task DeleteEventTeacher(EventTeacher item);
-
-		Task<List<Teacher>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
-
-		Task<Rate> CreateRate(Rate item);
-
-		Task DeleteRate(Rate item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc89ad3feef923bc75edcb4399a1a4c0</Hash>
+    <Hash>b413f31273dedd1eab9a567748486200</Hash>
 </Codenesium>*/

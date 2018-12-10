@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  web:
+    container_name: 'stackoverflow-app'
+    image: 'stackoverflow'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=stackoverflow-db;Persist Security Info=False;User ID=postgres;Password=test;Database=stackoverflow;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    depends_on:
+     - "postgres"
+    networks:
+      - stackoverflow-network
+
+  postgres:
+    container_name: 'stackoverflow-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: stackoverflow
+    networks:
+      - stackoverflow-network
+    ports:
+     - "5433:5432"
+    restart: always
+
+volumes:
+     pgdata:
+
+networks:
+    stackoverflow-network:
+       driver: bridge

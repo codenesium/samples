@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICityRepository cityRepository;
+		protected ICityRepository CityRepository { get; private set; }
 
 		public AbstractApiCityServerRequestModelValidator(ICityRepository cityRepository)
 		{
-			this.cityRepository = cityRepository;
+			this.CityRepository = cityRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCityServerRequestModel model, int id)
@@ -37,9 +37,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvinceByProvinceId).When(x => !x?.ProvinceId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.cityRepository.ProvinceByProvinceId(id);
+			var record = await this.CityRepository.ProvinceByProvinceId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79ddb356beed7757b6109e885dc36adc</Hash>
+    <Hash>6a9747bfd68b698d75f3d80ac63ad622</Hash>
 </Codenesium>*/

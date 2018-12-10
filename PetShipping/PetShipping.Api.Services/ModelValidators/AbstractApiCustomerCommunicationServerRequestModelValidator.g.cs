@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ICustomerCommunicationRepository customerCommunicationRepository;
+		protected ICustomerCommunicationRepository CustomerCommunicationRepository { get; private set; }
 
 		public AbstractApiCustomerCommunicationServerRequestModelValidator(ICustomerCommunicationRepository customerCommunicationRepository)
 		{
-			this.customerCommunicationRepository = customerCommunicationRepository;
+			this.CustomerCommunicationRepository = customerCommunicationRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCustomerCommunicationServerRequestModel model, int id)
@@ -46,16 +46,16 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.Note).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidCustomerByCustomerId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidCustomerByCustomerId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.customerCommunicationRepository.CustomerByCustomerId(id);
+			var record = await this.CustomerCommunicationRepository.CustomerByCustomerId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidEmployeeByEmployeeId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEmployeeByEmployeeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.customerCommunicationRepository.EmployeeByEmployeeId(id);
+			var record = await this.CustomerCommunicationRepository.EmployeeByEmployeeId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2b229960aaabca77044959e57b7df33</Hash>
+    <Hash>a26498708052c6c9c83b5c85a5488cc4</Hash>
 </Codenesium>*/

@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace TicketingCRMNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<VenueRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
 			var repository = new VenueRepository(loggerMoc.Object, context);
 
-			Venue entity = new Venue();
-			context.Set<Venue>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new VenueRepository(loggerMoc.Object, context);
 
 			Venue entity = new Venue();
+			entity.SetProperties("B", "B", 1, "B", "B", 2, "B", "B", 1, "B");
 			context.Set<Venue>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new VenueRepository(loggerMoc.Object, context);
 
 			var entity = new Venue();
+			entity.SetProperties("B", "B", 1, "B", "B", 2, "B", "B", 1, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<Venue>().FirstOrDefaultAsync();
+			var records = await context.Set<Venue>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
 			var repository = new VenueRepository(loggerMoc.Object, context);
 			Venue entity = new Venue();
+			entity.SetProperties("B", "B", 1, "B", "B", 2, "B", "B", 1, "B");
 			context.Set<Venue>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Venue>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
 			var repository = new VenueRepository(loggerMoc.Object, context);
 			Venue entity = new Venue();
+			entity.SetProperties("B", "B", 1, "B", "B", 2, "B", "B", 1, "B");
 			context.Set<Venue>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new Venue());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<Venue>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<Venue>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = VenueRepositoryMoc.GetContext();
 			var repository = new VenueRepository(loggerMoc.Object, context);
 			Venue entity = new Venue();
+			entity.SetProperties("B", "B", 1, "B", "B", 2, "B", "B", 1, "B");
 			context.Set<Venue>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			Venue modifiedRecord = await context.Set<Venue>().FirstOrDefaultAsync();
+			var records = await context.Set<Venue>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2890808ea3c9f2cb9f3cc9e31a6ee6d0</Hash>
+    <Hash>306bfe3953b71af6a1ff84032b266e24</Hash>
 </Codenesium>*/

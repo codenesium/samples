@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<AirTransportRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 
-			AirTransport entity = new AirTransport();
-			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 
 			AirTransport entity = new AirTransport();
+			entity.SetProperties(2, "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 
 			var entity = new AirTransport();
+			entity.SetProperties(2, "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
-			var record = await context.Set<AirTransport>().FirstOrDefaultAsync();
+			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
+			entity.SetProperties(2, "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace PetShippingNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<AirTransport>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
+			entity.SetProperties(2, "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new AirTransport());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<AirTransport>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
 			var repository = new AirTransportRepository(loggerMoc.Object, context);
 			AirTransport entity = new AirTransport();
+			entity.SetProperties(2, "B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AirTransport>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.AirlineId);
 
-			AirTransport modifiedRecord = await context.Set<AirTransport>().FirstOrDefaultAsync();
+			var records = await context.Set<AirTransport>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>623ffb50f16b7b1610d156b00b4855e9</Hash>
+    <Hash>e09e211d721f8bcea80121c930ca7f02</Hash>
 </Codenesium>*/

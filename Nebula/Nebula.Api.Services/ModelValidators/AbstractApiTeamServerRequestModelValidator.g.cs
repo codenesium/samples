@@ -13,11 +13,11 @@ namespace NebulaNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private ITeamRepository teamRepository;
+		protected ITeamRepository TeamRepository { get; private set; }
 
 		public AbstractApiTeamServerRequestModelValidator(ITeamRepository teamRepository)
 		{
-			this.teamRepository = teamRepository;
+			this.TeamRepository = teamRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiTeamServerRequestModel model, int id)
@@ -29,7 +29,7 @@ namespace NebulaNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -38,16 +38,16 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganizationByOrganizationId).When(x => !x?.OrganizationId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
-		private async Task<bool> BeValidOrganizationByOrganizationId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidOrganizationByOrganizationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.teamRepository.OrganizationByOrganizationId(id);
+			var record = await this.TeamRepository.OrganizationByOrganizationId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeUniqueByName(ApiTeamServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiTeamServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Team record = await this.teamRepository.ByName(model.Name);
+			Team record = await this.TeamRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
 			{
@@ -62,5 +62,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>710171c3d07a690682ef68c9af708a66</Hash>
+    <Hash>2b827352751da03fe606b0505f8fd76a</Hash>
 </Codenesium>*/

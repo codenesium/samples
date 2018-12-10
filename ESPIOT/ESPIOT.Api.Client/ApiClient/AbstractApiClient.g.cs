@@ -211,7 +211,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -239,5 +239,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>6c702b43a073bda1dcae95d3fd6491fd</Hash>
+    <Hash>efe2c2470a7cfcb0791ee444a58bfef7</Hash>
 </Codenesium>*/

@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
+		protected IPipelineStepStepRequirementRepository PipelineStepStepRequirementRepository { get; private set; }
 
 		public AbstractApiPipelineStepStepRequirementServerRequestModelValidator(IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository)
 		{
-			this.pipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
+			this.PipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPipelineStepStepRequirementServerRequestModel model, int id)
@@ -41,9 +41,9 @@ namespace PetShippingNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepStepRequirementRepository.PipelineStepByPipelineStepId(id);
+			var record = await this.PipelineStepStepRequirementRepository.PipelineStepByPipelineStepId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bad2667d3f1830d3012a37340b699605</Hash>
+    <Hash>f6ee2cab28707a41dc8898d88632b5a5</Hash>
 </Codenesium>*/

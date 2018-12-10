@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IReplyRepository replyRepository;
+		protected IReplyRepository ReplyRepository { get; private set; }
 
 		public AbstractApiReplyServerRequestModelValidator(IReplyRepository replyRepository)
 		{
-			this.replyRepository = replyRepository;
+			this.ReplyRepository = replyRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiReplyServerRequestModel model, int id)
@@ -45,9 +45,9 @@ namespace TwitterNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidUserByReplierUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByReplierUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.replyRepository.UserByReplierUserId(id);
+			var record = await this.ReplyRepository.UserByReplierUserId(id);
 
 			return record != null;
 		}
@@ -55,5 +55,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b5bf028439ae7b86a0deb66339cd398</Hash>
+    <Hash>b22fadf2ff8ed41b8338dbb0dc28781b</Hash>
 </Codenesium>*/

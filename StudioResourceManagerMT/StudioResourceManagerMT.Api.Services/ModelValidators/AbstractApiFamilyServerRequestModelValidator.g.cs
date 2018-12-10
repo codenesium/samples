@@ -13,11 +13,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IFamilyRepository familyRepository;
+		protected IFamilyRepository FamilyRepository { get; private set; }
 
 		public AbstractApiFamilyServerRequestModelValidator(IFamilyRepository familyRepository)
 		{
-			this.familyRepository = familyRepository;
+			this.FamilyRepository = familyRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiFamilyServerRequestModel model, int id)
@@ -55,5 +55,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbdcaa53bbd6c6a3b848b5800b704d1f</Hash>
+    <Hash>fb009a7208c324f731481c0b334fcb6b</Hash>
 </Codenesium>*/

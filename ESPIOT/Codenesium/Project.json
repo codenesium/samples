@@ -5,7 +5,7 @@
   "LocalDestinationDirectory": "C:\\Users\\Administrator\\Documents\\Mercurial\\Samples\\ESPIOT",
   "Database": {
     "$id": "2",
-    "Name": "IOT",
+    "Name": "espiot",
     "Schemas": [
       {
         "$id": "3",
@@ -18,27 +18,27 @@
               {
                 "$id": "5",
                 "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "6",
-                "Name": "name",
-                "DataType": "varchar",
+                "Name": "publicId",
+                "DataType": "uuid",
                 "NumericPrecision": 0,
-                "MaxLength": 90,
+                "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               },
               {
                 "$id": "7",
-                "Name": "publicId",
-                "DataType": "uniqueidentifier",
+                "Name": "name",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
-                "MaxLength": 0,
+                "MaxLength": 90,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               }
@@ -46,18 +46,18 @@
             "Constraints": [
               {
                 "$id": "8",
-                "Name": "PK_Device",
+                "Name": "IX_Device",
                 "TableName": "Device",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
+                "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
                     "$id": "9",
-                    "Name": "id",
+                    "Name": "publicId",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": true
+                    "IsIdentity": false
                   }
                 ],
                 "SchemaName": "dbo",
@@ -65,18 +65,18 @@
               },
               {
                 "$id": "10",
-                "Name": "IX_Device",
+                "Name": "PK_Device",
                 "TableName": "Device",
-                "IsPrimaryKey": false,
+                "IsPrimaryKey": true,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
                     "$id": "11",
-                    "Name": "publicId",
+                    "Name": "id",
                     "Order": 1,
                     "Descending": false,
                     "IsIncludedColumn": false,
-                    "IsIdentity": false
+                    "IsIdentity": true
                   }
                 ],
                 "SchemaName": "dbo",
@@ -93,8 +93,8 @@
               {
                 "$id": "13",
                 "Name": "deviceId",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
@@ -102,27 +102,27 @@
               {
                 "$id": "14",
                 "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "15",
-                "Name": "name",
-                "DataType": "varchar",
+                "Name": "value",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
-                "MaxLength": 90,
+                "MaxLength": 4000,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               },
               {
                 "$id": "16",
-                "Name": "value",
-                "DataType": "varchar",
+                "Name": "name",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
-                "MaxLength": 4000,
+                "MaxLength": 90,
                 "IsNullable": false,
                 "DatabaseGenerated": false
               }
@@ -130,32 +130,13 @@
             "Constraints": [
               {
                 "$id": "17",
-                "Name": "PK_Action",
-                "TableName": "DeviceAction",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "Columns": [
-                  {
-                    "$id": "18",
-                    "Name": "id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "SchemaName": "dbo",
-                "IsUnique": true
-              },
-              {
-                "$id": "19",
                 "Name": "IX_DeviceAction_DeviceId",
                 "TableName": "DeviceAction",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
-                    "$id": "20",
+                    "$id": "18",
                     "Name": "deviceId",
                     "Order": 1,
                     "Descending": false,
@@ -165,6 +146,25 @@
                 ],
                 "SchemaName": "dbo",
                 "IsUnique": false
+              },
+              {
+                "$id": "19",
+                "Name": "PK_Action",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "Columns": [
+                  {
+                    "$id": "20",
+                    "Name": "id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "SchemaName": "dbo",
+                "IsUnique": true
               }
             ],
             "DefaultConstraints": [],
@@ -192,7 +192,7 @@
       }
     ],
     "Version": "1.0",
-    "DatabaseType": "MSSQL"
+    "DatabaseType": "POSTGRESQL"
   },
   "Project": {
     "$id": "23",
@@ -200,14 +200,14 @@
       {
         "$id": "24",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "9caf9074-4e9b-4e22-b702-631b7733b0b0",
+        "AppSchemaId": "7c056293-9293-4a76-bd80-f09b39609008",
         "Tables": [
           {
             "$id": "25",
             "AppTableName": "Device",
             "AppTableNamePlural": "Devices",
             "AppDoNotProcess": false,
-            "AppTableId": "c3a1f4a8-013d-4d60-8508-06b237f02c77",
+            "AppTableId": "2195c68a-36db-4cc8-a6a6-58adaf6d310d",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -218,7 +218,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "Id",
                 "AppNamePlural": "Ids",
-                "AppFieldType": "int",
+                "AppFieldType": "integer",
                 "AppFieldMaxLength": 0,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -232,11 +232,11 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "27",
@@ -246,7 +246,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "Name",
                 "AppNamePlural": "Names",
-                "AppFieldType": "varchar",
+                "AppFieldType": "character varying",
                 "AppFieldMaxLength": 90,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -260,7 +260,7 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "name",
-                "DataType": "varchar",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
                 "MaxLength": 90,
                 "IsNullable": false,
@@ -274,7 +274,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "PublicId",
                 "AppNamePlural": "PublicIds",
-                "AppFieldType": "uniqueidentifier",
+                "AppFieldType": "uuid",
                 "AppFieldMaxLength": 0,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -288,7 +288,7 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "publicId",
-                "DataType": "uniqueidentifier",
+                "DataType": "uuid",
                 "NumericPrecision": 0,
                 "MaxLength": 0,
                 "IsNullable": false,
@@ -301,39 +301,6 @@
                 "Columns": [
                   {
                     "$id": "30",
-                    "Column": {
-                      "$ref": "26"
-                    },
-                    "Name": "Id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_Device",
-                "Table": {
-                  "$ref": "25"
-                },
-                "GenerationEnabled": true,
-                "Name": "PK_Device",
-                "TableName": "Device",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": true
-              },
-              {
-                "$id": "31",
-                "Columns": [
-                  {
-                    "$id": "32",
                     "Column": {
                       "$ref": "28"
                     },
@@ -358,6 +325,39 @@
                 "Name": "IX_Device",
                 "TableName": "Device",
                 "IsPrimaryKey": false,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
+              },
+              {
+                "$id": "31",
+                "Columns": [
+                  {
+                    "$id": "32",
+                    "Column": {
+                      "$ref": "26"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Device",
+                "Table": {
+                  "$ref": "25"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Device",
+                "TableName": "Device",
+                "IsPrimaryKey": true,
                 "ConstraintType": "NONCLUSTERED",
                 "SchemaName": "dbo",
                 "IsUnique": true
@@ -394,7 +394,7 @@
             "AppTableName": "DeviceAction",
             "AppTableNamePlural": "DeviceActions",
             "AppDoNotProcess": false,
-            "AppTableId": "9ed1eb12-397f-4cff-a0a2-944cc75f83f7",
+            "AppTableId": "8d842b1d-ec41-4865-9c17-2fe29b54f419",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -405,7 +405,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "DeviceId",
                 "AppNamePlural": "DeviceIds",
-                "AppFieldType": "int",
+                "AppFieldType": "integer",
                 "AppFieldMaxLength": 0,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -419,8 +419,8 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "deviceId",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
                 "DatabaseGenerated": false
@@ -433,7 +433,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "Id",
                 "AppNamePlural": "Ids",
-                "AppFieldType": "int",
+                "AppFieldType": "integer",
                 "AppFieldMaxLength": 0,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -447,11 +447,11 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "id",
-                "DataType": "int",
-                "NumericPrecision": 10,
+                "DataType": "integer",
+                "NumericPrecision": 32,
                 "MaxLength": 0,
                 "IsNullable": false,
-                "DatabaseGenerated": true
+                "DatabaseGenerated": false
               },
               {
                 "$id": "36",
@@ -461,7 +461,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "Name",
                 "AppNamePlural": "Names",
-                "AppFieldType": "varchar",
+                "AppFieldType": "character varying",
                 "AppFieldMaxLength": 90,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -475,7 +475,7 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "name",
-                "DataType": "varchar",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
                 "MaxLength": 90,
                 "IsNullable": false,
@@ -489,7 +489,7 @@
                 "AppShowInResponseModel": true,
                 "AppName": "@Value",
                 "AppNamePlural": "Values",
-                "AppFieldType": "varchar",
+                "AppFieldType": "character varying",
                 "AppFieldMaxLength": 4000,
                 "AppDoNotProcess": false,
                 "AppGenerationEnabled": true,
@@ -503,7 +503,7 @@
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
                 "Name": "value",
-                "DataType": "varchar",
+                "DataType": "character varying",
                 "NumericPrecision": 0,
                 "MaxLength": 4000,
                 "IsNullable": false,
@@ -516,39 +516,6 @@
                 "Columns": [
                   {
                     "$id": "39",
-                    "Column": {
-                      "$ref": "35"
-                    },
-                    "Name": "Id",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": true
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ById",
-                "ControllerRoute": "byId",
-                "AppName": "PK_Action",
-                "Table": {
-                  "$ref": "33"
-                },
-                "GenerationEnabled": true,
-                "Name": "PK_Action",
-                "TableName": "DeviceAction",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": true
-              },
-              {
-                "$id": "40",
-                "Columns": [
-                  {
-                    "$id": "41",
                     "Column": {
                       "$ref": "34"
                     },
@@ -576,6 +543,39 @@
                 "ConstraintType": "NONCLUSTERED",
                 "SchemaName": "dbo",
                 "IsUnique": false
+              },
+              {
+                "$id": "40",
+                "Columns": [
+                  {
+                    "$id": "41",
+                    "Column": {
+                      "$ref": "35"
+                    },
+                    "Name": "Id",
+                    "Order": 1,
+                    "Descending": false,
+                    "IsIncludedColumn": false,
+                    "IsIdentity": true
+                  }
+                ],
+                "Virtual": false,
+                "AppDoNotProcess": false,
+                "AppGenerationEnabled": true,
+                "AppShowInController": true,
+                "ControllerMethodName": "ById",
+                "ControllerRoute": "byId",
+                "AppName": "PK_Action",
+                "Table": {
+                  "$ref": "33"
+                },
+                "GenerationEnabled": true,
+                "Name": "PK_Action",
+                "TableName": "DeviceAction",
+                "IsPrimaryKey": true,
+                "ConstraintType": "NONCLUSTERED",
+                "SchemaName": "dbo",
+                "IsUnique": true
               }
             ],
             "Schema": {

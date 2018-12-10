@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<SalesTerritoryRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
-			SalesTerritory entity = new SalesTerritory();
-			context.Set<SalesTerritory>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
 			SalesTerritory entity = new SalesTerritory();
+			entity.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2);
 			context.Set<SalesTerritory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
 			var entity = new SalesTerritory();
+			entity.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2);
 			await repository.Create(entity);
 
-			var record = await context.Set<SalesTerritory>().FirstOrDefaultAsync();
+			var records = await context.Set<SalesTerritory>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 			SalesTerritory entity = new SalesTerritory();
+			entity.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2);
 			context.Set<SalesTerritory>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<SalesTerritory>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<SalesTerritory>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 			SalesTerritory entity = new SalesTerritory();
+			entity.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2);
 			context.Set<SalesTerritory>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new SalesTerritory());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<SalesTerritory>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<SalesTerritory>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
 			var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 			SalesTerritory entity = new SalesTerritory();
+			entity.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2);
 			context.Set<SalesTerritory>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.TerritoryID);
 
-			SalesTerritory modifiedRecord = await context.Set<SalesTerritory>().FirstOrDefaultAsync();
+			var records = await context.Set<SalesTerritory>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39ee7a108016aeed17bec8a16ee62a9e</Hash>
+    <Hash>c070fcbbe3d06737b2e7942e9ac0ea15</Hash>
 </Codenesium>*/

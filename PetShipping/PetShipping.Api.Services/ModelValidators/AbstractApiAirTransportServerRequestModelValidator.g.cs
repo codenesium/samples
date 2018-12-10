@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IAirTransportRepository airTransportRepository;
+		protected IAirTransportRepository AirTransportRepository { get; private set; }
 
 		public AbstractApiAirTransportServerRequestModelValidator(IAirTransportRepository airTransportRepository)
 		{
-			this.airTransportRepository = airTransportRepository;
+			this.AirTransportRepository = airTransportRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiAirTransportServerRequestModel model, int id)
@@ -53,9 +53,9 @@ namespace PetShippingNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidHandlerByHandlerId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidHandlerByHandlerId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.airTransportRepository.HandlerByHandlerId(id);
+			var record = await this.AirTransportRepository.HandlerByHandlerId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>390577e29c46c1bed9e2d719c06f4dc6</Hash>
+    <Hash>e95a4f2532acb64bc709ce72444da3bb</Hash>
 </Codenesium>*/

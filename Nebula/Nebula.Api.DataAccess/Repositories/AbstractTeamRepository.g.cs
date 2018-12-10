@@ -82,35 +82,16 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
+		// Foreign key reference to this table Chain via teamId.
+		public async virtual Task<List<Chain>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+		}
+
 		// Foreign key reference to table Organization via organizationId.
 		public async virtual Task<Organization> OrganizationByOrganizationId(int organizationId)
 		{
 			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
-		}
-
-		// Foreign key reference pass-though. Pass-thru table Chain. Foreign Table Team.
-		public async virtual Task<List<Team>> ByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.Chains
-			              join teams in this.Context.Teams on
-			              refTable.TeamId equals teams.Id
-			              where refTable.ChainStatusId == chainStatusId
-			              select teams).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<Chain> CreateChain(Chain item)
-		{
-			this.Context.Set<Chain>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task DeleteChain(Chain item)
-		{
-			this.Context.Set<Chain>().Remove(item);
-			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<Team>> Where(
@@ -137,5 +118,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c213e86dd252168009f37dc96f7ae1b</Hash>
+    <Hash>6cc635bc49a5c15c313115868150e2cf</Hash>
 </Codenesium>*/

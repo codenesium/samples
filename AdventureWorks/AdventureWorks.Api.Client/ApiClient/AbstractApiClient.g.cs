@@ -4001,7 +4001,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCustomerClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -4029,5 +4029,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9a86a182f6e099cb359f51c34801c7b6</Hash>
+    <Hash>81bae54a5a9e89a5d588ab76a8e33f15</Hash>
 </Codenesium>*/

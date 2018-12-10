@@ -73,55 +73,55 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		private async void BeUniqueByStartTimeEndTime_Create_Exists()
+		private async void BeUniqueByName_Create_Exists()
 		{
 			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
+			shiftRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Shift>(new Shift()));
 			var validator = new ApiShiftServerRequestModelValidator(shiftRepository.Object);
 
 			await validator.ValidateCreateAsync(new ApiShiftServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("01:00:00"));
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStartTimeEndTime_Create_Not_Exists()
+		private async void BeUniqueByName_Create_Not_Exists()
 		{
 			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
+			shiftRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Shift>(null));
 			var validator = new ApiShiftServerRequestModelValidator(shiftRepository.Object);
 
 			await validator.ValidateCreateAsync(new ApiShiftServerRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("01:00:00"));
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStartTimeEndTime_Update_Exists()
+		private async void BeUniqueByName_Update_Exists()
 		{
 			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
+			shiftRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Shift>(new Shift()));
 			var validator = new ApiShiftServerRequestModelValidator(shiftRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiShiftServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("01:00:00"));
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
 		}
 
 		[Fact]
-		private async void BeUniqueByStartTimeEndTime_Update_Not_Exists()
+		private async void BeUniqueByName_Update_Not_Exists()
 		{
 			Mock<IShiftRepository> shiftRepository = new Mock<IShiftRepository>();
-			shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
+			shiftRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Shift>(null));
 			var validator = new ApiShiftServerRequestModelValidator(shiftRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiShiftServerRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("01:00:00"));
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c8a5c6e043204531d18166dcda3fb348</Hash>
+    <Hash>ab1be90c4a9eaedd5da5c03ae6a88de2</Hash>
 </Codenesium>*/

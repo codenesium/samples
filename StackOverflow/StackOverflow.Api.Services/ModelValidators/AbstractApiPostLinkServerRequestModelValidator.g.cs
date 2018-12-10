@@ -13,11 +13,11 @@ namespace StackOverflowNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IPostLinkRepository postLinkRepository;
+		protected IPostLinkRepository PostLinkRepository { get; private set; }
 
 		public AbstractApiPostLinkServerRequestModelValidator(IPostLinkRepository postLinkRepository)
 		{
-			this.postLinkRepository = postLinkRepository;
+			this.PostLinkRepository = postLinkRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiPostLinkServerRequestModel model, int id)
@@ -45,5 +45,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d2d597027477228e94229e7beba2cd0</Hash>
+    <Hash>9d3dcfeff014c275fa160d8303cf5aa6</Hash>
 </Codenesium>*/

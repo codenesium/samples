@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private short existingRecordId;
 
-		private ILocationRepository locationRepository;
+		protected ILocationRepository LocationRepository { get; private set; }
 
 		public AbstractApiLocationServerRequestModelValidator(ILocationRepository locationRepository)
 		{
-			this.locationRepository = locationRepository;
+			this.LocationRepository = locationRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiLocationServerRequestModel model, short id)
@@ -41,13 +41,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiLocationServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiLocationServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Location record = await this.locationRepository.ByName(model.Name);
+			Location record = await this.LocationRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(short) && record.LocationID == this.existingRecordId))
 			{
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a171700402369275b7cb5b798c0617dd</Hash>
+    <Hash>2e1ce13de99df414565296fc43a5db3f</Hash>
 </Codenesium>*/

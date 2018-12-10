@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private Guid existingRecordId;
 
-		private IDocumentRepository documentRepository;
+		protected IDocumentRepository DocumentRepository { get; private set; }
 
 		public AbstractApiDocumentServerRequestModelValidator(IDocumentRepository documentRepository)
 		{
-			this.documentRepository = documentRepository;
+			this.DocumentRepository = documentRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiDocumentServerRequestModel model, Guid id)
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b01f9a0ca80871f5830cce10df09ea0</Hash>
+    <Hash>5a0ef8528c85a473cc8872e3c56f52e8</Hash>
 </Codenesium>*/

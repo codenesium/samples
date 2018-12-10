@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private string existingRecordId;
 
-		private ICurrencyRepository currencyRepository;
+		protected ICurrencyRepository CurrencyRepository { get; private set; }
 
 		public AbstractApiCurrencyServerRequestModelValidator(ICurrencyRepository currencyRepository)
 		{
-			this.currencyRepository = currencyRepository;
+			this.CurrencyRepository = currencyRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCurrencyServerRequestModel model, string id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiCurrencyServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiCurrencyServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Currency record = await this.currencyRepository.ByName(model.Name);
+			Currency record = await this.CurrencyRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(string) && record.CurrencyCode == this.existingRecordId))
 			{
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f5dca9a4411dc6e6a426a1bc8a749e5</Hash>
+    <Hash>b33a40b9673356983f2c3c50df8fc9fb</Hash>
 </Codenesium>*/

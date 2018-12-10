@@ -284,7 +284,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFileClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		private void HandleResponseCode(HttpResponseMessage httpResponse)
+		protected void HandleResponseCode(HttpResponseMessage httpResponse)
 		{
 			int responseCode = (int)httpResponse.StatusCode;
 			if (responseCode >= 400 && responseCode != 422)
@@ -312,5 +312,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>8587e09d75a0fd42d23b95b82888600c</Hash>
+    <Hash>6b8313faf2a62e1585d6d5d19740e834</Hash>
 </Codenesium>*/

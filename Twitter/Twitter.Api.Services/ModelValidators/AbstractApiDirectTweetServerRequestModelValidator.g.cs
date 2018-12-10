@@ -13,11 +13,11 @@ namespace TwitterNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IDirectTweetRepository directTweetRepository;
+		protected IDirectTweetRepository DirectTweetRepository { get; private set; }
 
 		public AbstractApiDirectTweetServerRequestModelValidator(IDirectTweetRepository directTweetRepository)
 		{
-			this.directTweetRepository = directTweetRepository;
+			this.DirectTweetRepository = directTweetRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiDirectTweetServerRequestModel model, int id)
@@ -45,9 +45,9 @@ namespace TwitterNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidUserByTaggedUserId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidUserByTaggedUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.directTweetRepository.UserByTaggedUserId(id);
+			var record = await this.DirectTweetRepository.UserByTaggedUserId(id);
 
 			return record != null;
 		}
@@ -55,5 +55,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65f43b6a6fe16eb2db2736b330ffce0b</Hash>
+    <Hash>44cf101bd6fe1d9016e005581242bfb2</Hash>
 </Codenesium>*/

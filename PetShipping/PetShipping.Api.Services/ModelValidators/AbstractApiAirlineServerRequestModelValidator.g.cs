@@ -13,11 +13,11 @@ namespace PetShippingNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IAirlineRepository airlineRepository;
+		protected IAirlineRepository AirlineRepository { get; private set; }
 
 		public AbstractApiAirlineServerRequestModelValidator(IAirlineRepository airlineRepository)
 		{
-			this.airlineRepository = airlineRepository;
+			this.AirlineRepository = airlineRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiAirlineServerRequestModel model, int id)
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f3427d3b8908047e5ea328f57e7db1f</Hash>
+    <Hash>2eb23d448780b886132fbd1d541a68f3</Hash>
 </Codenesium>*/

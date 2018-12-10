@@ -27,11 +27,9 @@ namespace TwitterNS.Api.Services
 		Task<List<ApiQuoteTweetServerResponseModel>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiRetweetServerResponseModel>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTweetServerResponseModel>> ByRetweeterUserId(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>560426ee9f76e5e123cc772b94fa1204</Hash>
+    <Hash>ce390f53a04e1fa0b8123c5e00ae3340</Hash>
 </Codenesium>*/

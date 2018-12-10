@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private string existingRecordId;
 
-		private ICultureRepository cultureRepository;
+		protected ICultureRepository CultureRepository { get; private set; }
 
 		public AbstractApiCultureServerRequestModelValidator(ICultureRepository cultureRepository)
 		{
-			this.cultureRepository = cultureRepository;
+			this.CultureRepository = cultureRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiCultureServerRequestModel model, string id)
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => !x?.Name.IsEmptyOrZeroOrNull() ?? false).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => (!x?.Name.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureServerRequestModel.Name)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.Name).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeUniqueByName(ApiCultureServerRequestModel model,  CancellationToken cancellationToken)
+		protected async Task<bool> BeUniqueByName(ApiCultureServerRequestModel model,  CancellationToken cancellationToken)
 		{
-			Culture record = await this.cultureRepository.ByName(model.Name);
+			Culture record = await this.CultureRepository.ByName(model.Name);
 
 			if (record == null || (this.existingRecordId != default(string) && record.CultureID == this.existingRecordId))
 			{
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db74f902411eb18c0d72812810f0123e</Hash>
+    <Hash>76aa4f0967f92b92ee2b557872773d7b</Hash>
 </Codenesium>*/

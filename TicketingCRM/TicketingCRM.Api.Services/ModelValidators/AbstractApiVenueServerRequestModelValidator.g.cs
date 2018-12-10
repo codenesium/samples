@@ -13,11 +13,11 @@ namespace TicketingCRMNS.Api.Services
 	{
 		private int existingRecordId;
 
-		private IVenueRepository venueRepository;
+		protected IVenueRepository VenueRepository { get; private set; }
 
 		public AbstractApiVenueServerRequestModelValidator(IVenueRepository venueRepository)
 		{
-			this.venueRepository = venueRepository;
+			this.VenueRepository = venueRepository;
 		}
 
 		public async Task<ValidationResult> ValidateAsync(ApiVenueServerRequestModel model, int id)
@@ -78,16 +78,16 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		private async Task<bool> BeValidAdminByAdminId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidAdminByAdminId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.venueRepository.AdminByAdminId(id);
+			var record = await this.VenueRepository.AdminByAdminId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.venueRepository.ProvinceByProvinceId(id);
+			var record = await this.VenueRepository.ProvinceByProvinceId(id);
 
 			return record != null;
 		}
@@ -95,5 +95,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4eddc854ebc0221453176eb0ec98aff7</Hash>
+    <Hash>b9505d341c734457c833938bd12ee22e</Hash>
 </Codenesium>*/

@@ -1,10 +1,13 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,10 +17,17 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		public static ApplicationDbContext GetContext()
 		{
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-			              .UseInMemoryDatabase(Guid.NewGuid().ToString())
-			              .Options;
-			return new ApplicationDbContext(options);
+			SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+			string connectionString = connectionStringBuilder.ToString();
+			SqliteConnection connection = new SqliteConnection(connectionString);
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			options.UseSqlite(connection);
+			var context = new ApplicationDbContext(options.Options);
+			context.Database.OpenConnection();
+			context.Database.EnsureCreated();
+			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+			migrator.Migrate().Wait();
+			return context;
 		}
 
 		public static Mock<ILogger<PaymentTypeRepository>> GetLoggerMoc()
@@ -38,13 +48,12 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
-			PaymentType entity = new PaymentType();
-			context.Set<PaymentType>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.All();
+			var records = await repository.All();
 
-			record.Should().NotBeEmpty();
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -55,6 +64,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
 			PaymentType entity = new PaymentType();
+			entity.SetProperties(2, "B");
 			context.Set<PaymentType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -71,11 +81,12 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
 			var entity = new PaymentType();
+			entity.SetProperties(2, "B");
 			await repository.Create(entity);
 
-			var record = await context.Set<PaymentType>().FirstOrDefaultAsync();
+			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
 
-			record.Should().NotBeNull();
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -85,6 +96,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 			PaymentType entity = new PaymentType();
+			entity.SetProperties(2, "B");
 			context.Set<PaymentType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -92,8 +104,9 @@ namespace PetStoreNS.Api.DataAccess
 
 			await repository.Update(record);
 
-			var modifiedRecord = context.Set<PaymentType>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -103,13 +116,15 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 			PaymentType entity = new PaymentType();
+			entity.SetProperties(2, "B");
 			context.Set<PaymentType>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Update(new PaymentType());
+			await repository.Update(entity);
 
-			var modifiedRecord = context.Set<PaymentType>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
+			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
+
+			records.Count.Should().Be(2);
 		}
 
 		[Fact]
@@ -119,14 +134,15 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
 			var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 			PaymentType entity = new PaymentType();
+			entity.SetProperties(2, "B");
 			context.Set<PaymentType>().Add(entity);
 			await context.SaveChangesAsync();
 
 			await repository.Delete(entity.Id);
 
-			PaymentType modifiedRecord = await context.Set<PaymentType>().FirstOrDefaultAsync();
+			var records = await context.Set<PaymentType>().Where(x => true).ToListAsync();
 
-			modifiedRecord.Should().BeNull();
+			records.Count.Should().Be(1);
 		}
 
 		[Fact]
@@ -147,5 +163,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a272b9793ed793c695bb1d628d533a0</Hash>
+    <Hash>a0eb32a51d1177f39b497b9029ef8d74</Hash>
 </Codenesium>*/
