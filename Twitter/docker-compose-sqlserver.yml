@@ -17,7 +17,7 @@ services:
      - "8000:8000"
     networks:
       - twitter-network
-	extra_hosts:
+    extra_hosts:
       - "localhost:10.0.2.2"
 networks:
     twitter-network:

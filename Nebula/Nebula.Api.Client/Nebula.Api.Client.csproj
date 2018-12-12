@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2;netstandard2.0</TargetFrameworks>
 	<RootNamespace>NebulaNS.Api.Client</RootNamespace>
 	<NuspecFile>Nebula.Api.Client.nuspec</NuspecFile>
   </PropertyGroup>
@@ -10,9 +10,9 @@
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj" />
   </ItemGroup>
 
-   <ItemGroup>
+  <ItemGroup>
 	<PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
-	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
+	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
 	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
   

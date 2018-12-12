@@ -1,7 +1,7 @@
 export class ApiChainClientRequestModel {
 	chainStatusId : number;
 	chainStatusIdEntity : string;
-	externalId : string;
+	externalId : any;
 	id : number;
 	name : string;
 	teamId : number;
@@ -10,7 +10,7 @@ export class ApiChainClientRequestModel {
 	constructor() {
 		this.chainStatusId = 0;
 		this.chainStatusIdEntity = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.name = '';
 		this.teamId = 0;
@@ -21,7 +21,7 @@ export class ApiChainClientRequestModel {
 export class ApiChainClientResponseModel {
 	chainStatusId : number;
 	chainStatusIdEntity : string;
-	externalId : string;
+	externalId : any;
 	id : number;
 	name : string;
 	teamId : number;
@@ -30,7 +30,7 @@ export class ApiChainClientResponseModel {
 	constructor() {
 		this.chainStatusId = 0;
 		this.chainStatusIdEntity = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.name = '';
 		this.teamId = 0;
@@ -88,14 +88,14 @@ export class ApiClaspClientResponseModel {
 	}
 }
 export class ApiLinkClientRequestModel {
-	assignedMachineId : number;
+	assignedMachineId : any;
 	assignedMachineIdEntity : string;
 	chainId : number;
 	chainIdEntity : string;
-	dateCompleted : string;
-	dateStarted : string;
+	dateCompleted : any;
+	dateStarted : any;
 	dynamicParameter : string;
-	externalId : string;
+	externalId : any;
 	id : number;
 	linkStatusId : number;
 	linkStatusIdEntity : string;
@@ -106,14 +106,14 @@ export class ApiLinkClientRequestModel {
 	timeoutInSecond : number;
 
 	constructor() {
-		this.assignedMachineId = 0;
+		this.assignedMachineId = null;
 		this.assignedMachineIdEntity = '';
 		this.chainId = 0;
 		this.chainIdEntity = '';
-		this.dateCompleted = '';
-		this.dateStarted = '';
+		this.dateCompleted = null;
+		this.dateStarted = null;
 		this.dynamicParameter = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.linkStatusId = 0;
 		this.linkStatusIdEntity = '';
@@ -126,14 +126,14 @@ export class ApiLinkClientRequestModel {
 }
 
 export class ApiLinkClientResponseModel {
-	assignedMachineId : number;
+	assignedMachineId : any;
 	assignedMachineIdEntity : string;
 	chainId : number;
 	chainIdEntity : string;
-	dateCompleted : string;
-	dateStarted : string;
+	dateCompleted : any;
+	dateStarted : any;
 	dynamicParameter : string;
-	externalId : string;
+	externalId : any;
 	id : number;
 	linkStatusId : number;
 	linkStatusIdEntity : string;
@@ -144,14 +144,14 @@ export class ApiLinkClientResponseModel {
 	timeoutInSecond : number;
 
 	constructor() {
-		this.assignedMachineId = 0;
+		this.assignedMachineId = null;
 		this.assignedMachineIdEntity = '';
 		this.chainId = 0;
 		this.chainIdEntity = '';
-		this.dateCompleted = '';
-		this.dateStarted = '';
+		this.dateCompleted = null;
+		this.dateStarted = null;
 		this.dynamicParameter = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.linkStatusId = 0;
 		this.linkStatusIdEntity = '';
@@ -163,14 +163,14 @@ export class ApiLinkClientResponseModel {
 	}
 }
 export class ApiLinkLogClientRequestModel {
-	dateEntered : string;
+	dateEntered : any;
 	id : number;
 	linkId : number;
 	linkIdEntity : string;
 	log : string;
 
 	constructor() {
-		this.dateEntered = '';
+		this.dateEntered = null;
 		this.id = 0;
 		this.linkId = 0;
 		this.linkIdEntity = '';
@@ -179,14 +179,14 @@ export class ApiLinkLogClientRequestModel {
 }
 
 export class ApiLinkLogClientResponseModel {
-	dateEntered : string;
+	dateEntered : any;
 	id : number;
 	linkId : number;
 	linkIdEntity : string;
 	log : string;
 
 	constructor() {
-		this.dateEntered = '';
+		this.dateEntered = null;
 		this.id = 0;
 		this.linkId = 0;
 		this.linkIdEntity = '';
@@ -217,7 +217,7 @@ export class ApiMachineClientRequestModel {
 	id : number;
 	jwtKey : string;
 	lastIpAddress : string;
-	machineGuid : string;
+	machineGuid : any;
 	name : string;
 
 	constructor() {
@@ -225,7 +225,7 @@ export class ApiMachineClientRequestModel {
 		this.id = 0;
 		this.jwtKey = '';
 		this.lastIpAddress = '';
-		this.machineGuid = '';
+		this.machineGuid = null;
 		this.name = '';
 	}
 }
@@ -235,7 +235,7 @@ export class ApiMachineClientResponseModel {
 	id : number;
 	jwtKey : string;
 	lastIpAddress : string;
-	machineGuid : string;
+	machineGuid : any;
 	name : string;
 
 	constructor() {
@@ -243,7 +243,7 @@ export class ApiMachineClientResponseModel {
 		this.id = 0;
 		this.jwtKey = '';
 		this.lastIpAddress = '';
-		this.machineGuid = '';
+		this.machineGuid = null;
 		this.name = '';
 	}
 }
@@ -295,5 +295,5 @@ export class ApiTeamClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>be5966c85795ab52628569daf4a61ba4</Hash>
+    <Hash>8e2f00a13047949bcdc6977f5c4f2bdf</Hash>
 </Codenesium>*/

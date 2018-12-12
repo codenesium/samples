@@ -57,6 +57,71 @@ namespace ESPIOTNS.Api.Client
 			this.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<CreateResponse<List<ApiEfmigrationshistoryClientResponseModel>>> EfmigrationshistoryBulkInsertAsync(List<ApiEfmigrationshistoryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Efmigrationshistories/BulkInsert", items, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiEfmigrationshistoryClientResponseModel>>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiEfmigrationshistoryClientResponseModel>> EfmigrationshistoryCreateAsync(ApiEfmigrationshistoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Efmigrationshistories", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiEfmigrationshistoryClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiEfmigrationshistoryClientResponseModel>> EfmigrationshistoryUpdateAsync(string id, ApiEfmigrationshistoryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Efmigrationshistories/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiEfmigrationshistoryClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> EfmigrationshistoryDeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Efmigrationshistories/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiEfmigrationshistoryClientResponseModel> EfmigrationshistoryGetAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Efmigrationshistories/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiEfmigrationshistoryClientResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiEfmigrationshistoryClientResponseModel>> EfmigrationshistoryAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiEfmigrationshistoryClientResponseModel> response = new List<ApiEfmigrationshistoryClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Efmigrationshistories?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
+
+				this.HandleResponseCode(httpResponse);
+				List<ApiEfmigrationshistoryClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiEfmigrationshistoryClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
+		}
+
 		public virtual async Task<CreateResponse<List<ApiDeviceClientResponseModel>>> DeviceBulkInsertAsync(List<ApiDeviceClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Devices/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -239,5 +304,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>efe2c2470a7cfcb0791ee444a58bfef7</Hash>
+    <Hash>b5b387f0efd7e6e51d922c4ce1bdc5b3</Hash>
 </Codenesium>*/

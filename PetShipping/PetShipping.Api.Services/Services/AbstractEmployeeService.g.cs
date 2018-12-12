@@ -17,6 +17,10 @@ namespace PetShippingNS.Api.Services
 
 		protected IDALEmployeeMapper DalEmployeeMapper { get; private set; }
 
+		protected IBOLCustomerCommunicationMapper BolCustomerCommunicationMapper { get; private set; }
+
+		protected IDALCustomerCommunicationMapper DalCustomerCommunicationMapper { get; private set; }
+
 		protected IBOLPipelineStepMapper BolPipelineStepMapper { get; private set; }
 
 		protected IDALPipelineStepMapper DalPipelineStepMapper { get; private set; }
@@ -24,10 +28,6 @@ namespace PetShippingNS.Api.Services
 		protected IBOLPipelineStepNoteMapper BolPipelineStepNoteMapper { get; private set; }
 
 		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
-
-		protected IBOLCustomerCommunicationMapper BolCustomerCommunicationMapper { get; private set; }
-
-		protected IDALCustomerCommunicationMapper DalCustomerCommunicationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -37,24 +37,24 @@ namespace PetShippingNS.Api.Services
 			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
 			IDALEmployeeMapper dalEmployeeMapper,
+			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
+			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
-			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
-			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base()
 		{
 			this.EmployeeRepository = employeeRepository;
 			this.EmployeeModelValidator = employeeModelValidator;
 			this.BolEmployeeMapper = bolEmployeeMapper;
 			this.DalEmployeeMapper = dalEmployeeMapper;
+			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
+			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.BolPipelineStepMapper = bolPipelineStepMapper;
 			this.DalPipelineStepMapper = dalPipelineStepMapper;
 			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
-			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
-			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
 		}
 
@@ -129,6 +129,13 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
+		public async virtual Task<List<ApiCustomerCommunicationServerResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<CustomerCommunication> records = await this.EmployeeRepository.CustomerCommunicationsByEmployeeId(employeeId, limit, offset);
+
+			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiPipelineStepServerResponseModel>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStep> records = await this.EmployeeRepository.PipelineStepsByShipperId(shipperId, limit, offset);
@@ -142,16 +149,9 @@ namespace PetShippingNS.Api.Services
 
 			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiCustomerCommunicationServerResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<CustomerCommunication> records = await this.EmployeeRepository.CustomerCommunicationsByEmployeeId(employeeId, limit, offset);
-
-			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89cd6f907014be324b402e314be4c003</Hash>
+    <Hash>619d7460478238ae3b39aed3c741abee</Hash>
 </Codenesium>*/

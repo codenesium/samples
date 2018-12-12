@@ -17,7 +17,7 @@ services:
      - "8000:8000"
     networks:
       - espiot-network
-	extra_hosts:
+    extra_hosts:
       - "localhost:10.0.2.2"
 networks:
     espiot-network:

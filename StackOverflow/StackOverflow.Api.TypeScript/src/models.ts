@@ -1,11 +1,11 @@
 export class ApiBadgeClientRequestModel {
-	date : string;
+	date : any;
 	id : number;
 	name : string;
 	userId : number;
 
 	constructor() {
-		this.date = '';
+		this.date = null;
 		this.id = 0;
 		this.name = '';
 		this.userId = 0;
@@ -13,51 +13,51 @@ export class ApiBadgeClientRequestModel {
 }
 
 export class ApiBadgeClientResponseModel {
-	date : string;
+	date : any;
 	id : number;
 	name : string;
 	userId : number;
 
 	constructor() {
-		this.date = '';
+		this.date = null;
 		this.id = 0;
 		this.name = '';
 		this.userId = 0;
 	}
 }
 export class ApiCommentClientRequestModel {
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	postId : number;
-	score : number;
+	score : any;
 	text : string;
-	userId : number;
+	userId : any;
 
 	constructor() {
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.postId = 0;
-		this.score = 0;
+		this.score = null;
 		this.text = '';
-		this.userId = 0;
+		this.userId = null;
 	}
 }
 
 export class ApiCommentClientResponseModel {
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	postId : number;
-	score : number;
+	score : any;
 	text : string;
-	userId : number;
+	userId : any;
 
 	constructor() {
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.postId = 0;
-		this.score = 0;
+		this.score = null;
 		this.text = '';
-		this.userId = 0;
+		this.userId = null;
 	}
 }
 export class ApiLinkTypeClientRequestModel {
@@ -81,49 +81,49 @@ export class ApiLinkTypeClientResponseModel {
 }
 export class ApiPostHistoryClientRequestModel {
 	comment : string;
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	postHistoryTypeId : number;
 	postId : number;
 	revisionGUID : string;
 	text : string;
 	userDisplayName : string;
-	userId : number;
+	userId : any;
 
 	constructor() {
 		this.comment = '';
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.postHistoryTypeId = 0;
 		this.postId = 0;
 		this.revisionGUID = '';
 		this.text = '';
 		this.userDisplayName = '';
-		this.userId = 0;
+		this.userId = null;
 	}
 }
 
 export class ApiPostHistoryClientResponseModel {
 	comment : string;
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	postHistoryTypeId : number;
 	postId : number;
 	revisionGUID : string;
 	text : string;
 	userDisplayName : string;
-	userId : number;
+	userId : any;
 
 	constructor() {
 		this.comment = '';
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.postHistoryTypeId = 0;
 		this.postId = 0;
 		this.revisionGUID = '';
 		this.text = '';
 		this.userDisplayName = '';
-		this.userId = 0;
+		this.userId = null;
 	}
 }
 export class ApiPostHistoryTypeClientRequestModel {
@@ -146,14 +146,14 @@ export class ApiPostHistoryTypeClientResponseModel {
 	}
 }
 export class ApiPostLinkClientRequestModel {
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	linkTypeId : number;
 	postId : number;
 	relatedPostId : number;
 
 	constructor() {
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.linkTypeId = 0;
 		this.postId = 0;
@@ -162,14 +162,14 @@ export class ApiPostLinkClientRequestModel {
 }
 
 export class ApiPostLinkClientResponseModel {
-	creationDate : string;
+	creationDate : any;
 	id : number;
 	linkTypeId : number;
 	postId : number;
 	relatedPostId : number;
 
 	constructor() {
-		this.creationDate = '';
+		this.creationDate = null;
 		this.id = 0;
 		this.linkTypeId = 0;
 		this.postId = 0;
@@ -177,21 +177,21 @@ export class ApiPostLinkClientResponseModel {
 	}
 }
 export class ApiPostClientRequestModel {
-	acceptedAnswerId : number;
-	answerCount : number;
+	acceptedAnswerId : any;
+	answerCount : any;
 	body : string;
-	closedDate : string;
-	commentCount : number;
-	communityOwnedDate : string;
-	creationDate : string;
-	favoriteCount : number;
+	closedDate : any;
+	commentCount : any;
+	communityOwnedDate : any;
+	creationDate : any;
+	favoriteCount : any;
 	id : number;
-	lastActivityDate : string;
-	lastEditDate : string;
+	lastActivityDate : any;
+	lastEditDate : any;
 	lastEditorDisplayName : string;
-	lastEditorUserId : number;
-	ownerUserId : number;
-	parentId : number;
+	lastEditorUserId : any;
+	ownerUserId : any;
+	parentId : any;
 	postTypeId : number;
 	score : number;
 	tag : string;
@@ -199,21 +199,21 @@ export class ApiPostClientRequestModel {
 	viewCount : number;
 
 	constructor() {
-		this.acceptedAnswerId = 0;
-		this.answerCount = 0;
+		this.acceptedAnswerId = null;
+		this.answerCount = null;
 		this.body = '';
-		this.closedDate = '';
-		this.commentCount = 0;
-		this.communityOwnedDate = '';
-		this.creationDate = '';
-		this.favoriteCount = 0;
+		this.closedDate = null;
+		this.commentCount = null;
+		this.communityOwnedDate = null;
+		this.creationDate = null;
+		this.favoriteCount = null;
 		this.id = 0;
-		this.lastActivityDate = '';
-		this.lastEditDate = '';
+		this.lastActivityDate = null;
+		this.lastEditDate = null;
 		this.lastEditorDisplayName = '';
-		this.lastEditorUserId = 0;
-		this.ownerUserId = 0;
-		this.parentId = 0;
+		this.lastEditorUserId = null;
+		this.ownerUserId = null;
+		this.parentId = null;
 		this.postTypeId = 0;
 		this.score = 0;
 		this.tag = '';
@@ -223,21 +223,21 @@ export class ApiPostClientRequestModel {
 }
 
 export class ApiPostClientResponseModel {
-	acceptedAnswerId : number;
-	answerCount : number;
+	acceptedAnswerId : any;
+	answerCount : any;
 	body : string;
-	closedDate : string;
-	commentCount : number;
-	communityOwnedDate : string;
-	creationDate : string;
-	favoriteCount : number;
+	closedDate : any;
+	commentCount : any;
+	communityOwnedDate : any;
+	creationDate : any;
+	favoriteCount : any;
 	id : number;
-	lastActivityDate : string;
-	lastEditDate : string;
+	lastActivityDate : any;
+	lastEditDate : any;
 	lastEditorDisplayName : string;
-	lastEditorUserId : number;
-	ownerUserId : number;
-	parentId : number;
+	lastEditorUserId : any;
+	ownerUserId : any;
+	parentId : any;
 	postTypeId : number;
 	score : number;
 	tag : string;
@@ -245,21 +245,21 @@ export class ApiPostClientResponseModel {
 	viewCount : number;
 
 	constructor() {
-		this.acceptedAnswerId = 0;
-		this.answerCount = 0;
+		this.acceptedAnswerId = null;
+		this.answerCount = null;
 		this.body = '';
-		this.closedDate = '';
-		this.commentCount = 0;
-		this.communityOwnedDate = '';
-		this.creationDate = '';
-		this.favoriteCount = 0;
+		this.closedDate = null;
+		this.commentCount = null;
+		this.communityOwnedDate = null;
+		this.creationDate = null;
+		this.favoriteCount = null;
 		this.id = 0;
-		this.lastActivityDate = '';
-		this.lastEditDate = '';
+		this.lastActivityDate = null;
+		this.lastEditDate = null;
 		this.lastEditorDisplayName = '';
-		this.lastEditorUserId = 0;
-		this.ownerUserId = 0;
-		this.parentId = 0;
+		this.lastEditorUserId = null;
+		this.ownerUserId = null;
+		this.parentId = null;
 		this.postTypeId = 0;
 		this.score = 0;
 		this.tag = '';
@@ -319,14 +319,14 @@ export class ApiTagClientResponseModel {
 }
 export class ApiUserClientRequestModel {
 	aboutMe : string;
-	accountId : number;
-	age : number;
-	creationDate : string;
+	accountId : any;
+	age : any;
+	creationDate : any;
 	displayName : string;
 	downVote : number;
 	emailHash : string;
 	id : number;
-	lastAccessDate : string;
+	lastAccessDate : any;
 	location : string;
 	reputation : number;
 	upVote : number;
@@ -335,14 +335,14 @@ export class ApiUserClientRequestModel {
 
 	constructor() {
 		this.aboutMe = '';
-		this.accountId = 0;
-		this.age = 0;
-		this.creationDate = '';
+		this.accountId = null;
+		this.age = null;
+		this.creationDate = null;
 		this.displayName = '';
 		this.downVote = 0;
 		this.emailHash = '';
 		this.id = 0;
-		this.lastAccessDate = '';
+		this.lastAccessDate = null;
 		this.location = '';
 		this.reputation = 0;
 		this.upVote = 0;
@@ -353,14 +353,14 @@ export class ApiUserClientRequestModel {
 
 export class ApiUserClientResponseModel {
 	aboutMe : string;
-	accountId : number;
-	age : number;
-	creationDate : string;
+	accountId : any;
+	age : any;
+	creationDate : any;
 	displayName : string;
 	downVote : number;
 	emailHash : string;
 	id : number;
-	lastAccessDate : string;
+	lastAccessDate : any;
 	location : string;
 	reputation : number;
 	upVote : number;
@@ -369,14 +369,14 @@ export class ApiUserClientResponseModel {
 
 	constructor() {
 		this.aboutMe = '';
-		this.accountId = 0;
-		this.age = 0;
-		this.creationDate = '';
+		this.accountId = null;
+		this.age = null;
+		this.creationDate = null;
 		this.displayName = '';
 		this.downVote = 0;
 		this.emailHash = '';
 		this.id = 0;
-		this.lastAccessDate = '';
+		this.lastAccessDate = null;
 		this.location = '';
 		this.reputation = 0;
 		this.upVote = 0;
@@ -385,37 +385,37 @@ export class ApiUserClientResponseModel {
 	}
 }
 export class ApiVoteClientRequestModel {
-	bountyAmount : number;
-	creationDate : string;
+	bountyAmount : any;
+	creationDate : any;
 	id : number;
 	postId : number;
-	userId : number;
+	userId : any;
 	voteTypeId : number;
 
 	constructor() {
-		this.bountyAmount = 0;
-		this.creationDate = '';
+		this.bountyAmount = null;
+		this.creationDate = null;
 		this.id = 0;
 		this.postId = 0;
-		this.userId = 0;
+		this.userId = null;
 		this.voteTypeId = 0;
 	}
 }
 
 export class ApiVoteClientResponseModel {
-	bountyAmount : number;
-	creationDate : string;
+	bountyAmount : any;
+	creationDate : any;
 	id : number;
 	postId : number;
-	userId : number;
+	userId : any;
 	voteTypeId : number;
 
 	constructor() {
-		this.bountyAmount = 0;
-		this.creationDate = '';
+		this.bountyAmount = null;
+		this.creationDate = null;
 		this.id = 0;
 		this.postId = 0;
-		this.userId = 0;
+		this.userId = null;
 		this.voteTypeId = 0;
 	}
 }
@@ -440,5 +440,5 @@ export class ApiVoteTypeClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>9cd466894201e5a18eee043f08b521f4</Hash>
+    <Hash>53d7efc970453b487926dd822000f702</Hash>
 </Codenesium>*/

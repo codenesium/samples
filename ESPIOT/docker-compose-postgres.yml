@@ -4,7 +4,7 @@ services:
 
   web:
     container_name: 'espiot-app'
-    image: 'espiot'
+    image: 'codenesium/espiot'
     build:
       context: .
       dockerfile: DockerFile
@@ -32,6 +32,16 @@ services:
     ports:
      - "5433:5432"
     restart: always
+
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: --interval 30
 
 volumes:
      pgdata:

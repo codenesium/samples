@@ -30,14 +30,6 @@ namespace PetShippingNS.Api.DataAccess
 			breedItem1.SetProperties(1, "A", 1);
 			this.Context.Breeds.Add(breedItem1);
 
-			var customerItem1 = new Customer();
-			customerItem1.SetProperties("A", "A", 1, "A", "A", "A");
-			this.Context.Customers.Add(customerItem1);
-
-			var customerCommunicationItem1 = new CustomerCommunication();
-			customerCommunicationItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
-			this.Context.CustomerCommunications.Add(customerCommunicationItem1);
-
 			var countryItem1 = new Country();
 			countryItem1.SetProperties(1, "A");
 			this.Context.Countries.Add(countryItem1);
@@ -45,6 +37,14 @@ namespace PetShippingNS.Api.DataAccess
 			var countryRequirementItem1 = new CountryRequirement();
 			countryRequirementItem1.SetProperties(1, "A", 1);
 			this.Context.CountryRequirements.Add(countryRequirementItem1);
+
+			var customerItem1 = new Customer();
+			customerItem1.SetProperties("A", "A", 1, "A", "A", "A");
+			this.Context.Customers.Add(customerItem1);
+
+			var customerCommunicationItem1 = new CustomerCommunication();
+			customerCommunicationItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
+			this.Context.CustomerCommunications.Add(customerCommunicationItem1);
 
 			var destinationItem1 = new Destination();
 			destinationItem1.SetProperties(1, 1, "A", 1);
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c4e064f9dd7bd19a86c1d098870604e</Hash>
+    <Hash>e6a4347245cb90c8a76af3608c9a8295</Hash>
 </Codenesium>*/

@@ -56,7 +56,7 @@ export class ApiPenClientResponseModel {
 	}
 }
 export class ApiPetClientRequestModel {
-	acquiredDate : string;
+	acquiredDate : any;
 	breedId : number;
 	breedIdEntity : string;
 	description : string;
@@ -68,7 +68,7 @@ export class ApiPetClientRequestModel {
 	speciesIdEntity : string;
 
 	constructor() {
-		this.acquiredDate = '';
+		this.acquiredDate = null;
 		this.breedId = 0;
 		this.breedIdEntity = '';
 		this.description = '';
@@ -82,7 +82,7 @@ export class ApiPetClientRequestModel {
 }
 
 export class ApiPetClientResponseModel {
-	acquiredDate : string;
+	acquiredDate : any;
 	breedId : number;
 	breedIdEntity : string;
 	description : string;
@@ -94,7 +94,7 @@ export class ApiPetClientResponseModel {
 	speciesIdEntity : string;
 
 	constructor() {
-		this.acquiredDate = '';
+		this.acquiredDate = null;
 		this.breedId = 0;
 		this.breedIdEntity = '';
 		this.description = '';
@@ -174,5 +174,5 @@ export class ApiSpeciesClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>ca0aa6a14a9b8ec76f49c2b5bfe78876</Hash>
+    <Hash>2911b3bbcce73c925e7b9edab44bd47b</Hash>
 </Codenesium>*/

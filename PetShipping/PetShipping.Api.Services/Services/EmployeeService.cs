@@ -12,28 +12,28 @@ namespace PetShippingNS.Api.Services
 			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
 			IDALEmployeeMapper dalEmployeeMapper,
+			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
+			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
-			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
-			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
+			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base(logger,
 			       employeeRepository,
 			       employeeModelValidator,
 			       bolEmployeeMapper,
 			       dalEmployeeMapper,
+			       bolCustomerCommunicationMapper,
+			       dalCustomerCommunicationMapper,
 			       bolPipelineStepMapper,
 			       dalPipelineStepMapper,
 			       bolPipelineStepNoteMapper,
-			       dalPipelineStepNoteMapper,
-			       bolCustomerCommunicationMapper,
-			       dalCustomerCommunicationMapper)
+			       dalPipelineStepNoteMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6098789b39297be3ff8bff849afa8fca</Hash>
+    <Hash>20cb6449d6117ae2df336b793dd08fc9</Hash>
 </Codenesium>*/

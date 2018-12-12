@@ -8,6 +8,8 @@ namespace ESPIOTNS.Api.Services.Tests
 {
 	public class DALMapperMockFactory
 	{
+		public IDALEfmigrationshistoryMapper DALEfmigrationshistoryMapperMock { get; set; } = new DALEfmigrationshistoryMapper();
+
 		public IDALDeviceMapper DALDeviceMapperMock { get; set; } = new DALDeviceMapper();
 
 		public IDALDeviceActionMapper DALDeviceActionMapperMock { get; set; } = new DALDeviceActionMapper();
@@ -19,5 +21,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>16f9b741d24932602ab678409cd0b94f</Hash>
+    <Hash>50fadca34208370b375d51181264d38d</Hash>
 </Codenesium>*/

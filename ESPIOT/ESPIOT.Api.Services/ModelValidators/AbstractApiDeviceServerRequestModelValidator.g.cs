@@ -28,6 +28,7 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -53,5 +54,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3db5a89a80eb9eb0c8a624587fce9cf7</Hash>
+    <Hash>f84ca59c044c7b8ba1f392e70499920c</Hash>
 </Codenesium>*/

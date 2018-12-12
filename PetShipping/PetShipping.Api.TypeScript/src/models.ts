@@ -23,9 +23,9 @@ export class ApiAirTransportClientRequestModel {
 	handlerId : number;
 	handlerIdEntity : string;
 	id : number;
-	landDate : string;
+	landDate : any;
 	pipelineStepId : number;
-	takeoffDate : string;
+	takeoffDate : any;
 
 	constructor() {
 		this.airlineId = 0;
@@ -33,9 +33,9 @@ export class ApiAirTransportClientRequestModel {
 		this.handlerId = 0;
 		this.handlerIdEntity = '';
 		this.id = 0;
-		this.landDate = '';
+		this.landDate = null;
 		this.pipelineStepId = 0;
-		this.takeoffDate = '';
+		this.takeoffDate = null;
 	}
 }
 
@@ -45,9 +45,9 @@ export class ApiAirTransportClientResponseModel {
 	handlerId : number;
 	handlerIdEntity : string;
 	id : number;
-	landDate : string;
+	landDate : any;
 	pipelineStepId : number;
-	takeoffDate : string;
+	takeoffDate : any;
 
 	constructor() {
 		this.airlineId = 0;
@@ -55,9 +55,9 @@ export class ApiAirTransportClientResponseModel {
 		this.handlerId = 0;
 		this.handlerIdEntity = '';
 		this.id = 0;
-		this.landDate = '';
+		this.landDate = null;
 		this.pipelineStepId = 0;
-		this.takeoffDate = '';
+		this.takeoffDate = null;
 	}
 }
 export class ApiBreedClientRequestModel {
@@ -85,80 +85,6 @@ export class ApiBreedClientResponseModel {
 		this.name = '';
 		this.speciesId = 0;
 		this.speciesIdEntity = '';
-	}
-}
-export class ApiCustomerClientRequestModel {
-	email : string;
-	firstName : string;
-	id : number;
-	lastName : string;
-	note : string;
-	phone : string;
-
-	constructor() {
-		this.email = '';
-		this.firstName = '';
-		this.id = 0;
-		this.lastName = '';
-		this.note = '';
-		this.phone = '';
-	}
-}
-
-export class ApiCustomerClientResponseModel {
-	email : string;
-	firstName : string;
-	id : number;
-	lastName : string;
-	note : string;
-	phone : string;
-
-	constructor() {
-		this.email = '';
-		this.firstName = '';
-		this.id = 0;
-		this.lastName = '';
-		this.note = '';
-		this.phone = '';
-	}
-}
-export class ApiCustomerCommunicationClientRequestModel {
-	customerId : number;
-	customerIdEntity : string;
-	dateCreated : string;
-	employeeId : number;
-	employeeIdEntity : string;
-	id : number;
-	note : string;
-
-	constructor() {
-		this.customerId = 0;
-		this.customerIdEntity = '';
-		this.dateCreated = '';
-		this.employeeId = 0;
-		this.employeeIdEntity = '';
-		this.id = 0;
-		this.note = '';
-	}
-}
-
-export class ApiCustomerCommunicationClientResponseModel {
-	customerId : number;
-	customerIdEntity : string;
-	dateCreated : string;
-	employeeId : number;
-	employeeIdEntity : string;
-	id : number;
-	note : string;
-
-	constructor() {
-		this.customerId = 0;
-		this.customerIdEntity = '';
-		this.dateCreated = '';
-		this.employeeId = 0;
-		this.employeeIdEntity = '';
-		this.id = 0;
-		this.note = '';
 	}
 }
 export class ApiCountryClientRequestModel {
@@ -205,6 +131,80 @@ export class ApiCountryRequirementClientResponseModel {
 		this.countryIdEntity = '';
 		this.detail = '';
 		this.id = 0;
+	}
+}
+export class ApiCustomerClientRequestModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	note : string;
+	phone : string;
+
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.note = '';
+		this.phone = '';
+	}
+}
+
+export class ApiCustomerClientResponseModel {
+	email : string;
+	firstName : string;
+	id : number;
+	lastName : string;
+	note : string;
+	phone : string;
+
+	constructor() {
+		this.email = '';
+		this.firstName = '';
+		this.id = 0;
+		this.lastName = '';
+		this.note = '';
+		this.phone = '';
+	}
+}
+export class ApiCustomerCommunicationClientRequestModel {
+	customerId : number;
+	customerIdEntity : string;
+	dateCreated : any;
+	employeeId : number;
+	employeeIdEntity : string;
+	id : number;
+	note : string;
+
+	constructor() {
+		this.customerId = 0;
+		this.customerIdEntity = '';
+		this.dateCreated = null;
+		this.employeeId = 0;
+		this.employeeIdEntity = '';
+		this.id = 0;
+		this.note = '';
+	}
+}
+
+export class ApiCustomerCommunicationClientResponseModel {
+	customerId : number;
+	customerIdEntity : string;
+	dateCreated : any;
+	employeeId : number;
+	employeeIdEntity : string;
+	id : number;
+	note : string;
+
+	constructor() {
+		this.customerId = 0;
+		this.customerIdEntity = '';
+		this.dateCreated = null;
+		this.employeeId = 0;
+		this.employeeIdEntity = '';
+		this.id = 0;
+		this.note = '';
 	}
 }
 export class ApiDestinationClientRequestModel {
@@ -605,7 +605,7 @@ export class ApiSaleClientRequestModel {
 	note : string;
 	petId : number;
 	petIdEntity : string;
-	saleDate : string;
+	saleDate : any;
 	salesPersonId : number;
 
 	constructor() {
@@ -615,7 +615,7 @@ export class ApiSaleClientRequestModel {
 		this.note = '';
 		this.petId = 0;
 		this.petIdEntity = '';
-		this.saleDate = '';
+		this.saleDate = null;
 		this.salesPersonId = 0;
 	}
 }
@@ -627,7 +627,7 @@ export class ApiSaleClientResponseModel {
 	note : string;
 	petId : number;
 	petIdEntity : string;
-	saleDate : string;
+	saleDate : any;
 	salesPersonId : number;
 
 	constructor() {
@@ -637,7 +637,7 @@ export class ApiSaleClientResponseModel {
 		this.note = '';
 		this.petId = 0;
 		this.petIdEntity = '';
-		this.saleDate = '';
+		this.saleDate = null;
 		this.salesPersonId = 0;
 	}
 }
@@ -662,5 +662,5 @@ export class ApiSpeciesClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>d53c80efcef38d7ca1cac0de30f04527</Hash>
+    <Hash>2a410604c26a6b0b8ccb1ce235084f51</Hash>
 </Codenesium>*/

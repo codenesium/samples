@@ -16,10 +16,10 @@ namespace PetShippingNS.Api.Client
 			from.Airlines.ForEach(x => this.AddAirline(x));
 			from.AirTransports.ForEach(x => this.AddAirTransport(x));
 			from.Breeds.ForEach(x => this.AddBreed(x));
-			from.Customers.ForEach(x => this.AddCustomer(x));
-			from.CustomerCommunications.ForEach(x => this.AddCustomerCommunication(x));
 			from.Countries.ForEach(x => this.AddCountry(x));
 			from.CountryRequirements.ForEach(x => this.AddCountryRequirement(x));
+			from.Customers.ForEach(x => this.AddCustomer(x));
+			from.CustomerCommunications.ForEach(x => this.AddCustomerCommunication(x));
 			from.Destinations.ForEach(x => this.AddDestination(x));
 			from.Employees.ForEach(x => this.AddEmployee(x));
 			from.Handlers.ForEach(x => this.AddHandler(x));
@@ -43,13 +43,13 @@ namespace PetShippingNS.Api.Client
 
 		public List<ApiBreedClientResponseModel> Breeds { get; private set; } = new List<ApiBreedClientResponseModel>();
 
-		public List<ApiCustomerClientResponseModel> Customers { get; private set; } = new List<ApiCustomerClientResponseModel>();
-
-		public List<ApiCustomerCommunicationClientResponseModel> CustomerCommunications { get; private set; } = new List<ApiCustomerCommunicationClientResponseModel>();
-
 		public List<ApiCountryClientResponseModel> Countries { get; private set; } = new List<ApiCountryClientResponseModel>();
 
 		public List<ApiCountryRequirementClientResponseModel> CountryRequirements { get; private set; } = new List<ApiCountryRequirementClientResponseModel>();
+
+		public List<ApiCustomerClientResponseModel> Customers { get; private set; } = new List<ApiCustomerClientResponseModel>();
+
+		public List<ApiCustomerCommunicationClientResponseModel> CustomerCommunications { get; private set; } = new List<ApiCustomerCommunicationClientResponseModel>();
 
 		public List<ApiDestinationClientResponseModel> Destinations { get; private set; } = new List<ApiDestinationClientResponseModel>();
 
@@ -105,22 +105,6 @@ namespace PetShippingNS.Api.Client
 			}
 		}
 
-		public void AddCustomer(ApiCustomerClientResponseModel item)
-		{
-			if (!this.Customers.Any(x => x.Id == item.Id))
-			{
-				this.Customers.Add(item);
-			}
-		}
-
-		public void AddCustomerCommunication(ApiCustomerCommunicationClientResponseModel item)
-		{
-			if (!this.CustomerCommunications.Any(x => x.Id == item.Id))
-			{
-				this.CustomerCommunications.Add(item);
-			}
-		}
-
 		public void AddCountry(ApiCountryClientResponseModel item)
 		{
 			if (!this.Countries.Any(x => x.Id == item.Id))
@@ -134,6 +118,22 @@ namespace PetShippingNS.Api.Client
 			if (!this.CountryRequirements.Any(x => x.Id == item.Id))
 			{
 				this.CountryRequirements.Add(item);
+			}
+		}
+
+		public void AddCustomer(ApiCustomerClientResponseModel item)
+		{
+			if (!this.Customers.Any(x => x.Id == item.Id))
+			{
+				this.Customers.Add(item);
+			}
+		}
+
+		public void AddCustomerCommunication(ApiCustomerCommunicationClientResponseModel item)
+		{
+			if (!this.CustomerCommunications.Any(x => x.Id == item.Id))
+			{
+				this.CustomerCommunications.Add(item);
 			}
 		}
 
@@ -260,5 +260,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>459358428d169fa736ef2835b333d96c</Hash>
+    <Hash>fd05af83ae67b94b567e67e562b65016</Hash>
 </Codenesium>*/

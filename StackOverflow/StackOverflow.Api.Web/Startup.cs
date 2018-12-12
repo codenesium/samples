@@ -41,12 +41,17 @@ namespace StackOverflowNS.Api.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+	    private ILoggerFactory loggerFactory;
+
+        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+		    this.loggerFactory = loggerFactory;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile($"appSettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
+
             this.Configuration = builder.Build();
         }
 
@@ -58,20 +63,6 @@ namespace StackOverflowNS.Api.Web
 
         public IConfigurationRoot Configuration { get; protected set; }
 
-		// Logging for Entity Framework
-        public static readonly LoggerFactory LoggerFactory
-            = new LoggerFactory(new List<ILoggerProvider>()
-            {
-                new ConsoleLoggerProvider((category, level)
-                => 
-                category == DbLoggerCategory.Database.Command.Name
-                   && level == LogLevel.Information, true),
-
-                 new DebugLoggerProvider((category, level)
-                => category == DbLoggerCategory.Database.Command.Name
-                   && level == LogLevel.Information)
-            });
-
         public virtual DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
@@ -81,8 +72,23 @@ namespace StackOverflowNS.Api.Web
                 options.EnableSensitiveDataLogging();
             }
 
-            options.UseLoggerFactory(Startup.LoggerFactory);
-            options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+            options.UseLoggerFactory(this.loggerFactory);
+
+			string provider = this.Configuration.GetValue<string>("DatabaseProvider");
+
+       		if (provider.ToUpper() == "MSSQL")
+			{
+				options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+			}
+			else if (provider.ToUpper() == "POSTGRESQL")
+			{
+				options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+			}
+			else
+			{
+				throw new Exception("Unknown database provider supplied. Valid options are MSSQL and POSTGRESQL.");
+			}
+
             return options.Options;
         }
 
@@ -110,10 +116,13 @@ namespace StackOverflowNS.Api.Web
 
         public virtual void SetupLogging(IServiceCollection services)
         {
-            services.AddLogging(logBuilder => logBuilder
-                .AddConfiguration(this.Configuration.GetSection("Logging"))
-                .AddConsole()
-                .AddDebug());
+             services.AddLogging(loggingBuilder => loggingBuilder
+				.AddConsole()
+				.AddDebug()
+				.AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information)
+				.AddFilter("System", LogLevel.Information) 
+				.AddFilter<DebugLoggerProvider>("Microsoft", LogLevel.Debug) 
+				.AddConfiguration(this.Configuration.GetSection("Logging"))); 
         }
 
         public virtual void SetupAuthentication(IServiceCollection services)
@@ -171,6 +180,8 @@ namespace StackOverflowNS.Api.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
            services.Configure<ApiSettings>(this.Configuration);
+
+		   services.AddHealthChecks();
 
 		   // enable CORS for all requests
            services.AddCors(config =>
@@ -342,10 +353,6 @@ namespace StackOverflowNS.Api.Web
           IApplicationLifetime appLifetime,
           ApplicationDbContext context)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            
-            loggerFactory.AddDebug();
-
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
                 ExceptionHandler = new ExceptionMiddleWare(env, loggerFactory).Invoke
@@ -356,6 +363,8 @@ namespace StackOverflowNS.Api.Web
             this.EnableSecurity(app);
 
             app.UseSwagger();
+				
+			app.UseHealthChecks("/api/health");
 
             app.UseSwaggerUI(c =>
             {

@@ -1,41 +1,41 @@
 export class ApiDirectTweetClientRequestModel {
 	content : string;
-	date : string;
+	date : any;
 	taggedUserId : number;
 	taggedUserIdEntity : string;
-	time : string;
+	time : any;
 	tweetId : number;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.taggedUserId = 0;
 		this.taggedUserIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetId = 0;
 	}
 }
 
 export class ApiDirectTweetClientResponseModel {
 	content : string;
-	date : string;
+	date : any;
 	taggedUserId : number;
 	taggedUserIdEntity : string;
-	time : string;
+	time : any;
 	tweetId : number;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.taggedUserId = 0;
 		this.taggedUserIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetId = 0;
 	}
 }
 export class ApiFollowerClientRequestModel {
 	blocked : string;
-	dateFollowed : string;
+	dateFollowed : any;
 	followRequestStatu : string;
 	followedUserId : number;
 	followedUserIdEntity : string;
@@ -46,7 +46,7 @@ export class ApiFollowerClientRequestModel {
 
 	constructor() {
 		this.blocked = '';
-		this.dateFollowed = '';
+		this.dateFollowed = null;
 		this.followRequestStatu = '';
 		this.followedUserId = 0;
 		this.followedUserIdEntity = '';
@@ -59,7 +59,7 @@ export class ApiFollowerClientRequestModel {
 
 export class ApiFollowerClientResponseModel {
 	blocked : string;
-	dateFollowed : string;
+	dateFollowed : any;
 	followRequestStatu : string;
 	followedUserId : number;
 	followedUserIdEntity : string;
@@ -70,7 +70,7 @@ export class ApiFollowerClientResponseModel {
 
 	constructor() {
 		this.blocked = '';
-		this.dateFollowed = '';
+		this.dateFollowed = null;
 		this.followRequestStatu = '';
 		this.followedUserId = 0;
 		this.followedUserIdEntity = '';
@@ -81,24 +81,24 @@ export class ApiFollowerClientResponseModel {
 	}
 }
 export class ApiFollowingClientRequestModel {
-	dateFollowed : string;
+	dateFollowed : any;
 	muted : string;
 	userId : number;
 
 	constructor() {
-		this.dateFollowed = '';
+		this.dateFollowed = null;
 		this.muted = '';
 		this.userId = 0;
 	}
 }
 
 export class ApiFollowingClientResponseModel {
-	dateFollowed : string;
+	dateFollowed : any;
 	muted : string;
 	userId : number;
 
 	constructor() {
-		this.dateFollowed = '';
+		this.dateFollowed = null;
 		this.muted = '';
 		this.userId = 0;
 	}
@@ -133,13 +133,13 @@ export class ApiLocationClientResponseModel {
 export class ApiMessageClientRequestModel {
 	content : string;
 	messageId : number;
-	senderUserId : number;
+	senderUserId : any;
 	senderUserIdEntity : string;
 
 	constructor() {
 		this.content = '';
 		this.messageId = 0;
-		this.senderUserId = 0;
+		this.senderUserId = null;
 		this.senderUserIdEntity = '';
 	}
 }
@@ -147,200 +147,200 @@ export class ApiMessageClientRequestModel {
 export class ApiMessageClientResponseModel {
 	content : string;
 	messageId : number;
-	senderUserId : number;
+	senderUserId : any;
 	senderUserIdEntity : string;
 
 	constructor() {
 		this.content = '';
 		this.messageId = 0;
-		this.senderUserId = 0;
+		this.senderUserId = null;
 		this.senderUserIdEntity = '';
 	}
 }
 export class ApiMessengerClientRequestModel {
-	date : string;
-	fromUserId : number;
+	date : any;
+	fromUserId : any;
 	id : number;
-	messageId : number;
+	messageId : any;
 	messageIdEntity : string;
-	time : string;
+	time : any;
 	toUserId : number;
 	toUserIdEntity : string;
-	userId : number;
+	userId : any;
 	userIdEntity : string;
 
 	constructor() {
-		this.date = '';
-		this.fromUserId = 0;
+		this.date = null;
+		this.fromUserId = null;
 		this.id = 0;
-		this.messageId = 0;
+		this.messageId = null;
 		this.messageIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.toUserId = 0;
 		this.toUserIdEntity = '';
-		this.userId = 0;
+		this.userId = null;
 		this.userIdEntity = '';
 	}
 }
 
 export class ApiMessengerClientResponseModel {
-	date : string;
-	fromUserId : number;
+	date : any;
+	fromUserId : any;
 	id : number;
-	messageId : number;
+	messageId : any;
 	messageIdEntity : string;
-	time : string;
+	time : any;
 	toUserId : number;
 	toUserIdEntity : string;
-	userId : number;
+	userId : any;
 	userIdEntity : string;
 
 	constructor() {
-		this.date = '';
-		this.fromUserId = 0;
+		this.date = null;
+		this.fromUserId = null;
 		this.id = 0;
-		this.messageId = 0;
+		this.messageId = null;
 		this.messageIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.toUserId = 0;
 		this.toUserIdEntity = '';
-		this.userId = 0;
+		this.userId = null;
 		this.userIdEntity = '';
 	}
 }
 export class ApiQuoteTweetClientRequestModel {
 	content : string;
-	date : string;
+	date : any;
 	quoteTweetId : number;
 	retweeterUserId : number;
 	retweeterUserIdEntity : string;
 	sourceTweetId : number;
 	sourceTweetIdEntity : string;
-	time : string;
+	time : any;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.quoteTweetId = 0;
 		this.retweeterUserId = 0;
 		this.retweeterUserIdEntity = '';
 		this.sourceTweetId = 0;
 		this.sourceTweetIdEntity = '';
-		this.time = '';
+		this.time = null;
 	}
 }
 
 export class ApiQuoteTweetClientResponseModel {
 	content : string;
-	date : string;
+	date : any;
 	quoteTweetId : number;
 	retweeterUserId : number;
 	retweeterUserIdEntity : string;
 	sourceTweetId : number;
 	sourceTweetIdEntity : string;
-	time : string;
+	time : any;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.quoteTweetId = 0;
 		this.retweeterUserId = 0;
 		this.retweeterUserIdEntity = '';
 		this.sourceTweetId = 0;
 		this.sourceTweetIdEntity = '';
-		this.time = '';
+		this.time = null;
 	}
 }
 export class ApiReplyClientRequestModel {
 	content : string;
-	date : string;
+	date : any;
 	replierUserId : number;
 	replierUserIdEntity : string;
 	replyId : number;
-	time : string;
+	time : any;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.replierUserId = 0;
 		this.replierUserIdEntity = '';
 		this.replyId = 0;
-		this.time = '';
+		this.time = null;
 	}
 }
 
 export class ApiReplyClientResponseModel {
 	content : string;
-	date : string;
+	date : any;
 	replierUserId : number;
 	replierUserIdEntity : string;
 	replyId : number;
-	time : string;
+	time : any;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.replierUserId = 0;
 		this.replierUserIdEntity = '';
 		this.replyId = 0;
-		this.time = '';
+		this.time = null;
 	}
 }
 export class ApiRetweetClientRequestModel {
-	date : string;
+	date : any;
 	id : number;
-	retwitterUserId : number;
+	retwitterUserId : any;
 	retwitterUserIdEntity : string;
-	time : string;
+	time : any;
 	tweetTweetId : number;
 	tweetTweetIdEntity : string;
 
 	constructor() {
-		this.date = '';
+		this.date = null;
 		this.id = 0;
-		this.retwitterUserId = 0;
+		this.retwitterUserId = null;
 		this.retwitterUserIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetTweetId = 0;
 		this.tweetTweetIdEntity = '';
 	}
 }
 
 export class ApiRetweetClientResponseModel {
-	date : string;
+	date : any;
 	id : number;
-	retwitterUserId : number;
+	retwitterUserId : any;
 	retwitterUserIdEntity : string;
-	time : string;
+	time : any;
 	tweetTweetId : number;
 	tweetTweetIdEntity : string;
 
 	constructor() {
-		this.date = '';
+		this.date = null;
 		this.id = 0;
-		this.retwitterUserId = 0;
+		this.retwitterUserId = null;
 		this.retwitterUserIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetTweetId = 0;
 		this.tweetTweetIdEntity = '';
 	}
 }
 export class ApiTweetClientRequestModel {
 	content : string;
-	date : string;
+	date : any;
 	locationId : number;
 	locationIdEntity : string;
-	time : string;
+	time : any;
 	tweetId : number;
 	userUserId : number;
 	userUserIdEntity : string;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.locationId = 0;
 		this.locationIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetId = 0;
 		this.userUserId = 0;
 		this.userUserIdEntity = '';
@@ -349,20 +349,20 @@ export class ApiTweetClientRequestModel {
 
 export class ApiTweetClientResponseModel {
 	content : string;
-	date : string;
+	date : any;
 	locationId : number;
 	locationIdEntity : string;
-	time : string;
+	time : any;
 	tweetId : number;
 	userUserId : number;
 	userUserIdEntity : string;
 
 	constructor() {
 		this.content = '';
-		this.date = '';
+		this.date = null;
 		this.locationId = 0;
 		this.locationIdEntity = '';
-		this.time = '';
+		this.time = null;
 		this.tweetId = 0;
 		this.userUserId = 0;
 		this.userUserIdEntity = '';
@@ -370,7 +370,7 @@ export class ApiTweetClientResponseModel {
 }
 export class ApiUserClientRequestModel {
 	bioImgUrl : string;
-	birthday : string;
+	birthday : any;
 	contentDescription : string;
 	email : string;
 	fullName : string;
@@ -387,7 +387,7 @@ export class ApiUserClientRequestModel {
 
 	constructor() {
 		this.bioImgUrl = '';
-		this.birthday = '';
+		this.birthday = null;
 		this.contentDescription = '';
 		this.email = '';
 		this.fullName = '';
@@ -406,7 +406,7 @@ export class ApiUserClientRequestModel {
 
 export class ApiUserClientResponseModel {
 	bioImgUrl : string;
-	birthday : string;
+	birthday : any;
 	contentDescription : string;
 	email : string;
 	fullName : string;
@@ -423,7 +423,7 @@ export class ApiUserClientResponseModel {
 
 	constructor() {
 		this.bioImgUrl = '';
-		this.birthday = '';
+		this.birthday = null;
 		this.contentDescription = '';
 		this.email = '';
 		this.fullName = '';
@@ -441,5 +441,5 @@ export class ApiUserClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>141ca409ca7f470bf485e198146d2676</Hash>
+    <Hash>780c7c6ed7bd130c80fd3010fc97ac47</Hash>
 </Codenesium>*/

@@ -119,13 +119,13 @@ export class ApiEventClientRequestModel {
 	address2 : string;
 	cityId : number;
 	cityIdEntity : string;
-	date : string;
+	date : any;
 	description : string;
-	endDate : string;
+	endDate : any;
 	facebook : string;
 	id : number;
 	name : string;
-	startDate : string;
+	startDate : any;
 	website : string;
 
 	constructor() {
@@ -133,13 +133,13 @@ export class ApiEventClientRequestModel {
 		this.address2 = '';
 		this.cityId = 0;
 		this.cityIdEntity = '';
-		this.date = '';
+		this.date = null;
 		this.description = '';
-		this.endDate = '';
+		this.endDate = null;
 		this.facebook = '';
 		this.id = 0;
 		this.name = '';
-		this.startDate = '';
+		this.startDate = null;
 		this.website = '';
 	}
 }
@@ -149,13 +149,13 @@ export class ApiEventClientResponseModel {
 	address2 : string;
 	cityId : number;
 	cityIdEntity : string;
-	date : string;
+	date : any;
 	description : string;
-	endDate : string;
+	endDate : any;
 	facebook : string;
 	id : number;
 	name : string;
-	startDate : string;
+	startDate : any;
 	website : string;
 
 	constructor() {
@@ -163,13 +163,13 @@ export class ApiEventClientResponseModel {
 		this.address2 = '';
 		this.cityId = 0;
 		this.cityIdEntity = '';
-		this.date = '';
+		this.date = null;
 		this.description = '';
-		this.endDate = '';
+		this.endDate = null;
 		this.facebook = '';
 		this.id = 0;
 		this.name = '';
-		this.startDate = '';
+		this.startDate = null;
 		this.website = '';
 	}
 }
@@ -204,7 +204,7 @@ export class ApiSaleClientRequestModel {
 	id : number;
 	ipAddress : string;
 	note : string;
-	saleDate : string;
+	saleDate : any;
 	transactionId : number;
 	transactionIdEntity : string;
 
@@ -212,7 +212,7 @@ export class ApiSaleClientRequestModel {
 		this.id = 0;
 		this.ipAddress = '';
 		this.note = '';
-		this.saleDate = '';
+		this.saleDate = null;
 		this.transactionId = 0;
 		this.transactionIdEntity = '';
 	}
@@ -222,7 +222,7 @@ export class ApiSaleClientResponseModel {
 	id : number;
 	ipAddress : string;
 	note : string;
-	saleDate : string;
+	saleDate : any;
 	transactionId : number;
 	transactionIdEntity : string;
 
@@ -230,7 +230,7 @@ export class ApiSaleClientResponseModel {
 		this.id = 0;
 		this.ipAddress = '';
 		this.note = '';
-		this.saleDate = '';
+		this.saleDate = null;
 		this.transactionId = 0;
 		this.transactionIdEntity = '';
 	}
@@ -392,5 +392,5 @@ export class ApiVenueClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>16fed79c0b0a05574ed235dba64e8410</Hash>
+    <Hash>87ddf8c1c3d5777b901b3b80e9a1b349</Hash>
 </Codenesium>*/

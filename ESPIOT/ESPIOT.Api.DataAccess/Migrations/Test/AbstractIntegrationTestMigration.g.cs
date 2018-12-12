@@ -18,6 +18,10 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual async Task Migrate()
 		{
+			var efmigrationshistoryItem1 = new Efmigrationshistory();
+			efmigrationshistoryItem1.SetProperties("A", "A");
+			this.Context.Efmigrationshistories.Add(efmigrationshistoryItem1);
+
 			var deviceItem1 = new Device();
 			deviceItem1.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			this.Context.Devices.Add(deviceItem1);
@@ -32,5 +36,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b1db372615c54e75a36011f80f41c93</Hash>
+    <Hash>9310f11787fb1336febd10634571f950</Hash>
 </Codenesium>*/

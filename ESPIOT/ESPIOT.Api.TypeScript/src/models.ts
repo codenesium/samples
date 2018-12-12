@@ -1,58 +1,77 @@
-export class ApiDeviceClientRequestModel {
-	id : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-	name : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-	publicId : MAPPING_NOT_FOUND_MapContainer->GetMapping uuid;
+export class ApiEfmigrationshistoryClientRequestModel {
+	migrationId : string;
+	productVersion : string;
 
 	constructor() {
-		this.id = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-		this.name = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-		this.publicId = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping uuid;
+		this.migrationId = '';
+		this.productVersion = '';
+	}
+}
+
+export class ApiEfmigrationshistoryClientResponseModel {
+	migrationId : string;
+	productVersion : string;
+
+	constructor() {
+		this.migrationId = '';
+		this.productVersion = '';
+	}
+}
+export class ApiDeviceClientRequestModel {
+	id : number;
+	name : string;
+	publicId : any;
+
+	constructor() {
+		this.id = 0;
+		this.name = '';
+		this.publicId = null;
 	}
 }
 
 export class ApiDeviceClientResponseModel {
-	id : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-	name : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-	publicId : MAPPING_NOT_FOUND_MapContainer->GetMapping uuid;
+	id : number;
+	name : string;
+	publicId : any;
 
 	constructor() {
-		this.id = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-		this.name = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-		this.publicId = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping uuid;
+		this.id = 0;
+		this.name = '';
+		this.publicId = null;
 	}
 }
 export class ApiDeviceActionClientRequestModel {
-	deviceId : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
+	deviceId : number;
 	deviceIdEntity : string;
-	id : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-	name : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-	value : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
+	id : number;
+	name : string;
+	value : string;
 
 	constructor() {
-		this.deviceId = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
+		this.deviceId = 0;
 		this.deviceIdEntity = '';
-		this.id = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-		this.name = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-		this.value = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
+		this.id = 0;
+		this.name = '';
+		this.value = '';
 	}
 }
 
 export class ApiDeviceActionClientResponseModel {
-	deviceId : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
+	deviceId : number;
 	deviceIdEntity : string;
-	id : MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-	name : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-	value : MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
+	id : number;
+	name : string;
+	value : string;
 
 	constructor() {
-		this.deviceId = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
+		this.deviceId = 0;
 		this.deviceIdEntity = '';
-		this.id = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping integer;
-		this.name = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
-		this.value = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping character varying;
+		this.id = 0;
+		this.name = '';
+		this.value = '';
 	}
 }
 
 /*<Codenesium>
-    <Hash>453a9444e9ddd67862f0230654ca710c</Hash>
+    <Hash>a2ea1f71de142a74de014c1cd4239c38</Hash>
 </Codenesium>*/

@@ -48,13 +48,13 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<Breed> Breeds { get; set; }
 
-		public virtual DbSet<Customer> Customers { get; set; }
-
-		public virtual DbSet<CustomerCommunication> CustomerCommunications { get; set; }
-
 		public virtual DbSet<Country> Countries { get; set; }
 
 		public virtual DbSet<CountryRequirement> CountryRequirements { get; set; }
+
+		public virtual DbSet<Customer> Customers { get; set; }
+
+		public virtual DbSet<CustomerCommunication> CustomerCommunications { get; set; }
 
 		public virtual DbSet<Destination> Destinations { get; set; }
 
@@ -153,6 +153,28 @@ namespace PetShippingNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
+			modelBuilder.Entity<Country>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Country>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<CountryRequirement>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<CountryRequirement>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<Customer>()
 			.HasKey(c => new
 			{
@@ -164,28 +186,6 @@ namespace PetShippingNS.Api.DataAccess
 			{
 				c.Id,
 			});
-
-			modelBuilder.Entity<Country>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<Country>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<CountryRequirement>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<CountryRequirement>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
 
 			modelBuilder.Entity<Destination>()
 			.HasKey(c => new
@@ -382,5 +382,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7285b8b8c65379906da172dd5ae7d32f</Hash>
+    <Hash>54d2e044d62c5e505c0b371fb31a8a5b</Hash>
 </Codenesium>*/

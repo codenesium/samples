@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
 	<RootNamespace>StackOverflowNS.Api.Services</RootNamespace>
   </PropertyGroup>
 
@@ -12,12 +12,11 @@
 
   <ItemGroup>
     <PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
-	<PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+	<PackageReference Include="Microsoft.AspNetCore.App" />
 	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.1.0" />
   </ItemGroup>
   
-    
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>StackOverflow.Api.Services.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

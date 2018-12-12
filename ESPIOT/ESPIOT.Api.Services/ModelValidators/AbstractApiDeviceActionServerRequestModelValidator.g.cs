@@ -33,11 +33,13 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		public virtual void @ValueRules()
 		{
+			this.RuleFor(x => x.@Value).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.@Value).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -51,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>779b5a10f2bb117321189554f7c2d82b</Hash>
+    <Hash>b8ce48587702b07d352e73098154513b</Hash>
 </Codenesium>*/

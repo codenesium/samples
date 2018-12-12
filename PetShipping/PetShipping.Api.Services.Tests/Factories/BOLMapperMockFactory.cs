@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IBOLBreedMapper BOLBreedMapperMock { get; set; } = new BOLBreedMapper();
 
-		public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
-
-		public IBOLCustomerCommunicationMapper BOLCustomerCommunicationMapperMock { get; set; } = new BOLCustomerCommunicationMapper();
-
 		public IBOLCountryMapper BOLCountryMapperMock { get; set; } = new BOLCountryMapper();
 
 		public IBOLCountryRequirementMapper BOLCountryRequirementMapperMock { get; set; } = new BOLCountryRequirementMapper();
+
+		public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
+
+		public IBOLCustomerCommunicationMapper BOLCustomerCommunicationMapperMock { get; set; } = new BOLCustomerCommunicationMapper();
 
 		public IBOLDestinationMapper BOLDestinationMapperMock { get; set; } = new BOLDestinationMapper();
 
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>332b6d813bfa21c70696bbebf4e688d2</Hash>
+    <Hash>4bf083025d0749478b376b196b8fd501</Hash>
 </Codenesium>*/

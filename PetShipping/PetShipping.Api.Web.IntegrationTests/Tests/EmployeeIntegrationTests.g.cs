@@ -198,6 +198,34 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
+		public virtual async void TestForeignKeyCustomerCommunicationsByEmployeeIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeyCustomerCommunicationsByEmployeeIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
 		public virtual async void TestForeignKeyPipelineStepsByShipperIdFound()
 		{
 			var builder = new WebHostBuilder()
@@ -254,34 +282,6 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
-		public virtual async void TestForeignKeyCustomerCommunicationsByEmployeeIdFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(1);
-
-			response.Should().NotBeEmpty();
-		}
-
-		[Fact]
-		public virtual async void TestForeignKeyCustomerCommunicationsByEmployeeIdNotFound()
-		{
-			var builder = new WebHostBuilder()
-			              .UseEnvironment("Production")
-			              .UseStartup<TestStartup>();
-			TestServer testServer = new TestServer(builder);
-
-			var client = new ApiClient(testServer.CreateClient());
-			List<ApiCustomerCommunicationClientResponseModel> response = await client.CustomerCommunicationsByEmployeeId(default(int));
-
-			response.Should().BeEmpty();
-		}
-
-		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -304,5 +304,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>082849a3eecbb150b589db748020f103</Hash>
+    <Hash>48211670ca3a263d09f5632a8e1546b3</Hash>
 </Codenesium>*/

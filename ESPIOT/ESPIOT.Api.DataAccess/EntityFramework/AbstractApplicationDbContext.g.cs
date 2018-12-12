@@ -42,6 +42,8 @@ namespace ESPIOTNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
+		public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
+
 		public virtual DbSet<Device> Devices { get; set; }
 
 		public virtual DbSet<DeviceAction> DeviceActions { get; set; }
@@ -80,6 +82,12 @@ namespace ESPIOTNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Efmigrationshistory>()
+			.HasKey(c => new
+			{
+				c.MigrationId,
+			});
+
 			modelBuilder.Entity<Device>()
 			.HasKey(c => new
 			{
@@ -132,5 +140,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ac3f8fbaace955b1a63f284894efaf9</Hash>
+    <Hash>cd055ead2566bf09bb3d9c7d78b2c132</Hash>
 </Codenesium>*/

@@ -260,6 +260,152 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPetClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<CreateResponse<List<ApiCountryClientResponseModel>>> CountryBulkInsertAsync(List<ApiCountryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Countries/BulkInsert", items, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryClientResponseModel>>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiCountryClientResponseModel>> CountryCreateAsync(ApiCountryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Countries", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiCountryClientResponseModel>> CountryUpdateAsync(int id, ApiCountryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Countries/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> CountryDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Countries/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiCountryClientResponseModel> CountryGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiCountryClientResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiCountryClientResponseModel>> CountryAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiCountryClientResponseModel> response = new List<ApiCountryClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
+
+				this.HandleResponseCode(httpResponse);
+				List<ApiCountryClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
+		}
+
+		public virtual async Task<List<ApiCountryRequirementClientResponseModel>> CountryRequirementsByCountryId(int countryId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{countryId}/CountryRequirements", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiDestinationClientResponseModel>> DestinationsByCountryId(int countryId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{countryId}/Destinations", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiDestinationClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<List<ApiCountryRequirementClientResponseModel>>> CountryRequirementBulkInsertAsync(List<ApiCountryRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRequirementClientResponseModel>>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiCountryRequirementClientResponseModel>> CountryRequirementCreateAsync(ApiCountryRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRequirements", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiCountryRequirementClientResponseModel>> CountryRequirementUpdateAsync(int id, ApiCountryRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/CountryRequirements/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> CountryRequirementDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/CountryRequirements/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiCountryRequirementClientResponseModel> CountryRequirementGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CountryRequirements/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiCountryRequirementClientResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiCountryRequirementClientResponseModel>> CountryRequirementAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiCountryRequirementClientResponseModel> response = new List<ApiCountryRequirementClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CountryRequirements?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
+
+				this.HandleResponseCode(httpResponse);
+				List<ApiCountryRequirementClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
+		}
+
 		public virtual async Task<CreateResponse<List<ApiCustomerClientResponseModel>>> CustomerBulkInsertAsync(List<ApiCustomerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Customers/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -414,152 +560,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCountryClientResponseModel>>> CountryBulkInsertAsync(List<ApiCountryClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Countries/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiCountryClientResponseModel>> CountryCreateAsync(ApiCountryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Countries", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiCountryClientResponseModel>> CountryUpdateAsync(int id, ApiCountryClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/Countries/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> CountryDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/Countries/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiCountryClientResponseModel> CountryGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiCountryClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiCountryClientResponseModel>> CountryAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiCountryClientResponseModel> response = new List<ApiCountryClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiCountryClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiCountryClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
-		public virtual async Task<List<ApiCountryRequirementClientResponseModel>> CountryRequirementsByCountryId(int countryId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{countryId}/CountryRequirements", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiDestinationClientResponseModel>> DestinationsByCountryId(int countryId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Countries/{countryId}/Destinations", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiDestinationClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<List<ApiCountryRequirementClientResponseModel>>> CountryRequirementBulkInsertAsync(List<ApiCountryRequirementClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCountryRequirementClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiCountryRequirementClientResponseModel>> CountryRequirementCreateAsync(ApiCountryRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CountryRequirements", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiCountryRequirementClientResponseModel>> CountryRequirementUpdateAsync(int id, ApiCountryRequirementClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/CountryRequirements/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> CountryRequirementDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/CountryRequirements/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiCountryRequirementClientResponseModel> CountryRequirementGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CountryRequirements/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiCountryRequirementClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiCountryRequirementClientResponseModel>> CountryRequirementAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiCountryRequirementClientResponseModel> response = new List<ApiCountryRequirementClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CountryRequirements?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiCountryRequirementClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiCountryRequirementClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
 		public virtual async Task<CreateResponse<List<ApiDestinationClientResponseModel>>> DestinationBulkInsertAsync(List<ApiDestinationClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Destinations/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -698,6 +698,14 @@ namespace PetShippingNS.Api.Client
 			return response;
 		}
 
+		public virtual async Task<List<ApiCustomerCommunicationClientResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Employees/{employeeId}/CustomerCommunications", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiPipelineStepClientResponseModel>> PipelineStepsByShipperId(int shipperId, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Employees/{shipperId}/PipelineSteps", cancellationToken).ConfigureAwait(false);
@@ -712,14 +720,6 @@ namespace PetShippingNS.Api.Client
 
 			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiCustomerCommunicationClientResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Employees/{employeeId}/CustomerCommunications", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<List<ApiCustomerCommunicationClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiHandlerClientResponseModel>>> HandlerBulkInsertAsync(List<ApiHandlerClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -1691,5 +1691,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>005758c311f6e681bddd711564e67e35</Hash>
+    <Hash>12a017397c7d4bd98ea8d1ef1ff32418</Hash>
 </Codenesium>*/

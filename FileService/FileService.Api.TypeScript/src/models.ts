@@ -1,34 +1,34 @@
 export class ApiBucketClientRequestModel {
-	externalId : string;
+	externalId : any;
 	id : number;
 	name : string;
 
 	constructor() {
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.name = '';
 	}
 }
 
 export class ApiBucketClientResponseModel {
-	externalId : string;
+	externalId : any;
 	id : number;
 	name : string;
 
 	constructor() {
-		this.externalId = '';
+		this.externalId = null;
 		this.id = 0;
 		this.name = '';
 	}
 }
 export class ApiFileClientRequestModel {
-	bucketId : number;
+	bucketId : any;
 	bucketIdEntity : string;
-	dateCreated : string;
+	dateCreated : any;
 	description : string;
-	expiration : string;
+	expiration : any;
 	extension : string;
-	externalId : string;
+	externalId : any;
 	fileSizeInByte : number;
 	fileTypeId : number;
 	fileTypeIdEntity : string;
@@ -38,13 +38,13 @@ export class ApiFileClientRequestModel {
 	publicKey : string;
 
 	constructor() {
-		this.bucketId = 0;
+		this.bucketId = null;
 		this.bucketIdEntity = '';
-		this.dateCreated = '';
+		this.dateCreated = null;
 		this.description = '';
-		this.expiration = '';
+		this.expiration = null;
 		this.extension = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.fileSizeInByte = 0;
 		this.fileTypeId = 0;
 		this.fileTypeIdEntity = '';
@@ -56,13 +56,13 @@ export class ApiFileClientRequestModel {
 }
 
 export class ApiFileClientResponseModel {
-	bucketId : number;
+	bucketId : any;
 	bucketIdEntity : string;
-	dateCreated : string;
+	dateCreated : any;
 	description : string;
-	expiration : string;
+	expiration : any;
 	extension : string;
-	externalId : string;
+	externalId : any;
 	fileSizeInByte : number;
 	fileTypeId : number;
 	fileTypeIdEntity : string;
@@ -72,13 +72,13 @@ export class ApiFileClientResponseModel {
 	publicKey : string;
 
 	constructor() {
-		this.bucketId = 0;
+		this.bucketId = null;
 		this.bucketIdEntity = '';
-		this.dateCreated = '';
+		this.dateCreated = null;
 		this.description = '';
-		this.expiration = '';
+		this.expiration = null;
 		this.extension = '';
-		this.externalId = '';
+		this.externalId = null;
 		this.fileSizeInByte = 0;
 		this.fileTypeId = 0;
 		this.fileTypeIdEntity = '';
@@ -109,5 +109,5 @@ export class ApiFileTypeClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>34110dbd9c32f2d342d73caa0bc935ea</Hash>
+    <Hash>8cd49c90e2f1b8faecd6570da0e22adf</Hash>
 </Codenesium>*/

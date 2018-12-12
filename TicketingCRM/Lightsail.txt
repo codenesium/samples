@@ -1,0 +1,86 @@
+This setup is for ubuntu,.NET Core and Postgres on AWS LightSail. This will install and run the ticketingcrm docker application.
+It will set the docker daemon to run on boot. Your containers should start automatically becuase the docker compose
+file has the containers set to restart always. 
+Watchtower is also set up. Watchtower is a container that polls docker hub for new images and updates your containers sutomatically.
+
+1. Execute from the AWS CLI. You may get errors if you don't execute them one at a time.
+aws lightsail create-instances --instance-name "ticketingcrm" --availability-zone "us-east-1b" --blueprint-id "ubuntu_18_04" --bundle-id nano_2_0
+aws lightsail create-disk --disk-name ticketingcrm-data --availability-zone "us-east-1b" --size-in-gb 8
+aws lightsail open-instance-public-ports --port-info fromPort=8000,toPort=8000,protocol=TCP --instance-name="ticketingcrm"
+aws lightsail attach-disk --disk-name ticketingcrm-data --instance-name ticketingcrm --disk-path /dev/xvdf
+aws lightsail allocate-static-ip --static-ip-name "ticketingcrm-ip" 
+aws lightsail attach-static-ip --static-ip-name "ticketingcrm-ip" --instance-name "ticketingcrm"
+aws lightsail get-instance --instance-name "ticketingcrm"
+
+2. SSH into the created instance and execute the script below. You can get to the terminal from the LightSail web view.
+This will create a docker-compose.yml file and a setup.sh script that will set up Docker on the machine and
+docker-compose up your container. It will also set up the volume you created earlier so that your database can be persisted.
+You have to presee enter after pasting it to the terminal. 
+
+sudo echo "version: '2'
+services:
+
+  web:
+    container_name: 'ticketingcrm-app'
+    image: 'codenesium/ticketingcrm'
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+       - ASPNETCORE_URLS=http://+:8000
+       - ConnectionStrings__ApplicationDbContext=Host=ticketingcrm-db;Persist Security Info=False;User ID=postgres;Password=test;Database=ticketingcrm;
+    volumes:
+      - .:/var/www/app
+    ports:
+     - "8000:8000"
+    restart: always
+    depends_on:
+     - "postgres"
+    networks:
+      - ticketingcrm-network
+
+  postgres:
+    container_name: 'ticketingcrm-db'
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ticketingcrm
+    networks:
+      - ticketingcrm-network
+    ports:
+     - "5433:5432"
+    restart: always
+    volumes:
+         - /database/ticketingcrm:/var/lib/postgresql/data
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command: --interval 30
+
+networks:
+    ticketingcrm-network:
+       driver: bridge" >> docker-compose.yml;
+	   
+sudo echo '#!/bin/bash
+sudo file -s /dev/xvdf && 
+sudo mkfs -t ext4 /dev/xvdf && 
+sudo mkdir /database &&
+sudo mkdir /database/ticketingcrm &&
+sudo mount /dev/xvdf  /database/ticketingcrm && 
+sudo rmdir /database/ticketingcrm/lost+found && 
+sudo apt-get update && 
+sudo apt-get install -y docker && 
+sudo apt-get install -y docker-compose && 
+sudo service docker start && 
+sudo systemctl enable docker  &&
+docker pull codenesium/ticketingcrm && 
+sudo docker-compose up;' >> setup.sh;
+
+chmod 755 setup.sh;
+sudo sh ./setup.sh;

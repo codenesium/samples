@@ -11,8 +11,12 @@ namespace StudioResourceManagerNS.Api.Web
 {
     public class TestStartup : Startup
     {
-        public TestStartup(IHostingEnvironment env)
+		private ILoggerFactory loggerFactory;
+        
+		public TestStartup(IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+			 this.loggerFactory = loggerFactory;
+
              var builder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile($"appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
@@ -31,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Web
                 options.EnableSensitiveDataLogging();
             }
 
-            options.UseLoggerFactory(Startup.LoggerFactory);
+            options.UseLoggerFactory(this.loggerFactory);
             options.UseSqlite(connection);
 
             return options.Options;

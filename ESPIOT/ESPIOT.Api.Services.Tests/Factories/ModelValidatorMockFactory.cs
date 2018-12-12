@@ -9,12 +9,18 @@ namespace ESPIOTNS.Api.Services.Tests
 {
 	public class ModelValidatorMockFactory
 	{
+		public Mock<IApiEfmigrationshistoryServerRequestModelValidator> EfmigrationshistoryModelValidatorMock { get; set; } = new Mock<IApiEfmigrationshistoryServerRequestModelValidator>();
+
 		public Mock<IApiDeviceServerRequestModelValidator> DeviceModelValidatorMock { get; set; } = new Mock<IApiDeviceServerRequestModelValidator>();
 
 		public Mock<IApiDeviceActionServerRequestModelValidator> DeviceActionModelValidatorMock { get; set; } = new Mock<IApiDeviceActionServerRequestModelValidator>();
 
 		public ModelValidatorMockFactory()
 		{
+			this.EfmigrationshistoryModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEfmigrationshistoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.EfmigrationshistoryModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiEfmigrationshistoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.EfmigrationshistoryModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.DeviceModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.DeviceModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.DeviceModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -27,5 +33,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>16e99769790a6587c3989b5c294b3264</Hash>
+    <Hash>820fa015c02b3507d676008a6247f7bf</Hash>
 </Codenesium>*/

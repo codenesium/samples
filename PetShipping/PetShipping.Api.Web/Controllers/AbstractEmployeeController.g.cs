@@ -217,6 +217,23 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("{employeeId}/CustomerCommunications")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiCustomerCommunicationServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> CustomerCommunicationsByEmployeeId(int employeeId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCustomerCommunicationServerResponseModel> response = await this.EmployeeService.CustomerCommunicationsByEmployeeId(employeeId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
 		[Route("{shipperId}/PipelineSteps")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPipelineStepServerResponseModel>), 200)]
@@ -250,23 +267,6 @@ namespace PetShippingNS.Api.Web
 			return this.Ok(response);
 		}
 
-		[HttpGet]
-		[Route("{employeeId}/CustomerCommunications")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCustomerCommunicationServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> CustomerCommunicationsByEmployeeId(int employeeId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiCustomerCommunicationServerResponseModel> response = await this.EmployeeService.CustomerCommunicationsByEmployeeId(employeeId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiEmployeeServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiEmployeeServerRequestModel> patch)
 		{
 			var record = await this.EmployeeService.Get(id);
@@ -286,5 +286,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1c0c9e6dbd094ec227560aa678ec97c2</Hash>
+    <Hash>b5835ce66ea7697dde041892eb12510e</Hash>
 </Codenesium>*/
