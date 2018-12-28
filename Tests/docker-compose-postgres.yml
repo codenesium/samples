@@ -9,18 +9,20 @@ services:
       context: .
       dockerfile: DockerFile
     environment:
-       - ASPNETCORE_URLS=http://+:8000
+       - ASPNETCORE_URLS=http://+:80
        - ConnectionStrings__ApplicationDbContext=Host=tests-db;Persist Security Info=False;User ID=postgres;Password=test;Database=tests;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
     volumes:
       - .:/var/www/app
     ports:
-     - "8000:8000"
+     - "80:80"
     depends_on:
-     - "postgres"
+     - "db"
     networks:
       - tests-network
 
-  postgres:
+  db:
     container_name: 'tests-db'
     image: postgres:9.6-alpine
     environment:
@@ -33,6 +35,15 @@ services:
      - "5433:5432"
     restart: always
 
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    networks:
+      - tests-network
 volumes:
      pgdata:
 

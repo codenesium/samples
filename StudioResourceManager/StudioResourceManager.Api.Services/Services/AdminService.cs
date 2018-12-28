@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public AdminService(
 			ILogger<IAdminRepository> logger,
+			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper)
 			: base(logger,
+			       mediator,
 			       adminRepository,
 			       adminModelValidator,
 			       bolAdminMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86513b8cd2c3b67558dbfbebd48f3374</Hash>
+    <Hash>ca82078d3bb3d24c68d4df141578946a</Hash>
 </Codenesium>*/

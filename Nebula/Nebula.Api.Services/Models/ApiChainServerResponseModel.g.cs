@@ -26,7 +26,7 @@ namespace NebulaNS.Api.Services
 		public int ChainStatusId { get; private set; }
 
 		[JsonProperty]
-		public string ChainStatusIdEntity { get; set; }
+		public string ChainStatusIdEntity { get; private set; } = RouteConstants.ChainStatuses;
 
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
@@ -41,10 +41,10 @@ namespace NebulaNS.Api.Services
 		public int TeamId { get; private set; }
 
 		[JsonProperty]
-		public string TeamIdEntity { get; set; }
+		public string TeamIdEntity { get; private set; } = RouteConstants.Teams;
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c87c15ff0a3cee4a163f4150c2aeb20</Hash>
+    <Hash>0b1ad39d4f01fcbd5819c2fab99d24da</Hash>
 </Codenesium>*/

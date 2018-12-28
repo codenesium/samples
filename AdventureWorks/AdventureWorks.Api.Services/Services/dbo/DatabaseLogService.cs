@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public DatabaseLogService(
 			ILogger<IDatabaseLogRepository> logger,
+			IMediator mediator,
 			IDatabaseLogRepository databaseLogRepository,
 			IApiDatabaseLogServerRequestModelValidator databaseLogModelValidator,
 			IBOLDatabaseLogMapper bolDatabaseLogMapper,
 			IDALDatabaseLogMapper dalDatabaseLogMapper)
 			: base(logger,
+			       mediator,
 			       databaseLogRepository,
 			       databaseLogModelValidator,
 			       bolDatabaseLogMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08794bb5bffa2a39b0413331df7b21ad</Hash>
+    <Hash>00fa34080b0cbb816c9a63ca3efe6c5b</Hash>
 </Codenesium>*/

@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Address_rowguid.
 		public async virtual Task<Address> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Address>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Address>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode.
 		public async virtual Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
-			return await this.Context.Set<Address>().SingleOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
+			return await this.Context.Set<Address>().FirstOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 		}
 
 		// Non-unique constraint IX_Address_StateProvinceID.
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f66fe233ddcd0876407f2bca1f2058ee</Hash>
+    <Hash>917a84810214e1b9760f37a08f41aaa9</Hash>
 </Codenesium>*/

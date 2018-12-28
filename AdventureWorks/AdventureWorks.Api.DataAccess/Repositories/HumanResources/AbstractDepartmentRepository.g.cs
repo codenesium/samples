@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Department_Name.
 		public async virtual Task<Department> ByName(string name)
 		{
-			return await this.Context.Set<Department>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Department>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Department>> Where(
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f8304ae4df3eac312b0bf93b7161b3e8</Hash>
+    <Hash>bcd09f2a219b5828a59bbd690bc252ab</Hash>
 </Codenesium>*/

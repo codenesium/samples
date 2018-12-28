@@ -9,6 +9,7 @@ using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new PipelineStepStepRequirement());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -45,6 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var record = new PipelineStepStepRequirement();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -62,6 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepStepRequirement>(null));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -80,6 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiPipelineStepStepRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -91,6 +96,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PipelineStepStepRequirement>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPipelineStepStepRequirementServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     validatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -111,6 +118,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -132,6 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PipelineStepStepRequirement>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace PetShippingNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     validatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -153,6 +164,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiPipelineStepStepRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -173,6 +186,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPipelineStepStepRequirementServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
+			                                                     mock.MediatorMock.Object,
 			                                                     mock.RepositoryMock.Object,
 			                                                     validatorMock.Object,
 			                                                     mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -193,10 +208,11 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepStepRequirementDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56e98c5e30610edbd2e04c84d18621dc</Hash>
+    <Hash>10c54a8ed2ab12d7fbde1c094cc060ff</Hash>
 </Codenesium>*/

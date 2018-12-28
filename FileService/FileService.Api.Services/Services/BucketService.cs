@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace FileServiceNS.Api.Services
@@ -8,6 +9,7 @@ namespace FileServiceNS.Api.Services
 	{
 		public BucketService(
 			ILogger<IBucketRepository> logger,
+			IMediator mediator,
 			IBucketRepository bucketRepository,
 			IApiBucketServerRequestModelValidator bucketModelValidator,
 			IBOLBucketMapper bolBucketMapper,
@@ -15,6 +17,7 @@ namespace FileServiceNS.Api.Services
 			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base(logger,
+			       mediator,
 			       bucketRepository,
 			       bucketModelValidator,
 			       bolBucketMapper,
@@ -27,5 +30,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7003f8f0d576c58042e66fe2f19c2573</Hash>
+    <Hash>9223e861ef45e6253e02ecc0e948ea9c</Hash>
 </Codenesium>*/

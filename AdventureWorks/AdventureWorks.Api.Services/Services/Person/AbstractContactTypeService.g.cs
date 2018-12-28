@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractContactTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IContactTypeRepository ContactTypeRepository { get; private set; }
 
 		protected IApiContactTypeServerRequestModelValidator ContactTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractContactTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IContactTypeRepository contactTypeRepository,
 			IApiContactTypeServerRequestModelValidator contactTypeModelValidator,
 			IBOLContactTypeMapper bolContactTypeMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolContactTypeMapper = bolContactTypeMapper;
 			this.DalContactTypeMapper = dalContactTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiContactTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolContactTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.ContactTypeRepository.Create(this.DalContactTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolContactTypeMapper.MapBOToModel(this.DalContactTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalContactTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolContactTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ContactTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ContactTypeRepository.Get(contactTypeID);
 
-				return ValidationResponseFactory<ApiContactTypeServerResponseModel>.UpdateResponse(this.BolContactTypeMapper.MapBOToModel(this.DalContactTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalContactTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolContactTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ContactTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiContactTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ContactTypeRepository.Delete(contactTypeID);
+
+				await this.mediator.Publish(new ContactTypeDeletedNotification(contactTypeID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1112834f3fb0bd30c11c6471446b1acc</Hash>
+    <Hash>f8dc43898ea8ce1eeed97d2b8ecd2ca8</Hash>
 </Codenesium>*/

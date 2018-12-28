@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShoppingCartItemService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IShoppingCartItemRepository ShoppingCartItemRepository { get; private set; }
 
 		protected IApiShoppingCartItemServerRequestModelValidator ShoppingCartItemModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShoppingCartItemService(
 			ILogger logger,
+			IMediator mediator,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IApiShoppingCartItemServerRequestModelValidator shoppingCartItemModelValidator,
 			IBOLShoppingCartItemMapper bolShoppingCartItemMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolShoppingCartItemMapper = bolShoppingCartItemMapper;
 			this.DalShoppingCartItemMapper = dalShoppingCartItemMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiShoppingCartItemServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolShoppingCartItemMapper.MapModelToBO(default(int), model);
 				var record = await this.ShoppingCartItemRepository.Create(this.DalShoppingCartItemMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
+				var businessObject = this.DalShoppingCartItemMapper.MapEFToBO(record);
+				response.SetRecord(this.BolShoppingCartItemMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ShoppingCartItemCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
-				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
+				var businessObject = this.DalShoppingCartItemMapper.MapEFToBO(record);
+				var apiModel = this.BolShoppingCartItemMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ShoppingCartItemUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ShoppingCartItemRepository.Delete(shoppingCartItemID);
+
+				await this.mediator.Publish(new ShoppingCartItemDeletedNotification(shoppingCartItemID));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>918f4d575d581c9f8046db3e82f22d06</Hash>
+    <Hash>1926123953fdc10f7baf289bf92ad0e4</Hash>
 </Codenesium>*/

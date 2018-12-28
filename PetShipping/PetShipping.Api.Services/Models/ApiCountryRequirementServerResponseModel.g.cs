@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
-		public string CountryIdEntity { get; set; }
+		public string CountryIdEntity { get; private set; } = RouteConstants.Countries;
 
 		[JsonProperty]
 		public string Detail { get; private set; }
@@ -33,5 +33,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b599bee734c5fd00644f3710f2e27e6</Hash>
+    <Hash>89df1802c2b8f6bd95ccebe60babe1c3</Hash>
 </Codenesium>*/

@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Machine_MachineGuid.
 		public async virtual Task<Machine> ByMachineGuid(Guid machineGuid)
 		{
-			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.MachineGuid == machineGuid);
+			return await this.Context.Set<Machine>().FirstOrDefaultAsync(x => x.MachineGuid == machineGuid);
 		}
 
 		// Foreign key reference to this table Link via assignedMachineId.
@@ -112,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1619b0a18d865ea37d662542e7dc1ecf</Hash>
+    <Hash>8e9201ad50a094bf8d818fff189793ba</Hash>
 </Codenesium>*/

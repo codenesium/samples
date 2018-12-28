@@ -9,6 +9,7 @@ using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Machine());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -47,6 +49,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Machine();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -66,6 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -86,6 +90,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiMachineServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Machine>())).Returns(Task.FromResult(new Machine()));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -99,6 +104,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Machine>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiMachineServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -121,6 +128,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMachineServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Machine>())).Returns(Task.FromResult(new Machine()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -144,6 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Machine>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace NebulaNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -167,6 +178,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiMachineServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -189,6 +202,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiMachineServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -211,6 +226,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MachineDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Machine();
 			mock.RepositoryMock.Setup(x => x.ByMachineGuid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -239,6 +256,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			mock.RepositoryMock.Setup(x => x.ByMachineGuid(It.IsAny<Guid>())).Returns(Task.FromResult<Machine>(null));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -260,6 +278,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Link());
 			mock.RepositoryMock.Setup(x => x.LinksByAssignedMachineId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -279,6 +298,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			mock.RepositoryMock.Setup(x => x.LinksByAssignedMachineId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
 			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
@@ -295,5 +315,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>640e30e5d7fe9e0cc786412149300688</Hash>
+    <Hash>69c8e12be985d27c4241fcd39aeed0f4</Hash>
 </Codenesium>*/

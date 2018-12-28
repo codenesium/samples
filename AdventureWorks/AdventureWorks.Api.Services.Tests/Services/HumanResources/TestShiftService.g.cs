@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Shift());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Shift();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Shift>(null));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiShiftServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Shift>())).Returns(Task.FromResult(new Shift()));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Shift>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiShiftServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShiftServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Shift>())).Returns(Task.FromResult(new Shift()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Shift>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShiftServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiShiftServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiShiftServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShiftDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -202,6 +218,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Shift();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -219,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Shift>(null));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -237,6 +255,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Shift();
 			mock.RepositoryMock.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult(record));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -254,6 +273,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			mock.RepositoryMock.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
 			var service = new ShiftService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
@@ -268,5 +288,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e98e676048161d196b91861e138ba471</Hash>
+    <Hash>b3f44f1fa1fae15d35e237910f9d0419</Hash>
 </Codenesium>*/

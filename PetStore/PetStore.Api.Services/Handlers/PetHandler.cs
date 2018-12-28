@@ -1,0 +1,65 @@
+using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace PetStoreNS.Api.Services
+{
+	public class PetCreatedHandler : INotificationHandler<PetCreatedNotification>
+	{
+		public async Task Handle(PetCreatedNotification notification, CancellationToken cancellation)
+		{
+			await Task.CompletedTask;
+		}
+	}
+
+	public class PetUpdatedHandler : INotificationHandler<PetUpdatedNotification>
+	{
+		public async Task Handle(PetUpdatedNotification notification, CancellationToken cancellation)
+		{
+			await Task.CompletedTask;
+		}
+	}
+
+	public class PetDeletedHandler : INotificationHandler<PetDeletedNotification>
+	{
+		public async Task Handle(PetDeletedNotification notification, CancellationToken cancellation)
+		{
+			await Task.CompletedTask;
+		}
+	}
+
+	public class PetCreatedNotification : INotification
+	{
+		public ApiPetServerResponseModel Record { get; private set; }
+
+		public PetCreatedNotification(ApiPetServerResponseModel record)
+		{
+			this.Record = record;
+		}
+	}
+
+	public class PetUpdatedNotification : INotification
+	{
+		public ApiPetServerResponseModel Record { get; private set; }
+
+		public PetUpdatedNotification(ApiPetServerResponseModel record)
+		{
+			this.Record = record;
+		}
+	}
+
+	public class PetDeletedNotification : INotification
+	{
+		public int Id { get; private set; }
+
+		public PetDeletedNotification(int id)
+		{
+			this.Id = id;
+		}
+	}
+}
+
+/*<Codenesium>
+    <Hash>a12b6b8d33ce330fc2d9f08826111258</Hash>
+</Codenesium>*/

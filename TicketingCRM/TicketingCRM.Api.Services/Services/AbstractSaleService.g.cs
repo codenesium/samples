@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractSaleService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISaleRepository SaleRepository { get; private set; }
 
 		protected IApiSaleServerRequestModelValidator SaleModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractSaleService(
 			ILogger logger,
+			IMediator mediator,
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
@@ -32,6 +36,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSaleServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
 				var record = await this.SaleRepository.Create(this.DalSaleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
+				var businessObject = this.DalSaleMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSaleMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SaleCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.SaleRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
+				var businessObject = this.DalSaleMapper.MapEFToBO(record);
+				var apiModel = this.BolSaleMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SaleUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.SaleRepository.Delete(id);
+
+				await this.mediator.Publish(new SaleDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b807ec5ce338f996246a5aab6682125</Hash>
+    <Hash>f48e62de4f41eeb08e902bd8d5c1c64c</Hash>
 </Codenesium>*/

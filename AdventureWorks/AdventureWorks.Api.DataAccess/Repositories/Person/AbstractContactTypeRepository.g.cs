@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ContactType_Name.
 		public async virtual Task<ContactType> ByName(string name)
 		{
-			return await this.Context.Set<ContactType>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ContactType>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<ContactType>> Where(
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6fc09dd58d06da424a90bff60e6c210</Hash>
+    <Hash>e8cbd7b65d8949d6a1c0ee57569ea9f8</Hash>
 </Codenesium>*/

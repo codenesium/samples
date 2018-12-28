@@ -28,10 +28,10 @@ namespace TicketingCRMNS.Api.Services
 		public int TicketStatusId { get; private set; }
 
 		[JsonProperty]
-		public string TicketStatusIdEntity { get; set; }
+		public string TicketStatusIdEntity { get; private set; } = RouteConstants.TicketStatus;
 	}
 }
 
 /*<Codenesium>
-    <Hash>313226adab76ea19c48b6139e223645c</Hash>
+    <Hash>1b577b27b9b7bc6b4f4c8ff831a22c17</Hash>
 </Codenesium>*/

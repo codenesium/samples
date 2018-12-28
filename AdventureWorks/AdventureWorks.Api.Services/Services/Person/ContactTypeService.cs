@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public ContactTypeService(
 			ILogger<IContactTypeRepository> logger,
+			IMediator mediator,
 			IContactTypeRepository contactTypeRepository,
 			IApiContactTypeServerRequestModelValidator contactTypeModelValidator,
 			IBOLContactTypeMapper bolContactTypeMapper,
 			IDALContactTypeMapper dalContactTypeMapper)
 			: base(logger,
+			       mediator,
 			       contactTypeRepository,
 			       contactTypeModelValidator,
 			       bolContactTypeMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>773af6ee08455067e380bac1ecd11c34</Hash>
+    <Hash>ca9304e6ed284934b9696e5752653590</Hash>
 </Codenesium>*/

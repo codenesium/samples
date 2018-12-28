@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostLinkService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPostLinkRepository PostLinkRepository { get; private set; }
 
 		protected IApiPostLinkServerRequestModelValidator PostLinkModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractPostLinkService(
 			ILogger logger,
+			IMediator mediator,
 			IPostLinkRepository postLinkRepository,
 			IApiPostLinkServerRequestModelValidator postLinkModelValidator,
 			IBOLPostLinkMapper bolPostLinkMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolPostLinkMapper = bolPostLinkMapper;
 			this.DalPostLinkMapper = dalPostLinkMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPostLinkServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolPostLinkMapper.MapModelToBO(default(int), model);
 				var record = await this.PostLinkRepository.Create(this.DalPostLinkMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPostLinkMapper.MapBOToModel(this.DalPostLinkMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostLinkMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPostLinkMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PostLinkCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostLinkRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPostLinkServerResponseModel>.UpdateResponse(this.BolPostLinkMapper.MapBOToModel(this.DalPostLinkMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostLinkMapper.MapEFToBO(record);
+				var apiModel = this.BolPostLinkMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PostLinkUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPostLinkServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.PostLinkRepository.Delete(id);
+
+				await this.mediator.Publish(new PostLinkDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62c187046c4254f55b859bb4ba3cdeb7</Hash>
+    <Hash>db8c2c11671c9d6c74fad51edc73b165</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public EventService(
 			ILogger<IEventRepository> logger,
+			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
+			       mediator,
 			       eventRepository,
 			       eventModelValidator,
 			       bolEventMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57b2e6d34247e2803c3974badfab0cc1</Hash>
+    <Hash>76f4008f77c13e7157a4a731339cadd6</Hash>
 </Codenesium>*/

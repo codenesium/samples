@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCityService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICityRepository CityRepository { get; private set; }
 
 		protected IApiCityServerRequestModelValidator CityModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractCityService(
 			ILogger logger,
+			IMediator mediator,
 			ICityRepository cityRepository,
 			IApiCityServerRequestModelValidator cityModelValidator,
 			IBOLCityMapper bolCityMapper,
@@ -40,6 +44,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolCityMapper.MapModelToBO(default(int), model);
 				var record = await this.CityRepository.Create(this.DalCityMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(record)));
+				var businessObject = this.DalCityMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCityMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CityCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.CityRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCityServerResponseModel>.UpdateResponse(this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(record)));
+				var businessObject = this.DalCityMapper.MapEFToBO(record);
+				var apiModel = this.BolCityMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CityUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCityServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.CityRepository.Delete(id);
+
+				await this.mediator.Publish(new CityDeletedNotification(id));
 			}
 
 			return response;
@@ -130,5 +144,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3944492de3aaa81412686c2f66d05a15</Hash>
+    <Hash>e98372bfce822370a6eb852f8ad7644d</Hash>
 </Codenesium>*/

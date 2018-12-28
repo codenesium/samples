@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new AWBuildVersion());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new AWBuildVersion();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<AWBuildVersion>(null));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiAWBuildVersionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AWBuildVersion>())).Returns(Task.FromResult(new AWBuildVersion()));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAWBuildVersionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<AWBuildVersion>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiAWBuildVersionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiAWBuildVersionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAWBuildVersionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AWBuildVersion>())).Returns(Task.FromResult(new AWBuildVersion()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<AWBuildVersion>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AWBuildVersion()));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAWBuildVersionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiAWBuildVersionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiAWBuildVersionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
@@ -193,10 +208,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AWBuildVersionDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bec50ca7e0c66e0f6190593df4912910</Hash>
+    <Hash>f5b51dc703e4a189b72bb58550f763af</Hash>
 </Codenesium>*/

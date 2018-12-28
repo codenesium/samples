@@ -31,8 +31,7 @@ namespace StackOverflowNS.Api.Web
         {
             return WebHost.CreateDefaultBuilder(args)
                      .UseStartup<Startup>()
-                     .UseKestrel()
-                     .UseUrls("http://0.0.0.0:8000");
+                     .UseKestrel();
         }
 
         public static IWebHostBuilder CreateWebHostBuilderForService(string[] args)
@@ -46,8 +45,7 @@ namespace StackOverflowNS.Api.Web
                 })
                 .UseContentRoot(pathToContentRoot)
                 .UseStartup<Startup>()
-                .UseKestrel()
-                .UseUrls("http://0.0.0.0:8000");
+                .UseKestrel();
         }
     }
 }

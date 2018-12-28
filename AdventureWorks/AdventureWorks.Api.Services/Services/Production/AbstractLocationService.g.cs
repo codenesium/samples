@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractLocationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ILocationRepository LocationRepository { get; private set; }
 
 		protected IApiLocationServerRequestModelValidator LocationModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractLocationService(
 			ILogger logger,
+			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
 			IBOLLocationMapper bolLocationMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolLocationMapper = bolLocationMapper;
 			this.DalLocationMapper = dalLocationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolLocationMapper.MapModelToBO(default(short), model);
 				var record = await this.LocationRepository.Create(this.DalLocationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
+				var businessObject = this.DalLocationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolLocationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new LocationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.LocationRepository.Get(locationID);
 
-				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
+				var businessObject = this.DalLocationMapper.MapEFToBO(record);
+				var apiModel = this.BolLocationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new LocationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.LocationRepository.Delete(locationID);
+
+				await this.mediator.Publish(new LocationDeletedNotification(locationID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2c78225acab849ac8ff7414d918b0a9</Hash>
+    <Hash>baa92fa81c26b27d8538ec357e630902</Hash>
 </Codenesium>*/

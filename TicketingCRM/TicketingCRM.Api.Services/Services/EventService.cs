@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public EventService(
 			ILogger<IEventRepository> logger,
+			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
+			       mediator,
 			       eventRepository,
 			       eventModelValidator,
 			       bolEventMapper,
@@ -23,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3a8acc6a010f079d9519ac6953f9ae5</Hash>
+    <Hash>93fe7674930060e0ff33cf9cb10922ee</Hash>
 </Codenesium>*/

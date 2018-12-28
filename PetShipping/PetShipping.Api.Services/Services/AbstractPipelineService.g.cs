@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPipelineRepository PipelineRepository { get; private set; }
 
 		protected IApiPipelineServerRequestModelValidator PipelineModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractPipelineService(
 			ILogger logger,
+			IMediator mediator,
 			IPipelineRepository pipelineRepository,
 			IApiPipelineServerRequestModelValidator pipelineModelValidator,
 			IBOLPipelineMapper bolPipelineMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolPipelineMapper = bolPipelineMapper;
 			this.DalPipelineMapper = dalPipelineMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPipelineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolPipelineMapper.MapModelToBO(default(int), model);
 				var record = await this.PipelineRepository.Create(this.DalPipelineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPipelineMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PipelineCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.PipelineRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPipelineServerResponseModel>.UpdateResponse(this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineMapper.MapEFToBO(record);
+				var apiModel = this.BolPipelineMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PipelineUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPipelineServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.PipelineRepository.Delete(id);
+
+				await this.mediator.Publish(new PipelineDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab1e2a7f78fec60027d2615cf15adf9d</Hash>
+    <Hash>28fe857c1b3121897e1f3c868df8ba1e</Hash>
 </Codenesium>*/

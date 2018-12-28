@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_AddressType_Name.
 		public async virtual Task<AddressType> ByName(string name)
 		{
-			return await this.Context.Set<AddressType>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<AddressType>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_AddressType_rowguid.
 		public async virtual Task<AddressType> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<AddressType>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<AddressType>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<AddressType>> Where(
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8dfe6ba97487394b7f995f6e2da0a964</Hash>
+    <Hash>980ad33416e04cd58ff3cff3cd0740c0</Hash>
 </Codenesium>*/

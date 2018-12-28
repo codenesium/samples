@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPaymentTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPaymentTypeRepository PaymentTypeRepository { get; private set; }
 
 		protected IApiPaymentTypeServerRequestModelValidator PaymentTypeModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetStoreNS.Api.Services
 
 		public AbstractPaymentTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
 			IBOLPaymentTypeMapper bolPaymentTypeMapper,
@@ -40,6 +44,8 @@ namespace PetStoreNS.Api.Services
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPaymentTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetStoreNS.Api.Services
 				var bo = this.BolPaymentTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.PaymentTypeRepository.Create(this.DalPaymentTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPaymentTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPaymentTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PaymentTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetStoreNS.Api.Services
 
 				var record = await this.PaymentTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPaymentTypeServerResponseModel>.UpdateResponse(this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPaymentTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolPaymentTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PaymentTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPaymentTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetStoreNS.Api.Services
 			if (response.Success)
 			{
 				await this.PaymentTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new PaymentTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>931ab3f966dd2fc98a3d7da8ba42c414</Hash>
+    <Hash>f0069c2636e1ade7613cece3daaa607e</Hash>
 </Codenesium>*/

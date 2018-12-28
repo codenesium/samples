@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public EmployeeService(
 			ILogger<IEmployeeRepository> logger,
+			IMediator mediator,
 			IEmployeeRepository employeeRepository,
 			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
@@ -19,6 +21,7 @@ namespace PetShippingNS.Api.Services
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base(logger,
+			       mediator,
 			       employeeRepository,
 			       employeeModelValidator,
 			       bolEmployeeMapper,
@@ -35,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20cb6449d6117ae2df336b793dd08fc9</Hash>
+    <Hash>b8f9084e20ea6290ec8c59a584a21f1b</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public CurrencyRateService(
 			ILogger<ICurrencyRateRepository> logger,
+			IMediator mediator,
 			ICurrencyRateRepository currencyRateRepository,
 			IApiCurrencyRateServerRequestModelValidator currencyRateModelValidator,
 			IBOLCurrencyRateMapper bolCurrencyRateMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
+			       mediator,
 			       currencyRateRepository,
 			       currencyRateModelValidator,
 			       bolCurrencyRateMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e2b670c96283b37207c4b96a7efb4af</Hash>
+    <Hash>5db149befbbf910ee713fd807e9b1f52</Hash>
 </Codenesium>*/

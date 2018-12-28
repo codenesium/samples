@@ -9,6 +9,7 @@ using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Student());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -45,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var record = new Student();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -62,6 +65,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStudentRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Student>(null));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -80,6 +84,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiStudentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Student>())).Returns(Task.FromResult(new Student()));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -91,6 +96,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StudentModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Student>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiStudentServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -111,6 +118,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStudentServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Student>())).Returns(Task.FromResult(new Student()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -132,6 +141,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StudentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Student>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -153,6 +164,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiStudentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -173,6 +186,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StudentModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiStudentServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -193,6 +208,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StudentDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Student());
 			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -220,6 +237,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStudentRepository>();
 			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -239,6 +257,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Student());
 			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -256,6 +275,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStudentRepository>();
 			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
 			var service = new StudentService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
@@ -270,5 +290,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6e05457738bda8c7ddb59c7b854a9913</Hash>
+    <Hash>d80025a94e72284807caaea0d37952c8</Hash>
 </Codenesium>*/

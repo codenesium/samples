@@ -6,6 +6,12 @@ using System.Text;
 
 namespace FileServiceNS.Api.Services
 {
+	public class RouteConstants
+	{public const string Buckets = "buckets";
+	 public const string Files = "files";
+	 public const string FileTypes = "filetypes";
+	 public const string VersionInfoes = "versioninfoes";}
+
 	public abstract class AbstractService
 	{
 	}
@@ -65,5 +71,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0dbf0c4b12ba28639257864e249faa44</Hash>
+    <Hash>6dfc30083b6f1876ce1200329ea5f954</Hash>
 </Codenesium>*/

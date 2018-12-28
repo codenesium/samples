@@ -6,6 +6,30 @@ using System.Text;
 
 namespace PetShippingNS.Api.Services
 {
+	public class RouteConstants
+	{public const string Airlines = "airlines";
+	 public const string AirTransports = "airtransports";
+	 public const string Breeds = "breeds";
+	 public const string Countries = "countries";
+	 public const string CountryRequirements = "countryrequirements";
+	 public const string Customers = "customers";
+	 public const string CustomerCommunications = "customercommunications";
+	 public const string Destinations = "destinations";
+	 public const string Employees = "employees";
+	 public const string Handlers = "handlers";
+	 public const string HandlerPipelineSteps = "handlerpipelinesteps";
+	 public const string OtherTransports = "othertransports";
+	 public const string Pets = "pets";
+	 public const string Pipelines = "pipelines";
+	 public const string PipelineStatus = "pipelinestatus";
+	 public const string PipelineSteps = "pipelinesteps";
+	 public const string PipelineStepDestinations = "pipelinestepdestinations";
+	 public const string PipelineStepNotes = "pipelinestepnotes";
+	 public const string PipelineStepStatus = "pipelinestepstatus";
+	 public const string PipelineStepStepRequirements = "pipelinestepsteprequirements";
+	 public const string Sales = "sales";
+	 public const string Species = "species";}
+
 	public abstract class AbstractService
 	{
 	}
@@ -65,5 +89,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e715bd4cdcb669fc57901808f5fb8231</Hash>
+    <Hash>9247f4cd54f6ad4ad0121cc0f2a6d771</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractUserService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IUserRepository UserRepository { get; private set; }
 
 		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractUserService(
 			ILogger logger,
+			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolUserMapper = bolUserMapper;
 			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
 				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				response.SetRecord(this.BolUserMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new UserCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.UserRepository.Get(id);
 
-				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				var apiModel = this.BolUserMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new UserUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(id);
+
+				await this.mediator.Publish(new UserDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a23db4f7f1a3b145f03ae10746568678</Hash>
+    <Hash>670de1ab5926f8cdf06951f405df2acc</Hash>
 </Codenesium>*/

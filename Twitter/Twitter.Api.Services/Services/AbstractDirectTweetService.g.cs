@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractDirectTweetService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IDirectTweetRepository DirectTweetRepository { get; private set; }
 
 		protected IApiDirectTweetServerRequestModelValidator DirectTweetModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractDirectTweetService(
 			ILogger logger,
+			IMediator mediator,
 			IDirectTweetRepository directTweetRepository,
 			IApiDirectTweetServerRequestModelValidator directTweetModelValidator,
 			IBOLDirectTweetMapper bolDirectTweetMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolDirectTweetMapper = bolDirectTweetMapper;
 			this.DalDirectTweetMapper = dalDirectTweetMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiDirectTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolDirectTweetMapper.MapModelToBO(default(int), model);
 				var record = await this.DirectTweetRepository.Create(this.DalDirectTweetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalDirectTweetMapper.MapEFToBO(record);
+				response.SetRecord(this.BolDirectTweetMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new DirectTweetCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.DirectTweetRepository.Get(tweetId);
 
-				return ValidationResponseFactory<ApiDirectTweetServerResponseModel>.UpdateResponse(this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalDirectTweetMapper.MapEFToBO(record);
+				var apiModel = this.BolDirectTweetMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new DirectTweetUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDirectTweetServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.DirectTweetRepository.Delete(tweetId);
+
+				await this.mediator.Publish(new DirectTweetDeletedNotification(tweetId));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e077a1292389ebdd256fd5b360297d77</Hash>
+    <Hash>5790cec43804b54bdd47817821fe1cc3</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractVPersonService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IVPersonRepository VPersonRepository { get; private set; }
 
 		protected IApiVPersonServerRequestModelValidator VPersonModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractVPersonService(
 			ILogger logger,
+			IMediator mediator,
 			IVPersonRepository vPersonRepository,
 			IApiVPersonServerRequestModelValidator vPersonModelValidator,
 			IBOLVPersonMapper bolVPersonMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolVPersonMapper = bolVPersonMapper;
 			this.DalVPersonMapper = dalVPersonMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiVPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolVPersonMapper.MapModelToBO(default(int), model);
 				var record = await this.VPersonRepository.Create(this.DalVPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalVPersonMapper.MapEFToBO(record);
+				response.SetRecord(this.BolVPersonMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new VPersonCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.VPersonRepository.Get(personId);
 
-				return ValidationResponseFactory<ApiVPersonServerResponseModel>.UpdateResponse(this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalVPersonMapper.MapEFToBO(record);
+				var apiModel = this.BolVPersonMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new VPersonUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiVPersonServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.VPersonRepository.Delete(personId);
+
+				await this.mediator.Publish(new VPersonDeletedNotification(personId));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e59de247f2dbcf1bcc2e5c9b03814217</Hash>
+    <Hash>58ae2c7e2112a2a6453857c0d9f9b7b8</Hash>
 </Codenesium>*/

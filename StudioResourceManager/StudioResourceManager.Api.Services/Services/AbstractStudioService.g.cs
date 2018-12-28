@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractStudioService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IStudioRepository StudioRepository { get; private set; }
 
 		protected IApiStudioServerRequestModelValidator StudioModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractStudioService(
 			ILogger logger,
+			IMediator mediator,
 			IStudioRepository studioRepository,
 			IApiStudioServerRequestModelValidator studioModelValidator,
 			IBOLStudioMapper bolStudioMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolStudioMapper = bolStudioMapper;
 			this.DalStudioMapper = dalStudioMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiStudioServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolStudioMapper.MapModelToBO(default(int), model);
 				var record = await this.StudioRepository.Create(this.DalStudioMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
+				var businessObject = this.DalStudioMapper.MapEFToBO(record);
+				response.SetRecord(this.BolStudioMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new StudioCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.StudioRepository.Get(id);
 
-				return ValidationResponseFactory<ApiStudioServerResponseModel>.UpdateResponse(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
+				var businessObject = this.DalStudioMapper.MapEFToBO(record);
+				var apiModel = this.BolStudioMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new StudioUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiStudioServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.StudioRepository.Delete(id);
+
+				await this.mediator.Publish(new StudioDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>adb2300e7488ae4656c0a3e2eb95a518</Hash>
+    <Hash>312e15b9b8c0488beee33919077ce89a</Hash>
 </Codenesium>*/

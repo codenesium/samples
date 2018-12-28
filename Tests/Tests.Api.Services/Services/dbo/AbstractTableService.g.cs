@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTableService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITableRepository TableRepository { get; private set; }
 
 		protected IApiTableServerRequestModelValidator TableModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTableService(
 			ILogger logger,
+			IMediator mediator,
 			ITableRepository tableRepository,
 			IApiTableServerRequestModelValidator tableModelValidator,
 			IBOLTableMapper bolTableMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolTableMapper = bolTableMapper;
 			this.DalTableMapper = dalTableMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolTableMapper.MapModelToBO(default(int), model);
 				var record = await this.TableRepository.Create(this.DalTableMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
+				var businessObject = this.DalTableMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTableMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TableCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TableRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTableServerResponseModel>.UpdateResponse(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
+				var businessObject = this.DalTableMapper.MapEFToBO(record);
+				var apiModel = this.BolTableMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TableUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTableServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.TableRepository.Delete(id);
+
+				await this.mediator.Publish(new TableDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>583bfa81e46ddd67e35ba0ef3a6f204b</Hash>
+    <Hash>bfe6807d2d7b12895313dd029c420f42</Hash>
 </Codenesium>*/

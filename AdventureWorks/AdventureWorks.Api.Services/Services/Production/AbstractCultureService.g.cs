@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCultureService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICultureRepository CultureRepository { get; private set; }
 
 		protected IApiCultureServerRequestModelValidator CultureModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCultureService(
 			ILogger logger,
+			IMediator mediator,
 			ICultureRepository cultureRepository,
 			IApiCultureServerRequestModelValidator cultureModelValidator,
 			IBOLCultureMapper bolCultureMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolCultureMapper = bolCultureMapper;
 			this.DalCultureMapper = dalCultureMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCultureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolCultureMapper.MapModelToBO(default(string), model);
 				var record = await this.CultureRepository.Create(this.DalCultureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(record)));
+				var businessObject = this.DalCultureMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCultureMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CultureCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CultureRepository.Get(cultureID);
 
-				return ValidationResponseFactory<ApiCultureServerResponseModel>.UpdateResponse(this.BolCultureMapper.MapBOToModel(this.DalCultureMapper.MapEFToBO(record)));
+				var businessObject = this.DalCultureMapper.MapEFToBO(record);
+				var apiModel = this.BolCultureMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CultureUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCultureServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.CultureRepository.Delete(cultureID);
+
+				await this.mediator.Publish(new CultureDeletedNotification(cultureID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f11ab71cf1abb3f3ef7e1b15335d08d4</Hash>
+    <Hash>f732197901ebf92b2ec363ef1d022453</Hash>
 </Codenesium>*/

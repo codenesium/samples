@@ -43,13 +43,13 @@ namespace NebulaNS.Api.Services
 		public int? AssignedMachineId { get; private set; }
 
 		[JsonProperty]
-		public string AssignedMachineIdEntity { get; set; }
+		public string AssignedMachineIdEntity { get; private set; } = RouteConstants.Machines;
 
 		[JsonProperty]
 		public int ChainId { get; private set; }
 
 		[JsonProperty]
-		public string ChainIdEntity { get; set; }
+		public string ChainIdEntity { get; private set; } = RouteConstants.Chains;
 
 		[Required]
 		[JsonProperty]
@@ -73,7 +73,7 @@ namespace NebulaNS.Api.Services
 		public int LinkStatusId { get; private set; }
 
 		[JsonProperty]
-		public string LinkStatusIdEntity { get; set; }
+		public string LinkStatusIdEntity { get; private set; } = RouteConstants.LinkStatuses;
 
 		[JsonProperty]
 		public string Name { get; private set; }
@@ -95,5 +95,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6d5640a086448acbb11b098ffc62293</Hash>
+    <Hash>90d6fd3a78196dc7a89416457dc8cda4</Hash>
 </Codenesium>*/

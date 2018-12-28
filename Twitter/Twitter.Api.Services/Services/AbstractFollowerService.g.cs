@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractFollowerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IFollowerRepository FollowerRepository { get; private set; }
 
 		protected IApiFollowerServerRequestModelValidator FollowerModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractFollowerService(
 			ILogger logger,
+			IMediator mediator,
 			IFollowerRepository followerRepository,
 			IApiFollowerServerRequestModelValidator followerModelValidator,
 			IBOLFollowerMapper bolFollowerMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolFollowerMapper = bolFollowerMapper;
 			this.DalFollowerMapper = dalFollowerMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiFollowerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolFollowerMapper.MapModelToBO(default(int), model);
 				var record = await this.FollowerRepository.Create(this.DalFollowerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(record)));
+				var businessObject = this.DalFollowerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolFollowerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new FollowerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.FollowerRepository.Get(id);
 
-				return ValidationResponseFactory<ApiFollowerServerResponseModel>.UpdateResponse(this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(record)));
+				var businessObject = this.DalFollowerMapper.MapEFToBO(record);
+				var apiModel = this.BolFollowerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new FollowerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiFollowerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.FollowerRepository.Delete(id);
+
+				await this.mediator.Publish(new FollowerDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4ef35cbe6e24006cd44bf3e8048999c</Hash>
+    <Hash>8918cbb02bac594d5abffd64a700020b</Hash>
 </Codenesium>*/

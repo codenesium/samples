@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new CreditCard());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new CreditCard();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiCreditCardServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CreditCard>())).Returns(Task.FromResult(new CreditCard()));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCreditCardServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CreditCard>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCreditCardServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCreditCardServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCreditCardServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CreditCard>())).Returns(Task.FromResult(new CreditCard()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCreditCardServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CreditCard>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCreditCardServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CreditCard()));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCreditCardServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiCreditCardServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCreditCardServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CreditCardDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new CreditCard();
 			mock.RepositoryMock.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
 			mock.RepositoryMock.Setup(x => x.ByCardNumber(It.IsAny<string>())).Returns(Task.FromResult<CreditCard>(null));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -260,6 +278,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new SalesOrderHeader());
 			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -279,6 +298,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
 			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new CreditCardService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
@@ -295,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5f265011b729abdc5dc9bba1a2b4ef74</Hash>
+    <Hash>2af9e81c2b4d7a8d5e2582912876f543</Hash>
 </Codenesium>*/

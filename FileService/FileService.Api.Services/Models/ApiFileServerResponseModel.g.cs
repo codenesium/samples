@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.Services
 		public int? BucketId { get; private set; }
 
 		[JsonProperty]
-		public string BucketIdEntity { get; set; }
+		public string BucketIdEntity { get; private set; } = RouteConstants.Buckets;
 
 		[JsonProperty]
 		public DateTime DateCreated { get; private set; }
@@ -66,7 +66,7 @@ namespace FileServiceNS.Api.Services
 		public int FileTypeId { get; private set; }
 
 		[JsonProperty]
-		public string FileTypeIdEntity { get; set; }
+		public string FileTypeIdEntity { get; private set; } = RouteConstants.FileTypes;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -83,5 +83,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6cd870997dc383c5688c0785cf7f6c3</Hash>
+    <Hash>c5a943a3aa04c6a88f7f4f7968414ac1</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractUnitMeasureService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IUnitMeasureRepository UnitMeasureRepository { get; private set; }
 
 		protected IApiUnitMeasureServerRequestModelValidator UnitMeasureModelValidator { get; private set; }
@@ -29,6 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractUnitMeasureService(
 			ILogger logger,
+			IMediator mediator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
 			IBOLUnitMeasureMapper bolUnitMeasureMapper,
@@ -48,6 +52,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolProductMapper = bolProductMapper;
 			this.DalProductMapper = dalProductMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -81,7 +87,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolUnitMeasureMapper.MapModelToBO(default(string), model);
 				var record = await this.UnitMeasureRepository.Create(this.DalUnitMeasureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolUnitMeasureMapper.MapBOToModel(this.DalUnitMeasureMapper.MapEFToBO(record)));
+				var businessObject = this.DalUnitMeasureMapper.MapEFToBO(record);
+				response.SetRecord(this.BolUnitMeasureMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new UnitMeasureCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,7 +108,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.UnitMeasureRepository.Get(unitMeasureCode);
 
-				return ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.UpdateResponse(this.BolUnitMeasureMapper.MapBOToModel(this.DalUnitMeasureMapper.MapEFToBO(record)));
+				var businessObject = this.DalUnitMeasureMapper.MapEFToBO(record);
+				var apiModel = this.BolUnitMeasureMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new UnitMeasureUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiUnitMeasureServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -116,6 +128,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.UnitMeasureRepository.Delete(unitMeasureCode);
+
+				await this.mediator.Publish(new UnitMeasureDeletedNotification(unitMeasureCode));
 			}
 
 			return response;
@@ -159,5 +173,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b230dcd9c96e2e6bf32627b71898ebf6</Hash>
+    <Hash>f4c7efc400525d540f2087ccc39bfd47</Hash>
 </Codenesium>*/

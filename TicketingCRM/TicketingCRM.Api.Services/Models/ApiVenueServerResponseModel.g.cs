@@ -42,7 +42,7 @@ namespace TicketingCRMNS.Api.Services
 		public int AdminId { get; private set; }
 
 		[JsonProperty]
-		public string AdminIdEntity { get; set; }
+		public string AdminIdEntity { get; private set; } = RouteConstants.Admins;
 
 		[JsonProperty]
 		public string Email { get; private set; }
@@ -63,7 +63,7 @@ namespace TicketingCRMNS.Api.Services
 		public int ProvinceId { get; private set; }
 
 		[JsonProperty]
-		public string ProvinceIdEntity { get; set; }
+		public string ProvinceIdEntity { get; private set; } = RouteConstants.Provinces;
 
 		[JsonProperty]
 		public string Website { get; private set; }
@@ -71,5 +71,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bb4501cbf09903fa1dbee657c60b3b1</Hash>
+    <Hash>bb9c8117c42ee09e1c28f1bf9e067df1</Hash>
 </Codenesium>*/

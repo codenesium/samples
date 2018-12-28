@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Location());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -49,6 +51,7 @@ namespace TwitterNS.Api.Services.Tests
 			var record = new Location();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -70,6 +73,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Location>(null));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -92,6 +96,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiLocationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -107,6 +112,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Location>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -117,6 +123,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiLocationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -131,6 +138,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLocationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -141,6 +149,7 @@ namespace TwitterNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Location()));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -156,6 +165,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Location>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -167,6 +177,7 @@ namespace TwitterNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Location()));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -181,6 +192,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -190,6 +202,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiLocationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -205,6 +218,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -215,6 +229,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiLocationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -229,6 +244,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LocationDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -239,6 +255,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Tweet());
 			mock.RepositoryMock.Setup(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -260,6 +277,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			mock.RepositoryMock.Setup(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -283,6 +301,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new User());
 			mock.RepositoryMock.Setup(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -304,6 +323,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			mock.RepositoryMock.Setup(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new LocationService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
@@ -322,5 +342,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6aeb46ac446ea2920aecc74b8dbaf1e9</Hash>
+    <Hash>55062f938c2dd655dbc6c17b386061a2</Hash>
 </Codenesium>*/

@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Department());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Department();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(record));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDepartmentRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<Department>(null));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiDepartmentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Department>())).Returns(Task.FromResult(new Department()));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Department>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDepartmentServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDepartmentServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Department>())).Returns(Task.FromResult(new Department()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Department>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiDepartmentServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiDepartmentServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.CompletedTask);
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<short>()));
 			mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDepartmentServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<short>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DepartmentDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -202,6 +218,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Department();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -219,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDepartmentRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Department>(null));
 			var service = new DepartmentService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DepartmentModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLDepartmentMapperMock,
@@ -233,5 +251,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9e1713f5f4af58916a46b79a126bcc4d</Hash>
+    <Hash>d7eddbd0bef525336c4efb77b34be7bd</Hash>
 </Codenesium>*/

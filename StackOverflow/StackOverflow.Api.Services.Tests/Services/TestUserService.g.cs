@@ -9,6 +9,7 @@ using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			records.Add(new User());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -45,6 +47,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var record = new User();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -62,6 +65,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -80,6 +84,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -91,6 +96,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -111,6 +118,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -132,6 +141,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<User>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -153,6 +164,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -173,6 +186,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -193,10 +208,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e61415c8150e56282cf527d2d1db13e6</Hash>
+    <Hash>43f7bd9cd20b324850d83201fa078d72</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public TestAllFieldTypeService(
 			ILogger<ITestAllFieldTypeRepository> logger,
+			IMediator mediator,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
 			IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper,
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
 			: base(logger,
+			       mediator,
 			       testAllFieldTypeRepository,
 			       testAllFieldTypeModelValidator,
 			       bolTestAllFieldTypeMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7c0d6e1ae0ca6e21e5763f4c3a05754</Hash>
+    <Hash>354ed4178b42c5b08b257dbcf67e1def</Hash>
 </Codenesium>*/

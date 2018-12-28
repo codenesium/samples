@@ -9,6 +9,7 @@ using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new Breed());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -47,6 +49,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var record = new Breed();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -66,6 +69,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBreedRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Breed>(null));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -86,6 +90,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiBreedServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Breed>())).Returns(Task.FromResult(new Breed()));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -99,6 +104,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BreedModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBreedServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Breed>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBreedServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -121,6 +128,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBreedServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace PetStoreNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Breed>())).Returns(Task.FromResult(new Breed()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -144,6 +153,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BreedModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Breed>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace PetStoreNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Breed()));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -167,6 +178,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBreedServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiBreedServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -189,6 +202,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BreedModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBreedServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -211,6 +226,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BreedDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new Pet());
 			mock.RepositoryMock.Setup(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -240,6 +257,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBreedRepository>();
 			mock.RepositoryMock.Setup(x => x.PetsByBreedId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
 			var service = new BreedService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
@@ -256,5 +274,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>70cdf37c4c0ec2d749e9481129efd1c7</Hash>
+    <Hash>3f0b78024456d17fa2576eb530bc6017</Hash>
 </Codenesium>*/

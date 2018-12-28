@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public SalesOrderHeaderService(
 			ILogger<ISalesOrderHeaderRepository> logger,
+			IMediator mediator,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
 			IApiSalesOrderHeaderServerRequestModelValidator salesOrderHeaderModelValidator,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
+			       mediator,
 			       salesOrderHeaderRepository,
 			       salesOrderHeaderModelValidator,
 			       bolSalesOrderHeaderMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa3dce4ebe29b9b88d59ed6ce6fc0ad9</Hash>
+    <Hash>a9c2c99bcea710e7566d6d108526567a</Hash>
 </Codenesium>*/

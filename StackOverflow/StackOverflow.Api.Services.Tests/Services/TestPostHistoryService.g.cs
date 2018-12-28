@@ -9,6 +9,7 @@ using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			records.Add(new PostHistory());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -45,6 +47,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var record = new PostHistory();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -62,6 +65,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPostHistoryRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<PostHistory>(null));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -80,6 +84,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiPostHistoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostHistory>())).Returns(Task.FromResult(new PostHistory()));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -91,6 +96,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PostHistory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPostHistoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -111,6 +118,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostHistoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostHistory>())).Returns(Task.FromResult(new PostHistory()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -132,6 +141,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PostHistory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -153,6 +164,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostHistoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiPostHistoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -173,6 +186,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPostHistoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
@@ -193,10 +208,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostHistoryDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ab1c46b0f8ed4eb9e6c47e106a38ea5</Hash>
+    <Hash>e2739eda74f9411996a447c9d845eabe</Hash>
 </Codenesium>*/

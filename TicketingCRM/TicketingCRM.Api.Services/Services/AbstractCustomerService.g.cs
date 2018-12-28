@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
 		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractCustomerService(
 			ILogger logger,
+			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolCustomerMapper,
@@ -32,6 +36,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolCustomerMapper = bolCustomerMapper;
 			this.DalCustomerMapper = dalCustomerMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
 				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCustomerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CustomerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.CustomerRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				var apiModel = this.BolCustomerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CustomerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.CustomerRepository.Delete(id);
+
+				await this.mediator.Publish(new CustomerDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8535488f9314f5f8222008ea74100cd0</Hash>
+    <Hash>16b75caab7b9366892d54d2e3fb9ff49</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCountryService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICountryRepository CountryRepository { get; private set; }
 
 		protected IApiCountryServerRequestModelValidator CountryModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractCountryService(
 			ILogger logger,
+			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
 			IBOLCountryMapper bolCountryMapper,
@@ -40,6 +44,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolProvinceMapper = bolProvinceMapper;
 			this.DalProvinceMapper = dalProvinceMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
 				var record = await this.CountryRepository.Create(this.DalCountryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCountryMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CountryCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.CountryRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryMapper.MapEFToBO(record);
+				var apiModel = this.BolCountryMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CountryUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.CountryRepository.Delete(id);
+
+				await this.mediator.Publish(new CountryDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e86255187fdd5368808932d32525525</Hash>
+    <Hash>8b4cbbc93cf8624e135b7d52efbfafc3</Hash>
 </Codenesium>*/

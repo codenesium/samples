@@ -6,6 +6,14 @@ using System.Text;
 
 namespace PetStoreNS.Api.Services
 {
+	public class RouteConstants
+	{public const string Breeds = "breeds";
+	 public const string PaymentTypes = "paymenttypes";
+	 public const string Pens = "pens";
+	 public const string Pets = "pets";
+	 public const string Sales = "sales";
+	 public const string Species = "species";}
+
 	public abstract class AbstractService
 	{
 	}
@@ -65,5 +73,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e52adec3f328ee6b75e72700f79747e</Hash>
+    <Hash>5da1a2e2f30822da9a20fdd53b804cd9</Hash>
 </Codenesium>*/

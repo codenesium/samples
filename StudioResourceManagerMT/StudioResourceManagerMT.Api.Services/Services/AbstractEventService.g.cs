@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractEventService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IEventRepository EventRepository { get; private set; }
 
 		protected IApiEventServerRequestModelValidator EventModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractEventService(
 			ILogger logger,
+			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiEventServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
 				var record = await this.EventRepository.Create(this.DalEventMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalEventMapper.MapEFToBO(record);
+				response.SetRecord(this.BolEventMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new EventCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -84,7 +92,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.EventRepository.Get(id);
 
-				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalEventMapper.MapEFToBO(record);
+				await this.mediator.Publish(new EventUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -100,6 +111,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.EventRepository.Delete(id);
+
+				await this.mediator.Publish(new EventDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +128,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5792c3e9a01f82af6b068df8d2f6419</Hash>
+    <Hash>d17775425b8aa508666180d0155ccddf</Hash>
 </Codenesium>*/

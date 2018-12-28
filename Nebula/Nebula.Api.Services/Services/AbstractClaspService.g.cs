@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractClaspService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IClaspRepository ClaspRepository { get; private set; }
 
 		protected IApiClaspServerRequestModelValidator ClaspModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractClaspService(
 			ILogger logger,
+			IMediator mediator,
 			IClaspRepository claspRepository,
 			IApiClaspServerRequestModelValidator claspModelValidator,
 			IBOLClaspMapper bolClaspMapper,
@@ -32,6 +36,8 @@ namespace NebulaNS.Api.Services
 			this.BolClaspMapper = bolClaspMapper;
 			this.DalClaspMapper = dalClaspMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiClaspServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolClaspMapper.MapModelToBO(default(int), model);
 				var record = await this.ClaspRepository.Create(this.DalClaspMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record)));
+				var businessObject = this.DalClaspMapper.MapEFToBO(record);
+				response.SetRecord(this.BolClaspMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ClaspCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.ClaspRepository.Get(id);
 
-				return ValidationResponseFactory<ApiClaspServerResponseModel>.UpdateResponse(this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record)));
+				var businessObject = this.DalClaspMapper.MapEFToBO(record);
+				var apiModel = this.BolClaspMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ClaspUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiClaspServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.ClaspRepository.Delete(id);
+
+				await this.mediator.Publish(new ClaspDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>11cdffc1c4892b8b907b7327cabe01be</Hash>
+    <Hash>2eab80603150d2f78401bd1ec3f340d8</Hash>
 </Codenesium>*/

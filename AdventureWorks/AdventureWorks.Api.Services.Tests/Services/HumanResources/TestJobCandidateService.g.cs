@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new JobCandidate());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new JobCandidate();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<JobCandidate>(null));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiJobCandidateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<JobCandidate>())).Returns(Task.FromResult(new JobCandidate()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<JobCandidate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiJobCandidateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiJobCandidateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<JobCandidate>())).Returns(Task.FromResult(new JobCandidate()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new JobCandidate()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<JobCandidate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new JobCandidate()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiJobCandidateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiJobCandidateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiJobCandidateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<JobCandidateDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new JobCandidate());
 			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -220,6 +237,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IJobCandidateRepository>();
 			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<JobCandidate>>(new List<JobCandidate>()));
 			var service = new JobCandidateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.JobCandidateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
@@ -234,5 +252,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b2c0b29861ec189ab59275130718c960</Hash>
+    <Hash>a29a333256be9f3cb76dada271196d83</Hash>
 </Codenesium>*/

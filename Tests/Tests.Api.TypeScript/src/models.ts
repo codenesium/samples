@@ -85,47 +85,47 @@ export class ApiPersonClientResponseModel {
 export class ApiRowVersionCheckClientRequestModel {
 	id : number;
 	name : string;
-	rowVersion : string;
+	rowVersion : any;
 
 	constructor() {
 		this.id = 0;
 		this.name = '';
-		this.rowVersion = '';
+		this.rowVersion = null;
 	}
 }
 
 export class ApiRowVersionCheckClientResponseModel {
 	id : number;
 	name : string;
-	rowVersion : string;
+	rowVersion : any;
 
 	constructor() {
 		this.id = 0;
 		this.name = '';
-		this.rowVersion = '';
+		this.rowVersion = null;
 	}
 }
 export class ApiSelfReferenceClientRequestModel {
 	id : number;
-	selfReferenceId : number;
-	selfReferenceId2 : number;
+	selfReferenceId : any;
+	selfReferenceId2 : any;
 
 	constructor() {
 		this.id = 0;
-		this.selfReferenceId = 0;
-		this.selfReferenceId2 = 0;
+		this.selfReferenceId = null;
+		this.selfReferenceId2 = null;
 	}
 }
 
 export class ApiSelfReferenceClientResponseModel {
 	id : number;
-	selfReferenceId : number;
-	selfReferenceId2 : number;
+	selfReferenceId : any;
+	selfReferenceId2 : any;
 
 	constructor() {
 		this.id = 0;
-		this.selfReferenceId = 0;
-		this.selfReferenceId2 = 0;
+		this.selfReferenceId = null;
+		this.selfReferenceId2 = null;
 	}
 }
 export class ApiTableClientRequestModel {
@@ -149,13 +149,13 @@ export class ApiTableClientResponseModel {
 }
 export class ApiTestAllFieldTypeClientRequestModel {
 	fieldBigInt : number;
-	fieldBinary : string;
+	fieldBinary : any;
 	fieldBit : boolean;
 	fieldChar : string;
-	fieldDate : string;
-	fieldDateTime : string;
-	fieldDateTime2 : string;
-	fieldDateTimeOffset : string;
+	fieldDate : any;
+	fieldDateTime : any;
+	fieldDateTime2 : any;
+	fieldDateTimeOffset : any;
 	fieldDecimal : number;
 	fieldFloat : number;
 	fieldImage : any;
@@ -165,28 +165,28 @@ export class ApiTestAllFieldTypeClientRequestModel {
 	fieldNumeric : number;
 	fieldNVarchar : string;
 	fieldReal : number;
-	fieldSmallDateTime : string;
+	fieldSmallDateTime : any;
 	fieldSmallInt : number;
 	fieldSmallMoney : number;
 	fieldText : string;
-	fieldTime : string;
-	fieldTimestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+	fieldTime : any;
+	fieldTimestamp : any;
 	fieldTinyInt : number;
-	fieldUniqueIdentifier : string;
-	fieldVarBinary : string;
+	fieldUniqueIdentifier : any;
+	fieldVarBinary : any;
 	fieldVarchar : string;
 	fieldXML : string;
 	id : number;
 
 	constructor() {
 		this.fieldBigInt = 0;
-		this.fieldBinary = '';
+		this.fieldBinary = null;
 		this.fieldBit = false;
 		this.fieldChar = '';
-		this.fieldDate = '';
-		this.fieldDateTime = '';
-		this.fieldDateTime2 = '';
-		this.fieldDateTimeOffset = '';
+		this.fieldDate = null;
+		this.fieldDateTime = null;
+		this.fieldDateTime2 = null;
+		this.fieldDateTimeOffset = null;
 		this.fieldDecimal = 0;
 		this.fieldFloat = 0;
 		this.fieldImage = null;
@@ -196,15 +196,15 @@ export class ApiTestAllFieldTypeClientRequestModel {
 		this.fieldNumeric = 0;
 		this.fieldNVarchar = '';
 		this.fieldReal = 0;
-		this.fieldSmallDateTime = '';
+		this.fieldSmallDateTime = null;
 		this.fieldSmallInt = 0;
 		this.fieldSmallMoney = 0;
 		this.fieldText = '';
-		this.fieldTime = '';
-		this.fieldTimestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+		this.fieldTime = null;
+		this.fieldTimestamp = null;
 		this.fieldTinyInt = 0;
-		this.fieldUniqueIdentifier = '';
-		this.fieldVarBinary = '';
+		this.fieldUniqueIdentifier = null;
+		this.fieldVarBinary = null;
 		this.fieldVarchar = '';
 		this.fieldXML = '';
 		this.id = 0;
@@ -213,13 +213,13 @@ export class ApiTestAllFieldTypeClientRequestModel {
 
 export class ApiTestAllFieldTypeClientResponseModel {
 	fieldBigInt : number;
-	fieldBinary : string;
+	fieldBinary : any;
 	fieldBit : boolean;
 	fieldChar : string;
-	fieldDate : string;
-	fieldDateTime : string;
-	fieldDateTime2 : string;
-	fieldDateTimeOffset : string;
+	fieldDate : any;
+	fieldDateTime : any;
+	fieldDateTime2 : any;
+	fieldDateTimeOffset : any;
 	fieldDecimal : number;
 	fieldFloat : number;
 	fieldImage : any;
@@ -229,28 +229,28 @@ export class ApiTestAllFieldTypeClientResponseModel {
 	fieldNumeric : number;
 	fieldNVarchar : string;
 	fieldReal : number;
-	fieldSmallDateTime : string;
+	fieldSmallDateTime : any;
 	fieldSmallInt : number;
 	fieldSmallMoney : number;
 	fieldText : string;
-	fieldTime : string;
-	fieldTimestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+	fieldTime : any;
+	fieldTimestamp : any;
 	fieldTinyInt : number;
-	fieldUniqueIdentifier : string;
-	fieldVarBinary : string;
+	fieldUniqueIdentifier : any;
+	fieldVarBinary : any;
 	fieldVarchar : string;
 	fieldXML : string;
 	id : number;
 
 	constructor() {
 		this.fieldBigInt = 0;
-		this.fieldBinary = '';
+		this.fieldBinary = null;
 		this.fieldBit = false;
 		this.fieldChar = '';
-		this.fieldDate = '';
-		this.fieldDateTime = '';
-		this.fieldDateTime2 = '';
-		this.fieldDateTimeOffset = '';
+		this.fieldDate = null;
+		this.fieldDateTime = null;
+		this.fieldDateTime2 = null;
+		this.fieldDateTimeOffset = null;
 		this.fieldDecimal = 0;
 		this.fieldFloat = 0;
 		this.fieldImage = null;
@@ -260,78 +260,78 @@ export class ApiTestAllFieldTypeClientResponseModel {
 		this.fieldNumeric = 0;
 		this.fieldNVarchar = '';
 		this.fieldReal = 0;
-		this.fieldSmallDateTime = '';
+		this.fieldSmallDateTime = null;
 		this.fieldSmallInt = 0;
 		this.fieldSmallMoney = 0;
 		this.fieldText = '';
-		this.fieldTime = '';
-		this.fieldTimestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+		this.fieldTime = null;
+		this.fieldTimestamp = null;
 		this.fieldTinyInt = 0;
-		this.fieldUniqueIdentifier = '';
-		this.fieldVarBinary = '';
+		this.fieldUniqueIdentifier = null;
+		this.fieldVarBinary = null;
 		this.fieldVarchar = '';
 		this.fieldXML = '';
 		this.id = 0;
 	}
 }
 export class ApiTestAllFieldTypesNullableClientRequestModel {
-	fieldBigInt : number;
-	fieldBinary : string;
-	fieldBit : boolean;
+	fieldBigInt : any;
+	fieldBinary : any;
+	fieldBit : any;
 	fieldChar : string;
-	fieldDate : string;
-	fieldDateTime : string;
-	fieldDateTime2 : string;
-	fieldDateTimeOffset : string;
-	fieldDecimal : number;
-	fieldFloat : number;
+	fieldDate : any;
+	fieldDateTime : any;
+	fieldDateTime2 : any;
+	fieldDateTimeOffset : any;
+	fieldDecimal : any;
+	fieldFloat : any;
 	fieldImage : any;
-	fieldMoney : number;
+	fieldMoney : any;
 	fieldNChar : string;
 	fieldNText : string;
-	fieldNumeric : number;
+	fieldNumeric : any;
 	fieldNVarchar : string;
-	fieldReal : number;
-	fieldSmallDateTime : string;
-	fieldSmallInt : number;
-	fieldSmallMoney : number;
+	fieldReal : any;
+	fieldSmallDateTime : any;
+	fieldSmallInt : any;
+	fieldSmallMoney : any;
 	fieldText : string;
-	fieldTime : string;
-	fieldTimestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
-	fieldTinyInt : number;
-	fieldUniqueIdentifier : string;
-	fieldVarBinary : string;
+	fieldTime : any;
+	fieldTimestamp : any;
+	fieldTinyInt : any;
+	fieldUniqueIdentifier : any;
+	fieldVarBinary : any;
 	fieldVarchar : string;
 	fieldXML : string;
 	id : number;
 
 	constructor() {
-		this.fieldBigInt = 0;
-		this.fieldBinary = '';
-		this.fieldBit = false;
+		this.fieldBigInt = null;
+		this.fieldBinary = null;
+		this.fieldBit = null;
 		this.fieldChar = '';
-		this.fieldDate = '';
-		this.fieldDateTime = '';
-		this.fieldDateTime2 = '';
-		this.fieldDateTimeOffset = '';
-		this.fieldDecimal = 0;
-		this.fieldFloat = 0;
+		this.fieldDate = null;
+		this.fieldDateTime = null;
+		this.fieldDateTime2 = null;
+		this.fieldDateTimeOffset = null;
+		this.fieldDecimal = null;
+		this.fieldFloat = null;
 		this.fieldImage = null;
-		this.fieldMoney = 0;
+		this.fieldMoney = null;
 		this.fieldNChar = '';
 		this.fieldNText = '';
-		this.fieldNumeric = 0;
+		this.fieldNumeric = null;
 		this.fieldNVarchar = '';
-		this.fieldReal = 0;
-		this.fieldSmallDateTime = '';
-		this.fieldSmallInt = 0;
-		this.fieldSmallMoney = 0;
+		this.fieldReal = null;
+		this.fieldSmallDateTime = null;
+		this.fieldSmallInt = null;
+		this.fieldSmallMoney = null;
 		this.fieldText = '';
-		this.fieldTime = '';
-		this.fieldTimestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
-		this.fieldTinyInt = 0;
-		this.fieldUniqueIdentifier = '';
-		this.fieldVarBinary = '';
+		this.fieldTime = null;
+		this.fieldTimestamp = null;
+		this.fieldTinyInt = null;
+		this.fieldUniqueIdentifier = null;
+		this.fieldVarBinary = null;
 		this.fieldVarchar = '';
 		this.fieldXML = '';
 		this.id = 0;
@@ -339,63 +339,63 @@ export class ApiTestAllFieldTypesNullableClientRequestModel {
 }
 
 export class ApiTestAllFieldTypesNullableClientResponseModel {
-	fieldBigInt : number;
-	fieldBinary : string;
-	fieldBit : boolean;
+	fieldBigInt : any;
+	fieldBinary : any;
+	fieldBit : any;
 	fieldChar : string;
-	fieldDate : string;
-	fieldDateTime : string;
-	fieldDateTime2 : string;
-	fieldDateTimeOffset : string;
-	fieldDecimal : number;
-	fieldFloat : number;
+	fieldDate : any;
+	fieldDateTime : any;
+	fieldDateTime2 : any;
+	fieldDateTimeOffset : any;
+	fieldDecimal : any;
+	fieldFloat : any;
 	fieldImage : any;
-	fieldMoney : number;
+	fieldMoney : any;
 	fieldNChar : string;
 	fieldNText : string;
-	fieldNumeric : number;
+	fieldNumeric : any;
 	fieldNVarchar : string;
-	fieldReal : number;
-	fieldSmallDateTime : string;
-	fieldSmallInt : number;
-	fieldSmallMoney : number;
+	fieldReal : any;
+	fieldSmallDateTime : any;
+	fieldSmallInt : any;
+	fieldSmallMoney : any;
 	fieldText : string;
-	fieldTime : string;
-	fieldTimestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
-	fieldTinyInt : number;
-	fieldUniqueIdentifier : string;
-	fieldVarBinary : string;
+	fieldTime : any;
+	fieldTimestamp : any;
+	fieldTinyInt : any;
+	fieldUniqueIdentifier : any;
+	fieldVarBinary : any;
 	fieldVarchar : string;
 	fieldXML : string;
 	id : number;
 
 	constructor() {
-		this.fieldBigInt = 0;
-		this.fieldBinary = '';
-		this.fieldBit = false;
+		this.fieldBigInt = null;
+		this.fieldBinary = null;
+		this.fieldBit = null;
 		this.fieldChar = '';
-		this.fieldDate = '';
-		this.fieldDateTime = '';
-		this.fieldDateTime2 = '';
-		this.fieldDateTimeOffset = '';
-		this.fieldDecimal = 0;
-		this.fieldFloat = 0;
+		this.fieldDate = null;
+		this.fieldDateTime = null;
+		this.fieldDateTime2 = null;
+		this.fieldDateTimeOffset = null;
+		this.fieldDecimal = null;
+		this.fieldFloat = null;
 		this.fieldImage = null;
-		this.fieldMoney = 0;
+		this.fieldMoney = null;
 		this.fieldNChar = '';
 		this.fieldNText = '';
-		this.fieldNumeric = 0;
+		this.fieldNumeric = null;
 		this.fieldNVarchar = '';
-		this.fieldReal = 0;
-		this.fieldSmallDateTime = '';
-		this.fieldSmallInt = 0;
-		this.fieldSmallMoney = 0;
+		this.fieldReal = null;
+		this.fieldSmallDateTime = null;
+		this.fieldSmallInt = null;
+		this.fieldSmallMoney = null;
 		this.fieldText = '';
-		this.fieldTime = '';
-		this.fieldTimestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
-		this.fieldTinyInt = 0;
-		this.fieldUniqueIdentifier = '';
-		this.fieldVarBinary = '';
+		this.fieldTime = null;
+		this.fieldTimestamp = null;
+		this.fieldTinyInt = null;
+		this.fieldUniqueIdentifier = null;
+		this.fieldVarBinary = null;
 		this.fieldVarchar = '';
 		this.fieldXML = '';
 		this.id = 0;
@@ -404,24 +404,24 @@ export class ApiTestAllFieldTypesNullableClientResponseModel {
 export class ApiTimestampCheckClientRequestModel {
 	id : number;
 	name : string;
-	timestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+	timestamp : any;
 
 	constructor() {
 		this.id = 0;
 		this.name = '';
-		this.timestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+		this.timestamp = null;
 	}
 }
 
 export class ApiTimestampCheckClientResponseModel {
 	id : number;
 	name : string;
-	timestamp : MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+	timestamp : any;
 
 	constructor() {
 		this.id = 0;
 		this.name = '';
-		this.timestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+		this.timestamp = null;
 	}
 }
 export class ApiVPersonClientRequestModel {
@@ -506,5 +506,5 @@ export class ApiPersonRefClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>09c5c09d13f7c705a4ef30d445ceefd1</Hash>
+    <Hash>a4086550b281ac3ac05c77ae4b6bafb1</Hash>
 </Codenesium>*/

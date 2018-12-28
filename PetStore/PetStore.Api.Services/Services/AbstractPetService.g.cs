@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPetService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPetRepository PetRepository { get; private set; }
 
 		protected IApiPetServerRequestModelValidator PetModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetStoreNS.Api.Services
 
 		public AbstractPetService(
 			ILogger logger,
+			IMediator mediator,
 			IPetRepository petRepository,
 			IApiPetServerRequestModelValidator petModelValidator,
 			IBOLPetMapper bolPetMapper,
@@ -40,6 +44,8 @@ namespace PetStoreNS.Api.Services
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetStoreNS.Api.Services
 				var bo = this.BolPetMapper.MapModelToBO(default(int), model);
 				var record = await this.PetRepository.Create(this.DalPetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(record)));
+				var businessObject = this.DalPetMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPetMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PetCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetStoreNS.Api.Services
 
 				var record = await this.PetRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPetServerResponseModel>.UpdateResponse(this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(record)));
+				var businessObject = this.DalPetMapper.MapEFToBO(record);
+				var apiModel = this.BolPetMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PetUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPetServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetStoreNS.Api.Services
 			if (response.Success)
 			{
 				await this.PetRepository.Delete(id);
+
+				await this.mediator.Publish(new PetDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b3b2f171dd8e6eaa7bc9c788658cd4b7</Hash>
+    <Hash>38d481b79180c68d676ffa933af83127</Hash>
 </Codenesium>*/

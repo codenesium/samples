@@ -13,57 +13,10 @@
         "Tables": [
           {
             "$id": "4",
-            "Name": "__EFMigrationsHistory",
-            "Columns": [
-              {
-                "$id": "5",
-                "Name": "MigrationId",
-                "DataType": "nvarchar",
-                "NumericPrecision": 0,
-                "MaxLength": 150,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "6",
-                "Name": "ProductVersion",
-                "DataType": "nvarchar",
-                "NumericPrecision": 0,
-                "MaxLength": 32,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
-              {
-                "$id": "7",
-                "Name": "PK___EFMigrationsHistory",
-                "TableName": "__EFMigrationsHistory",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "Columns": [
-                  {
-                    "$id": "8",
-                    "Name": "MigrationId",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": false
-                  }
-                ],
-                "SchemaName": "dbo",
-                "IsUnique": true
-              }
-            ],
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "9",
             "Name": "Device",
             "Columns": [
               {
-                "$id": "10",
+                "$id": "5",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -72,7 +25,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "11",
+                "$id": "6",
                 "Name": "name",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -81,7 +34,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "12",
+                "$id": "7",
                 "Name": "publicId",
                 "DataType": "uniqueidentifier",
                 "NumericPrecision": 0,
@@ -92,14 +45,14 @@
             ],
             "Constraints": [
               {
-                "$id": "13",
+                "$id": "8",
                 "Name": "PK_Device",
                 "TableName": "Device",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "14",
+                    "$id": "9",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -111,14 +64,14 @@
                 "IsUnique": true
               },
               {
-                "$id": "15",
+                "$id": "10",
                 "Name": "IX_Device",
                 "TableName": "Device",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
-                    "$id": "16",
+                    "$id": "11",
                     "Name": "publicId",
                     "Order": 1,
                     "Descending": false,
@@ -134,11 +87,11 @@
             "IsView": false
           },
           {
-            "$id": "17",
+            "$id": "12",
             "Name": "DeviceAction",
             "Columns": [
               {
-                "$id": "18",
+                "$id": "13",
                 "Name": "deviceId",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -147,7 +100,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "19",
+                "$id": "14",
                 "Name": "id",
                 "DataType": "int",
                 "NumericPrecision": 10,
@@ -156,7 +109,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "20",
+                "$id": "15",
                 "Name": "name",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -165,7 +118,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "21",
+                "$id": "16",
                 "Name": "value",
                 "DataType": "varchar",
                 "NumericPrecision": 0,
@@ -176,14 +129,14 @@
             ],
             "Constraints": [
               {
-                "$id": "22",
+                "$id": "17",
                 "Name": "PK_Action",
                 "TableName": "DeviceAction",
                 "IsPrimaryKey": true,
                 "ConstraintType": "CLUSTERED",
                 "Columns": [
                   {
-                    "$id": "23",
+                    "$id": "18",
                     "Name": "id",
                     "Order": 1,
                     "Descending": false,
@@ -195,14 +148,14 @@
                 "IsUnique": true
               },
               {
-                "$id": "24",
+                "$id": "19",
                 "Name": "IX_DeviceAction_DeviceId",
                 "TableName": "DeviceAction",
                 "IsPrimaryKey": false,
                 "ConstraintType": "NONCLUSTERED",
                 "Columns": [
                   {
-                    "$id": "25",
+                    "$id": "20",
                     "Name": "deviceId",
                     "Order": 1,
                     "Descending": false,
@@ -220,10 +173,10 @@
         ],
         "ForeignKeys": [
           {
-            "$id": "26",
+            "$id": "21",
             "Columns": [
               {
-                "$id": "27",
+                "$id": "22",
                 "ForeignKeyTableName": "DeviceAction",
                 "ForeignKeyColumnName": "deviceId",
                 "PrimaryKeyTableName": "Device",
@@ -242,149 +195,23 @@
     "DatabaseType": "MSSQL"
   },
   "Project": {
-    "$id": "28",
+    "$id": "23",
     "Schemas": [
       {
-        "$id": "29",
+        "$id": "24",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "54db7945-812c-4ce4-95f9-fb16421256bb",
+        "AppSchemaId": "9e7b8e3b-befa-45a8-b7d5-d0d400b146c5",
         "Tables": [
           {
-            "$id": "30",
-            "AppTableName": "Efmigrationshistory",
-            "AppTableNamePlural": "Efmigrationshistories",
-            "AppDoNotProcess": false,
-            "AppTableId": "f6a27b6c-72e4-4228-a82b-7dd1e020bded",
-            "AppGenerationEnabled": true,
-            "Columns": [
-              {
-                "$id": "31",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "MigrationId",
-                "AppNamePlural": "MigrationIds",
-                "AppFieldType": "nvarchar",
-                "AppFieldMaxLength": 150,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "string",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "30"
-                },
-                "AppDefaultValue": null,
-                "GenerationEnabled": true,
-                "Name": "MigrationId",
-                "DataType": "nvarchar",
-                "NumericPrecision": 0,
-                "MaxLength": 150,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              },
-              {
-                "$id": "32",
-                "AppIsBooleanWithYNConversion": false,
-                "AppIsRequired": true,
-                "AppShowInRequestModel": true,
-                "AppShowInResponseModel": true,
-                "AppName": "ProductVersion",
-                "AppNamePlural": "ProductVersions",
-                "AppFieldType": "nvarchar",
-                "AppFieldMaxLength": 32,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppIsNullable": false,
-                "AppFieldId": "00000000-0000-0000-0000-000000000000",
-                "AppCLRType": "string",
-                "AppIsConcurrencyColumn": false,
-                "Table": {
-                  "$ref": "30"
-                },
-                "AppDefaultValue": null,
-                "GenerationEnabled": true,
-                "Name": "ProductVersion",
-                "DataType": "nvarchar",
-                "NumericPrecision": 0,
-                "MaxLength": 32,
-                "IsNullable": false,
-                "DatabaseGenerated": false
-              }
-            ],
-            "Constraints": [
-              {
-                "$id": "33",
-                "Columns": [
-                  {
-                    "$id": "34",
-                    "Column": {
-                      "$ref": "31"
-                    },
-                    "Name": "MigrationId",
-                    "Order": 1,
-                    "Descending": false,
-                    "IsIncludedColumn": false,
-                    "IsIdentity": false
-                  }
-                ],
-                "Virtual": false,
-                "AppDoNotProcess": false,
-                "AppGenerationEnabled": true,
-                "AppShowInController": true,
-                "ControllerMethodName": "ByMigrationId",
-                "ControllerRoute": "byMigrationId",
-                "AppName": "PK___EFMigrationsHistory",
-                "Table": {
-                  "$ref": "30"
-                },
-                "GenerationEnabled": true,
-                "Name": "PK___EFMigrationsHistory",
-                "TableName": "Efmigrationshistory",
-                "IsPrimaryKey": true,
-                "ConstraintType": "CLUSTERED",
-                "SchemaName": "dbo",
-                "IsUnique": true
-              }
-            ],
-            "Schema": {
-              "$ref": "29"
-            },
-            "AppParentTable": null,
-            "AppReferenceTable": false,
-            "AppIsView": false,
-            "AppControllerAttribute": "",
-            "AppGenerateBulkInsertMethod": true,
-            "AppGenerateCreateMethod": true,
-            "AppGenerateUpdateMethod": true,
-            "AppGenerateDeleteMethod": true,
-            "AppGenerateAllMethod": true,
-            "AppGenerateGetMethod": true,
-            "AppGeneratePatchMethod": true,
-            "AppBulkInsertMethodAttribute": "",
-            "AppCreateMethodAttribute": "",
-            "AppUpdateMethodAttribute": "",
-            "AppDeleteMethodAttribute": "",
-            "AppAllMethodAttribute": "",
-            "AppGetMethodAttribute": "",
-            "AppPatchMethodAttribute": "",
-            "GenerationEnabled": true,
-            "Name": "__EFMigrationsHistory",
-            "DefaultConstraints": [],
-            "IsView": false
-          },
-          {
-            "$id": "35",
+            "$id": "25",
             "AppTableName": "Device",
             "AppTableNamePlural": "Devices",
             "AppDoNotProcess": false,
-            "AppTableId": "8abf2581-c018-4a15-bc8b-097b1432a0eb",
+            "AppTableId": "d2a7c929-0c22-42e4-acd8-589c41c7f523",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "36",
+                "$id": "26",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -398,9 +225,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "int",
+                "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "35"
+                  "$ref": "25"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -412,7 +240,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "37",
+                "$id": "27",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -426,9 +254,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "string",
+                "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "35"
+                  "$ref": "25"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -440,7 +269,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "38",
+                "$id": "28",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -454,9 +283,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "Guid",
+                "AppTypescriptType": "any",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "35"
+                  "$ref": "25"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -470,12 +300,12 @@
             ],
             "Constraints": [
               {
-                "$id": "39",
+                "$id": "29",
                 "Columns": [
                   {
-                    "$id": "40",
+                    "$id": "30",
                     "Column": {
-                      "$ref": "36"
+                      "$ref": "26"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -492,7 +322,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Device",
                 "Table": {
-                  "$ref": "35"
+                  "$ref": "25"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Device",
@@ -503,12 +333,12 @@
                 "IsUnique": true
               },
               {
-                "$id": "41",
+                "$id": "31",
                 "Columns": [
                   {
-                    "$id": "42",
+                    "$id": "32",
                     "Column": {
-                      "$ref": "38"
+                      "$ref": "28"
                     },
                     "Name": "PublicId",
                     "Order": 1,
@@ -525,7 +355,7 @@
                 "ControllerRoute": "byPublicId",
                 "AppName": "IX_Device",
                 "Table": {
-                  "$ref": "35"
+                  "$ref": "25"
                 },
                 "GenerationEnabled": true,
                 "Name": "IX_Device",
@@ -537,7 +367,7 @@
               }
             ],
             "Schema": {
-              "$ref": "29"
+              "$ref": "24"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -563,15 +393,15 @@
             "IsView": false
           },
           {
-            "$id": "43",
+            "$id": "33",
             "AppTableName": "DeviceAction",
             "AppTableNamePlural": "DeviceActions",
             "AppDoNotProcess": false,
-            "AppTableId": "6395441c-c39a-4f39-a142-8e82a7889f20",
+            "AppTableId": "863102f3-e289-4b5d-bc64-1cacf0c3cbe0",
             "AppGenerationEnabled": true,
             "Columns": [
               {
-                "$id": "44",
+                "$id": "34",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -585,9 +415,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "int",
+                "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -599,7 +430,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "45",
+                "$id": "35",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -613,9 +444,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "int",
+                "AppTypescriptType": "number",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -627,7 +459,7 @@
                 "DatabaseGenerated": true
               },
               {
-                "$id": "46",
+                "$id": "36",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -641,9 +473,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "string",
+                "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -655,7 +488,7 @@
                 "DatabaseGenerated": false
               },
               {
-                "$id": "47",
+                "$id": "37",
                 "AppIsBooleanWithYNConversion": false,
                 "AppIsRequired": true,
                 "AppShowInRequestModel": true,
@@ -669,9 +502,10 @@
                 "AppIsNullable": false,
                 "AppFieldId": "00000000-0000-0000-0000-000000000000",
                 "AppCLRType": "string",
+                "AppTypescriptType": "string",
                 "AppIsConcurrencyColumn": false,
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "AppDefaultValue": null,
                 "GenerationEnabled": true,
@@ -685,12 +519,12 @@
             ],
             "Constraints": [
               {
-                "$id": "48",
+                "$id": "38",
                 "Columns": [
                   {
-                    "$id": "49",
+                    "$id": "39",
                     "Column": {
-                      "$ref": "45"
+                      "$ref": "35"
                     },
                     "Name": "Id",
                     "Order": 1,
@@ -707,7 +541,7 @@
                 "ControllerRoute": "byId",
                 "AppName": "PK_Action",
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "GenerationEnabled": true,
                 "Name": "PK_Action",
@@ -718,12 +552,12 @@
                 "IsUnique": true
               },
               {
-                "$id": "50",
+                "$id": "40",
                 "Columns": [
                   {
-                    "$id": "51",
+                    "$id": "41",
                     "Column": {
-                      "$ref": "44"
+                      "$ref": "34"
                     },
                     "Name": "DeviceId",
                     "Order": 1,
@@ -740,7 +574,7 @@
                 "ControllerRoute": "byDeviceId",
                 "AppName": "IX_DeviceAction_DeviceId",
                 "Table": {
-                  "$ref": "43"
+                  "$ref": "33"
                 },
                 "GenerationEnabled": true,
                 "Name": "IX_DeviceAction_DeviceId",
@@ -752,7 +586,7 @@
               }
             ],
             "Schema": {
-              "$ref": "29"
+              "$ref": "24"
             },
             "AppParentTable": null,
             "AppReferenceTable": false,
@@ -780,16 +614,16 @@
         ],
         "ForeignKeys": [
           {
-            "$id": "52",
+            "$id": "42",
             "Columns": [
               {
-                "$id": "53",
+                "$id": "43",
                 "AppDoNotProcess": false,
                 "ForeignColumn": {
-                  "$ref": "44"
+                  "$ref": "34"
                 },
                 "PrimaryColumn": {
-                  "$ref": "36"
+                  "$ref": "26"
                 }
               }
             ],
@@ -800,14 +634,14 @@
         ],
         "ReferenceForeignKeys": [],
         "ApplicationApiContainer": {
-          "$ref": "28"
+          "$ref": "23"
         },
         "Name": "dbo"
       }
     ],
     "ApplicationVersion": "1.0",
     "ApiSettings": {
-      "$id": "54",
+      "$id": "44",
       "NamespacePrefix": "",
       "IsMultiTenant": false,
       "UseSoftDeletes": false
@@ -817,7 +651,7 @@
     "DatabaseType": ""
   },
   "Settings": {
-    "$id": "55",
+    "$id": "45",
     "SettingsVersion": "1.0",
     "ApiSettings": {
       "NamespacePrefix": "",
@@ -826,7 +660,7 @@
     },
     "TableParameterSettings": [
       {
-        "$id": "56",
+        "$id": "46",
         "Table": "Device",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -850,7 +684,7 @@
         "AppPatchMethodAttribute": ""
       },
       {
-        "$id": "57",
+        "$id": "47",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "AppDoNotProcess": false,
@@ -876,7 +710,7 @@
     ],
     "ColumnParameterSettings": [
       {
-        "$id": "58",
+        "$id": "48",
         "Table": "DeviceAction",
         "Schema": "dbo",
         "Column": "Name",
@@ -895,7 +729,7 @@
     "VirtualForeignKeys": [],
     "ForeignKeyParameterSettings": [
       {
-        "$id": "59",
+        "$id": "49",
         "ForeignKeyName": "FK_DeviceAction_DeviceId_Device_Id",
         "AppDoNotProcess": false
       }
@@ -903,7 +737,7 @@
     "VirtualConstraints": [],
     "ConstraintParameterSettings": [
       {
-        "$id": "60",
+        "$id": "50",
         "SchemaName": "dbo",
         "TableName": "Device",
         "Name": "IX_Device",

@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new SalesTerritory());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -51,6 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTerritory();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -74,6 +77,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -98,6 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiSalesTerritoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTerritory>())).Returns(Task.FromResult(new SalesTerritory()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -115,6 +120,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SalesTerritory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -125,6 +131,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiSalesTerritoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -141,6 +148,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTerritoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -151,6 +159,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTerritory>())).Returns(Task.FromResult(new SalesTerritory()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -168,6 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SalesTerritory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -179,6 +189,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -195,6 +206,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -204,6 +216,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiSalesTerritoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -221,6 +234,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -231,6 +245,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiSalesTerritoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -247,6 +262,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTerritoryDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -256,6 +272,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTerritory();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -279,6 +296,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -303,6 +321,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTerritory();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -326,6 +345,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<SalesTerritory>(null));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -351,6 +371,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Customer());
 			mock.RepositoryMock.Setup(x => x.CustomersByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -374,6 +395,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.CustomersByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -399,6 +421,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new SalesOrderHeader());
 			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -422,6 +445,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -447,6 +471,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new SalesPerson());
 			mock.RepositoryMock.Setup(x => x.SalesPersonsByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -470,6 +495,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
 			mock.RepositoryMock.Setup(x => x.SalesPersonsByTerritoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesPerson>>(new List<SalesPerson>()));
 			var service = new SalesTerritoryService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLSalesTerritoryMapperMock,
@@ -490,5 +516,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f6b2786f40c6013f9661bdf2a4b14a5a</Hash>
+    <Hash>82094dada8407857cf27f58038e349e1</Hash>
 </Codenesium>*/

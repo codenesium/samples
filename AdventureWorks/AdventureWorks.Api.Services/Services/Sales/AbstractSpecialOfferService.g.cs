@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSpecialOfferService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISpecialOfferRepository SpecialOfferRepository { get; private set; }
 
 		protected IApiSpecialOfferServerRequestModelValidator SpecialOfferModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSpecialOfferService(
 			ILogger logger,
+			IMediator mediator,
 			ISpecialOfferRepository specialOfferRepository,
 			IApiSpecialOfferServerRequestModelValidator specialOfferModelValidator,
 			IBOLSpecialOfferMapper bolSpecialOfferMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSpecialOfferMapper = bolSpecialOfferMapper;
 			this.DalSpecialOfferMapper = dalSpecialOfferMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSpecialOfferServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolSpecialOfferMapper.MapModelToBO(default(int), model);
 				var record = await this.SpecialOfferRepository.Create(this.DalSpecialOfferMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpecialOfferMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSpecialOfferMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SpecialOfferCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SpecialOfferRepository.Get(specialOfferID);
 
-				return ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.UpdateResponse(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpecialOfferMapper.MapEFToBO(record);
+				var apiModel = this.BolSpecialOfferMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SpecialOfferUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSpecialOfferServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.SpecialOfferRepository.Delete(specialOfferID);
+
+				await this.mediator.Publish(new SpecialOfferDeletedNotification(specialOfferID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e837729d92fe02a6020080c5739464af</Hash>
+    <Hash>b7aec11243b788cb3112929fb757fb7e</Hash>
 </Codenesium>*/

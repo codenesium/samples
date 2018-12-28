@@ -39,13 +39,13 @@ namespace TwitterNS.Api.Services
 		public int FollowedUserId { get; private set; }
 
 		[JsonProperty]
-		public string FollowedUserIdEntity { get; set; }
+		public string FollowedUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
 		public int FollowingUserId { get; private set; }
 
 		[JsonProperty]
-		public string FollowingUserIdEntity { get; set; }
+		public string FollowingUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -56,5 +56,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ec38e42993117cba4d1cdfa9dfcded3</Hash>
+    <Hash>0e3e7a3b04271a8d8042d14483ff4fa7</Hash>
 </Codenesium>*/

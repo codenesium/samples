@@ -1,5 +1,5 @@
 export class ApiAdminClientRequestModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	firstName : string;
 	id : number;
@@ -9,7 +9,7 @@ export class ApiAdminClientRequestModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.firstName = '';
 		this.id = 0;
@@ -21,7 +21,7 @@ export class ApiAdminClientRequestModel {
 }
 
 export class ApiAdminClientResponseModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	firstName : string;
 	id : number;
@@ -31,7 +31,7 @@ export class ApiAdminClientResponseModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.firstName = '';
 		this.id = 0;
@@ -42,52 +42,52 @@ export class ApiAdminClientResponseModel {
 	}
 }
 export class ApiEventClientRequestModel {
-	actualEndDate : string;
-	actualStartDate : string;
-	billAmount : number;
+	actualEndDate : any;
+	actualStartDate : any;
+	billAmount : any;
 	eventStatusId : number;
 	eventStatusIdEntity : string;
 	id : number;
-	scheduledEndDate : string;
-	scheduledStartDate : string;
+	scheduledEndDate : any;
+	scheduledStartDate : any;
 	studentNote : string;
 	teacherNote : string;
 
 	constructor() {
-		this.actualEndDate = '';
-		this.actualStartDate = '';
-		this.billAmount = 0;
+		this.actualEndDate = null;
+		this.actualStartDate = null;
+		this.billAmount = null;
 		this.eventStatusId = 0;
 		this.eventStatusIdEntity = '';
 		this.id = 0;
-		this.scheduledEndDate = '';
-		this.scheduledStartDate = '';
+		this.scheduledEndDate = null;
+		this.scheduledStartDate = null;
 		this.studentNote = '';
 		this.teacherNote = '';
 	}
 }
 
 export class ApiEventClientResponseModel {
-	actualEndDate : string;
-	actualStartDate : string;
-	billAmount : number;
+	actualEndDate : any;
+	actualStartDate : any;
+	billAmount : any;
 	eventStatusId : number;
 	eventStatusIdEntity : string;
 	id : number;
-	scheduledEndDate : string;
-	scheduledStartDate : string;
+	scheduledEndDate : any;
+	scheduledStartDate : any;
 	studentNote : string;
 	teacherNote : string;
 
 	constructor() {
-		this.actualEndDate = '';
-		this.actualStartDate = '';
-		this.billAmount = 0;
+		this.actualEndDate = null;
+		this.actualStartDate = null;
+		this.billAmount = null;
 		this.eventStatusId = 0;
 		this.eventStatusIdEntity = '';
 		this.id = 0;
-		this.scheduledEndDate = '';
-		this.scheduledStartDate = '';
+		this.scheduledEndDate = null;
+		this.scheduledStartDate = null;
 		this.studentNote = '';
 		this.teacherNote = '';
 	}
@@ -224,7 +224,7 @@ export class ApiSpaceFeatureClientResponseModel {
 	}
 }
 export class ApiStudentClientRequestModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	emailRemindersEnabled : boolean;
 	familyId : number;
@@ -239,7 +239,7 @@ export class ApiStudentClientRequestModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.emailRemindersEnabled = false;
 		this.familyId = 0;
@@ -256,7 +256,7 @@ export class ApiStudentClientRequestModel {
 }
 
 export class ApiStudentClientResponseModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	emailRemindersEnabled : boolean;
 	familyId : number;
@@ -271,7 +271,7 @@ export class ApiStudentClientResponseModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.emailRemindersEnabled = false;
 		this.familyId = 0;
@@ -330,7 +330,7 @@ export class ApiStudioClientResponseModel {
 	}
 }
 export class ApiTeacherClientRequestModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	firstName : string;
 	id : number;
@@ -340,7 +340,7 @@ export class ApiTeacherClientRequestModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.firstName = '';
 		this.id = 0;
@@ -352,7 +352,7 @@ export class ApiTeacherClientRequestModel {
 }
 
 export class ApiTeacherClientResponseModel {
-	birthday : string;
+	birthday : any;
 	email : string;
 	firstName : string;
 	id : number;
@@ -362,7 +362,7 @@ export class ApiTeacherClientResponseModel {
 	userIdEntity : string;
 
 	constructor() {
-		this.birthday = '';
+		this.birthday = null;
 		this.email = '';
 		this.firstName = '';
 		this.id = 0;
@@ -416,5 +416,5 @@ export class ApiUserClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>850b0975b842dbbdbe92eeff1f8c5a4c</Hash>
+    <Hash>ebf73bdb562593b699aee92cd0c10efa</Hash>
 </Codenesium>*/

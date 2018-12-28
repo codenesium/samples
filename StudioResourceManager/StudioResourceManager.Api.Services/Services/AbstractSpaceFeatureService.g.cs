@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractSpaceFeatureService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISpaceFeatureRepository SpaceFeatureRepository { get; private set; }
 
 		protected IApiSpaceFeatureServerRequestModelValidator SpaceFeatureModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractSpaceFeatureService(
 			ILogger logger,
+			IMediator mediator,
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolSpaceFeatureMapper = bolSpaceFeatureMapper;
 			this.DalSpaceFeatureMapper = dalSpaceFeatureMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSpaceFeatureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolSpaceFeatureMapper.MapModelToBO(default(int), model);
 				var record = await this.SpaceFeatureRepository.Create(this.DalSpaceFeatureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSpaceFeatureMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SpaceFeatureCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.SpaceFeatureRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
+				var apiModel = this.BolSpaceFeatureMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SpaceFeatureUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.SpaceFeatureRepository.Delete(id);
+
+				await this.mediator.Publish(new SpaceFeatureDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ff36ad7703241a6d2e99873e52f0be8</Hash>
+    <Hash>b146ddd2da85eb717fa8c0e620de8120</Hash>
 </Codenesium>*/

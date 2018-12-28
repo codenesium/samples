@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Location_Name.
 		public async virtual Task<Location> ByName(string name)
 		{
-			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Location>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Location>> Where(
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>02bd0bd27701ca9de920ff8ec1f5b14b</Hash>
+    <Hash>eb59fa8d04e5d9043ebe259159a6e09c</Hash>
 </Codenesium>*/

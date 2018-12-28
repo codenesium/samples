@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractStudentService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IStudentRepository StudentRepository { get; private set; }
 
 		protected IApiStudentServerRequestModelValidator StudentModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractStudentService(
 			ILogger logger,
+			IMediator mediator,
 			IStudentRepository studentRepository,
 			IApiStudentServerRequestModelValidator studentModelValidator,
 			IBOLStudentMapper bolStudentMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolStudentMapper = bolStudentMapper;
 			this.DalStudentMapper = dalStudentMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiStudentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolStudentMapper.MapModelToBO(default(int), model);
 				var record = await this.StudentRepository.Create(this.DalStudentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalStudentMapper.MapEFToBO(record);
+				response.SetRecord(this.BolStudentMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new StudentCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -84,7 +92,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.StudentRepository.Get(id);
 
-				return ValidationResponseFactory<ApiStudentServerResponseModel>.UpdateResponse(this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalStudentMapper.MapEFToBO(record);
+				await this.mediator.Publish(new StudentUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiStudentServerResponseModel>.UpdateResponse(this.BolStudentMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -100,6 +111,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.StudentRepository.Delete(id);
+
+				await this.mediator.Publish(new StudentDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +135,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f2bcf04a39f44603c20d8c7b4d11d3c2</Hash>
+    <Hash>b5bab6686991b14653dccdcd02aacc1c</Hash>
 </Codenesium>*/

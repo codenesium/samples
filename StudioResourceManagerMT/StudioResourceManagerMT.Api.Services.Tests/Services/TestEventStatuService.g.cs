@@ -9,6 +9,7 @@ using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			records.Add(new EventStatu());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -47,6 +49,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var record = new EventStatu();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -66,6 +69,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventStatuRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<EventStatu>(null));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -86,6 +90,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var model = new ApiEventStatuServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EventStatu>())).Returns(Task.FromResult(new EventStatu()));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -99,6 +104,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<EventStatu>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiEventStatuServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -121,6 +128,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventStatuServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<EventStatu>())).Returns(Task.FromResult(new EventStatu()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventStatu()));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -144,6 +153,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<EventStatu>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventStatu()));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -167,6 +178,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatuServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var model = new ApiEventStatuServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -189,6 +202,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiEventStatuServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -211,6 +226,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventStatuDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			records.Add(new Event());
 			mock.RepositoryMock.Setup(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -240,6 +257,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventStatuRepository>();
 			mock.RepositoryMock.Setup(x => x.EventsByEventStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
 			var service = new EventStatuService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.EventStatuModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLEventStatuMapperMock,
@@ -256,5 +274,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f9b052d89eb0b92051fdb9ca510a1c6</Hash>
+    <Hash>a4dcc47d3f7de15a6e2067988ba47299</Hash>
 </Codenesium>*/

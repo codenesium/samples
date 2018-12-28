@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SalesOrderHeader_rowguid.
 		public async virtual Task<SalesOrderHeader> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SalesOrderHeader>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint AK_SalesOrderHeader_SalesOrderNumber.
 		public async virtual Task<SalesOrderHeader> BySalesOrderNumber(string salesOrderNumber)
 		{
-			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderNumber == salesOrderNumber);
+			return await this.Context.Set<SalesOrderHeader>().FirstOrDefaultAsync(x => x.SalesOrderNumber == salesOrderNumber);
 		}
 
 		// Non-unique constraint IX_SalesOrderHeader_CustomerID.
@@ -154,5 +154,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a942d533fb4793222849394adaaa5d51</Hash>
+    <Hash>90452164736622b0f5f069e605ea8eaa</Hash>
 </Codenesium>*/

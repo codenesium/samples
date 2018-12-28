@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public CountryService(
 			ILogger<ICountryRepository> logger,
+			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
 			IBOLCountryMapper bolCountryMapper,
@@ -17,6 +19,7 @@ namespace PetShippingNS.Api.Services
 			IBOLDestinationMapper bolDestinationMapper,
 			IDALDestinationMapper dalDestinationMapper)
 			: base(logger,
+			       mediator,
 			       countryRepository,
 			       countryModelValidator,
 			       bolCountryMapper,
@@ -31,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5af8494634115f1049207fb284e48a66</Hash>
+    <Hash>ced9d641ea4fd86bc4c59b8cc9d533d7</Hash>
 </Codenesium>*/

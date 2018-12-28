@@ -18,7 +18,7 @@
   <files>
       <file src="bin\Release\netstandard2.0\*.dll" target="lib\Release\netstandard2.0" />
       <file src="bin\Release\netstandard2.0\*.pdb" target="lib\Release\netstandard2.0" />
-      <file src="bin\Release\netcoreapp2.1\*.dll" target="lib\Release\netcoreapp2.1" />
-      <file src="bin\Release\netcoreapp2.1\*.pdb" target="lib\Release\netcoreapp2.1" />
+      <file src="bin\Release\netcoreapp2.2\*.dll" target="lib\Release\netcoreapp2.2" />
+      <file src="bin\Release\netcoreapp2.2\*.pdb" target="lib\Release\netcoreapp2.2" />
   </files>
 </package>

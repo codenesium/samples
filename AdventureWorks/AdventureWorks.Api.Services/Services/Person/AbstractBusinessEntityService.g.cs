@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBusinessEntityService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IBusinessEntityRepository BusinessEntityRepository { get; private set; }
 
 		protected IApiBusinessEntityServerRequestModelValidator BusinessEntityModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractBusinessEntityService(
 			ILogger logger,
+			IMediator mediator,
 			IBusinessEntityRepository businessEntityRepository,
 			IApiBusinessEntityServerRequestModelValidator businessEntityModelValidator,
 			IBOLBusinessEntityMapper bolBusinessEntityMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPersonMapper = bolPersonMapper;
 			this.DalPersonMapper = dalPersonMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiBusinessEntityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolBusinessEntityMapper.MapModelToBO(default(int), model);
 				var record = await this.BusinessEntityRepository.Create(this.DalBusinessEntityMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(record)));
+				var businessObject = this.DalBusinessEntityMapper.MapEFToBO(record);
+				response.SetRecord(this.BolBusinessEntityMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new BusinessEntityCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.BusinessEntityRepository.Get(businessEntityID);
 
-				return ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.UpdateResponse(this.BolBusinessEntityMapper.MapBOToModel(this.DalBusinessEntityMapper.MapEFToBO(record)));
+				var businessObject = this.DalBusinessEntityMapper.MapEFToBO(record);
+				var apiModel = this.BolBusinessEntityMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new BusinessEntityUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiBusinessEntityServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.BusinessEntityRepository.Delete(businessEntityID);
+
+				await this.mediator.Publish(new BusinessEntityDeletedNotification(businessEntityID));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9403a58e328efdf3fe8931c54f18d2c</Hash>
+    <Hash>1f8b49380f35ac68ea43a9452083ae78</Hash>
 </Codenesium>*/

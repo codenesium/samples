@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public ProductSubcategoryService(
 			ILogger<IProductSubcategoryRepository> logger,
+			IMediator mediator,
 			IProductSubcategoryRepository productSubcategoryRepository,
 			IApiProductSubcategoryServerRequestModelValidator productSubcategoryModelValidator,
 			IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLProductMapper bolProductMapper,
 			IDALProductMapper dalProductMapper)
 			: base(logger,
+			       mediator,
 			       productSubcategoryRepository,
 			       productSubcategoryModelValidator,
 			       bolProductSubcategoryMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5122247bb28dbd47c00e9cd516ff76dd</Hash>
+    <Hash>22406c5230d441257226b4708299e447</Hash>
 </Codenesium>*/

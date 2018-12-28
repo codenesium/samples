@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractOtherTransportService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IOtherTransportRepository OtherTransportRepository { get; private set; }
 
 		protected IApiOtherTransportServerRequestModelValidator OtherTransportModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractOtherTransportService(
 			ILogger logger,
+			IMediator mediator,
 			IOtherTransportRepository otherTransportRepository,
 			IApiOtherTransportServerRequestModelValidator otherTransportModelValidator,
 			IBOLOtherTransportMapper bolOtherTransportMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolOtherTransportMapper = bolOtherTransportMapper;
 			this.DalOtherTransportMapper = dalOtherTransportMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiOtherTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolOtherTransportMapper.MapModelToBO(default(int), model);
 				var record = await this.OtherTransportRepository.Create(this.DalOtherTransportMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(record)));
+				var businessObject = this.DalOtherTransportMapper.MapEFToBO(record);
+				response.SetRecord(this.BolOtherTransportMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new OtherTransportCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.OtherTransportRepository.Get(id);
 
-				return ValidationResponseFactory<ApiOtherTransportServerResponseModel>.UpdateResponse(this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(record)));
+				var businessObject = this.DalOtherTransportMapper.MapEFToBO(record);
+				var apiModel = this.BolOtherTransportMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new OtherTransportUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiOtherTransportServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.OtherTransportRepository.Delete(id);
+
+				await this.mediator.Publish(new OtherTransportDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fd690b451aef5b656cbb9889de19c66</Hash>
+    <Hash>ab774cf852189e9ba0f0199faf4b6a2a</Hash>
 </Codenesium>*/

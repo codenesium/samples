@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractRateService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IRateRepository RateRepository { get; private set; }
 
 		protected IApiRateServerRequestModelValidator RateModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractRateService(
 			ILogger logger,
+			IMediator mediator,
 			IRateRepository rateRepository,
 			IApiRateServerRequestModelValidator rateModelValidator,
 			IBOLRateMapper bolRateMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolRateMapper.MapModelToBO(default(int), model);
 				var record = await this.RateRepository.Create(this.DalRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalRateMapper.MapEFToBO(record);
+				response.SetRecord(this.BolRateMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new RateCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -84,7 +92,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.RateRepository.Get(id);
 
-				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalRateMapper.MapEFToBO(record);
+				await this.mediator.Publish(new RateUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(this.BolRateMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -100,6 +111,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.RateRepository.Delete(id);
+
+				await this.mediator.Publish(new RateDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +135,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76013c2660f7c3b510d875d2c7c3bf43</Hash>
+    <Hash>0da86b20e43646247f3e8adc86448424</Hash>
 </Codenesium>*/

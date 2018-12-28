@@ -30,7 +30,7 @@ namespace NebulaNS.Api.Services
 		public int LinkId { get; private set; }
 
 		[JsonProperty]
-		public string LinkIdEntity { get; set; }
+		public string LinkIdEntity { get; private set; } = RouteConstants.Links;
 
 		[JsonProperty]
 		public string Log { get; private set; }
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>570f5490cfaeb9616ea3b0a0fd6d39e8</Hash>
+    <Hash>a6e90a61b292ab2ebfdaa6d01e30116c</Hash>
 </Codenesium>*/

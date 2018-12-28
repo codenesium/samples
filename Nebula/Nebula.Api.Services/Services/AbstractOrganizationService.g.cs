@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractOrganizationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IOrganizationRepository OrganizationRepository { get; private set; }
 
 		protected IApiOrganizationServerRequestModelValidator OrganizationModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractOrganizationService(
 			ILogger logger,
+			IMediator mediator,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationServerRequestModelValidator organizationModelValidator,
 			IBOLOrganizationMapper bolOrganizationMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolTeamMapper = bolTeamMapper;
 			this.DalTeamMapper = dalTeamMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiOrganizationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolOrganizationMapper.MapModelToBO(default(int), model);
 				var record = await this.OrganizationRepository.Create(this.DalOrganizationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
+				var businessObject = this.DalOrganizationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolOrganizationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new OrganizationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.OrganizationRepository.Get(id);
 
-				return ValidationResponseFactory<ApiOrganizationServerResponseModel>.UpdateResponse(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
+				var businessObject = this.DalOrganizationMapper.MapEFToBO(record);
+				var apiModel = this.BolOrganizationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new OrganizationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiOrganizationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.OrganizationRepository.Delete(id);
+
+				await this.mediator.Publish(new OrganizationDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>274b7edf8174400a278ebdb807d23a48</Hash>
+    <Hash>7fa3be3fb98d964f76811925f79bd5c5</Hash>
 </Codenesium>*/

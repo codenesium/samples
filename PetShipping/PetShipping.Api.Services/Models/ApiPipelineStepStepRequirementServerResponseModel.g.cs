@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.Services
 		public int PipelineStepId { get; private set; }
 
 		[JsonProperty]
-		public string PipelineStepIdEntity { get; set; }
+		public string PipelineStepIdEntity { get; private set; } = RouteConstants.PipelineSteps;
 
 		[JsonProperty]
 		public bool RequirementMet { get; private set; }
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3dcaba2cc9b2e17824b5142c9216a491</Hash>
+    <Hash>aea38006fd6f2163210a7adc903c2413</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public CityService(
 			ILogger<ICityRepository> logger,
+			IMediator mediator,
 			ICityRepository cityRepository,
 			IApiCityServerRequestModelValidator cityModelValidator,
 			IBOLCityMapper bolCityMapper,
@@ -15,6 +17,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
+			       mediator,
 			       cityRepository,
 			       cityModelValidator,
 			       bolCityMapper,
@@ -27,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a39d8e2fc38c242ffa11c30624cc89e</Hash>
+    <Hash>fc894b4c959c63c62dcfc36c67429994</Hash>
 </Codenesium>*/

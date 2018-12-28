@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Transaction());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -47,6 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var record = new Transaction();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -66,6 +69,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -86,6 +90,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiTransactionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Transaction>())).Returns(Task.FromResult(new Transaction()));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -99,6 +104,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Transaction>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTransactionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -121,6 +128,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Transaction>())).Returns(Task.FromResult(new Transaction()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -144,6 +153,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Transaction>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -167,6 +178,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiTransactionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -189,6 +202,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTransactionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -211,6 +226,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Transaction());
 			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -240,6 +257,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Transaction>>(new List<Transaction>()));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -261,6 +279,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Sale());
 			mock.RepositoryMock.Setup(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -280,6 +299,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			mock.RepositoryMock.Setup(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
 			var service = new TransactionService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
@@ -296,5 +316,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ad5ce9aac090d2e09c7831612e83a3ab</Hash>
+    <Hash>01b707ccfcf110410b035aa1ae0d49e7</Hash>
 </Codenesium>*/

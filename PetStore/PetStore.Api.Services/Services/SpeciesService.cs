@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetStoreNS.Api.Services
 	{
 		public SpeciesService(
 			ILogger<ISpeciesRepository> logger,
+			IMediator mediator,
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesServerRequestModelValidator speciesModelValidator,
 			IBOLSpeciesMapper bolSpeciesMapper,
@@ -15,6 +17,7 @@ namespace PetStoreNS.Api.Services
 			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base(logger,
+			       mediator,
 			       speciesRepository,
 			       speciesModelValidator,
 			       bolSpeciesMapper,
@@ -27,5 +30,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7a283bdb5db7bde673310228bde1d0a4</Hash>
+    <Hash>eadd539086e56120fdf8aeaf037292cf</Hash>
 </Codenesium>*/

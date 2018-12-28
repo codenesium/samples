@@ -70,7 +70,7 @@ namespace TwitterNS.Api.Services
 		public int LocationLocationId { get; private set; }
 
 		[JsonProperty]
-		public string LocationLocationIdEntity { get; set; }
+		public string LocationLocationIdEntity { get; private set; } = RouteConstants.Locations;
 
 		[JsonProperty]
 		public string Password { get; private set; }
@@ -95,5 +95,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8226af158071ca8de99cf6152f2521f7</Hash>
+    <Hash>9e9551a314c1963cc21d4107a915bddf</Hash>
 </Codenesium>*/

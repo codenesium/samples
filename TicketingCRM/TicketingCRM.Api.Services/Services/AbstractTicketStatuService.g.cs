@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractTicketStatuService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITicketStatuRepository TicketStatuRepository { get; private set; }
 
 		protected IApiTicketStatuServerRequestModelValidator TicketStatuModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractTicketStatuService(
 			ILogger logger,
+			IMediator mediator,
 			ITicketStatuRepository ticketStatuRepository,
 			IApiTicketStatuServerRequestModelValidator ticketStatuModelValidator,
 			IBOLTicketStatuMapper bolTicketStatuMapper,
@@ -40,6 +44,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTicketStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolTicketStatuMapper.MapModelToBO(default(int), model);
 				var record = await this.TicketStatuRepository.Create(this.DalTicketStatuMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTicketStatuMapper.MapBOToModel(this.DalTicketStatuMapper.MapEFToBO(record)));
+				var businessObject = this.DalTicketStatuMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTicketStatuMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TicketStatuCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.TicketStatuRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTicketStatuServerResponseModel>.UpdateResponse(this.BolTicketStatuMapper.MapBOToModel(this.DalTicketStatuMapper.MapEFToBO(record)));
+				var businessObject = this.DalTicketStatuMapper.MapEFToBO(record);
+				var apiModel = this.BolTicketStatuMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TicketStatuUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTicketStatuServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.TicketStatuRepository.Delete(id);
+
+				await this.mediator.Publish(new TicketStatuDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15985fe7b84dcece70728f8fdc9a5a2f</Hash>
+    <Hash>d1799073ac97fdf2421cba7b81986cb3</Hash>
 </Codenesium>*/

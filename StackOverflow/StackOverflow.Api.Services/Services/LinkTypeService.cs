@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StackOverflowNS.Api.Services
 	{
 		public LinkTypeService(
 			ILogger<ILinkTypeRepository> logger,
+			IMediator mediator,
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
 			IBOLLinkTypeMapper bolLinkTypeMapper,
 			IDALLinkTypeMapper dalLinkTypeMapper)
 			: base(logger,
+			       mediator,
 			       linkTypeRepository,
 			       linkTypeModelValidator,
 			       bolLinkTypeMapper,
@@ -23,5 +26,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24b50396f0a275536f7899dd323f0487</Hash>
+    <Hash>dbb29c44604544fd43cd8b6b4d0473fb</Hash>
 </Codenesium>*/

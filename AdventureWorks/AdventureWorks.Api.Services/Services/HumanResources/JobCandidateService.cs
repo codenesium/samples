@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public JobCandidateService(
 			ILogger<IJobCandidateRepository> logger,
+			IMediator mediator,
 			IJobCandidateRepository jobCandidateRepository,
 			IApiJobCandidateServerRequestModelValidator jobCandidateModelValidator,
 			IBOLJobCandidateMapper bolJobCandidateMapper,
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base(logger,
+			       mediator,
 			       jobCandidateRepository,
 			       jobCandidateModelValidator,
 			       bolJobCandidateMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5e08083458a852471079cbec4e1a555</Hash>
+    <Hash>7e84136fcbd118ee3478fa92b024f4f2</Hash>
 </Codenesium>*/

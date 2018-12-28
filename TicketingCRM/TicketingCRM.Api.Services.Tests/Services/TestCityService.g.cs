@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new City());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -47,6 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var record = new City();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -66,6 +69,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICityRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -86,6 +90,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiCityServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<City>())).Returns(Task.FromResult(new City()));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -99,6 +104,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<City>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCityServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -121,6 +128,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCityServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<City>())).Returns(Task.FromResult(new City()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -144,6 +153,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<City>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -167,6 +178,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCityServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiCityServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -189,6 +202,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CityModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCityServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -211,6 +226,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CityDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new City());
 			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -240,6 +257,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICityRepository>();
 			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<City>>(new List<City>()));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -261,6 +279,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Event());
 			mock.RepositoryMock.Setup(x => x.EventsByCityId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -280,6 +299,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICityRepository>();
 			mock.RepositoryMock.Setup(x => x.EventsByCityId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
 			var service = new CityService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.CityModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLCityMapperMock,
@@ -296,5 +316,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7ab44f441f20e00acdf959907c907e0f</Hash>
+    <Hash>4a354fc05f0031ff24e748a6696cced4</Hash>
 </Codenesium>*/

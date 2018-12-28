@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineStepStepRequirementService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPipelineStepStepRequirementRepository PipelineStepStepRequirementRepository { get; private set; }
 
 		protected IApiPipelineStepStepRequirementServerRequestModelValidator PipelineStepStepRequirementModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractPipelineStepStepRequirementService(
 			ILogger logger,
+			IMediator mediator,
 			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
 			IApiPipelineStepStepRequirementServerRequestModelValidator pipelineStepStepRequirementModelValidator,
 			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolPipelineStepStepRequirementMapper = bolPipelineStepStepRequirementMapper;
 			this.DalPipelineStepStepRequirementMapper = dalPipelineStepStepRequirementMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPipelineStepStepRequirementServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolPipelineStepStepRequirementMapper.MapModelToBO(default(int), model);
 				var record = await this.PipelineStepStepRequirementRepository.Create(this.DalPipelineStepStepRequirementMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineStepStepRequirementMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPipelineStepStepRequirementMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PipelineStepStepRequirementCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.PipelineStepStepRequirementRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPipelineStepStepRequirementServerResponseModel>.UpdateResponse(this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineStepStepRequirementMapper.MapEFToBO(record);
+				var apiModel = this.BolPipelineStepStepRequirementMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PipelineStepStepRequirementUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPipelineStepStepRequirementServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.PipelineStepStepRequirementRepository.Delete(id);
+
+				await this.mediator.Publish(new PipelineStepStepRequirementDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>139de0c30fffb009aabaed8f78530604</Hash>
+    <Hash>670e19ad6bc7b74a02ef31930e008a9c</Hash>
 </Codenesium>*/

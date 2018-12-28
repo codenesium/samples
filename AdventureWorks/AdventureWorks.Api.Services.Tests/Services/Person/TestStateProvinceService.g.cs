@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new StateProvince());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new StateProvince();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<StateProvince>(null));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiStateProvinceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StateProvince>())).Returns(Task.FromResult(new StateProvince()));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<StateProvince>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiStateProvinceServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiStateProvinceServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StateProvince>())).Returns(Task.FromResult(new StateProvince()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<StateProvince>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new StateProvince()));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiStateProvinceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiStateProvinceServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<StateProvinceDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new StateProvince();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -259,6 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new StateProvince();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -278,6 +297,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<StateProvince>(null));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -298,6 +318,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new StateProvince();
 			mock.RepositoryMock.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -317,6 +338,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			mock.RepositoryMock.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<StateProvince>(null));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -338,6 +360,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Address());
 			mock.RepositoryMock.Setup(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -357,6 +380,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			mock.RepositoryMock.Setup(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Address>>(new List<Address>()));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
@@ -373,5 +397,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6fe2d85fef8f5cf86f9fab702deb1a0f</Hash>
+    <Hash>3477ec4f4cf82ef8886acbc6115faea0</Hash>
 </Codenesium>*/

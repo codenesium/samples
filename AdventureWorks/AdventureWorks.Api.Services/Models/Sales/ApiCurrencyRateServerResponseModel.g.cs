@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Services
 		public string FromCurrencyCode { get; private set; }
 
 		[JsonProperty]
-		public string FromCurrencyCodeEntity { get; set; }
+		public string FromCurrencyCodeEntity { get; private set; } = RouteConstants.Currencies;
 
 		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; }
@@ -51,10 +51,10 @@ namespace AdventureWorksNS.Api.Services
 		public string ToCurrencyCode { get; private set; }
 
 		[JsonProperty]
-		public string ToCurrencyCodeEntity { get; set; }
+		public string ToCurrencyCodeEntity { get; private set; } = RouteConstants.Currencies;
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a523d5e48d4e71b8d1974587764112c</Hash>
+    <Hash>09cbebbc7c2d74a40f9f31c1b45a67ca</Hash>
 </Codenesium>*/

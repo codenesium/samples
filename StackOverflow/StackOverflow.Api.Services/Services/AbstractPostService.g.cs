@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPostRepository PostRepository { get; private set; }
 
 		protected IApiPostServerRequestModelValidator PostModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractPostService(
 			ILogger logger,
+			IMediator mediator,
 			IPostRepository postRepository,
 			IApiPostServerRequestModelValidator postModelValidator,
 			IBOLPostMapper bolPostMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolPostMapper = bolPostMapper;
 			this.DalPostMapper = dalPostMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPostServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolPostMapper.MapModelToBO(default(int), model);
 				var record = await this.PostRepository.Create(this.DalPostMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPostMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PostCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPostServerResponseModel>.UpdateResponse(this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostMapper.MapEFToBO(record);
+				var apiModel = this.BolPostMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PostUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPostServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.PostRepository.Delete(id);
+
+				await this.mediator.Publish(new PostDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>14b8fe45abbee567c526920a99b7a6f5</Hash>
+    <Hash>7f9f6cd4590c2c90ecfbfd3fce91189f</Hash>
 </Codenesium>*/

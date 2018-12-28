@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPenService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPenRepository PenRepository { get; private set; }
 
 		protected IApiPenServerRequestModelValidator PenModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetStoreNS.Api.Services
 
 		public AbstractPenService(
 			ILogger logger,
+			IMediator mediator,
 			IPenRepository penRepository,
 			IApiPenServerRequestModelValidator penModelValidator,
 			IBOLPenMapper bolPenMapper,
@@ -40,6 +44,8 @@ namespace PetStoreNS.Api.Services
 			this.BolPetMapper = bolPetMapper;
 			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPenServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetStoreNS.Api.Services
 				var bo = this.BolPenMapper.MapModelToBO(default(int), model);
 				var record = await this.PenRepository.Create(this.DalPenMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPenMapper.MapBOToModel(this.DalPenMapper.MapEFToBO(record)));
+				var businessObject = this.DalPenMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPenMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PenCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetStoreNS.Api.Services
 
 				var record = await this.PenRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPenServerResponseModel>.UpdateResponse(this.BolPenMapper.MapBOToModel(this.DalPenMapper.MapEFToBO(record)));
+				var businessObject = this.DalPenMapper.MapEFToBO(record);
+				var apiModel = this.BolPenMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PenUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPenServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetStoreNS.Api.Services
 			if (response.Success)
 			{
 				await this.PenRepository.Delete(id);
+
+				await this.mediator.Publish(new PenDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e592ed61101471177ff26d6234c89ebc</Hash>
+    <Hash>33f0fd09ce32de8964404f001dcacfdb</Hash>
 </Codenesium>*/

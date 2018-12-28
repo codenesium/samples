@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public DestinationService(
 			ILogger<IDestinationRepository> logger,
+			IMediator mediator,
 			IDestinationRepository destinationRepository,
 			IApiDestinationServerRequestModelValidator destinationModelValidator,
 			IBOLDestinationMapper bolDestinationMapper,
@@ -15,6 +17,7 @@ namespace PetShippingNS.Api.Services
 			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
 			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper)
 			: base(logger,
+			       mediator,
 			       destinationRepository,
 			       destinationModelValidator,
 			       bolDestinationMapper,
@@ -27,5 +30,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b156acb0b31f410188636d06781e57a2</Hash>
+    <Hash>96ad9f83d3e8a78ced794632e37a07d8</Hash>
 </Codenesium>*/

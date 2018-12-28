@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void StartTimeRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => (!x?.StartTime.IsEmptyOrZeroOrNull() ?? false) || (!x?.StartTime.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.StartTime)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => (!x?.StartTime.IsEmptyOrZeroOrNull() ?? false) || (!x?.EndTime.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftServerRequestModel.StartTime)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		protected async Task<bool> BeUniqueByName(ApiShiftServerRequestModel model,  CancellationToken cancellationToken)
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98fc7b1d5e7d9685e91fb3794d196698</Hash>
+    <Hash>109d39611d688fdf44075217890aaf59</Hash>
 </Codenesium>*/

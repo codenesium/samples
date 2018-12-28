@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractLinkTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ILinkTypeRepository LinkTypeRepository { get; private set; }
 
 		protected IApiLinkTypeServerRequestModelValidator LinkTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractLinkTypeService(
 			ILogger logger,
+			IMediator mediator,
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
 			IBOLLinkTypeMapper bolLinkTypeMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolLinkTypeMapper = bolLinkTypeMapper;
 			this.DalLinkTypeMapper = dalLinkTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiLinkTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolLinkTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.LinkTypeRepository.Create(this.DalLinkTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolLinkTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new LinkTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.LinkTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiLinkTypeServerResponseModel>.UpdateResponse(this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolLinkTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new LinkTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiLinkTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.LinkTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new LinkTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b6ec4be1a19c0059994cf8b5cdeede2</Hash>
+    <Hash>3ca67e4dbe08830e5ab2e4a29865d17b</Hash>
 </Codenesium>*/

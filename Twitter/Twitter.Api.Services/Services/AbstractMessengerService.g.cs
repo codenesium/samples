@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractMessengerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IMessengerRepository MessengerRepository { get; private set; }
 
 		protected IApiMessengerServerRequestModelValidator MessengerModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractMessengerService(
 			ILogger logger,
+			IMediator mediator,
 			IMessengerRepository messengerRepository,
 			IApiMessengerServerRequestModelValidator messengerModelValidator,
 			IBOLMessengerMapper bolMessengerMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolMessengerMapper = bolMessengerMapper;
 			this.DalMessengerMapper = dalMessengerMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiMessengerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolMessengerMapper.MapModelToBO(default(int), model);
 				var record = await this.MessengerRepository.Create(this.DalMessengerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(record)));
+				var businessObject = this.DalMessengerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolMessengerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new MessengerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.MessengerRepository.Get(id);
 
-				return ValidationResponseFactory<ApiMessengerServerResponseModel>.UpdateResponse(this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(record)));
+				var businessObject = this.DalMessengerMapper.MapEFToBO(record);
+				var apiModel = this.BolMessengerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new MessengerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiMessengerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.MessengerRepository.Delete(id);
+
+				await this.mediator.Publish(new MessengerDeletedNotification(id));
 			}
 
 			return response;
@@ -129,5 +143,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>763a587cad1a75c9dbe8f6fa6d5d9b4c</Hash>
+    <Hash>a8f03d6c95d0bdaccf09f4efc36973b3</Hash>
 </Codenesium>*/

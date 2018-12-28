@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractAdminService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAdminRepository AdminRepository { get; private set; }
 
 		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractAdminService(
 			ILogger logger,
+			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
@@ -40,6 +44,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
 				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAdminMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AdminCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.AdminRepository.Get(id);
 
-				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				var apiModel = this.BolAdminMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AdminUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.AdminRepository.Delete(id);
+
+				await this.mediator.Publish(new AdminDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12d6175e8d6a3bcd013bf60eb12b3d41</Hash>
+    <Hash>4fd5c085e764c28613de1b9cf51ef846</Hash>
 </Codenesium>*/

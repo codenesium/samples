@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public TicketStatuService(
 			ILogger<ITicketStatuRepository> logger,
+			IMediator mediator,
 			ITicketStatuRepository ticketStatuRepository,
 			IApiTicketStatuServerRequestModelValidator ticketStatuModelValidator,
 			IBOLTicketStatuMapper bolTicketStatuMapper,
@@ -15,6 +17,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLTicketMapper bolTicketMapper,
 			IDALTicketMapper dalTicketMapper)
 			: base(logger,
+			       mediator,
 			       ticketStatuRepository,
 			       ticketStatuModelValidator,
 			       bolTicketStatuMapper,
@@ -27,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94bfda7e1ba0afda36967833b6575928</Hash>
+    <Hash>43b6766575db45b22ef661ae127cd5ca</Hash>
 </Codenesium>*/

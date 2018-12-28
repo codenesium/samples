@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -7,6 +8,8 @@ namespace StackOverflowNS.Api.Services.Tests
         where T : class
     {
         public Mock<ILogger<T>> LoggerMock { get; set; } = new Mock<ILogger<T>>();
+
+		public Mock<IMediator> MediatorMock { get; set; } = new Mock<IMediator>();
 
         public Mock<T> RepositoryMock { get; set; } = new Mock<T>();
 

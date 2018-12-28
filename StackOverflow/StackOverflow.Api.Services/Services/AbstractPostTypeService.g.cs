@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPostTypeRepository PostTypeRepository { get; private set; }
 
 		protected IApiPostTypeServerRequestModelValidator PostTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractPostTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IPostTypeRepository postTypeRepository,
 			IApiPostTypeServerRequestModelValidator postTypeModelValidator,
 			IBOLPostTypeMapper bolPostTypeMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolPostTypeMapper = bolPostTypeMapper;
 			this.DalPostTypeMapper = dalPostTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPostTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolPostTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.PostTypeRepository.Create(this.DalPostTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPostTypeMapper.MapBOToModel(this.DalPostTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPostTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PostTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPostTypeServerResponseModel>.UpdateResponse(this.BolPostTypeMapper.MapBOToModel(this.DalPostTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolPostTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PostTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPostTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.PostTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new PostTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b4506e2acd47a34ebf71b03e379b18d</Hash>
+    <Hash>a29a25a1b26bb79461723d1d6e50c57a</Hash>
 </Codenesium>*/

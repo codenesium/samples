@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Customer_AccountNumber.
 		public async virtual Task<Customer> ByAccountNumber(string accountNumber)
 		{
-			return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
+			return await this.Context.Set<Customer>().FirstOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
 		// unique constraint AK_Customer_rowguid.
 		public async virtual Task<Customer> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Customer>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Customer_TerritoryID.
@@ -136,5 +136,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>311848c7aecb174d5b542abb042e0874</Hash>
+    <Hash>3e84c0eea4b9436215a7a76d0bbbea53</Hash>
 </Codenesium>*/

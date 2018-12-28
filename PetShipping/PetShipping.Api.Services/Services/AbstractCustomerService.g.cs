@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
 		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractCustomerService(
 			ILogger logger,
+			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolCustomerMapper,
@@ -40,6 +44,8 @@ namespace PetShippingNS.Api.Services
 			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
 			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
 				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCustomerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CustomerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CustomerRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				var apiModel = this.BolCustomerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CustomerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.CustomerRepository.Delete(id);
+
+				await this.mediator.Publish(new CustomerDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1c288436c735f20bc222277eecb9b22</Hash>
+    <Hash>76817a40df5c8af8c8e8036df54022b7</Hash>
 </Codenesium>*/

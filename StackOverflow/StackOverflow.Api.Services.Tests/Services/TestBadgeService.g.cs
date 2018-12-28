@@ -9,6 +9,7 @@ using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			records.Add(new Badge());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -45,6 +47,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var record = new Badge();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -62,6 +65,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBadgeRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Badge>(null));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -80,6 +84,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiBadgeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Badge>())).Returns(Task.FromResult(new Badge()));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -91,6 +96,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Badge>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBadgeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -111,6 +118,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBadgeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Badge>())).Returns(Task.FromResult(new Badge()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badge()));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -132,6 +141,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Badge>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Badge()));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -153,6 +164,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBadgeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiBadgeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -173,6 +186,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBadgeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BadgeService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
@@ -193,10 +208,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BadgeDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91f5f91f37b59509ffad15eb71f10622</Hash>
+    <Hash>7a0430c2cf1aedd0b25adecfe29e0444</Hash>
 </Codenesium>*/

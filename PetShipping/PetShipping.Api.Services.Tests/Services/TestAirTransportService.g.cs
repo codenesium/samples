@@ -9,6 +9,7 @@ using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new AirTransport());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -45,6 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var record = new AirTransport();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -62,6 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAirTransportRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<AirTransport>(null));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -80,6 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiAirTransportServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AirTransport>())).Returns(Task.FromResult(new AirTransport()));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -91,6 +96,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<AirTransport>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiAirTransportServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -111,6 +118,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiAirTransportServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AirTransport>())).Returns(Task.FromResult(new AirTransport()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -132,6 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<AirTransport>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace PetShippingNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -153,6 +164,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAirTransportServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiAirTransportServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -173,6 +186,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiAirTransportServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new AirTransportService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
@@ -193,10 +208,11 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<AirTransportDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6d39e1c888b2b57f45e70926f579127</Hash>
+    <Hash>b75d9d2729fb40a673079156faa27863</Hash>
 </Codenesium>*/

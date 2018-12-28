@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShiftService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IShiftRepository ShiftRepository { get; private set; }
 
 		protected IApiShiftServerRequestModelValidator ShiftModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShiftService(
 			ILogger logger,
+			IMediator mediator,
 			IShiftRepository shiftRepository,
 			IApiShiftServerRequestModelValidator shiftModelValidator,
 			IBOLShiftMapper bolShiftMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolShiftMapper = bolShiftMapper;
 			this.DalShiftMapper = dalShiftMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiShiftServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolShiftMapper.MapModelToBO(default(int), model);
 				var record = await this.ShiftRepository.Create(this.DalShiftMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(record)));
+				var businessObject = this.DalShiftMapper.MapEFToBO(record);
+				response.SetRecord(this.BolShiftMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ShiftCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ShiftRepository.Get(shiftID);
 
-				return ValidationResponseFactory<ApiShiftServerResponseModel>.UpdateResponse(this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(record)));
+				var businessObject = this.DalShiftMapper.MapEFToBO(record);
+				var apiModel = this.BolShiftMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ShiftUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiShiftServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ShiftRepository.Delete(shiftID);
+
+				await this.mediator.Publish(new ShiftDeletedNotification(shiftID));
 			}
 
 			return response;
@@ -136,5 +150,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47a4454d77f8bf8b78d00320a96137db</Hash>
+    <Hash>4692a4f124babad71af2f3c9e10ddd3b</Hash>
 </Codenesium>*/

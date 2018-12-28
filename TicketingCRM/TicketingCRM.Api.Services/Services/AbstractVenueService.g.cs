@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractVenueService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IVenueRepository VenueRepository { get; private set; }
 
 		protected IApiVenueServerRequestModelValidator VenueModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractVenueService(
 			ILogger logger,
+			IMediator mediator,
 			IVenueRepository venueRepository,
 			IApiVenueServerRequestModelValidator venueModelValidator,
 			IBOLVenueMapper bolVenueMapper,
@@ -32,6 +36,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiVenueServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolVenueMapper.MapModelToBO(default(int), model);
 				var record = await this.VenueRepository.Create(this.DalVenueMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record)));
+				var businessObject = this.DalVenueMapper.MapEFToBO(record);
+				response.SetRecord(this.BolVenueMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new VenueCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.VenueRepository.Get(id);
 
-				return ValidationResponseFactory<ApiVenueServerResponseModel>.UpdateResponse(this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record)));
+				var businessObject = this.DalVenueMapper.MapEFToBO(record);
+				var apiModel = this.BolVenueMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new VenueUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiVenueServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.VenueRepository.Delete(id);
+
+				await this.mediator.Publish(new VenueDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6f0201aa9df4d604c0bd01cc879bb55</Hash>
+    <Hash>8928f0e001c5ff32aa070ae679e5a623</Hash>
 </Codenesium>*/

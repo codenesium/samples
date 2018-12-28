@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_UnitMeasure_Name.
 		public async virtual Task<UnitMeasure> ByName(string name)
 		{
-			return await this.Context.Set<UnitMeasure>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<UnitMeasure>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table BillOfMaterial via unitMeasureCode.
@@ -124,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a0977e2e99cf15e47fa947a955c900e0</Hash>
+    <Hash>b82ef34cc2fbe902c4f331e1935eb85a</Hash>
 </Codenesium>*/

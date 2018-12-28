@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public UserService(
 			ILogger<IUserRepository> logger,
+			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
@@ -19,6 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLTeacherMapper bolTeacherMapper,
 			IDALTeacherMapper dalTeacherMapper)
 			: base(logger,
+			       mediator,
 			       userRepository,
 			       userModelValidator,
 			       bolUserMapper,
@@ -35,5 +38,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d800a80e749c734b60788c73a64fd7f3</Hash>
+    <Hash>025d80011273f962b0f7b97939826af2</Hash>
 </Codenesium>*/

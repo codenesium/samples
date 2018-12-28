@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractCustomerCommunicationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICustomerCommunicationRepository CustomerCommunicationRepository { get; private set; }
 
 		protected IApiCustomerCommunicationServerRequestModelValidator CustomerCommunicationModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractCustomerCommunicationService(
 			ILogger logger,
+			IMediator mediator,
 			ICustomerCommunicationRepository customerCommunicationRepository,
 			IApiCustomerCommunicationServerRequestModelValidator customerCommunicationModelValidator,
 			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
 			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCustomerCommunicationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolCustomerCommunicationMapper.MapModelToBO(default(int), model);
 				var record = await this.CustomerCommunicationRepository.Create(this.DalCustomerCommunicationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerCommunicationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCustomerCommunicationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CustomerCommunicationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CustomerCommunicationRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCustomerCommunicationServerResponseModel>.UpdateResponse(this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerCommunicationMapper.MapEFToBO(record);
+				var apiModel = this.BolCustomerCommunicationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CustomerCommunicationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCustomerCommunicationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.CustomerCommunicationRepository.Delete(id);
+
+				await this.mediator.Publish(new CustomerCommunicationDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e97ee506d0873145e99a6105cca2cdd6</Hash>
+    <Hash>8ae288d41ac4607d1474465be9590863</Hash>
 </Codenesium>*/

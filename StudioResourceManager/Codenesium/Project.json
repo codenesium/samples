@@ -1863,6 +1863,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "a30fc0c4-bc20-4e7a-9986-edeb9a4b32d9",
                 "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -1891,6 +1892,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "646cb710-727e-4f35-8f8a-bd4d77157125",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -1919,6 +1921,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "7e4e35c7-3914-4a7f-ace7-aa2739e30018",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -1947,6 +1950,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "410e4cf2-5c3f-431b-af2a-3a1418a4646b",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -1975,6 +1979,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "33a1b71e-bd7c-49cf-aaf2-e707a6c86045",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -2003,6 +2008,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "ef99c16e-b2cb-465f-b3d3-9c37550aa556",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -2031,6 +2037,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "5caee439-75ea-442f-9717-b13537c23f53",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -2059,6 +2066,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "ee4d275c-c52b-46a3-9c10-dc4ce34f85a2",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "206"
@@ -2190,6 +2198,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "2148e94f-543c-4056-a06f-48b7fc11aa85",
                 "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2218,6 +2227,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "6a28c736-fa8f-4c7e-90d1-43efa336523e",
                 "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2246,6 +2256,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "78871760-4d03-4dec-966c-65043a58570a",
                 "AppCLRType": "decimal?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2274,6 +2285,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "500c199b-f9a6-489d-ad1d-ccce73cb55c9",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2302,6 +2314,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "b38da6fb-fe42-4659-8a0a-3de06bf85904",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2330,6 +2343,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "f31047bf-f76d-4ae4-942b-b85370e3e888",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2358,6 +2372,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "2341993c-cf6a-46b5-9efd-20c193b8944e",
                 "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2386,6 +2401,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "b65d2142-9d30-43b5-b7be-e4f9b5b26794",
                 "AppCLRType": "DateTime?",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2414,6 +2430,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "a9a7d2e8-c175-41c3-b5cf-2802415cb916",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2442,6 +2459,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "ca8eee67-3909-4296-8f35-fd23be94887f",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "219"
@@ -2573,6 +2591,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "fcce87e7-244a-409e-b65d-0d050d130248",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "234"
@@ -2601,6 +2620,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "b48639ae-6597-427a-9428-7ea65ab07867",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "234"
@@ -2629,6 +2649,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "309c5aa7-262a-48f8-95f1-308c25a264ca",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "234"
@@ -2727,6 +2748,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "910e94f4-7ea0-416e-9575-0ebb7d9fb433",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "240"
@@ -2755,6 +2777,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "58ba36c6-5c60-4ba5-8cb5-dbf4b2db7921",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "240"
@@ -2783,6 +2806,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "88f2ed68-cc01-47e1-88da-b4eabf2868c9",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "240"
@@ -2958,6 +2982,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "5b511474-27cf-439e-b119-a90c00a2e412",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "251"
@@ -2986,6 +3011,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "14fe7138-7501-4cae-bd36-52b3f8ccbfa2",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "251"
@@ -3014,6 +3040,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "e257d95d-84df-4733-8ddd-79f0618f9755",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "251"
@@ -3189,6 +3216,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "72fb76f3-b491-4694-b7cc-e538110a8e57",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3217,6 +3245,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "d7e566df-068f-421b-b2e8-2c72448cf05b",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3245,6 +3274,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "1be58d0b-1712-4a80-a637-67ae7726cc3b",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3273,6 +3303,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "b4cd8a73-5e61-43da-8bee-d72e4b150101",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3301,6 +3332,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "f1960a03-33c1-42b5-b5a6-416c41bf866a",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3329,6 +3361,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "0e21f9fe-8f8b-4f85-9848-16d7ee9b64c2",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3357,6 +3390,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "41932507-3ab5-481e-ab68-58fe31dbfa6d",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "262"
@@ -3455,6 +3489,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "8e59107d-f99c-4f74-bd09-437387e708ed",
                 "AppCLRType": "decimal",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "272"
@@ -3483,6 +3518,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "7fa8f9de-5823-4b71-9e04-21999f7c2f04",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "272"
@@ -3511,6 +3547,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "fc00b432-5127-4e95-9a5f-c3517af6e354",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "272"
@@ -3539,6 +3576,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "89decfd5-1cd4-4166-8140-7c035894542b",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "272"
@@ -3567,6 +3605,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "4126874e-02de-4ff6-9b40-757ea06248ca",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "272"
@@ -3731,6 +3770,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "a0daf23f-0e6e-4fd9-9105-2e6d994b9221",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "284"
@@ -3759,6 +3799,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "2a5bc0de-9ac7-45b4-843f-6e193fdafdbc",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "284"
@@ -3787,6 +3828,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "92decb4e-9452-4b69-9936-db8dfaf24edc",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "284"
@@ -3815,6 +3857,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "cd39b8fe-24f5-4d2d-9ae4-63cfb7508245",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "284"
@@ -3913,6 +3956,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "f558c02e-f091-4cab-b85f-cdad415e7d5e",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "291"
@@ -3941,6 +3985,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "7e8f8558-90df-41fd-8928-b81f53db2ef3",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "291"
@@ -3969,6 +4014,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "638b8653-9630-4438-bb2f-2d0484ca5e40",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "291"
@@ -4067,6 +4113,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "1fa87778-4da9-44c8-b12d-c7ddcd2f4382",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "297"
@@ -4095,6 +4142,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "0e30551c-2016-42ee-84c3-ea283fccf186",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "297"
@@ -4123,6 +4171,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "66763435-bef7-4dd8-a98d-0341e347c81a",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "297"
@@ -4298,6 +4347,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "9c522a23-f261-40b5-aa19-06256c3a5a80",
                 "AppCLRType": "DateTime",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4326,6 +4376,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "8f5f0017-7e35-4bed-bb9f-c25d19f74d90",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4354,6 +4405,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "3b18169a-3324-40bb-92a6-872d9db895e6",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4382,6 +4434,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "1ae94323-646b-46c1-a229-713872147325",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4410,6 +4463,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "e0baf976-9157-4867-9d60-9c96da236522",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4438,6 +4492,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "0191cc6e-8493-4eaf-a8e0-ad43c3a34dd6",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4466,6 +4521,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "95c8a44c-dbf6-4c95-933d-1fd4d59e930d",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4494,6 +4550,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "6ac44ae8-b794-4c1d-b0dd-91047f90e6e5",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4522,6 +4579,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "15a18614-a994-4c66-ae19-27bf700f731f",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4550,6 +4608,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "e2fcdb4e-013b-42a0-a3e3-15c202a44510",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4578,6 +4637,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "31687629-79f2-4326-99d5-6f74dcabeaec",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4606,6 +4666,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "6869340d-a317-48ac-a20b-b43f7ef98276",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "308"
@@ -4770,6 +4831,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "4494c3c2-f067-4fbd-bf49-aac9c5691103",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4798,6 +4860,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "23814273-8b89-4afc-82d7-4018e13cd2d9",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4826,6 +4889,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "eed035f4-b453-4374-90f8-256e6d9c5033",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4854,6 +4918,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "94666f47-ce20-413a-bdf2-4ce5698fef07",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4882,6 +4947,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "20c1c7ec-8b8d-4b4c-b19c-510aa5a32522",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4910,6 +4976,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "e38963ab-b021-4784-8708-88a157bced03",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4938,6 +5005,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "49861c21-a2d2-49aa-9346-9fc3bf390ffe",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4966,6 +5034,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "1cb24f5e-5c7c-421a-926b-1331e2a4f93e",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -4994,6 +5063,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "943ad243-d858-4cdf-a157-c53efd164196",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "327"
@@ -5092,6 +5162,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "b1d12bd0-fa95-43b3-9812-ee48a7ca1dcc",
                 "AppCLRType": "DateTime",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5120,6 +5191,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "dc4fbb9e-80fb-4ec8-a605-12f470cb63aa",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5148,6 +5220,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "b78000f4-7d98-4b81-9657-05723e939907",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5176,6 +5249,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "c838a13c-8569-4bb9-93ae-cc1dd81c359e",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5204,6 +5278,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "d1ea9f0a-38f2-40b9-8e09-ead295d12d87",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5232,6 +5307,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "57adac2a-84cf-47b2-bdb1-f0ba304fdfae",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5260,6 +5336,7 @@
                 "AppIsNullable": true,
                 "AppFieldId": "260ac451-50c8-4f56-bd04-c857b30596ef",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5288,6 +5365,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "51f131dd-6485-4f2d-b7bd-330eaed582eb",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "339"
@@ -5419,6 +5497,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "fb35c6cb-a23a-46bb-b042-afd255c10485",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "352"
@@ -5447,6 +5526,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "104565f3-71d5-4f0a-99a1-7c56f7846799",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "352"
@@ -5475,6 +5555,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "5e6e328c-5128-4db4-a678-24a57e208e3b",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "352"
@@ -5573,6 +5654,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "52be5947-2de4-4870-9b1e-96139449218c",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "358"
@@ -5601,6 +5683,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "4389c9b9-7708-4d9a-bde0-9207a726a9ef",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "358"
@@ -5629,6 +5712,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "b3307577-75b0-45f1-8f55-5d7d63066ded",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "358"
@@ -5804,6 +5888,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "e6753465-4ead-436f-a3f7-0741653bedd4",
                 "AppCLRType": "int",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "369"
@@ -5832,6 +5917,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "8b54c681-11c7-4086-b605-cbc0504c65d9",
                 "AppCLRType": "bool",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "369"
@@ -5860,6 +5946,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "fe739ad6-3299-4a94-8b23-3430b59933a7",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "369"
@@ -5888,6 +5975,7 @@
                 "AppIsNullable": false,
                 "AppFieldId": "34fdea03-a731-47c3-a0b0-2c32ce5ba006",
                 "AppCLRType": "string",
+                "AppTypescriptType": null,
                 "AppIsConcurrencyColumn": false,
                 "Table": {
                   "$ref": "369"

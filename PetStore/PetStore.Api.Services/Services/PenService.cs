@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetStoreNS.Api.Services
 	{
 		public PenService(
 			ILogger<IPenRepository> logger,
+			IMediator mediator,
 			IPenRepository penRepository,
 			IApiPenServerRequestModelValidator penModelValidator,
 			IBOLPenMapper bolPenMapper,
@@ -15,6 +17,7 @@ namespace PetStoreNS.Api.Services
 			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base(logger,
+			       mediator,
 			       penRepository,
 			       penModelValidator,
 			       bolPenMapper,
@@ -27,5 +30,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee4830a7fdc6381e9cc261afdcc1d0bb</Hash>
+    <Hash>f1d347cfba290ec0a8efa3c78abdf75b</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractSaleService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISaleRepository SaleRepository { get; private set; }
 
 		protected IApiSaleServerRequestModelValidator SaleModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractSaleService(
 			ILogger logger,
+			IMediator mediator,
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSaleServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
 				var record = await this.SaleRepository.Create(this.DalSaleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
+				var businessObject = this.DalSaleMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSaleMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SaleCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.SaleRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
+				var businessObject = this.DalSaleMapper.MapEFToBO(record);
+				var apiModel = this.BolSaleMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SaleUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.SaleRepository.Delete(id);
+
+				await this.mediator.Publish(new SaleDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7a624b7b82e295ad67db403f4365fd9</Hash>
+    <Hash>af70cca27204c74426f3d4a16d67b2d7</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public SpaceFeatureService(
 			ILogger<ISpaceFeatureRepository> logger,
+			IMediator mediator,
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base(logger,
+			       mediator,
 			       spaceFeatureRepository,
 			       spaceFeatureModelValidator,
 			       bolSpaceFeatureMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cdbfd823cf78b901d65e9db148c25aa</Hash>
+    <Hash>6259e1241aa98928d0c1fde76542f83a</Hash>
 </Codenesium>*/

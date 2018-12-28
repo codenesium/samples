@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCurrencyRateService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICurrencyRateRepository CurrencyRateRepository { get; private set; }
 
 		protected IApiCurrencyRateServerRequestModelValidator CurrencyRateModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCurrencyRateService(
 			ILogger logger,
+			IMediator mediator,
 			ICurrencyRateRepository currencyRateRepository,
 			IApiCurrencyRateServerRequestModelValidator currencyRateModelValidator,
 			IBOLCurrencyRateMapper bolCurrencyRateMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCurrencyRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolCurrencyRateMapper.MapModelToBO(default(int), model);
 				var record = await this.CurrencyRateRepository.Create(this.DalCurrencyRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(record)));
+				var businessObject = this.DalCurrencyRateMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCurrencyRateMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CurrencyRateCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CurrencyRateRepository.Get(currencyRateID);
 
-				return ValidationResponseFactory<ApiCurrencyRateServerResponseModel>.UpdateResponse(this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(record)));
+				var businessObject = this.DalCurrencyRateMapper.MapEFToBO(record);
+				var apiModel = this.BolCurrencyRateMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CurrencyRateUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCurrencyRateServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.CurrencyRateRepository.Delete(currencyRateID);
+
+				await this.mediator.Publish(new CurrencyRateDeletedNotification(currencyRateID));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d721d09e99e8dd8b67cdc0b14dca37d7</Hash>
+    <Hash>b5807a8b100aed0e3b57c10d16c62e2c</Hash>
 </Codenesium>*/

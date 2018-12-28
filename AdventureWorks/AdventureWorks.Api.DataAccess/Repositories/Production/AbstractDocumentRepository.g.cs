@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Document_rowguid.
 		public async virtual Task<Document> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Document>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Document>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Document_FileName_Revision.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fcb007bd7bd9e3ad9bc32505c85061f0</Hash>
+    <Hash>06c46360b5b4cbc868208a9ad59d71e1</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractUserService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IUserRepository UserRepository { get; private set; }
 
 		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
@@ -53,6 +56,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractUserService(
 			ILogger logger,
+			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
@@ -96,6 +100,8 @@ namespace TwitterNS.Api.Services
 			this.BolTweetMapper = bolTweetMapper;
 			this.DalTweetMapper = dalTweetMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -129,7 +135,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
 				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				response.SetRecord(this.BolUserMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new UserCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -148,7 +156,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.UserRepository.Get(userId);
 
-				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				var apiModel = this.BolUserMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new UserUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -164,6 +176,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(userId);
+
+				await this.mediator.Publish(new UserDeletedNotification(userId));
 			}
 
 			return response;
@@ -249,5 +263,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e09c15877ec9ebbb87185626bddcc97d</Hash>
+    <Hash>20b9de28973d03eb0a02ada3a1996190</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractFollowingService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IFollowingRepository FollowingRepository { get; private set; }
 
 		protected IApiFollowingServerRequestModelValidator FollowingModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractFollowingService(
 			ILogger logger,
+			IMediator mediator,
 			IFollowingRepository followingRepository,
 			IApiFollowingServerRequestModelValidator followingModelValidator,
 			IBOLFollowingMapper bolFollowingMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolFollowingMapper = bolFollowingMapper;
 			this.DalFollowingMapper = dalFollowingMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiFollowingServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolFollowingMapper.MapModelToBO(default(int), model);
 				var record = await this.FollowingRepository.Create(this.DalFollowingMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record)));
+				var businessObject = this.DalFollowingMapper.MapEFToBO(record);
+				response.SetRecord(this.BolFollowingMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new FollowingCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.FollowingRepository.Get(userId);
 
-				return ValidationResponseFactory<ApiFollowingServerResponseModel>.UpdateResponse(this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record)));
+				var businessObject = this.DalFollowingMapper.MapEFToBO(record);
+				var apiModel = this.BolFollowingMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new FollowingUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiFollowingServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.FollowingRepository.Delete(userId);
+
+				await this.mediator.Publish(new FollowingDeletedNotification(userId));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f1623151922dd85b1689ff757555b39</Hash>
+    <Hash>4051ce303cfeb5f7a593272c40cc7082</Hash>
 </Codenesium>*/

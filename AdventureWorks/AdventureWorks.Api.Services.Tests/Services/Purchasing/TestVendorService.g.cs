@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Vendor());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Vendor();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVendorRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Vendor>(null));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiVendorServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vendor>())).Returns(Task.FromResult(new Vendor()));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVendorServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Vendor>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiVendorServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVendorServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVendorServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Vendor>())).Returns(Task.FromResult(new Vendor()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Vendor>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiVendorServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.VendorModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiVendorServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VendorDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new Vendor();
 			mock.RepositoryMock.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVendorRepository>();
 			mock.RepositoryMock.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Vendor>(null));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -260,6 +278,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new PurchaseOrderHeader());
 			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -279,6 +298,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVendorRepository>();
 			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
 			var service = new VendorService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLVendorMapperMock,
@@ -295,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3f385f5974c8308ec90ee988475d27c6</Hash>
+    <Hash>2d5e18d8f32018c1c2eac4f7f5a62401</Hash>
 </Codenesium>*/

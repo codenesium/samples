@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Link_ExternalId.
 		public async virtual Task<Link> ByExternalId(Guid externalId)
 		{
-			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
+			return await this.Context.Set<Link>().FirstOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		// Non-unique constraint AX_Link_ChainId.
@@ -136,5 +136,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f362bbe181c4cffd4b99fbe2ca8b1d0d</Hash>
+    <Hash>fb9e7d91c31fe246521511dcf47792f1</Hash>
 </Codenesium>*/

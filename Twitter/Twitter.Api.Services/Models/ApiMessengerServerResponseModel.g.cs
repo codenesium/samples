@@ -42,7 +42,7 @@ namespace TwitterNS.Api.Services
 		public int? MessageId { get; private set; }
 
 		[JsonProperty]
-		public string MessageIdEntity { get; set; }
+		public string MessageIdEntity { get; private set; } = RouteConstants.Messages;
 
 		[Required]
 		[JsonProperty]
@@ -52,17 +52,17 @@ namespace TwitterNS.Api.Services
 		public int ToUserId { get; private set; }
 
 		[JsonProperty]
-		public string ToUserIdEntity { get; set; }
+		public string ToUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[Required]
 		[JsonProperty]
 		public int? UserId { get; private set; }
 
 		[JsonProperty]
-		public string UserIdEntity { get; set; }
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3bfae735b4f47457080a4ccbfe136d4</Hash>
+    <Hash>4660ec6118fab6ea9a864a65ec366209</Hash>
 </Codenesium>*/

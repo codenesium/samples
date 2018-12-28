@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.Services
 		public int? SalesPersonID { get; private set; }
 
 		[JsonProperty]
-		public string SalesPersonIDEntity { get; set; }
+		public string SalesPersonIDEntity { get; private set; } = RouteConstants.SalesPersons;
 	}
 }
 
 /*<Codenesium>
-    <Hash>9bdd3e80ba308fd8241ddd1ef1faf8d1</Hash>
+    <Hash>c414843329cc6abe272424aaddb378de</Hash>
 </Codenesium>*/

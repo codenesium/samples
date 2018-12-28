@@ -79,19 +79,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Product_Name.
 		public async virtual Task<Product> ByName(string name)
 		{
-			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Product>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_Product_ProductNumber.
 		public async virtual Task<Product> ByProductNumber(string productNumber)
 		{
-			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.ProductNumber == productNumber);
+			return await this.Context.Set<Product>().FirstOrDefaultAsync(x => x.ProductNumber == productNumber);
 		}
 
 		// unique constraint AK_Product_rowguid.
 		public async virtual Task<Product> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Product>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table BillOfMaterial via productAssemblyID.
@@ -148,5 +148,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1e9f5f7b97180a661e39ab660eabf80</Hash>
+    <Hash>1ab2af77912dc6ff9aab1f4a78aa5759</Hash>
 </Codenesium>*/

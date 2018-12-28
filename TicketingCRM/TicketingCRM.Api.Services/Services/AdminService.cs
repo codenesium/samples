@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public AdminService(
 			ILogger<IAdminRepository> logger,
+			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
@@ -15,6 +17,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base(logger,
+			       mediator,
 			       adminRepository,
 			       adminModelValidator,
 			       bolAdminMapper,
@@ -27,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>749f517ca4ae5999662d74d8b327c2ed</Hash>
+    <Hash>d9c885d0160ad883c1ef34aea123cadb</Hash>
 </Codenesium>*/

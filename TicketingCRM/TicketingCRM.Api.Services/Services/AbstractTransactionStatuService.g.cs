@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractTransactionStatuService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITransactionStatuRepository TransactionStatuRepository { get; private set; }
 
 		protected IApiTransactionStatuServerRequestModelValidator TransactionStatuModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractTransactionStatuService(
 			ILogger logger,
+			IMediator mediator,
 			ITransactionStatuRepository transactionStatuRepository,
 			IApiTransactionStatuServerRequestModelValidator transactionStatuModelValidator,
 			IBOLTransactionStatuMapper bolTransactionStatuMapper,
@@ -40,6 +44,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolTransactionMapper = bolTransactionMapper;
 			this.DalTransactionMapper = dalTransactionMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTransactionStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolTransactionStatuMapper.MapModelToBO(default(int), model);
 				var record = await this.TransactionStatuRepository.Create(this.DalTransactionStatuMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(record)));
+				var businessObject = this.DalTransactionStatuMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTransactionStatuMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TransactionStatuCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.TransactionStatuRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.UpdateResponse(this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(record)));
+				var businessObject = this.DalTransactionStatuMapper.MapEFToBO(record);
+				var apiModel = this.BolTransactionStatuMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TransactionStatuUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.TransactionStatuRepository.Delete(id);
+
+				await this.mediator.Publish(new TransactionStatuDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5a036a16e4d3b55701cb616d46793fc6</Hash>
+    <Hash>656facd04fe13c2dcb16eb9040d72795</Hash>
 </Codenesium>*/

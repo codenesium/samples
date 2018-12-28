@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new CountryRegion());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new CountryRegion();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRegionRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiCountryRegionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CountryRegion>())).Returns(Task.FromResult(new CountryRegion()));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRegionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CountryRegion>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryRegionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRegionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CountryRegion>())).Returns(Task.FromResult(new CountryRegion()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CountryRegion>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegion()));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCountryRegionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiCountryRegionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
 			mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryRegionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRegionDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new CountryRegion();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRegionRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<CountryRegion>(null));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -260,6 +278,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new StateProvince());
 			mock.RepositoryMock.Setup(x => x.StateProvincesByCountryRegionCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -279,6 +298,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRegionRepository>();
 			mock.RepositoryMock.Setup(x => x.StateProvincesByCountryRegionCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<StateProvince>>(new List<StateProvince>()));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
+			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
@@ -295,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>04bb28f2818c6d5a1aaa5daea6c18c9c</Hash>
+    <Hash>8cd389e76090f1e14929378a8978e3e9</Hash>
 </Codenesium>*/

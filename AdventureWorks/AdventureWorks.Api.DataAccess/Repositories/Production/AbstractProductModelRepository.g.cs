@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ProductModel_Name.
 		public async virtual Task<ProductModel> ByName(string name)
 		{
-			return await this.Context.Set<ProductModel>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ProductModel>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_ProductModel_rowguid.
 		public async virtual Task<ProductModel> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductModel>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ProductModel>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint PXML_ProductModel_CatalogDescription.
@@ -130,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5cfd5f3e6dbc940bd3b1ff8dc896f621</Hash>
+    <Hash>54117c814e07292870de4f1782b9c3c3</Hash>
 </Codenesium>*/

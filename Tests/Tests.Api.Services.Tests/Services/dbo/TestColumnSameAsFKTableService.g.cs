@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TestsNS.Api.Services.Tests
 			records.Add(new ColumnSameAsFKTable());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -45,6 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			var record = new ColumnSameAsFKTable();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -62,6 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IColumnSameAsFKTableRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ColumnSameAsFKTable>(null));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -80,6 +84,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiColumnSameAsFKTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ColumnSameAsFKTable>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -91,6 +96,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ColumnSameAsFKTable>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiColumnSameAsFKTableServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -111,6 +118,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ColumnSameAsFKTable>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -132,6 +141,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ColumnSameAsFKTable>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TestsNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ColumnSameAsFKTable()));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -153,6 +164,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiColumnSameAsFKTableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -173,6 +186,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiColumnSameAsFKTableServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
@@ -193,10 +208,11 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ColumnSameAsFKTableDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89d355d7bdb8e63e41a3c5be82a08b97</Hash>
+    <Hash>0d7dbbeefe5b08cd63151f439d1099da</Hash>
 </Codenesium>*/

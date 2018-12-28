@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBillOfMaterialService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IBillOfMaterialRepository BillOfMaterialRepository { get; private set; }
 
 		protected IApiBillOfMaterialServerRequestModelValidator BillOfMaterialModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractBillOfMaterialService(
 			ILogger logger,
+			IMediator mediator,
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolBillOfMaterialMapper = bolBillOfMaterialMapper;
 			this.DalBillOfMaterialMapper = dalBillOfMaterialMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolBillOfMaterialMapper.MapModelToBO(default(int), model);
 				var record = await this.BillOfMaterialRepository.Create(this.DalBillOfMaterialMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
+				var businessObject = this.DalBillOfMaterialMapper.MapEFToBO(record);
+				response.SetRecord(this.BolBillOfMaterialMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new BillOfMaterialCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
-				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
+				var businessObject = this.DalBillOfMaterialMapper.MapEFToBO(record);
+				var apiModel = this.BolBillOfMaterialMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new BillOfMaterialUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.BillOfMaterialRepository.Delete(billOfMaterialsID);
+
+				await this.mediator.Publish(new BillOfMaterialDeletedNotification(billOfMaterialsID));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d76d34f9fd200ee3df69dcdce00434b1</Hash>
+    <Hash>e15001f80d3795c88ff93e2687f661ad</Hash>
 </Codenesium>*/

@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Country());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -47,6 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var record = new Country();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -66,6 +69,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -86,6 +90,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiCountryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(Task.FromResult(new Country()));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -99,6 +104,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Country>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -121,6 +128,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(Task.FromResult(new Country()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -144,6 +153,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Country>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Country()));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -167,6 +178,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiCountryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -189,6 +202,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CountryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -211,6 +226,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Province());
 			mock.RepositoryMock.Setup(x => x.ProvincesByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -240,6 +257,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			mock.RepositoryMock.Setup(x => x.ProvincesByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Province>>(new List<Province>()));
 			var service = new CountryService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
@@ -256,5 +274,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e5e59c7d4d6e603ad4ab3c6a7ed2b49</Hash>
+    <Hash>caf9b49638869d844a6e45df97a40128</Hash>
 </Codenesium>*/

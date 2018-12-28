@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractAddressTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAddressTypeRepository AddressTypeRepository { get; private set; }
 
 		protected IApiAddressTypeServerRequestModelValidator AddressTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractAddressTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
 			IBOLAddressTypeMapper bolAddressTypeMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolAddressTypeMapper = bolAddressTypeMapper;
 			this.DalAddressTypeMapper = dalAddressTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAddressTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolAddressTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.AddressTypeRepository.Create(this.DalAddressTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalAddressTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAddressTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AddressTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.AddressTypeRepository.Get(addressTypeID);
 
-				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalAddressTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolAddressTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AddressTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.AddressTypeRepository.Delete(addressTypeID);
+
+				await this.mediator.Publish(new AddressTypeDeletedNotification(addressTypeID));
 			}
 
 			return response;
@@ -136,5 +150,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>595b7c3d8d0fe6d3bf26fe1dfbacac12</Hash>
+    <Hash>2a39f8cbf0d3691489e6204ccb6540fc</Hash>
 </Codenesium>*/

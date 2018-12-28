@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPurchaseOrderHeaderService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; private set; }
 
 		protected IApiPurchaseOrderHeaderServerRequestModelValidator PurchaseOrderHeaderModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPurchaseOrderHeaderService(
 			ILogger logger,
+			IMediator mediator,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
 			IApiPurchaseOrderHeaderServerRequestModelValidator purchaseOrderHeaderModelValidator,
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPurchaseOrderHeaderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolPurchaseOrderHeaderMapper.MapModelToBO(default(int), model);
 				var record = await this.PurchaseOrderHeaderRepository.Create(this.DalPurchaseOrderHeaderMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(record)));
+				var businessObject = this.DalPurchaseOrderHeaderMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPurchaseOrderHeaderMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PurchaseOrderHeaderCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
 
-				return ValidationResponseFactory<ApiPurchaseOrderHeaderServerResponseModel>.UpdateResponse(this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(record)));
+				var businessObject = this.DalPurchaseOrderHeaderMapper.MapEFToBO(record);
+				var apiModel = this.BolPurchaseOrderHeaderMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PurchaseOrderHeaderUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPurchaseOrderHeaderServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.PurchaseOrderHeaderRepository.Delete(purchaseOrderID);
+
+				await this.mediator.Publish(new PurchaseOrderHeaderDeletedNotification(purchaseOrderID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8fe0eafb7f060b465297b04320869ee8</Hash>
+    <Hash>622e29ceba37c2f04cba9990d2548749</Hash>
 </Codenesium>*/

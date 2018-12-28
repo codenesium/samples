@@ -46,7 +46,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public int EventStatusId { get; private set; }
 
 		[JsonProperty]
-		public string EventStatusIdEntity { get; set; }
+		public string EventStatusIdEntity { get; private set; } = RouteConstants.EventStatus;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -70,5 +70,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd256f868de5ac0c91a8a537770af274</Hash>
+    <Hash>21792851c0dd1ca5e8e3660f79876641</Hash>
 </Codenesium>*/

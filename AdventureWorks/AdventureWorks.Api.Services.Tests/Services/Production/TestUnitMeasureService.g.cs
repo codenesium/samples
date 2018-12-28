@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new UnitMeasure());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -49,6 +51,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new UnitMeasure();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -70,6 +73,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUnitMeasureRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -92,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiUnitMeasureServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<UnitMeasure>())).Returns(Task.FromResult(new UnitMeasure()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -107,6 +112,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUnitMeasureServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<UnitMeasure>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -117,6 +123,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUnitMeasureServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUnitMeasureServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -131,6 +138,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUnitMeasureServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -141,6 +149,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<UnitMeasure>())).Returns(Task.FromResult(new UnitMeasure()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -156,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUnitMeasureServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<UnitMeasure>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -167,6 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUnitMeasureServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new UnitMeasure()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -181,6 +192,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUnitMeasureServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -190,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiUnitMeasureServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -205,6 +218,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
 			mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -215,6 +229,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUnitMeasureServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -229,6 +244,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<string>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UnitMeasureDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -238,6 +254,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new UnitMeasure();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -259,6 +276,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUnitMeasureRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<UnitMeasure>(null));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -282,6 +300,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new BillOfMaterial());
 			mock.RepositoryMock.Setup(x => x.BillOfMaterialsByUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -303,6 +322,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUnitMeasureRepository>();
 			mock.RepositoryMock.Setup(x => x.BillOfMaterialsByUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -326,6 +346,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Product());
 			mock.RepositoryMock.Setup(x => x.ProductsBySizeUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -347,6 +368,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUnitMeasureRepository>();
 			mock.RepositoryMock.Setup(x => x.ProductsBySizeUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Product>>(new List<Product>()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -370,6 +392,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Product());
 			mock.RepositoryMock.Setup(x => x.ProductsByWeightUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -391,6 +414,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUnitMeasureRepository>();
 			mock.RepositoryMock.Setup(x => x.ProductsByWeightUnitMeasureCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Product>>(new List<Product>()));
 			var service = new UnitMeasureService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.UnitMeasureModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLUnitMeasureMapperMock,
@@ -409,5 +433,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7a9282f3ff3ad5af8a6dd1ba0c880d13</Hash>
+    <Hash>35e12c8aa4ca910b8e4cb0856f14318b</Hash>
 </Codenesium>*/

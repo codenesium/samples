@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace NebulaNS.Api.Services
 	{
 		public MachineService(
 			ILogger<IMachineRepository> logger,
+			IMediator mediator,
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
 			IBOLMachineMapper bolMachineMapper,
@@ -15,6 +17,7 @@ namespace NebulaNS.Api.Services
 			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base(logger,
+			       mediator,
 			       machineRepository,
 			       machineModelValidator,
 			       bolMachineMapper,
@@ -27,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac663644b70263808e6dca84cb367437</Hash>
+    <Hash>d35138376a3a560426e6dc3fe2cf87c2</Hash>
 </Codenesium>*/

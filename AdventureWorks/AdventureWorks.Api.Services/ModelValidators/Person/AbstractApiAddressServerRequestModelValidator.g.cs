@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void AddressLine1Rules()
 		{
 			this.RuleFor(x => x.AddressLine1).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false) || (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false) || (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false) || (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false) || (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressServerRequestModel.AddressLine1)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => (!x?.AddressLine1.IsEmptyOrZeroOrNull() ?? false) || (!x?.AddressLine2.IsEmptyOrZeroOrNull() ?? false) || (!x?.City.IsEmptyOrZeroOrNull() ?? false) || (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false) || (!x?.PostalCode.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressServerRequestModel.AddressLine1)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.AddressLine1).Length(0, 60).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf79bc63f6e44fec254514ce2ee8da0f</Hash>
+    <Hash>5db2c29b2185da500d7d405b765f74c8</Hash>
 </Codenesium>*/

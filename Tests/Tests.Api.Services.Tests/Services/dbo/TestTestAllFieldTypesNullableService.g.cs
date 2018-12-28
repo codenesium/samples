@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TestsNS.Api.Services.Tests
 			records.Add(new TestAllFieldTypesNullable());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -45,6 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			var record = new TestAllFieldTypesNullable();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -62,6 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<TestAllFieldTypesNullable>(null));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -80,6 +84,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TestAllFieldTypesNullable>())).Returns(Task.FromResult(new TestAllFieldTypesNullable()));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -91,6 +96,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TestAllFieldTypesNullable>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTestAllFieldTypesNullableServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -111,6 +118,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TestAllFieldTypesNullable>())).Returns(Task.FromResult(new TestAllFieldTypesNullable()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldTypesNullable()));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -132,6 +141,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TestAllFieldTypesNullable>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TestsNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TestAllFieldTypesNullable()));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -153,6 +164,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTestAllFieldTypesNullableServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -173,6 +186,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTestAllFieldTypesNullableServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
@@ -193,10 +208,11 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TestAllFieldTypesNullableDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a4930c30183cfad80efb785e5da935b</Hash>
+    <Hash>212a5388ea43e6f50cf97e94f24e59b8</Hash>
 </Codenesium>*/

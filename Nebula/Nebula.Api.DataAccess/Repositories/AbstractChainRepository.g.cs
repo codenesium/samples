@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Chain_ExternalId.
 		public async virtual Task<Chain> ByExternalId(Guid externalId)
 		{
-			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
+			return await this.Context.Set<Chain>().FirstOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		// Foreign key reference to this table Clasp via nextChainId.
@@ -136,5 +136,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65a636dd77aa2c87ae3964e24b168d8b</Hash>
+    <Hash>4bb77c5ba2dd6dd1c992e3298fa83a59</Hash>
 </Codenesium>*/

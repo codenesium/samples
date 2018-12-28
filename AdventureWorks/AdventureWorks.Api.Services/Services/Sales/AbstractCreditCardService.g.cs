@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCreditCardService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICreditCardRepository CreditCardRepository { get; private set; }
 
 		protected IApiCreditCardServerRequestModelValidator CreditCardModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCreditCardService(
 			ILogger logger,
+			IMediator mediator,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
 			IBOLCreditCardMapper bolCreditCardMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCreditCardServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolCreditCardMapper.MapModelToBO(default(int), model);
 				var record = await this.CreditCardRepository.Create(this.DalCreditCardMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
+				var businessObject = this.DalCreditCardMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCreditCardMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CreditCardCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CreditCardRepository.Get(creditCardID);
 
-				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
+				var businessObject = this.DalCreditCardMapper.MapEFToBO(record);
+				var apiModel = this.BolCreditCardMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CreditCardUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.CreditCardRepository.Delete(creditCardID);
+
+				await this.mediator.Publish(new CreditCardDeletedNotification(creditCardID));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8516250d1cb1523d9131aafa3569e93</Hash>
+    <Hash>4c02a1f1b33e7ffa359b2e647b49e59d</Hash>
 </Codenesium>*/

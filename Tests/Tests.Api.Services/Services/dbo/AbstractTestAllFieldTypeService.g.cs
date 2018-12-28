@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTestAllFieldTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITestAllFieldTypeRepository TestAllFieldTypeRepository { get; private set; }
 
 		protected IApiTestAllFieldTypeServerRequestModelValidator TestAllFieldTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTestAllFieldTypeService(
 			ILogger logger,
+			IMediator mediator,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
 			IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolTestAllFieldTypeMapper = bolTestAllFieldTypeMapper;
 			this.DalTestAllFieldTypeMapper = dalTestAllFieldTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTestAllFieldTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.TestAllFieldTypeRepository.Create(this.DalTestAllFieldTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalTestAllFieldTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTestAllFieldTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TestAllFieldTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TestAllFieldTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.UpdateResponse(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalTestAllFieldTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolTestAllFieldTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TestAllFieldTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.TestAllFieldTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new TestAllFieldTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6fffe7896606f8ded72d932246bebd3</Hash>
+    <Hash>1a884abf42e1c9f3e71c3c4e69856c77</Hash>
 </Codenesium>*/

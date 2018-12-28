@@ -9,6 +9,7 @@ using StudioResourceManagerMTNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			records.Add(new Event());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -45,6 +47,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var record = new Event();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -62,6 +65,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Event>(null));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -80,6 +84,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var model = new ApiEventServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -91,6 +96,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Event>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiEventServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -111,6 +118,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiEventServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -132,6 +141,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Event>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -153,6 +164,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var model = new ApiEventServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -173,6 +186,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiEventServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -193,6 +208,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<EventDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			records.Add(new Event());
 			mock.RepositoryMock.Setup(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -220,6 +237,7 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRepository>();
 			mock.RepositoryMock.Setup(x => x.ByEventStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
 			var service = new EventService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
@@ -234,5 +252,5 @@ namespace StudioResourceManagerMTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>683952a7976a87203abb637d776e7910</Hash>
+    <Hash>dfe7daada6a56f32ed521853d9d274c8</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public StudioService(
 			ILogger<IStudioRepository> logger,
+			IMediator mediator,
 			IStudioRepository studioRepository,
 			IApiStudioServerRequestModelValidator studioModelValidator,
 			IBOLStudioMapper bolStudioMapper,
 			IDALStudioMapper dalStudioMapper)
 			: base(logger,
+			       mediator,
 			       studioRepository,
 			       studioModelValidator,
 			       bolStudioMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e53d5589a7c02d14b97f377ac0c86a4e</Hash>
+    <Hash>3418baa2291716afc025794d23c1bf2b</Hash>
 </Codenesium>*/

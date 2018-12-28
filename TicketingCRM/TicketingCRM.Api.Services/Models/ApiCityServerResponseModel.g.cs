@@ -28,10 +28,10 @@ namespace TicketingCRMNS.Api.Services
 		public int ProvinceId { get; private set; }
 
 		[JsonProperty]
-		public string ProvinceIdEntity { get; set; }
+		public string ProvinceIdEntity { get; private set; } = RouteConstants.Provinces;
 	}
 }
 
 /*<Codenesium>
-    <Hash>496393ce2b900e081464ead7b9b60241</Hash>
+    <Hash>c729aa4e6ceb22079c305d5801222fc8</Hash>
 </Codenesium>*/

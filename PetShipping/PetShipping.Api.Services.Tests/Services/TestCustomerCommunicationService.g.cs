@@ -9,6 +9,7 @@ using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new CustomerCommunication());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -45,6 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var record = new CustomerCommunication();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -62,6 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICustomerCommunicationRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<CustomerCommunication>(null));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -80,6 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiCustomerCommunicationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CustomerCommunication>())).Returns(Task.FromResult(new CustomerCommunication()));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -91,6 +96,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerCommunicationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CustomerCommunication>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCustomerCommunicationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerCommunicationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               validatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -111,6 +118,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCustomerCommunicationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CustomerCommunication>())).Returns(Task.FromResult(new CustomerCommunication()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CustomerCommunication()));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -132,6 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerCommunicationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CustomerCommunication>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace PetShippingNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerCommunicationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CustomerCommunication()));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               validatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -153,6 +164,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerCommunicationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiCustomerCommunicationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -173,6 +186,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCustomerCommunicationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               validatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -193,6 +208,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CustomerCommunicationDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new CustomerCommunication());
 			mock.RepositoryMock.Setup(x => x.ByCustomerId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -220,6 +237,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICustomerCommunicationRepository>();
 			mock.RepositoryMock.Setup(x => x.ByCustomerId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CustomerCommunication>>(new List<CustomerCommunication>()));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -239,6 +257,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new CustomerCommunication());
 			mock.RepositoryMock.Setup(x => x.ByEmployeeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -256,6 +275,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICustomerCommunicationRepository>();
 			mock.RepositoryMock.Setup(x => x.ByEmployeeId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CustomerCommunication>>(new List<CustomerCommunication>()));
 			var service = new CustomerCommunicationService(mock.LoggerMock.Object,
+			                                               mock.MediatorMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CustomerCommunicationModelValidatorMock.Object,
 			                                               mock.BOLMapperMockFactory.BOLCustomerCommunicationMapperMock,
@@ -270,5 +290,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>667158b49bdcef7b2ffa1ce49034a4bb</Hash>
+    <Hash>8edab24745a311011a15a18b84d19f10</Hash>
 </Codenesium>*/

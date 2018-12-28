@@ -9,6 +9,7 @@ using StackOverflowNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			records.Add(new PostType());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -45,6 +47,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var record = new PostType();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -62,6 +65,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPostTypeRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<PostType>(null));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -80,6 +84,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiPostTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostType>())).Returns(Task.FromResult(new PostType()));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -91,6 +96,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PostType>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPostTypeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -111,6 +118,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPostTypeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PostType>())).Returns(Task.FromResult(new PostType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -132,6 +141,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PostType>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -153,6 +164,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var model = new ApiPostTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -173,6 +186,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PostTypeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPostTypeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PostTypeService(mock.LoggerMock.Object,
+			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLPostTypeMapperMock,
@@ -193,10 +208,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PostTypeDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f65600c0b5fe5b8f74e074ff91bacb4</Hash>
+    <Hash>e02a554ad4ae6ad4121e17fe91833578</Hash>
 </Codenesium>*/

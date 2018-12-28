@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractAirTransportService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAirTransportRepository AirTransportRepository { get; private set; }
 
 		protected IApiAirTransportServerRequestModelValidator AirTransportModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractAirTransportService(
 			ILogger logger,
+			IMediator mediator,
 			IAirTransportRepository airTransportRepository,
 			IApiAirTransportServerRequestModelValidator airTransportModelValidator,
 			IBOLAirTransportMapper bolAirTransportMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolAirTransportMapper = bolAirTransportMapper;
 			this.DalAirTransportMapper = dalAirTransportMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAirTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolAirTransportMapper.MapModelToBO(default(int), model);
 				var record = await this.AirTransportRepository.Create(this.DalAirTransportMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(record)));
+				var businessObject = this.DalAirTransportMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAirTransportMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AirTransportCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.AirTransportRepository.Get(airlineId);
 
-				return ValidationResponseFactory<ApiAirTransportServerResponseModel>.UpdateResponse(this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(record)));
+				var businessObject = this.DalAirTransportMapper.MapEFToBO(record);
+				var apiModel = this.BolAirTransportMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AirTransportUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAirTransportServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.AirTransportRepository.Delete(airlineId);
+
+				await this.mediator.Publish(new AirTransportDeletedNotification(airlineId));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c99e37400211938bd66a15d64d2ebd9f</Hash>
+    <Hash>9621fe52b58b377eabec9e12fd738a96</Hash>
 </Codenesium>*/

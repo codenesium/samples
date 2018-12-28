@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Ticket());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -45,6 +47,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var record = new Ticket();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -62,6 +65,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITicketRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(null));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -80,6 +84,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiTicketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Ticket>())).Returns(Task.FromResult(new Ticket()));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -91,6 +96,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TicketModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Ticket>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTicketServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -111,6 +118,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTicketServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Ticket>())).Returns(Task.FromResult(new Ticket()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -132,6 +141,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TicketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Ticket>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -153,6 +164,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var model = new ApiTicketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -173,6 +186,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TicketModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTicketServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -193,6 +208,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TicketDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			records.Add(new Ticket());
 			mock.RepositoryMock.Setup(x => x.ByTicketStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -220,6 +237,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITicketRepository>();
 			mock.RepositoryMock.Setup(x => x.ByTicketStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Ticket>>(new List<Ticket>()));
 			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
@@ -234,5 +252,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4cc425dd2e19c935673acbeb88bdd786</Hash>
+    <Hash>ea9b6bd8102fc50307f94cd2ab8b5d68</Hash>
 </Codenesium>*/

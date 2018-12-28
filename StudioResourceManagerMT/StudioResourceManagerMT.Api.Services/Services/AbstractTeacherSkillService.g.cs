@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractTeacherSkillService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITeacherSkillRepository TeacherSkillRepository { get; private set; }
 
 		protected IApiTeacherSkillServerRequestModelValidator TeacherSkillModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractTeacherSkillService(
 			ILogger logger,
+			IMediator mediator,
 			ITeacherSkillRepository teacherSkillRepository,
 			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
 			IBOLTeacherSkillMapper bolTeacherSkillMapper,
@@ -40,6 +44,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolTeacherSkillMapper.MapModelToBO(default(int), model);
 				var record = await this.TeacherSkillRepository.Create(this.DalTeacherSkillMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalTeacherSkillMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTeacherSkillMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new TeacherSkillCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -92,7 +100,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.TeacherSkillRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.UpdateResponse(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalTeacherSkillMapper.MapEFToBO(record);
+				await this.mediator.Publish(new TeacherSkillUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.UpdateResponse(this.BolTeacherSkillMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -108,6 +119,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.TeacherSkillRepository.Delete(id);
+
+				await this.mediator.Publish(new TeacherSkillDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +136,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b39b75e080bc626084ff6be98c1163a2</Hash>
+    <Hash>4366cc8327b5098243dacace3973768c</Hash>
 </Codenesium>*/

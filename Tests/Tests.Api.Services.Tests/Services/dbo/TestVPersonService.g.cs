@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TestsNS.Api.Services.Tests
 			records.Add(new VPerson());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -45,6 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			var record = new VPerson();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -62,6 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVPersonRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<VPerson>(null));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -80,6 +84,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiVPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VPerson>())).Returns(Task.FromResult(new VPerson()));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -91,6 +96,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<VPerson>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiVPersonServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVPersonServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -111,6 +118,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVPersonServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VPerson>())).Returns(Task.FromResult(new VPerson()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VPerson()));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -132,6 +141,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVPersonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<VPerson>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TestsNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVPersonServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VPerson()));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -153,6 +164,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVPersonServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiVPersonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -173,6 +186,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiVPersonServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new VPersonService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
@@ -193,10 +208,11 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<VPersonDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d95c6614cb2fd204f3997646ebb93d8</Hash>
+    <Hash>9a06aa34326226d525d304724a7ce057</Hash>
 </Codenesium>*/

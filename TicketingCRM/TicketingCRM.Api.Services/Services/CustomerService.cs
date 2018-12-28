@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public CustomerService(
 			ILogger<ICustomerRepository> logger,
+			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper)
 			: base(logger,
+			       mediator,
 			       customerRepository,
 			       customerModelValidator,
 			       bolCustomerMapper,
@@ -23,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48cbdad8c6397faf93610ee4fe08f81b</Hash>
+    <Hash>e9a4c9d4d6b1a468508bb21f4a4719b2</Hash>
 </Codenesium>*/

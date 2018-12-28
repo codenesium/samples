@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Services
 		public int PipelineStatusId { get; private set; }
 
 		[JsonProperty]
-		public string PipelineStatusIdEntity { get; set; }
+		public string PipelineStatusIdEntity { get; private set; } = RouteConstants.PipelineStatus;
 
 		[JsonProperty]
 		public int SaleId { get; private set; }
@@ -33,5 +33,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b57566193a0db9bf639b5c6abd69bf5</Hash>
+    <Hash>17fe5cc58d568d695121f79217cbde7a</Hash>
 </Codenesium>*/

@@ -1,22 +1,3 @@
-export class ApiEfmigrationshistoryClientRequestModel {
-	migrationId : string;
-	productVersion : string;
-
-	constructor() {
-		this.migrationId = '';
-		this.productVersion = '';
-	}
-}
-
-export class ApiEfmigrationshistoryClientResponseModel {
-	migrationId : string;
-	productVersion : string;
-
-	constructor() {
-		this.migrationId = '';
-		this.productVersion = '';
-	}
-}
 export class ApiDeviceClientRequestModel {
 	id : number;
 	name : string;
@@ -73,5 +54,5 @@ export class ApiDeviceActionClientResponseModel {
 }
 
 /*<Codenesium>
-    <Hash>a2ea1f71de142a74de014c1cd4239c38</Hash>
+    <Hash>1b0b644b5a19b985a1e5979e2fce959d</Hash>
 </Codenesium>*/

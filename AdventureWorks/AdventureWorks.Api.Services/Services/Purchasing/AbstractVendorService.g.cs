@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractVendorService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IVendorRepository VendorRepository { get; private set; }
 
 		protected IApiVendorServerRequestModelValidator VendorModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractVendorService(
 			ILogger logger,
+			IMediator mediator,
 			IVendorRepository vendorRepository,
 			IApiVendorServerRequestModelValidator vendorModelValidator,
 			IBOLVendorMapper bolVendorMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiVendorServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolVendorMapper.MapModelToBO(default(int), model);
 				var record = await this.VendorRepository.Create(this.DalVendorMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record)));
+				var businessObject = this.DalVendorMapper.MapEFToBO(record);
+				response.SetRecord(this.BolVendorMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new VendorCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.VendorRepository.Get(businessEntityID);
 
-				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record)));
+				var businessObject = this.DalVendorMapper.MapEFToBO(record);
+				var apiModel = this.BolVendorMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new VendorUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.VendorRepository.Delete(businessEntityID);
+
+				await this.mediator.Publish(new VendorDeletedNotification(businessEntityID));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c59f4ddac8ecc75a5904bbb283e7269</Hash>
+    <Hash>9c6adbe1b1cad39172c49c0e8f26ded9</Hash>
 </Codenesium>*/

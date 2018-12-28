@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_LinkStatus_Name.
 		public async virtual Task<LinkStatus> ByName(string name)
 		{
-			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<LinkStatus>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Link via linkStatusId.
@@ -112,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa09f80d5a267bb53c77296a4658bc06</Hash>
+    <Hash>28eac1d9dcfcab807bfc7a0e9af153f9</Hash>
 </Codenesium>*/

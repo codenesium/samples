@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public ProvinceService(
 			ILogger<IProvinceRepository> logger,
+			IMediator mediator,
 			IProvinceRepository provinceRepository,
 			IApiProvinceServerRequestModelValidator provinceModelValidator,
 			IBOLProvinceMapper bolProvinceMapper,
@@ -17,6 +19,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base(logger,
+			       mediator,
 			       provinceRepository,
 			       provinceModelValidator,
 			       bolProvinceMapper,
@@ -31,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e943920ee12fa140255bdcb03cbe4be7</Hash>
+    <Hash>c59b5c2c7267e527e82dd8d1678d72f6</Hash>
 </Codenesium>*/

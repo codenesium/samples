@@ -32,7 +32,7 @@ namespace TwitterNS.Api.Services
 		public int TaggedUserId { get; private set; }
 
 		[JsonProperty]
-		public string TaggedUserIdEntity { get; set; }
+		public string TaggedUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
 		public TimeSpan Time { get; private set; }
@@ -43,5 +43,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87bf25390d55e2d6ccb7432ebbbc1b27</Hash>
+    <Hash>15b51b129f876c37fc1aac56a57b327c</Hash>
 </Codenesium>*/

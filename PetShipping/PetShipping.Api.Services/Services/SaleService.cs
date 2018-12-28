@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace PetShippingNS.Api.Services
 	{
 		public SaleService(
 			ILogger<ISaleRepository> logger,
+			IMediator mediator,
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
+			       mediator,
 			       saleRepository,
 			       saleModelValidator,
 			       bolSaleMapper,
@@ -23,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4462838807b3695a10a146e0b21a1a6f</Hash>
+    <Hash>1d911cc2fbab0a21c4f2513f1a7b5cd5</Hash>
 </Codenesium>*/

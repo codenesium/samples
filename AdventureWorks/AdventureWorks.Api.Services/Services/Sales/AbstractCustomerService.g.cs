@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICustomerRepository CustomerRepository { get; private set; }
 
 		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCustomerService(
 			ILogger logger,
+			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolCustomerMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
 				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCustomerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CustomerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CustomerRepository.Get(customerID);
 
-				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
+				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
+				var apiModel = this.BolCustomerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CustomerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.CustomerRepository.Delete(customerID);
+
+				await this.mediator.Publish(new CustomerDeletedNotification(customerID));
 			}
 
 			return response;
@@ -158,5 +172,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cee0b64e6cb3cc047e2f1d0f2afd820</Hash>
+    <Hash>0ec2c6cebc809ed8b5d52caed183808e</Hash>
 </Codenesium>*/

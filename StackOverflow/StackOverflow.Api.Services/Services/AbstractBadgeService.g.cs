@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractBadgeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IBadgeRepository BadgeRepository { get; private set; }
 
 		protected IApiBadgeServerRequestModelValidator BadgeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractBadgeService(
 			ILogger logger,
+			IMediator mediator,
 			IBadgeRepository badgeRepository,
 			IApiBadgeServerRequestModelValidator badgeModelValidator,
 			IBOLBadgeMapper bolBadgeMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolBadgeMapper = bolBadgeMapper;
 			this.DalBadgeMapper = dalBadgeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiBadgeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolBadgeMapper.MapModelToBO(default(int), model);
 				var record = await this.BadgeRepository.Create(this.DalBadgeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(record)));
+				var businessObject = this.DalBadgeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolBadgeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new BadgeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.BadgeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiBadgeServerResponseModel>.UpdateResponse(this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(record)));
+				var businessObject = this.DalBadgeMapper.MapEFToBO(record);
+				var apiModel = this.BolBadgeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new BadgeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiBadgeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.BadgeRepository.Delete(id);
+
+				await this.mediator.Publish(new BadgeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebc6b3db06cb329e2237271fe4a5780c</Hash>
+    <Hash>dd0699c478b8010d28f3a0c76c474859</Hash>
 </Codenesium>*/

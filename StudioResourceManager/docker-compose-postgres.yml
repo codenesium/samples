@@ -9,18 +9,20 @@ services:
       context: .
       dockerfile: DockerFile
     environment:
-       - ASPNETCORE_URLS=http://+:8000
+       - ASPNETCORE_URLS=http://+:80
        - ConnectionStrings__ApplicationDbContext=Host=studioresourcemanager-db;Persist Security Info=False;User ID=postgres;Password=test;Database=studioresourcemanager;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
     volumes:
       - .:/var/www/app
     ports:
-     - "8000:8000"
+     - "80:80"
     depends_on:
-     - "postgres"
+     - "db"
     networks:
       - studioresourcemanager-network
 
-  postgres:
+  db:
     container_name: 'studioresourcemanager-db'
     image: postgres:9.6-alpine
     environment:
@@ -39,10 +41,9 @@ services:
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --interval 30
-
+    networks:
+      - studioresourcemanager-network
 volumes:
      pgdata:
 

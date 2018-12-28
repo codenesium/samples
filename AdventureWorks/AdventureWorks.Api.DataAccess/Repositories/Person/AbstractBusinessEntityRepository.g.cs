@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_BusinessEntity_rowguid.
 		public async virtual Task<BusinessEntity> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<BusinessEntity>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<BusinessEntity>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table Person via businessEntityID.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>590ee79355ef3331703f16b4964d187c</Hash>
+    <Hash>d126c8dfb4362871dfa5a23fb47e076c</Hash>
 </Codenesium>*/

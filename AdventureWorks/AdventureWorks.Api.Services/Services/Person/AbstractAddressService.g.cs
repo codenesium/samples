@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractAddressService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAddressRepository AddressRepository { get; private set; }
 
 		protected IApiAddressServerRequestModelValidator AddressModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractAddressService(
 			ILogger logger,
+			IMediator mediator,
 			IAddressRepository addressRepository,
 			IApiAddressServerRequestModelValidator addressModelValidator,
 			IBOLAddressMapper bolAddressMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolAddressMapper = bolAddressMapper;
 			this.DalAddressMapper = dalAddressMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAddressServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolAddressMapper.MapModelToBO(default(int), model);
 				var record = await this.AddressRepository.Create(this.DalAddressMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record)));
+				var businessObject = this.DalAddressMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAddressMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AddressCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.AddressRepository.Get(addressID);
 
-				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record)));
+				var businessObject = this.DalAddressMapper.MapEFToBO(record);
+				var apiModel = this.BolAddressMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AddressUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.AddressRepository.Delete(addressID);
+
+				await this.mediator.Publish(new AddressDeletedNotification(addressID));
 			}
 
 			return response;
@@ -143,5 +157,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5550d2ab1820546c652482138557d2f</Hash>
+    <Hash>bcae78724ed58587632a3ebcc9ec8ab4</Hash>
 </Codenesium>*/

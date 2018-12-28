@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StackOverflowNS.Api.Services
 	{
 		public PostService(
 			ILogger<IPostRepository> logger,
+			IMediator mediator,
 			IPostRepository postRepository,
 			IApiPostServerRequestModelValidator postModelValidator,
 			IBOLPostMapper bolPostMapper,
 			IDALPostMapper dalPostMapper)
 			: base(logger,
+			       mediator,
 			       postRepository,
 			       postModelValidator,
 			       bolPostMapper,
@@ -23,5 +26,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91c55567050c3a49f63e6d432cdfb9d0</Hash>
+    <Hash>7eb728aaeb3b1d90813c616c87088c91</Hash>
 </Codenesium>*/

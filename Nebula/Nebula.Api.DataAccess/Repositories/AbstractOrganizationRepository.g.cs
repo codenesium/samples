@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_organization_Name.
 		public async virtual Task<Organization> ByName(string name)
 		{
-			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Organization>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Team via organizationId.
@@ -112,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc86ccb04b729cd2d53c2dcf1daef407</Hash>
+    <Hash>4f722979fde9d87ed39d4d99e33c1b88</Hash>
 </Codenesium>*/

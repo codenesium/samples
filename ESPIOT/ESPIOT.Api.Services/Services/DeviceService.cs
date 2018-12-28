@@ -1,5 +1,6 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace ESPIOTNS.Api.Services
@@ -8,6 +9,7 @@ namespace ESPIOTNS.Api.Services
 	{
 		public DeviceService(
 			ILogger<IDeviceRepository> logger,
+			IMediator mediator,
 			IDeviceRepository deviceRepository,
 			IApiDeviceServerRequestModelValidator deviceModelValidator,
 			IBOLDeviceMapper bolDeviceMapper,
@@ -15,6 +17,7 @@ namespace ESPIOTNS.Api.Services
 			IBOLDeviceActionMapper bolDeviceActionMapper,
 			IDALDeviceActionMapper dalDeviceActionMapper)
 			: base(logger,
+			       mediator,
 			       deviceRepository,
 			       deviceModelValidator,
 			       bolDeviceMapper,
@@ -27,5 +30,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcaf3102369713d216949d9e53935da8</Hash>
+    <Hash>d93b908b10b8a63c9a394ced4131b56a</Hash>
 </Codenesium>*/

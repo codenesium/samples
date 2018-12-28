@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.Services
 		public int DestinationId { get; private set; }
 
 		[JsonProperty]
-		public string DestinationIdEntity { get; set; }
+		public string DestinationIdEntity { get; private set; } = RouteConstants.Destinations;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -31,10 +31,10 @@ namespace PetShippingNS.Api.Services
 		public int PipelineStepId { get; private set; }
 
 		[JsonProperty]
-		public string PipelineStepIdEntity { get; set; }
+		public string PipelineStepIdEntity { get; private set; } = RouteConstants.PipelineSteps;
 	}
 }
 
 /*<Codenesium>
-    <Hash>09980b9ea4147cb20730c47682181459</Hash>
+    <Hash>4698dff4c93311546465aadb3285926a</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductPhotoService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IProductPhotoRepository ProductPhotoRepository { get; private set; }
 
 		protected IApiProductPhotoServerRequestModelValidator ProductPhotoModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractProductPhotoService(
 			ILogger logger,
+			IMediator mediator,
 			IProductPhotoRepository productPhotoRepository,
 			IApiProductPhotoServerRequestModelValidator productPhotoModelValidator,
 			IBOLProductPhotoMapper bolProductPhotoMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolProductPhotoMapper = bolProductPhotoMapper;
 			this.DalProductPhotoMapper = dalProductPhotoMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiProductPhotoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolProductPhotoMapper.MapModelToBO(default(int), model);
 				var record = await this.ProductPhotoRepository.Create(this.DalProductPhotoMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductPhotoMapper.MapEFToBO(record);
+				response.SetRecord(this.BolProductPhotoMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ProductPhotoCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductPhotoRepository.Get(productPhotoID);
 
-				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductPhotoMapper.MapEFToBO(record);
+				var apiModel = this.BolProductPhotoMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ProductPhotoUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ProductPhotoRepository.Delete(productPhotoID);
+
+				await this.mediator.Publish(new ProductPhotoDeletedNotification(productPhotoID));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa096d82703d2493876ab44aca01151d</Hash>
+    <Hash>c32af9ad663df6feaae35e0caa25c85e</Hash>
 </Codenesium>*/

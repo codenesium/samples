@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSelfReferenceService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISelfReferenceRepository SelfReferenceRepository { get; private set; }
 
 		protected IApiSelfReferenceServerRequestModelValidator SelfReferenceModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractSelfReferenceService(
 			ILogger logger,
+			IMediator mediator,
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
 			IBOLSelfReferenceMapper bolSelfReferenceMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolSelfReferenceMapper = bolSelfReferenceMapper;
 			this.DalSelfReferenceMapper = dalSelfReferenceMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolSelfReferenceMapper.MapModelToBO(default(int), model);
 				var record = await this.SelfReferenceRepository.Create(this.DalSelfReferenceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
+				var businessObject = this.DalSelfReferenceMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSelfReferenceMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SelfReferenceCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.SelfReferenceRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.UpdateResponse(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
+				var businessObject = this.DalSelfReferenceMapper.MapEFToBO(record);
+				var apiModel = this.BolSelfReferenceMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SelfReferenceUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.SelfReferenceRepository.Delete(id);
+
+				await this.mediator.Publish(new SelfReferenceDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfa3b586b2542298c3179794af0bba56</Hash>
+    <Hash>dc247ed7b78ef32dc0a3e26cc3eba987</Hash>
 </Codenesium>*/

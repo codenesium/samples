@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractDestinationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IDestinationRepository DestinationRepository { get; private set; }
 
 		protected IApiDestinationServerRequestModelValidator DestinationModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractDestinationService(
 			ILogger logger,
+			IMediator mediator,
 			IDestinationRepository destinationRepository,
 			IApiDestinationServerRequestModelValidator destinationModelValidator,
 			IBOLDestinationMapper bolDestinationMapper,
@@ -40,6 +44,8 @@ namespace PetShippingNS.Api.Services
 			this.BolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
 			this.DalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiDestinationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolDestinationMapper.MapModelToBO(default(int), model);
 				var record = await this.DestinationRepository.Create(this.DalDestinationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(record)));
+				var businessObject = this.DalDestinationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolDestinationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new DestinationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.DestinationRepository.Get(id);
 
-				return ValidationResponseFactory<ApiDestinationServerResponseModel>.UpdateResponse(this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(record)));
+				var businessObject = this.DalDestinationMapper.MapEFToBO(record);
+				var apiModel = this.BolDestinationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new DestinationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDestinationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.DestinationRepository.Delete(id);
+
+				await this.mediator.Publish(new DestinationDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1d93bb7742548f14f6b2847da64003e</Hash>
+    <Hash>c3b50c43f77a33a7c7a2ff8a421c2e18</Hash>
 </Codenesium>*/

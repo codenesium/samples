@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractFileTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IFileTypeRepository FileTypeRepository { get; private set; }
 
 		protected IApiFileTypeServerRequestModelValidator FileTypeModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace FileServiceNS.Api.Services
 
 		public AbstractFileTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IFileTypeRepository fileTypeRepository,
 			IApiFileTypeServerRequestModelValidator fileTypeModelValidator,
 			IBOLFileTypeMapper bolFileTypeMapper,
@@ -40,6 +44,8 @@ namespace FileServiceNS.Api.Services
 			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiFileTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace FileServiceNS.Api.Services
 				var bo = this.BolFileTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.FileTypeRepository.Create(this.DalFileTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalFileTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolFileTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new FileTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace FileServiceNS.Api.Services
 
 				var record = await this.FileTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiFileTypeServerResponseModel>.UpdateResponse(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalFileTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolFileTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new FileTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiFileTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace FileServiceNS.Api.Services
 			if (response.Success)
 			{
 				await this.FileTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new FileTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30819763cd0d52343e4846d299ab8405</Hash>
+    <Hash>5c7cbfb04ea88be8b1c5989e58d9e9ea</Hash>
 </Codenesium>*/

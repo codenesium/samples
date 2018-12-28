@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public TransactionService(
 			ILogger<ITransactionRepository> logger,
+			IMediator mediator,
 			ITransactionRepository transactionRepository,
 			IApiTransactionServerRequestModelValidator transactionModelValidator,
 			IBOLTransactionMapper bolTransactionMapper,
@@ -15,6 +17,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
+			       mediator,
 			       transactionRepository,
 			       transactionModelValidator,
 			       bolTransactionMapper,
@@ -27,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>44e87f6fca3850209eb56c068259a02d</Hash>
+    <Hash>358880701b6577b126ce6982ffbbb24a</Hash>
 </Codenesium>*/

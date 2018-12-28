@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTestAllFieldTypesNullableService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITestAllFieldTypesNullableRepository TestAllFieldTypesNullableRepository { get; private set; }
 
 		protected IApiTestAllFieldTypesNullableServerRequestModelValidator TestAllFieldTypesNullableModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractTestAllFieldTypesNullableService(
 			ILogger logger,
+			IMediator mediator,
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
 			IApiTestAllFieldTypesNullableServerRequestModelValidator testAllFieldTypesNullableModelValidator,
 			IBOLTestAllFieldTypesNullableMapper bolTestAllFieldTypesNullableMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolTestAllFieldTypesNullableMapper = bolTestAllFieldTypesNullableMapper;
 			this.DalTestAllFieldTypesNullableMapper = dalTestAllFieldTypesNullableMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTestAllFieldTypesNullableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolTestAllFieldTypesNullableMapper.MapModelToBO(default(int), model);
 				var record = await this.TestAllFieldTypesNullableRepository.Create(this.DalTestAllFieldTypesNullableMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record)));
+				var businessObject = this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TestAllFieldTypesNullableCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.TestAllFieldTypesNullableRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.UpdateResponse(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record)));
+				var businessObject = this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record);
+				var apiModel = this.BolTestAllFieldTypesNullableMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TestAllFieldTypesNullableUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.TestAllFieldTypesNullableRepository.Delete(id);
+
+				await this.mediator.Publish(new TestAllFieldTypesNullableDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>18a5c152bb20f0996c8668c244076292</Hash>
+    <Hash>436786279c44397561f84df11c5b2920</Hash>
 </Codenesium>*/

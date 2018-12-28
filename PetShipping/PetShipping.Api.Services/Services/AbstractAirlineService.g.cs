@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractAirlineService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAirlineRepository AirlineRepository { get; private set; }
 
 		protected IApiAirlineServerRequestModelValidator AirlineModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractAirlineService(
 			ILogger logger,
+			IMediator mediator,
 			IAirlineRepository airlineRepository,
 			IApiAirlineServerRequestModelValidator airlineModelValidator,
 			IBOLAirlineMapper bolAirlineMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolAirlineMapper = bolAirlineMapper;
 			this.DalAirlineMapper = dalAirlineMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAirlineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolAirlineMapper.MapModelToBO(default(int), model);
 				var record = await this.AirlineRepository.Create(this.DalAirlineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(record)));
+				var businessObject = this.DalAirlineMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAirlineMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AirlineCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.AirlineRepository.Get(id);
 
-				return ValidationResponseFactory<ApiAirlineServerResponseModel>.UpdateResponse(this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(record)));
+				var businessObject = this.DalAirlineMapper.MapEFToBO(record);
+				var apiModel = this.BolAirlineMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AirlineUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAirlineServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.AirlineRepository.Delete(id);
+
+				await this.mediator.Publish(new AirlineDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>447152d25d1aa9f585afa3b06891261d</Hash>
+    <Hash>8dd09fc1ca5669a4c2830473e80d8172</Hash>
 </Codenesium>*/

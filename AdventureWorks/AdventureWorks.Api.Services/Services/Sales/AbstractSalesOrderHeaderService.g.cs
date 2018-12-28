@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesOrderHeaderService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; private set; }
 
 		protected IApiSalesOrderHeaderServerRequestModelValidator SalesOrderHeaderModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSalesOrderHeaderService(
 			ILogger logger,
+			IMediator mediator,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
 			IApiSalesOrderHeaderServerRequestModelValidator salesOrderHeaderModelValidator,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSalesOrderHeaderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolSalesOrderHeaderMapper.MapModelToBO(default(int), model);
 				var record = await this.SalesOrderHeaderRepository.Create(this.DalSalesOrderHeaderMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(record)));
+				var businessObject = this.DalSalesOrderHeaderMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSalesOrderHeaderMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SalesOrderHeaderCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesOrderHeaderRepository.Get(salesOrderID);
 
-				return ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.UpdateResponse(this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(record)));
+				var businessObject = this.DalSalesOrderHeaderMapper.MapEFToBO(record);
+				var apiModel = this.BolSalesOrderHeaderMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SalesOrderHeaderUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSalesOrderHeaderServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.SalesOrderHeaderRepository.Delete(salesOrderID);
+
+				await this.mediator.Publish(new SalesOrderHeaderDeletedNotification(salesOrderID));
 			}
 
 			return response;
@@ -150,5 +164,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2815000a4674aa807dc8b93adc709230</Hash>
+    <Hash>77111624a4c3a55e2e910ee81d5e54d8</Hash>
 </Codenesium>*/

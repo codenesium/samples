@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractFamilyService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IFamilyRepository FamilyRepository { get; private set; }
 
 		protected IApiFamilyServerRequestModelValidator FamilyModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractFamilyService(
 			ILogger logger,
+			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
 			IBOLFamilyMapper bolFamilyMapper,
@@ -40,6 +44,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolStudentMapper = bolStudentMapper;
 			this.DalStudentMapper = dalStudentMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiFamilyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolFamilyMapper.MapModelToBO(default(int), model);
 				var record = await this.FamilyRepository.Create(this.DalFamilyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalFamilyMapper.MapEFToBO(record);
+				response.SetRecord(this.BolFamilyMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new FamilyCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -92,7 +100,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.FamilyRepository.Get(id);
 
-				return ValidationResponseFactory<ApiFamilyServerResponseModel>.UpdateResponse(this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalFamilyMapper.MapEFToBO(record);
+				await this.mediator.Publish(new FamilyUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiFamilyServerResponseModel>.UpdateResponse(this.BolFamilyMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -108,6 +119,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.FamilyRepository.Delete(id);
+
+				await this.mediator.Publish(new FamilyDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +136,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89587e133defd468b35a60e702d02777</Hash>
+    <Hash>d64a9e966e01becf14068ec7dc2c905f</Hash>
 </Codenesium>*/

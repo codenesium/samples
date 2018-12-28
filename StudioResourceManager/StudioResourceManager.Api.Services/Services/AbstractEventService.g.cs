@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractEventService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IEventRepository EventRepository { get; private set; }
 
 		protected IApiEventServerRequestModelValidator EventModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractEventService(
 			ILogger logger,
+			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiEventServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
 				var record = await this.EventRepository.Create(this.DalEventMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				var businessObject = this.DalEventMapper.MapEFToBO(record);
+				response.SetRecord(this.BolEventMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new EventCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.EventRepository.Get(id);
 
-				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
+				var businessObject = this.DalEventMapper.MapEFToBO(record);
+				var apiModel = this.BolEventMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new EventUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.EventRepository.Delete(id);
+
+				await this.mediator.Publish(new EventDeletedNotification(id));
 			}
 
 			return response;
@@ -129,5 +143,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9157ccde6dba3c682b9a2a13f2bd841</Hash>
+    <Hash>6e7b18e47ddaf25cd44c0ffddfc12a35</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetShippingNS.Api.Services
 	{
 		public PipelineStepService(
 			ILogger<IPipelineStepRepository> logger,
+			IMediator mediator,
 			IPipelineStepRepository pipelineStepRepository,
 			IApiPipelineStepServerRequestModelValidator pipelineStepModelValidator,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
@@ -23,6 +25,7 @@ namespace PetShippingNS.Api.Services
 			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
 			IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper)
 			: base(logger,
+			       mediator,
 			       pipelineStepRepository,
 			       pipelineStepModelValidator,
 			       bolPipelineStepMapper,
@@ -43,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fae452b747b3505745e0378ce4777475</Hash>
+    <Hash>81c1b1e39e85b773cebb815a6adfdd74</Hash>
 </Codenesium>*/

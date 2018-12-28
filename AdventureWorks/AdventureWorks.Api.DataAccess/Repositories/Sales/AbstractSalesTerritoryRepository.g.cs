@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SalesTerritory_Name.
 		public async virtual Task<SalesTerritory> ByName(string name)
 		{
-			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<SalesTerritory>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_SalesTerritory_rowguid.
 		public async virtual Task<SalesTerritory> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SalesTerritory>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table Customer via territoryID.
@@ -130,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a96f157391e98efbf9270008040e8ed1</Hash>
+    <Hash>3e053d55a636bdab8e9c41463ceb3b5e</Hash>
 </Codenesium>*/

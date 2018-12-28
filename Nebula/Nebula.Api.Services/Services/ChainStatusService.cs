@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace NebulaNS.Api.Services
 	{
 		public ChainStatusService(
 			ILogger<IChainStatusRepository> logger,
+			IMediator mediator,
 			IChainStatusRepository chainStatusRepository,
 			IApiChainStatusServerRequestModelValidator chainStatusModelValidator,
 			IBOLChainStatusMapper bolChainStatusMapper,
@@ -15,6 +17,7 @@ namespace NebulaNS.Api.Services
 			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper)
 			: base(logger,
+			       mediator,
 			       chainStatusRepository,
 			       chainStatusModelValidator,
 			       bolChainStatusMapper,
@@ -27,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>933fd1919f7e01f5a1d1e365d7d1335d</Hash>
+    <Hash>9106eacefa5ca85d9f63e0e30c6554c5</Hash>
 </Codenesium>*/

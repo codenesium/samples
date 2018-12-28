@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public AddressTypeService(
 			ILogger<IAddressTypeRepository> logger,
+			IMediator mediator,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
 			IBOLAddressTypeMapper bolAddressTypeMapper,
 			IDALAddressTypeMapper dalAddressTypeMapper)
 			: base(logger,
+			       mediator,
 			       addressTypeRepository,
 			       addressTypeModelValidator,
 			       bolAddressTypeMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a495d7998f9335d4ecdcaca9fb02db70</Hash>
+    <Hash>3252f5e22e990f02b7c5a21ac858616e</Hash>
 </Codenesium>*/

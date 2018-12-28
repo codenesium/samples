@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new ScrapReason());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ScrapReason();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(record));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult<ScrapReason>(null));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiScrapReasonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ScrapReason>())).Returns(Task.FromResult(new ScrapReason()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiScrapReasonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ScrapReason>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiScrapReasonServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiScrapReasonServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiScrapReasonServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ScrapReason>())).Returns(Task.FromResult(new ScrapReason()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ScrapReason>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiScrapReasonServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiScrapReasonServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.CompletedTask);
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<short>()));
 			mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiScrapReasonServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<short>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<short>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ScrapReasonDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ScrapReason();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ScrapReason>(null));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -260,6 +278,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new WorkOrder());
 			mock.RepositoryMock.Setup(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -279,6 +298,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
 			mock.RepositoryMock.Setup(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
@@ -295,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>617c6dad2cc9a705d927fbafd7267807</Hash>
+    <Hash>004df07e982151187382612b05296748</Hash>
 </Codenesium>*/

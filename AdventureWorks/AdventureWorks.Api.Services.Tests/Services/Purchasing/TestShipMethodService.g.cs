@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new ShipMethod());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ShipMethod();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ShipMethod>(null));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiShipMethodServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShipMethod>())).Returns(Task.FromResult(new ShipMethod()));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ShipMethod>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiShipMethodServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiShipMethodServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShipMethod>())).Returns(Task.FromResult(new ShipMethod()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ShipMethod>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShipMethod()));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiShipMethodServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiShipMethodServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ShipMethodDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ShipMethod();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ShipMethod>(null));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -259,6 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ShipMethod();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -278,6 +297,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<ShipMethod>(null));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -299,6 +319,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new PurchaseOrderHeader());
 			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByShipMethodID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -318,6 +339,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByShipMethodID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
+			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
@@ -334,5 +356,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>21295e4bbb5cfa4d2e356b5938b1ea5c</Hash>
+    <Hash>48fe92e133f7f6680688d24449a037e4</Hash>
 </Codenesium>*/

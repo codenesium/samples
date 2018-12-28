@@ -9,6 +9,7 @@ using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Rate());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -45,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var record = new Rate();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -62,6 +65,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRateRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Rate>(null));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -80,6 +84,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Rate>())).Returns(Task.FromResult(new Rate()));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -91,6 +96,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Rate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -111,6 +118,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Rate>())).Returns(Task.FromResult(new Rate()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Rate()));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -132,6 +141,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Rate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Rate()));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -153,6 +164,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -173,6 +186,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.RateModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -193,6 +208,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RateDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Rate());
 			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -220,6 +237,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRateRepository>();
 			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -239,6 +257,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Rate());
 			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -256,6 +275,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRateRepository>();
 			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
 			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -270,5 +290,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>13c81a1d1b077018e8701519527727b7</Hash>
+    <Hash>d0e669f74d831b4cfa8d433c056dda01</Hash>
 </Codenesium>*/

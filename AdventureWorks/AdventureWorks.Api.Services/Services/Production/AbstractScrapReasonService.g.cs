@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractScrapReasonService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IScrapReasonRepository ScrapReasonRepository { get; private set; }
 
 		protected IApiScrapReasonServerRequestModelValidator ScrapReasonModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractScrapReasonService(
 			ILogger logger,
+			IMediator mediator,
 			IScrapReasonRepository scrapReasonRepository,
 			IApiScrapReasonServerRequestModelValidator scrapReasonModelValidator,
 			IBOLScrapReasonMapper bolScrapReasonMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolWorkOrderMapper = bolWorkOrderMapper;
 			this.DalWorkOrderMapper = dalWorkOrderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiScrapReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolScrapReasonMapper.MapModelToBO(default(short), model);
 				var record = await this.ScrapReasonRepository.Create(this.DalScrapReasonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolScrapReasonMapper.MapBOToModel(this.DalScrapReasonMapper.MapEFToBO(record)));
+				var businessObject = this.DalScrapReasonMapper.MapEFToBO(record);
+				response.SetRecord(this.BolScrapReasonMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ScrapReasonCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ScrapReasonRepository.Get(scrapReasonID);
 
-				return ValidationResponseFactory<ApiScrapReasonServerResponseModel>.UpdateResponse(this.BolScrapReasonMapper.MapBOToModel(this.DalScrapReasonMapper.MapEFToBO(record)));
+				var businessObject = this.DalScrapReasonMapper.MapEFToBO(record);
+				var apiModel = this.BolScrapReasonMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ScrapReasonUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiScrapReasonServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ScrapReasonRepository.Delete(scrapReasonID);
+
+				await this.mediator.Publish(new ScrapReasonDeletedNotification(scrapReasonID));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e72b7f0ace2ed99627d3ddf2f5f3cfb3</Hash>
+    <Hash>05cbbeb88297f4dc11d6e63bffb38453</Hash>
 </Codenesium>*/

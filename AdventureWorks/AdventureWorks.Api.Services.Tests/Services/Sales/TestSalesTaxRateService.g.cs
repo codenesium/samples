@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new SalesTaxRate());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTaxRate();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiSalesTaxRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTaxRate>())).Returns(Task.FromResult(new SalesTaxRate()));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<SalesTaxRate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiSalesTaxRateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiSalesTaxRateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTaxRate>())).Returns(Task.FromResult(new SalesTaxRate()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<SalesTaxRate>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTaxRateServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiSalesTaxRateServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiSalesTaxRateServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<SalesTaxRateDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -202,6 +218,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTaxRate();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -219,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<SalesTaxRate>(null));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -237,6 +255,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new SalesTaxRate();
 			mock.RepositoryMock.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -254,6 +273,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesTaxRateRepository>();
 			mock.RepositoryMock.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
 			var service = new SalesTaxRateService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SalesTaxRateModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSalesTaxRateMapperMock,
@@ -268,5 +288,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fbc2fd669b13f30d62375bd04fa91152</Hash>
+    <Hash>ccffb983925594f30727d9edced74f7c</Hash>
 </Codenesium>*/

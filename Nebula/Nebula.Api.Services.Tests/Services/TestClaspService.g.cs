@@ -9,6 +9,7 @@ using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Clasp());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -45,6 +47,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Clasp();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -62,6 +65,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IClaspRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Clasp>(null));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -80,6 +84,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiClaspServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Clasp>())).Returns(Task.FromResult(new Clasp()));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -91,6 +96,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiClaspServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Clasp>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiClaspServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiClaspServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -111,6 +118,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiClaspServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Clasp>())).Returns(Task.FromResult(new Clasp()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Clasp()));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -132,6 +141,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Clasp>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Clasp()));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -153,6 +164,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiClaspServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -173,6 +186,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiClaspServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ClaspService(mock.LoggerMock.Object,
+			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
@@ -193,10 +208,11 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ClaspDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ba11c93502be2e991028e969d1c441e</Hash>
+    <Hash>1f1bc927b7e36a28f94be61959f7ce8b</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractCountryRequirementService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICountryRequirementRepository CountryRequirementRepository { get; private set; }
 
 		protected IApiCountryRequirementServerRequestModelValidator CountryRequirementModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractCountryRequirementService(
 			ILogger logger,
+			IMediator mediator,
 			ICountryRequirementRepository countryRequirementRepository,
 			IApiCountryRequirementServerRequestModelValidator countryRequirementModelValidator,
 			IBOLCountryRequirementMapper bolCountryRequirementMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolCountryRequirementMapper = bolCountryRequirementMapper;
 			this.DalCountryRequirementMapper = dalCountryRequirementMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCountryRequirementServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolCountryRequirementMapper.MapModelToBO(default(int), model);
 				var record = await this.CountryRequirementRepository.Create(this.DalCountryRequirementMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryRequirementMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCountryRequirementMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CountryRequirementCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CountryRequirementRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.UpdateResponse(this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryRequirementMapper.MapEFToBO(record);
+				var apiModel = this.BolCountryRequirementMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CountryRequirementUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.CountryRequirementRepository.Delete(id);
+
+				await this.mediator.Publish(new CountryRequirementDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de57e01000e79454c200d1e32d0f76f4</Hash>
+    <Hash>d1715a94516783b432f37a2815fb7734</Hash>
 </Codenesium>*/

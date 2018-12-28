@@ -6,6 +6,22 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
+	public class RouteConstants
+	{public const string ColumnSameAsFKTables = "columnsameasfktables";
+	 public const string CompositePrimaryKeys = "compositeprimarykeys";
+	 public const string IncludedColumnTests = "includedcolumntests";
+	 public const string People = "people";
+	 public const string RowVersionChecks = "rowversionchecks";
+	 public const string SelfReferences = "selfreferences";
+	 public const string Tables = "tables";
+	 public const string TestAllFieldTypes = "testallfieldtypes";
+	 public const string TestAllFieldTypesNullables = "testallfieldtypesnullables";
+	 public const string TimestampChecks = "timestampchecks";
+	 public const string VPersons = "vpersons";
+	 public const string SchemaAPersons = "schemaapersons";
+	 public const string SchemaBPersons = "schemabpersons";
+	 public const string PersonRefs = "personrefs";}
+
 	public abstract class AbstractService
 	{
 	}
@@ -65,5 +81,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76b020e81020e9f2b149aeea69550aca</Hash>
+    <Hash>8816723cc7ffbb9b811f9e824d5a2657</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractRetweetService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IRetweetRepository RetweetRepository { get; private set; }
 
 		protected IApiRetweetServerRequestModelValidator RetweetModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractRetweetService(
 			ILogger logger,
+			IMediator mediator,
 			IRetweetRepository retweetRepository,
 			IApiRetweetServerRequestModelValidator retweetModelValidator,
 			IBOLRetweetMapper bolRetweetMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolRetweetMapper = bolRetweetMapper;
 			this.DalRetweetMapper = dalRetweetMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiRetweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolRetweetMapper.MapModelToBO(default(int), model);
 				var record = await this.RetweetRepository.Create(this.DalRetweetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalRetweetMapper.MapEFToBO(record);
+				response.SetRecord(this.BolRetweetMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new RetweetCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.RetweetRepository.Get(id);
 
-				return ValidationResponseFactory<ApiRetweetServerResponseModel>.UpdateResponse(this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalRetweetMapper.MapEFToBO(record);
+				var apiModel = this.BolRetweetMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new RetweetUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiRetweetServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.RetweetRepository.Delete(id);
+
+				await this.mediator.Publish(new RetweetDeletedNotification(id));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f040dc8bca5cfa61281d4b9c3f3d51e</Hash>
+    <Hash>ccf0de512f72dfc2c371df16e99505da</Hash>
 </Codenesium>*/

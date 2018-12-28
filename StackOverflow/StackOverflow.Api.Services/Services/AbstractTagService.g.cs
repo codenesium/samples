@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractTagService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITagRepository TagRepository { get; private set; }
 
 		protected IApiTagServerRequestModelValidator TagModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractTagService(
 			ILogger logger,
+			IMediator mediator,
 			ITagRepository tagRepository,
 			IApiTagServerRequestModelValidator tagModelValidator,
 			IBOLTagMapper bolTagMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolTagMapper = bolTagMapper;
 			this.DalTagMapper = dalTagMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTagServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolTagMapper.MapModelToBO(default(int), model);
 				var record = await this.TagRepository.Create(this.DalTagMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(record)));
+				var businessObject = this.DalTagMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTagMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TagCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.TagRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTagServerResponseModel>.UpdateResponse(this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(record)));
+				var businessObject = this.DalTagMapper.MapEFToBO(record);
+				var apiModel = this.BolTagMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TagUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTagServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.TagRepository.Delete(id);
+
+				await this.mediator.Publish(new TagDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e23fc6f088f7ca8a692772fd54447196</Hash>
+    <Hash>dc78060e4b67bcc88bae418b6397d5a2</Hash>
 </Codenesium>*/

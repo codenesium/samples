@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public SelfReferenceService(
 			ILogger<ISelfReferenceRepository> logger,
+			IMediator mediator,
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
 			IBOLSelfReferenceMapper bolSelfReferenceMapper,
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
 			: base(logger,
+			       mediator,
 			       selfReferenceRepository,
 			       selfReferenceModelValidator,
 			       bolSelfReferenceMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0b7edaab072fbfca90ae06883b65abf</Hash>
+    <Hash>7c9e1460631d10f7145d3a2580f828a0</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace PetShippingNS.Api.Services
 	{
 		public CustomerCommunicationService(
 			ILogger<ICustomerCommunicationRepository> logger,
+			IMediator mediator,
 			ICustomerCommunicationRepository customerCommunicationRepository,
 			IApiCustomerCommunicationServerRequestModelValidator customerCommunicationModelValidator,
 			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
 			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base(logger,
+			       mediator,
 			       customerCommunicationRepository,
 			       customerCommunicationModelValidator,
 			       bolCustomerCommunicationMapper,
@@ -23,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0fcb3d64f47197532af062a949bab05c</Hash>
+    <Hash>f6b3d657d037ea272f8c135b63b952ab</Hash>
 </Codenesium>*/

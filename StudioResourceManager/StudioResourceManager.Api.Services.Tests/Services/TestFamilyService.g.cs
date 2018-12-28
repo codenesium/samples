@@ -9,6 +9,7 @@ using StudioResourceManagerNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Family());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -47,6 +49,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var record = new Family();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -66,6 +69,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IFamilyRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -86,6 +90,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiFamilyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Family>())).Returns(Task.FromResult(new Family()));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -99,6 +104,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Family>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiFamilyServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -121,6 +128,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Family>())).Returns(Task.FromResult(new Family()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -144,6 +153,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Family>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -167,6 +178,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var model = new ApiFamilyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -189,6 +202,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiFamilyServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -211,6 +226,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FamilyDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			records.Add(new Student());
 			mock.RepositoryMock.Setup(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -240,6 +257,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IFamilyRepository>();
 			mock.RepositoryMock.Setup(x => x.StudentsByFamilyId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
 			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
@@ -256,5 +274,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9c7edc5706c06f9bbf1af9c7cd194bae</Hash>
+    <Hash>a0c6166ff672865e2eafb44609ce8f36</Hash>
 </Codenesium>*/

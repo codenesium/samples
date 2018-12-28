@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public TeacherService(
 			ILogger<ITeacherRepository> logger,
+			IMediator mediator,
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
 			IBOLTeacherMapper bolTeacherMapper,
@@ -15,6 +17,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base(logger,
+			       mediator,
 			       teacherRepository,
 			       teacherModelValidator,
 			       bolTeacherMapper,
@@ -27,5 +30,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8aff5c9514bf892c6553ab5c165b58c3</Hash>
+    <Hash>29ce9dd0d1b96419d2439a1df559f8fe</Hash>
 </Codenesium>*/

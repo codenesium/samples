@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesTaxRateService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISalesTaxRateRepository SalesTaxRateRepository { get; private set; }
 
 		protected IApiSalesTaxRateServerRequestModelValidator SalesTaxRateModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractSalesTaxRateService(
 			ILogger logger,
+			IMediator mediator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
 			IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolSalesTaxRateMapper = bolSalesTaxRateMapper;
 			this.DalSalesTaxRateMapper = dalSalesTaxRateMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSalesTaxRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolSalesTaxRateMapper.MapModelToBO(default(int), model);
 				var record = await this.SalesTaxRateRepository.Create(this.DalSalesTaxRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
+				var businessObject = this.DalSalesTaxRateMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSalesTaxRateMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SalesTaxRateCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
-				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
+				var businessObject = this.DalSalesTaxRateMapper.MapEFToBO(record);
+				var apiModel = this.BolSalesTaxRateMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SalesTaxRateUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.SalesTaxRateRepository.Delete(salesTaxRateID);
+
+				await this.mediator.Publish(new SalesTaxRateDeletedNotification(salesTaxRateID));
 			}
 
 			return response;
@@ -136,5 +150,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2584aa1b5020741cc6a5ed9c5595570b</Hash>
+    <Hash>800f10ac588fa2ea2f0c847f0fe50298</Hash>
 </Codenesium>*/

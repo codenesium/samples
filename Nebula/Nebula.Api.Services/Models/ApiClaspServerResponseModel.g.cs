@@ -25,16 +25,16 @@ namespace NebulaNS.Api.Services
 		public int NextChainId { get; private set; }
 
 		[JsonProperty]
-		public string NextChainIdEntity { get; set; }
+		public string NextChainIdEntity { get; private set; } = RouteConstants.Chains;
 
 		[JsonProperty]
 		public int PreviousChainId { get; private set; }
 
 		[JsonProperty]
-		public string PreviousChainIdEntity { get; set; }
+		public string PreviousChainIdEntity { get; private set; } = RouteConstants.Chains;
 	}
 }
 
 /*<Codenesium>
-    <Hash>9cdcfc57aefc5a1fb995973cab90c152</Hash>
+    <Hash>78a11b6afe75fb64416a2c2b898d26bb</Hash>
 </Codenesium>*/

@@ -37,13 +37,13 @@ namespace TwitterNS.Api.Services
 		public int RetweeterUserId { get; private set; }
 
 		[JsonProperty]
-		public string RetweeterUserIdEntity { get; set; }
+		public string RetweeterUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
 		public int SourceTweetId { get; private set; }
 
 		[JsonProperty]
-		public string SourceTweetIdEntity { get; set; }
+		public string SourceTweetIdEntity { get; private set; } = RouteConstants.Tweets;
 
 		[JsonProperty]
 		public TimeSpan Time { get; private set; }
@@ -51,5 +51,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f26063cb4de05295672dfcef925c95d</Hash>
+    <Hash>3009e13977d2b0e502a4b1f588725593</Hash>
 </Codenesium>*/

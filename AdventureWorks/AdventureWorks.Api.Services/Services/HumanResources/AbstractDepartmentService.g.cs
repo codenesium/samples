@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDepartmentService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IDepartmentRepository DepartmentRepository { get; private set; }
 
 		protected IApiDepartmentServerRequestModelValidator DepartmentModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractDepartmentService(
 			ILogger logger,
+			IMediator mediator,
 			IDepartmentRepository departmentRepository,
 			IApiDepartmentServerRequestModelValidator departmentModelValidator,
 			IBOLDepartmentMapper bolDepartmentMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolDepartmentMapper = bolDepartmentMapper;
 			this.DalDepartmentMapper = dalDepartmentMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiDepartmentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolDepartmentMapper.MapModelToBO(default(short), model);
 				var record = await this.DepartmentRepository.Create(this.DalDepartmentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record)));
+				var businessObject = this.DalDepartmentMapper.MapEFToBO(record);
+				response.SetRecord(this.BolDepartmentMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new DepartmentCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.DepartmentRepository.Get(departmentID);
 
-				return ValidationResponseFactory<ApiDepartmentServerResponseModel>.UpdateResponse(this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record)));
+				var businessObject = this.DalDepartmentMapper.MapEFToBO(record);
+				var apiModel = this.BolDepartmentMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new DepartmentUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDepartmentServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.DepartmentRepository.Delete(departmentID);
+
+				await this.mediator.Publish(new DepartmentDeletedNotification(departmentID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79e100d311d689e4a83094a6979139f2</Hash>
+    <Hash>899b859da4622d6f9e5a95edf332cfa0</Hash>
 </Codenesium>*/

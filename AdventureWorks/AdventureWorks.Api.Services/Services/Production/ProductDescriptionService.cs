@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public ProductDescriptionService(
 			ILogger<IProductDescriptionRepository> logger,
+			IMediator mediator,
 			IProductDescriptionRepository productDescriptionRepository,
 			IApiProductDescriptionServerRequestModelValidator productDescriptionModelValidator,
 			IBOLProductDescriptionMapper bolProductDescriptionMapper,
 			IDALProductDescriptionMapper dalProductDescriptionMapper)
 			: base(logger,
+			       mediator,
 			       productDescriptionRepository,
 			       productDescriptionModelValidator,
 			       bolProductDescriptionMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b06d1a72ed81f3cecbd7ed413e28db5</Hash>
+    <Hash>cccd1f4648ebc1a8d234237a939b96bf</Hash>
 </Codenesium>*/

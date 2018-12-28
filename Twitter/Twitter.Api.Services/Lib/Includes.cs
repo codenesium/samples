@@ -6,6 +6,20 @@ using TwitterNS.Api.Contracts;
 
 namespace TwitterNS.Api.Services
 {
+	public class RouteConstants
+	{public const string DirectTweets = "directtweets";
+	 public const string Followers = "followers";
+	 public const string Followings = "followings";
+	 public const string Likes = "likes";
+	 public const string Locations = "locations";
+	 public const string Messages = "messages";
+	 public const string Messengers = "messengers";
+	 public const string QuoteTweets = "quotetweets";
+	 public const string Replies = "replies";
+	 public const string Retweets = "retweets";
+	 public const string Tweets = "tweets";
+	 public const string Users = "users";}
+
 	public abstract class AbstractService
 	{
 	}
@@ -65,5 +79,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a207a6b835f1894039e6c83a0434d15a</Hash>
+    <Hash>0f3e3949e115997ce47a6e5f03ea9337</Hash>
 </Codenesium>*/

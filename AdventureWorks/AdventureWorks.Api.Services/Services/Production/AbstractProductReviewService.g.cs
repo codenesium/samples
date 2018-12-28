@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductReviewService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IProductReviewRepository ProductReviewRepository { get; private set; }
 
 		protected IApiProductReviewServerRequestModelValidator ProductReviewModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractProductReviewService(
 			ILogger logger,
+			IMediator mediator,
 			IProductReviewRepository productReviewRepository,
 			IApiProductReviewServerRequestModelValidator productReviewModelValidator,
 			IBOLProductReviewMapper bolProductReviewMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolProductReviewMapper = bolProductReviewMapper;
 			this.DalProductReviewMapper = dalProductReviewMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiProductReviewServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolProductReviewMapper.MapModelToBO(default(int), model);
 				var record = await this.ProductReviewRepository.Create(this.DalProductReviewMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductReviewMapper.MapEFToBO(record);
+				response.SetRecord(this.BolProductReviewMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ProductReviewCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductReviewRepository.Get(productReviewID);
 
-				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductReviewMapper.MapEFToBO(record);
+				var apiModel = this.BolProductReviewMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ProductReviewUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ProductReviewRepository.Delete(productReviewID);
+
+				await this.mediator.Publish(new ProductReviewDeletedNotification(productReviewID));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ba87beb4363d36ba29d789db816ca9c5</Hash>
+    <Hash>9a9f9c2223af02bd64615c3d42a03597</Hash>
 </Codenesium>*/

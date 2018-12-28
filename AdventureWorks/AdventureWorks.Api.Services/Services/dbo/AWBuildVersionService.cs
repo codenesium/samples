@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public AWBuildVersionService(
 			ILogger<IAWBuildVersionRepository> logger,
+			IMediator mediator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IApiAWBuildVersionServerRequestModelValidator aWBuildVersionModelValidator,
 			IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
 			IDALAWBuildVersionMapper dalAWBuildVersionMapper)
 			: base(logger,
+			       mediator,
 			       aWBuildVersionRepository,
 			       aWBuildVersionModelValidator,
 			       bolAWBuildVersionMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4c5b50132fba2098e7f939d37feb3b1</Hash>
+    <Hash>8b12dab84fe9b6ee6aa5eccc2f1a1107</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractReplyService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IReplyRepository ReplyRepository { get; private set; }
 
 		protected IApiReplyServerRequestModelValidator ReplyModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractReplyService(
 			ILogger logger,
+			IMediator mediator,
 			IReplyRepository replyRepository,
 			IApiReplyServerRequestModelValidator replyModelValidator,
 			IBOLReplyMapper bolReplyMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolReplyMapper = bolReplyMapper;
 			this.DalReplyMapper = dalReplyMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiReplyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolReplyMapper.MapModelToBO(default(int), model);
 				var record = await this.ReplyRepository.Create(this.DalReplyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(record)));
+				var businessObject = this.DalReplyMapper.MapEFToBO(record);
+				response.SetRecord(this.BolReplyMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ReplyCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.ReplyRepository.Get(replyId);
 
-				return ValidationResponseFactory<ApiReplyServerResponseModel>.UpdateResponse(this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(record)));
+				var businessObject = this.DalReplyMapper.MapEFToBO(record);
+				var apiModel = this.BolReplyMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ReplyUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiReplyServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.ReplyRepository.Delete(replyId);
+
+				await this.mediator.Publish(new ReplyDeletedNotification(replyId));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e30062a2b5f59f6d48087b7cd95381f</Hash>
+    <Hash>abc5627690fe2ad2b84acaeb7e8316f6</Hash>
 </Codenesium>*/

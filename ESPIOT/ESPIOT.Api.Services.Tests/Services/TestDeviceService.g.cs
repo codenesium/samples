@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			records.Add(new Device());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -47,6 +49,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var record = new Device();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -66,6 +69,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -86,6 +90,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var model = new ApiDeviceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -99,6 +104,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Device>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDeviceServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -121,6 +128,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -144,6 +153,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Device>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Device()));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -167,6 +178,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var model = new ApiDeviceServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -189,6 +202,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDeviceServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -211,6 +226,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var record = new Device();
 			mock.RepositoryMock.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -239,6 +256,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceRepository>();
 			mock.RepositoryMock.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult<Device>(null));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -260,6 +278,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			records.Add(new DeviceAction());
 			mock.RepositoryMock.Setup(x => x.DeviceActionsByDeviceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -279,6 +298,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceRepository>();
 			mock.RepositoryMock.Setup(x => x.DeviceActionsByDeviceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
 			var service = new DeviceService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLDeviceMapperMock,
@@ -295,5 +315,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b2bc9b3eb067910dad1d835eddd60d0f</Hash>
+    <Hash>ff0560ead64ca63189541ec417e759f8</Hash>
 </Codenesium>*/

@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TestsNS.Api.Services.Tests
 			records.Add(new CompositePrimaryKey());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -45,6 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			var record = new CompositePrimaryKey();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -62,6 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICompositePrimaryKeyRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<CompositePrimaryKey>(null));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -80,6 +84,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiCompositePrimaryKeyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CompositePrimaryKey>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -91,6 +96,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CompositePrimaryKey>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCompositePrimaryKeyServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -111,6 +118,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CompositePrimaryKey>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -132,6 +141,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CompositePrimaryKey>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TestsNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CompositePrimaryKey()));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -153,6 +164,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiCompositePrimaryKeyServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -173,6 +186,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CompositePrimaryKeyModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCompositePrimaryKeyServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CompositePrimaryKeyService(mock.LoggerMock.Object,
+			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
 			                                             mock.BOLMapperMockFactory.BOLCompositePrimaryKeyMapperMock,
@@ -193,10 +208,11 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CompositePrimaryKeyDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cde52433558987f1bbd7ddcebbfe4b36</Hash>
+    <Hash>476493d426b92ca149f10843ce9e8e20</Hash>
 </Codenesium>*/

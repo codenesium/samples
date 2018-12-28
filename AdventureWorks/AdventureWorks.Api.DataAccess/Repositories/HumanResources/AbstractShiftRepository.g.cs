@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Shift_Name.
 		public async virtual Task<Shift> ByName(string name)
 		{
-			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Shift>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// unique constraint AK_Shift_StartTime_EndTime.
 		public async virtual Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
 		{
-			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
+			return await this.Context.Set<Shift>().FirstOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
 		}
 
 		protected async Task<List<Shift>> Where(
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed8dd6d57babb1cb31ab7ef17b76f741</Hash>
+    <Hash>67ff12909a3df46f6d12dc401da8d437</Hash>
 </Codenesium>*/

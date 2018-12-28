@@ -1,28 +1,28 @@
 export class ApiAWBuildVersionClientRequestModel {
 	database_Version : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	systemInformationID : number;
-	versionDate : string;
+	versionDate : any;
 
 	constructor() {
 		this.database_Version = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.systemInformationID = 0;
-		this.versionDate = '';
+		this.versionDate = null;
 	}
 }
 
 export class ApiAWBuildVersionClientResponseModel {
 	database_Version : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	systemInformationID : number;
-	versionDate : string;
+	versionDate : any;
 
 	constructor() {
 		this.database_Version = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.systemInformationID = 0;
-		this.versionDate = '';
+		this.versionDate = null;
 	}
 }
 export class ApiDatabaseLogClientRequestModel {
@@ -30,7 +30,7 @@ export class ApiDatabaseLogClientRequestModel {
 	databaseUser : string;
 	event: string;
 	object: string;
-	postTime : string;
+	postTime : any;
 	schema : string;
 	tsql : string;
 	xmlEvent : string;
@@ -40,7 +40,7 @@ export class ApiDatabaseLogClientRequestModel {
 		this.databaseUser = '';
 		this.event = '';
 		this.object = '';
-		this.postTime = '';
+		this.postTime = null;
 		this.schema = '';
 		this.tsql = '';
 		this.xmlEvent = '';
@@ -52,7 +52,7 @@ export class ApiDatabaseLogClientResponseModel {
 	databaseUser : string;
 	event: string;
 	object: string;
-	postTime : string;
+	postTime : any;
 	schema : string;
 	tsql : string;
 	xmlEvent : string;
@@ -62,69 +62,69 @@ export class ApiDatabaseLogClientResponseModel {
 		this.databaseUser = '';
 		this.event = '';
 		this.object = '';
-		this.postTime = '';
+		this.postTime = null;
 		this.schema = '';
 		this.tsql = '';
 		this.xmlEvent = '';
 	}
 }
 export class ApiErrorLogClientRequestModel {
-	errorLine : number;
+	errorLine : any;
 	errorLogID : number;
 	errorMessage : string;
 	errorNumber : number;
 	errorProcedure : string;
-	errorSeverity : number;
-	errorState : number;
-	errorTime : string;
+	errorSeverity : any;
+	errorState : any;
+	errorTime : any;
 	userName : string;
 
 	constructor() {
-		this.errorLine = 0;
+		this.errorLine = null;
 		this.errorLogID = 0;
 		this.errorMessage = '';
 		this.errorNumber = 0;
 		this.errorProcedure = '';
-		this.errorSeverity = 0;
-		this.errorState = 0;
-		this.errorTime = '';
+		this.errorSeverity = null;
+		this.errorState = null;
+		this.errorTime = null;
 		this.userName = '';
 	}
 }
 
 export class ApiErrorLogClientResponseModel {
-	errorLine : number;
+	errorLine : any;
 	errorLogID : number;
 	errorMessage : string;
 	errorNumber : number;
 	errorProcedure : string;
-	errorSeverity : number;
-	errorState : number;
-	errorTime : string;
+	errorSeverity : any;
+	errorState : any;
+	errorTime : any;
 	userName : string;
 
 	constructor() {
-		this.errorLine = 0;
+		this.errorLine = null;
 		this.errorLogID = 0;
 		this.errorMessage = '';
 		this.errorNumber = 0;
 		this.errorProcedure = '';
-		this.errorSeverity = 0;
-		this.errorState = 0;
-		this.errorTime = '';
+		this.errorSeverity = null;
+		this.errorState = null;
+		this.errorTime = null;
 		this.userName = '';
 	}
 }
 export class ApiDepartmentClientRequestModel {
 	departmentID : number;
 	groupName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.departmentID = 0;
 		this.groupName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
@@ -132,46 +132,46 @@ export class ApiDepartmentClientRequestModel {
 export class ApiDepartmentClientResponseModel {
 	departmentID : number;
 	groupName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.departmentID = 0;
 		this.groupName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 export class ApiEmployeeClientRequestModel {
-	birthDate : string;
+	birthDate : any;
 	businessEntityID : number;
 	currentFlag : boolean;
 	gender : string;
-	hireDate : string;
+	hireDate : any;
 	jobTitle : string;
 	loginID : string;
 	maritalStatu : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	nationalIDNumber : string;
-	organizationLevel : number;
-	rowguid : string;
+	organizationLevel : any;
+	rowguid : any;
 	salariedFlag : boolean;
 	sickLeaveHour : number;
 	vacationHour : number;
 
 	constructor() {
-		this.birthDate = '';
+		this.birthDate = null;
 		this.businessEntityID = 0;
 		this.currentFlag = false;
 		this.gender = '';
-		this.hireDate = '';
+		this.hireDate = null;
 		this.jobTitle = '';
 		this.loginID = '';
 		this.maritalStatu = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.nationalIDNumber = '';
-		this.organizationLevel = 0;
-		this.rowguid = '';
+		this.organizationLevel = null;
+		this.rowguid = null;
 		this.salariedFlag = false;
 		this.sickLeaveHour = 0;
 		this.vacationHour = 0;
@@ -179,96 +179,96 @@ export class ApiEmployeeClientRequestModel {
 }
 
 export class ApiEmployeeClientResponseModel {
-	birthDate : string;
+	birthDate : any;
 	businessEntityID : number;
 	currentFlag : boolean;
 	gender : string;
-	hireDate : string;
+	hireDate : any;
 	jobTitle : string;
 	loginID : string;
 	maritalStatu : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	nationalIDNumber : string;
-	organizationLevel : number;
-	rowguid : string;
+	organizationLevel : any;
+	rowguid : any;
 	salariedFlag : boolean;
 	sickLeaveHour : number;
 	vacationHour : number;
 
 	constructor() {
-		this.birthDate = '';
+		this.birthDate = null;
 		this.businessEntityID = 0;
 		this.currentFlag = false;
 		this.gender = '';
-		this.hireDate = '';
+		this.hireDate = null;
 		this.jobTitle = '';
 		this.loginID = '';
 		this.maritalStatu = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.nationalIDNumber = '';
-		this.organizationLevel = 0;
-		this.rowguid = '';
+		this.organizationLevel = null;
+		this.rowguid = null;
 		this.salariedFlag = false;
 		this.sickLeaveHour = 0;
 		this.vacationHour = 0;
 	}
 }
 export class ApiJobCandidateClientRequestModel {
-	businessEntityID : number;
+	businessEntityID : any;
 	jobCandidateID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	resume : string;
 
 	constructor() {
-		this.businessEntityID = 0;
+		this.businessEntityID = null;
 		this.jobCandidateID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.resume = '';
 	}
 }
 
 export class ApiJobCandidateClientResponseModel {
-	businessEntityID : number;
+	businessEntityID : any;
 	jobCandidateID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	resume : string;
 
 	constructor() {
-		this.businessEntityID = 0;
+		this.businessEntityID = null;
 		this.jobCandidateID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.resume = '';
 	}
 }
 export class ApiShiftClientRequestModel {
-	endTime : string;
-	modifiedDate : string;
+	endTime : any;
+	modifiedDate : any;
 	name : string;
 	shiftID : number;
-	startTime : string;
+	startTime : any;
 
 	constructor() {
-		this.endTime = '';
-		this.modifiedDate = '';
+		this.endTime = null;
+		this.modifiedDate = null;
 		this.name = '';
 		this.shiftID = 0;
-		this.startTime = '';
+		this.startTime = null;
 	}
 }
 
 export class ApiShiftClientResponseModel {
-	endTime : string;
-	modifiedDate : string;
+	endTime : any;
+	modifiedDate : any;
 	name : string;
 	shiftID : number;
-	startTime : string;
+	startTime : any;
 
 	constructor() {
-		this.endTime = '';
-		this.modifiedDate = '';
+		this.endTime = null;
+		this.modifiedDate = null;
 		this.name = '';
 		this.shiftID = 0;
-		this.startTime = '';
+		this.startTime = null;
 	}
 }
 export class ApiAddressClientRequestModel {
@@ -276,9 +276,9 @@ export class ApiAddressClientRequestModel {
 	addressLine1 : string;
 	addressLine2 : string;
 	city : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	postalCode : string;
-	rowguid : string;
+	rowguid : any;
 	stateProvinceID : number;
 
 	constructor() {
@@ -286,9 +286,9 @@ export class ApiAddressClientRequestModel {
 		this.addressLine1 = '';
 		this.addressLine2 = '';
 		this.city = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.postalCode = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.stateProvinceID = 0;
 	}
 }
@@ -298,9 +298,9 @@ export class ApiAddressClientResponseModel {
 	addressLine1 : string;
 	addressLine2 : string;
 	city : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	postalCode : string;
-	rowguid : string;
+	rowguid : any;
 	stateProvinceID : number;
 
 	constructor() {
@@ -308,137 +308,137 @@ export class ApiAddressClientResponseModel {
 		this.addressLine1 = '';
 		this.addressLine2 = '';
 		this.city = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.postalCode = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.stateProvinceID = 0;
 	}
 }
 export class ApiAddressTypeClientRequestModel {
 	addressTypeID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.addressTypeID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiAddressTypeClientResponseModel {
 	addressTypeID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.addressTypeID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiBusinessEntityClientRequestModel {
 	businessEntityID : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 
 	constructor() {
 		this.businessEntityID = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 	}
 }
 
 export class ApiBusinessEntityClientResponseModel {
 	businessEntityID : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 
 	constructor() {
 		this.businessEntityID = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 	}
 }
 export class ApiContactTypeClientRequestModel {
 	contactTypeID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.contactTypeID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 
 export class ApiContactTypeClientResponseModel {
 	contactTypeID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.contactTypeID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 export class ApiCountryRegionClientRequestModel {
 	countryRegionCode : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.countryRegionCode = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 
 export class ApiCountryRegionClientResponseModel {
 	countryRegionCode : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.countryRegionCode = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 export class ApiPasswordClientRequestModel {
 	businessEntityID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	passwordHash : string;
 	passwordSalt : string;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.businessEntityID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.passwordHash = '';
 		this.passwordSalt = '';
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiPasswordClientResponseModel {
 	businessEntityID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	passwordHash : string;
 	passwordSalt : string;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.businessEntityID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.passwordHash = '';
 		this.passwordSalt = '';
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiPersonClientRequestModel {
@@ -449,10 +449,10 @@ export class ApiPersonClientRequestModel {
 	firstName : string;
 	lastName : string;
 	middleName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	nameStyle : boolean;
 	personType : string;
-	rowguid : string;
+	rowguid : any;
 	suffix : string;
 	title : string;
 
@@ -464,10 +464,10 @@ export class ApiPersonClientRequestModel {
 		this.firstName = '';
 		this.lastName = '';
 		this.middleName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.nameStyle = false;
 		this.personType = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.suffix = '';
 		this.title = '';
 	}
@@ -481,10 +481,10 @@ export class ApiPersonClientResponseModel {
 	firstName : string;
 	lastName : string;
 	middleName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	nameStyle : boolean;
 	personType : string;
-	rowguid : string;
+	rowguid : any;
 	suffix : string;
 	title : string;
 
@@ -496,33 +496,33 @@ export class ApiPersonClientResponseModel {
 		this.firstName = '';
 		this.lastName = '';
 		this.middleName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.nameStyle = false;
 		this.personType = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.suffix = '';
 		this.title = '';
 	}
 }
 export class ApiPhoneNumberTypeClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	phoneNumberTypeID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.phoneNumberTypeID = 0;
 	}
 }
 
 export class ApiPhoneNumberTypeClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	phoneNumberTypeID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.phoneNumberTypeID = 0;
 	}
@@ -530,9 +530,9 @@ export class ApiPhoneNumberTypeClientResponseModel {
 export class ApiStateProvinceClientRequestModel {
 	countryRegionCode : string;
 	isOnlyStateProvinceFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	stateProvinceCode : string;
 	stateProvinceID : number;
 	territoryID : number;
@@ -540,9 +540,9 @@ export class ApiStateProvinceClientRequestModel {
 	constructor() {
 		this.countryRegionCode = '';
 		this.isOnlyStateProvinceFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.stateProvinceCode = '';
 		this.stateProvinceID = 0;
 		this.territoryID = 0;
@@ -552,9 +552,9 @@ export class ApiStateProvinceClientRequestModel {
 export class ApiStateProvinceClientResponseModel {
 	countryRegionCode : string;
 	isOnlyStateProvinceFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	stateProvinceCode : string;
 	stateProvinceID : number;
 	territoryID : number;
@@ -562,9 +562,9 @@ export class ApiStateProvinceClientResponseModel {
 	constructor() {
 		this.countryRegionCode = '';
 		this.isOnlyStateProvinceFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.stateProvinceCode = '';
 		this.stateProvinceID = 0;
 		this.territoryID = 0;
@@ -574,22 +574,22 @@ export class ApiBillOfMaterialClientRequestModel {
 	billOfMaterialsID : number;
 	bOMLevel : number;
 	componentID : number;
-	endDate : string;
-	modifiedDate : string;
+	endDate : any;
+	modifiedDate : any;
 	perAssemblyQty : number;
-	productAssemblyID : number;
-	startDate : string;
+	productAssemblyID : any;
+	startDate : any;
 	unitMeasureCode : string;
 
 	constructor() {
 		this.billOfMaterialsID = 0;
 		this.bOMLevel = 0;
 		this.componentID = 0;
-		this.endDate = '';
-		this.modifiedDate = '';
+		this.endDate = null;
+		this.modifiedDate = null;
 		this.perAssemblyQty = 0;
-		this.productAssemblyID = 0;
-		this.startDate = '';
+		this.productAssemblyID = null;
+		this.startDate = null;
 		this.unitMeasureCode = '';
 	}
 }
@@ -598,75 +598,75 @@ export class ApiBillOfMaterialClientResponseModel {
 	billOfMaterialsID : number;
 	bOMLevel : number;
 	componentID : number;
-	endDate : string;
-	modifiedDate : string;
+	endDate : any;
+	modifiedDate : any;
 	perAssemblyQty : number;
-	productAssemblyID : number;
-	startDate : string;
+	productAssemblyID : any;
+	startDate : any;
 	unitMeasureCode : string;
 
 	constructor() {
 		this.billOfMaterialsID = 0;
 		this.bOMLevel = 0;
 		this.componentID = 0;
-		this.endDate = '';
-		this.modifiedDate = '';
+		this.endDate = null;
+		this.modifiedDate = null;
 		this.perAssemblyQty = 0;
-		this.productAssemblyID = 0;
-		this.startDate = '';
+		this.productAssemblyID = null;
+		this.startDate = null;
 		this.unitMeasureCode = '';
 	}
 }
 export class ApiCultureClientRequestModel {
 	cultureID : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.cultureID = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 
 export class ApiCultureClientResponseModel {
 	cultureID : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.cultureID = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 export class ApiDocumentClientRequestModel {
 	changeNumber : number;
-	document1 : string;
-	documentLevel : number;
+	document1 : any;
+	documentLevel : any;
 	documentSummary : string;
 	fileExtension : string;
 	fileName : string;
 	folderFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	owner : number;
 	revision : string;
-	rowguid : string;
+	rowguid : any;
 	status : number;
 	title : string;
 
 	constructor() {
 		this.changeNumber = 0;
-		this.document1 = '';
-		this.documentLevel = 0;
+		this.document1 = null;
+		this.documentLevel = null;
 		this.documentSummary = '';
 		this.fileExtension = '';
 		this.fileName = '';
 		this.folderFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.owner = 0;
 		this.revision = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.status = 0;
 		this.title = '';
 	}
@@ -674,31 +674,31 @@ export class ApiDocumentClientRequestModel {
 
 export class ApiDocumentClientResponseModel {
 	changeNumber : number;
-	document1 : string;
-	documentLevel : number;
+	document1 : any;
+	documentLevel : any;
 	documentSummary : string;
 	fileExtension : string;
 	fileName : string;
 	folderFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	owner : number;
 	revision : string;
-	rowguid : string;
+	rowguid : any;
 	status : number;
 	title : string;
 
 	constructor() {
 		this.changeNumber = 0;
-		this.document1 = '';
-		this.documentLevel = 0;
+		this.document1 = null;
+		this.documentLevel = null;
 		this.documentSummary = '';
 		this.fileExtension = '';
 		this.fileName = '';
 		this.folderFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.owner = 0;
 		this.revision = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.status = 0;
 		this.title = '';
 	}
@@ -706,38 +706,38 @@ export class ApiDocumentClientResponseModel {
 export class ApiIllustrationClientRequestModel {
 	diagram : string;
 	illustrationID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 
 	constructor() {
 		this.diagram = '';
 		this.illustrationID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 	}
 }
 
 export class ApiIllustrationClientResponseModel {
 	diagram : string;
 	illustrationID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 
 	constructor() {
 		this.diagram = '';
 		this.illustrationID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 	}
 }
 export class ApiLocationClientRequestModel {
 	availability : number;
 	costRate : number;
 	locationID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.availability = 0;
 		this.costRate = 0;
 		this.locationID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
@@ -746,14 +746,14 @@ export class ApiLocationClientResponseModel {
 	availability : number;
 	costRate : number;
 	locationID : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.availability = 0;
 		this.costRate = 0;
 		this.locationID = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
@@ -761,54 +761,54 @@ export class ApiProductClientRequestModel {
 	class : string;
 	color : string;
 	daysToManufacture : number;
-	discontinuedDate : string;
+	discontinuedDate : any;
 	finishedGoodsFlag : boolean;
 	listPrice : number;
 	makeFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productID : number;
 	productLine : string;
-	productModelID : number;
+	productModelID : any;
 	productNumber : string;
-	productSubcategoryID : number;
+	productSubcategoryID : any;
 	reorderPoint : number;
-	rowguid : string;
+	rowguid : any;
 	safetyStockLevel : number;
-	sellEndDate : string;
-	sellStartDate : string;
+	sellEndDate : any;
+	sellStartDate : any;
 	size : string;
 	sizeUnitMeasureCode : string;
 	standardCost : number;
 	style : string;
-	weight : number;
+	weight : any;
 	weightUnitMeasureCode : string;
 
 	constructor() {
 		this.class = '';
 		this.color = '';
 		this.daysToManufacture = 0;
-		this.discontinuedDate = '';
+		this.discontinuedDate = null;
 		this.finishedGoodsFlag = false;
 		this.listPrice = 0;
 		this.makeFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productID = 0;
 		this.productLine = '';
-		this.productModelID = 0;
+		this.productModelID = null;
 		this.productNumber = '';
-		this.productSubcategoryID = 0;
+		this.productSubcategoryID = null;
 		this.reorderPoint = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 		this.safetyStockLevel = 0;
-		this.sellEndDate = '';
-		this.sellStartDate = '';
+		this.sellEndDate = null;
+		this.sellStartDate = null;
 		this.size = '';
 		this.sizeUnitMeasureCode = '';
 		this.standardCost = 0;
 		this.style = '';
-		this.weight = 0;
+		this.weight = null;
 		this.weightUnitMeasureCode = '';
 	}
 }
@@ -817,199 +817,199 @@ export class ApiProductClientResponseModel {
 	class : string;
 	color : string;
 	daysToManufacture : number;
-	discontinuedDate : string;
+	discontinuedDate : any;
 	finishedGoodsFlag : boolean;
 	listPrice : number;
 	makeFlag : boolean;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productID : number;
 	productLine : string;
-	productModelID : number;
+	productModelID : any;
 	productNumber : string;
-	productSubcategoryID : number;
+	productSubcategoryID : any;
 	reorderPoint : number;
-	rowguid : string;
+	rowguid : any;
 	safetyStockLevel : number;
-	sellEndDate : string;
-	sellStartDate : string;
+	sellEndDate : any;
+	sellStartDate : any;
 	size : string;
 	sizeUnitMeasureCode : string;
 	standardCost : number;
 	style : string;
-	weight : number;
+	weight : any;
 	weightUnitMeasureCode : string;
 
 	constructor() {
 		this.class = '';
 		this.color = '';
 		this.daysToManufacture = 0;
-		this.discontinuedDate = '';
+		this.discontinuedDate = null;
 		this.finishedGoodsFlag = false;
 		this.listPrice = 0;
 		this.makeFlag = false;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productID = 0;
 		this.productLine = '';
-		this.productModelID = 0;
+		this.productModelID = null;
 		this.productNumber = '';
-		this.productSubcategoryID = 0;
+		this.productSubcategoryID = null;
 		this.reorderPoint = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 		this.safetyStockLevel = 0;
-		this.sellEndDate = '';
-		this.sellStartDate = '';
+		this.sellEndDate = null;
+		this.sellStartDate = null;
 		this.size = '';
 		this.sizeUnitMeasureCode = '';
 		this.standardCost = 0;
 		this.style = '';
-		this.weight = 0;
+		this.weight = null;
 		this.weightUnitMeasureCode = '';
 	}
 }
 export class ApiProductCategoryClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productCategoryID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productCategoryID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiProductCategoryClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productCategoryID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productCategoryID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiProductDescriptionClientRequestModel {
 	description : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productDescriptionID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.description = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productDescriptionID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiProductDescriptionClientResponseModel {
 	description : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productDescriptionID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.description = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productDescriptionID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiProductModelClientRequestModel {
 	catalogDescription : string;
 	instruction : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productModelID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.catalogDescription = '';
 		this.instruction = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productModelID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiProductModelClientResponseModel {
 	catalogDescription : string;
 	instruction : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productModelID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
 		this.catalogDescription = '';
 		this.instruction = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productModelID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiProductPhotoClientRequestModel {
-	largePhoto : string;
+	largePhoto : any;
 	largePhotoFileName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productPhotoID : number;
-	thumbNailPhoto : string;
+	thumbNailPhoto : any;
 	thumbnailPhotoFileName : string;
 
 	constructor() {
-		this.largePhoto = '';
+		this.largePhoto = null;
 		this.largePhotoFileName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productPhotoID = 0;
-		this.thumbNailPhoto = '';
+		this.thumbNailPhoto = null;
 		this.thumbnailPhotoFileName = '';
 	}
 }
 
 export class ApiProductPhotoClientResponseModel {
-	largePhoto : string;
+	largePhoto : any;
 	largePhotoFileName : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productPhotoID : number;
-	thumbNailPhoto : string;
+	thumbNailPhoto : any;
 	thumbnailPhotoFileName : string;
 
 	constructor() {
-		this.largePhoto = '';
+		this.largePhoto = null;
 		this.largePhotoFileName = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productPhotoID = 0;
-		this.thumbNailPhoto = '';
+		this.thumbNailPhoto = null;
 		this.thumbnailPhotoFileName = '';
 	}
 }
 export class ApiProductReviewClientRequestModel {
 	comment : string;
 	emailAddress : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	productReviewID : number;
 	rating : number;
-	reviewDate : string;
+	reviewDate : any;
 	reviewerName : string;
 
 	constructor() {
 		this.comment = '';
 		this.emailAddress = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.productReviewID = 0;
 		this.rating = 0;
-		this.reviewDate = '';
+		this.reviewDate = null;
 		this.reviewerName = '';
 	}
 }
@@ -1017,97 +1017,97 @@ export class ApiProductReviewClientRequestModel {
 export class ApiProductReviewClientResponseModel {
 	comment : string;
 	emailAddress : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	productReviewID : number;
 	rating : number;
-	reviewDate : string;
+	reviewDate : any;
 	reviewerName : string;
 
 	constructor() {
 		this.comment = '';
 		this.emailAddress = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.productReviewID = 0;
 		this.rating = 0;
-		this.reviewDate = '';
+		this.reviewDate = null;
 		this.reviewerName = '';
 	}
 }
 export class ApiProductSubcategoryClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productCategoryID : number;
 	productSubcategoryID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productCategoryID = 0;
 		this.productSubcategoryID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 
 export class ApiProductSubcategoryClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	productCategoryID : number;
 	productSubcategoryID : number;
-	rowguid : string;
+	rowguid : any;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.productCategoryID = 0;
 		this.productSubcategoryID = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 	}
 }
 export class ApiScrapReasonClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	scrapReasonID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.scrapReasonID = 0;
 	}
 }
 
 export class ApiScrapReasonClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	scrapReasonID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.scrapReasonID = 0;
 	}
 }
 export class ApiTransactionHistoryClientRequestModel {
 	actualCost : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	referenceOrderID : number;
 	referenceOrderLineID : number;
-	transactionDate : string;
+	transactionDate : any;
 	transactionID : number;
 	transactionType : string;
 
 	constructor() {
 		this.actualCost = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.referenceOrderID = 0;
 		this.referenceOrderLineID = 0;
-		this.transactionDate = '';
+		this.transactionDate = null;
 		this.transactionID = 0;
 		this.transactionType = '';
 	}
@@ -1115,46 +1115,46 @@ export class ApiTransactionHistoryClientRequestModel {
 
 export class ApiTransactionHistoryClientResponseModel {
 	actualCost : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	referenceOrderID : number;
 	referenceOrderLineID : number;
-	transactionDate : string;
+	transactionDate : any;
 	transactionID : number;
 	transactionType : string;
 
 	constructor() {
 		this.actualCost = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.referenceOrderID = 0;
 		this.referenceOrderLineID = 0;
-		this.transactionDate = '';
+		this.transactionDate = null;
 		this.transactionID = 0;
 		this.transactionType = '';
 	}
 }
 export class ApiTransactionHistoryArchiveClientRequestModel {
 	actualCost : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	referenceOrderID : number;
 	referenceOrderLineID : number;
-	transactionDate : string;
+	transactionDate : any;
 	transactionID : number;
 	transactionType : string;
 
 	constructor() {
 		this.actualCost = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.referenceOrderID = 0;
 		this.referenceOrderLineID = 0;
-		this.transactionDate = '';
+		this.transactionDate = null;
 		this.transactionID = 0;
 		this.transactionType = '';
 	}
@@ -1162,97 +1162,97 @@ export class ApiTransactionHistoryArchiveClientRequestModel {
 
 export class ApiTransactionHistoryArchiveClientResponseModel {
 	actualCost : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	referenceOrderID : number;
 	referenceOrderLineID : number;
-	transactionDate : string;
+	transactionDate : any;
 	transactionID : number;
 	transactionType : string;
 
 	constructor() {
 		this.actualCost = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.referenceOrderID = 0;
 		this.referenceOrderLineID = 0;
-		this.transactionDate = '';
+		this.transactionDate = null;
 		this.transactionID = 0;
 		this.transactionType = '';
 	}
 }
 export class ApiUnitMeasureClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	unitMeasureCode : string;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.unitMeasureCode = '';
 	}
 }
 
 export class ApiUnitMeasureClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	unitMeasureCode : string;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.unitMeasureCode = '';
 	}
 }
 export class ApiWorkOrderClientRequestModel {
-	dueDate : string;
-	endDate : string;
-	modifiedDate : string;
+	dueDate : any;
+	endDate : any;
+	modifiedDate : any;
 	orderQty : number;
 	productID : number;
 	scrappedQty : number;
-	scrapReasonID : number;
-	startDate : string;
+	scrapReasonID : any;
+	startDate : any;
 	stockedQty : number;
 	workOrderID : number;
 
 	constructor() {
-		this.dueDate = '';
-		this.endDate = '';
-		this.modifiedDate = '';
+		this.dueDate = null;
+		this.endDate = null;
+		this.modifiedDate = null;
 		this.orderQty = 0;
 		this.productID = 0;
 		this.scrappedQty = 0;
-		this.scrapReasonID = 0;
-		this.startDate = '';
+		this.scrapReasonID = null;
+		this.startDate = null;
 		this.stockedQty = 0;
 		this.workOrderID = 0;
 	}
 }
 
 export class ApiWorkOrderClientResponseModel {
-	dueDate : string;
-	endDate : string;
-	modifiedDate : string;
+	dueDate : any;
+	endDate : any;
+	modifiedDate : any;
 	orderQty : number;
 	productID : number;
 	scrappedQty : number;
-	scrapReasonID : number;
-	startDate : string;
+	scrapReasonID : any;
+	startDate : any;
 	stockedQty : number;
 	workOrderID : number;
 
 	constructor() {
-		this.dueDate = '';
-		this.endDate = '';
-		this.modifiedDate = '';
+		this.dueDate = null;
+		this.endDate = null;
+		this.modifiedDate = null;
 		this.orderQty = 0;
 		this.productID = 0;
 		this.scrappedQty = 0;
-		this.scrapReasonID = 0;
-		this.startDate = '';
+		this.scrapReasonID = null;
+		this.startDate = null;
 		this.stockedQty = 0;
 		this.workOrderID = 0;
 	}
@@ -1260,11 +1260,11 @@ export class ApiWorkOrderClientResponseModel {
 export class ApiPurchaseOrderHeaderClientRequestModel {
 	employeeID : number;
 	freight : number;
-	modifiedDate : string;
-	orderDate : string;
+	modifiedDate : any;
+	orderDate : any;
 	purchaseOrderID : number;
 	revisionNumber : number;
-	shipDate : string;
+	shipDate : any;
 	shipMethodID : number;
 	status : number;
 	subTotal : number;
@@ -1275,11 +1275,11 @@ export class ApiPurchaseOrderHeaderClientRequestModel {
 	constructor() {
 		this.employeeID = 0;
 		this.freight = 0;
-		this.modifiedDate = '';
-		this.orderDate = '';
+		this.modifiedDate = null;
+		this.orderDate = null;
 		this.purchaseOrderID = 0;
 		this.revisionNumber = 0;
-		this.shipDate = '';
+		this.shipDate = null;
 		this.shipMethodID = 0;
 		this.status = 0;
 		this.subTotal = 0;
@@ -1292,11 +1292,11 @@ export class ApiPurchaseOrderHeaderClientRequestModel {
 export class ApiPurchaseOrderHeaderClientResponseModel {
 	employeeID : number;
 	freight : number;
-	modifiedDate : string;
-	orderDate : string;
+	modifiedDate : any;
+	orderDate : any;
 	purchaseOrderID : number;
 	revisionNumber : number;
-	shipDate : string;
+	shipDate : any;
 	shipMethodID : number;
 	status : number;
 	subTotal : number;
@@ -1307,11 +1307,11 @@ export class ApiPurchaseOrderHeaderClientResponseModel {
 	constructor() {
 		this.employeeID = 0;
 		this.freight = 0;
-		this.modifiedDate = '';
-		this.orderDate = '';
+		this.modifiedDate = null;
+		this.orderDate = null;
 		this.purchaseOrderID = 0;
 		this.revisionNumber = 0;
-		this.shipDate = '';
+		this.shipDate = null;
 		this.shipMethodID = 0;
 		this.status = 0;
 		this.subTotal = 0;
@@ -1321,17 +1321,17 @@ export class ApiPurchaseOrderHeaderClientResponseModel {
 	}
 }
 export class ApiShipMethodClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	shipBase : number;
 	shipMethodID : number;
 	shipRate : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.shipBase = 0;
 		this.shipMethodID = 0;
 		this.shipRate = 0;
@@ -1339,17 +1339,17 @@ export class ApiShipMethodClientRequestModel {
 }
 
 export class ApiShipMethodClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	shipBase : number;
 	shipMethodID : number;
 	shipRate : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.shipBase = 0;
 		this.shipMethodID = 0;
 		this.shipRate = 0;
@@ -1360,7 +1360,7 @@ export class ApiVendorClientRequestModel {
 	activeFlag : boolean;
 	businessEntityID : number;
 	creditRating : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	preferredVendorStatu : boolean;
 	purchasingWebServiceURL : string;
@@ -1370,7 +1370,7 @@ export class ApiVendorClientRequestModel {
 		this.activeFlag = false;
 		this.businessEntityID = 0;
 		this.creditRating = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.preferredVendorStatu = false;
 		this.purchasingWebServiceURL = '';
@@ -1382,7 +1382,7 @@ export class ApiVendorClientResponseModel {
 	activeFlag : boolean;
 	businessEntityID : number;
 	creditRating : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	preferredVendorStatu : boolean;
 	purchasingWebServiceURL : string;
@@ -1392,7 +1392,7 @@ export class ApiVendorClientResponseModel {
 		this.activeFlag = false;
 		this.businessEntityID = 0;
 		this.creditRating = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.preferredVendorStatu = false;
 		this.purchasingWebServiceURL = '';
@@ -1404,7 +1404,7 @@ export class ApiCreditCardClientRequestModel {
 	creditCardID : number;
 	expMonth : number;
 	expYear : number;
-	modifiedDate : string;
+	modifiedDate : any;
 
 	constructor() {
 		this.cardNumber = '';
@@ -1412,7 +1412,7 @@ export class ApiCreditCardClientRequestModel {
 		this.creditCardID = 0;
 		this.expMonth = 0;
 		this.expYear = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 	}
 }
 
@@ -1422,7 +1422,7 @@ export class ApiCreditCardClientResponseModel {
 	creditCardID : number;
 	expMonth : number;
 	expYear : number;
-	modifiedDate : string;
+	modifiedDate : any;
 
 	constructor() {
 		this.cardNumber = '';
@@ -1430,51 +1430,51 @@ export class ApiCreditCardClientResponseModel {
 		this.creditCardID = 0;
 		this.expMonth = 0;
 		this.expYear = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 	}
 }
 export class ApiCurrencyClientRequestModel {
 	currencyCode : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.currencyCode = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 
 export class ApiCurrencyClientResponseModel {
 	currencyCode : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 
 	constructor() {
 		this.currencyCode = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 	}
 }
 export class ApiCurrencyRateClientRequestModel {
 	averageRate : number;
-	currencyRateDate : string;
+	currencyRateDate : any;
 	currencyRateID : number;
 	endOfDayRate : number;
 	fromCurrencyCode : string;
 	fromCurrencyCodeEntity : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	toCurrencyCode : string;
 	toCurrencyCodeEntity : string;
 
 	constructor() {
 		this.averageRate = 0;
-		this.currencyRateDate = '';
+		this.currencyRateDate = null;
 		this.currencyRateID = 0;
 		this.endOfDayRate = 0;
 		this.fromCurrencyCode = '';
 		this.fromCurrencyCodeEntity = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.toCurrencyCode = '';
 		this.toCurrencyCodeEntity = '';
 	}
@@ -1482,23 +1482,23 @@ export class ApiCurrencyRateClientRequestModel {
 
 export class ApiCurrencyRateClientResponseModel {
 	averageRate : number;
-	currencyRateDate : string;
+	currencyRateDate : any;
 	currencyRateID : number;
 	endOfDayRate : number;
 	fromCurrencyCode : string;
 	fromCurrencyCodeEntity : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	toCurrencyCode : string;
 	toCurrencyCodeEntity : string;
 
 	constructor() {
 		this.averageRate = 0;
-		this.currencyRateDate = '';
+		this.currencyRateDate = null;
 		this.currencyRateID = 0;
 		this.endOfDayRate = 0;
 		this.fromCurrencyCode = '';
 		this.fromCurrencyCodeEntity = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.toCurrencyCode = '';
 		this.toCurrencyCodeEntity = '';
 	}
@@ -1506,23 +1506,23 @@ export class ApiCurrencyRateClientResponseModel {
 export class ApiCustomerClientRequestModel {
 	accountNumber : string;
 	customerID : number;
-	modifiedDate : string;
-	personID : number;
-	rowguid : string;
-	storeID : number;
+	modifiedDate : any;
+	personID : any;
+	rowguid : any;
+	storeID : any;
 	storeIDEntity : string;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 
 	constructor() {
 		this.accountNumber = '';
 		this.customerID = 0;
-		this.modifiedDate = '';
-		this.personID = 0;
-		this.rowguid = '';
-		this.storeID = 0;
+		this.modifiedDate = null;
+		this.personID = null;
+		this.rowguid = null;
+		this.storeID = null;
 		this.storeIDEntity = '';
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 	}
 }
@@ -1530,23 +1530,23 @@ export class ApiCustomerClientRequestModel {
 export class ApiCustomerClientResponseModel {
 	accountNumber : string;
 	customerID : number;
-	modifiedDate : string;
-	personID : number;
-	rowguid : string;
-	storeID : number;
+	modifiedDate : any;
+	personID : any;
+	rowguid : any;
+	storeID : any;
 	storeIDEntity : string;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 
 	constructor() {
 		this.accountNumber = '';
 		this.customerID = 0;
-		this.modifiedDate = '';
-		this.personID = 0;
-		this.rowguid = '';
-		this.storeID = 0;
+		this.modifiedDate = null;
+		this.personID = null;
+		this.rowguid = null;
+		this.storeID = null;
 		this.storeIDEntity = '';
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 	}
 }
@@ -1555,31 +1555,31 @@ export class ApiSalesOrderHeaderClientRequestModel {
 	billToAddressID : number;
 	comment : string;
 	creditCardApprovalCode : string;
-	creditCardID : number;
+	creditCardID : any;
 	creditCardIDEntity : string;
-	currencyRateID : number;
+	currencyRateID : any;
 	currencyRateIDEntity : string;
 	customerID : number;
 	customerIDEntity : string;
-	dueDate : string;
+	dueDate : any;
 	freight : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	onlineOrderFlag : boolean;
-	orderDate : string;
+	orderDate : any;
 	purchaseOrderNumber : string;
 	revisionNumber : number;
-	rowguid : string;
+	rowguid : any;
 	salesOrderID : number;
 	salesOrderNumber : string;
-	salesPersonID : number;
+	salesPersonID : any;
 	salesPersonIDEntity : string;
-	shipDate : string;
+	shipDate : any;
 	shipMethodID : number;
 	shipToAddressID : number;
 	status : number;
 	subTotal : number;
 	taxAmt : number;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 	totalDue : number;
 
@@ -1588,31 +1588,31 @@ export class ApiSalesOrderHeaderClientRequestModel {
 		this.billToAddressID = 0;
 		this.comment = '';
 		this.creditCardApprovalCode = '';
-		this.creditCardID = 0;
+		this.creditCardID = null;
 		this.creditCardIDEntity = '';
-		this.currencyRateID = 0;
+		this.currencyRateID = null;
 		this.currencyRateIDEntity = '';
 		this.customerID = 0;
 		this.customerIDEntity = '';
-		this.dueDate = '';
+		this.dueDate = null;
 		this.freight = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.onlineOrderFlag = false;
-		this.orderDate = '';
+		this.orderDate = null;
 		this.purchaseOrderNumber = '';
 		this.revisionNumber = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesOrderID = 0;
 		this.salesOrderNumber = '';
-		this.salesPersonID = 0;
+		this.salesPersonID = null;
 		this.salesPersonIDEntity = '';
-		this.shipDate = '';
+		this.shipDate = null;
 		this.shipMethodID = 0;
 		this.shipToAddressID = 0;
 		this.status = 0;
 		this.subTotal = 0;
 		this.taxAmt = 0;
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 		this.totalDue = 0;
 	}
@@ -1623,31 +1623,31 @@ export class ApiSalesOrderHeaderClientResponseModel {
 	billToAddressID : number;
 	comment : string;
 	creditCardApprovalCode : string;
-	creditCardID : number;
+	creditCardID : any;
 	creditCardIDEntity : string;
-	currencyRateID : number;
+	currencyRateID : any;
 	currencyRateIDEntity : string;
 	customerID : number;
 	customerIDEntity : string;
-	dueDate : string;
+	dueDate : any;
 	freight : number;
-	modifiedDate : string;
+	modifiedDate : any;
 	onlineOrderFlag : boolean;
-	orderDate : string;
+	orderDate : any;
 	purchaseOrderNumber : string;
 	revisionNumber : number;
-	rowguid : string;
+	rowguid : any;
 	salesOrderID : number;
 	salesOrderNumber : string;
-	salesPersonID : number;
+	salesPersonID : any;
 	salesPersonIDEntity : string;
-	shipDate : string;
+	shipDate : any;
 	shipMethodID : number;
 	shipToAddressID : number;
 	status : number;
 	subTotal : number;
 	taxAmt : number;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 	totalDue : number;
 
@@ -1656,31 +1656,31 @@ export class ApiSalesOrderHeaderClientResponseModel {
 		this.billToAddressID = 0;
 		this.comment = '';
 		this.creditCardApprovalCode = '';
-		this.creditCardID = 0;
+		this.creditCardID = null;
 		this.creditCardIDEntity = '';
-		this.currencyRateID = 0;
+		this.currencyRateID = null;
 		this.currencyRateIDEntity = '';
 		this.customerID = 0;
 		this.customerIDEntity = '';
-		this.dueDate = '';
+		this.dueDate = null;
 		this.freight = 0;
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.onlineOrderFlag = false;
-		this.orderDate = '';
+		this.orderDate = null;
 		this.purchaseOrderNumber = '';
 		this.revisionNumber = 0;
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesOrderID = 0;
 		this.salesOrderNumber = '';
-		this.salesPersonID = 0;
+		this.salesPersonID = null;
 		this.salesPersonIDEntity = '';
-		this.shipDate = '';
+		this.shipDate = null;
 		this.shipMethodID = 0;
 		this.shipToAddressID = 0;
 		this.status = 0;
 		this.subTotal = 0;
 		this.taxAmt = 0;
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 		this.totalDue = 0;
 	}
@@ -1689,24 +1689,24 @@ export class ApiSalesPersonClientRequestModel {
 	bonus : number;
 	businessEntityID : number;
 	commissionPct : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 	salesLastYear : number;
-	salesQuota : number;
+	salesQuota : any;
 	salesYTD : number;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 
 	constructor() {
 		this.bonus = 0;
 		this.businessEntityID = 0;
 		this.commissionPct = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 		this.salesLastYear = 0;
-		this.salesQuota = 0;
+		this.salesQuota = null;
 		this.salesYTD = 0;
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 	}
 }
@@ -1715,35 +1715,35 @@ export class ApiSalesPersonClientResponseModel {
 	bonus : number;
 	businessEntityID : number;
 	commissionPct : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 	salesLastYear : number;
-	salesQuota : number;
+	salesQuota : any;
 	salesYTD : number;
-	territoryID : number;
+	territoryID : any;
 	territoryIDEntity : string;
 
 	constructor() {
 		this.bonus = 0;
 		this.businessEntityID = 0;
 		this.commissionPct = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 		this.salesLastYear = 0;
-		this.salesQuota = 0;
+		this.salesQuota = null;
 		this.salesYTD = 0;
-		this.territoryID = 0;
+		this.territoryID = null;
 		this.territoryIDEntity = '';
 	}
 }
 export class ApiSalesReasonClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	reasonType : string;
 	salesReasonID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.reasonType = '';
 		this.salesReasonID = 0;
@@ -1751,31 +1751,31 @@ export class ApiSalesReasonClientRequestModel {
 }
 
 export class ApiSalesReasonClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
 	reasonType : string;
 	salesReasonID : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
 		this.reasonType = '';
 		this.salesReasonID = 0;
 	}
 }
 export class ApiSalesTaxRateClientRequestModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	salesTaxRateID : number;
 	stateProvinceID : number;
 	taxRate : number;
 	taxType : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesTaxRateID = 0;
 		this.stateProvinceID = 0;
 		this.taxRate = 0;
@@ -1784,18 +1784,18 @@ export class ApiSalesTaxRateClientRequestModel {
 }
 
 export class ApiSalesTaxRateClientResponseModel {
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	salesTaxRateID : number;
 	stateProvinceID : number;
 	taxRate : number;
 	taxType : number;
 
 	constructor() {
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesTaxRateID = 0;
 		this.stateProvinceID = 0;
 		this.taxRate = 0;
@@ -1807,9 +1807,9 @@ export class ApiSalesTerritoryClientRequestModel {
 	costYTD : number;
 	countryRegionCode : string;
 	group : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	salesLastYear : number;
 	salesYTD : number;
 	territoryID : number;
@@ -1819,9 +1819,9 @@ export class ApiSalesTerritoryClientRequestModel {
 		this.costYTD = 0;
 		this.countryRegionCode = '';
 		this.group = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesLastYear = 0;
 		this.salesYTD = 0;
 		this.territoryID = 0;
@@ -1833,9 +1833,9 @@ export class ApiSalesTerritoryClientResponseModel {
 	costYTD : number;
 	countryRegionCode : string;
 	group : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
+	rowguid : any;
 	salesLastYear : number;
 	salesYTD : number;
 	territoryID : number;
@@ -1845,25 +1845,25 @@ export class ApiSalesTerritoryClientResponseModel {
 		this.costYTD = 0;
 		this.countryRegionCode = '';
 		this.group = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
+		this.rowguid = null;
 		this.salesLastYear = 0;
 		this.salesYTD = 0;
 		this.territoryID = 0;
 	}
 }
 export class ApiShoppingCartItemClientRequestModel {
-	dateCreated : string;
-	modifiedDate : string;
+	dateCreated : any;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	shoppingCartID : string;
 	shoppingCartItemID : number;
 
 	constructor() {
-		this.dateCreated = '';
-		this.modifiedDate = '';
+		this.dateCreated = null;
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.shoppingCartID = '';
@@ -1872,16 +1872,16 @@ export class ApiShoppingCartItemClientRequestModel {
 }
 
 export class ApiShoppingCartItemClientResponseModel {
-	dateCreated : string;
-	modifiedDate : string;
+	dateCreated : any;
+	modifiedDate : any;
 	productID : number;
 	quantity : number;
 	shoppingCartID : string;
 	shoppingCartItemID : number;
 
 	constructor() {
-		this.dateCreated = '';
-		this.modifiedDate = '';
+		this.dateCreated = null;
+		this.modifiedDate = null;
 		this.productID = 0;
 		this.quantity = 0;
 		this.shoppingCartID = '';
@@ -1892,26 +1892,26 @@ export class ApiSpecialOfferClientRequestModel {
 	category : string;
 	description : string;
 	discountPct : number;
-	endDate : string;
-	maxQty : number;
+	endDate : any;
+	maxQty : any;
 	minQty : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 	specialOfferID : number;
-	startDate : string;
+	startDate : any;
 	type : string;
 
 	constructor() {
 		this.category = '';
 		this.description = '';
 		this.discountPct = 0;
-		this.endDate = '';
-		this.maxQty = 0;
+		this.endDate = null;
+		this.maxQty = null;
 		this.minQty = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 		this.specialOfferID = 0;
-		this.startDate = '';
+		this.startDate = null;
 		this.type = '';
 	}
 }
@@ -1920,45 +1920,45 @@ export class ApiSpecialOfferClientResponseModel {
 	category : string;
 	description : string;
 	discountPct : number;
-	endDate : string;
-	maxQty : number;
+	endDate : any;
+	maxQty : any;
 	minQty : number;
-	modifiedDate : string;
-	rowguid : string;
+	modifiedDate : any;
+	rowguid : any;
 	specialOfferID : number;
-	startDate : string;
+	startDate : any;
 	type : string;
 
 	constructor() {
 		this.category = '';
 		this.description = '';
 		this.discountPct = 0;
-		this.endDate = '';
-		this.maxQty = 0;
+		this.endDate = null;
+		this.maxQty = null;
 		this.minQty = 0;
-		this.modifiedDate = '';
-		this.rowguid = '';
+		this.modifiedDate = null;
+		this.rowguid = null;
 		this.specialOfferID = 0;
-		this.startDate = '';
+		this.startDate = null;
 		this.type = '';
 	}
 }
 export class ApiStoreClientRequestModel {
 	businessEntityID : number;
 	demographic : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
-	salesPersonID : number;
+	rowguid : any;
+	salesPersonID : any;
 	salesPersonIDEntity : string;
 
 	constructor() {
 		this.businessEntityID = 0;
 		this.demographic = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
-		this.salesPersonID = 0;
+		this.rowguid = null;
+		this.salesPersonID = null;
 		this.salesPersonIDEntity = '';
 	}
 }
@@ -1966,23 +1966,23 @@ export class ApiStoreClientRequestModel {
 export class ApiStoreClientResponseModel {
 	businessEntityID : number;
 	demographic : string;
-	modifiedDate : string;
+	modifiedDate : any;
 	name : string;
-	rowguid : string;
-	salesPersonID : number;
+	rowguid : any;
+	salesPersonID : any;
 	salesPersonIDEntity : string;
 
 	constructor() {
 		this.businessEntityID = 0;
 		this.demographic = '';
-		this.modifiedDate = '';
+		this.modifiedDate = null;
 		this.name = '';
-		this.rowguid = '';
-		this.salesPersonID = 0;
+		this.rowguid = null;
+		this.salesPersonID = null;
 		this.salesPersonIDEntity = '';
 	}
 }
 
 /*<Codenesium>
-    <Hash>a15b57e394735369c5966cf524df2d22</Hash>
+    <Hash>bff5fd03d847d2f45b5b41d9280263fd</Hash>
 </Codenesium>*/

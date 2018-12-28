@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public PhoneNumberTypeService(
 			ILogger<IPhoneNumberTypeRepository> logger,
+			IMediator mediator,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
 			IApiPhoneNumberTypeServerRequestModelValidator phoneNumberTypeModelValidator,
 			IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper,
 			IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper)
 			: base(logger,
+			       mediator,
 			       phoneNumberTypeRepository,
 			       phoneNumberTypeModelValidator,
 			       bolPhoneNumberTypeMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25b97eb979a85f5e0342aaf218df0675</Hash>
+    <Hash>f76a68a11eb248e55de4b642d80ca172</Hash>
 </Codenesium>*/

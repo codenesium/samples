@@ -84,20 +84,20 @@ namespace AdventureWorksNS.Api.Services
 		public int? CreditCardID { get; private set; }
 
 		[JsonProperty]
-		public string CreditCardIDEntity { get; set; }
+		public string CreditCardIDEntity { get; private set; } = RouteConstants.CreditCards;
 
 		[Required]
 		[JsonProperty]
 		public int? CurrencyRateID { get; private set; }
 
 		[JsonProperty]
-		public string CurrencyRateIDEntity { get; set; }
+		public string CurrencyRateIDEntity { get; private set; } = RouteConstants.CurrencyRates;
 
 		[JsonProperty]
 		public int CustomerID { get; private set; }
 
 		[JsonProperty]
-		public string CustomerIDEntity { get; set; }
+		public string CustomerIDEntity { get; private set; } = RouteConstants.Customers;
 
 		[JsonProperty]
 		public DateTime DueDate { get; private set; }
@@ -135,7 +135,7 @@ namespace AdventureWorksNS.Api.Services
 		public int? SalesPersonID { get; private set; }
 
 		[JsonProperty]
-		public string SalesPersonIDEntity { get; set; }
+		public string SalesPersonIDEntity { get; private set; } = RouteConstants.SalesPersons;
 
 		[Required]
 		[JsonProperty]
@@ -161,7 +161,7 @@ namespace AdventureWorksNS.Api.Services
 		public int? TerritoryID { get; private set; }
 
 		[JsonProperty]
-		public string TerritoryIDEntity { get; set; }
+		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
 
 		[JsonProperty]
 		public decimal TotalDue { get; private set; }
@@ -169,5 +169,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>701e2b9725cd066235dbdf1cbbbd535e</Hash>
+    <Hash>06782b766c6178671fdbc88227f69796</Hash>
 </Codenesium>*/

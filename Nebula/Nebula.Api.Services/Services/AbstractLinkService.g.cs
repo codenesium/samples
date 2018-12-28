@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractLinkService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ILinkRepository LinkRepository { get; private set; }
 
 		protected IApiLinkServerRequestModelValidator LinkModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractLinkService(
 			ILogger logger,
+			IMediator mediator,
 			ILinkRepository linkRepository,
 			IApiLinkServerRequestModelValidator linkModelValidator,
 			IBOLLinkMapper bolLinkMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolLinkLogMapper = bolLinkLogMapper;
 			this.DalLinkLogMapper = dalLinkLogMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiLinkServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolLinkMapper.MapModelToBO(default(int), model);
 				var record = await this.LinkRepository.Create(this.DalLinkMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkMapper.MapEFToBO(record);
+				response.SetRecord(this.BolLinkMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new LinkCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.LinkRepository.Get(id);
 
-				return ValidationResponseFactory<ApiLinkServerResponseModel>.UpdateResponse(this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkMapper.MapEFToBO(record);
+				var apiModel = this.BolLinkMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new LinkUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiLinkServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.LinkRepository.Delete(id);
+
+				await this.mediator.Publish(new LinkDeletedNotification(id));
 			}
 
 			return response;
@@ -144,5 +158,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b2bca8430d6386f40a3b04a8e843dcc</Hash>
+    <Hash>f004141882cae0b497227715b47b03ef</Hash>
 </Codenesium>*/

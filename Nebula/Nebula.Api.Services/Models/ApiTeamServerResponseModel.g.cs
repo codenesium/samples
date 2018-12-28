@@ -28,10 +28,10 @@ namespace NebulaNS.Api.Services
 		public int OrganizationId { get; private set; }
 
 		[JsonProperty]
-		public string OrganizationIdEntity { get; set; }
+		public string OrganizationIdEntity { get; private set; } = RouteConstants.Organizations;
 	}
 }
 
 /*<Codenesium>
-    <Hash>e557123cf6279d66e0e1992847ff42a6</Hash>
+    <Hash>c1baaa4666489392443090e222a466a0</Hash>
 </Codenesium>*/

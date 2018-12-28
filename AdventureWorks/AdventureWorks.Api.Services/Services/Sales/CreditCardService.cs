@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public CreditCardService(
 			ILogger<ICreditCardRepository> logger,
+			IMediator mediator,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
 			IBOLCreditCardMapper bolCreditCardMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
+			       mediator,
 			       creditCardRepository,
 			       creditCardModelValidator,
 			       bolCreditCardMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3e8333be3db891d8eede5d37ba010392</Hash>
+    <Hash>d35a825d733d3d56a0520f479e461b13</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public BusinessEntityService(
 			ILogger<IBusinessEntityRepository> logger,
+			IMediator mediator,
 			IBusinessEntityRepository businessEntityRepository,
 			IApiBusinessEntityServerRequestModelValidator businessEntityModelValidator,
 			IBOLBusinessEntityMapper bolBusinessEntityMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper)
 			: base(logger,
+			       mediator,
 			       businessEntityRepository,
 			       businessEntityModelValidator,
 			       bolBusinessEntityMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a99d92b747e784cc1ad07feece119c9c</Hash>
+    <Hash>09675b5abd5d902d93442e4fee531f37</Hash>
 </Codenesium>*/

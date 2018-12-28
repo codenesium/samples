@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services
 		public int HandlerId { get; private set; }
 
 		[JsonProperty]
-		public string HandlerIdEntity { get; set; }
+		public string HandlerIdEntity { get; private set; } = RouteConstants.Handlers;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>559bac39d9ab31543fc9d8caffe2eba4</Hash>
+    <Hash>f971bef2048e3ee443532913fbf7a4c5</Hash>
 </Codenesium>*/

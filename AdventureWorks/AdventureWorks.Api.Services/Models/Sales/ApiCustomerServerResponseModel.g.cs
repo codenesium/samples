@@ -47,17 +47,17 @@ namespace AdventureWorksNS.Api.Services
 		public int? StoreID { get; private set; }
 
 		[JsonProperty]
-		public string StoreIDEntity { get; set; }
+		public string StoreIDEntity { get; private set; } = RouteConstants.Stores;
 
 		[Required]
 		[JsonProperty]
 		public int? TerritoryID { get; private set; }
 
 		[JsonProperty]
-		public string TerritoryIDEntity { get; set; }
+		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
 	}
 }
 
 /*<Codenesium>
-    <Hash>155495750853d27d5efa6e73f0f03ab9</Hash>
+    <Hash>30061db2bae5143ad6e95903f0f7e573</Hash>
 </Codenesium>*/

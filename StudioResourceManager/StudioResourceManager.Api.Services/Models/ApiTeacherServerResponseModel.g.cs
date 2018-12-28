@@ -49,10 +49,10 @@ namespace StudioResourceManagerNS.Api.Services
 		public int UserId { get; private set; }
 
 		[JsonProperty]
-		public string UserIdEntity { get; set; }
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
 	}
 }
 
 /*<Codenesium>
-    <Hash>780fb48635ec6b3263d048a1ac73073f</Hash>
+    <Hash>76a02b88add24bba8d7e0470eedf6552</Hash>
 </Codenesium>*/

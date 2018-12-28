@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public VendorService(
 			ILogger<IVendorRepository> logger,
+			IMediator mediator,
 			IVendorRepository vendorRepository,
 			IApiVendorServerRequestModelValidator vendorModelValidator,
 			IBOLVendorMapper bolVendorMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
+			       mediator,
 			       vendorRepository,
 			       vendorModelValidator,
 			       bolVendorMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ea22180a3b246f123d08de848322d1f</Hash>
+    <Hash>255fe723d71682374152c0e8b471a851</Hash>
 </Codenesium>*/

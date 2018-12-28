@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TwitterNS.Api.Services
 	{
 		public FollowerService(
 			ILogger<IFollowerRepository> logger,
+			IMediator mediator,
 			IFollowerRepository followerRepository,
 			IApiFollowerServerRequestModelValidator followerModelValidator,
 			IBOLFollowerMapper bolFollowerMapper,
 			IDALFollowerMapper dalFollowerMapper)
 			: base(logger,
+			       mediator,
 			       followerRepository,
 			       followerModelValidator,
 			       bolFollowerMapper,
@@ -23,5 +26,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00a4f4501d32bf587abf09ae685cab51</Hash>
+    <Hash>4ede1dbce00b82334ce78a80887b1ee5</Hash>
 </Codenesium>*/

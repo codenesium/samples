@@ -9,6 +9,7 @@ using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new CountryRequirement());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -45,6 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var record = new CountryRequirement();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -62,6 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRequirementRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<CountryRequirement>(null));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -80,6 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiCountryRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CountryRequirement>())).Returns(Task.FromResult(new CountryRequirement()));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -91,6 +96,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<CountryRequirement>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryRequirementServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRequirementServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -111,6 +118,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRequirementServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CountryRequirement>())).Returns(Task.FromResult(new CountryRequirement()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -132,6 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequirementServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<CountryRequirement>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace PetShippingNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequirementServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CountryRequirement()));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -153,6 +164,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCountryRequirementServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiCountryRequirementServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -173,6 +186,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.CountryRequirementModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiCountryRequirementServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new CountryRequirementService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
@@ -193,10 +208,11 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<CountryRequirementDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>979ffaf5e5db8c734666cbc49066fd3a</Hash>
+    <Hash>ffa7714f7632e9f2991b7fd8337cbb6e</Hash>
 </Codenesium>*/

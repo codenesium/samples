@@ -9,16 +9,42 @@ services:
       context: .
       dockerfile: DockerFile
     environment:
-       - ASPNETCORE_URLS=http://+:8000
-       - ConnectionStrings__ApplicationDbContext=
+       - ASPNETCORE_URLS=http://+:80
+       - ConnectionStrings__ApplicationDbContext=Server=db;Persist Security Info=False;User ID=sa;Password=Passw0rd;Initial Catalog=nebulaMultipleActiveResultSets=True;Connection Timeout=10;
+       - DatabaseProvider=MSSQL
+       - MigrateDatabase=true
     volumes:
       - .:/var/www/app
     ports:
-     - "8000:8000"
+     - "80:80"
+    depends_on:
+     - "db"
     networks:
       - nebula-network
     extra_hosts:
       - "localhost:10.0.2.2"
+
+  db:
+    image: "microsoft/mssql-server-linux"
+    container_name: 'db'
+    environment:
+       SA_PASSWORD: "Passw0rd"
+       ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - nebula-network
+
+  watchtower:
+    container_name: 'watchtower'
+    image: v2tec/watchtower
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    networks:
+      - nebula-network
+
 networks:
     nebula-network:
        driver: bridge

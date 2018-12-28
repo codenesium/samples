@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractHandlerService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IHandlerRepository HandlerRepository { get; private set; }
 
 		protected IApiHandlerServerRequestModelValidator HandlerModelValidator { get; private set; }
@@ -33,6 +36,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractHandlerService(
 			ILogger logger,
+			IMediator mediator,
 			IHandlerRepository handlerRepository,
 			IApiHandlerServerRequestModelValidator handlerModelValidator,
 			IBOLHandlerMapper bolHandlerMapper,
@@ -56,6 +60,8 @@ namespace PetShippingNS.Api.Services
 			this.BolOtherTransportMapper = bolOtherTransportMapper;
 			this.DalOtherTransportMapper = dalOtherTransportMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiHandlerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -89,7 +95,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolHandlerMapper.MapModelToBO(default(int), model);
 				var record = await this.HandlerRepository.Create(this.DalHandlerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(record)));
+				var businessObject = this.DalHandlerMapper.MapEFToBO(record);
+				response.SetRecord(this.BolHandlerMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new HandlerCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -108,7 +116,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.HandlerRepository.Get(id);
 
-				return ValidationResponseFactory<ApiHandlerServerResponseModel>.UpdateResponse(this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(record)));
+				var businessObject = this.DalHandlerMapper.MapEFToBO(record);
+				var apiModel = this.BolHandlerMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new HandlerUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiHandlerServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -124,6 +136,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.HandlerRepository.Delete(id);
+
+				await this.mediator.Publish(new HandlerDeletedNotification(id));
 			}
 
 			return response;
@@ -153,5 +167,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc9cfab6608c5ca460723df840967afa</Hash>
+    <Hash>9b6a643116e7c94c5f7a34b6d6856169</Hash>
 </Codenesium>*/

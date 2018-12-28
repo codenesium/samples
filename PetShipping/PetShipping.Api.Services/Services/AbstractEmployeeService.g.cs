@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractEmployeeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IEmployeeRepository EmployeeRepository { get; private set; }
 
 		protected IApiEmployeeServerRequestModelValidator EmployeeModelValidator { get; private set; }
@@ -33,6 +36,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractEmployeeService(
 			ILogger logger,
+			IMediator mediator,
 			IEmployeeRepository employeeRepository,
 			IApiEmployeeServerRequestModelValidator employeeModelValidator,
 			IBOLEmployeeMapper bolEmployeeMapper,
@@ -56,6 +60,8 @@ namespace PetShippingNS.Api.Services
 			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiEmployeeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -89,7 +95,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolEmployeeMapper.MapModelToBO(default(int), model);
 				var record = await this.EmployeeRepository.Create(this.DalEmployeeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
+				var businessObject = this.DalEmployeeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolEmployeeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new EmployeeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -108,7 +116,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.EmployeeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
+				var businessObject = this.DalEmployeeMapper.MapEFToBO(record);
+				var apiModel = this.BolEmployeeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new EmployeeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiEmployeeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -124,6 +136,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.EmployeeRepository.Delete(id);
+
+				await this.mediator.Publish(new EmployeeDeletedNotification(id));
 			}
 
 			return response;
@@ -153,5 +167,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>619d7460478238ae3b39aed3c741abee</Hash>
+    <Hash>34319076d799d7075305f054fb045c8c</Hash>
 </Codenesium>*/

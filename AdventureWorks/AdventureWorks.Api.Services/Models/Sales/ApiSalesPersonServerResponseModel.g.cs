@@ -60,10 +60,10 @@ namespace AdventureWorksNS.Api.Services
 		public int? TerritoryID { get; private set; }
 
 		[JsonProperty]
-		public string TerritoryIDEntity { get; set; }
+		public string TerritoryIDEntity { get; private set; } = RouteConstants.SalesTerritories;
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b45a3f64019d048ec2fc68023b6d640</Hash>
+    <Hash>6e3ae729ff96ee41b7c6835bb42dfbe2</Hash>
 </Codenesium>*/

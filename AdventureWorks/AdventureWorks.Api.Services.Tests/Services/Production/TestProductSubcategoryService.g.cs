@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new ProductSubcategory());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -47,6 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ProductSubcategory();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -66,6 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ProductSubcategory>(null));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -86,6 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiProductSubcategoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductSubcategory>())).Returns(Task.FromResult(new ProductSubcategory()));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -99,6 +104,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<ProductSubcategory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiProductSubcategoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -121,6 +128,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiProductSubcategoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductSubcategory>())).Returns(Task.FromResult(new ProductSubcategory()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductSubcategory()));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -144,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<ProductSubcategory>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductSubcategory()));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -167,6 +178,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductSubcategoryServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiProductSubcategoryServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -189,6 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiProductSubcategoryServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -211,6 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<ProductSubcategoryDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ProductSubcategory();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -239,6 +256,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ProductSubcategory>(null));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -259,6 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new ProductSubcategory();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -278,6 +297,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRowguid(It.IsAny<Guid>())).Returns(Task.FromResult<ProductSubcategory>(null));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -299,6 +319,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new Product());
 			mock.RepositoryMock.Setup(x => x.ProductsByProductSubcategoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -318,6 +339,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductSubcategoryRepository>();
 			mock.RepositoryMock.Setup(x => x.ProductsByProductSubcategoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Product>>(new List<Product>()));
 			var service = new ProductSubcategoryService(mock.LoggerMock.Object,
+			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductSubcategoryModelValidatorMock.Object,
 			                                            mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
@@ -334,5 +356,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>15b4e66a59a9e788f2aebf625b895e86</Hash>
+    <Hash>911189d1c1ac27634ff39ca9059aef64</Hash>
 </Codenesium>*/

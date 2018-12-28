@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractAWBuildVersionService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAWBuildVersionRepository AWBuildVersionRepository { get; private set; }
 
 		protected IApiAWBuildVersionServerRequestModelValidator AWBuildVersionModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractAWBuildVersionService(
 			ILogger logger,
+			IMediator mediator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IApiAWBuildVersionServerRequestModelValidator aWBuildVersionModelValidator,
 			IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolAWBuildVersionMapper = bolAWBuildVersionMapper;
 			this.DalAWBuildVersionMapper = dalAWBuildVersionMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAWBuildVersionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolAWBuildVersionMapper.MapModelToBO(default(int), model);
 				var record = await this.AWBuildVersionRepository.Create(this.DalAWBuildVersionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAWBuildVersionMapper.MapBOToModel(this.DalAWBuildVersionMapper.MapEFToBO(record)));
+				var businessObject = this.DalAWBuildVersionMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAWBuildVersionMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AWBuildVersionCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.AWBuildVersionRepository.Get(systemInformationID);
 
-				return ValidationResponseFactory<ApiAWBuildVersionServerResponseModel>.UpdateResponse(this.BolAWBuildVersionMapper.MapBOToModel(this.DalAWBuildVersionMapper.MapEFToBO(record)));
+				var businessObject = this.DalAWBuildVersionMapper.MapEFToBO(record);
+				var apiModel = this.BolAWBuildVersionMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AWBuildVersionUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAWBuildVersionServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.AWBuildVersionRepository.Delete(systemInformationID);
+
+				await this.mediator.Publish(new AWBuildVersionDeletedNotification(systemInformationID));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>809895f92eed1dd0b43255f73e829ac2</Hash>
+    <Hash>ad9559b8aebcfd8efb46eaf1db9c4b66</Hash>
 </Codenesium>*/

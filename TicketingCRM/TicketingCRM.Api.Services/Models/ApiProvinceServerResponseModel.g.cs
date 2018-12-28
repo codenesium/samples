@@ -22,7 +22,7 @@ namespace TicketingCRMNS.Api.Services
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
-		public string CountryIdEntity { get; set; }
+		public string CountryIdEntity { get; private set; } = RouteConstants.Countries;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -33,5 +33,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29553872c26cbab2cb2e89b0ad01aa9f</Hash>
+    <Hash>52610dfb1e55bae6b4e0b974f2c8319a</Hash>
 </Codenesium>*/

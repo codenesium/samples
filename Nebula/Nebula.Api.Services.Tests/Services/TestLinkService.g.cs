@@ -9,6 +9,7 @@ using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Link());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -47,6 +49,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Link();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -66,6 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Link>(null));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -86,6 +90,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiLinkServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Link>())).Returns(Task.FromResult(new Link()));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -99,6 +104,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Link>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiLinkServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -121,6 +128,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiLinkServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Link>())).Returns(Task.FromResult(new Link()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -144,6 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Link>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace NebulaNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -167,6 +178,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiLinkServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -189,6 +202,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.LinkModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiLinkServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -211,6 +226,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<LinkDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Link();
 			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -239,6 +256,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(null));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -260,6 +278,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Link());
 			mock.RepositoryMock.Setup(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -279,6 +298,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			mock.RepositoryMock.Setup(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -300,6 +320,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new LinkLog());
 			mock.RepositoryMock.Setup(x => x.LinkLogsByLinkId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -319,6 +340,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			mock.RepositoryMock.Setup(x => x.LinkLogsByLinkId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<LinkLog>>(new List<LinkLog>()));
 			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
@@ -335,5 +357,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a88cc685b812e1a469fb0a44525bfaf2</Hash>
+    <Hash>cdada3d73034327c2e31170f14321781</Hash>
 </Codenesium>*/

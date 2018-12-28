@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CountryRegion_Name.
 		public async virtual Task<CountryRegion> ByName(string name)
 		{
-			return await this.Context.Set<CountryRegion>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<CountryRegion>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table StateProvince via countryRegionCode.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2c140112d6cb572c624118e24514786</Hash>
+    <Hash>3d8efbd07e520bc085309b51c13e1277</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StackOverflowNS.Api.Services
 	{
 		public BadgeService(
 			ILogger<IBadgeRepository> logger,
+			IMediator mediator,
 			IBadgeRepository badgeRepository,
 			IApiBadgeServerRequestModelValidator badgeModelValidator,
 			IBOLBadgeMapper bolBadgeMapper,
 			IDALBadgeMapper dalBadgeMapper)
 			: base(logger,
+			       mediator,
 			       badgeRepository,
 			       badgeModelValidator,
 			       bolBadgeMapper,
@@ -23,5 +26,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43af2f66bc4ea5c98cdb97227812d53c</Hash>
+    <Hash>6dfb5c901c522af4819247bc47641cd9</Hash>
 </Codenesium>*/

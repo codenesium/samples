@@ -33,7 +33,7 @@ namespace PetStoreNS.Api.Services
 		public int BreedId { get; private set; }
 
 		[JsonProperty]
-		public string BreedIdEntity { get; set; }
+		public string BreedIdEntity { get; private set; } = RouteConstants.Breeds;
 
 		[JsonProperty]
 		public string Description { get; private set; }
@@ -45,7 +45,7 @@ namespace PetStoreNS.Api.Services
 		public int PenId { get; private set; }
 
 		[JsonProperty]
-		public string PenIdEntity { get; set; }
+		public string PenIdEntity { get; private set; } = RouteConstants.Pens;
 
 		[JsonProperty]
 		public decimal Price { get; private set; }
@@ -54,10 +54,10 @@ namespace PetStoreNS.Api.Services
 		public int SpeciesId { get; private set; }
 
 		[JsonProperty]
-		public string SpeciesIdEntity { get; set; }
+		public string SpeciesIdEntity { get; private set; } = RouteConstants.Species;
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4c60a62adb2163669696809d3ea47ce</Hash>
+    <Hash>2781694d823593a31da7b4f81201ca1f</Hash>
 </Codenesium>*/

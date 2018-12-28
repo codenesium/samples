@@ -32,7 +32,7 @@ namespace TwitterNS.Api.Services
 		public int ReplierUserId { get; private set; }
 
 		[JsonProperty]
-		public string ReplierUserIdEntity { get; set; }
+		public string ReplierUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
 		public int ReplyId { get; private set; }
@@ -43,5 +43,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7389dce346ae441181597d783c67f79e</Hash>
+    <Hash>c60cc6025f92ccf482df1995220da959</Hash>
 </Codenesium>*/

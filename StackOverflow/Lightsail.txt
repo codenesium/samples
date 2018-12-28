@@ -27,19 +27,21 @@ services:
       context: .
       dockerfile: DockerFile
     environment:
-       - ASPNETCORE_URLS=http://+:8000
+       - ASPNETCORE_URLS=http://+:80
        - ConnectionStrings__ApplicationDbContext=Host=stackoverflow-db;Persist Security Info=False;User ID=postgres;Password=test;Database=stackoverflow;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
     volumes:
       - .:/var/www/app
     ports:
-     - "8000:8000"
+     - "80:80"
     restart: always
     depends_on:
-     - "postgres"
+     - "db"
     networks:
       - stackoverflow-network
 
-  postgres:
+  db:
     container_name: 'stackoverflow-db'
     image: postgres:9.6-alpine
     environment:
@@ -59,14 +61,12 @@ services:
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --interval 30
 
 networks:
     stackoverflow-network:
        driver: bridge" >> docker-compose.yml;
-	   
+   
 sudo echo '#!/bin/bash
 sudo file -s /dev/xvdf && 
 sudo mkfs -t ext4 /dev/xvdf && 

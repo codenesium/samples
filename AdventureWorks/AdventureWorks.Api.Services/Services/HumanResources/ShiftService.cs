@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public ShiftService(
 			ILogger<IShiftRepository> logger,
+			IMediator mediator,
 			IShiftRepository shiftRepository,
 			IApiShiftServerRequestModelValidator shiftModelValidator,
 			IBOLShiftMapper bolShiftMapper,
 			IDALShiftMapper dalShiftMapper)
 			: base(logger,
+			       mediator,
 			       shiftRepository,
 			       shiftModelValidator,
 			       bolShiftMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10263f848ba91e05060a73501d4b2760</Hash>
+    <Hash>206d96899a1571b4da53803189cc6df0</Hash>
 </Codenesium>*/

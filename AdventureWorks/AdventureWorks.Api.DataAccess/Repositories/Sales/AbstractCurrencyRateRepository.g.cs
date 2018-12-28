@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode.
 		public async virtual Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
 		{
-			return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
+			return await this.Context.Set<CurrencyRate>().FirstOrDefaultAsync(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 		}
 
 		// Foreign key reference to this table SalesOrderHeader via currencyRateID.
@@ -124,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>317ea8b16edb9b2dfb6bab3f73e0c9b8</Hash>
+    <Hash>ad061ab5beaa9d09685f40fd19d7abc5</Hash>
 </Codenesium>*/

@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new WorkOrder());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new WorkOrder();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<WorkOrder>(null));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiWorkOrderServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkOrder>())).Returns(Task.FromResult(new WorkOrder()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<WorkOrder>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiWorkOrderServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkOrder>())).Returns(Task.FromResult(new WorkOrder()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new WorkOrder()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<WorkOrder>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new WorkOrder()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiWorkOrderServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiWorkOrderServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<WorkOrderDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new WorkOrder());
 			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -220,6 +237,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
 			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -239,6 +257,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new WorkOrder());
 			mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<short?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -256,6 +275,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
 			mock.RepositoryMock.Setup(x => x.ByScrapReasonID(It.IsAny<short?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
@@ -270,5 +290,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>56b7eb0477bb333510df1abbb1df4b1d</Hash>
+    <Hash>a93524d082a5270878631cba84b65cf2</Hash>
 </Codenesium>*/

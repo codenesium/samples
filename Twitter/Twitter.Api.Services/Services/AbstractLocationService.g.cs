@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractLocationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ILocationRepository LocationRepository { get; private set; }
 
 		protected IApiLocationServerRequestModelValidator LocationModelValidator { get; private set; }
@@ -29,6 +32,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractLocationService(
 			ILogger logger,
+			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
 			IBOLLocationMapper bolLocationMapper,
@@ -48,6 +52,8 @@ namespace TwitterNS.Api.Services
 			this.BolUserMapper = bolUserMapper;
 			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -81,7 +87,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolLocationMapper.MapModelToBO(default(int), model);
 				var record = await this.LocationRepository.Create(this.DalLocationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
+				var businessObject = this.DalLocationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolLocationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new LocationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,7 +108,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.LocationRepository.Get(locationId);
 
-				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
+				var businessObject = this.DalLocationMapper.MapEFToBO(record);
+				var apiModel = this.BolLocationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new LocationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -116,6 +128,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.LocationRepository.Delete(locationId);
+
+				await this.mediator.Publish(new LocationDeletedNotification(locationId));
 			}
 
 			return response;
@@ -138,5 +152,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8f68792a5ea43adeb2128cf2beaf884</Hash>
+    <Hash>95e2933cd87fdb730d15a93c15c8ecfc</Hash>
 </Codenesium>*/

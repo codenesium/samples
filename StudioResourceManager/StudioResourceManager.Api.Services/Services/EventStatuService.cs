@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace StudioResourceManagerNS.Api.Services
 	{
 		public EventStatuService(
 			ILogger<IEventStatuRepository> logger,
+			IMediator mediator,
 			IEventStatuRepository eventStatuRepository,
 			IApiEventStatuServerRequestModelValidator eventStatuModelValidator,
 			IBOLEventStatuMapper bolEventStatuMapper,
@@ -15,6 +17,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
+			       mediator,
 			       eventStatuRepository,
 			       eventStatuModelValidator,
 			       bolEventStatuMapper,
@@ -27,5 +30,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61a5b99f847137ff59d5b1625f073c90</Hash>
+    <Hash>e3b46a1c6c81abcdef20048f5d85a6cd</Hash>
 </Codenesium>*/

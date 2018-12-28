@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractCountryService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICountryRepository CountryRepository { get; private set; }
 
 		protected IApiCountryServerRequestModelValidator CountryModelValidator { get; private set; }
@@ -29,6 +32,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractCountryService(
 			ILogger logger,
+			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
 			IBOLCountryMapper bolCountryMapper,
@@ -48,6 +52,8 @@ namespace PetShippingNS.Api.Services
 			this.BolDestinationMapper = bolDestinationMapper;
 			this.DalDestinationMapper = dalDestinationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -81,7 +87,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
 				var record = await this.CountryRepository.Create(this.DalCountryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCountryMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CountryCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,7 +108,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.CountryRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryMapper.MapEFToBO(record);
+				var apiModel = this.BolCountryMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CountryUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -116,6 +128,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.CountryRepository.Delete(id);
+
+				await this.mediator.Publish(new CountryDeletedNotification(id));
 			}
 
 			return response;
@@ -138,5 +152,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c29f0b12d16bf3d0bf8ab5709902fcb4</Hash>
+    <Hash>76421e7bcadd2728b17a64fcdd56b709</Hash>
 </Codenesium>*/

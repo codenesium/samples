@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace FileServiceNS.Api.Services.Tests
 			records.Add(new Bucket());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -47,6 +49,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var record = new Bucket();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -66,6 +69,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(null));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -86,6 +90,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var model = new ApiBucketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Bucket>())).Returns(Task.FromResult(new Bucket()));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -99,6 +104,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Bucket>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBucketServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -121,6 +128,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBucketServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace FileServiceNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Bucket>())).Returns(Task.FromResult(new Bucket()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -144,6 +153,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Bucket>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace FileServiceNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -167,6 +178,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBucketServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var model = new ApiBucketServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -189,6 +202,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BucketModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBucketServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -211,6 +226,7 @@ namespace FileServiceNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BucketDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var record = new Bucket();
 			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -239,6 +256,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -259,6 +277,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var record = new Bucket();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -278,6 +297,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Bucket>(null));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -299,6 +319,7 @@ namespace FileServiceNS.Api.Services.Tests
 			records.Add(new File());
 			mock.RepositoryMock.Setup(x => x.FilesByBucketId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -318,6 +339,7 @@ namespace FileServiceNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBucketRepository>();
 			mock.RepositoryMock.Setup(x => x.FilesByBucketId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<File>>(new List<File>()));
 			var service = new BucketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.BucketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLBucketMapperMock,
@@ -334,5 +356,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3e9c0292760a316db0e9fe98c92583c3</Hash>
+    <Hash>5f2acf2dc9cfd64764739d9f26a7f344</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractRowVersionCheckService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IRowVersionCheckRepository RowVersionCheckRepository { get; private set; }
 
 		protected IApiRowVersionCheckServerRequestModelValidator RowVersionCheckModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractRowVersionCheckService(
 			ILogger logger,
+			IMediator mediator,
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
 			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolRowVersionCheckMapper = bolRowVersionCheckMapper;
 			this.DalRowVersionCheckMapper = dalRowVersionCheckMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolRowVersionCheckMapper.MapModelToBO(default(int), model);
 				var record = await this.RowVersionCheckRepository.Create(this.DalRowVersionCheckMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
+				var businessObject = this.DalRowVersionCheckMapper.MapEFToBO(record);
+				response.SetRecord(this.BolRowVersionCheckMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new RowVersionCheckCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.RowVersionCheckRepository.Get(id);
 
-				return ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.UpdateResponse(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
+				var businessObject = this.DalRowVersionCheckMapper.MapEFToBO(record);
+				var apiModel = this.BolRowVersionCheckMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new RowVersionCheckUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.RowVersionCheckRepository.Delete(id);
+
+				await this.mediator.Publish(new RowVersionCheckDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3328db5b15f9750531c6821a95fb5d7c</Hash>
+    <Hash>447d38348132676dd4e2ad572d76431b</Hash>
 </Codenesium>*/

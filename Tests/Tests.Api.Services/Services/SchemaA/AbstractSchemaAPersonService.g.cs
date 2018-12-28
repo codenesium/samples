@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSchemaAPersonService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISchemaAPersonRepository SchemaAPersonRepository { get; private set; }
 
 		protected IApiSchemaAPersonServerRequestModelValidator SchemaAPersonModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractSchemaAPersonService(
 			ILogger logger,
+			IMediator mediator,
 			ISchemaAPersonRepository schemaAPersonRepository,
 			IApiSchemaAPersonServerRequestModelValidator schemaAPersonModelValidator,
 			IBOLSchemaAPersonMapper bolSchemaAPersonMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolSchemaAPersonMapper = bolSchemaAPersonMapper;
 			this.DalSchemaAPersonMapper = dalSchemaAPersonMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSchemaAPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolSchemaAPersonMapper.MapModelToBO(default(int), model);
 				var record = await this.SchemaAPersonRepository.Create(this.DalSchemaAPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalSchemaAPersonMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSchemaAPersonMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SchemaAPersonCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.SchemaAPersonRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.UpdateResponse(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalSchemaAPersonMapper.MapEFToBO(record);
+				var apiModel = this.BolSchemaAPersonMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SchemaAPersonUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSchemaAPersonServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.SchemaAPersonRepository.Delete(id);
+
+				await this.mediator.Publish(new SchemaAPersonDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef861079b0c12f87c4398e13a58257c2</Hash>
+    <Hash>dff8bc59b2be5ece82b82c7aa7b1ad95</Hash>
 </Codenesium>*/

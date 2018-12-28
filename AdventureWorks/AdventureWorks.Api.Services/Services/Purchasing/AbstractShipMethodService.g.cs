@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShipMethodService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IShipMethodRepository ShipMethodRepository { get; private set; }
 
 		protected IApiShipMethodServerRequestModelValidator ShipMethodModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractShipMethodService(
 			ILogger logger,
+			IMediator mediator,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
 			IBOLShipMethodMapper bolShipMethodMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiShipMethodServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolShipMethodMapper.MapModelToBO(default(int), model);
 				var record = await this.ShipMethodRepository.Create(this.DalShipMethodMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
+				var businessObject = this.DalShipMethodMapper.MapEFToBO(record);
+				response.SetRecord(this.BolShipMethodMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ShipMethodCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ShipMethodRepository.Get(shipMethodID);
 
-				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
+				var businessObject = this.DalShipMethodMapper.MapEFToBO(record);
+				var apiModel = this.BolShipMethodMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ShipMethodUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ShipMethodRepository.Delete(shipMethodID);
+
+				await this.mediator.Publish(new ShipMethodDeletedNotification(shipMethodID));
 			}
 
 			return response;
@@ -151,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a74b3c78e1d69225b203ebf56e62eaf0</Hash>
+    <Hash>aa2aa19c22a3869d8efdd6d8b41037d5</Hash>
 </Codenesium>*/

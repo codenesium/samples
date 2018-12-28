@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractTicketService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITicketRepository TicketRepository { get; private set; }
 
 		protected IApiTicketServerRequestModelValidator TicketModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractTicketService(
 			ILogger logger,
+			IMediator mediator,
 			ITicketRepository ticketRepository,
 			IApiTicketServerRequestModelValidator ticketModelValidator,
 			IBOLTicketMapper bolTicketMapper,
@@ -32,6 +36,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTicketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolTicketMapper.MapModelToBO(default(int), model);
 				var record = await this.TicketRepository.Create(this.DalTicketMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(record)));
+				var businessObject = this.DalTicketMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTicketMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TicketCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.TicketRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTicketServerResponseModel>.UpdateResponse(this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(record)));
+				var businessObject = this.DalTicketMapper.MapEFToBO(record);
+				var apiModel = this.BolTicketMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TicketUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTicketServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.TicketRepository.Delete(id);
+
+				await this.mediator.Publish(new TicketDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>babd4a79c5d6ee4a86b798c7b3a60bf6</Hash>
+    <Hash>dee799cae6155476fb808274494f9a54</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace PetShippingNS.Api.Services
 	{
 		public OtherTransportService(
 			ILogger<IOtherTransportRepository> logger,
+			IMediator mediator,
 			IOtherTransportRepository otherTransportRepository,
 			IApiOtherTransportServerRequestModelValidator otherTransportModelValidator,
 			IBOLOtherTransportMapper bolOtherTransportMapper,
 			IDALOtherTransportMapper dalOtherTransportMapper)
 			: base(logger,
+			       mediator,
 			       otherTransportRepository,
 			       otherTransportModelValidator,
 			       bolOtherTransportMapper,
@@ -23,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0a75dc305b3c5b0754eb0ef3f30c41b</Hash>
+    <Hash>d46b6f4c10e639a9332e9ff318b97bc6</Hash>
 </Codenesium>*/

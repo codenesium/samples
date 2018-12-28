@@ -79,13 +79,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_SalesTaxRate_rowguid.
 		public async virtual Task<SalesTaxRate> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<SalesTaxRate>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// unique constraint AK_SalesTaxRate_StateProvinceID_TaxType.
 		public async virtual Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
-			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
+			return await this.Context.Set<SalesTaxRate>().FirstOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
 		}
 
 		protected async Task<List<SalesTaxRate>> Where(
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c44afb35213ab84b8615bf24f961a1a</Hash>
+    <Hash>dca6f9a90d14517c71281958042a4a97</Hash>
 </Codenesium>*/

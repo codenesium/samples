@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public PasswordService(
 			ILogger<IPasswordRepository> logger,
+			IMediator mediator,
 			IPasswordRepository passwordRepository,
 			IApiPasswordServerRequestModelValidator passwordModelValidator,
 			IBOLPasswordMapper bolPasswordMapper,
 			IDALPasswordMapper dalPasswordMapper)
 			: base(logger,
+			       mediator,
 			       passwordRepository,
 			       passwordModelValidator,
 			       bolPasswordMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05193cb671a47fd18d440ae08de904a4</Hash>
+    <Hash>8559182efccda0f041aea26062d55bd3</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TicketingCRMNS.Api.Services
 	{
 		public CountryService(
 			ILogger<ICountryRepository> logger,
+			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
 			IBOLCountryMapper bolCountryMapper,
@@ -15,6 +17,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper)
 			: base(logger,
+			       mediator,
 			       countryRepository,
 			       countryModelValidator,
 			       bolCountryMapper,
@@ -27,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6dfc9bd285c89d32900e38302ae0cb8e</Hash>
+    <Hash>5b84500434d4da874dfca76c98818e96</Hash>
 </Codenesium>*/

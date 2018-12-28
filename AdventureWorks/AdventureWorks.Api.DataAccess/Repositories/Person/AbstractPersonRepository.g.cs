@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Person_rowguid.
 		public async virtual Task<Person> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Person>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Person>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Person_LastName_FirstName_MiddleName.
@@ -130,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e991ff9e6c28a9ad67769481239b1800</Hash>
+    <Hash>0496be7ff4aea0abee58c899c4f24155</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPasswordService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPasswordRepository PasswordRepository { get; private set; }
 
 		protected IApiPasswordServerRequestModelValidator PasswordModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPasswordService(
 			ILogger logger,
+			IMediator mediator,
 			IPasswordRepository passwordRepository,
 			IApiPasswordServerRequestModelValidator passwordModelValidator,
 			IBOLPasswordMapper bolPasswordMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPasswordMapper = bolPasswordMapper;
 			this.DalPasswordMapper = dalPasswordMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPasswordServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolPasswordMapper.MapModelToBO(default(int), model);
 				var record = await this.PasswordRepository.Create(this.DalPasswordMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(record)));
+				var businessObject = this.DalPasswordMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPasswordMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PasswordCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PasswordRepository.Get(businessEntityID);
 
-				return ValidationResponseFactory<ApiPasswordServerResponseModel>.UpdateResponse(this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(record)));
+				var businessObject = this.DalPasswordMapper.MapEFToBO(record);
+				var apiModel = this.BolPasswordMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PasswordUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPasswordServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.PasswordRepository.Delete(businessEntityID);
+
+				await this.mediator.Publish(new PasswordDeletedNotification(businessEntityID));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da36bca2de87bec1d803b04d128aeaae</Hash>
+    <Hash>58ed33e3caade320e05e2de0e9a10555</Hash>
 </Codenesium>*/

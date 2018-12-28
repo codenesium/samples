@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostHistoryTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPostHistoryTypeRepository PostHistoryTypeRepository { get; private set; }
 
 		protected IApiPostHistoryTypeServerRequestModelValidator PostHistoryTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractPostHistoryTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IPostHistoryTypeRepository postHistoryTypeRepository,
 			IApiPostHistoryTypeServerRequestModelValidator postHistoryTypeModelValidator,
 			IBOLPostHistoryTypeMapper bolPostHistoryTypeMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolPostHistoryTypeMapper = bolPostHistoryTypeMapper;
 			this.DalPostHistoryTypeMapper = dalPostHistoryTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPostHistoryTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolPostHistoryTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.PostHistoryTypeRepository.Create(this.DalPostHistoryTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostHistoryTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPostHistoryTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PostHistoryTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.PostHistoryTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.UpdateResponse(this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPostHistoryTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolPostHistoryTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PostHistoryTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.PostHistoryTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new PostHistoryTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc7a0dc71773c920188e17a29087f787</Hash>
+    <Hash>7cd79b45ec66545c6854d863ce39c25f</Hash>
 </Codenesium>*/

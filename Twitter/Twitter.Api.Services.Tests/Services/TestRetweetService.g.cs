@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Retweet());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -45,6 +47,7 @@ namespace TwitterNS.Api.Services.Tests
 			var record = new Retweet();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -62,6 +65,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRetweetRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Retweet>(null));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -80,6 +84,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiRetweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Retweet>())).Returns(Task.FromResult(new Retweet()));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -91,6 +96,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRetweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Retweet>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRetweetServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRetweetServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -111,6 +118,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRetweetServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TwitterNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Retweet>())).Returns(Task.FromResult(new Retweet()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Retweet()));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -132,6 +141,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRetweetServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Retweet>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TwitterNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRetweetServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Retweet()));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -153,6 +164,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRetweetServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiRetweetServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -173,6 +186,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRetweetServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -193,6 +208,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RetweetDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Retweet());
 			mock.RepositoryMock.Setup(x => x.ByRetwitterUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -220,6 +237,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRetweetRepository>();
 			mock.RepositoryMock.Setup(x => x.ByRetwitterUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -239,6 +257,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Retweet());
 			mock.RepositoryMock.Setup(x => x.ByTweetTweetId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -256,6 +275,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRetweetRepository>();
 			mock.RepositoryMock.Setup(x => x.ByTweetTweetId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
 			var service = new RetweetService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.RetweetModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLRetweetMapperMock,
@@ -270,5 +290,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>445a1a95451a551b24a3f5ca9e199fa2</Hash>
+    <Hash>80788fcf8fe5ca340a36dd0a0d5ec913</Hash>
 </Codenesium>*/

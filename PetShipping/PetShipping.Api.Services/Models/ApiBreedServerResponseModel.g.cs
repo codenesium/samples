@@ -28,10 +28,10 @@ namespace PetShippingNS.Api.Services
 		public int SpeciesId { get; private set; }
 
 		[JsonProperty]
-		public string SpeciesIdEntity { get; set; }
+		public string SpeciesIdEntity { get; private set; } = RouteConstants.Species;
 	}
 }
 
 /*<Codenesium>
-    <Hash>a265347af025177ab4315841f66d58d9</Hash>
+    <Hash>9517e77b21e1dcb793b9c59ad77f1d63</Hash>
 </Codenesium>*/

@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Culture_Name.
 		public async virtual Task<Culture> ByName(string name)
 		{
-			return await this.Context.Set<Culture>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Culture>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		protected async Task<List<Culture>> Where(
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>830c27446c2ab622cd04676a252a3792</Hash>
+    <Hash>1472702b4181f823b4742b6232983ac4</Hash>
 </Codenesium>*/

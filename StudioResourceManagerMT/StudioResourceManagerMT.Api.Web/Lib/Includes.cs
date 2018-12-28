@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
@@ -10,6 +11,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -48,6 +50,35 @@ namespace Codenesium.Foundation.CommonMVC
             return this.Ok("Api is healthy!");
         }
     }
+
+	public class HealthCheck : IHealthCheck
+	{
+		public string Name => nameof(HealthCheck);
+
+		private readonly ApplicationDbContext context;
+
+		public HealthCheck(ApplicationDbContext context)
+		{
+			this.context = context;
+		}
+
+		public async Task<HealthCheckResult> CheckHealthAsync(
+			HealthCheckContext healthCheckContext,
+			CancellationToken cancellationToken = default(CancellationToken))
+		{
+			try
+			{
+				await this.context.Database.OpenConnectionAsync();
+				await this.context.Database.ExecuteSqlCommandAsync(new RawSqlString("IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0"));
+				this.context.Database.CloseConnection();
+				return new HealthCheckResult(HealthStatus.Healthy, "Can we connect and execute queries on the database", null, null);
+			}
+			catch (Exception ex)
+			{
+				return new HealthCheckResult(HealthStatus.Unhealthy, "Can we connect and execute queries on the database", ex, null);
+			}
+		}
+	}
 
     /// <summary>
     /// ITransactionCoordinator is an interface that is injecteded into controllers and allows
@@ -311,6 +342,8 @@ namespace Codenesium.Foundation.CommonMVC
 
     public class ApiSettings
     {
+		public virtual string DatabaseProvider { get; set; }
+
         public virtual string ExternalBaseUrl { get; set; }
 
         public virtual bool MigrateDatabase { get; set; }

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 {
 	public abstract class AbstractUserService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IUserRepository UserRepository { get; private set; }
 
 		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
@@ -33,6 +36,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 		public AbstractUserService(
 			ILogger logger,
+			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
@@ -56,6 +60,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			this.BolTeacherMapper = bolTeacherMapper;
 			this.DalTeacherMapper = dalTeacherMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -89,7 +95,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
 				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalUserMapper.MapEFToBO(record);
+				response.SetRecord(this.BolUserMapper.MapBOToModel(recordMappedToBusinessObject));
+				await this.mediator.Publish(new UserCreatedNotification(recordMappedToBusinessObject));
 			}
 
 			return response;
@@ -108,7 +116,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.UserRepository.Get(id);
 
-				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var recordMappedToBusinessObject = this.DalUserMapper.MapEFToBO(record);
+				await this.mediator.Publish(new UserUpdatedNotification(recordMappedToBusinessObject));
+
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(recordMappedToBusinessObject));
 			}
 			else
 			{
@@ -124,6 +135,8 @@ namespace StudioResourceManagerMTNS.Api.Services
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(id);
+
+				await this.mediator.Publish(new UserDeletedNotification(id));
 			}
 
 			return response;
@@ -153,5 +166,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c513369c4c175ae229cec9dd8ea82c73</Hash>
+    <Hash>71fed7fdc16abaddf06544afc9f0ece5</Hash>
 </Codenesium>*/

@@ -42,13 +42,13 @@ namespace PetStoreNS.Api.Services
 		public int PaymentTypeId { get; private set; }
 
 		[JsonProperty]
-		public string PaymentTypeIdEntity { get; set; }
+		public string PaymentTypeIdEntity { get; private set; } = RouteConstants.PaymentTypes;
 
 		[JsonProperty]
 		public int PetId { get; private set; }
 
 		[JsonProperty]
-		public string PetIdEntity { get; set; }
+		public string PetIdEntity { get; private set; } = RouteConstants.Pets;
 
 		[JsonProperty]
 		public string Phone { get; private set; }
@@ -56,5 +56,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b671f00a2cde9086af1a37ca587a6ded</Hash>
+    <Hash>cd138aec000d7d0e4f66d41338b55541</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public RateService(
 			ILogger<IRateRepository> logger,
+			IMediator mediator,
 			IRateRepository rateRepository,
 			IApiRateServerRequestModelValidator rateModelValidator,
 			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base(logger,
+			       mediator,
 			       rateRepository,
 			       rateModelValidator,
 			       bolRateMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3092a9be4176f6e40ab740f98032b173</Hash>
+    <Hash>9309fa30fcaaa59c102bc14607f618c6</Hash>
 </Codenesium>*/

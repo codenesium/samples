@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractUserService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IUserRepository UserRepository { get; private set; }
 
 		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
@@ -33,6 +36,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractUserService(
 			ILogger logger,
+			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
 			IBOLUserMapper bolUserMapper,
@@ -56,6 +60,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolTeacherMapper = bolTeacherMapper;
 			this.DalTeacherMapper = dalTeacherMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -89,7 +95,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
 				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				response.SetRecord(this.BolUserMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new UserCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -108,7 +116,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.UserRepository.Get(id);
 
-				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
+				var businessObject = this.DalUserMapper.MapEFToBO(record);
+				var apiModel = this.BolUserMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new UserUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -124,6 +136,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.UserRepository.Delete(id);
+
+				await this.mediator.Publish(new UserDeletedNotification(id));
 			}
 
 			return response;
@@ -153,5 +167,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66ea5f293c61003e527ffc7f9aa884fa</Hash>
+    <Hash>2293b2e78f2617fcf29017261753ceb9</Hash>
 </Codenesium>*/

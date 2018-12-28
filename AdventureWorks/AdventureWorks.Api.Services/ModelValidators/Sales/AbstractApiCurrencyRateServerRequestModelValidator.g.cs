@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void CurrencyRateDateRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => (!x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false) || (!x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false) || (!x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.CurrencyRateDate)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => (!x?.CurrencyRateDate.IsEmptyOrZeroOrNull() ?? false) || (!x?.FromCurrencyCode.IsEmptyOrZeroOrNull() ?? false) || (!x?.ToCurrencyCode.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateServerRequestModel.CurrencyRateDate)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void EndOfDayRateRules()
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8e755007d6f59726ec233f76400b103</Hash>
+    <Hash>dd692bc8548873262a79edbae2e7b7a3</Hash>
 </Codenesium>*/

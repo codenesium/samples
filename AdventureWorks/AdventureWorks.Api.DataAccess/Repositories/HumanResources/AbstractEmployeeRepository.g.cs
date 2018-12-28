@@ -79,19 +79,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Employee_LoginID.
 		public async virtual Task<Employee> ByLoginID(string loginID)
 		{
-			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.LoginID == loginID);
+			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.LoginID == loginID);
 		}
 
 		// unique constraint AK_Employee_NationalIDNumber.
 		public async virtual Task<Employee> ByNationalIDNumber(string nationalIDNumber)
 		{
-			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.NationalIDNumber == nationalIDNumber);
+			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.NationalIDNumber == nationalIDNumber);
 		}
 
 		// unique constraint AK_Employee_rowguid.
 		public async virtual Task<Employee> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Employee>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Foreign key reference to this table JobCandidate via businessEntityID.
@@ -124,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d027ea31d30cf91fc2f8caf54462868</Hash>
+    <Hash>fb9cf61b39026748196f3a429c328247</Hash>
 </Codenesium>*/

@@ -3,28 +3,28 @@
 # build a container named FileService with 
 # docker build -t FileService .
 # run with
-# docker run -d -p 8000:8000  --add-host="localhost:10.0.2.2" --rm --name fileserviceapp FileService
-# this will run your app exposed on the docker network and will forward port 8000 on the local machine to port 8000 in the container.
+# docker run -d -p 80:80  --add-host="localhost:10.0.2.2" --rm --name fileserviceapp FileService
+# this will run your app exposed on the docker network and will forward port 80 on the local machine to port 8000 in the container.
 # On this machine it's http://192.168.99.100:8000 but it could be different for you.
 # with the rm option the container will be deleted when it exits
 # running this command will also expose your local network to the docker container so that localhost from
 # inside the container will point to your local machine.
 # see https://stackoverflow.com/questions/30495905/accessing-host-machine-as-localhost-from-a-docker-container-thats-also-inside-a for
-# info about why 10.0.2.2 makes localhost accesible from the container.
+# info about why 10.0.2.2 makes localhost accessible from the container.
 
 
-FROM microsoft/dotnet:2.2-sdk AS build
+FROM microsoft/dotnet:2.2-sdk-alpine AS build
 WORKDIR /app
-EXPOSE 8000
+EXPOSE 80
 
 # copy csproj and restore as distinct layers
 COPY . ./
 
 WORKDIR /app
-RUN dotnet publish FileService.Api.Web/FileService.Api.Web.csproj -c Release  -o /app/out
+RUN dotnet publish FileService.Api.Web/FileService.Api.Web.csproj -c Release  -o /app/out -r alpine-x64 --self-contained
 
 
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
+FROM microsoft/dotnet:2.2-runtime-deps-alpine AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "FileService.Api.Web.dll"]
+ENTRYPOINT ["./FileService.Api.Web"]

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public FamilyService(
 			ILogger<IFamilyRepository> logger,
+			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
 			IBOLFamilyMapper bolFamilyMapper,
@@ -15,6 +17,7 @@ namespace StudioResourceManagerMTNS.Api.Services
 			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base(logger,
+			       mediator,
 			       familyRepository,
 			       familyModelValidator,
 			       bolFamilyMapper,
@@ -27,5 +30,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04e818b769b05d141dcb1c4b80a313cc</Hash>
+    <Hash>23815d625c13985b5f992fcaae8d71d2</Hash>
 </Codenesium>*/

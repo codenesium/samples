@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Metadata;
 using Autofac.Features.ResolveAnything;
 using Codenesium.Foundation.CommonMVC;
+using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -76,13 +77,17 @@ namespace StackOverflowNS.Api.Web
 
 			string provider = this.Configuration.GetValue<string>("DatabaseProvider");
 
-       		if (provider.ToUpper() == "MSSQL")
+            if (provider.ToUpper() == "MSSQL")
 			{
 				options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
 			}
 			else if (provider.ToUpper() == "POSTGRESQL")
 			{
 				options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+			}
+			else if (string.IsNullOrWhiteSpace(provider))
+			{
+				options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
 			}
 			else
 			{
@@ -97,7 +102,7 @@ namespace StackOverflowNS.Api.Web
 			Policy policy = Policy
 			  .Handle<Exception>()
 			  .WaitAndRetry(
-				   10,
+				   40,
 				   retryAttempt => TimeSpan.FromSeconds(3),
 				   (exception, timeSpan, retryCount, pollyContext) =>
 				   {
@@ -108,8 +113,7 @@ namespace StackOverflowNS.Api.Web
 		    {
 				if (this.Configuration.GetValue<bool>("MigrateDatabase"))
 				{
-					context.Database.EnsureCreated();
-					context.Database.Migrate();
+			        context.Database.Migrate();
 				}
 			});
         }
@@ -337,6 +341,9 @@ namespace StackOverflowNS.Api.Web
                     !t.IsAbstract &&
                     !(t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Meta<>)))
             );
+
+            // register the mediator and register all handlers in the services assembly
+			builder.AddMediatR(typeof(AbstractService).Assembly);
 
             // build the DI container
             this.ApplicationApiContainer = builder.Build();

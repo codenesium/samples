@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Currency_Name.
 		public async virtual Task<Currency> ByName(string name)
 		{
-			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Currency>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table CurrencyRate via fromCurrencyCode.
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c796ea1c48e6926f5c9885383a1f5e3e</Hash>
+    <Hash>8d9bb7ab7596138433558be1c209b3c9</Hash>
 </Codenesium>*/

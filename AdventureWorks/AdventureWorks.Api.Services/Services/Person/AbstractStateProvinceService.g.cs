@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractStateProvinceService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IStateProvinceRepository StateProvinceRepository { get; private set; }
 
 		protected IApiStateProvinceServerRequestModelValidator StateProvinceModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractStateProvinceService(
 			ILogger logger,
+			IMediator mediator,
 			IStateProvinceRepository stateProvinceRepository,
 			IApiStateProvinceServerRequestModelValidator stateProvinceModelValidator,
 			IBOLStateProvinceMapper bolStateProvinceMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolAddressMapper = bolAddressMapper;
 			this.DalAddressMapper = dalAddressMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiStateProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolStateProvinceMapper.MapModelToBO(default(int), model);
 				var record = await this.StateProvinceRepository.Create(this.DalStateProvinceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
+				var businessObject = this.DalStateProvinceMapper.MapEFToBO(record);
+				response.SetRecord(this.BolStateProvinceMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new StateProvinceCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.StateProvinceRepository.Get(stateProvinceID);
 
-				return ValidationResponseFactory<ApiStateProvinceServerResponseModel>.UpdateResponse(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
+				var businessObject = this.DalStateProvinceMapper.MapEFToBO(record);
+				var apiModel = this.BolStateProvinceMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new StateProvinceUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiStateProvinceServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.StateProvinceRepository.Delete(stateProvinceID);
+
+				await this.mediator.Publish(new StateProvinceDeletedNotification(stateProvinceID));
 			}
 
 			return response;
@@ -165,5 +179,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83dab6718fa809e9ca42869e0c814f38</Hash>
+    <Hash>3ff40bfb56abff0e95f6cbbcc8b3e0d0</Hash>
 </Codenesium>*/

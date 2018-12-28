@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractVoteService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IVoteRepository VoteRepository { get; private set; }
 
 		protected IApiVoteServerRequestModelValidator VoteModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractVoteService(
 			ILogger logger,
+			IMediator mediator,
 			IVoteRepository voteRepository,
 			IApiVoteServerRequestModelValidator voteModelValidator,
 			IBOLVoteMapper bolVoteMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolVoteMapper = bolVoteMapper;
 			this.DalVoteMapper = dalVoteMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiVoteServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolVoteMapper.MapModelToBO(default(int), model);
 				var record = await this.VoteRepository.Create(this.DalVoteMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolVoteMapper.MapBOToModel(this.DalVoteMapper.MapEFToBO(record)));
+				var businessObject = this.DalVoteMapper.MapEFToBO(record);
+				response.SetRecord(this.BolVoteMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new VoteCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.VoteRepository.Get(id);
 
-				return ValidationResponseFactory<ApiVoteServerResponseModel>.UpdateResponse(this.BolVoteMapper.MapBOToModel(this.DalVoteMapper.MapEFToBO(record)));
+				var businessObject = this.DalVoteMapper.MapEFToBO(record);
+				var apiModel = this.BolVoteMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new VoteUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiVoteServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.VoteRepository.Delete(id);
+
+				await this.mediator.Publish(new VoteDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1c5c85b8caf4e6fd83f91fdb72b3f4f</Hash>
+    <Hash>f8391114b3a06ca4cc46b9d4ad71895c</Hash>
 </Codenesium>*/

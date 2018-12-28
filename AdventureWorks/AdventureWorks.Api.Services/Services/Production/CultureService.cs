@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public CultureService(
 			ILogger<ICultureRepository> logger,
+			IMediator mediator,
 			ICultureRepository cultureRepository,
 			IApiCultureServerRequestModelValidator cultureModelValidator,
 			IBOLCultureMapper bolCultureMapper,
 			IDALCultureMapper dalCultureMapper)
 			: base(logger,
+			       mediator,
 			       cultureRepository,
 			       cultureModelValidator,
 			       bolCultureMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c39f5aa27b17eb2c5de3da0765399d32</Hash>
+    <Hash>c0eb501489ff9d31f9385b97cbd83ba4</Hash>
 </Codenesium>*/

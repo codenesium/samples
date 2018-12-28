@@ -49,10 +49,10 @@ namespace StudioResourceManagerMTNS.Api.Services
 		public int UserId { get; private set; }
 
 		[JsonProperty]
-		public string UserIdEntity { get; set; }
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e35b8458386bedbd04d6d8345d00acd</Hash>
+    <Hash>eb9549d24e3a20f0e7dfb16015058969</Hash>
 </Codenesium>*/

@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ProductDescription_rowguid.
 		public async virtual Task<ProductDescription> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<ProductDescription>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<ProductDescription>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		protected async Task<List<ProductDescription>> Where(
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>76f0500114e1fa1dd94a00ad97d9cc59</Hash>
+    <Hash>84ff9d6d3337c7fcac023d78456e7797</Hash>
 </Codenesium>*/

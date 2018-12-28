@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public UnitMeasureService(
 			ILogger<IUnitMeasureRepository> logger,
+			IMediator mediator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
 			IBOLUnitMeasureMapper bolUnitMeasureMapper,
@@ -17,6 +19,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLProductMapper bolProductMapper,
 			IDALProductMapper dalProductMapper)
 			: base(logger,
+			       mediator,
 			       unitMeasureRepository,
 			       unitMeasureModelValidator,
 			       bolUnitMeasureMapper,
@@ -31,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c4d8328e13e5b76a62ca9294d0c926b</Hash>
+    <Hash>5be951c4804f00ced4599570b5ca6937</Hash>
 </Codenesium>*/

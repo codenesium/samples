@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace NebulaNS.Api.Services
 	{
 		public OrganizationService(
 			ILogger<IOrganizationRepository> logger,
+			IMediator mediator,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationServerRequestModelValidator organizationModelValidator,
 			IBOLOrganizationMapper bolOrganizationMapper,
@@ -15,6 +17,7 @@ namespace NebulaNS.Api.Services
 			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper)
 			: base(logger,
+			       mediator,
 			       organizationRepository,
 			       organizationModelValidator,
 			       bolOrganizationMapper,
@@ -27,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0137a57c621bbffd9805c97883f6a90</Hash>
+    <Hash>f407561cdd0cfc5fc780047956324901</Hash>
 </Codenesium>*/

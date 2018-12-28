@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductCategoryService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IProductCategoryRepository ProductCategoryRepository { get; private set; }
 
 		protected IApiProductCategoryServerRequestModelValidator ProductCategoryModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractProductCategoryService(
 			ILogger logger,
+			IMediator mediator,
 			IProductCategoryRepository productCategoryRepository,
 			IApiProductCategoryServerRequestModelValidator productCategoryModelValidator,
 			IBOLProductCategoryMapper bolProductCategoryMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolProductSubcategoryMapper = bolProductSubcategoryMapper;
 			this.DalProductSubcategoryMapper = dalProductSubcategoryMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiProductCategoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolProductCategoryMapper.MapModelToBO(default(int), model);
 				var record = await this.ProductCategoryRepository.Create(this.DalProductCategoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductCategoryMapper.MapEFToBO(record);
+				response.SetRecord(this.BolProductCategoryMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ProductCategoryCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.ProductCategoryRepository.Get(productCategoryID);
 
-				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record)));
+				var businessObject = this.DalProductCategoryMapper.MapEFToBO(record);
+				var apiModel = this.BolProductCategoryMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ProductCategoryUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.ProductCategoryRepository.Delete(productCategoryID);
+
+				await this.mediator.Publish(new ProductCategoryDeletedNotification(productCategoryID));
 			}
 
 			return response;
@@ -151,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb8ee775b0f928b90960c38223f574e0</Hash>
+    <Hash>aa9f95657469d491bd60e0ab39112efa</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPersonService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPersonRepository PersonRepository { get; private set; }
 
 		protected IApiPersonServerRequestModelValidator PersonModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPersonService(
 			ILogger logger,
+			IMediator mediator,
 			IPersonRepository personRepository,
 			IApiPersonServerRequestModelValidator personModelValidator,
 			IBOLPersonMapper bolPersonMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPasswordMapper = bolPasswordMapper;
 			this.DalPasswordMapper = dalPasswordMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolPersonMapper.MapModelToBO(default(int), model);
 				var record = await this.PersonRepository.Create(this.DalPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalPersonMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPersonMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PersonCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PersonRepository.Get(businessEntityID);
 
-				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
+				var businessObject = this.DalPersonMapper.MapEFToBO(record);
+				var apiModel = this.BolPersonMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PersonUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.PersonRepository.Delete(businessEntityID);
+
+				await this.mediator.Publish(new PersonDeletedNotification(businessEntityID));
 			}
 
 			return response;
@@ -158,5 +172,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06147a717296d9d001bf0780c5d83f0b</Hash>
+    <Hash>521d8ab653c732697cc0fcf0f46e2b45</Hash>
 </Codenesium>*/

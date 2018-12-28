@@ -9,6 +9,7 @@ using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Team());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -47,6 +49,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Team();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -66,6 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITeamRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -86,6 +90,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiTeamServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Team>())).Returns(Task.FromResult(new Team()));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -99,6 +104,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TeamModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeamServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Team>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTeamServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -121,6 +128,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTeamServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Team>())).Returns(Task.FromResult(new Team()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -144,6 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TeamModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Team>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace NebulaNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -167,6 +178,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiTeamServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -189,6 +202,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TeamModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTeamServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -211,6 +226,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TeamDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Team();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -239,6 +256,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITeamRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -260,6 +278,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Chain());
 			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -279,6 +298,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITeamRepository>();
 			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Chain>>(new List<Chain>()));
 			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
@@ -295,5 +315,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5c0bf214acb3f9a6296ef3ef43da3deb</Hash>
+    <Hash>a426ef9f65b27a5c9a018d01171a92f9</Hash>
 </Codenesium>*/

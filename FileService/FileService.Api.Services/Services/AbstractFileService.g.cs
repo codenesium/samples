@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractFileService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IFileRepository FileRepository { get; private set; }
 
 		protected IApiFileServerRequestModelValidator FileModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace FileServiceNS.Api.Services
 
 		public AbstractFileService(
 			ILogger logger,
+			IMediator mediator,
 			IFileRepository fileRepository,
 			IApiFileServerRequestModelValidator fileModelValidator,
 			IBOLFileMapper bolFileMapper,
@@ -32,6 +36,8 @@ namespace FileServiceNS.Api.Services
 			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiFileServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace FileServiceNS.Api.Services
 				var bo = this.BolFileMapper.MapModelToBO(default(int), model);
 				var record = await this.FileRepository.Create(this.DalFileMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
+				var businessObject = this.DalFileMapper.MapEFToBO(record);
+				response.SetRecord(this.BolFileMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new FileCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace FileServiceNS.Api.Services
 
 				var record = await this.FileRepository.Get(id);
 
-				return ValidationResponseFactory<ApiFileServerResponseModel>.UpdateResponse(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
+				var businessObject = this.DalFileMapper.MapEFToBO(record);
+				var apiModel = this.BolFileMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new FileUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiFileServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace FileServiceNS.Api.Services
 			if (response.Success)
 			{
 				await this.FileRepository.Delete(id);
+
+				await this.mediator.Publish(new FileDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac334564f31ed59ab9593052d66ed885</Hash>
+    <Hash>ecc0edfb78f61b08898039c18799c698</Hash>
 </Codenesium>*/

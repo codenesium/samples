@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractIllustrationService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IIllustrationRepository IllustrationRepository { get; private set; }
 
 		protected IApiIllustrationServerRequestModelValidator IllustrationModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractIllustrationService(
 			ILogger logger,
+			IMediator mediator,
 			IIllustrationRepository illustrationRepository,
 			IApiIllustrationServerRequestModelValidator illustrationModelValidator,
 			IBOLIllustrationMapper bolIllustrationMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolIllustrationMapper = bolIllustrationMapper;
 			this.DalIllustrationMapper = dalIllustrationMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiIllustrationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolIllustrationMapper.MapModelToBO(default(int), model);
 				var record = await this.IllustrationRepository.Create(this.DalIllustrationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
+				var businessObject = this.DalIllustrationMapper.MapEFToBO(record);
+				response.SetRecord(this.BolIllustrationMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new IllustrationCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.IllustrationRepository.Get(illustrationID);
 
-				return ValidationResponseFactory<ApiIllustrationServerResponseModel>.UpdateResponse(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
+				var businessObject = this.DalIllustrationMapper.MapEFToBO(record);
+				var apiModel = this.BolIllustrationMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new IllustrationUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiIllustrationServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.IllustrationRepository.Delete(illustrationID);
+
+				await this.mediator.Publish(new IllustrationDeletedNotification(illustrationID));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d494ba1d0c5d5a4b342754f866c3205</Hash>
+    <Hash>79ff4fb63d9251e19bc5bdef29b0e180</Hash>
 </Codenesium>*/

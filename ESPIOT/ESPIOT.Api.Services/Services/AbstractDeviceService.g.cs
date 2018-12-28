@@ -1,5 +1,6 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace ESPIOTNS.Api.Services
 {
 	public abstract class AbstractDeviceService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IDeviceRepository DeviceRepository { get; private set; }
 
 		protected IApiDeviceServerRequestModelValidator DeviceModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace ESPIOTNS.Api.Services
 
 		public AbstractDeviceService(
 			ILogger logger,
+			IMediator mediator,
 			IDeviceRepository deviceRepository,
 			IApiDeviceServerRequestModelValidator deviceModelValidator,
 			IBOLDeviceMapper bolDeviceMapper,
@@ -40,6 +44,8 @@ namespace ESPIOTNS.Api.Services
 			this.BolDeviceActionMapper = bolDeviceActionMapper;
 			this.DalDeviceActionMapper = dalDeviceActionMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiDeviceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace ESPIOTNS.Api.Services
 				var bo = this.BolDeviceMapper.MapModelToBO(default(int), model);
 				var record = await this.DeviceRepository.Create(this.DalDeviceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record)));
+				var businessObject = this.DalDeviceMapper.MapEFToBO(record);
+				response.SetRecord(this.BolDeviceMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new DeviceCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace ESPIOTNS.Api.Services
 
 				var record = await this.DeviceRepository.Get(id);
 
-				return ValidationResponseFactory<ApiDeviceServerResponseModel>.UpdateResponse(this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record)));
+				var businessObject = this.DalDeviceMapper.MapEFToBO(record);
+				var apiModel = this.BolDeviceMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new DeviceUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDeviceServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace ESPIOTNS.Api.Services
 			if (response.Success)
 			{
 				await this.DeviceRepository.Delete(id);
+
+				await this.mediator.Publish(new DeviceDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3c92b091c4bc51982d5423d36f1100c</Hash>
+    <Hash>ab66b284d95e2e6307e29f510a54a33f</Hash>
 </Codenesium>*/

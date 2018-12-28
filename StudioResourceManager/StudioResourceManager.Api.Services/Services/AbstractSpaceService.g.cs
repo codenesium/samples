@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractSpaceService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISpaceRepository SpaceRepository { get; private set; }
 
 		protected IApiSpaceServerRequestModelValidator SpaceModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractSpaceService(
 			ILogger logger,
+			IMediator mediator,
 			ISpaceRepository spaceRepository,
 			IApiSpaceServerRequestModelValidator spaceModelValidator,
 			IBOLSpaceMapper bolSpaceMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolSpaceMapper = bolSpaceMapper;
 			this.DalSpaceMapper = dalSpaceMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSpaceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolSpaceMapper.MapModelToBO(default(int), model);
 				var record = await this.SpaceRepository.Create(this.DalSpaceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpaceMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSpaceMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SpaceCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.SpaceRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSpaceServerResponseModel>.UpdateResponse(this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpaceMapper.MapEFToBO(record);
+				var apiModel = this.BolSpaceMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SpaceUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSpaceServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.SpaceRepository.Delete(id);
+
+				await this.mediator.Publish(new SpaceDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ad260df74af88edfb465cd1aa8e1e8a</Hash>
+    <Hash>f5ee1a5096f9a87e3af6ec119c42bff5</Hash>
 </Codenesium>*/

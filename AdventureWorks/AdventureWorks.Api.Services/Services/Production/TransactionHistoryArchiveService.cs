@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public TransactionHistoryArchiveService(
 			ILogger<ITransactionHistoryArchiveRepository> logger,
+			IMediator mediator,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			IApiTransactionHistoryArchiveServerRequestModelValidator transactionHistoryArchiveModelValidator,
 			IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
 			IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper)
 			: base(logger,
+			       mediator,
 			       transactionHistoryArchiveRepository,
 			       transactionHistoryArchiveModelValidator,
 			       bolTransactionHistoryArchiveMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3625eca5aab05894e9301037e8c56a2</Hash>
+    <Hash>b641766a37704790f6197c8a87fbb9fa</Hash>
 </Codenesium>*/

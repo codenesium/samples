@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_ScrapReason_Name.
 		public async virtual Task<ScrapReason> ByName(string name)
 		{
-			return await this.Context.Set<ScrapReason>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ScrapReason>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table WorkOrder via scrapReasonID.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c65d9b6f239361da6dc7e49eb081cf59</Hash>
+    <Hash>8c123eebaeeb450f822f3f6109355538</Hash>
 </Codenesium>*/

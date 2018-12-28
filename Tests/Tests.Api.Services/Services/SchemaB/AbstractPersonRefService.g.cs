@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractPersonRefService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPersonRefRepository PersonRefRepository { get; private set; }
 
 		protected IApiPersonRefServerRequestModelValidator PersonRefModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractPersonRefService(
 			ILogger logger,
+			IMediator mediator,
 			IPersonRefRepository personRefRepository,
 			IApiPersonRefServerRequestModelValidator personRefModelValidator,
 			IBOLPersonRefMapper bolPersonRefMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolPersonRefMapper = bolPersonRefMapper;
 			this.DalPersonRefMapper = dalPersonRefMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPersonRefServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolPersonRefMapper.MapModelToBO(default(int), model);
 				var record = await this.PersonRefRepository.Create(this.DalPersonRefMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
+				var businessObject = this.DalPersonRefMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPersonRefMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PersonRefCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.PersonRefRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPersonRefServerResponseModel>.UpdateResponse(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
+				var businessObject = this.DalPersonRefMapper.MapEFToBO(record);
+				var apiModel = this.BolPersonRefMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PersonRefUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPersonRefServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.PersonRefRepository.Delete(id);
+
+				await this.mediator.Publish(new PersonRefDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c97a749d17375284d5ccbfdfb27077c1</Hash>
+    <Hash>4897a5201466ad486b0b42b81cf2e4c5</Hash>
 </Codenesium>*/

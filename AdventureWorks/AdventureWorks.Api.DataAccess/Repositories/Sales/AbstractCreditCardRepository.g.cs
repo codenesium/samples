@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_CreditCard_CardNumber.
 		public async virtual Task<CreditCard> ByCardNumber(string cardNumber)
 		{
-			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CardNumber == cardNumber);
+			return await this.Context.Set<CreditCard>().FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
 		}
 
 		// Foreign key reference to this table SalesOrderHeader via creditCardID.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d731f4593bd5f4e34bab7c223759dadc</Hash>
+    <Hash>978c5d81832306375ca2a4fedff35096</Hash>
 </Codenesium>*/

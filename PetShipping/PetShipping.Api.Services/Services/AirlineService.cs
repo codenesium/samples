@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace PetShippingNS.Api.Services
 	{
 		public AirlineService(
 			ILogger<IAirlineRepository> logger,
+			IMediator mediator,
 			IAirlineRepository airlineRepository,
 			IApiAirlineServerRequestModelValidator airlineModelValidator,
 			IBOLAirlineMapper bolAirlineMapper,
 			IDALAirlineMapper dalAirlineMapper)
 			: base(logger,
+			       mediator,
 			       airlineRepository,
 			       airlineModelValidator,
 			       bolAirlineMapper,
@@ -23,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0a43500dcecb3f05b9e258ef9dc2084e</Hash>
+    <Hash>56e66720e9602747e0a04bea45187917</Hash>
 </Codenesium>*/

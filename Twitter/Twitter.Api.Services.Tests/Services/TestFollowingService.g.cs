@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Following());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -45,6 +47,7 @@ namespace TwitterNS.Api.Services.Tests
 			var record = new Following();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -62,6 +65,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IFollowingRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Following>(null));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -80,6 +84,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiFollowingServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Following>())).Returns(Task.FromResult(new Following()));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -91,6 +96,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Following>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiFollowingServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -111,6 +118,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TwitterNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Following>())).Returns(Task.FromResult(new Following()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Following()));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -132,6 +141,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowingServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Following>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TwitterNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowingServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Following()));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -153,6 +164,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowingServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiFollowingServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -173,6 +186,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiFollowingServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new FollowingService(mock.LoggerMock.Object,
+			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
 			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
@@ -193,10 +208,11 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<FollowingDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e96bb2b084c8e3ce819c3398bd852b9f</Hash>
+    <Hash>2db8c696861f28cbffe1f28256965c08</Hash>
 </Codenesium>*/

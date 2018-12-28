@@ -43,7 +43,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void StateProvinceIDRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceIDTaxType).When(x => (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false) || (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.StateProvinceID)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceIDTaxType).When(x => (!x?.StateProvinceID.IsEmptyOrZeroOrNull() ?? false) || (!x?.TaxType.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateServerRequestModel.StateProvinceID)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 		}
 
 		public virtual void TaxRateRules()
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06e5b3b78e636ab6f78e1d6a8ac37059</Hash>
+    <Hash>e08b3d944ad222dbe88e0ee5d826865f</Hash>
 </Codenesium>*/

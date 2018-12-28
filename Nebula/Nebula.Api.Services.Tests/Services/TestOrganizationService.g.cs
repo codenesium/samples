@@ -9,6 +9,7 @@ using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Organization());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -47,6 +49,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Organization();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -66,6 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Organization>(null));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -86,6 +90,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiOrganizationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Organization>())).Returns(Task.FromResult(new Organization()));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -99,6 +104,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Organization>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiOrganizationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -121,6 +128,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiOrganizationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Organization>())).Returns(Task.FromResult(new Organization()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -144,6 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Organization>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace NebulaNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Organization()));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -167,6 +178,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace NebulaNS.Api.Services.Tests
 			var model = new ApiOrganizationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -189,6 +202,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace NebulaNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiOrganizationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -211,6 +226,7 @@ namespace NebulaNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<OrganizationDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -220,6 +236,7 @@ namespace NebulaNS.Api.Services.Tests
 			var record = new Organization();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -239,6 +256,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Organization>(null));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -260,6 +278,7 @@ namespace NebulaNS.Api.Services.Tests
 			records.Add(new Team());
 			mock.RepositoryMock.Setup(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -279,6 +298,7 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			mock.RepositoryMock.Setup(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Team>>(new List<Team>()));
 			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
@@ -295,5 +315,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5c2b59a3ed3b894a80811b3d6de0259b</Hash>
+    <Hash>c61f42880535a559af03f817a4b6c705</Hash>
 </Codenesium>*/

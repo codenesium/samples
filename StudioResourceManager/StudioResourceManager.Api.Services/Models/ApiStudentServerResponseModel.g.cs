@@ -47,7 +47,7 @@ namespace StudioResourceManagerNS.Api.Services
 		public int FamilyId { get; private set; }
 
 		[JsonProperty]
-		public string FamilyIdEntity { get; set; }
+		public string FamilyIdEntity { get; private set; } = RouteConstants.Families;
 
 		[JsonProperty]
 		public string FirstName { get; private set; }
@@ -71,10 +71,10 @@ namespace StudioResourceManagerNS.Api.Services
 		public int UserId { get; private set; }
 
 		[JsonProperty]
-		public string UserIdEntity { get; set; }
+		public string UserIdEntity { get; private set; } = RouteConstants.Users;
 	}
 }
 
 /*<Codenesium>
-    <Hash>745533d5cda8f4ed3520ccfbb98697fd</Hash>
+    <Hash>ad3dd488441a6bfdba0dc596921e0620</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public CountryRegionService(
 			ILogger<ICountryRegionRepository> logger,
+			IMediator mediator,
 			ICountryRegionRepository countryRegionRepository,
 			IApiCountryRegionServerRequestModelValidator countryRegionModelValidator,
 			IBOLCountryRegionMapper bolCountryRegionMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLStateProvinceMapper bolStateProvinceMapper,
 			IDALStateProvinceMapper dalStateProvinceMapper)
 			: base(logger,
+			       mediator,
 			       countryRegionRepository,
 			       countryRegionModelValidator,
 			       bolCountryRegionMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb524c0efb147370ea05bd606f58d4bc</Hash>
+    <Hash>7349c485145b66f2864444dba9358cb1</Hash>
 </Codenesium>*/

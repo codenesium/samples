@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractTransactionHistoryArchiveService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITransactionHistoryArchiveRepository TransactionHistoryArchiveRepository { get; private set; }
 
 		protected IApiTransactionHistoryArchiveServerRequestModelValidator TransactionHistoryArchiveModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractTransactionHistoryArchiveService(
 			ILogger logger,
+			IMediator mediator,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			IApiTransactionHistoryArchiveServerRequestModelValidator transactionHistoryArchiveModelValidator,
 			IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolTransactionHistoryArchiveMapper = bolTransactionHistoryArchiveMapper;
 			this.DalTransactionHistoryArchiveMapper = dalTransactionHistoryArchiveMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTransactionHistoryArchiveServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolTransactionHistoryArchiveMapper.MapModelToBO(default(int), model);
 				var record = await this.TransactionHistoryArchiveRepository.Create(this.DalTransactionHistoryArchiveMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(record)));
+				var businessObject = this.DalTransactionHistoryArchiveMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTransactionHistoryArchiveMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TransactionHistoryArchiveCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
 
-				return ValidationResponseFactory<ApiTransactionHistoryArchiveServerResponseModel>.UpdateResponse(this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(record)));
+				var businessObject = this.DalTransactionHistoryArchiveMapper.MapEFToBO(record);
+				var apiModel = this.BolTransactionHistoryArchiveMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TransactionHistoryArchiveUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTransactionHistoryArchiveServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.TransactionHistoryArchiveRepository.Delete(transactionID);
+
+				await this.mediator.Publish(new TransactionHistoryArchiveDeletedNotification(transactionID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fe294fb62ea3b2a1e5218d13739f74a</Hash>
+    <Hash>db8f5aa342d4d15015d7bf542036b8a3</Hash>
 </Codenesium>*/

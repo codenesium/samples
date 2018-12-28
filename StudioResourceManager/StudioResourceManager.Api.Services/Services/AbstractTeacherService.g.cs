@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractTeacherService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITeacherRepository TeacherRepository { get; private set; }
 
 		protected IApiTeacherServerRequestModelValidator TeacherModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractTeacherService(
 			ILogger logger,
+			IMediator mediator,
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
 			IBOLTeacherMapper bolTeacherMapper,
@@ -40,6 +44,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTeacherServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolTeacherMapper.MapModelToBO(default(int), model);
 				var record = await this.TeacherRepository.Create(this.DalTeacherMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(record)));
+				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTeacherMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TeacherCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.TeacherRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTeacherServerResponseModel>.UpdateResponse(this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(record)));
+				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
+				var apiModel = this.BolTeacherMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TeacherUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTeacherServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.TeacherRepository.Delete(id);
+
+				await this.mediator.Publish(new TeacherDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66d7472d610a12c27b00ca4b28ee7253</Hash>
+    <Hash>b1a2a8c84e61e0f7e92f99204161cfd4</Hash>
 </Codenesium>*/

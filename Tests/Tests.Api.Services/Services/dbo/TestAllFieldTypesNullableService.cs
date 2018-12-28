@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public TestAllFieldTypesNullableService(
 			ILogger<ITestAllFieldTypesNullableRepository> logger,
+			IMediator mediator,
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
 			IApiTestAllFieldTypesNullableServerRequestModelValidator testAllFieldTypesNullableModelValidator,
 			IBOLTestAllFieldTypesNullableMapper bolTestAllFieldTypesNullableMapper,
 			IDALTestAllFieldTypesNullableMapper dalTestAllFieldTypesNullableMapper)
 			: base(logger,
+			       mediator,
 			       testAllFieldTypesNullableRepository,
 			       testAllFieldTypesNullableModelValidator,
 			       bolTestAllFieldTypesNullableMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>999061f0fb8d2ff012f4becc625325f7</Hash>
+    <Hash>166fdcb3b11843ac4114920d2e0e0702</Hash>
 </Codenesium>*/

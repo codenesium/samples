@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCountryRegionService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICountryRegionRepository CountryRegionRepository { get; private set; }
 
 		protected IApiCountryRegionServerRequestModelValidator CountryRegionModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractCountryRegionService(
 			ILogger logger,
+			IMediator mediator,
 			ICountryRegionRepository countryRegionRepository,
 			IApiCountryRegionServerRequestModelValidator countryRegionModelValidator,
 			IBOLCountryRegionMapper bolCountryRegionMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolStateProvinceMapper = bolStateProvinceMapper;
 			this.DalStateProvinceMapper = dalStateProvinceMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCountryRegionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolCountryRegionMapper.MapModelToBO(default(string), model);
 				var record = await this.CountryRegionRepository.Create(this.DalCountryRegionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryRegionMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCountryRegionMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CountryRegionCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.CountryRegionRepository.Get(countryRegionCode);
 
-				return ValidationResponseFactory<ApiCountryRegionServerResponseModel>.UpdateResponse(this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record)));
+				var businessObject = this.DalCountryRegionMapper.MapEFToBO(record);
+				var apiModel = this.BolCountryRegionMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CountryRegionUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCountryRegionServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.CountryRegionRepository.Delete(countryRegionCode);
+
+				await this.mediator.Publish(new CountryRegionDeletedNotification(countryRegionCode));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57598c39f53d4acef71461e5065672d3</Hash>
+    <Hash>e608734522aaf02362e7e45931cde061</Hash>
 </Codenesium>*/

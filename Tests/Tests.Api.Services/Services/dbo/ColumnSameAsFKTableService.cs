@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public ColumnSameAsFKTableService(
 			ILogger<IColumnSameAsFKTableRepository> logger,
+			IMediator mediator,
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
 			IApiColumnSameAsFKTableServerRequestModelValidator columnSameAsFKTableModelValidator,
 			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base(logger,
+			       mediator,
 			       columnSameAsFKTableRepository,
 			       columnSameAsFKTableModelValidator,
 			       bolColumnSameAsFKTableMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8a483d815c3e5d27b21c1a21e9181a9</Hash>
+    <Hash>25ab64e7bd6f575132cca7305be84274</Hash>
 </Codenesium>*/

@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Vendor_AccountNumber.
 		public async virtual Task<Vendor> ByAccountNumber(string accountNumber)
 		{
-			return await this.Context.Set<Vendor>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
+			return await this.Context.Set<Vendor>().FirstOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
 		// Foreign key reference to this table PurchaseOrderHeader via vendorID.
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57f722ebda131ecbb65b3431ce97b979</Hash>
+    <Hash>c0d60eec4113555625038661e37f503d</Hash>
 </Codenesium>*/

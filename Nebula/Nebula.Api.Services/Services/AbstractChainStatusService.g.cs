@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractChainStatusService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IChainStatusRepository ChainStatusRepository { get; private set; }
 
 		protected IApiChainStatusServerRequestModelValidator ChainStatusModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractChainStatusService(
 			ILogger logger,
+			IMediator mediator,
 			IChainStatusRepository chainStatusRepository,
 			IApiChainStatusServerRequestModelValidator chainStatusModelValidator,
 			IBOLChainStatusMapper bolChainStatusMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiChainStatusServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolChainStatusMapper.MapModelToBO(default(int), model);
 				var record = await this.ChainStatusRepository.Create(this.DalChainStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(record)));
+				var businessObject = this.DalChainStatusMapper.MapEFToBO(record);
+				response.SetRecord(this.BolChainStatusMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ChainStatusCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.ChainStatusRepository.Get(id);
 
-				return ValidationResponseFactory<ApiChainStatusServerResponseModel>.UpdateResponse(this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(record)));
+				var businessObject = this.DalChainStatusMapper.MapEFToBO(record);
+				var apiModel = this.BolChainStatusMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ChainStatusUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiChainStatusServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.ChainStatusRepository.Delete(id);
+
+				await this.mediator.Publish(new ChainStatusDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b78a8db3911828724720b846098ec85f</Hash>
+    <Hash>3a13fae1015aa66068473ff3db602b73</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractCommentService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICommentRepository CommentRepository { get; private set; }
 
 		protected IApiCommentServerRequestModelValidator CommentModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractCommentService(
 			ILogger logger,
+			IMediator mediator,
 			ICommentRepository commentRepository,
 			IApiCommentServerRequestModelValidator commentModelValidator,
 			IBOLCommentMapper bolCommentMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolCommentMapper = bolCommentMapper;
 			this.DalCommentMapper = dalCommentMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCommentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolCommentMapper.MapModelToBO(default(int), model);
 				var record = await this.CommentRepository.Create(this.DalCommentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(record)));
+				var businessObject = this.DalCommentMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCommentMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CommentCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.CommentRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCommentServerResponseModel>.UpdateResponse(this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(record)));
+				var businessObject = this.DalCommentMapper.MapEFToBO(record);
+				var apiModel = this.BolCommentMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CommentUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCommentServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.CommentRepository.Delete(id);
+
+				await this.mediator.Publish(new CommentDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79dd4de5bdc55cfc83e2f54e48c93d8c</Hash>
+    <Hash>006a4d4b7f79d5794ce1e264718a9a50</Hash>
 </Codenesium>*/

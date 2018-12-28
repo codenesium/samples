@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Message());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -47,6 +49,7 @@ namespace TwitterNS.Api.Services.Tests
 			var record = new Message();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -66,6 +69,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMessageRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Message>(null));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -86,6 +90,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiMessageServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Message>())).Returns(Task.FromResult(new Message()));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -99,6 +104,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMessageServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Message>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiMessageServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMessageServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -121,6 +128,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiMessageServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace TwitterNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Message>())).Returns(Task.FromResult(new Message()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Message()));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -144,6 +153,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Message>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace TwitterNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Message()));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -167,6 +178,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMessageServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiMessageServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -189,6 +202,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.MessageModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiMessageServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -211,6 +226,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<MessageDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Message());
 			mock.RepositoryMock.Setup(x => x.BySenderUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -240,6 +257,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMessageRepository>();
 			mock.RepositoryMock.Setup(x => x.BySenderUserId(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Message>>(new List<Message>()));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -261,6 +279,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Messenger());
 			mock.RepositoryMock.Setup(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -280,6 +299,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMessageRepository>();
 			mock.RepositoryMock.Setup(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
 			var service = new MessageService(mock.LoggerMock.Object,
+			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
@@ -296,5 +316,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b312c9869da7e6d13c06726804399ddb</Hash>
+    <Hash>d1b6f2e6272457622028a5f828324075</Hash>
 </Codenesium>*/

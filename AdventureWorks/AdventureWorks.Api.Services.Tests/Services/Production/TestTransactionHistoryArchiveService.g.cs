@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new TransactionHistoryArchive());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new TransactionHistoryArchive();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<TransactionHistoryArchive>(null));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiTransactionHistoryArchiveServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<TransactionHistoryArchive>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTransactionHistoryArchiveServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionHistoryArchive>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<TransactionHistoryArchive>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionHistoryArchiveServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiTransactionHistoryArchiveServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiTransactionHistoryArchiveServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<TransactionHistoryArchiveDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new TransactionHistoryArchive());
 			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -220,6 +237,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -239,6 +257,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new TransactionHistoryArchive());
 			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -256,6 +275,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistoryArchive>>(new List<TransactionHistoryArchive>()));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
+			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
 			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
@@ -270,5 +290,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dd64aed718f3dfb3b9b30d8fe023a7ad</Hash>
+    <Hash>06ce9449bf943eadab681d87ff6a4511</Hash>
 </Codenesium>*/

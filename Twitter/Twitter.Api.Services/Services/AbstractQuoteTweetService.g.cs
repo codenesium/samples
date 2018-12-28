@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TwitterNS.Api.Services
 {
 	public abstract class AbstractQuoteTweetService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IQuoteTweetRepository QuoteTweetRepository { get; private set; }
 
 		protected IApiQuoteTweetServerRequestModelValidator QuoteTweetModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TwitterNS.Api.Services
 
 		public AbstractQuoteTweetService(
 			ILogger logger,
+			IMediator mediator,
 			IQuoteTweetRepository quoteTweetRepository,
 			IApiQuoteTweetServerRequestModelValidator quoteTweetModelValidator,
 			IBOLQuoteTweetMapper bolQuoteTweetMapper,
@@ -32,6 +36,8 @@ namespace TwitterNS.Api.Services
 			this.BolQuoteTweetMapper = bolQuoteTweetMapper;
 			this.DalQuoteTweetMapper = dalQuoteTweetMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiQuoteTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TwitterNS.Api.Services
 				var bo = this.BolQuoteTweetMapper.MapModelToBO(default(int), model);
 				var record = await this.QuoteTweetRepository.Create(this.DalQuoteTweetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalQuoteTweetMapper.MapEFToBO(record);
+				response.SetRecord(this.BolQuoteTweetMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new QuoteTweetCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TwitterNS.Api.Services
 
 				var record = await this.QuoteTweetRepository.Get(quoteTweetId);
 
-				return ValidationResponseFactory<ApiQuoteTweetServerResponseModel>.UpdateResponse(this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(record)));
+				var businessObject = this.DalQuoteTweetMapper.MapEFToBO(record);
+				var apiModel = this.BolQuoteTweetMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new QuoteTweetUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiQuoteTweetServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TwitterNS.Api.Services
 			if (response.Success)
 			{
 				await this.QuoteTweetRepository.Delete(quoteTweetId);
+
+				await this.mediator.Publish(new QuoteTweetDeletedNotification(quoteTweetId));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42cac8d5b7de2d0410d173d61d6d4302</Hash>
+    <Hash>871e68371fae359317200e9a62712b2e</Hash>
 </Codenesium>*/

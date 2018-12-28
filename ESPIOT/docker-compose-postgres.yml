@@ -4,23 +4,25 @@ services:
 
   web:
     container_name: 'espiot-app'
-    image: 'codenesium/espiot'
+    image: 'espiot'
     build:
       context: .
       dockerfile: DockerFile
     environment:
-       - ASPNETCORE_URLS=http://+:8000
+       - ASPNETCORE_URLS=http://+:80
        - ConnectionStrings__ApplicationDbContext=Host=espiot-db;Persist Security Info=False;User ID=postgres;Password=test;Database=espiot;
+       - DatabaseProvider=POSTGRESQL
+       - MigrateDatabase=true
     volumes:
       - .:/var/www/app
     ports:
-     - "8000:8000"
+     - "80:80"
     depends_on:
-     - "postgres"
+     - "db"
     networks:
       - espiot-network
 
-  postgres:
+  db:
     container_name: 'espiot-db'
     image: postgres:9.6-alpine
     environment:
@@ -39,10 +41,9 @@ services:
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --interval 30
-
+    networks:
+      - espiot-network
 volumes:
      pgdata:
 

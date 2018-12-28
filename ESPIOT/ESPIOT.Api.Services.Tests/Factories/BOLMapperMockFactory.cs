@@ -8,8 +8,6 @@ namespace ESPIOTNS.Api.Services.Tests
 {
 	public class BOLMapperMockFactory
 	{
-		public IBOLEfmigrationshistoryMapper BOLEfmigrationshistoryMapperMock { get; set; } = new BOLEfmigrationshistoryMapper();
-
 		public IBOLDeviceMapper BOLDeviceMapperMock { get; set; } = new BOLDeviceMapper();
 
 		public IBOLDeviceActionMapper BOLDeviceActionMapperMock { get; set; } = new BOLDeviceActionMapper();
@@ -21,5 +19,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>90bcaac0dc8975297eb90809f9d85e42</Hash>
+    <Hash>4afa7ec6e5ef2f5b59bca8b4bcd6e779</Hash>
 </Codenesium>*/

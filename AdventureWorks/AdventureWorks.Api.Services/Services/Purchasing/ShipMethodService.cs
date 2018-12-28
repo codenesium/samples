@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,6 +9,7 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public ShipMethodService(
 			ILogger<IShipMethodRepository> logger,
+			IMediator mediator,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
 			IBOLShipMethodMapper bolShipMethodMapper,
@@ -15,6 +17,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
+			       mediator,
 			       shipMethodRepository,
 			       shipMethodModelValidator,
 			       bolShipMethodMapper,
@@ -27,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d17529098c0e87576cf8ceb72e982166</Hash>
+    <Hash>ce7ceb72426cf6e0f80b022829f2ea58</Hash>
 </Codenesium>*/

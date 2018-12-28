@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPhoneNumberTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; private set; }
 
 		protected IApiPhoneNumberTypeServerRequestModelValidator PhoneNumberTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractPhoneNumberTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
 			IApiPhoneNumberTypeServerRequestModelValidator phoneNumberTypeModelValidator,
 			IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolPhoneNumberTypeMapper = bolPhoneNumberTypeMapper;
 			this.DalPhoneNumberTypeMapper = dalPhoneNumberTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPhoneNumberTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolPhoneNumberTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.PhoneNumberTypeRepository.Create(this.DalPhoneNumberTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPhoneNumberTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPhoneNumberTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PhoneNumberTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
 
-				return ValidationResponseFactory<ApiPhoneNumberTypeServerResponseModel>.UpdateResponse(this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalPhoneNumberTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolPhoneNumberTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PhoneNumberTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPhoneNumberTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.PhoneNumberTypeRepository.Delete(phoneNumberTypeID);
+
+				await this.mediator.Publish(new PhoneNumberTypeDeletedNotification(phoneNumberTypeID));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>635cc8df3158aa0cc5b52c5be506b779</Hash>
+    <Hash>49c9d4da67d16489a6ffbdf8f2c32325</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace AdventureWorksNS.Api.Services
@@ -8,11 +9,13 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public BillOfMaterialService(
 			ILogger<IBillOfMaterialRepository> logger,
+			IMediator mediator,
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base(logger,
+			       mediator,
 			       billOfMaterialRepository,
 			       billOfMaterialModelValidator,
 			       bolBillOfMaterialMapper,
@@ -23,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>32dbac41e4d017cfab38aa7a740f22b9</Hash>
+    <Hash>5a9c2350e739e4279eb8090b29a54fc8</Hash>
 </Codenesium>*/

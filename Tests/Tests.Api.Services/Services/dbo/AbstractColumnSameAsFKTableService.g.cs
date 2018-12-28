@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractColumnSameAsFKTableService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IColumnSameAsFKTableRepository ColumnSameAsFKTableRepository { get; private set; }
 
 		protected IApiColumnSameAsFKTableServerRequestModelValidator ColumnSameAsFKTableModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractColumnSameAsFKTableService(
 			ILogger logger,
+			IMediator mediator,
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
 			IApiColumnSameAsFKTableServerRequestModelValidator columnSameAsFKTableModelValidator,
 			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolColumnSameAsFKTableMapper = bolColumnSameAsFKTableMapper;
 			this.DalColumnSameAsFKTableMapper = dalColumnSameAsFKTableMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiColumnSameAsFKTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolColumnSameAsFKTableMapper.MapModelToBO(default(int), model);
 				var record = await this.ColumnSameAsFKTableRepository.Create(this.DalColumnSameAsFKTableMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(record)));
+				var businessObject = this.DalColumnSameAsFKTableMapper.MapEFToBO(record);
+				response.SetRecord(this.BolColumnSameAsFKTableMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ColumnSameAsFKTableCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.ColumnSameAsFKTableRepository.Get(id);
 
-				return ValidationResponseFactory<ApiColumnSameAsFKTableServerResponseModel>.UpdateResponse(this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(record)));
+				var businessObject = this.DalColumnSameAsFKTableMapper.MapEFToBO(record);
+				var apiModel = this.BolColumnSameAsFKTableMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ColumnSameAsFKTableUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiColumnSameAsFKTableServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.ColumnSameAsFKTableRepository.Delete(id);
+
+				await this.mediator.Publish(new ColumnSameAsFKTableDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc09dc2b90aa0ddb495cab993e00c2a7</Hash>
+    <Hash>d633dfdc282a48644c7cbb4ad4c723fe</Hash>
 </Codenesium>*/

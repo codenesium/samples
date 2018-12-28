@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractLinkStatusService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ILinkStatusRepository LinkStatusRepository { get; private set; }
 
 		protected IApiLinkStatusServerRequestModelValidator LinkStatusModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractLinkStatusService(
 			ILogger logger,
+			IMediator mediator,
 			ILinkStatusRepository linkStatusRepository,
 			IApiLinkStatusServerRequestModelValidator linkStatusModelValidator,
 			IBOLLinkStatusMapper bolLinkStatusMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiLinkStatusServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolLinkStatusMapper.MapModelToBO(default(int), model);
 				var record = await this.LinkStatusRepository.Create(this.DalLinkStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolLinkStatusMapper.MapBOToModel(this.DalLinkStatusMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkStatusMapper.MapEFToBO(record);
+				response.SetRecord(this.BolLinkStatusMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new LinkStatusCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.LinkStatusRepository.Get(id);
 
-				return ValidationResponseFactory<ApiLinkStatusServerResponseModel>.UpdateResponse(this.BolLinkStatusMapper.MapBOToModel(this.DalLinkStatusMapper.MapEFToBO(record)));
+				var businessObject = this.DalLinkStatusMapper.MapEFToBO(record);
+				var apiModel = this.BolLinkStatusMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new LinkStatusUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiLinkStatusServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.LinkStatusRepository.Delete(id);
+
+				await this.mediator.Publish(new LinkStatusDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>63a00e2a8dcae8196b3c05e8b3378c8c</Hash>
+    <Hash>4ebd849c71dc35bbe8658b2a5940ba00</Hash>
 </Codenesium>*/

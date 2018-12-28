@@ -9,6 +9,7 @@ using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 			records.Add(new PipelineStepDestination());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -45,6 +47,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var record = new PipelineStepDestination();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -62,6 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPipelineStepDestinationRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<PipelineStepDestination>(null));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -80,6 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiPipelineStepDestinationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepDestination>())).Returns(Task.FromResult(new PipelineStepDestination()));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -91,6 +96,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepDestinationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PipelineStepDestination>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPipelineStepDestinationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepDestinationServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 validatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -111,6 +118,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPipelineStepDestinationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepDestination>())).Returns(Task.FromResult(new PipelineStepDestination()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepDestination()));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -132,6 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PipelineStepDestination>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace PetShippingNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepDestination()));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 validatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -153,6 +164,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepDestinationServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var model = new ApiPipelineStepDestinationServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -173,6 +186,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PipelineStepDestinationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace PetShippingNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPipelineStepDestinationServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PipelineStepDestinationService(mock.LoggerMock.Object,
+			                                                 mock.MediatorMock.Object,
 			                                                 mock.RepositoryMock.Object,
 			                                                 validatorMock.Object,
 			                                                 mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
@@ -193,10 +208,11 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PipelineStepDestinationDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f0feff35df7a8eb4f870a5e19bf3471</Hash>
+    <Hash>334e181dd1ba369f0cf67c9ed3edc721</Hash>
 </Codenesium>*/

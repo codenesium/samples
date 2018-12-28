@@ -30,10 +30,10 @@ namespace TwitterNS.Api.Services
 		public int? SenderUserId { get; private set; }
 
 		[JsonProperty]
-		public string SenderUserIdEntity { get; set; }
+		public string SenderUserIdEntity { get; private set; } = RouteConstants.Users;
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbd41b4723fda470e6a0f63360e28a2d</Hash>
+    <Hash>1688cd5fc59f6e133da5c4531140b1ac</Hash>
 </Codenesium>*/

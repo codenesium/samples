@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new BillOfMaterial());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -45,6 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var record = new BillOfMaterial();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -62,6 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<BillOfMaterial>(null));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -80,6 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiBillOfMaterialServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BillOfMaterial>())).Returns(Task.FromResult(new BillOfMaterial()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -91,6 +96,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<BillOfMaterial>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBillOfMaterialServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -111,6 +118,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BillOfMaterial>())).Returns(Task.FromResult(new BillOfMaterial()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -132,6 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<BillOfMaterial>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterial()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -153,6 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var model = new ApiBillOfMaterialServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -173,6 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiBillOfMaterialServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -193,6 +208,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<BillOfMaterialDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			records.Add(new BillOfMaterial());
 			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -220,6 +237,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
 			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
+			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
 			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
@@ -234,5 +252,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1fd2a2bd23ded1cc013eb93fd784618a</Hash>
+    <Hash>bb0b891f5768594b32ee59f2cb889cd4</Hash>
 </Codenesium>*/

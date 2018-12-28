@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractIncludedColumnTestService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IIncludedColumnTestRepository IncludedColumnTestRepository { get; private set; }
 
 		protected IApiIncludedColumnTestServerRequestModelValidator IncludedColumnTestModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractIncludedColumnTestService(
 			ILogger logger,
+			IMediator mediator,
 			IIncludedColumnTestRepository includedColumnTestRepository,
 			IApiIncludedColumnTestServerRequestModelValidator includedColumnTestModelValidator,
 			IBOLIncludedColumnTestMapper bolIncludedColumnTestMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolIncludedColumnTestMapper = bolIncludedColumnTestMapper;
 			this.DalIncludedColumnTestMapper = dalIncludedColumnTestMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiIncludedColumnTestServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolIncludedColumnTestMapper.MapModelToBO(default(int), model);
 				var record = await this.IncludedColumnTestRepository.Create(this.DalIncludedColumnTestMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(record)));
+				var businessObject = this.DalIncludedColumnTestMapper.MapEFToBO(record);
+				response.SetRecord(this.BolIncludedColumnTestMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new IncludedColumnTestCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.IncludedColumnTestRepository.Get(id);
 
-				return ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.UpdateResponse(this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(record)));
+				var businessObject = this.DalIncludedColumnTestMapper.MapEFToBO(record);
+				var apiModel = this.BolIncludedColumnTestMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new IncludedColumnTestUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.IncludedColumnTestRepository.Delete(id);
+
+				await this.mediator.Publish(new IncludedColumnTestDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ffab6b78a66ee127d722cbb03ddf21d1</Hash>
+    <Hash>be691fecdea8900e1a143a462927d99b</Hash>
 </Codenesium>*/

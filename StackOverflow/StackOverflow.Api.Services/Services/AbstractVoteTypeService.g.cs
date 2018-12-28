@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StackOverflowNS.Api.Contracts;
 using StackOverflowNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractVoteTypeService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IVoteTypeRepository VoteTypeRepository { get; private set; }
 
 		protected IApiVoteTypeServerRequestModelValidator VoteTypeModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StackOverflowNS.Api.Services
 
 		public AbstractVoteTypeService(
 			ILogger logger,
+			IMediator mediator,
 			IVoteTypeRepository voteTypeRepository,
 			IApiVoteTypeServerRequestModelValidator voteTypeModelValidator,
 			IBOLVoteTypeMapper bolVoteTypeMapper,
@@ -32,6 +36,8 @@ namespace StackOverflowNS.Api.Services
 			this.BolVoteTypeMapper = bolVoteTypeMapper;
 			this.DalVoteTypeMapper = dalVoteTypeMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiVoteTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StackOverflowNS.Api.Services
 				var bo = this.BolVoteTypeMapper.MapModelToBO(default(int), model);
 				var record = await this.VoteTypeRepository.Create(this.DalVoteTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolVoteTypeMapper.MapBOToModel(this.DalVoteTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalVoteTypeMapper.MapEFToBO(record);
+				response.SetRecord(this.BolVoteTypeMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new VoteTypeCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StackOverflowNS.Api.Services
 
 				var record = await this.VoteTypeRepository.Get(id);
 
-				return ValidationResponseFactory<ApiVoteTypeServerResponseModel>.UpdateResponse(this.BolVoteTypeMapper.MapBOToModel(this.DalVoteTypeMapper.MapEFToBO(record)));
+				var businessObject = this.DalVoteTypeMapper.MapEFToBO(record);
+				var apiModel = this.BolVoteTypeMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new VoteTypeUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiVoteTypeServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StackOverflowNS.Api.Services
 			if (response.Success)
 			{
 				await this.VoteTypeRepository.Delete(id);
+
+				await this.mediator.Publish(new VoteTypeDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>321b31ca9960cf00ac71989c00d10b41</Hash>
+    <Hash>bc07226b85acd3c60fed8a47c68c1be8</Hash>
 </Codenesium>*/

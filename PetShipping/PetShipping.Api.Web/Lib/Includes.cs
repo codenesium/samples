@@ -342,6 +342,8 @@ namespace Codenesium.Foundation.CommonMVC
 
     public class ApiSettings
     {
+		public virtual string DatabaseProvider { get; set; }
+
         public virtual string ExternalBaseUrl { get; set; }
 
         public virtual bool MigrateDatabase { get; set; }

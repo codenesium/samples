@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractWorkOrderService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IWorkOrderRepository WorkOrderRepository { get; private set; }
 
 		protected IApiWorkOrderServerRequestModelValidator WorkOrderModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractWorkOrderService(
 			ILogger logger,
+			IMediator mediator,
 			IWorkOrderRepository workOrderRepository,
 			IApiWorkOrderServerRequestModelValidator workOrderModelValidator,
 			IBOLWorkOrderMapper bolWorkOrderMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolWorkOrderMapper = bolWorkOrderMapper;
 			this.DalWorkOrderMapper = dalWorkOrderMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiWorkOrderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolWorkOrderMapper.MapModelToBO(default(int), model);
 				var record = await this.WorkOrderRepository.Create(this.DalWorkOrderMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record)));
+				var businessObject = this.DalWorkOrderMapper.MapEFToBO(record);
+				response.SetRecord(this.BolWorkOrderMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new WorkOrderCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.WorkOrderRepository.Get(workOrderID);
 
-				return ValidationResponseFactory<ApiWorkOrderServerResponseModel>.UpdateResponse(this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record)));
+				var businessObject = this.DalWorkOrderMapper.MapEFToBO(record);
+				var apiModel = this.BolWorkOrderMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new WorkOrderUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiWorkOrderServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.WorkOrderRepository.Delete(workOrderID);
+
+				await this.mediator.Publish(new WorkOrderDeletedNotification(workOrderID));
 			}
 
 			return response;
@@ -122,5 +136,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da01a202ae0c4e6c60a0d0329427c316</Hash>
+    <Hash>d87497b3d5814358e664cbeb5cd4c140</Hash>
 </Codenesium>*/

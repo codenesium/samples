@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		// unique constraint AK_Store_rowguid.
 		public async virtual Task<Store> ByRowguid(Guid rowguid)
 		{
-			return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.Rowguid == rowguid);
+			return await this.Context.Set<Store>().FirstOrDefaultAsync(x => x.Rowguid == rowguid);
 		}
 
 		// Non-unique constraint IX_Store_SalesPersonID.
@@ -130,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>019a107e18fa1c4973c76461c1358f18</Hash>
+    <Hash>d85ec2aa1c3370cce629235aa4d34284</Hash>
 </Codenesium>*/

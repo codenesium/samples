@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractTeamService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ITeamRepository TeamRepository { get; private set; }
 
 		protected IApiTeamServerRequestModelValidator TeamModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractTeamService(
 			ILogger logger,
+			IMediator mediator,
 			ITeamRepository teamRepository,
 			IApiTeamServerRequestModelValidator teamModelValidator,
 			IBOLTeamMapper bolTeamMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiTeamServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolTeamMapper.MapModelToBO(default(int), model);
 				var record = await this.TeamRepository.Create(this.DalTeamMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
+				var businessObject = this.DalTeamMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTeamMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TeamCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.TeamRepository.Get(id);
 
-				return ValidationResponseFactory<ApiTeamServerResponseModel>.UpdateResponse(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
+				var businessObject = this.DalTeamMapper.MapEFToBO(record);
+				var apiModel = this.BolTeamMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TeamUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiTeamServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.TeamRepository.Delete(id);
+
+				await this.mediator.Publish(new TeamDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f7eda9e4440f85391875ef8b6686a794</Hash>
+    <Hash>50cf565f7c9ffe857e8e9490e7b77f2b</Hash>
 </Codenesium>*/

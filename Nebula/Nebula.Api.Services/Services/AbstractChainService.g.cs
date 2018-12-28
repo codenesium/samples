@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractChainService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IChainRepository ChainRepository { get; private set; }
 
 		protected IApiChainServerRequestModelValidator ChainModelValidator { get; private set; }
@@ -29,6 +32,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractChainService(
 			ILogger logger,
+			IMediator mediator,
 			IChainRepository chainRepository,
 			IApiChainServerRequestModelValidator chainModelValidator,
 			IBOLChainMapper bolChainMapper,
@@ -48,6 +52,8 @@ namespace NebulaNS.Api.Services
 			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiChainServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -81,7 +87,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolChainMapper.MapModelToBO(default(int), model);
 				var record = await this.ChainRepository.Create(this.DalChainMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(record)));
+				var businessObject = this.DalChainMapper.MapEFToBO(record);
+				response.SetRecord(this.BolChainMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ChainCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,7 +108,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.ChainRepository.Get(id);
 
-				return ValidationResponseFactory<ApiChainServerResponseModel>.UpdateResponse(this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(record)));
+				var businessObject = this.DalChainMapper.MapEFToBO(record);
+				var apiModel = this.BolChainMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ChainUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiChainServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -116,6 +128,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.ChainRepository.Delete(id);
+
+				await this.mediator.Publish(new ChainDeletedNotification(id));
 			}
 
 			return response;
@@ -159,5 +173,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7e6f9623347aca1d592fbd9924a7ea2</Hash>
+    <Hash>efe06ecbc8f7aa55a64cbac94ba7317b</Hash>
 </Codenesium>*/

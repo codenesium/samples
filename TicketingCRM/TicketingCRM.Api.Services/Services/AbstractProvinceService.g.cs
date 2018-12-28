@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractProvinceService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IProvinceRepository ProvinceRepository { get; private set; }
 
 		protected IApiProvinceServerRequestModelValidator ProvinceModelValidator { get; private set; }
@@ -29,6 +32,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public AbstractProvinceService(
 			ILogger logger,
+			IMediator mediator,
 			IProvinceRepository provinceRepository,
 			IApiProvinceServerRequestModelValidator provinceModelValidator,
 			IBOLProvinceMapper bolProvinceMapper,
@@ -48,6 +52,8 @@ namespace TicketingCRMNS.Api.Services
 			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -81,7 +87,9 @@ namespace TicketingCRMNS.Api.Services
 				var bo = this.BolProvinceMapper.MapModelToBO(default(int), model);
 				var record = await this.ProvinceRepository.Create(this.DalProvinceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record)));
+				var businessObject = this.DalProvinceMapper.MapEFToBO(record);
+				response.SetRecord(this.BolProvinceMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new ProvinceCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,7 +108,11 @@ namespace TicketingCRMNS.Api.Services
 
 				var record = await this.ProvinceRepository.Get(id);
 
-				return ValidationResponseFactory<ApiProvinceServerResponseModel>.UpdateResponse(this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record)));
+				var businessObject = this.DalProvinceMapper.MapEFToBO(record);
+				var apiModel = this.BolProvinceMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new ProvinceUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiProvinceServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -116,6 +128,8 @@ namespace TicketingCRMNS.Api.Services
 			if (response.Success)
 			{
 				await this.ProvinceRepository.Delete(id);
+
+				await this.mediator.Publish(new ProvinceDeletedNotification(id));
 			}
 
 			return response;
@@ -145,5 +159,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b34974acd656678f37ea9d51562c44f</Hash>
+    <Hash>4869e944c9c74fe13a516ffd928d273f</Hash>
 </Codenesium>*/

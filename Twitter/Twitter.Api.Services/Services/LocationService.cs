@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TwitterNS.Api.Services
 	{
 		public LocationService(
 			ILogger<ILocationRepository> logger,
+			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
 			IBOLLocationMapper bolLocationMapper,
@@ -17,6 +19,7 @@ namespace TwitterNS.Api.Services
 			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base(logger,
+			       mediator,
 			       locationRepository,
 			       locationModelValidator,
 			       bolLocationMapper,
@@ -31,5 +34,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23e65827462f908baa3ca05eaedddbb9</Hash>
+    <Hash>40a20b2bd9e582081184b23f9f69bab8</Hash>
 </Codenesium>*/

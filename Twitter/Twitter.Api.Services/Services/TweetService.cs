@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace TwitterNS.Api.Services
 	{
 		public TweetService(
 			ILogger<ITweetRepository> logger,
+			IMediator mediator,
 			ITweetRepository tweetRepository,
 			IApiTweetServerRequestModelValidator tweetModelValidator,
 			IBOLTweetMapper bolTweetMapper,
@@ -17,6 +19,7 @@ namespace TwitterNS.Api.Services
 			IBOLRetweetMapper bolRetweetMapper,
 			IDALRetweetMapper dalRetweetMapper)
 			: base(logger,
+			       mediator,
 			       tweetRepository,
 			       tweetModelValidator,
 			       bolTweetMapper,
@@ -31,5 +34,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8897fd8fff061cb7602bef95cef6ce3</Hash>
+    <Hash>d6278c8eecb197b1fabe16917d0eb54a</Hash>
 </Codenesium>*/

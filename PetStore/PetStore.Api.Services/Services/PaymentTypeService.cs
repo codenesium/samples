@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
@@ -8,6 +9,7 @@ namespace PetStoreNS.Api.Services
 	{
 		public PaymentTypeService(
 			ILogger<IPaymentTypeRepository> logger,
+			IMediator mediator,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
 			IBOLPaymentTypeMapper bolPaymentTypeMapper,
@@ -15,6 +17,7 @@ namespace PetStoreNS.Api.Services
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
+			       mediator,
 			       paymentTypeRepository,
 			       paymentTypeModelValidator,
 			       bolPaymentTypeMapper,
@@ -27,5 +30,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87a14019e19c10b3f09c1d3057fe166c</Hash>
+    <Hash>174212d50b3f5deea1f287af17aa5f7c</Hash>
 </Codenesium>*/

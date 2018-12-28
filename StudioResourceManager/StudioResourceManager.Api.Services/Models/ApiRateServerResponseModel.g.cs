@@ -30,16 +30,16 @@ namespace StudioResourceManagerNS.Api.Services
 		public int TeacherId { get; private set; }
 
 		[JsonProperty]
-		public string TeacherIdEntity { get; set; }
+		public string TeacherIdEntity { get; private set; } = RouteConstants.Teachers;
 
 		[JsonProperty]
 		public int TeacherSkillId { get; private set; }
 
 		[JsonProperty]
-		public string TeacherSkillIdEntity { get; set; }
+		public string TeacherSkillIdEntity { get; private set; } = RouteConstants.TeacherSkills;
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ce25a2ed22ef60cb5ae3f1c699c5dfa</Hash>
+    <Hash>69ffda0eb4c26f3bb6c1ed3d2d4e7b13</Hash>
 </Codenesium>*/

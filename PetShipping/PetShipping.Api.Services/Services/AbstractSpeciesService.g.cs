@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractSpeciesService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ISpeciesRepository SpeciesRepository { get; private set; }
 
 		protected IApiSpeciesServerRequestModelValidator SpeciesModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractSpeciesService(
 			ILogger logger,
+			IMediator mediator,
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesServerRequestModelValidator speciesModelValidator,
 			IBOLSpeciesMapper bolSpeciesMapper,
@@ -40,6 +44,8 @@ namespace PetShippingNS.Api.Services
 			this.BolBreedMapper = bolBreedMapper;
 			this.DalBreedMapper = dalBreedMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiSpeciesServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolSpeciesMapper.MapModelToBO(default(int), model);
 				var record = await this.SpeciesRepository.Create(this.DalSpeciesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpeciesMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSpeciesMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SpeciesCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.SpeciesRepository.Get(id);
 
-				return ValidationResponseFactory<ApiSpeciesServerResponseModel>.UpdateResponse(this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record)));
+				var businessObject = this.DalSpeciesMapper.MapEFToBO(record);
+				var apiModel = this.BolSpeciesMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SpeciesUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiSpeciesServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.SpeciesRepository.Delete(id);
+
+				await this.mediator.Publish(new SpeciesDeletedNotification(id));
 			}
 
 			return response;
@@ -123,5 +137,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bea02843b7af3bf801ee51b21f6797b4</Hash>
+    <Hash>a3c8cf800cf82e4e4eb86dfc7f09623f</Hash>
 </Codenesium>*/

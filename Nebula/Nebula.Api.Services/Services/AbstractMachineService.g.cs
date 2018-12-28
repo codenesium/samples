@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractMachineService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IMachineRepository MachineRepository { get; private set; }
 
 		protected IApiMachineServerRequestModelValidator MachineModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public AbstractMachineService(
 			ILogger logger,
+			IMediator mediator,
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
 			IBOLMachineMapper bolMachineMapper,
@@ -40,6 +44,8 @@ namespace NebulaNS.Api.Services
 			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiMachineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace NebulaNS.Api.Services
 				var bo = this.BolMachineMapper.MapModelToBO(default(int), model);
 				var record = await this.MachineRepository.Create(this.DalMachineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
+				var businessObject = this.DalMachineMapper.MapEFToBO(record);
+				response.SetRecord(this.BolMachineMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new MachineCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace NebulaNS.Api.Services
 
 				var record = await this.MachineRepository.Get(id);
 
-				return ValidationResponseFactory<ApiMachineServerResponseModel>.UpdateResponse(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
+				var businessObject = this.DalMachineMapper.MapEFToBO(record);
+				var apiModel = this.BolMachineMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new MachineUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiMachineServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace NebulaNS.Api.Services
 			if (response.Success)
 			{
 				await this.MachineRepository.Delete(id);
+
+				await this.mediator.Publish(new MachineDeletedNotification(id));
 			}
 
 			return response;
@@ -137,5 +151,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dae6dc6ce54f1e8c72670b3aaa5eb5d2</Hash>
+    <Hash>e89e1d1185ebd64e4b91138fa8a2628f</Hash>
 </Codenesium>*/

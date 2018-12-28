@@ -79,7 +79,7 @@ namespace ESPIOTNS.Api.DataAccess
 		// unique constraint IX_Device.
 		public async virtual Task<Device> ByPublicId(Guid publicId)
 		{
-			return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.PublicId == publicId);
+			return await this.Context.Set<Device>().FirstOrDefaultAsync(x => x.PublicId == publicId);
 		}
 
 		// Foreign key reference to this table DeviceAction via deviceId.
@@ -112,5 +112,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05b7a996c7e3f8890dd62d4c3299f848</Hash>
+    <Hash>3cc0714d7cafe7961b6105e2aeaffc24</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractCompositePrimaryKeyService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected ICompositePrimaryKeyRepository CompositePrimaryKeyRepository { get; private set; }
 
 		protected IApiCompositePrimaryKeyServerRequestModelValidator CompositePrimaryKeyModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace TestsNS.Api.Services
 
 		public AbstractCompositePrimaryKeyService(
 			ILogger logger,
+			IMediator mediator,
 			ICompositePrimaryKeyRepository compositePrimaryKeyRepository,
 			IApiCompositePrimaryKeyServerRequestModelValidator compositePrimaryKeyModelValidator,
 			IBOLCompositePrimaryKeyMapper bolCompositePrimaryKeyMapper,
@@ -32,6 +36,8 @@ namespace TestsNS.Api.Services
 			this.BolCompositePrimaryKeyMapper = bolCompositePrimaryKeyMapper;
 			this.DalCompositePrimaryKeyMapper = dalCompositePrimaryKeyMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiCompositePrimaryKeyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace TestsNS.Api.Services
 				var bo = this.BolCompositePrimaryKeyMapper.MapModelToBO(default(int), model);
 				var record = await this.CompositePrimaryKeyRepository.Create(this.DalCompositePrimaryKeyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolCompositePrimaryKeyMapper.MapBOToModel(this.DalCompositePrimaryKeyMapper.MapEFToBO(record)));
+				var businessObject = this.DalCompositePrimaryKeyMapper.MapEFToBO(record);
+				response.SetRecord(this.BolCompositePrimaryKeyMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new CompositePrimaryKeyCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace TestsNS.Api.Services
 
 				var record = await this.CompositePrimaryKeyRepository.Get(id);
 
-				return ValidationResponseFactory<ApiCompositePrimaryKeyServerResponseModel>.UpdateResponse(this.BolCompositePrimaryKeyMapper.MapBOToModel(this.DalCompositePrimaryKeyMapper.MapEFToBO(record)));
+				var businessObject = this.DalCompositePrimaryKeyMapper.MapEFToBO(record);
+				var apiModel = this.BolCompositePrimaryKeyMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new CompositePrimaryKeyUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiCompositePrimaryKeyServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace TestsNS.Api.Services
 			if (response.Success)
 			{
 				await this.CompositePrimaryKeyRepository.Delete(id);
+
+				await this.mediator.Publish(new CompositePrimaryKeyDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89a7ab266c6ee6bcf0eac3ee1c0c73ed</Hash>
+    <Hash>92f92287f3616fc7723bdeeb7da153b0</Hash>
 </Codenesium>*/

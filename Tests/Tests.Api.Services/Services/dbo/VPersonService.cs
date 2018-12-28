@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public VPersonService(
 			ILogger<IVPersonRepository> logger,
+			IMediator mediator,
 			IVPersonRepository vPersonRepository,
 			IApiVPersonServerRequestModelValidator vPersonModelValidator,
 			IBOLVPersonMapper bolVPersonMapper,
 			IDALVPersonMapper dalVPersonMapper)
 			: base(logger,
+			       mediator,
 			       vPersonRepository,
 			       vPersonModelValidator,
 			       bolVPersonMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10cd241a876a3184fcde7dd4072f6e09</Hash>
+    <Hash>228ecac1a61f88238db64b2ad41f8832</Hash>
 </Codenesium>*/

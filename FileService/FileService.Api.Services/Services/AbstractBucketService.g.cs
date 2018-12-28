@@ -1,5 +1,6 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractBucketService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IBucketRepository BucketRepository { get; private set; }
 
 		protected IApiBucketServerRequestModelValidator BucketModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace FileServiceNS.Api.Services
 
 		public AbstractBucketService(
 			ILogger logger,
+			IMediator mediator,
 			IBucketRepository bucketRepository,
 			IApiBucketServerRequestModelValidator bucketModelValidator,
 			IBOLBucketMapper bolBucketMapper,
@@ -40,6 +44,8 @@ namespace FileServiceNS.Api.Services
 			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiBucketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace FileServiceNS.Api.Services
 				var bo = this.BolBucketMapper.MapModelToBO(default(int), model);
 				var record = await this.BucketRepository.Create(this.DalBucketMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(record)));
+				var businessObject = this.DalBucketMapper.MapEFToBO(record);
+				response.SetRecord(this.BolBucketMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new BucketCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace FileServiceNS.Api.Services
 
 				var record = await this.BucketRepository.Get(id);
 
-				return ValidationResponseFactory<ApiBucketServerResponseModel>.UpdateResponse(this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(record)));
+				var businessObject = this.DalBucketMapper.MapEFToBO(record);
+				var apiModel = this.BolBucketMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new BucketUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiBucketServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace FileServiceNS.Api.Services
 			if (response.Success)
 			{
 				await this.BucketRepository.Delete(id);
+
+				await this.mediator.Publish(new BucketDeletedNotification(id));
 			}
 
 			return response;
@@ -151,5 +165,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>26c68b3429916e83636da71385702a69</Hash>
+    <Hash>5c30e9a3ed76510984eb543dbcaf265c</Hash>
 </Codenesium>*/

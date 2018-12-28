@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerMTNS.Api.Contracts;
 using StudioResourceManagerMTNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace StudioResourceManagerMTNS.Api.Services
 	{
 		public StudentService(
 			ILogger<IStudentRepository> logger,
+			IMediator mediator,
 			IStudentRepository studentRepository,
 			IApiStudentServerRequestModelValidator studentModelValidator,
 			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base(logger,
+			       mediator,
 			       studentRepository,
 			       studentModelValidator,
 			       bolStudentMapper,
@@ -23,5 +26,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42b200e607479061cbe3d58b76c5a498</Hash>
+    <Hash>34bd237a7aeea7c46d73f255b3368cfc</Hash>
 </Codenesium>*/

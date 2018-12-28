@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public RowVersionCheckService(
 			ILogger<IRowVersionCheckRepository> logger,
+			IMediator mediator,
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
 			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base(logger,
+			       mediator,
 			       rowVersionCheckRepository,
 			       rowVersionCheckModelValidator,
 			       bolRowVersionCheckMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd9618d7908670846213725779c47e5a</Hash>
+    <Hash>eafbcec9a65f09a2c0c356e4044779fa</Hash>
 </Codenesium>*/

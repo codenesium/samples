@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineStepNoteService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IPipelineStepNoteRepository PipelineStepNoteRepository { get; private set; }
 
 		protected IApiPipelineStepNoteServerRequestModelValidator PipelineStepNoteModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace PetShippingNS.Api.Services
 
 		public AbstractPipelineStepNoteService(
 			ILogger logger,
+			IMediator mediator,
 			IPipelineStepNoteRepository pipelineStepNoteRepository,
 			IApiPipelineStepNoteServerRequestModelValidator pipelineStepNoteModelValidator,
 			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
@@ -32,6 +36,8 @@ namespace PetShippingNS.Api.Services
 			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiPipelineStepNoteServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace PetShippingNS.Api.Services
 				var bo = this.BolPipelineStepNoteMapper.MapModelToBO(default(int), model);
 				var record = await this.PipelineStepNoteRepository.Create(this.DalPipelineStepNoteMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineStepNoteMapper.MapEFToBO(record);
+				response.SetRecord(this.BolPipelineStepNoteMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new PipelineStepNoteCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace PetShippingNS.Api.Services
 
 				var record = await this.PipelineStepNoteRepository.Get(id);
 
-				return ValidationResponseFactory<ApiPipelineStepNoteServerResponseModel>.UpdateResponse(this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(record)));
+				var businessObject = this.DalPipelineStepNoteMapper.MapEFToBO(record);
+				var apiModel = this.BolPipelineStepNoteMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new PipelineStepNoteUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiPipelineStepNoteServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace PetShippingNS.Api.Services
 			if (response.Success)
 			{
 				await this.PipelineStepNoteRepository.Delete(id);
+
+				await this.mediator.Publish(new PipelineStepNoteDeletedNotification(id));
 			}
 
 			return response;
@@ -108,5 +122,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f7545c48f8c18760c924704d1d6e787e</Hash>
+    <Hash>a102a84804a1d973d1dfd02299b14b2d</Hash>
 </Codenesium>*/

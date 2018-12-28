@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,8 +31,7 @@ namespace TestsNS.Api.Web
         {
             return WebHost.CreateDefaultBuilder(args)
                      .UseStartup<Startup>()
-                     .UseKestrel()
-                     .UseUrls("http://0.0.0.0:8000");
+                     .UseKestrel();
         }
 
         public static IWebHostBuilder CreateWebHostBuilderForService(string[] args)
@@ -45,8 +45,7 @@ namespace TestsNS.Api.Web
                 })
                 .UseContentRoot(pathToContentRoot)
                 .UseStartup<Startup>()
-                .UseKestrel()
-                .UseUrls("http://0.0.0.0:8000");
+                .UseKestrel();
         }
     }
 }

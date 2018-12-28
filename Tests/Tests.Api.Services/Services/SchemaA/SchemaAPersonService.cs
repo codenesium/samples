@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -8,11 +9,13 @@ namespace TestsNS.Api.Services
 	{
 		public SchemaAPersonService(
 			ILogger<ISchemaAPersonRepository> logger,
+			IMediator mediator,
 			ISchemaAPersonRepository schemaAPersonRepository,
 			IApiSchemaAPersonServerRequestModelValidator schemaAPersonModelValidator,
 			IBOLSchemaAPersonMapper bolSchemaAPersonMapper,
 			IDALSchemaAPersonMapper dalSchemaAPersonMapper)
 			: base(logger,
+			       mediator,
 			       schemaAPersonRepository,
 			       schemaAPersonModelValidator,
 			       bolSchemaAPersonMapper,
@@ -23,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a87c28c2ce1d3ec9f7a3d9f55017ba39</Hash>
+    <Hash>1567971d9561dc67d24fdcdfff51c17f</Hash>
 </Codenesium>*/

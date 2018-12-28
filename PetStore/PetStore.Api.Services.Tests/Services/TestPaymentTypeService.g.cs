@@ -9,6 +9,7 @@ using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new PaymentType());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -47,6 +49,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var record = new PaymentType();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -66,6 +69,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<PaymentType>(null));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -86,6 +90,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiPaymentTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PaymentType>())).Returns(Task.FromResult(new PaymentType()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -99,6 +104,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPaymentTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<PaymentType>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPaymentTypeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -121,6 +128,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPaymentTypeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace PetStoreNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PaymentType>())).Returns(Task.FromResult(new PaymentType()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -144,6 +153,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<PaymentType>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace PetStoreNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PaymentType()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -167,6 +178,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPaymentTypeServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiPaymentTypeServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -189,6 +202,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPaymentTypeServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -211,6 +226,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PaymentTypeDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new Sale());
 			mock.RepositoryMock.Setup(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -240,6 +257,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
 			mock.RepositoryMock.Setup(x => x.SalesByPaymentTypeId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
+			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
 			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
@@ -256,5 +274,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a58b359ad4733ed8c6a7212e2d313194</Hash>
+    <Hash>af46b560e7d2d8a430c97293cb74dc56</Hash>
 </Codenesium>*/

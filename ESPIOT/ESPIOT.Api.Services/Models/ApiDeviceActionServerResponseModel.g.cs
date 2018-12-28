@@ -24,7 +24,7 @@ namespace ESPIOTNS.Api.Services
 		public int DeviceId { get; private set; }
 
 		[JsonProperty]
-		public string DeviceIdEntity { get; set; }
+		public string DeviceIdEntity { get; private set; } = RouteConstants.Devices;
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -38,5 +38,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b349de6158a6a2416eb050663e37719</Hash>
+    <Hash>317dac7462edbb08ef3e6b61f0e7d702</Hash>
 </Codenesium>*/

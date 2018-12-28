@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			records.Add(new DeviceAction());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -45,6 +47,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var record = new DeviceAction();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -62,6 +65,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<DeviceAction>(null));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -80,6 +84,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var model = new ApiDeviceActionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeviceAction>())).Returns(Task.FromResult(new DeviceAction()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -91,6 +96,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<DeviceAction>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDeviceActionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -111,6 +118,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiDeviceActionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeviceAction>())).Returns(Task.FromResult(new DeviceAction()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -132,6 +141,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<DeviceAction>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -153,6 +164,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceActionServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var model = new ApiDeviceActionServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -173,6 +186,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiDeviceActionServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -193,6 +208,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<DeviceActionDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -203,6 +219,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			records.Add(new DeviceAction());
 			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -220,6 +237,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
+			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
@@ -234,5 +252,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7747e96371cba11d3d2ac4b6d054ad8f</Hash>
+    <Hash>dda4408a35da1867863ece7b42dc89e8</Hash>
 </Codenesium>*/

@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TestsNS.Api.Services.Tests
 			records.Add(new RowVersionCheck());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -45,6 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			var record = new RowVersionCheck();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -62,6 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IRowVersionCheckRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<RowVersionCheck>(null));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -80,6 +84,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiRowVersionCheckServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<RowVersionCheck>())).Returns(Task.FromResult(new RowVersionCheck()));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -91,6 +96,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<RowVersionCheck>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -101,6 +107,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRowVersionCheckServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -111,6 +118,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiRowVersionCheckServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -121,6 +129,7 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<RowVersionCheck>())).Returns(Task.FromResult(new RowVersionCheck()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -132,6 +141,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<RowVersionCheck>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -143,6 +153,7 @@ namespace TestsNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new RowVersionCheck()));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -153,6 +164,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiRowVersionCheckServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -162,6 +174,7 @@ namespace TestsNS.Api.Services.Tests
 			var model = new ApiRowVersionCheckServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -173,6 +186,7 @@ namespace TestsNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.RowVersionCheckModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -183,6 +197,7 @@ namespace TestsNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiRowVersionCheckServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new RowVersionCheckService(mock.LoggerMock.Object,
+			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
 			                                         mock.BOLMapperMockFactory.BOLRowVersionCheckMapperMock,
@@ -193,10 +208,11 @@ namespace TestsNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<RowVersionCheckDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56737639f90607e7f5c4270b3c8ba5ef</Hash>
+    <Hash>02193cc4e789d9165f045188f32058f4</Hash>
 </Codenesium>*/

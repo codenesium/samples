@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using TwitterNS.Api.Contracts;
 using TwitterNS.Api.DataAccess;
@@ -27,6 +28,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new User());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -61,6 +63,7 @@ namespace TwitterNS.Api.Services.Tests
 			var record = new User();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -94,6 +97,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -128,6 +132,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -155,6 +160,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -165,6 +171,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -191,6 +198,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiUserServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -201,6 +209,7 @@ namespace TwitterNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -228,6 +237,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<User>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -239,6 +249,7 @@ namespace TwitterNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new User()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -265,6 +276,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -274,6 +286,7 @@ namespace TwitterNS.Api.Services.Tests
 			var model = new ApiUserServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -301,6 +314,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -311,6 +325,7 @@ namespace TwitterNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiUserServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -337,6 +352,7 @@ namespace TwitterNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<UserDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -347,6 +363,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new User());
 			mock.RepositoryMock.Setup(x => x.ByLocationLocationId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -380,6 +397,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.ByLocationLocationId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -415,6 +433,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new DirectTweet());
 			mock.RepositoryMock.Setup(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -448,6 +467,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DirectTweet>>(new List<DirectTweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -483,6 +503,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Follower());
 			mock.RepositoryMock.Setup(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -516,6 +537,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -551,6 +573,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Follower());
 			mock.RepositoryMock.Setup(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -584,6 +607,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -619,6 +643,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Message());
 			mock.RepositoryMock.Setup(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -652,6 +677,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Message>>(new List<Message>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -687,6 +713,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Messenger());
 			mock.RepositoryMock.Setup(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -720,6 +747,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -755,6 +783,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Messenger());
 			mock.RepositoryMock.Setup(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -788,6 +817,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -823,6 +853,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new QuoteTweet());
 			mock.RepositoryMock.Setup(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -856,6 +887,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<QuoteTweet>>(new List<QuoteTweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -891,6 +923,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Reply());
 			mock.RepositoryMock.Setup(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -924,6 +957,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Reply>>(new List<Reply>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -959,6 +993,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Retweet());
 			mock.RepositoryMock.Setup(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -992,6 +1027,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -1027,6 +1063,7 @@ namespace TwitterNS.Api.Services.Tests
 			records.Add(new Tweet());
 			mock.RepositoryMock.Setup(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -1060,6 +1097,7 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			mock.RepositoryMock.Setup(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
 			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
@@ -1090,5 +1128,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb33fc2fc168946dc9a31fee1ef1a9e1</Hash>
+    <Hash>a3a18853363dbec49a6cdc78b05b7d8c</Hash>
 </Codenesium>*/

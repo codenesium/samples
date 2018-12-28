@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractStoreService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IStoreRepository StoreRepository { get; private set; }
 
 		protected IApiStoreServerRequestModelValidator StoreModelValidator { get; private set; }
@@ -25,6 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractStoreService(
 			ILogger logger,
+			IMediator mediator,
 			IStoreRepository storeRepository,
 			IApiStoreServerRequestModelValidator storeModelValidator,
 			IBOLStoreMapper bolStoreMapper,
@@ -40,6 +44,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolCustomerMapper = bolCustomerMapper;
 			this.DalCustomerMapper = dalCustomerMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiStoreServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -73,7 +79,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolStoreMapper.MapModelToBO(default(int), model);
 				var record = await this.StoreRepository.Create(this.DalStoreMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(record)));
+				var businessObject = this.DalStoreMapper.MapEFToBO(record);
+				response.SetRecord(this.BolStoreMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new StoreCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,7 +100,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.StoreRepository.Get(businessEntityID);
 
-				return ValidationResponseFactory<ApiStoreServerResponseModel>.UpdateResponse(this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(record)));
+				var businessObject = this.DalStoreMapper.MapEFToBO(record);
+				var apiModel = this.BolStoreMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new StoreUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiStoreServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -108,6 +120,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.StoreRepository.Delete(businessEntityID);
+
+				await this.mediator.Publish(new StoreDeletedNotification(businessEntityID));
 			}
 
 			return response;
@@ -151,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fe438704cd8ea3cdca8d7ac7e1d3260</Hash>
+    <Hash>0090c713c9377208fb65fe2231253ddf</Hash>
 </Codenesium>*/

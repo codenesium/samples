@@ -1,5 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDocumentService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IDocumentRepository DocumentRepository { get; private set; }
 
 		protected IApiDocumentServerRequestModelValidator DocumentModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public AbstractDocumentService(
 			ILogger logger,
+			IMediator mediator,
 			IDocumentRepository documentRepository,
 			IApiDocumentServerRequestModelValidator documentModelValidator,
 			IBOLDocumentMapper bolDocumentMapper,
@@ -32,6 +36,8 @@ namespace AdventureWorksNS.Api.Services
 			this.BolDocumentMapper = bolDocumentMapper;
 			this.DalDocumentMapper = dalDocumentMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiDocumentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace AdventureWorksNS.Api.Services
 				var bo = this.BolDocumentMapper.MapModelToBO(default(Guid), model);
 				var record = await this.DocumentRepository.Create(this.DalDocumentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(record)));
+				var businessObject = this.DalDocumentMapper.MapEFToBO(record);
+				response.SetRecord(this.BolDocumentMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new DocumentCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace AdventureWorksNS.Api.Services
 
 				var record = await this.DocumentRepository.Get(rowguid);
 
-				return ValidationResponseFactory<ApiDocumentServerResponseModel>.UpdateResponse(this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(record)));
+				var businessObject = this.DalDocumentMapper.MapEFToBO(record);
+				var apiModel = this.BolDocumentMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new DocumentUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiDocumentServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace AdventureWorksNS.Api.Services
 			if (response.Success)
 			{
 				await this.DocumentRepository.Delete(rowguid);
+
+				await this.mediator.Publish(new DocumentDeletedNotification(rowguid));
 			}
 
 			return response;
@@ -129,5 +143,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e1eb365a6ac132ebda5302ec444d8b3</Hash>
+    <Hash>9f044587b918414c7d91448eebf7c219</Hash>
 </Codenesium>*/

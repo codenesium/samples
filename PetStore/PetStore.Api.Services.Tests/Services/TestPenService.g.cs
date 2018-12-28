@@ -9,6 +9,7 @@ using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +28,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new Pen());
 			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -47,6 +49,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var record = new Pen();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -66,6 +69,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPenRepository>();
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<Pen>(null));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -86,6 +90,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiPenServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Pen>())).Returns(Task.FromResult(new Pen()));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -99,6 +104,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PenModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPenServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<Pen>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenCreatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -109,6 +115,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPenServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -121,6 +128,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiPenServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenCreatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -131,6 +139,7 @@ namespace PetStoreNS.Api.Services.Tests
 			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Pen>())).Returns(Task.FromResult(new Pen()));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -144,6 +153,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.ModelValidatorMockFactory.PenModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()));
 			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<Pen>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenUpdatedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -155,6 +165,7 @@ namespace PetStoreNS.Api.Services.Tests
 			validatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>())).Returns(Task.FromResult(new ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -167,6 +178,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPenServerRequestModel>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenUpdatedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -176,6 +188,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var model = new ApiPenServerRequestModel();
 			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -189,6 +202,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Success.Should().BeTrue();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PenModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenDeletedNotification>(), It.IsAny<CancellationToken>()));
 		}
 
 		[Fact]
@@ -199,6 +213,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var validatorMock = new Mock<IApiPenServerRequestModelValidator>();
 			validatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult(new List<ValidationFailure>() { new ValidationFailure("text", "test") })));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             validatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -211,6 +226,7 @@ namespace PetStoreNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			response.Success.Should().BeFalse();
 			validatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+			mock.MediatorMock.Verify(x => x.Publish(It.IsAny<PenDeletedNotification>(), It.IsAny<CancellationToken>()), Times.Never());
 		}
 
 		[Fact]
@@ -221,6 +237,7 @@ namespace PetStoreNS.Api.Services.Tests
 			records.Add(new Pet());
 			mock.RepositoryMock.Setup(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -240,6 +257,7 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPenRepository>();
 			mock.RepositoryMock.Setup(x => x.PetsByPenId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
 			var service = new PenService(mock.LoggerMock.Object,
+			                             mock.MediatorMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
 			                             mock.BOLMapperMockFactory.BOLPenMapperMock,
@@ -256,5 +274,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>49f458430222ef2107137209a80b2171</Hash>
+    <Hash>d495550cb57febb177f971d4a0050268</Hash>
 </Codenesium>*/

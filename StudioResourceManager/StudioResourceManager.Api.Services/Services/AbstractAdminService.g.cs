@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
 using StudioResourceManagerNS.Api.Contracts;
 using StudioResourceManagerNS.Api.DataAccess;
@@ -9,6 +10,8 @@ namespace StudioResourceManagerNS.Api.Services
 {
 	public abstract class AbstractAdminService : AbstractService
 	{
+		private IMediator mediator;
+
 		protected IAdminRepository AdminRepository { get; private set; }
 
 		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
@@ -21,6 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public AbstractAdminService(
 			ILogger logger,
+			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
 			IBOLAdminMapper bolAdminMapper,
@@ -32,6 +36,8 @@ namespace StudioResourceManagerNS.Api.Services
 			this.BolAdminMapper = bolAdminMapper;
 			this.DalAdminMapper = dalAdminMapper;
 			this.logger = logger;
+
+			this.mediator = mediator;
 		}
 
 		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
@@ -65,7 +71,9 @@ namespace StudioResourceManagerNS.Api.Services
 				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
 				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAdminMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AdminCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -84,7 +92,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 				var record = await this.AdminRepository.Get(id);
 
-				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				var apiModel = this.BolAdminMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AdminUpdatedNotification(apiModel));
+
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -100,6 +112,8 @@ namespace StudioResourceManagerNS.Api.Services
 			if (response.Success)
 			{
 				await this.AdminRepository.Delete(id);
+
+				await this.mediator.Publish(new AdminDeletedNotification(id));
 			}
 
 			return response;
@@ -115,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b6ade91fc82e9990f97b18d00d60f21</Hash>
+    <Hash>e6c0cffa5ea996d3f7c69b7330d3d76c</Hash>
 </Codenesium>*/

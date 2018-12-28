@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void StateProvinceCodeRules()
 		{
 			this.RuleFor(x => x.StateProvinceCode).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => (!x?.StateProvinceCode.IsEmptyOrZeroOrNull() ?? false) || (!x?.StateProvinceCode.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceServerRequestModel.StateProvinceCode)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => (!x?.StateProvinceCode.IsEmptyOrZeroOrNull() ?? false) || (!x?.CountryRegionCode.IsEmptyOrZeroOrNull() ?? false)).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceServerRequestModel.StateProvinceCode)).WithErrorCode(ValidationErrorCodes.ViolatesUniqueConstraintRule);
 			this.RuleFor(x => x.StateProvinceCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42f33711376fc8c57a46c6b72fff14a4</Hash>
+    <Hash>264958d1183f38283b374f395b603ab4</Hash>
 </Codenesium>*/

@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_ChainStatus_Name.
 		public async virtual Task<ChainStatus> ByName(string name)
 		{
-			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ChainStatus>().FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Chain via chainStatusId.
@@ -112,5 +112,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>257b21054062a96733e7bec25d9b3570</Hash>
+    <Hash>b8683b2bf6c7f09b190f42b1d9fd7c48</Hash>
 </Codenesium>*/
