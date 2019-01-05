@@ -1,5 +1,6 @@
 language: csharp
 mono: none
+distro: xenial
 dotnet: 2.2
 script:
    -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
