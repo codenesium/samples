@@ -1,5 +1,6 @@
 language: csharp
 mono: none
+sudo: required
 distro: xenial
 dotnet: 2.2
 script:
