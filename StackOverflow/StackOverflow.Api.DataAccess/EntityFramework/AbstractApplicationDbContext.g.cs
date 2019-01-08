@@ -15,7 +15,7 @@ namespace StackOverflowNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; } = 1;
+		public int TenantId { get; private set; }
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -24,21 +24,11 @@ namespace StackOverflowNS.Api.DataAccess
 
 		public virtual void SetUserId(Guid userId)
 		{
-			if (userId == default(Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-
 			this.UserId = userId;
 		}
 
 		public virtual void SetTenantId(int tenantId)
 		{
-			if (tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-
 			this.TenantId = tenantId;
 		}
 
@@ -262,5 +252,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64d6e556bd0ec2440e2d309a096e24f1</Hash>
+    <Hash>8e1e857df4c8533b5ff31bd498a40558</Hash>
 </Codenesium>*/

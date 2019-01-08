@@ -71,9 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
 				var record = await this.EventRepository.Create(this.DalEventMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalEventMapper.MapEFToBO(record);
-				response.SetRecord(this.BolEventMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new EventCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalEventMapper.MapEFToBO(record);
+				response.SetRecord(this.BolEventMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new EventCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,10 +92,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.EventRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalEventMapper.MapEFToBO(record);
-				await this.mediator.Publish(new EventUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalEventMapper.MapEFToBO(record);
+				var apiModel = this.BolEventMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new EventUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(this.BolEventMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiEventServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -128,5 +129,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d17775425b8aa508666180d0155ccddf</Hash>
+    <Hash>96b80f62785b562ccc410239fbb65fa2</Hash>
 </Codenesium>*/

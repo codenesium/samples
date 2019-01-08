@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class UserCreatedNotification : INotification
 	{
-		public BOUser Record { get; private set; }
+		public ApiUserServerResponseModel Record { get; private set; }
 
-		public UserCreatedNotification(BOUser record)
+		public UserCreatedNotification(ApiUserServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class UserUpdatedNotification : INotification
 	{
-		public BOUser Record { get; private set; }
+		public ApiUserServerResponseModel Record { get; private set; }
 
-		public UserUpdatedNotification(BOUser record)
+		public UserUpdatedNotification(ApiUserServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>456d03f917572d5695941df39a72de70</Hash>
+    <Hash>41d9bdc8765e9291002161965daf584a</Hash>
 </Codenesium>*/

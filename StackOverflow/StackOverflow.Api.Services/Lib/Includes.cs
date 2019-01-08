@@ -6,20 +6,6 @@ using System.Text;
 
 namespace StackOverflowNS.Api.Services
 {
-	public class RouteConstants
-	{public const string Badges = "badges";
-	 public const string Comments = "comments";
-	 public const string LinkTypes = "linktypes";
-	 public const string PostHistories = "posthistories";
-	 public const string PostHistoryTypes = "posthistorytypes";
-	 public const string PostLinks = "postlinks";
-	 public const string Posts = "posts";
-	 public const string PostTypes = "posttypes";
-	 public const string Tags = "tags";
-	 public const string Users = "users";
-	 public const string Votes = "votes";
-	 public const string VoteTypes = "votetypes";}
-
 	public abstract class AbstractService
 	{
 	}
@@ -79,5 +65,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ea7aefe51c1216f0ac9192e991815cd</Hash>
+    <Hash>ca0f6f278442947c96c7120d11226ebc</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class AdminCreatedNotification : INotification
 	{
-		public BOAdmin Record { get; private set; }
+		public ApiAdminServerResponseModel Record { get; private set; }
 
-		public AdminCreatedNotification(BOAdmin record)
+		public AdminCreatedNotification(ApiAdminServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class AdminUpdatedNotification : INotification
 	{
-		public BOAdmin Record { get; private set; }
+		public ApiAdminServerResponseModel Record { get; private set; }
 
-		public AdminUpdatedNotification(BOAdmin record)
+		public AdminUpdatedNotification(ApiAdminServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d647c504d817990da4795dff3256e20</Hash>
+    <Hash>83736157cf77f9f5c20a71475acc0da2</Hash>
 </Codenesium>*/

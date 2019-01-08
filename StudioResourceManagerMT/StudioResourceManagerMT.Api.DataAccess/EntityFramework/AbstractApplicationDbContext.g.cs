@@ -15,7 +15,7 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; } = 1;
+		public int TenantId { get; private set; }
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -24,21 +24,11 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 
 		public virtual void SetUserId(Guid userId)
 		{
-			if (userId == default(Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-
 			this.UserId = userId;
 		}
 
 		public virtual void SetTenantId(int tenantId)
 		{
-			if (tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-
 			this.TenantId = tenantId;
 		}
 
@@ -343,5 +333,5 @@ namespace StudioResourceManagerMTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>881a9ce74393f15cb10afc2c6b2ec496</Hash>
+    <Hash>65e91294e5ff08af50b60f08085a1383</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; } = 1;
+		public int TenantId { get; private set; }
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -24,21 +24,11 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void SetUserId(Guid userId)
 		{
-			if (userId == default(Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-
 			this.UserId = userId;
 		}
 
 		public virtual void SetTenantId(int tenantId)
 		{
-			if (tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-
 			this.TenantId = tenantId;
 		}
 
@@ -184,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9bb0f9e611ffdef9d3c5fe240588302f</Hash>
+    <Hash>b31bf2489e1c4bed9a99c03d1027f0c0</Hash>
 </Codenesium>*/

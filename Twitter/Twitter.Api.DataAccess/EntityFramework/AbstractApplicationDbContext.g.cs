@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; } = 1;
+		public int TenantId { get; private set; }
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -24,21 +24,11 @@ namespace TwitterNS.Api.DataAccess
 
 		public virtual void SetUserId(Guid userId)
 		{
-			if (userId == default(Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-
 			this.UserId = userId;
 		}
 
 		public virtual void SetTenantId(int tenantId)
 		{
-			if (tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-
 			this.TenantId = tenantId;
 		}
 
@@ -218,5 +208,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e9c62b186060eae81591880d0942c4b</Hash>
+    <Hash>4993f9dcc5af4570ea7df35f25d16309</Hash>
 </Codenesium>*/

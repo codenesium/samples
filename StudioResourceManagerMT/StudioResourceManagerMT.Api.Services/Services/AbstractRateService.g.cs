@@ -71,9 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolRateMapper.MapModelToBO(default(int), model);
 				var record = await this.RateRepository.Create(this.DalRateMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalRateMapper.MapEFToBO(record);
-				response.SetRecord(this.BolRateMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new RateCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalRateMapper.MapEFToBO(record);
+				response.SetRecord(this.BolRateMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new RateCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,10 +92,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.RateRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalRateMapper.MapEFToBO(record);
-				await this.mediator.Publish(new RateUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalRateMapper.MapEFToBO(record);
+				var apiModel = this.BolRateMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new RateUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(this.BolRateMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -135,5 +136,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0da86b20e43646247f3e8adc86448424</Hash>
+    <Hash>68928e073aeaa48a192c32a82989b4d5</Hash>
 </Codenesium>*/

@@ -79,9 +79,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolTeacherMapper.MapModelToBO(default(int), model);
 				var record = await this.TeacherRepository.Create(this.DalTeacherMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalTeacherMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTeacherMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new TeacherCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
+				response.SetRecord(this.BolTeacherMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new TeacherCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -100,10 +100,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.TeacherRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalTeacherMapper.MapEFToBO(record);
-				await this.mediator.Publish(new TeacherUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
+				var apiModel = this.BolTeacherMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new TeacherUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiTeacherServerResponseModel>.UpdateResponse(this.BolTeacherMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiTeacherServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -143,5 +144,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8cafcab0d9bf4f7da55779a458ccc207</Hash>
+    <Hash>78aa6546af2162b1396045dffa13a65c</Hash>
 </Codenesium>*/

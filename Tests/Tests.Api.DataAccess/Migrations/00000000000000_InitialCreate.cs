@@ -21,18 +21,6 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
-IF NOT EXISTS(SELECT *
-FROM sys.schemas
-WHERE name = N'SchemaA')
-EXEC('CREATE SCHEMA [SchemaA] AUTHORIZATION [dbo]');
-GO
-
-IF NOT EXISTS(SELECT *
-FROM sys.schemas
-WHERE name = N'SchemaB')
-EXEC('CREATE SCHEMA [SchemaB] AUTHORIZATION [dbo]');
-GO
-
 --IF (OBJECT_ID('dbo.FK_ColumnSameAsFKTable_PERSON', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[ColumnSameAsFKTable] DROP CONSTRAINT [FK_ColumnSameAsFKTable_PERSON]
@@ -51,18 +39,6 @@ GO
 --IF (OBJECT_ID('dbo.FK_selfReference_selfReference2', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[selfReference] DROP CONSTRAINT [FK_selfReference_selfReference2]
---END
---GO
-
-
---IF (OBJECT_ID('SchemaB.FK_PersonRef_PersonA', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [SchemaB].[PersonRef] DROP CONSTRAINT [FK_PersonRef_PersonA]
---END
---GO
---IF (OBJECT_ID('SchemaB.FK_PersonRef_PersonB', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [SchemaB].[PersonRef] DROP CONSTRAINT [FK_PersonRef_PersonB]
 --END
 --GO
 
@@ -119,23 +95,6 @@ GO
 --IF OBJECT_ID('dbo.vPerson', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[vPerson]
---END
---GO
-
---IF OBJECT_ID('SchemaA.Person', 'U') IS NOT NULL 
---BEGIN
---DROP TABLE [SchemaA].[Person]
---END
---GO
-
---IF OBJECT_ID('SchemaB.Person', 'U') IS NOT NULL 
---BEGIN
---DROP TABLE [SchemaB].[Person]
---END
---GO
---IF OBJECT_ID('SchemaB.PersonRef', 'U') IS NOT NULL 
---BEGIN
---DROP TABLE [SchemaB].[PersonRef]
 --END
 --GO
 
@@ -272,25 +231,6 @@ CREATE TABLE [dbo].[vPerson](
 ) ON[PRIMARY]
 GO
 
-CREATE TABLE [SchemaA].[Person](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (50)   NOT NULL,
-) ON[PRIMARY]
-GO
-
-CREATE TABLE [SchemaB].[Person](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (50)   NOT NULL,
-) ON[PRIMARY]
-GO
-
-CREATE TABLE [SchemaB].[PersonRef](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[personAId] [int]     NOT NULL,
-[personBId] [int]     NOT NULL,
-) ON[PRIMARY]
-GO
-
 ALTER TABLE[dbo].[ColumnSameAsFKTable]
 ADD CONSTRAINT[PK_ColumnSameAsFKTable] PRIMARY KEY CLUSTERED
 (
@@ -366,24 +306,6 @@ ADD CONSTRAINT[vPerion_PK] PRIMARY KEY CLUSTERED
 [PERSON_ID] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE[SchemaA].[Person]
-ADD CONSTRAINT[PK_Person] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-ALTER TABLE[SchemaB].[Person]
-ADD CONSTRAINT[PK_Person_1] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-ALTER TABLE[SchemaB].[PersonRef]
-ADD CONSTRAINT[PK_PersonRef] PRIMARY KEY CLUSTERED
-(
-[id] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
 
 ALTER TABLE[dbo].[RowVersionCheck]
 ADD CONSTRAINT[DF_RowVersionCheck_rowVersion]  DEFAULT(newid()) FOR[rowVersion]
@@ -409,18 +331,6 @@ ALTER TABLE[dbo].[selfReference]  WITH CHECK ADD  CONSTRAINT[FK_selfReference_se
 REFERENCES[dbo].[selfReference]([id]) on delete no action on update no action
 GO
 ALTER TABLE[dbo].[selfReference] CHECK CONSTRAINT[FK_selfReference_selfReference2]
-GO
-
-
-ALTER TABLE[SchemaB].[PersonRef]  WITH CHECK ADD  CONSTRAINT[FK_PersonRef_PersonA] FOREIGN KEY([personAId])
-REFERENCES[SchemaA].[Person]([id]) on delete no action on update no action
-GO
-ALTER TABLE[SchemaB].[PersonRef] CHECK CONSTRAINT[FK_PersonRef_PersonA]
-GO
-ALTER TABLE[SchemaB].[PersonRef]  WITH CHECK ADD  CONSTRAINT[FK_PersonRef_PersonB] FOREIGN KEY([personBId])
-REFERENCES[SchemaB].[Person]([id]) on delete no action on update no action
-GO
-ALTER TABLE[SchemaB].[PersonRef] CHECK CONSTRAINT[FK_PersonRef_PersonB]
 GO
 
 ");

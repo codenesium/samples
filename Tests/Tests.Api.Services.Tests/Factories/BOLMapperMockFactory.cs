@@ -10,8 +10,6 @@ namespace TestsNS.Api.Services.Tests
 	{
 		public IBOLColumnSameAsFKTableMapper BOLColumnSameAsFKTableMapperMock { get; set; } = new BOLColumnSameAsFKTableMapper();
 
-		public IBOLCompositePrimaryKeyMapper BOLCompositePrimaryKeyMapperMock { get; set; } = new BOLCompositePrimaryKeyMapper();
-
 		public IBOLIncludedColumnTestMapper BOLIncludedColumnTestMapperMock { get; set; } = new BOLIncludedColumnTestMapper();
 
 		public IBOLPersonMapper BOLPersonMapperMock { get; set; } = new BOLPersonMapper();
@@ -30,12 +28,6 @@ namespace TestsNS.Api.Services.Tests
 
 		public IBOLVPersonMapper BOLVPersonMapperMock { get; set; } = new BOLVPersonMapper();
 
-		public IBOLSchemaAPersonMapper BOLSchemaAPersonMapperMock { get; set; } = new BOLSchemaAPersonMapper();
-
-		public IBOLSchemaBPersonMapper BOLSchemaBPersonMapperMock { get; set; } = new BOLSchemaBPersonMapper();
-
-		public IBOLPersonRefMapper BOLPersonRefMapperMock { get; set; } = new BOLPersonRefMapper();
-
 		public BOLMapperMockFactory()
 		{
 		}
@@ -43,5 +35,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0e51efcbccafa315aa7e99325945d873</Hash>
+    <Hash>eb3bf1b16bcdd11ca9aa02d096063038</Hash>
 </Codenesium>*/

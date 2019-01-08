@@ -86,6 +86,8 @@ namespace Codenesium.Foundation.CommonMVC
     /// </summary>
     public interface ITransactionCoordinator
     {
+		void SetTenantId(int tenantId);
+
         void BeginTransaction();
 
         void CommitTransaction();
@@ -109,6 +111,11 @@ namespace Codenesium.Foundation.CommonMVC
         {
             this.context = context;
         }
+
+		public void SetTenantId(int tenantId)
+		{
+			this.context.SetTenantId(tenantId);
+		}
 
         public void BeginTransaction()
         {
@@ -148,7 +155,7 @@ namespace Codenesium.Foundation.CommonMVC
     /// </summary>
     public abstract class AbstractApiController : Controller
     {
-        public ITransactionCoordinator TransactionCooordinator { get; private set; }
+		public ITransactionCoordinator TransactionCooordinator { get; private set; }
 
         protected ILogger Logger { get; private set;  }
 
@@ -164,6 +171,12 @@ namespace Codenesium.Foundation.CommonMVC
             this.Settings = settings;
             this.TransactionCooordinator = transactionCooordinator;
         }
+
+		public override void OnActionExecuting(ActionExecutingContext context)
+		{
+			base.OnActionExecuting(context);
+			this.TransactionCooordinator.SetTenantId(this.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "tenant")?.Value.ToNullableInt() ?? 0);
+		}
     }
 
     /// <summary>

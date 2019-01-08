@@ -10,8 +10,6 @@ namespace TestsNS.Api.Services.Tests
 	{
 		public IDALColumnSameAsFKTableMapper DALColumnSameAsFKTableMapperMock { get; set; } = new DALColumnSameAsFKTableMapper();
 
-		public IDALCompositePrimaryKeyMapper DALCompositePrimaryKeyMapperMock { get; set; } = new DALCompositePrimaryKeyMapper();
-
 		public IDALIncludedColumnTestMapper DALIncludedColumnTestMapperMock { get; set; } = new DALIncludedColumnTestMapper();
 
 		public IDALPersonMapper DALPersonMapperMock { get; set; } = new DALPersonMapper();
@@ -30,12 +28,6 @@ namespace TestsNS.Api.Services.Tests
 
 		public IDALVPersonMapper DALVPersonMapperMock { get; set; } = new DALVPersonMapper();
 
-		public IDALSchemaAPersonMapper DALSchemaAPersonMapperMock { get; set; } = new DALSchemaAPersonMapper();
-
-		public IDALSchemaBPersonMapper DALSchemaBPersonMapperMock { get; set; } = new DALSchemaBPersonMapper();
-
-		public IDALPersonRefMapper DALPersonRefMapperMock { get; set; } = new DALPersonRefMapper();
-
 		public DALMapperMockFactory()
 		{
 		}
@@ -43,5 +35,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>72a0582f8a5a6d8ab91f1268d0c60169</Hash>
+    <Hash>884cb9bb1265af5bda1303c549600c21</Hash>
 </Codenesium>*/

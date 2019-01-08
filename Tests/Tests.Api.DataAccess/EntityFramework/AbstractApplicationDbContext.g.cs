@@ -15,7 +15,7 @@ namespace TestsNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; } = 1;
+		public int TenantId { get; private set; }
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -24,21 +24,11 @@ namespace TestsNS.Api.DataAccess
 
 		public virtual void SetUserId(Guid userId)
 		{
-			if (userId == default(Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-
 			this.UserId = userId;
 		}
 
 		public virtual void SetTenantId(int tenantId)
 		{
-			if (tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-
 			this.TenantId = tenantId;
 		}
 
@@ -63,12 +53,6 @@ namespace TestsNS.Api.DataAccess
 		public virtual DbSet<TimestampCheck> TimestampChecks { get; set; }
 
 		public virtual DbSet<VPerson> VPersons { get; set; }
-
-		public virtual DbSet<SchemaAPerson> SchemaAPersons { get; set; }
-
-		public virtual DbSet<SchemaBPerson> SchemaBPersons { get; set; }
-
-		public virtual DbSet<PersonRef> PersonRefs { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -221,39 +205,6 @@ namespace TestsNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<SchemaAPerson>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<SchemaAPerson>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<SchemaBPerson>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<SchemaBPerson>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
-			modelBuilder.Entity<PersonRef>()
-			.HasKey(c => new
-			{
-				c.Id,
-			});
-
-			modelBuilder.Entity<PersonRef>()
-			.Property("Id")
-			.ValueGeneratedOnAdd()
-			.UseSqlServerIdentityColumn();
-
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -284,5 +235,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>94333c1348f891a0ba6a550e4a900139</Hash>
+    <Hash>08f9abf5be7935f11d304657ad4e3a4c</Hash>
 </Codenesium>*/

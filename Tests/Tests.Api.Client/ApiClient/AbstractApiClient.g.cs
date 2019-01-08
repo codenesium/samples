@@ -122,71 +122,6 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>>> CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CompositePrimaryKeys/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiCompositePrimaryKeyClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyClientResponseModel>> CompositePrimaryKeyCreateAsync(ApiCompositePrimaryKeyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/CompositePrimaryKeys", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiCompositePrimaryKeyClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiCompositePrimaryKeyClientResponseModel>> CompositePrimaryKeyUpdateAsync(int id, ApiCompositePrimaryKeyClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/CompositePrimaryKeys/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiCompositePrimaryKeyClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> CompositePrimaryKeyDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/CompositePrimaryKeys/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiCompositePrimaryKeyClientResponseModel> CompositePrimaryKeyGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CompositePrimaryKeys/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiCompositePrimaryKeyClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiCompositePrimaryKeyClientResponseModel>> CompositePrimaryKeyAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiCompositePrimaryKeyClientResponseModel> response = new List<ApiCompositePrimaryKeyClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/CompositePrimaryKeys?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiCompositePrimaryKeyClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
 		public virtual async Task<CreateResponse<List<ApiIncludedColumnTestClientResponseModel>>> IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/IncludedColumnTests/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -317,6 +252,22 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
+		public virtual async Task<List<ApiColumnSameAsFKTableClientResponseModel>> ColumnSameAsFKTablesByPerson(int person, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/People/{person}/ColumnSameAsFKTables", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiColumnSameAsFKTableClientResponseModel>> ColumnSameAsFKTablesByPersonId(int personId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/People/{personId}/ColumnSameAsFKTablesByPersonId", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<List<ApiRowVersionCheckClientResponseModel>>> RowVersionCheckBulkInsertAsync(List<ApiRowVersionCheckClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/RowVersionChecks/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -445,6 +396,22 @@ namespace TestsNS.Api.Client
 			}
 
 			return response;
+		}
+
+		public virtual async Task<List<ApiSelfReferenceClientResponseModel>> SelfReferencesBySelfReferenceId(int selfReferenceId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SelfReferences/{selfReferenceId}/SelfReferences", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiSelfReferenceClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSelfReferenceClientResponseModel>> SelfReferencesBySelfReferenceId2(int selfReferenceId2, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SelfReferences/{selfReferenceId2}/SelfReferencesBySelfReferenceId2", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiSelfReferenceClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiTableClientResponseModel>>> TableBulkInsertAsync(List<ApiTableClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -707,38 +674,6 @@ namespace TestsNS.Api.Client
 			return response;
 		}
 
-		public virtual async Task<CreateResponse<List<ApiVPersonClientResponseModel>>> VPersonBulkInsertAsync(List<ApiVPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiVPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiVPersonClientResponseModel>> VPersonCreateAsync(ApiVPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/VPersons", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiVPersonClientResponseModel>> VPersonUpdateAsync(int id, ApiVPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/VPersons/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> VPersonDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/VPersons/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<ApiVPersonClientResponseModel> VPersonGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/VPersons/{id}", cancellationToken).ConfigureAwait(false);
@@ -758,201 +693,6 @@ namespace TestsNS.Api.Client
 
 				this.HandleResponseCode(httpResponse);
 				List<ApiVPersonClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiVPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
-		public virtual async Task<CreateResponse<List<ApiSchemaAPersonClientResponseModel>>> SchemaAPersonBulkInsertAsync(List<ApiSchemaAPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaAPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaAPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiSchemaAPersonClientResponseModel>> SchemaAPersonCreateAsync(ApiSchemaAPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaAPersons", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiSchemaAPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiSchemaAPersonClientResponseModel>> SchemaAPersonUpdateAsync(int id, ApiSchemaAPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/SchemaAPersons/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiSchemaAPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> SchemaAPersonDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/SchemaAPersons/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiSchemaAPersonClientResponseModel> SchemaAPersonGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SchemaAPersons/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiSchemaAPersonClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiSchemaAPersonClientResponseModel>> SchemaAPersonAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiSchemaAPersonClientResponseModel> response = new List<ApiSchemaAPersonClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SchemaAPersons?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiSchemaAPersonClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiSchemaAPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
-		public virtual async Task<CreateResponse<List<ApiSchemaBPersonClientResponseModel>>> SchemaBPersonBulkInsertAsync(List<ApiSchemaBPersonClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaBPersons/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSchemaBPersonClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiSchemaBPersonClientResponseModel>> SchemaBPersonCreateAsync(ApiSchemaBPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SchemaBPersons", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiSchemaBPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiSchemaBPersonClientResponseModel>> SchemaBPersonUpdateAsync(int id, ApiSchemaBPersonClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/SchemaBPersons/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiSchemaBPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> SchemaBPersonDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/SchemaBPersons/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiSchemaBPersonClientResponseModel> SchemaBPersonGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SchemaBPersons/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiSchemaBPersonClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiSchemaBPersonClientResponseModel>> SchemaBPersonAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiSchemaBPersonClientResponseModel> response = new List<ApiSchemaBPersonClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SchemaBPersons?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiSchemaBPersonClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiSchemaBPersonClientResponseModel>>(httpResponse.Content.ContentToString());
-				response.AddRange(records);
-				if (records.Count < this.MaxLimit)
-				{
-					moreRecords = false;
-				}
-				else
-				{
-					offset += this.MaxLimit;
-				}
-			}
-
-			return response;
-		}
-
-		public virtual async Task<CreateResponse<List<ApiPersonRefClientResponseModel>>> PersonRefBulkInsertAsync(List<ApiPersonRefClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PersonRefs/BulkInsert", items, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<List<ApiPersonRefClientResponseModel>>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiPersonRefClientResponseModel>> PersonRefCreateAsync(ApiPersonRefClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/PersonRefs", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPersonRefClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiPersonRefClientResponseModel>> PersonRefUpdateAsync(int id, ApiPersonRefClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/PersonRefs/{id}", item, cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPersonRefClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> PersonRefDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/PersonRefs/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiPersonRefClientResponseModel> PersonRefGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PersonRefs/{id}", cancellationToken).ConfigureAwait(false);
-
-			this.HandleResponseCode(httpResponse);
-			return JsonConvert.DeserializeObject<ApiPersonRefClientResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPersonRefClientResponseModel>> PersonRefAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-		{
-			int offset = 0;
-			bool moreRecords = true;
-			List<ApiPersonRefClientResponseModel> response = new List<ApiPersonRefClientResponseModel>();
-			while (moreRecords)
-			{
-				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/PersonRefs?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
-
-				this.HandleResponseCode(httpResponse);
-				List<ApiPersonRefClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiPersonRefClientResponseModel>>(httpResponse.Content.ContentToString());
 				response.AddRange(records);
 				if (records.Count < this.MaxLimit)
 				{
@@ -995,5 +735,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ad4c7ecb769b1333b0c8520bbb7e84d1</Hash>
+    <Hash>7a2f847c0b40069c944f1f4b0729dca8</Hash>
 </Codenesium>*/

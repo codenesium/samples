@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class RateCreatedNotification : INotification
 	{
-		public BORate Record { get; private set; }
+		public ApiRateServerResponseModel Record { get; private set; }
 
-		public RateCreatedNotification(BORate record)
+		public RateCreatedNotification(ApiRateServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class RateUpdatedNotification : INotification
 	{
-		public BORate Record { get; private set; }
+		public ApiRateServerResponseModel Record { get; private set; }
 
-		public RateUpdatedNotification(BORate record)
+		public RateUpdatedNotification(ApiRateServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23de24289ef0d22a08eea2211e02d62c</Hash>
+    <Hash>f2ecb732c2a47fd549ba7afb077f7678</Hash>
 </Codenesium>*/

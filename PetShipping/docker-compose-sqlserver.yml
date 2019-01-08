@@ -10,7 +10,7 @@ services:
       dockerfile: DockerFile
     environment:
        - ASPNETCORE_URLS=http://+:80
-       - ConnectionStrings__ApplicationDbContext=Server=db;Persist Security Info=False;User ID=sa;Password=Passw0rd;Initial Catalog=petshippingMultipleActiveResultSets=True;Connection Timeout=10;
+       - ConnectionStrings__ApplicationDbContext=Server=db;Persist Security Info=False;User ID=sa;Password=Passw0rd;Initial Catalog=petshipping;MultipleActiveResultSets=True;Connection Timeout=10;
        - DatabaseProvider=MSSQL
        - MigrateDatabase=true
     volumes:

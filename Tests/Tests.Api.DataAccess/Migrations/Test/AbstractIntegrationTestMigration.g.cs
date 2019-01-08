@@ -22,10 +22,6 @@ namespace TestsNS.Api.DataAccess
 			columnSameAsFKTableItem1.SetProperties(1, 1, 1);
 			this.Context.ColumnSameAsFKTables.Add(columnSameAsFKTableItem1);
 
-			var compositePrimaryKeyItem1 = new CompositePrimaryKey();
-			compositePrimaryKeyItem1.SetProperties(1, 1);
-			this.Context.CompositePrimaryKeys.Add(compositePrimaryKeyItem1);
-
 			var includedColumnTestItem1 = new IncludedColumnTest();
 			includedColumnTestItem1.SetProperties(1, "A", "A");
 			this.Context.IncludedColumnTests.Add(includedColumnTestItem1);
@@ -63,26 +59,10 @@ namespace TestsNS.Api.DataAccess
 			this.Context.VPersons.Add(vPersonItem1);
 
 			await this.Context.SaveChangesAsync();
-
-			var schemaAPersonItem1 = new SchemaAPerson();
-			schemaAPersonItem1.SetProperties(1, "A");
-			this.Context.SchemaAPersons.Add(schemaAPersonItem1);
-
-			await this.Context.SaveChangesAsync();
-
-			var schemaBPersonItem1 = new SchemaBPerson();
-			schemaBPersonItem1.SetProperties(1, "A");
-			this.Context.SchemaBPersons.Add(schemaBPersonItem1);
-
-			var personRefItem1 = new PersonRef();
-			personRefItem1.SetProperties(1, 1, 1);
-			this.Context.PersonRefs.Add(personRefItem1);
-
-			await this.Context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74c81dcf115efc79406bb19a8e476800</Hash>
+    <Hash>377173033469600a9591d0dea5404333</Hash>
 </Codenesium>*/

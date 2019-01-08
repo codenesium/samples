@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class SpaceCreatedNotification : INotification
 	{
-		public BOSpace Record { get; private set; }
+		public ApiSpaceServerResponseModel Record { get; private set; }
 
-		public SpaceCreatedNotification(BOSpace record)
+		public SpaceCreatedNotification(ApiSpaceServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class SpaceUpdatedNotification : INotification
 	{
-		public BOSpace Record { get; private set; }
+		public ApiSpaceServerResponseModel Record { get; private set; }
 
-		public SpaceUpdatedNotification(BOSpace record)
+		public SpaceUpdatedNotification(ApiSpaceServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b2f1e0e798ecbc34657f71ca75f8e36</Hash>
+    <Hash>254e5bc1646bbf10a91f25d0e1823696</Hash>
 </Codenesium>*/

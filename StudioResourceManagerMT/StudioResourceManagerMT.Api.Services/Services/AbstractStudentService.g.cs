@@ -71,9 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolStudentMapper.MapModelToBO(default(int), model);
 				var record = await this.StudentRepository.Create(this.DalStudentMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalStudentMapper.MapEFToBO(record);
-				response.SetRecord(this.BolStudentMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new StudentCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalStudentMapper.MapEFToBO(record);
+				response.SetRecord(this.BolStudentMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new StudentCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,10 +92,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.StudentRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalStudentMapper.MapEFToBO(record);
-				await this.mediator.Publish(new StudentUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalStudentMapper.MapEFToBO(record);
+				var apiModel = this.BolStudentMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new StudentUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiStudentServerResponseModel>.UpdateResponse(this.BolStudentMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiStudentServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -135,5 +136,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5bab6686991b14653dccdcd02aacc1c</Hash>
+    <Hash>bb6ccadd57e60f8441cdd3435e2779a2</Hash>
 </Codenesium>*/

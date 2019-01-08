@@ -6,10 +6,6 @@ using System.Text;
 
 namespace ESPIOTNS.Api.Services
 {
-	public class RouteConstants
-	{public const string Devices = "devices";
-	 public const string DeviceActions = "deviceactions";}
-
 	public abstract class AbstractService
 	{
 	}
@@ -69,5 +65,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4748c55ea17ed475362e3bced556e34</Hash>
+    <Hash>f1e61622f99d9d6549054382cd0b8f48</Hash>
 </Codenesium>*/

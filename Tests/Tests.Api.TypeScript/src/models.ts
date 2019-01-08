@@ -1,43 +1,32 @@
 export class ApiColumnSameAsFKTableClientRequestModel {
 	id : number;
 	person : number;
+	personEntity : string;
 	personId : number;
+	personIdEntity : string;
 
 	constructor() {
 		this.id = 0;
 		this.person = 0;
+		this.personEntity = '';
 		this.personId = 0;
+		this.personIdEntity = '';
 	}
 }
 
 export class ApiColumnSameAsFKTableClientResponseModel {
 	id : number;
 	person : number;
+	personEntity : string;
 	personId : number;
+	personIdEntity : string;
 
 	constructor() {
 		this.id = 0;
 		this.person = 0;
+		this.personEntity = '';
 		this.personId = 0;
-	}
-}
-export class ApiCompositePrimaryKeyClientRequestModel {
-	id : number;
-	id2 : number;
-
-	constructor() {
-		this.id = 0;
-		this.id2 = 0;
-	}
-}
-
-export class ApiCompositePrimaryKeyClientResponseModel {
-	id : number;
-	id2 : number;
-
-	constructor() {
-		this.id = 0;
-		this.id2 = 0;
+		this.personIdEntity = '';
 	}
 }
 export class ApiIncludedColumnTestClientRequestModel {
@@ -108,24 +97,32 @@ export class ApiRowVersionCheckClientResponseModel {
 export class ApiSelfReferenceClientRequestModel {
 	id : number;
 	selfReferenceId : any;
+	selfReferenceIdEntity : string;
 	selfReferenceId2 : any;
+	selfReferenceId2Entity : string;
 
 	constructor() {
 		this.id = 0;
 		this.selfReferenceId = null;
+		this.selfReferenceIdEntity = '';
 		this.selfReferenceId2 = null;
+		this.selfReferenceId2Entity = '';
 	}
 }
 
 export class ApiSelfReferenceClientResponseModel {
 	id : number;
 	selfReferenceId : any;
+	selfReferenceIdEntity : string;
 	selfReferenceId2 : any;
+	selfReferenceId2Entity : string;
 
 	constructor() {
 		this.id = 0;
 		this.selfReferenceId = null;
+		this.selfReferenceIdEntity = '';
 		this.selfReferenceId2 = null;
+		this.selfReferenceId2Entity = '';
 	}
 }
 export class ApiTableClientRequestModel {
@@ -443,68 +440,7 @@ export class ApiVPersonClientResponseModel {
 		this.personName = '';
 	}
 }
-export class ApiSchemaAPersonClientRequestModel {
-	id : number;
-	name : string;
-
-	constructor() {
-		this.id = 0;
-		this.name = '';
-	}
-}
-
-export class ApiSchemaAPersonClientResponseModel {
-	id : number;
-	name : string;
-
-	constructor() {
-		this.id = 0;
-		this.name = '';
-	}
-}
-export class ApiSchemaBPersonClientRequestModel {
-	id : number;
-	name : string;
-
-	constructor() {
-		this.id = 0;
-		this.name = '';
-	}
-}
-
-export class ApiSchemaBPersonClientResponseModel {
-	id : number;
-	name : string;
-
-	constructor() {
-		this.id = 0;
-		this.name = '';
-	}
-}
-export class ApiPersonRefClientRequestModel {
-	id : number;
-	personAId : number;
-	personBId : number;
-
-	constructor() {
-		this.id = 0;
-		this.personAId = 0;
-		this.personBId = 0;
-	}
-}
-
-export class ApiPersonRefClientResponseModel {
-	id : number;
-	personAId : number;
-	personBId : number;
-
-	constructor() {
-		this.id = 0;
-		this.personAId = 0;
-		this.personBId = 0;
-	}
-}
 
 /*<Codenesium>
-    <Hash>a4086550b281ac3ac05c77ae4b6bafb1</Hash>
+    <Hash>5fe74213fabeedaafbf436889e21ecd5</Hash>
 </Codenesium>*/

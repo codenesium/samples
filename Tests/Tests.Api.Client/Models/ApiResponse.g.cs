@@ -14,7 +14,6 @@ namespace TestsNS.Api.Client
 		public void Merge(ApiResponse from)
 		{
 			from.ColumnSameAsFKTables.ForEach(x => this.AddColumnSameAsFKTable(x));
-			from.CompositePrimaryKeys.ForEach(x => this.AddCompositePrimaryKey(x));
 			from.IncludedColumnTests.ForEach(x => this.AddIncludedColumnTest(x));
 			from.People.ForEach(x => this.AddPerson(x));
 			from.RowVersionChecks.ForEach(x => this.AddRowVersionCheck(x));
@@ -24,14 +23,9 @@ namespace TestsNS.Api.Client
 			from.TestAllFieldTypesNullables.ForEach(x => this.AddTestAllFieldTypesNullable(x));
 			from.TimestampChecks.ForEach(x => this.AddTimestampCheck(x));
 			from.VPersons.ForEach(x => this.AddVPerson(x));
-			from.SchemaAPersons.ForEach(x => this.AddSchemaAPerson(x));
-			from.SchemaBPersons.ForEach(x => this.AddSchemaBPerson(x));
-			from.PersonRefs.ForEach(x => this.AddPersonRef(x));
 		}
 
 		public List<ApiColumnSameAsFKTableClientResponseModel> ColumnSameAsFKTables { get; private set; } = new List<ApiColumnSameAsFKTableClientResponseModel>();
-
-		public List<ApiCompositePrimaryKeyClientResponseModel> CompositePrimaryKeys { get; private set; } = new List<ApiCompositePrimaryKeyClientResponseModel>();
 
 		public List<ApiIncludedColumnTestClientResponseModel> IncludedColumnTests { get; private set; } = new List<ApiIncludedColumnTestClientResponseModel>();
 
@@ -51,25 +45,11 @@ namespace TestsNS.Api.Client
 
 		public List<ApiVPersonClientResponseModel> VPersons { get; private set; } = new List<ApiVPersonClientResponseModel>();
 
-		public List<ApiSchemaAPersonClientResponseModel> SchemaAPersons { get; private set; } = new List<ApiSchemaAPersonClientResponseModel>();
-
-		public List<ApiSchemaBPersonClientResponseModel> SchemaBPersons { get; private set; } = new List<ApiSchemaBPersonClientResponseModel>();
-
-		public List<ApiPersonRefClientResponseModel> PersonRefs { get; private set; } = new List<ApiPersonRefClientResponseModel>();
-
 		public void AddColumnSameAsFKTable(ApiColumnSameAsFKTableClientResponseModel item)
 		{
 			if (!this.ColumnSameAsFKTables.Any(x => x.Id == item.Id))
 			{
 				this.ColumnSameAsFKTables.Add(item);
-			}
-		}
-
-		public void AddCompositePrimaryKey(ApiCompositePrimaryKeyClientResponseModel item)
-		{
-			if (!this.CompositePrimaryKeys.Any(x => x.Id == item.Id))
-			{
-				this.CompositePrimaryKeys.Add(item);
 			}
 		}
 
@@ -144,33 +124,9 @@ namespace TestsNS.Api.Client
 				this.VPersons.Add(item);
 			}
 		}
-
-		public void AddSchemaAPerson(ApiSchemaAPersonClientResponseModel item)
-		{
-			if (!this.SchemaAPersons.Any(x => x.Id == item.Id))
-			{
-				this.SchemaAPersons.Add(item);
-			}
-		}
-
-		public void AddSchemaBPerson(ApiSchemaBPersonClientResponseModel item)
-		{
-			if (!this.SchemaBPersons.Any(x => x.Id == item.Id))
-			{
-				this.SchemaBPersons.Add(item);
-			}
-		}
-
-		public void AddPersonRef(ApiPersonRefClientResponseModel item)
-		{
-			if (!this.PersonRefs.Any(x => x.Id == item.Id))
-			{
-				this.PersonRefs.Add(item);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed5e2784fbad2cef167eaed59cdfc945</Hash>
+    <Hash>9be62f1a0526a7602bf1e76129b77600</Hash>
 </Codenesium>*/

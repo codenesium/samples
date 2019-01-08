@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class TeacherSkillCreatedNotification : INotification
 	{
-		public BOTeacherSkill Record { get; private set; }
+		public ApiTeacherSkillServerResponseModel Record { get; private set; }
 
-		public TeacherSkillCreatedNotification(BOTeacherSkill record)
+		public TeacherSkillCreatedNotification(ApiTeacherSkillServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class TeacherSkillUpdatedNotification : INotification
 	{
-		public BOTeacherSkill Record { get; private set; }
+		public ApiTeacherSkillServerResponseModel Record { get; private set; }
 
-		public TeacherSkillUpdatedNotification(BOTeacherSkill record)
+		public TeacherSkillUpdatedNotification(ApiTeacherSkillServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7178e9424906eeecdaeab403205e2991</Hash>
+    <Hash>7d533533a1f40467e756f76d79c6ce30</Hash>
 </Codenesium>*/

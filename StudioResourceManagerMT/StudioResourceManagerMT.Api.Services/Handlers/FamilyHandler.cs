@@ -1,4 +1,5 @@
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class FamilyCreatedNotification : INotification
 	{
-		public BOFamily Record { get; private set; }
+		public ApiFamilyServerResponseModel Record { get; private set; }
 
-		public FamilyCreatedNotification(BOFamily record)
+		public FamilyCreatedNotification(ApiFamilyServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -40,9 +41,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 	public class FamilyUpdatedNotification : INotification
 	{
-		public BOFamily Record { get; private set; }
+		public ApiFamilyServerResponseModel Record { get; private set; }
 
-		public FamilyUpdatedNotification(BOFamily record)
+		public FamilyUpdatedNotification(ApiFamilyServerResponseModel record)
 		{
 			this.Record = record;
 		}
@@ -60,5 +61,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8653d90727133335647ffdc4381b7299</Hash>
+    <Hash>1d3d93321d363a773142a702fa2f340a</Hash>
 </Codenesium>*/

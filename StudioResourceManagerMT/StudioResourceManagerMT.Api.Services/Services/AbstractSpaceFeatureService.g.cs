@@ -71,9 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolSpaceFeatureMapper.MapModelToBO(default(int), model);
 				var record = await this.SpaceFeatureRepository.Create(this.DalSpaceFeatureMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSpaceFeatureMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new SpaceFeatureCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
+				response.SetRecord(this.BolSpaceFeatureMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new SpaceFeatureCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,10 +92,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.SpaceFeatureRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
-				await this.mediator.Publish(new SpaceFeatureUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
+				var apiModel = this.BolSpaceFeatureMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new SpaceFeatureUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(this.BolSpaceFeatureMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -121,5 +122,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b2ea349fba365c3340757c0b4fb528cb</Hash>
+    <Hash>1abadeba345734ad679ff5eb6a26622f</Hash>
 </Codenesium>*/

@@ -71,9 +71,9 @@ namespace StudioResourceManagerMTNS.Api.Services
 				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
 				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
 
-				var recordMappedToBusinessObject = this.DalAdminMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAdminMapper.MapBOToModel(recordMappedToBusinessObject));
-				await this.mediator.Publish(new AdminCreatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				response.SetRecord(this.BolAdminMapper.MapBOToModel(businessObject));
+				await this.mediator.Publish(new AdminCreatedNotification(response.Record));
 			}
 
 			return response;
@@ -92,10 +92,11 @@ namespace StudioResourceManagerMTNS.Api.Services
 
 				var record = await this.AdminRepository.Get(id);
 
-				var recordMappedToBusinessObject = this.DalAdminMapper.MapEFToBO(record);
-				await this.mediator.Publish(new AdminUpdatedNotification(recordMappedToBusinessObject));
+				var businessObject = this.DalAdminMapper.MapEFToBO(record);
+				var apiModel = this.BolAdminMapper.MapBOToModel(businessObject);
+				await this.mediator.Publish(new AdminUpdatedNotification(apiModel));
 
-				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(this.BolAdminMapper.MapBOToModel(recordMappedToBusinessObject));
+				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(apiModel);
 			}
 			else
 			{
@@ -128,5 +129,5 @@ namespace StudioResourceManagerMTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>954135d5a33054fdce04bc9377169c2a</Hash>
+    <Hash>69f890d5966853d3f884d757d6396dbc</Hash>
 </Codenesium>*/

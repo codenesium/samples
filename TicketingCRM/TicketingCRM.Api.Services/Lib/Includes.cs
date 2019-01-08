@@ -6,21 +6,6 @@ using TicketingCRMNS.Api.Contracts;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public class RouteConstants
-	{public const string Admins = "admins";
-	 public const string Cities = "cities";
-	 public const string Countries = "countries";
-	 public const string Customers = "customers";
-	 public const string Events = "events";
-	 public const string Provinces = "provinces";
-	 public const string Sales = "sales";
-	 public const string SaleTickets = "saletickets";
-	 public const string Tickets = "tickets";
-	 public const string TicketStatus = "ticketstatus";
-	 public const string Transactions = "transactions";
-	 public const string TransactionStatus = "transactionstatus";
-	 public const string Venues = "venues";}
-
 	public abstract class AbstractService
 	{
 	}
@@ -80,5 +65,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb0d83d154be52c2edb7df006c986e2d</Hash>
+    <Hash>8328c5754df70409ebe2698af0a65d52</Hash>
 </Codenesium>*/
