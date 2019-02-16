@@ -198,13 +198,6 @@ export default class SpeciesSearchComponent extends React.Component<
                 Header: 'Species',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -267,5 +260,5 @@ export default class SpeciesSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>96c1bc396934ceed597daf81d79223eb</Hash>
+    <Hash>43ebe6c796f46dd65964ed53b60b13a0</Hash>
 </Codenesium>*/

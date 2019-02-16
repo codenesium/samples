@@ -148,16 +148,10 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
                     Header: 'PostType',
                     columns: [
 					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'Type',
-                      accessor: 'type',
+                      accessor: 'rwType',
                       Cell: (props) => {
-                      return <span>{String(props.original.type)}</span>;
+                      return <span>{String(props.original.rwType)}</span>;
                       }           
                     },
                     {
@@ -178,5 +172,5 @@ export default class PostTypeSearchComponent extends React.Component<PostTypeSea
 }
 
 /*<Codenesium>
-    <Hash>ffba6c8a0255436ac50a8ccc1fbca3d0</Hash>
+    <Hash>36f26db5316554128714e2876d592072</Hash>
 </Codenesium>*/

@@ -47,11 +47,11 @@ export default class SaleViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7d5ae069a709e5c5b1e3e8c8f6fe5d35</Hash>
+    <Hash>6f20c3fe27fc6edc54cac42997c9bd9b</Hash>
 </Codenesium>*/

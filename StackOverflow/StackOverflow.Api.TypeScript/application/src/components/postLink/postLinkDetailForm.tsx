@@ -34,12 +34,6 @@ const PostLinkDetailDisplay = (model: Props) => {
         <div className="col-sm-12">{String(model.model!.creationDate)}</div>
       </div>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="linkTypeId" className={'col-sm-2 col-form-label'}>
           LinkTypeId
         </label>
@@ -157,5 +151,5 @@ export default class PostLinkDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>497de60bd26a324f4cc1a6d393aba139</Hash>
+    <Hash>8b112d0cbc00ec8b5c515e664cf83443</Hash>
 </Codenesium>*/

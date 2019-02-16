@@ -38,12 +38,6 @@ const SaleDetailDisplay = (model: Props) => {
         <div className="col-sm-12">{String(model.model!.firstName)}</div>
       </div>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="lastName" className={'col-sm-2 col-form-label'}>
           LastName
         </label>
@@ -171,5 +165,5 @@ export default class SaleDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>758bb5ac6d2cba20d9bf9d4e158810b3</Hash>
+    <Hash>8a3b37211e22a3d54b6abe925ac07310</Hash>
 </Codenesium>*/

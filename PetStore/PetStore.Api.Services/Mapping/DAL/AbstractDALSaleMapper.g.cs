@@ -40,7 +40,7 @@ namespace PetStoreNS.Api.Services
 			{
 				var paymentTypeIdModel = new ApiPaymentTypeServerResponseModel();
 				paymentTypeIdModel.SetProperties(
-					item.Id,
+					item.PaymentTypeIdNavigation.Id,
 					item.PaymentTypeIdNavigation.Name);
 
 				model.SetPaymentTypeIdNavigation(paymentTypeIdModel);
@@ -50,7 +50,7 @@ namespace PetStoreNS.Api.Services
 			{
 				var petIdModel = new ApiPetServerResponseModel();
 				petIdModel.SetProperties(
-					item.Id,
+					item.PetIdNavigation.Id,
 					item.PetIdNavigation.AcquiredDate,
 					item.PetIdNavigation.BreedId,
 					item.PetIdNavigation.Description,
@@ -80,5 +80,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>432279ec4b237790fbc58184281857ed</Hash>
+    <Hash>bbc4aa5b91e23073f98be347a4b93c31</Hash>
 </Codenesium>*/

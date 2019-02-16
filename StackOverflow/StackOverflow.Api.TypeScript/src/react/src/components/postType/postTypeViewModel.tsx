@@ -1,23 +1,23 @@
 export default class PostTypeViewModel {
   id: number;
-  type: string;
+  rwType: string;
 
   constructor() {
     this.id = 0;
-    this.type = '';
+    this.rwType = '';
   }
 
-  setProperties(id: number, type: string): void {
+  setProperties(id: number, rwType: string): void {
     this.id = id;
-    this.type = type;
+    this.rwType = rwType;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.rwType);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>6aa071792fa320d4a932c28a028d91dd</Hash>
+    <Hash>67571446408034340066d1830d2a68e1</Hash>
 </Codenesium>*/

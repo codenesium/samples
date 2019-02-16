@@ -197,13 +197,6 @@ export default class PenSearchComponent extends React.Component<
                 Header: 'Pen',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -266,5 +259,5 @@ export default class PenSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c843c4c0e87cc6c2aed45a988ad294f3</Hash>
+    <Hash>b35c40f7be935f23bcf983fbaf61c2e7</Hash>
 </Codenesium>*/

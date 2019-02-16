@@ -41,7 +41,7 @@ interface Props {
             			<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("comment") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Comment</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="comment" className={errorExistForField("comment") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="comment" className={errorExistForField("comment") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("comment") && <small className="text-danger">{errorsForField("comment")}</small>}
                         </div>
                     </div>
@@ -49,7 +49,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("creationDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CreationDate</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="creationDate" className={errorExistForField("creationDate") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="creationDate" className={errorExistForField("creationDate") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("creationDate") && <small className="text-danger">{errorsForField("creationDate")}</small>}
                         </div>
                     </div>
@@ -57,7 +57,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("postHistoryTypeId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PostHistoryTypeId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="postHistoryTypeId" className={errorExistForField("postHistoryTypeId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="postHistoryTypeId" className={errorExistForField("postHistoryTypeId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("postHistoryTypeId") && <small className="text-danger">{errorsForField("postHistoryTypeId")}</small>}
                         </div>
                     </div>
@@ -65,7 +65,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("postId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PostId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="postId" className={errorExistForField("postId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="postId" className={errorExistForField("postId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("postId") && <small className="text-danger">{errorsForField("postId")}</small>}
                         </div>
                     </div>
@@ -73,7 +73,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("revisionGUID") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>RevisionGUID</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="revisionGUID" className={errorExistForField("revisionGUID") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="revisionGUID" className={errorExistForField("revisionGUID") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("revisionGUID") && <small className="text-danger">{errorsForField("revisionGUID")}</small>}
                         </div>
                     </div>
@@ -81,7 +81,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("text") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Text</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="text" className={errorExistForField("text") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="text" className={errorExistForField("text") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("text") && <small className="text-danger">{errorsForField("text")}</small>}
                         </div>
                     </div>
@@ -89,7 +89,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("userDisplayName") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>UserDisplayName</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="userDisplayName" className={errorExistForField("userDisplayName") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="userDisplayName" className={errorExistForField("userDisplayName") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("userDisplayName") && <small className="text-danger">{errorsForField("userDisplayName")}</small>}
                         </div>
                     </div>
@@ -97,7 +97,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("userId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>UserId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="userId" className={errorExistForField("userId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="userId" className={errorExistForField("userId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("userId") && <small className="text-danger">{errorsForField("userId")}</small>}
                         </div>
                     </div>
@@ -205,5 +205,5 @@ const PostHistoryCreate = withFormik<Props, PostHistoryViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>2cf6158cdfe624fe109e1282c2a3fcd8</Hash>
+    <Hash>41b38a56c036d2058ea94efdfb7c911a</Hash>
 </Codenesium>*/

@@ -23,10 +23,10 @@ this.userId = userId;
 
 	toDisplay() : string
 	{
-		return String();
+		return String(this.name);
 	}
 };
 
 /*<Codenesium>
-    <Hash>fddddfff7d67e9ad98ed816fe6840e57</Hash>
+    <Hash>50a7404240c08b6c80e5331b9082cdf0</Hash>
 </Codenesium>*/

@@ -28,16 +28,10 @@ const PostHistoryTypeDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="type" className={'col-sm-2 col-form-label'}>
+        <label htmlFor="rwType" className={'col-sm-2 col-form-label'}>
           Type
         </label>
-        <div className="col-sm-12">{String(model.model!.type)}</div>
+        <div className="col-sm-12">{String(model.model!.rwType)}</div>
       </div>
     </form>
   );
@@ -139,5 +133,5 @@ export default class PostHistoryTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c483e3fc646492286ea9f8eef0cd8819</Hash>
+    <Hash>d5703e4306dd4206abf258f07fdd88f3</Hash>
 </Codenesium>*/

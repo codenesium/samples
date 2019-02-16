@@ -26,12 +26,6 @@ const PenDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -137,5 +131,5 @@ export default class PenDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>17ffc816ee57b2084d5df6defbe5b9be</Hash>
+    <Hash>92105b7ef0bd6b6794744455d7e82970</Hash>
 </Codenesium>*/

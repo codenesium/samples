@@ -26,12 +26,6 @@ const SpeciesDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -137,5 +131,5 @@ export default class SpeciesDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9d85f1d9aefc3ebc5ead4c63dcccf34c</Hash>
+    <Hash>c0f6547dcab5a824d45145d68356fd22</Hash>
 </Codenesium>*/

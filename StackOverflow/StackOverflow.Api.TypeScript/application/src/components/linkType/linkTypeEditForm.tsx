@@ -41,17 +41,10 @@ interface Props {
 
           <form onSubmit={props.handleSubmit} role="form">
 							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("id") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Id</label>
+                        <label htmlFor="name" className={errorExistForField("rwType") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Type</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="id" className={errorExistForField("id") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("id") && <small className="text-danger">{errorsForField("id")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("type") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Type</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="type" className={errorExistForField("type") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("type") && <small className="text-danger">{errorsForField("type")}</small>}
+                             <Field type="textbox" name="rwType" className={errorExistForField("rwType") ? "form-control is-invalid" : "form-control"} />
+                            {errorExistForField("rwType") && <small className="text-danger">{errorsForField("rwType")}</small>}
                         </div>
                     </div>
 			
@@ -75,7 +68,7 @@ interface Props {
 const LinkTypeEdit = withFormik<Props, LinkTypeViewModel>({
     mapPropsToValues: props => {
         let response = new LinkTypeViewModel();
-		response.setProperties(props.model!.id,props.model!.type);	
+		response.setProperties(props.model!.id,props.model!.rwType);	
 		return response;
       },
   
@@ -85,8 +78,8 @@ const LinkTypeEdit = withFormik<Props, LinkTypeViewModel>({
 
 	  if(values.id == 0) {
                 errors.id = "Required"
-                    }if(values.type == '') {
-                errors.type = "Required"
+                    }if(values.rwType == '') {
+                errors.rwType = "Required"
                     }
 
       return errors;
@@ -192,5 +185,5 @@ const LinkTypeEdit = withFormik<Props, LinkTypeViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>da7c828e5e91848b916b18d5e891e151</Hash>
+    <Hash>73ee37824cabce6b4b8f8bd471a0a785</Hash>
 </Codenesium>*/

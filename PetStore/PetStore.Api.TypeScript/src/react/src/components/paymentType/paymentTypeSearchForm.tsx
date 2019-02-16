@@ -198,13 +198,6 @@ export default class PaymentTypeSearchComponent extends React.Component<
                 Header: 'PaymentType',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -267,5 +260,5 @@ export default class PaymentTypeSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1759a9636ef6922e535f882a941b6427</Hash>
+    <Hash>f2bd536718086c86af0cc941f500c287</Hash>
 </Codenesium>*/

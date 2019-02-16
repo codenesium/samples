@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Services
 			model.SetProperties("A");
 			PostType response = mapper.MapModelToEntity(1, model);
 
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace StackOverflowNS.Api.Services
 			ApiPostTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Id.Should().Be(1);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -49,5 +49,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24480da8b10787f74cc79515ca8082b2</Hash>
+    <Hash>72cba8f4cf0a245d6635156da08bea27</Hash>
 </Codenesium>*/

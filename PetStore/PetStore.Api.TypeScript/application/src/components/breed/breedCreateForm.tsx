@@ -62,7 +62,7 @@ const BreedCreateDisplay: React.SFC<FormikProps<BreedViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -179,5 +179,5 @@ export default class BreedCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>8858f37eec937e761a79ee6dd5997a4a</Hash>
+    <Hash>006bd5b42cb03f7a0229a8488b68e4e5</Hash>
 </Codenesium>*/

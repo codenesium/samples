@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Services
 			model.SetProperties("A");
 			LinkType response = mapper.MapModelToEntity(1, model);
 
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace StackOverflowNS.Api.Services
 			ApiLinkTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Id.Should().Be(1);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -49,5 +49,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c3230ae690ffe66086d8b37e9f04a2a</Hash>
+    <Hash>15287ee3f6f486a6f1ca2566af42f0fb</Hash>
 </Codenesium>*/

@@ -52,32 +52,6 @@ const PaymentTypeEditDisplay = (props: FormikProps<PaymentTypeViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -87,7 +61,7 @@ const PaymentTypeEditDisplay = (props: FormikProps<PaymentTypeViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -264,5 +238,5 @@ export default class PaymentTypeEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d18927b983c9743fd86e22575d3dd9c1</Hash>
+    <Hash>fc59128f1155b043bf539fe29d0bcde4</Hash>
 </Codenesium>*/

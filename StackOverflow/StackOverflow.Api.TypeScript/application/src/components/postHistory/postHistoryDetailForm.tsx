@@ -37,12 +37,6 @@ const PostHistoryDetailDisplay = (model:Props) => {
 							</div>
 						</div>
 					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
 							<label htmlFor="postHistoryTypeId" className={"col-sm-2 col-form-label"}>PostHistoryTypeId</label>
 							<div className="col-sm-12">
 								{String(model.model!.postHistoryTypeId)}
@@ -153,5 +147,5 @@ const PostHistoryDetailDisplay = (model:Props) => {
 }
 
 /*<Codenesium>
-    <Hash>641fc4d7c8403c872fa20d069b375ae6</Hash>
+    <Hash>01bc1856b649ce28b2bd5b6881b15e79</Hash>
 </Codenesium>*/

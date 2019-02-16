@@ -14,7 +14,7 @@ namespace StackOverflowNS.Api.Services
 		{
 			var response = new ApiLinkTypeServerResponseModel();
 			response.SetProperties(id,
-			                       request.Type);
+			                       request.RwType);
 			return response;
 		}
 
@@ -23,7 +23,7 @@ namespace StackOverflowNS.Api.Services
 		{
 			var request = new ApiLinkTypeServerRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 
@@ -32,19 +32,19 @@ namespace StackOverflowNS.Api.Services
 		{
 			var request = new ApiLinkTypeClientRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 
 		public JsonPatchDocument<ApiLinkTypeServerRequestModel> CreatePatch(ApiLinkTypeServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiLinkTypeServerRequestModel>();
-			patch.Replace(x => x.Type, model.Type);
+			patch.Replace(x => x.RwType, model.RwType);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f641af09de0728c2948748be42dbdb0</Hash>
+    <Hash>06dcea58041128a80f8d3ff9c1fdc3c3</Hash>
 </Codenesium>*/

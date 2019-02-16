@@ -83,11 +83,11 @@ const DeviceActionEditDisplay = (props: FormikProps<DeviceActionViewModel>) => {
               : 'col-sm-2 col-form-label'
           }
         >
-          Device
+          DeviceId
         </label>
         <div className="col-sm-12">
           <Field
-            type="select"
+            type="textbox"
             name="deviceId"
             className={
               errorExistForField('deviceId')
@@ -301,5 +301,5 @@ export default class DeviceActionEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>26660bbbf9ac2a5b57b93b491445e3b2</Hash>
+    <Hash>ca294a04d873e43c6e6d6c1b876c4f5d</Hash>
 </Codenesium>*/

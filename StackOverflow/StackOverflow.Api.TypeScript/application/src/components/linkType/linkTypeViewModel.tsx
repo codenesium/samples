@@ -1,23 +1,23 @@
 export default class LinkTypeViewModel {
   id: number;
-  type: string;
+  rwType: string;
 
   constructor() {
     this.id = 0;
-    this.type = '';
+    this.rwType = '';
   }
 
-  setProperties(id: number, type: string): void {
+  setProperties(id: number, rwType: string): void {
     this.id = id;
-    this.type = type;
+    this.rwType = rwType;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.rwType);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>d242c2b2bffe629bd2f6ac5bb20475bd</Hash>
+    <Hash>a530d5622a3d86a1771a20675e91ed40</Hash>
 </Codenesium>*/

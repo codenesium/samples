@@ -50,32 +50,6 @@ const SpeciesEditDisplay = (props: FormikProps<SpeciesViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -85,7 +59,7 @@ const SpeciesEditDisplay = (props: FormikProps<SpeciesViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -262,5 +236,5 @@ export default class SpeciesEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9d45e0764ea512d9541e7f744c881b43</Hash>
+    <Hash>b090ba65719be4e434318efc9bf2f070</Hash>
 </Codenesium>*/

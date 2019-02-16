@@ -154,12 +154,6 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
                       return <span>{String(props.original.creationDate)}</span>;
                       }           
                     },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'PostId',
                       accessor: 'postId',
                       Cell: (props) => {
@@ -202,5 +196,5 @@ export default class CommentSearchComponent extends React.Component<CommentSearc
 }
 
 /*<Codenesium>
-    <Hash>3eb5d411fe7e0a1e92aa9fdcbba7d883</Hash>
+    <Hash>62b3cfe53b886d025ec8f62d3403c51b</Hash>
 </Codenesium>*/

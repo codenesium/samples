@@ -19,7 +19,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			model.SetProperties("A");
 			ApiPostHistoryTypeServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			model.SetProperties(1, "A");
 			ApiPostHistoryTypeServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -43,11 +43,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			JsonPatchDocument<ApiPostHistoryTypeServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiPostHistoryTypeServerRequestModel();
 			patch.ApplyTo(response);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fca2e13f4fda6fe4ba61ee9896f9bbdc</Hash>
+    <Hash>ea45274cbe4ec4847a921edbe56b719b</Hash>
 </Codenesium>*/

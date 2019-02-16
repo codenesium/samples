@@ -14,7 +14,7 @@ namespace StackOverflowNS.Api.Services
 		{
 			var response = new ApiPostTypeServerResponseModel();
 			response.SetProperties(id,
-			                       request.Type);
+			                       request.RwType);
 			return response;
 		}
 
@@ -23,7 +23,7 @@ namespace StackOverflowNS.Api.Services
 		{
 			var request = new ApiPostTypeServerRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 
@@ -32,19 +32,19 @@ namespace StackOverflowNS.Api.Services
 		{
 			var request = new ApiPostTypeClientRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 
 		public JsonPatchDocument<ApiPostTypeServerRequestModel> CreatePatch(ApiPostTypeServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiPostTypeServerRequestModel>();
-			patch.Replace(x => x.Type, model.Type);
+			patch.Replace(x => x.RwType, model.RwType);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>88b9396148a3b86de9b3136269a9b22b</Hash>
+    <Hash>1af940a08dde40e607b0c550ea7ff5d9</Hash>
 </Codenesium>*/

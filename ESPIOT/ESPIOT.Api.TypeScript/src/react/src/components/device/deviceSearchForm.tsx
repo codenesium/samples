@@ -198,21 +198,7 @@ export default class DeviceSearchComponent extends React.Component<
                 Header: 'Device',
                 columns: [
                   {
-                    Header: 'Name',
-                    accessor: 'name',
-                    Cell: props => {
-                      return <span>{String(props.original.name)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Public Id',
-                    accessor: 'publicId',
-                    Cell: props => {
-                      return <span>{String(props.original.publicId)}</span>;
-                    },
-                  },
-                  {
-                    Header: 'Last Ping',
+                    Header: 'DateOfLastPing',
                     accessor: 'dateOfLastPing',
                     Cell: props => {
                       return (
@@ -221,10 +207,24 @@ export default class DeviceSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Active',
+                    Header: 'IsActive',
                     accessor: 'isActive',
                     Cell: props => {
                       return <span>{String(props.original.isActive)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'Name',
+                    accessor: 'name',
+                    Cell: props => {
+                      return <span>{String(props.original.name)}</span>;
+                    },
+                  },
+                  {
+                    Header: 'PublicId',
+                    accessor: 'publicId',
+                    Cell: props => {
+                      return <span>{String(props.original.publicId)}</span>;
                     },
                   },
                   {
@@ -283,5 +283,5 @@ export default class DeviceSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>511ac3c3ec172bc7b7ce8489e5ae5706</Hash>
+    <Hash>a35ee20950ad359452a78856e9a9d5a8</Hash>
 </Codenesium>*/

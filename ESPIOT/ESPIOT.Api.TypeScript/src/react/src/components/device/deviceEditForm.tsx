@@ -50,6 +50,60 @@ const DeviceEditDisplay = (props: FormikProps<DeviceViewModel>) => {
         <label
           htmlFor="name"
           className={
+            errorExistForField('dateOfLastPing')
+              ? 'col-sm-2 col-form-label is-invalid'
+              : 'col-sm-2 col-form-label'
+          }
+        >
+          DateOfLastPing
+        </label>
+        <div className="col-sm-12">
+          <Field
+            type="textbox"
+            name="dateOfLastPing"
+            className={
+              errorExistForField('dateOfLastPing')
+                ? 'form-control is-invalid'
+                : 'form-control'
+            }
+          />
+          {errorExistForField('dateOfLastPing') && (
+            <small className="text-danger">
+              {errorsForField('dateOfLastPing')}
+            </small>
+          )}
+        </div>
+      </div>
+      <div className="form-group row">
+        <label
+          htmlFor="name"
+          className={
+            errorExistForField('isActive')
+              ? 'col-sm-2 col-form-label is-invalid'
+              : 'col-sm-2 col-form-label'
+          }
+        >
+          IsActive
+        </label>
+        <div className="col-sm-12">
+          <Field
+            type="textbox"
+            name="isActive"
+            className={
+              errorExistForField('isActive')
+                ? 'form-control is-invalid'
+                : 'form-control'
+            }
+          />
+          {errorExistForField('isActive') && (
+            <small className="text-danger">{errorsForField('isActive')}</small>
+          )}
+        </div>
+      </div>
+      <div className="form-group row">
+        <label
+          htmlFor="name"
+          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -81,7 +135,7 @@ const DeviceEditDisplay = (props: FormikProps<DeviceViewModel>) => {
               : 'col-sm-2 col-form-label'
           }
         >
-          Public Id
+          PublicId
         </label>
         <div className="col-sm-12">
           <Field
@@ -95,61 +149,6 @@ const DeviceEditDisplay = (props: FormikProps<DeviceViewModel>) => {
           />
           {errorExistForField('publicId') && (
             <small className="text-danger">{errorsForField('publicId')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('dateOfLastPing')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Last Ping
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="dateOfLastPing"
-            className={
-              errorExistForField('dateOfLastPing')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('dateOfLastPing') && (
-            <small className="text-danger">
-              {errorsForField('dateOfLastPing')}
-            </small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('isActive')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Active
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="checkbox"
-            checked={props.values.isActive}
-            name="isActive"
-            className={
-              errorExistForField('isActive')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('isActive') && (
-            <small className="text-danger">{errorsForField('isActive')}</small>
           )}
         </div>
       </div>
@@ -329,5 +328,5 @@ export default class DeviceEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>fa4b0c92c0eb3a327782ab1196fbf004</Hash>
+    <Hash>81765d95d1b543749a85a4eb202729a4</Hash>
 </Codenesium>*/

@@ -50,32 +50,6 @@ const PenEditDisplay = (props: FormikProps<PenViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -85,7 +59,7 @@ const PenEditDisplay = (props: FormikProps<PenViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -260,5 +234,5 @@ export default class PenEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>731dce74bae7f41a9f463347a726722e</Hash>
+    <Hash>454bcf6eef5f147447bb17fbd655b425</Hash>
 </Codenesium>*/

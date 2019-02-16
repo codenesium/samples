@@ -30,11 +30,11 @@ export default class DeviceActionViewModel {
   }
 
   toDisplay(): string {
-    return String(this.name);
+    return String(this.action);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>7131d7ca1e6f714b80441c0b6c86a6c8</Hash>
+    <Hash>387cbc15aeb36fb07a3ca66d85d8f11b</Hash>
 </Codenesium>*/

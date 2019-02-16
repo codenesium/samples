@@ -40,7 +40,7 @@ namespace PetStoreNS.Api.Services
 			{
 				var breedIdModel = new ApiBreedServerResponseModel();
 				breedIdModel.SetProperties(
-					item.Id,
+					item.BreedIdNavigation.Id,
 					item.BreedIdNavigation.Name);
 
 				model.SetBreedIdNavigation(breedIdModel);
@@ -50,7 +50,7 @@ namespace PetStoreNS.Api.Services
 			{
 				var penIdModel = new ApiPenServerResponseModel();
 				penIdModel.SetProperties(
-					item.Id,
+					item.PenIdNavigation.Id,
 					item.PenIdNavigation.Name);
 
 				model.SetPenIdNavigation(penIdModel);
@@ -60,7 +60,7 @@ namespace PetStoreNS.Api.Services
 			{
 				var speciesIdModel = new ApiSpeciesServerResponseModel();
 				speciesIdModel.SetProperties(
-					item.Id,
+					item.SpeciesIdNavigation.Id,
 					item.SpeciesIdNavigation.Name);
 
 				model.SetSpeciesIdNavigation(speciesIdModel);
@@ -85,5 +85,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>408a56bd10fc6e29994579f0e0c32a5e</Hash>
+    <Hash>cef3b4d245c0ceb6cb4d2d4f103d1bc6</Hash>
 </Codenesium>*/

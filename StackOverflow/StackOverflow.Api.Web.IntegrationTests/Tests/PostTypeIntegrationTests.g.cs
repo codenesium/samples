@@ -44,9 +44,9 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<PostType>().ToList()[1].Type.Should().Be("B");
+			context.Set<PostType>().ToList()[1].RwType.Should().Be("B");
 
-			context.Set<PostType>().ToList()[2].Type.Should().Be("C");
+			context.Set<PostType>().ToList()[2].RwType.Should().Be("C");
 		}
 
 		[Fact]
@@ -65,9 +65,9 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<PostType>().ToList()[1].Type.Should().Be("B");
+			context.Set<PostType>().ToList()[1].RwType.Should().Be("B");
 
-			result.Record.Type.Should().Be("B");
+			result.Record.RwType.Should().Be("B");
 		}
 
 		[Fact]
@@ -93,10 +93,10 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
-			context.Set<PostType>().ToList()[0].Type.Should().Be("B");
+			context.Set<PostType>().ToList()[0].RwType.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
-			updateResponse.Record.Type.Should().Be("B");
+			updateResponse.Record.RwType.Should().Be("B");
 		}
 
 		[Fact]
@@ -139,7 +139,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 			response.Id.Should().Be(1);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -170,7 +170,7 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			response.Count.Should().BeGreaterThan(0);
 			response[0].Id.Should().Be(1);
-			response[0].Type.Should().Be("A");
+			response[0].RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -196,5 +196,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f1b68ae18e5f1292ca73c3f5dea6457f</Hash>
+    <Hash>bd2d380e4cd2e0c5b3d76cf53871d82c</Hash>
 </Codenesium>*/

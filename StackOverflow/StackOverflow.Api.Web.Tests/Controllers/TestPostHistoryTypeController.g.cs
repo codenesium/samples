@@ -194,7 +194,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostHistoryTypeServerRequestModel>()))
 			.Callback<int, ApiPostHistoryTypeServerRequestModel>(
-				(id, model) => model.Type.Should().Be("A")
+				(id, model) => model.RwType.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiPostHistoryTypeServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostHistoryTypeServerResponseModel>(new ApiPostHistoryTypeServerResponseModel()));
@@ -203,7 +203,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPostHistoryTypeServerRequestModel>();
-			patch.Replace(x => x.Type, "A");
+			patch.Replace(x => x.RwType, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPostHistoryTypeServerRequestModel>();
-			patch.Replace(x => x.Type, "A");
+			patch.Replace(x => x.RwType, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace StackOverflowNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>21cb91123e14efb66ac1c8291664629e</Hash>
+    <Hash>fb04ba3753f618a40b601179c11ff0e1</Hash>
 </Codenesium>*/

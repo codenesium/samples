@@ -198,13 +198,6 @@ export default class BreedSearchComponent extends React.Component<
                 Header: 'Breed',
                 columns: [
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'Name',
                     accessor: 'name',
                     Cell: props => {
@@ -267,5 +260,5 @@ export default class BreedSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1610e5c8aa8f9da03fd55d33e9895144</Hash>
+    <Hash>a34785bf9c3e1f3d6f9781e7247b8128</Hash>
 </Codenesium>*/

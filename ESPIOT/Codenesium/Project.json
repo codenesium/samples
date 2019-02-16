@@ -237,14 +237,14 @@
       {
         "$id": "28",
         "AppSchemaName": "dbo",
-        "AppSchemaId": "5651d7c2-cad8-474b-b375-f53abd090750",
+        "AppSchemaId": "7d20fbfd-ce80-42e4-82bf-6e692ea9cb00",
         "Tables": [
           {
             "$id": "29",
             "AppTableName": "Device",
             "AppTableNamePlural": "Devices",
             "AppDoNotProcess": false,
-            "AppTableId": "98cbe726-4f1b-4801-a404-4a45ef819c46",
+            "AppTableId": "7ce7c3ff-eff1-446e-864d-c4a9d0945fae",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -513,7 +513,7 @@
             "AppTableName": "DeviceAction",
             "AppTableNamePlural": "DeviceActions",
             "AppDoNotProcess": false,
-            "AppTableId": "aee4fcfd-06b2-4126-beaf-159b4a0c825d",
+            "AppTableId": "4b7b7ab9-81dd-468d-861b-e0e83e9119ff",
             "AppGenerationEnabled": true,
             "Columns": [
               {
@@ -824,178 +824,11 @@
       "IsMultiTenant": false,
       "UseSoftDeletes": false
     },
-    "TableParameterSettings": [
-      {
-        "$id": "54",
-        "Table": "Device",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "Device",
-        "AppTableNamePlural": "Devices",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
-      },
-      {
-        "$id": "55",
-        "Table": "DeviceAction",
-        "Schema": "dbo",
-        "AppDoNotProcess": false,
-        "AppTableName": "DeviceAction",
-        "AppTableNamePlural": "DeviceActions",
-        "AppReferenceTable": false,
-        "AppControllerAttribute": "",
-        "AppGenerateBulkInsertMethod": true,
-        "AppGenerateCreateMethod": true,
-        "AppGenerateUpdateMethod": true,
-        "AppGenerateDeleteMethod": true,
-        "AppGenerateAllMethod": true,
-        "AppGenerateGetMethod": true,
-        "AppGeneratePatchMethod": true,
-        "AppBulkInsertMethodAttribute": "",
-        "AppCreateMethodAttribute": "",
-        "AppUpdateMethodAttribute": "",
-        "AppDeleteMethodAttribute": "",
-        "AppAllMethodAttribute": "",
-        "AppGetMethodAttribute": "",
-        "AppPatchMethodAttribute": "",
-        "ForeignKeyDisplayColumn": "this.name"
-      }
-    ],
-    "ColumnParameterSettings": [
-      {
-        "$id": "56",
-        "Table": "Device",
-        "Schema": "dbo",
-        "Column": "DateOfLastPing",
-        "AppCLRType": "DateTime",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 3,
-        "AppViewDisplayOrder": 1,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Last Ping",
-        "AppName": "DateOfLastPing",
-        "AppNamePlural": "DateOfLastPings"
-      },
-      {
-        "$id": "57",
-        "Table": "Device",
-        "Schema": "dbo",
-        "Column": "IsActive",
-        "AppCLRType": "bool",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 0,
-        "AppViewDisplayOrder": 2,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Active",
-        "AppName": "IsActive",
-        "AppNamePlural": "IsActives"
-      },
-      {
-        "$id": "58",
-        "Table": "Device",
-        "Schema": "dbo",
-        "Column": "PublicId",
-        "AppCLRType": "Guid",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Public Id",
-        "AppName": "PublicId",
-        "AppNamePlural": "PublicIds"
-      },
-      {
-        "$id": "59",
-        "Table": "DeviceAction",
-        "Schema": "dbo",
-        "Column": "Name",
-        "AppCLRType": "string",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 11,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "",
-        "AppName": "Name",
-        "AppNamePlural": "Names"
-      },
-      {
-        "$id": "60",
-        "Table": "DeviceAction",
-        "Schema": "dbo",
-        "Column": "DeviceId",
-        "AppCLRType": "int",
-        "AppDoNotProcess": false,
-        "AppIsConcurrencyColumn": false,
-        "AppIsRequired": true,
-        "AppShowInRequestModel": true,
-        "AppShowInResponseModel": true,
-        "AppIsBooleanWithYNConversion": false,
-        "AppDefaultValue": "",
-        "AppViewControlType": 8,
-        "AppViewDisplayOrder": 0,
-        "AppDisplayInView": true,
-        "AppViewControlLabel": "Device",
-        "AppName": "DeviceId",
-        "AppNamePlural": "DeviceIds"
-      }
-    ],
+    "TableParameterSettings": [],
+    "ColumnParameterSettings": [],
     "VirtualForeignKeys": [],
-    "ForeignKeyParameterSettings": [
-      {
-        "$id": "61",
-        "ForeignKeyName": "FK_DeviceAction_DeviceId_Device_Id",
-        "AppDoNotProcess": false
-      }
-    ],
+    "ForeignKeyParameterSettings": [],
     "VirtualConstraints": [],
-    "ConstraintParameterSettings": [
-      {
-        "$id": "62",
-        "SchemaName": "dbo",
-        "TableName": "Device",
-        "Name": "IX_Device",
-        "AppDoNotProcess": false,
-        "AppShowInController": true
-      }
-    ]
+    "ConstraintParameterSettings": []
   }
 }

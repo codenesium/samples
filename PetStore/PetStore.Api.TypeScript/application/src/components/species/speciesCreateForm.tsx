@@ -62,7 +62,7 @@ const SpeciesCreateDisplay: React.SFC<FormikProps<SpeciesViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -179,5 +179,5 @@ export default class SpeciesCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d5f9b51728fb3d94979748ce5b22ceb3</Hash>
+    <Hash>98de4199f0ce691cab7eab2c293fd4cd</Hash>
 </Codenesium>*/

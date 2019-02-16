@@ -15,7 +15,7 @@ namespace StackOverflowNS.Api.Services
 			LinkType item = new LinkType();
 			item.SetProperties(
 				id,
-				model.Type);
+				model.RwType);
 			return item;
 		}
 
@@ -25,7 +25,7 @@ namespace StackOverflowNS.Api.Services
 			var model = new ApiLinkTypeServerResponseModel();
 
 			model.SetProperties(item.Id,
-			                    item.Type);
+			                    item.RwType);
 
 			return model;
 		}
@@ -46,5 +46,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>736d8e770c36cb823df472960af70beb</Hash>
+    <Hash>9fedfe46214f50bfe5732277567d373b</Hash>
 </Codenesium>*/

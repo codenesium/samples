@@ -230,13 +230,6 @@ export default class PetSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'PenId',
                     accessor: 'penId',
                     Cell: props => {
@@ -341,5 +334,5 @@ export default class PetSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>1b452b43098d39720ea4b7dcc46a830a</Hash>
+    <Hash>87a8391e42ad045798807b67f5d077e8</Hash>
 </Codenesium>*/

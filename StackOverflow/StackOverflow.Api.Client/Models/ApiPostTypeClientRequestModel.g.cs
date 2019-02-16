@@ -15,16 +15,16 @@ namespace StackOverflowNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			string rwtype)
+			string rwType)
 		{
-			this.Type = rwtype;
+			this.RwType = rwType;
 		}
 
 		[JsonProperty]
-		public string Type { get; private set; } = default(string);
+		public string RwType { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ccdf15c9f5f3172d036b0bdffe7590e</Hash>
+    <Hash>b749f0415804c14214ecd0ff9508a6a7</Hash>
 </Codenesium>*/

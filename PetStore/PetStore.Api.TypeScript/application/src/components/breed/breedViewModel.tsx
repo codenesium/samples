@@ -13,11 +13,11 @@ export default class BreedViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>5256cec1eb0eb92488bc1a6c208c6915</Hash>
+    <Hash>5cb84bad5829f0b83256a6dfabe53690</Hash>
 </Codenesium>*/

@@ -41,16 +41,9 @@ interface Props {
 
           <form onSubmit={props.handleSubmit} role="form">
 							<div className="form-group row">
-                        <label htmlFor="name" className={errorExistForField("id") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Id</label>
-					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="id" className={errorExistForField("id") ? "form-control is-invalid" : "form-control"} />
-                            {errorExistForField("id") && <small className="text-danger">{errorsForField("id")}</small>}
-                        </div>
-                    </div>
-							<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("name") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Name</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="name" className={errorExistForField("name") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("name") && <small className="text-danger">{errorsForField("name")}</small>}
                         </div>
                     </div>
@@ -192,5 +185,5 @@ const VoteTypeEdit = withFormik<Props, VoteTypeViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>1d53901f03d36522f6eb66313225045a</Hash>
+    <Hash>16fc69314176e83fec891a3ff990d89a</Hash>
 </Codenesium>*/

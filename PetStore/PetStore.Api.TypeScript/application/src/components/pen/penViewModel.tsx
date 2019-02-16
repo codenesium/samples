@@ -13,11 +13,11 @@ export default class PenViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>aded3edc61da51f3c73fb8ff368c91b5</Hash>
+    <Hash>caa00e9dc56895fa3103a10aacbcf979</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace StackOverflowNS.Api.Services
 			PostType item = new PostType();
 			item.SetProperties(
 				id,
-				model.Type);
+				model.RwType);
 			return item;
 		}
 
@@ -25,7 +25,7 @@ namespace StackOverflowNS.Api.Services
 			var model = new ApiPostTypeServerResponseModel();
 
 			model.SetProperties(item.Id,
-			                    item.Type);
+			                    item.RwType);
 
 			return model;
 		}
@@ -46,5 +46,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f26e1a59f6ec6d90677ea8939413707b</Hash>
+    <Hash>acdc8a363b75d159119c7550bb6eacc6</Hash>
 </Codenesium>*/

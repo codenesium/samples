@@ -28,11 +28,11 @@ export default class TagViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.tagName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>6c41374e06f4dc2b9b81ed9151064b93</Hash>
+    <Hash>96fab4bcd18d3fbe87ea62ebe25dad3b</Hash>
 </Codenesium>*/

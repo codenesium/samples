@@ -26,12 +26,6 @@ const BreedDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -137,5 +131,5 @@ export default class BreedDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4da695099265b7fae38dd47627b8daf5</Hash>
+    <Hash>72d9cbcc7da38c697fe2b2c612174265</Hash>
 </Codenesium>*/

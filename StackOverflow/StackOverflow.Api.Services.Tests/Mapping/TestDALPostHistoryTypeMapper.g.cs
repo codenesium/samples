@@ -20,7 +20,7 @@ namespace StackOverflowNS.Api.Services
 			model.SetProperties("A");
 			PostHistoryType response = mapper.MapModelToEntity(1, model);
 
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace StackOverflowNS.Api.Services
 			ApiPostHistoryTypeServerResponseModel response = mapper.MapEntityToModel(item);
 
 			response.Id.Should().Be(1);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -49,5 +49,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4353780b81e0affbe5c0f1442a8d7d9b</Hash>
+    <Hash>c4018b120b55a9165aee6a41699937a2</Hash>
 </Codenesium>*/

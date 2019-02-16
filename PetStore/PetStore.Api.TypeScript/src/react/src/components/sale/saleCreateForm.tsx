@@ -62,7 +62,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="amount"
             className={
               errorExistForField('amount')
@@ -89,7 +89,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="firstName"
             className={
               errorExistForField('firstName')
@@ -116,7 +116,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="lastName"
             className={
               errorExistForField('lastName')
@@ -143,7 +143,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="paymentTypeId"
             className={
               errorExistForField('paymentTypeId')
@@ -172,7 +172,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="petId"
             className={
               errorExistForField('petId')
@@ -199,7 +199,7 @@ const SaleCreateDisplay: React.SFC<FormikProps<SaleViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="phone"
             className={
               errorExistForField('phone')
@@ -339,5 +339,5 @@ export default class SaleCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>41f570e4cddb5dc609ab2cd193a8aecc</Hash>
+    <Hash>98fdca9d1cf9d11228df889a57558eef</Hash>
 </Codenesium>*/

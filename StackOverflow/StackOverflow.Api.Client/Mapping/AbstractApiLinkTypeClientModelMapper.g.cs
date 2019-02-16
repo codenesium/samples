@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.Client
 		{
 			var response = new ApiLinkTypeClientResponseModel();
 			response.SetProperties(id,
-			                       request.Type);
+			                       request.RwType);
 			return response;
 		}
 
@@ -21,12 +21,12 @@ namespace StackOverflowNS.Api.Client
 		{
 			var request = new ApiLinkTypeClientRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e82734c3b6894a31695da9bd2113e82e</Hash>
+    <Hash>ccc07d19671b55f3ecb295377fb9fb4d</Hash>
 </Codenesium>*/

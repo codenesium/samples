@@ -28,12 +28,6 @@ const PaymentTypeDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -139,5 +133,5 @@ export default class PaymentTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>3952f21acfc30a148d36e4af340502e3</Hash>
+    <Hash>b0df4ab519dd94cbc9ee9d111698170f</Hash>
 </Codenesium>*/

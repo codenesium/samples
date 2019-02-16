@@ -12,7 +12,7 @@ namespace StackOverflowNS.Api.Client
 		{
 			var response = new ApiPostHistoryTypeClientResponseModel();
 			response.SetProperties(id,
-			                       request.Type);
+			                       request.RwType);
 			return response;
 		}
 
@@ -21,12 +21,12 @@ namespace StackOverflowNS.Api.Client
 		{
 			var request = new ApiPostHistoryTypeClientRequestModel();
 			request.SetProperties(
-				response.Type);
+				response.RwType);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>81774f72181a2881c9f002d3cb5151d1</Hash>
+    <Hash>fa7fc02dd34520a7ec9e0336a57fb60a</Hash>
 </Codenesium>*/

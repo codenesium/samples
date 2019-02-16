@@ -46,12 +46,6 @@ const PetDetailDisplay = (model: Props) => {
         <div className="col-sm-12">{String(model.model!.description)}</div>
       </div>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="penId" className={'col-sm-2 col-form-label'}>
           PenId
         </label>
@@ -173,5 +167,5 @@ export default class PetDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>9ac8a52479b57e15a0c31776a98a9d77</Hash>
+    <Hash>0a3d567c4d84e27e62629c8d198414b2</Hash>
 </Codenesium>*/

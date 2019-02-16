@@ -64,7 +64,7 @@ const PaymentTypeCreateDisplay: React.SFC<FormikProps<PaymentTypeViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -181,5 +181,5 @@ export default class PaymentTypeCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>af2a3bc4bbac71357ddbb968ae147569</Hash>
+    <Hash>5f4edc759481b5ddab98b65bde38fa48</Hash>
 </Codenesium>*/

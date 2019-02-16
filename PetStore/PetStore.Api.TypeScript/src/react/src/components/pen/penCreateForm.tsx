@@ -62,7 +62,7 @@ const PenCreateDisplay: React.SFC<FormikProps<PenViewModel>> = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -177,5 +177,5 @@ export default class PenCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>239aebc2003ff63eda2747e8989e6bc2</Hash>
+    <Hash>77db2bb89800362f68c283756cd201bc</Hash>
 </Codenesium>*/

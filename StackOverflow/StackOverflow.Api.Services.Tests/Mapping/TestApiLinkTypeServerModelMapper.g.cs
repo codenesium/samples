@@ -19,7 +19,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			model.SetProperties("A");
 			ApiLinkTypeServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.Services.Tests
 			model.SetProperties(1, "A");
 			ApiLinkTypeServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -43,11 +43,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			JsonPatchDocument<ApiLinkTypeServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiLinkTypeServerRequestModel();
 			patch.ApplyTo(response);
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a76610ea4d5598989d7794b6df3bc78c</Hash>
+    <Hash>5dcf7c34048da9cd185a3e3622ca4334</Hash>
 </Codenesium>*/

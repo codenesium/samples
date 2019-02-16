@@ -13,11 +13,11 @@ export default class PaymentTypeViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.name);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>f1b6f6c5d6804a6118851518295338a7</Hash>
+    <Hash>81da126cd0ca3e4111dbdd466e47c70a</Hash>
 </Codenesium>*/

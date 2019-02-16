@@ -15,10 +15,10 @@ namespace StackOverflowNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
-			string rwtype)
+			string rwType)
 		{
 			this.Id = id;
-			this.Type = rwtype;
+			this.RwType = rwType;
 		}
 
 		[Key]
@@ -27,10 +27,10 @@ namespace StackOverflowNS.Api.DataAccess
 
 		[MaxLength(50)]
 		[Column("Type")]
-		public virtual string Type { get; private set; }
+		public virtual string RwType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>034d12330e508d0a2d1b499ffcd1a022</Hash>
+    <Hash>e66d9ad852edc04d09ec122b3ab1d9c6</Hash>
 </Codenesium>*/

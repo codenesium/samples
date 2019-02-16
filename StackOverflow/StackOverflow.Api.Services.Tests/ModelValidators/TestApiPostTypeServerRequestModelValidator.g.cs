@@ -25,7 +25,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Type_Create_null()
+		public async void RwType_Create_null()
 		{
 			Mock<IPostTypeRepository> postTypeRepository = new Mock<IPostTypeRepository>();
 			postTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
@@ -33,11 +33,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiPostTypeServerRequestModelValidator(postTypeRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPostTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, null as string);
 		}
 
 		[Fact]
-		public async void Type_Update_null()
+		public async void RwType_Update_null()
 		{
 			Mock<IPostTypeRepository> postTypeRepository = new Mock<IPostTypeRepository>();
 			postTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
@@ -45,11 +45,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiPostTypeServerRequestModelValidator(postTypeRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPostTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, null as string);
 		}
 
 		[Fact]
-		public async void Type_Create_length()
+		public async void RwType_Create_length()
 		{
 			Mock<IPostTypeRepository> postTypeRepository = new Mock<IPostTypeRepository>();
 			postTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
@@ -57,11 +57,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiPostTypeServerRequestModelValidator(postTypeRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPostTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, new string('A', 51));
 		}
 
 		[Fact]
-		public async void Type_Update_length()
+		public async void RwType_Update_length()
 		{
 			Mock<IPostTypeRepository> postTypeRepository = new Mock<IPostTypeRepository>();
 			postTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostType()));
@@ -69,11 +69,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiPostTypeServerRequestModelValidator(postTypeRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPostTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, new string('A', 51));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a776190c98013cfa51608262462999c</Hash>
+    <Hash>bc0585f9dea01769484e61fbaead3c64</Hash>
 </Codenesium>*/

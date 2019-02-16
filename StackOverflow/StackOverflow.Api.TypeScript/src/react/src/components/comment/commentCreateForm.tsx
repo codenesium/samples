@@ -41,7 +41,7 @@ interface Props {
             			<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("creationDate") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>CreationDate</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="creationDate" className={errorExistForField("creationDate") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="creationDate" className={errorExistForField("creationDate") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("creationDate") && <small className="text-danger">{errorsForField("creationDate")}</small>}
                         </div>
                     </div>
@@ -49,7 +49,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("postId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>PostId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="postId" className={errorExistForField("postId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="postId" className={errorExistForField("postId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("postId") && <small className="text-danger">{errorsForField("postId")}</small>}
                         </div>
                     </div>
@@ -57,7 +57,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("score") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Score</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="score" className={errorExistForField("score") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="score" className={errorExistForField("score") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("score") && <small className="text-danger">{errorsForField("score")}</small>}
                         </div>
                     </div>
@@ -65,7 +65,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("text") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>Text</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="text" className={errorExistForField("text") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="text" className={errorExistForField("text") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("text") && <small className="text-danger">{errorsForField("text")}</small>}
                         </div>
                     </div>
@@ -73,7 +73,7 @@ interface Props {
 						<div className="form-group row">
                         <label htmlFor="name" className={errorExistForField("userId") ? ("col-sm-2 col-form-label is-invalid") : "col-sm-2 col-form-label"}>UserId</label>
 					    <div className="col-sm-12">
-                             <Field type="datetime-local" name="userId" className={errorExistForField("userId") ? "form-control is-invalid" : "form-control"} />
+                             <Field type="textbox" name="userId" className={errorExistForField("userId") ? "form-control is-invalid" : "form-control"} />
                             {errorExistForField("userId") && <small className="text-danger">{errorsForField("userId")}</small>}
                         </div>
                     </div>
@@ -179,5 +179,5 @@ const CommentCreate = withFormik<Props, CommentViewModel>({
 }
 
 /*<Codenesium>
-    <Hash>78fc94f50c59286934a896d830cb3832</Hash>
+    <Hash>17000550099003df9ae31ce2932791f7</Hash>
 </Codenesium>*/

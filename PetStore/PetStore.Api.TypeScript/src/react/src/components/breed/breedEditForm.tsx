@@ -50,32 +50,6 @@ const BreedEditDisplay = (props: FormikProps<BreedViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('name')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -85,7 +59,7 @@ const BreedEditDisplay = (props: FormikProps<BreedViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="name"
             className={
               errorExistForField('name')
@@ -262,5 +236,5 @@ export default class BreedEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>ecdf1ea68be1072fec8c4718722b4e10</Hash>
+    <Hash>e83408362546693fc1d46aa065e6067d</Hash>
 </Codenesium>*/

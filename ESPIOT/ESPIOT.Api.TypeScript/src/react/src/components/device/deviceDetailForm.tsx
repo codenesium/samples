@@ -26,6 +26,18 @@ const DeviceDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
+        <label htmlFor="dateOfLastPing" className={'col-sm-2 col-form-label'}>
+          DateOfLastPing
+        </label>
+        <div className="col-sm-12">{String(model.model!.dateOfLastPing)}</div>
+      </div>
+      <div className="form-group row">
+        <label htmlFor="isActive" className={'col-sm-2 col-form-label'}>
+          IsActive
+        </label>
+        <div className="col-sm-12">{String(model.model!.isActive)}</div>
+      </div>
+      <div className="form-group row">
         <label htmlFor="name" className={'col-sm-2 col-form-label'}>
           Name
         </label>
@@ -33,21 +45,9 @@ const DeviceDetailDisplay = (model: Props) => {
       </div>
       <div className="form-group row">
         <label htmlFor="publicId" className={'col-sm-2 col-form-label'}>
-          Public Id
+          PublicId
         </label>
         <div className="col-sm-12">{String(model.model!.publicId)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="dateOfLastPing" className={'col-sm-2 col-form-label'}>
-          Last Ping
-        </label>
-        <div className="col-sm-12">{String(model.model!.dateOfLastPing)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="isActive" className={'col-sm-2 col-form-label'}>
-          Active
-        </label>
-        <div className="col-sm-12">{String(model.model!.isActive)}</div>
       </div>
     </form>
   );
@@ -149,5 +149,5 @@ export default class DeviceDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c0929c91d2ea761e43ea179282ba16e3</Hash>
+    <Hash>5e2af423e2d16017d253c6c3987cff23</Hash>
 </Codenesium>*/

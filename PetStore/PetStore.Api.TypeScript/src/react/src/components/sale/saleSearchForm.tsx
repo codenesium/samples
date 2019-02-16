@@ -211,13 +211,6 @@ export default class SaleSearchComponent extends React.Component<
                     },
                   },
                   {
-                    Header: 'Id',
-                    accessor: 'id',
-                    Cell: props => {
-                      return <span>{String(props.original.id)}</span>;
-                    },
-                  },
-                  {
                     Header: 'LastName',
                     accessor: 'lastName',
                     Cell: props => {
@@ -329,5 +322,5 @@ export default class SaleSearchComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d4072e106bcaf6c5b4606f1da64c3188</Hash>
+    <Hash>5c9a1bd174f8cfd6a9760b4e27a237ad</Hash>
 </Codenesium>*/

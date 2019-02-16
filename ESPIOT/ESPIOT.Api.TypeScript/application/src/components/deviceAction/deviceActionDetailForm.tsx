@@ -35,7 +35,7 @@ const DeviceActionDetailDisplay = (model: Props) => {
       </div>
       <div className="form-group row">
         <label htmlFor="deviceId" className={'col-sm-2 col-form-label'}>
-          Device
+          DeviceId
         </label>
         <div className="col-sm-12">
           {model.model!.deviceIdNavigation!.toDisplay()}
@@ -147,5 +147,5 @@ export default class DeviceActionDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>caf60dcf43799f38d00a6e5d8a5cb27d</Hash>
+    <Hash>6dc1c56b9d5d727a9f90160da8dcdb4f</Hash>
 </Codenesium>*/

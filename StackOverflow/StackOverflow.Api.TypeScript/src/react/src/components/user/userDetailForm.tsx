@@ -67,12 +67,6 @@ const UserDetailDisplay = (model:Props) => {
 							</div>
 						</div>
 					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
 							<label htmlFor="lastAccessDate" className={"col-sm-2 col-form-label"}>LastAccessDate</label>
 							<div className="col-sm-12">
 								{String(model.model!.lastAccessDate)}
@@ -183,5 +177,5 @@ const UserDetailDisplay = (model:Props) => {
 }
 
 /*<Codenesium>
-    <Hash>3e935229197b807414852558d0c9d74e</Hash>
+    <Hash>7db924580243034ed57cfb4255c3b4ee</Hash>
 </Codenesium>*/

@@ -28,16 +28,10 @@ const LinkTypeDetailDisplay = (model: Props) => {
         <i className="fas fa-edit" />
       </button>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="type" className={'col-sm-2 col-form-label'}>
+        <label htmlFor="rwType" className={'col-sm-2 col-form-label'}>
           Type
         </label>
-        <div className="col-sm-12">{String(model.model!.type)}</div>
+        <div className="col-sm-12">{String(model.model!.rwType)}</div>
       </div>
     </form>
   );
@@ -139,5 +133,5 @@ export default class LinkTypeDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>d12970deeb821b552fd6d832716dc7ca</Hash>
+    <Hash>a63f107f25ea83964f1d859d250ce8e1</Hash>
 </Codenesium>*/

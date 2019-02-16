@@ -59,7 +59,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="acquiredDate"
             className={
               errorExistForField('acquiredDate')
@@ -87,7 +87,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="breedId"
             className={
               errorExistForField('breedId')
@@ -113,7 +113,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="description"
             className={
               errorExistForField('description')
@@ -132,32 +132,6 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('penId')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -167,7 +141,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="penId"
             className={
               errorExistForField('penId')
@@ -193,7 +167,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="price"
             className={
               errorExistForField('price')
@@ -219,7 +193,7 @@ const PetEditDisplay = (props: FormikProps<PetViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="speciesId"
             className={
               errorExistForField('speciesId')
@@ -417,5 +391,5 @@ export default class PetEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>c7755eb1a907512bf39bf77b9393af60</Hash>
+    <Hash>f17091717ec759f27b52b7f0d766a8c5</Hash>
 </Codenesium>*/

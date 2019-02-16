@@ -148,12 +148,6 @@ export default class VoteTypeSearchComponent extends React.Component<VoteTypeSea
                     Header: 'VoteType',
                     columns: [
 					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'Name',
                       accessor: 'name',
                       Cell: (props) => {
@@ -178,5 +172,5 @@ export default class VoteTypeSearchComponent extends React.Component<VoteTypeSea
 }
 
 /*<Codenesium>
-    <Hash>2caccf2c090aa0515839f56a793214a5</Hash>
+    <Hash>3aa6d1cd1f9a850793c4cc776fdaa3dd</Hash>
 </Codenesium>*/

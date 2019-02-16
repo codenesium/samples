@@ -54,33 +54,7 @@ const PostHistoryTypeEditDisplay = (
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
-            errorExistForField('type')
+            errorExistForField('rwType')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
           }
@@ -89,16 +63,16 @@ const PostHistoryTypeEditDisplay = (
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
-            name="type"
+            type="textbox"
+            name="rwType"
             className={
-              errorExistForField('type')
+              errorExistForField('rwType')
                 ? 'form-control is-invalid'
                 : 'form-control'
             }
           />
-          {errorExistForField('type') && (
-            <small className="text-danger">{errorsForField('type')}</small>
+          {errorExistForField('rwType') && (
+            <small className="text-danger">{errorsForField('rwType')}</small>
           )}
         </div>
       </div>
@@ -122,7 +96,7 @@ const PostHistoryTypeEditDisplay = (
 const PostHistoryTypeEdit = withFormik<Props, PostHistoryTypeViewModel>({
   mapPropsToValues: props => {
     let response = new PostHistoryTypeViewModel();
-    response.setProperties(props.model!.id, props.model!.type);
+    response.setProperties(props.model!.id, props.model!.rwType);
     return response;
   },
 
@@ -133,8 +107,8 @@ const PostHistoryTypeEdit = withFormik<Props, PostHistoryTypeViewModel>({
     if (values.id == 0) {
       errors.id = 'Required';
     }
-    if (values.type == '') {
-      errors.type = 'Required';
+    if (values.rwType == '') {
+      errors.rwType = 'Required';
     }
 
     return errors;
@@ -266,5 +240,5 @@ export default class PostHistoryTypeEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>f53c06cb15fdef830b490fd18003c7dc</Hash>
+    <Hash>3422b46316fc45b16e8ed8898d293036</Hash>
 </Codenesium>*/

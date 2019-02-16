@@ -110,38 +110,38 @@ this.userId = userId;
 			}
 			export class LinkTypeClientRequestModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
 
 			export class LinkTypeClientResponseModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
@@ -226,38 +226,38 @@ this.userId = userId;
 			}
 			export class PostHistoryTypeClientRequestModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
 
 			export class PostHistoryTypeClientResponseModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
@@ -463,38 +463,38 @@ this.viewCount = viewCount;
 			}
 			export class PostTypeClientRequestModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
 
 			export class PostTypeClientResponseModel {
 				id:number;
-type:string;
+rwType:string;
 
 	
 				constructor() {
 					this.id = 0;
-this.type = '';
+this.rwType = '';
 
 				}
 
-				setProperties(id : number,type : string) : void
+				setProperties(id : number,rwType : string) : void
 				{
 					this.id = id;
-this.type = type;
+this.rwType = rwType;
 
 				}
 			}
@@ -762,5 +762,5 @@ this.name = name;
 			}
 
 /*<Codenesium>
-    <Hash>50ea3712da19c621d98b31b64a7849f7</Hash>
+    <Hash>2c915f18d19f699e2d448092016ab3be</Hash>
 </Codenesium>*/

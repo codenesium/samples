@@ -34,12 +34,6 @@ const CommentDetailDisplay = (model: Props) => {
         <div className="col-sm-12">{String(model.model!.creationDate)}</div>
       </div>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="postId" className={'col-sm-2 col-form-label'}>
           PostId
         </label>
@@ -163,5 +157,5 @@ export default class CommentDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>0cdb0ba22d152e101f888f0b6a5f720d</Hash>
+    <Hash>980177555f6c5561090485db6bed17ae</Hash>
 </Codenesium>*/

@@ -34,7 +34,7 @@ namespace ESPIOTNS.Api.Services
 			{
 				var deviceIdModel = new ApiDeviceServerResponseModel();
 				deviceIdModel.SetProperties(
-					item.Id,
+					item.DeviceIdNavigation.Id,
 					item.DeviceIdNavigation.DateOfLastPing,
 					item.DeviceIdNavigation.IsActive,
 					item.DeviceIdNavigation.Name,
@@ -62,5 +62,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8bfb149c66b0651619f73eabb00f82b</Hash>
+    <Hash>df37dd1cf784910b5064762d34dfbad1</Hash>
 </Codenesium>*/

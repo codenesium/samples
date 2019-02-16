@@ -73,12 +73,6 @@ const PostDetailDisplay = (model:Props) => {
 							</div>
 						</div>
 					   						 <div className="form-group row">
-							<label htmlFor="id" className={"col-sm-2 col-form-label"}>Id</label>
-							<div className="col-sm-12">
-								{String(model.model!.id)}
-							</div>
-						</div>
-					   						 <div className="form-group row">
 							<label htmlFor="lastActivityDate" className={"col-sm-2 col-form-label"}>LastActivityDate</label>
 							<div className="col-sm-12">
 								{String(model.model!.lastActivityDate)}
@@ -219,5 +213,5 @@ const PostDetailDisplay = (model:Props) => {
 }
 
 /*<Codenesium>
-    <Hash>d6ce331721f2809a27731eb80344b57c</Hash>
+    <Hash>23ef4521a63f4a35af65645b7f6901d9</Hash>
 </Codenesium>*/

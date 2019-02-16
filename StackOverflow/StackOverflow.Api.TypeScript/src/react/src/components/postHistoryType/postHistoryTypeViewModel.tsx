@@ -1,23 +1,23 @@
 export default class PostHistoryTypeViewModel {
   id: number;
-  type: string;
+  rwType: string;
 
   constructor() {
     this.id = 0;
-    this.type = '';
+    this.rwType = '';
   }
 
-  setProperties(id: number, type: string): void {
+  setProperties(id: number, rwType: string): void {
     this.id = id;
-    this.type = type;
+    this.rwType = rwType;
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.rwType);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>355c49415da296060d774ca6c18fb468</Hash>
+    <Hash>fbc85bb4eb9e36d689e70e46968de67e</Hash>
 </Codenesium>*/

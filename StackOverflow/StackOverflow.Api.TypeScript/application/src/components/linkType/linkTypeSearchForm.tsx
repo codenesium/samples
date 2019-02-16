@@ -148,16 +148,10 @@ export default class LinkTypeSearchComponent extends React.Component<LinkTypeSea
                     Header: 'LinkType',
                     columns: [
 					  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'Type',
-                      accessor: 'type',
+                      accessor: 'rwType',
                       Cell: (props) => {
-                      return <span>{String(props.original.type)}</span>;
+                      return <span>{String(props.original.rwType)}</span>;
                       }           
                     },
                     {
@@ -178,5 +172,5 @@ export default class LinkTypeSearchComponent extends React.Component<LinkTypeSea
 }
 
 /*<Codenesium>
-    <Hash>8bad0f1863dc57de29b4527d450a6157</Hash>
+    <Hash>7f5273e197b225e56c899454b1248cdc</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace StackOverflowNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiLinkTypeServerRequestModel model)
 		{
-			this.TypeRules();
+			this.RwTypeRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkTypeServerRequestModel model)
 		{
-			this.TypeRules();
+			this.RwTypeRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -33,5 +33,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc681c9ef0ebae5e5f0bd5ed11bc7e04</Hash>
+    <Hash>35e596454baa70168122c67bd4f441ec</Hash>
 </Codenesium>*/

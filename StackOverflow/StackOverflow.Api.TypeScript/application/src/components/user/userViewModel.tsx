@@ -64,11 +64,11 @@ export default class UserViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.displayName);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>3737d3a2fd123b6d1b9cde8b252d25e9</Hash>
+    <Hash>0a40a94ff346cd56d45cf5f77626dc42</Hash>
 </Codenesium>*/

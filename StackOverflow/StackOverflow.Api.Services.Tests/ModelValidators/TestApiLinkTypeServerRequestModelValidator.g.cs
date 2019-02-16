@@ -25,7 +25,7 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Type_Create_null()
+		public async void RwType_Create_null()
 		{
 			Mock<ILinkTypeRepository> linkTypeRepository = new Mock<ILinkTypeRepository>();
 			linkTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkType()));
@@ -33,11 +33,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiLinkTypeServerRequestModelValidator(linkTypeRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, null as string);
 		}
 
 		[Fact]
-		public async void Type_Update_null()
+		public async void RwType_Update_null()
 		{
 			Mock<ILinkTypeRepository> linkTypeRepository = new Mock<ILinkTypeRepository>();
 			linkTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkType()));
@@ -45,11 +45,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiLinkTypeServerRequestModelValidator(linkTypeRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, null as string);
 		}
 
 		[Fact]
-		public async void Type_Create_length()
+		public async void RwType_Create_length()
 		{
 			Mock<ILinkTypeRepository> linkTypeRepository = new Mock<ILinkTypeRepository>();
 			linkTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkType()));
@@ -57,11 +57,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiLinkTypeServerRequestModelValidator(linkTypeRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, new string('A', 51));
 		}
 
 		[Fact]
-		public async void Type_Update_length()
+		public async void RwType_Update_length()
 		{
 			Mock<ILinkTypeRepository> linkTypeRepository = new Mock<ILinkTypeRepository>();
 			linkTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkType()));
@@ -69,11 +69,11 @@ namespace StackOverflowNS.Api.Services.Tests
 			var validator = new ApiLinkTypeServerRequestModelValidator(linkTypeRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkTypeServerRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
+			validator.ShouldHaveValidationErrorFor(x => x.RwType, new string('A', 51));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5b24ced846542de1e6fed9cfea9377d</Hash>
+    <Hash>156fabf6d6203012ce1bf2b45307941c</Hash>
 </Codenesium>*/

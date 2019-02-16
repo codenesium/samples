@@ -196,12 +196,6 @@ export default class PostSearchComponent extends React.Component<PostSearchCompo
                       return <span>{String(props.original.favoriteCount)}</span>;
                       }           
                     },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'LastActivityDate',
                       accessor: 'lastActivityDate',
                       Cell: (props) => {
@@ -286,5 +280,5 @@ export default class PostSearchComponent extends React.Component<PostSearchCompo
 }
 
 /*<Codenesium>
-    <Hash>7b1b7c1430fda439411947f13f8a3245</Hash>
+    <Hash>7b6fb957b042371828d5733df73883a2</Hash>
 </Codenesium>*/

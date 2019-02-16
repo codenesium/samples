@@ -5,7 +5,7 @@ export default class PostHistoryTypeMapper {
     dto: Api.PostHistoryTypeClientResponseModel
   ): PostHistoryTypeViewModel {
     let response = new PostHistoryTypeViewModel();
-    response.setProperties(dto.id, dto.type);
+    response.setProperties(dto.id, dto.rwType);
 
     return response;
   }
@@ -14,12 +14,12 @@ export default class PostHistoryTypeMapper {
     model: PostHistoryTypeViewModel
   ): Api.PostHistoryTypeClientRequestModel {
     let response = new Api.PostHistoryTypeClientRequestModel();
-    response.setProperties(model.id, model.type);
+    response.setProperties(model.id, model.rwType);
     return response;
   }
 }
 
 
 /*<Codenesium>
-    <Hash>533694d81d9dbc9862672bcecad01372</Hash>
+    <Hash>684acde4f7bf1b50390f658d966631cd</Hash>
 </Codenesium>*/

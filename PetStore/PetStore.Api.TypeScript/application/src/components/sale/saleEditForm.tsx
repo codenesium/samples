@@ -59,7 +59,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="amount"
             className={
               errorExistForField('amount')
@@ -85,7 +85,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="firstName"
             className={
               errorExistForField('firstName')
@@ -102,32 +102,6 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         <label
           htmlFor="name"
           className={
-            errorExistForField('id')
-              ? 'col-sm-2 col-form-label is-invalid'
-              : 'col-sm-2 col-form-label'
-          }
-        >
-          Id
-        </label>
-        <div className="col-sm-12">
-          <Field
-            type="datetime-local"
-            name="id"
-            className={
-              errorExistForField('id')
-                ? 'form-control is-invalid'
-                : 'form-control'
-            }
-          />
-          {errorExistForField('id') && (
-            <small className="text-danger">{errorsForField('id')}</small>
-          )}
-        </div>
-      </div>
-      <div className="form-group row">
-        <label
-          htmlFor="name"
-          className={
             errorExistForField('lastName')
               ? 'col-sm-2 col-form-label is-invalid'
               : 'col-sm-2 col-form-label'
@@ -137,7 +111,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="lastName"
             className={
               errorExistForField('lastName')
@@ -163,7 +137,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="paymentTypeId"
             className={
               errorExistForField('paymentTypeId')
@@ -191,7 +165,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="petId"
             className={
               errorExistForField('petId')
@@ -217,7 +191,7 @@ const SaleEditDisplay = (props: FormikProps<SaleViewModel>) => {
         </label>
         <div className="col-sm-12">
           <Field
-            type="datetime-local"
+            type="textbox"
             name="phone"
             className={
               errorExistForField('phone')
@@ -417,5 +391,5 @@ export default class SaleEditComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>4c1910f12060ad160a59d24f5cb5b7be</Hash>
+    <Hash>b788e7721fecd28b2cb2761358a81a00</Hash>
 </Codenesium>*/

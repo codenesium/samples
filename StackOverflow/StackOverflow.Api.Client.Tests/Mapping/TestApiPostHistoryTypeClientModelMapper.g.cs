@@ -18,7 +18,7 @@ namespace StackOverflowNS.Api.Client.Tests
 			model.SetProperties("A");
 			ApiPostHistoryTypeClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 
 		[Fact]
@@ -29,11 +29,11 @@ namespace StackOverflowNS.Api.Client.Tests
 			model.SetProperties(1, "A");
 			ApiPostHistoryTypeClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.Type.Should().Be("A");
+			response.RwType.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>972839096d1f1c235c20baa0b9290b36</Hash>
+    <Hash>e359c39062b28940b14b423b1e2723ce</Hash>
 </Codenesium>*/

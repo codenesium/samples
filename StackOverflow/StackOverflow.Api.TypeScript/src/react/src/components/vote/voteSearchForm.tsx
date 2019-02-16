@@ -160,12 +160,6 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
                       return <span>{String(props.original.creationDate)}</span>;
                       }           
                     },  {
-                      Header: 'Id',
-                      accessor: 'id',
-                      Cell: (props) => {
-                      return <span>{String(props.original.id)}</span>;
-                      }           
-                    },  {
                       Header: 'PostId',
                       accessor: 'postId',
                       Cell: (props) => {
@@ -202,5 +196,5 @@ export default class VoteSearchComponent extends React.Component<VoteSearchCompo
 }
 
 /*<Codenesium>
-    <Hash>fce71310a3e7dc5c1bc6792ddf467a31</Hash>
+    <Hash>d9505b90cdff313f415267bfd629251a</Hash>
 </Codenesium>*/

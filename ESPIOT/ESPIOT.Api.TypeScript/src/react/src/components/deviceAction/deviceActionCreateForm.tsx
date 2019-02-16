@@ -87,11 +87,11 @@ const DeviceActionCreateDisplay: React.SFC<
               : 'col-sm-2 col-form-label'
           }
         >
-          Device
+          DeviceId
         </label>
         <div className="col-sm-12">
           <Field
-            type="select"
+            type="textbox"
             name="deviceId"
             className={
               errorExistForField('deviceId')
@@ -246,5 +246,5 @@ export default class DeviceActionCreateComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>81e7191fd6702c3bbf901409a3af6446</Hash>
+    <Hash>285c4ce308b07126aeb4c38f321cf746</Hash>
 </Codenesium>*/

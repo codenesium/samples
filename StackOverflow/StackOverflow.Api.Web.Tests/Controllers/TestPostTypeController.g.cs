@@ -194,7 +194,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPostTypeServerRequestModel>()))
 			.Callback<int, ApiPostTypeServerRequestModel>(
-				(id, model) => model.Type.Should().Be("A")
+				(id, model) => model.RwType.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiPostTypeServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPostTypeServerResponseModel>(new ApiPostTypeServerResponseModel()));
@@ -203,7 +203,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPostTypeServerRequestModel>();
-			patch.Replace(x => x.Type, "A");
+			patch.Replace(x => x.RwType, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace StackOverflowNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiPostTypeServerRequestModel>();
-			patch.Replace(x => x.Type, "A");
+			patch.Replace(x => x.RwType, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace StackOverflowNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>fda802c3939313713d994830c95f0375</Hash>
+    <Hash>c3a284affb68ecaa189f35a385659291</Hash>
 </Codenesium>*/

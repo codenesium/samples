@@ -38,12 +38,6 @@ const TagDetailDisplay = (model: Props) => {
         <div className="col-sm-12">{String(model.model!.excerptPostId)}</div>
       </div>
       <div className="form-group row">
-        <label htmlFor="id" className={'col-sm-2 col-form-label'}>
-          Id
-        </label>
-        <div className="col-sm-12">{String(model.model!.id)}</div>
-      </div>
-      <div className="form-group row">
         <label htmlFor="tagName" className={'col-sm-2 col-form-label'}>
           TagName
         </label>
@@ -155,5 +149,5 @@ export default class TagDetailComponent extends React.Component<
 
 
 /*<Codenesium>
-    <Hash>98e789102e8f32a72626535da934524a</Hash>
+    <Hash>99fdd72f3b081cb4c9079612f317d546</Hash>
 </Codenesium>*/

@@ -28,11 +28,11 @@ export default class PostLinkViewModel {
   }
 
   toDisplay(): string {
-    return String();
+    return String(this.id);
   }
 }
 
 
 /*<Codenesium>
-    <Hash>e6d5ff0fd5f3fa7b12439f7ab86870ae</Hash>
+    <Hash>9db471d196c8f8bbaeea44c71b4b47fb</Hash>
 </Codenesium>*/

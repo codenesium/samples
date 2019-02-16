@@ -26,14 +26,14 @@ namespace StackOverflowNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void TypeRules()
+		public virtual void RwTypeRules()
 		{
-			this.RuleFor(x => x.Type).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.Type).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+			this.RuleFor(x => x.RwType).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.RwType).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f3bfe523b1eb7d4d6366fe11fcb830a</Hash>
+    <Hash>d847931b4e41d1073f927039c6967f26</Hash>
 </Codenesium>*/
