@@ -46,15 +46,15 @@ namespace TicketingCRMNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTransactionStatuServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTransactionStatuServerResponseModel> response = await this.TransactionStatuService.All(query.Limit, query.Offset);
+			List<ApiTransactionStatuServerResponseModel> response = await this.TransactionStatuService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -223,7 +223,7 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> TransactionsByTransactionStatusId(int transactionStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -252,5 +252,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f41ace329bf61d7c85e75205b3baf50</Hash>
+    <Hash>07325a91462a524e01f475bb526582dc</Hash>
 </Codenesium>*/

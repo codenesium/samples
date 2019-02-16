@@ -46,15 +46,15 @@ namespace TicketingCRMNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTicketServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTicketServerResponseModel> response = await this.TicketService.All(query.Limit, query.Offset);
+			List<ApiTicketServerResponseModel> response = await this.TicketService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -223,12 +223,29 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> ByTicketStatusId(int ticketStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
 			List<ApiTicketServerResponseModel> response = await this.TicketService.ByTicketStatusId(ticketStatusId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{ticketId}/SaleTickets")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiSaleTicketServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> SaleTicketsByTicketId(int ticketId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiSaleTicketServerResponseModel> response = await this.TicketService.SaleTicketsByTicketId(ticketId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -252,5 +269,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9ea61af0d5cce34970144f42e6e4316d</Hash>
+    <Hash>7378fa58a4a338f35629f9dae02ecedd</Hash>
 </Codenesium>*/

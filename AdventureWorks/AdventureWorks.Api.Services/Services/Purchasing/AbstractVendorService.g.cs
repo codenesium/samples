@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiVendorServerRequestModelValidator VendorModelValidator { get; private set; }
 
-		protected IBOLVendorMapper BolVendorMapper { get; private set; }
-
 		protected IDALVendorMapper DalVendorMapper { get; private set; }
-
-		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
 		protected IDALPurchaseOrderHeaderMapper DalPurchaseOrderHeaderMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IVendorRepository vendorRepository,
 			IApiVendorServerRequestModelValidator vendorModelValidator,
-			IBOLVendorMapper bolVendorMapper,
 			IDALVendorMapper dalVendorMapper,
-			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base()
 		{
 			this.VendorRepository = vendorRepository;
 			this.VendorModelValidator = vendorModelValidator;
-			this.BolVendorMapper = bolVendorMapper;
 			this.DalVendorMapper = dalVendorMapper;
-			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiVendorServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVendorServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.VendorRepository.All(limit, offset);
+			var records = await this.VendorRepository.All(limit, offset, query);
 
-			return this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(records));
+			return this.DalVendorMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiVendorServerResponseModel> Get(int businessEntityID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record));
+				return this.DalVendorMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolVendorMapper.MapModelToBO(default(int), model);
-				var record = await this.VendorRepository.Create(this.DalVendorMapper.MapBOToEF(bo));
+				var bo = this.DalVendorMapper.MapModelToBO(default(int), model);
+				var record = await this.VendorRepository.Create(bo);
 
-				var businessObject = this.DalVendorMapper.MapEFToBO(record);
-				response.SetRecord(this.BolVendorMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalVendorMapper.MapBOToModel(record));
 				await this.mediator.Publish(new VendorCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolVendorMapper.MapModelToBO(businessEntityID, model);
-				await this.VendorRepository.Update(this.DalVendorMapper.MapBOToEF(bo));
+				var bo = this.DalVendorMapper.MapModelToBO(businessEntityID, model);
+				await this.VendorRepository.Update(bo);
 
 				var record = await this.VendorRepository.Get(businessEntityID);
 
-				var businessObject = this.DalVendorMapper.MapEFToBO(record);
-				var apiModel = this.BolVendorMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalVendorMapper.MapBOToModel(record);
 				await this.mediator.Publish(new VendorUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiVendorServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolVendorMapper.MapBOToModel(this.DalVendorMapper.MapEFToBO(record));
+				return this.DalVendorMapper.MapBOToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<PurchaseOrderHeader> records = await this.VendorRepository.PurchaseOrderHeadersByVendorID(vendorID, limit, offset);
 
-			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c6adbe1b1cad39172c49c0e8f26ded9</Hash>
+    <Hash>90c9fe94117eac3efdf21ebef49852bd</Hash>
 </Codenesium>*/

@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICurrencyRepository currencyRepository,
 			IApiCurrencyServerRequestModelValidator currencyModelValidator,
-			IBOLCurrencyMapper bolCurrencyMapper,
 			IDALCurrencyMapper dalCurrencyMapper,
-			IBOLCurrencyRateMapper bolCurrencyRateMapper,
 			IDALCurrencyRateMapper dalCurrencyRateMapper)
 			: base(logger,
 			       mediator,
 			       currencyRepository,
 			       currencyModelValidator,
-			       bolCurrencyMapper,
 			       dalCurrencyMapper,
-			       bolCurrencyRateMapper,
 			       dalCurrencyRateMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bea8e34ed8b6a1494b800ff4f923164</Hash>
+    <Hash>371de1e6a634c88b445f966dcee2fec5</Hash>
 </Codenesium>*/

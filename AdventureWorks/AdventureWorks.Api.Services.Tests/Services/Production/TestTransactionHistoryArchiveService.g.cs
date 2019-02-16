@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryArchiveRepository>();
 			var records = new List<TransactionHistoryArchive>();
 			records.Add(new TransactionHistoryArchive());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryArchiveService(mock.LoggerMock.Object,
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			ApiTransactionHistoryArchiveServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			ApiTransactionHistoryArchiveServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			CreateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			UpdateResponse<ApiTransactionHistoryArchiveServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByProductID(default(int));
@@ -240,7 +230,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByProductID(default(int));
@@ -260,7 +249,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
@@ -278,7 +266,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TransactionHistoryArchiveModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTransactionHistoryArchiveMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTransactionHistoryArchiveMapperMock);
 
 			List<ApiTransactionHistoryArchiveServerResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
@@ -290,5 +277,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>06ce9449bf943eadab681d87ff6a4511</Hash>
+    <Hash>9853a073e01d947ff5bd93b529a58677</Hash>
 </Codenesium>*/

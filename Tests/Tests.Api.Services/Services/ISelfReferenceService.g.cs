@@ -18,7 +18,7 @@ namespace TestsNS.Api.Services
 
 		Task<ApiSelfReferenceServerResponseModel> Get(int id);
 
-		Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiSelfReferenceServerResponseModel>> SelfReferencesBySelfReferenceId(int selfReferenceId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fce8d4f0a26404075252210f73dc844</Hash>
+    <Hash>540e92dadc4c984672af3834f98e761b</Hash>
 </Codenesium>*/

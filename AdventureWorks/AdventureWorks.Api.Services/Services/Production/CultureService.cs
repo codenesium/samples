@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICultureRepository cultureRepository,
 			IApiCultureServerRequestModelValidator cultureModelValidator,
-			IBOLCultureMapper bolCultureMapper,
 			IDALCultureMapper dalCultureMapper)
 			: base(logger,
 			       mediator,
 			       cultureRepository,
 			       cultureModelValidator,
-			       bolCultureMapper,
 			       dalCultureMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0eb501489ff9d31f9385b97cbd83ba4</Hash>
+    <Hash>2ff0b7a9ed95eb7e1bbabc09730db3d9</Hash>
 </Codenesium>*/

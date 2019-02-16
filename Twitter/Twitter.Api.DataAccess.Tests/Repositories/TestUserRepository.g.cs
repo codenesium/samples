@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRepositoryMoc.GetContext();
+			var repository = new UserRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			User entity = new User();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			var entity = new User();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<User>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", "B", 1, "B", "B", "B", "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5b8a7327102df0683b69574efa5d4e9d</Hash>
+    <Hash>84ef02fae3d8b5627c7029c83613e081</Hash>
 </Codenesium>*/

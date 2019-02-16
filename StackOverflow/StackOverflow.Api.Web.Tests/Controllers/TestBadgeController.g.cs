@@ -27,36 +27,36 @@ namespace StackOverflowNS.Api.Web.Tests
 			var record = new ApiBadgeServerResponseModel();
 			var records = new List<ApiBadgeServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiBadgeServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			BadgeControllerMockFacade mock = new BadgeControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiBadgeServerResponseModel>>(new List<ApiBadgeServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiBadgeServerResponseModel>>(new List<ApiBadgeServerResponseModel>()));
 			BadgeController controller = new BadgeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiBadgeServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -341,5 +341,5 @@ namespace StackOverflowNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>42c3051f91073b1d87c287db8bc3b44b</Hash>
+    <Hash>295587954ea02d0a8c330e83f46d9421</Hash>
 </Codenesium>*/

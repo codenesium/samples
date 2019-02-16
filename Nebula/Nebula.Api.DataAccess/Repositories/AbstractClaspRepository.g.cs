@@ -26,9 +26,21 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.NextChainId == query.ToInt() ||
+				                  x.PreviousChainId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Clasp> Get(int id)
@@ -79,13 +91,15 @@ namespace NebulaNS.Api.DataAccess
 		// Foreign key reference to table Chain via nextChainId.
 		public async virtual Task<Chain> ChainByNextChainId(int nextChainId)
 		{
-			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == nextChainId);
+			return await this.Context.Set<Chain>()
+			       .SingleOrDefaultAsync(x => x.Id == nextChainId);
 		}
 
 		// Foreign key reference to table Chain via previousChainId.
 		public async virtual Task<Chain> ChainByPreviousChainId(int previousChainId)
 		{
-			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == previousChainId);
+			return await this.Context.Set<Chain>()
+			       .SingleOrDefaultAsync(x => x.Id == previousChainId);
 		}
 
 		protected async Task<List<Clasp>> Where(
@@ -99,7 +113,11 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Clasp>();
+			return await this.Context.Set<Clasp>()
+			       .Include(x => x.NextChainIdNavigation)
+			       .Include(x => x.PreviousChainIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Clasp>();
 		}
 
 		private async Task<Clasp> GetById(int id)
@@ -112,5 +130,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9788103fa477bfab469c6e5af8e968c5</Hash>
+    <Hash>7b9120f7d7591f2318372b858275ea9e</Hash>
 </Codenesium>*/

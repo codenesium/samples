@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ProductCategory> Get(int productCategoryID);
 
-		Task<List<ProductCategory>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductCategory>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ProductCategory> ByName(string name);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f15522f97e71cabd8527658aaf29e0f</Hash>
+    <Hash>1a7393af59f2cb3c2cb8d21e73f72274</Hash>
 </Codenesium>*/

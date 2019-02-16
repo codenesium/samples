@@ -14,18 +14,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int shipMethodID,
 			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
 			decimal shipBase,
-			int shipMethodID,
 			decimal shipRate)
 		{
+			this.ShipMethodID = shipMethodID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ShipBase = shipBase;
-			this.ShipMethodID = shipMethodID;
 			this.ShipRate = shipRate;
 		}
 
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>97640ccbd6fb80a9cc13c504e396b8a2</Hash>
+    <Hash>3dfe2faee39ab9113e20a3ffaa2c9868</Hash>
 </Codenesium>*/

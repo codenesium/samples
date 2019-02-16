@@ -20,6 +20,7 @@ namespace TicketingCRMNS.Api.Client
 			from.Events.ForEach(x => this.AddEvent(x));
 			from.Provinces.ForEach(x => this.AddProvince(x));
 			from.Sales.ForEach(x => this.AddSale(x));
+			from.SaleTickets.ForEach(x => this.AddSaleTicket(x));
 			from.Tickets.ForEach(x => this.AddTicket(x));
 			from.TicketStatus.ForEach(x => this.AddTicketStatu(x));
 			from.Transactions.ForEach(x => this.AddTransaction(x));
@@ -40,6 +41,8 @@ namespace TicketingCRMNS.Api.Client
 		public List<ApiProvinceClientResponseModel> Provinces { get; private set; } = new List<ApiProvinceClientResponseModel>();
 
 		public List<ApiSaleClientResponseModel> Sales { get; private set; } = new List<ApiSaleClientResponseModel>();
+
+		public List<ApiSaleTicketClientResponseModel> SaleTickets { get; private set; } = new List<ApiSaleTicketClientResponseModel>();
 
 		public List<ApiTicketClientResponseModel> Tickets { get; private set; } = new List<ApiTicketClientResponseModel>();
 
@@ -107,6 +110,14 @@ namespace TicketingCRMNS.Api.Client
 			}
 		}
 
+		public void AddSaleTicket(ApiSaleTicketClientResponseModel item)
+		{
+			if (!this.SaleTickets.Any(x => x.Id == item.Id))
+			{
+				this.SaleTickets.Add(item);
+			}
+		}
+
 		public void AddTicket(ApiTicketClientResponseModel item)
 		{
 			if (!this.Tickets.Any(x => x.Id == item.Id))
@@ -150,5 +161,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>468776ec6f774c9ffab6b7458dec9151</Hash>
+    <Hash>3421bb3861fd78551d3f0fe5d19d185c</Hash>
 </Codenesium>*/

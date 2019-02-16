@@ -17,7 +17,7 @@ namespace TestsNS.Api.Client
 			DateTime fieldDateTime,
 			DateTime fieldDateTime2,
 			DateTimeOffset fieldDateTimeOffset,
-			double fieldDecimal,
+			decimal fieldDecimal,
 			double fieldFloat,
 			byte[] fieldImage,
 			decimal fieldMoney,
@@ -94,7 +94,7 @@ namespace TestsNS.Api.Client
 		public DateTimeOffset FieldDateTimeOffset { get; private set; }
 
 		[JsonProperty]
-		public double FieldDecimal { get; private set; }
+		public decimal FieldDecimal { get; private set; }
 
 		[JsonProperty]
 		public double FieldFloat { get; private set; }
@@ -159,5 +159,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>176b2127d7ef70514a7be3b6ee6ad0b3</Hash>
+    <Hash>837ad3f37cc345fe9ab00bb8a02126b2</Hash>
 </Codenesium>*/

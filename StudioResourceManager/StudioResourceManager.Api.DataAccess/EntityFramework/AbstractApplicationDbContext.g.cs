@@ -36,7 +36,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual DbSet<Event> Events { get; set; }
 
-		public virtual DbSet<EventStatu> EventStatus { get; set; }
+		public virtual DbSet<EventStatus> EventStatus { get; set; }
 
 		public virtual DbSet<EventStudent> EventStudents { get; set; }
 
@@ -120,13 +120,13 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
 
-			modelBuilder.Entity<EventStatu>()
+			modelBuilder.Entity<EventStatus>()
 			.HasKey(c => new
 			{
 				c.Id,
 			});
 
-			modelBuilder.Entity<EventStatu>()
+			modelBuilder.Entity<EventStatus>()
 			.Property("Id")
 			.ValueGeneratedOnAdd()
 			.UseSqlServerIdentityColumn();
@@ -261,7 +261,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<Event>().HasQueryFilter(x => !x.IsDeleted);
-			modelBuilder.Entity<EventStatu>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => !x.IsDeleted);
 			modelBuilder.Entity<Family>().HasQueryFilter(x => !x.IsDeleted);
@@ -277,32 +277,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
 		}
 	}
-
-	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public virtual ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "StudioResourceManager.Api.Web");
-
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appSettings.{environment}.json")
-			                                   .AddEnvironmentVariables()
-			                                   .Build();
-
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
-
-			builder.UseSqlServer(connectionString);
-
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
 }
 
 /*<Codenesium>
-    <Hash>cc3158061f87b6f4cefb74d1b5fe4dca</Hash>
+    <Hash>e3b138fb92dde3eb9eb1aa2ea6a1da8e</Hash>
 </Codenesium>*/

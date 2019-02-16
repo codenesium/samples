@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiAirTransportServerRequestModelValidator AirTransportModelValidator { get; private set; }
 
-		protected IBOLAirTransportMapper BolAirTransportMapper { get; private set; }
-
 		protected IDALAirTransportMapper DalAirTransportMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IAirTransportRepository airTransportRepository,
 			IApiAirTransportServerRequestModelValidator airTransportModelValidator,
-			IBOLAirTransportMapper bolAirTransportMapper,
 			IDALAirTransportMapper dalAirTransportMapper)
 			: base()
 		{
 			this.AirTransportRepository = airTransportRepository;
 			this.AirTransportModelValidator = airTransportModelValidator;
-			this.BolAirTransportMapper = bolAirTransportMapper;
 			this.DalAirTransportMapper = dalAirTransportMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAirTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAirTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AirTransportRepository.All(limit, offset);
+			List<AirTransport> records = await this.AirTransportRepository.All(limit, offset, query);
 
-			return this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(records));
+			return this.DalAirTransportMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAirTransportServerResponseModel> Get(int airlineId)
 		{
-			var record = await this.AirTransportRepository.Get(airlineId);
+			AirTransport record = await this.AirTransportRepository.Get(airlineId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(record));
+				return this.DalAirTransportMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAirTransportMapper.MapModelToBO(default(int), model);
-				var record = await this.AirTransportRepository.Create(this.DalAirTransportMapper.MapBOToEF(bo));
+				AirTransport record = this.DalAirTransportMapper.MapModelToEntity(default(int), model);
+				record = await this.AirTransportRepository.Create(record);
 
-				var businessObject = this.DalAirTransportMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAirTransportMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAirTransportMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AirTransportCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAirTransportMapper.MapModelToBO(airlineId, model);
-				await this.AirTransportRepository.Update(this.DalAirTransportMapper.MapBOToEF(bo));
+				AirTransport record = this.DalAirTransportMapper.MapModelToEntity(airlineId, model);
+				await this.AirTransportRepository.Update(record);
 
-				var record = await this.AirTransportRepository.Get(airlineId);
+				record = await this.AirTransportRepository.Get(airlineId);
 
-				var businessObject = this.DalAirTransportMapper.MapEFToBO(record);
-				var apiModel = this.BolAirTransportMapper.MapBOToModel(businessObject);
+				ApiAirTransportServerResponseModel apiModel = this.DalAirTransportMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AirTransportUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAirTransportServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9621fe52b58b377eabec9e12fd738a96</Hash>
+    <Hash>96586d25d5543107c6df56aeda680521</Hash>
 </Codenesium>*/

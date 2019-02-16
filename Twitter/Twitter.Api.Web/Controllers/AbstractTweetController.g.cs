@@ -46,15 +46,15 @@ namespace TwitterNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTweetServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTweetServerResponseModel> response = await this.TweetService.All(query.Limit, query.Offset);
+			List<ApiTweetServerResponseModel> response = await this.TweetService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -223,7 +223,7 @@ namespace TwitterNS.Api.Web
 		public async virtual Task<IActionResult> ByLocationId(int locationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -240,7 +240,7 @@ namespace TwitterNS.Api.Web
 		public async virtual Task<IActionResult> ByUserUserId(int userUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -257,7 +257,7 @@ namespace TwitterNS.Api.Web
 		public async virtual Task<IActionResult> QuoteTweetsBySourceTweetId(int sourceTweetId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -274,12 +274,29 @@ namespace TwitterNS.Api.Web
 		public async virtual Task<IActionResult> RetweetsByTweetTweetId(int tweetTweetId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
 			List<ApiRetweetServerResponseModel> response = await this.TweetService.RetweetsByTweetTweetId(tweetTweetId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byLikerUserId/{likerUserId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTweetServerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByLikerUserId(int likerUserId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTweetServerResponseModel> response = await this.TweetService.ByLikerUserId(likerUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -303,5 +320,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>215a30a884ecdb7c6cfd0ebc67d7013e</Hash>
+    <Hash>964cdb832c89e383a7a4065cefca63cd</Hash>
 </Codenesium>*/

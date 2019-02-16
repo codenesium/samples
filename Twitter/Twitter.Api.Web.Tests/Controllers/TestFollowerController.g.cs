@@ -27,36 +27,36 @@ namespace TwitterNS.Api.Web.Tests
 			var record = new ApiFollowerServerResponseModel();
 			var records = new List<ApiFollowerServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiFollowerServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			FollowerControllerMockFacade mock = new FollowerControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiFollowerServerResponseModel>>(new List<ApiFollowerServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiFollowerServerResponseModel>>(new List<ApiFollowerServerResponseModel>()));
 			FollowerController controller = new FollowerController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiFollowerServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -341,5 +341,5 @@ namespace TwitterNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7b6a60bf425cadc162024a4377bb42a</Hash>
+    <Hash>1fde38cda559959590cfdfe590b88816</Hash>
 </Codenesium>*/

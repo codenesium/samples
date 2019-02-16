@@ -31,7 +31,24 @@ namespace TicketingCRMNS.Api.Client
 			this.Website = website;
 
 			this.AdminIdEntity = nameof(ApiResponse.Admins);
+
 			this.ProvinceIdEntity = nameof(ApiResponse.Provinces);
+		}
+
+		[JsonProperty]
+		public ApiAdminClientResponseModel AdminIdNavigation { get; private set; }
+
+		public void SetAdminIdNavigation(ApiAdminClientResponseModel value)
+		{
+			this.AdminIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiProvinceClientResponseModel ProvinceIdNavigation { get; private set; }
+
+		public void SetProvinceIdNavigation(ApiProvinceClientResponseModel value)
+		{
+			this.ProvinceIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -73,5 +90,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>647ee74231adfdab90b3fbbbea93e375</Hash>
+    <Hash>a53b93a07a2a9a3b2df0689d5e8f4aa1</Hash>
 </Codenesium>*/

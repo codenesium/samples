@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Currency> Get(string currencyCode);
 
-		Task<List<Currency>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Currency>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Currency> ByName(string name);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3120bf4c4420723469362281d5aa355f</Hash>
+    <Hash>a598c7d077d8aadfbae0624d37ed45a7</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using AdventureWorksNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fe87cd1693c9cf29d110beaf87808c16</Hash>
+    <Hash>3619d8276939ef92fbae8e33fca2653e</Hash>
 </Codenesium>*/

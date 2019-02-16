@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<TableRepository>> loggerMoc = TableRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TableRepositoryMoc.GetContext();
 			var repository = new TableRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TableRepository>> loggerMoc = TableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TableRepositoryMoc.GetContext();
+			var repository = new TableRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TableRepository(loggerMoc.Object, context);
 
 			Table entity = new Table();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Table>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TableRepository(loggerMoc.Object, context);
 
 			var entity = new Table();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Table>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TableRepositoryMoc.GetContext();
 			var repository = new TableRepository(loggerMoc.Object, context);
 			Table entity = new Table();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Table>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TableRepositoryMoc.GetContext();
 			var repository = new TableRepository(loggerMoc.Object, context);
 			Table entity = new Table();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Table>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TableRepositoryMoc.GetContext();
 			var repository = new TableRepository(loggerMoc.Object, context);
 			Table entity = new Table();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Table>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c138fc2caff0156b1a9e97e1b0738a61</Hash>
+    <Hash>5e69a9f47c688b31a74d55ccb28f98e4</Hash>
 </Codenesium>*/

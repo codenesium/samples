@@ -14,16 +14,16 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int replyId,
 			string content,
 			DateTime date,
 			int replierUserId,
-			int replyId,
 			TimeSpan time)
 		{
+			this.ReplyId = replyId;
 			this.Content = content;
 			this.Date = date;
 			this.ReplierUserId = replierUserId;
-			this.ReplyId = replyId;
 			this.Time = time;
 		}
 
@@ -45,15 +45,15 @@ namespace TwitterNS.Api.DataAccess
 		public virtual TimeSpan Time { get; private set; }
 
 		[ForeignKey("ReplierUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User ReplierUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetReplierUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.ReplierUserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6476546834212f79ad1628233dcfb8dc</Hash>
+    <Hash>c7e24fe6a99dabcb947e72fffa7fe64a</Hash>
 </Codenesium>*/

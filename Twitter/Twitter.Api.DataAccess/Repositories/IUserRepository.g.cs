@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<User> Get(int userId);
 
-		Task<List<User>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<User>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 
@@ -40,9 +40,15 @@ namespace TwitterNS.Api.DataAccess
 		Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Location> LocationByLocationLocationId(int locationLocationId);
+
+		Task<List<User>> ByTweetId(int tweetId, int limit = int.MaxValue, int offset = 0);
+
+		Task<Like> CreateLike(Like item);
+
+		Task DeleteLike(Like item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d02026354a460f17fa4eaac4786b8e2c</Hash>
+    <Hash>33227fac952667a9b30c94b3f0415654</Hash>
 </Codenesium>*/

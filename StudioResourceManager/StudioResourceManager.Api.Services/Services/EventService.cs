@@ -12,13 +12,11 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
-			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       mediator,
 			       eventRepository,
 			       eventModelValidator,
-			       bolEventMapper,
 			       dalEventMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62c89cf2fc0c3b2db50d326b61e59a53</Hash>
+    <Hash>839469f88071b59136235098ffa6032e</Hash>
 </Codenesium>*/

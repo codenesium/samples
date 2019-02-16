@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IScrapReasonRepository scrapReasonRepository,
 			IApiScrapReasonServerRequestModelValidator scrapReasonModelValidator,
-			IBOLScrapReasonMapper bolScrapReasonMapper,
 			IDALScrapReasonMapper dalScrapReasonMapper,
-			IBOLWorkOrderMapper bolWorkOrderMapper,
 			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base(logger,
 			       mediator,
 			       scrapReasonRepository,
 			       scrapReasonModelValidator,
-			       bolScrapReasonMapper,
 			       dalScrapReasonMapper,
-			       bolWorkOrderMapper,
 			       dalWorkOrderMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>884ccea65e314bda0d044d9962137efd</Hash>
+    <Hash>a48f51b6a9fd0076587cec07b15995b3</Hash>
 </Codenesium>*/

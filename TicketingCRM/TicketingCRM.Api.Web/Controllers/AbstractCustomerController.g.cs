@@ -46,15 +46,15 @@ namespace TicketingCRMNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCustomerServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiCustomerServerResponseModel> response = await this.CustomerService.All(query.Limit, query.Offset);
+			List<ApiCustomerServerResponseModel> response = await this.CustomerService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9e66a84eaa917c0c3eb684ae6158af56</Hash>
+    <Hash>73633746f9bce0f32cf1c672e1908a3f</Hash>
 </Codenesium>*/

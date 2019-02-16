@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<Country> Get(int id);
 
-		Task<List<Country>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Country>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<CountryRequirement>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>969b289b6fb83d4e00366ae7326bbb18</Hash>
+    <Hash>9ad14b0e642f7bdb552e6a7263f69cc1</Hash>
 </Codenesium>*/

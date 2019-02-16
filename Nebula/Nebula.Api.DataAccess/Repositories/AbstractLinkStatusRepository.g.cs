@@ -26,9 +26,20 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<LinkStatus>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<LinkStatus>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<LinkStatus> Get(int id)
@@ -79,13 +90,16 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_LinkStatus_Name.
 		public async virtual Task<LinkStatus> ByName(string name)
 		{
-			return await this.Context.Set<LinkStatus>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<LinkStatus>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Link via linkStatusId.
 		public async virtual Task<List<Link>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Link>().Where(x => x.LinkStatusId == linkStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+			return await this.Context.Set<Link>()
+			       .Where(x => x.LinkStatusId == linkStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
 		protected async Task<List<LinkStatus>> Where(
@@ -99,7 +113,9 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<LinkStatus>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkStatus>();
+			return await this.Context.Set<LinkStatus>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkStatus>();
 		}
 
 		private async Task<LinkStatus> GetById(int id)
@@ -112,5 +128,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>28eac1d9dcfcab807bfc7a0e9af153f9</Hash>
+    <Hash>93e67cd690930de5dc0aa9be98a8469a</Hash>
 </Codenesium>*/

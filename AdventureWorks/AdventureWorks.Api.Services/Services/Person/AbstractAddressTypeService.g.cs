@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiAddressTypeServerRequestModelValidator AddressTypeModelValidator { get; private set; }
 
-		protected IBOLAddressTypeMapper BolAddressTypeMapper { get; private set; }
-
 		protected IDALAddressTypeMapper DalAddressTypeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
-			IBOLAddressTypeMapper bolAddressTypeMapper,
 			IDALAddressTypeMapper dalAddressTypeMapper)
 			: base()
 		{
 			this.AddressTypeRepository = addressTypeRepository;
 			this.AddressTypeModelValidator = addressTypeModelValidator;
-			this.BolAddressTypeMapper = bolAddressTypeMapper;
 			this.DalAddressTypeMapper = dalAddressTypeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAddressTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAddressTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AddressTypeRepository.All(limit, offset);
+			var records = await this.AddressTypeRepository.All(limit, offset, query);
 
-			return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(records));
+			return this.DalAddressTypeMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiAddressTypeServerResponseModel> Get(int addressTypeID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record));
+				return this.DalAddressTypeMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAddressTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.AddressTypeRepository.Create(this.DalAddressTypeMapper.MapBOToEF(bo));
+				var bo = this.DalAddressTypeMapper.MapModelToBO(default(int), model);
+				var record = await this.AddressTypeRepository.Create(bo);
 
-				var businessObject = this.DalAddressTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAddressTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAddressTypeMapper.MapBOToModel(record));
 				await this.mediator.Publish(new AddressTypeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAddressTypeMapper.MapModelToBO(addressTypeID, model);
-				await this.AddressTypeRepository.Update(this.DalAddressTypeMapper.MapBOToEF(bo));
+				var bo = this.DalAddressTypeMapper.MapModelToBO(addressTypeID, model);
+				await this.AddressTypeRepository.Update(bo);
 
 				var record = await this.AddressTypeRepository.Get(addressTypeID);
 
-				var businessObject = this.DalAddressTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolAddressTypeMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalAddressTypeMapper.MapBOToModel(record);
 				await this.mediator.Publish(new AddressTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAddressTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -129,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record));
+				return this.DalAddressTypeMapper.MapBOToModel(record);
 			}
 		}
 
@@ -143,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressTypeMapper.MapBOToModel(this.DalAddressTypeMapper.MapEFToBO(record));
+				return this.DalAddressTypeMapper.MapBOToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a39f8cbf0d3691489e6204ccb6540fc</Hash>
+    <Hash>7ab3ae41fc0f27c1f8865ce10229d6c2</Hash>
 </Codenesium>*/

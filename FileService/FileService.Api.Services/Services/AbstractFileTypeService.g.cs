@@ -16,11 +16,7 @@ namespace FileServiceNS.Api.Services
 
 		protected IApiFileTypeServerRequestModelValidator FileTypeModelValidator { get; private set; }
 
-		protected IBOLFileTypeMapper BolFileTypeMapper { get; private set; }
-
 		protected IDALFileTypeMapper DalFileTypeMapper { get; private set; }
-
-		protected IBOLFileMapper BolFileMapper { get; private set; }
 
 		protected IDALFileMapper DalFileMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace FileServiceNS.Api.Services
 			IMediator mediator,
 			IFileTypeRepository fileTypeRepository,
 			IApiFileTypeServerRequestModelValidator fileTypeModelValidator,
-			IBOLFileTypeMapper bolFileTypeMapper,
 			IDALFileTypeMapper dalFileTypeMapper,
-			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base()
 		{
 			this.FileTypeRepository = fileTypeRepository;
 			this.FileTypeModelValidator = fileTypeModelValidator;
-			this.BolFileTypeMapper = bolFileTypeMapper;
 			this.DalFileTypeMapper = dalFileTypeMapper;
-			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiFileTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFileTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.FileTypeRepository.All(limit, offset);
+			List<FileType> records = await this.FileTypeRepository.All(limit, offset, query);
 
-			return this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(records));
+			return this.DalFileTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiFileTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.FileTypeRepository.Get(id);
+			FileType record = await this.FileTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record));
+				return this.DalFileTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace FileServiceNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolFileTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.FileTypeRepository.Create(this.DalFileTypeMapper.MapBOToEF(bo));
+				FileType record = this.DalFileTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.FileTypeRepository.Create(record);
 
-				var businessObject = this.DalFileTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolFileTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalFileTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new FileTypeCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace FileServiceNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolFileTypeMapper.MapModelToBO(id, model);
-				await this.FileTypeRepository.Update(this.DalFileTypeMapper.MapBOToEF(bo));
+				FileType record = this.DalFileTypeMapper.MapModelToEntity(id, model);
+				await this.FileTypeRepository.Update(record);
 
-				var record = await this.FileTypeRepository.Get(id);
+				record = await this.FileTypeRepository.Get(id);
 
-				var businessObject = this.DalFileTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolFileTypeMapper.MapBOToModel(businessObject);
+				ApiFileTypeServerResponseModel apiModel = this.DalFileTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new FileTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiFileTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace FileServiceNS.Api.Services
 		{
 			List<File> records = await this.FileTypeRepository.FilesByFileTypeId(fileTypeId, limit, offset);
 
-			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
+			return this.DalFileMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c7cbfb04ea88be8b1c5989e58d9e9ea</Hash>
+    <Hash>6f93d875d90a87f180a700cc30382b8b</Hash>
 </Codenesium>*/

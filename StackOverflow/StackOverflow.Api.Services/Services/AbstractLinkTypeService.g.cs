@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiLinkTypeServerRequestModelValidator LinkTypeModelValidator { get; private set; }
 
-		protected IBOLLinkTypeMapper BolLinkTypeMapper { get; private set; }
-
 		protected IDALLinkTypeMapper DalLinkTypeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
-			IBOLLinkTypeMapper bolLinkTypeMapper,
 			IDALLinkTypeMapper dalLinkTypeMapper)
 			: base()
 		{
 			this.LinkTypeRepository = linkTypeRepository;
 			this.LinkTypeModelValidator = linkTypeModelValidator;
-			this.BolLinkTypeMapper = bolLinkTypeMapper;
 			this.DalLinkTypeMapper = dalLinkTypeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiLinkTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLinkTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.LinkTypeRepository.All(limit, offset);
+			List<LinkType> records = await this.LinkTypeRepository.All(limit, offset, query);
 
-			return this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(records));
+			return this.DalLinkTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiLinkTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.LinkTypeRepository.Get(id);
+			LinkType record = await this.LinkTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolLinkTypeMapper.MapBOToModel(this.DalLinkTypeMapper.MapEFToBO(record));
+				return this.DalLinkTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolLinkTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.LinkTypeRepository.Create(this.DalLinkTypeMapper.MapBOToEF(bo));
+				LinkType record = this.DalLinkTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.LinkTypeRepository.Create(record);
 
-				var businessObject = this.DalLinkTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolLinkTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalLinkTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new LinkTypeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolLinkTypeMapper.MapModelToBO(id, model);
-				await this.LinkTypeRepository.Update(this.DalLinkTypeMapper.MapBOToEF(bo));
+				LinkType record = this.DalLinkTypeMapper.MapModelToEntity(id, model);
+				await this.LinkTypeRepository.Update(record);
 
-				var record = await this.LinkTypeRepository.Get(id);
+				record = await this.LinkTypeRepository.Get(id);
 
-				var businessObject = this.DalLinkTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolLinkTypeMapper.MapBOToModel(businessObject);
+				ApiLinkTypeServerResponseModel apiModel = this.DalLinkTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new LinkTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiLinkTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ca67e4dbe08830e5ab2e4a29865d17b</Hash>
+    <Hash>69e06029d949ceea6025cf3ace4112cd</Hash>
 </Codenesium>*/

@@ -28,13 +28,29 @@ namespace NebulaNS.Api.Services
 		public string NextChainIdEntity { get; private set; } = RouteConstants.Chains;
 
 		[JsonProperty]
+		public ApiChainServerResponseModel NextChainIdNavigation { get; private set; }
+
+		public void SetNextChainIdNavigation(ApiChainServerResponseModel value)
+		{
+			this.NextChainIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int PreviousChainId { get; private set; }
 
 		[JsonProperty]
 		public string PreviousChainIdEntity { get; private set; } = RouteConstants.Chains;
+
+		[JsonProperty]
+		public ApiChainServerResponseModel PreviousChainIdNavigation { get; private set; }
+
+		public void SetPreviousChainIdNavigation(ApiChainServerResponseModel value)
+		{
+			this.PreviousChainIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>78a11b6afe75fb64416a2c2b898d26bb</Hash>
+    <Hash>d903e6d8b8bcadc9b09be4493eb8cdb0</Hash>
 </Codenesium>*/

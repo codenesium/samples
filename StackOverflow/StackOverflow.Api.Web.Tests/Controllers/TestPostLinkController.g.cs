@@ -27,36 +27,36 @@ namespace StackOverflowNS.Api.Web.Tests
 			var record = new ApiPostLinkServerResponseModel();
 			var records = new List<ApiPostLinkServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiPostLinkServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			PostLinkControllerMockFacade mock = new PostLinkControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiPostLinkServerResponseModel>>(new List<ApiPostLinkServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiPostLinkServerResponseModel>>(new List<ApiPostLinkServerResponseModel>()));
 			PostLinkController controller = new PostLinkController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiPostLinkServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -341,5 +341,5 @@ namespace StackOverflowNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>0eacd391516438aaebc4e0b356fc68a5</Hash>
+    <Hash>73663189f29911d7b5617b43c8702617</Hash>
 </Codenesium>*/

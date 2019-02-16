@@ -46,15 +46,15 @@ namespace TicketingCRMNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTicketStatuServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTicketStatuServerResponseModel> response = await this.TicketStatuService.All(query.Limit, query.Offset);
+			List<ApiTicketStatuServerResponseModel> response = await this.TicketStatuService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -223,7 +223,7 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> TicketsByTicketStatusId(int ticketStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -252,5 +252,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f0ef041c2ca75045b026fe80f30b1b19</Hash>
+    <Hash>c08a579664171143cbe1bfb4f8c99d7a</Hash>
 </Codenesium>*/

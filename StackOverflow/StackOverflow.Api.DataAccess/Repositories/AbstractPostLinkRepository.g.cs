@@ -26,9 +26,23 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PostLink>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PostLink>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CreationDate == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.LinkTypeId == query.ToInt() ||
+				                  x.PostId == query.ToInt() ||
+				                  x.RelatedPostId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PostLink> Get(int id)
@@ -87,7 +101,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PostLink>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostLink>();
+			return await this.Context.Set<PostLink>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostLink>();
 		}
 
 		private async Task<PostLink> GetById(int id)
@@ -100,5 +116,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>558262d992123c0172cd7f96b150602d</Hash>
+    <Hash>a74131c4b0fc477bd43e650422538d98</Hash>
 </Codenesium>*/

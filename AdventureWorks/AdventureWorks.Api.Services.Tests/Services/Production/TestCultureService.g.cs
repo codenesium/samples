@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICultureRepository>();
 			var records = new List<Culture>();
 			records.Add(new Culture());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CultureService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			List<ApiCultureServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ApiCultureServerResponseModel response = await service.Get(default(string));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ApiCultureServerResponseModel response = await service.Get(default(string));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			CreateResponse<ApiCultureServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			CreateResponse<ApiCultureServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			UpdateResponse<ApiCultureServerResponseModel> response = await service.Update(default(string), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			UpdateResponse<ApiCultureServerResponseModel> response = await service.Update(default(string), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ApiCultureServerResponseModel response = await service.ByName("test_value");
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALCultureMapperMock);
 
 			ApiCultureServerResponseModel response = await service.ByName("test_value");
@@ -251,5 +240,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8c23315329e95114ae4f13c51d5fc061</Hash>
+    <Hash>15fb67903891ba34deb2d0495bbfb8bf</Hash>
 </Codenesium>*/

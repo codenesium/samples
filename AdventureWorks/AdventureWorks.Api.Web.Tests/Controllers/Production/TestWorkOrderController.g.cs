@@ -27,36 +27,36 @@ namespace AdventureWorksNS.Api.Web.Tests
 			var record = new ApiWorkOrderServerResponseModel();
 			var records = new List<ApiWorkOrderServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiWorkOrderServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			WorkOrderControllerMockFacade mock = new WorkOrderControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiWorkOrderServerResponseModel>>(new List<ApiWorkOrderServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiWorkOrderServerResponseModel>>(new List<ApiWorkOrderServerResponseModel>()));
 			WorkOrderController controller = new WorkOrderController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiWorkOrderServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -341,5 +341,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>47ceb45263b5d6f9f7c1784d8f6619a3</Hash>
+    <Hash>9127706a0e29f810c6450a74eb3b682d</Hash>
 </Codenesium>*/

@@ -14,15 +14,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int businessEntityID,
 			int addressID,
 			int addressTypeID,
-			int businessEntityID,
 			DateTime modifiedDate,
 			Guid rowguid)
 		{
+			this.BusinessEntityID = businessEntityID;
 			this.AddressID = addressID;
 			this.AddressTypeID = addressTypeID;
-			this.BusinessEntityID = businessEntityID;
 			this.ModifiedDate = modifiedDate;
 			this.Rowguid = rowguid;
 		}
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f965b1aa1dbdc20aeba15c5db48d6e2</Hash>
+    <Hash>fd0f5f1eac18df58bcee57afe2c77ac4</Hash>
 </Codenesium>*/

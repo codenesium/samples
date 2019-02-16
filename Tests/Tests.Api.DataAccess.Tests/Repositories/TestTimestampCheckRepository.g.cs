@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<TimestampCheckRepository>> loggerMoc = TimestampCheckRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TimestampCheckRepositoryMoc.GetContext();
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TimestampCheckRepository>> loggerMoc = TimestampCheckRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TimestampCheckRepositoryMoc.GetContext();
+			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
 
 			TimestampCheck entity = new TimestampCheck();
-			entity.SetProperties(2, "B", BitConverter.GetBytes(2));
+			entity.SetProperties(default(int), "B", BitConverter.GetBytes(2));
 			context.Set<TimestampCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
 
 			var entity = new TimestampCheck();
-			entity.SetProperties(2, "B", BitConverter.GetBytes(2));
+			entity.SetProperties(default(int), "B", BitConverter.GetBytes(2));
 			await repository.Create(entity);
 
 			var records = await context.Set<TimestampCheck>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TimestampCheckRepositoryMoc.GetContext();
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
 			TimestampCheck entity = new TimestampCheck();
-			entity.SetProperties(2, "B", BitConverter.GetBytes(2));
+			entity.SetProperties(default(int), "B", BitConverter.GetBytes(2));
 			context.Set<TimestampCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TimestampCheckRepositoryMoc.GetContext();
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
 			TimestampCheck entity = new TimestampCheck();
-			entity.SetProperties(2, "B", BitConverter.GetBytes(2));
+			entity.SetProperties(default(int), "B", BitConverter.GetBytes(2));
 			context.Set<TimestampCheck>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = TimestampCheckRepositoryMoc.GetContext();
 			var repository = new TimestampCheckRepository(loggerMoc.Object, context);
 			TimestampCheck entity = new TimestampCheck();
-			entity.SetProperties(2, "B", BitConverter.GetBytes(2));
+			entity.SetProperties(default(int), "B", BitConverter.GetBytes(2));
 			context.Set<TimestampCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>de806d92dff2846eef3d6a11392ada7e</Hash>
+    <Hash>ed4f3e3d84f9dd550439866b46629f0c</Hash>
 </Codenesium>*/

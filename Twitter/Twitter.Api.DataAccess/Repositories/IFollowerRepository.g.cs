@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<Follower> Get(int id);
 
-		Task<List<Follower>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Follower>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Follower>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>01fb516965ce07e9daddff2b617c893b</Hash>
+    <Hash>fc6638c16f010de01cd31879b763ec26</Hash>
 </Codenesium>*/

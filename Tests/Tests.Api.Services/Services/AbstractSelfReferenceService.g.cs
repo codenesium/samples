@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiSelfReferenceServerRequestModelValidator SelfReferenceModelValidator { get; private set; }
 
-		protected IBOLSelfReferenceMapper BolSelfReferenceMapper { get; private set; }
-
 		protected IDALSelfReferenceMapper DalSelfReferenceMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
-			IBOLSelfReferenceMapper bolSelfReferenceMapper,
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
 			: base()
 		{
 			this.SelfReferenceRepository = selfReferenceRepository;
 			this.SelfReferenceModelValidator = selfReferenceModelValidator;
-			this.BolSelfReferenceMapper = bolSelfReferenceMapper;
 			this.DalSelfReferenceMapper = dalSelfReferenceMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSelfReferenceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SelfReferenceRepository.All(limit, offset);
+			List<SelfReference> records = await this.SelfReferenceRepository.All(limit, offset, query);
 
-			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
+			return this.DalSelfReferenceMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSelfReferenceServerResponseModel> Get(int id)
 		{
-			var record = await this.SelfReferenceRepository.Get(id);
+			SelfReference record = await this.SelfReferenceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record));
+				return this.DalSelfReferenceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSelfReferenceMapper.MapModelToBO(default(int), model);
-				var record = await this.SelfReferenceRepository.Create(this.DalSelfReferenceMapper.MapBOToEF(bo));
+				SelfReference record = this.DalSelfReferenceMapper.MapModelToEntity(default(int), model);
+				record = await this.SelfReferenceRepository.Create(record);
 
-				var businessObject = this.DalSelfReferenceMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSelfReferenceMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSelfReferenceMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SelfReferenceCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSelfReferenceMapper.MapModelToBO(id, model);
-				await this.SelfReferenceRepository.Update(this.DalSelfReferenceMapper.MapBOToEF(bo));
+				SelfReference record = this.DalSelfReferenceMapper.MapModelToEntity(id, model);
+				await this.SelfReferenceRepository.Update(record);
 
-				var record = await this.SelfReferenceRepository.Get(id);
+				record = await this.SelfReferenceRepository.Get(id);
 
-				var businessObject = this.DalSelfReferenceMapper.MapEFToBO(record);
-				var apiModel = this.BolSelfReferenceMapper.MapBOToModel(businessObject);
+				ApiSelfReferenceServerResponseModel apiModel = this.DalSelfReferenceMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SelfReferenceUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSelfReferenceServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace TestsNS.Api.Services
 		{
 			List<SelfReference> records = await this.SelfReferenceRepository.SelfReferencesBySelfReferenceId(selfReferenceId, limit, offset);
 
-			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
+			return this.DalSelfReferenceMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiSelfReferenceServerResponseModel>> SelfReferencesBySelfReferenceId2(int selfReferenceId2, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SelfReference> records = await this.SelfReferenceRepository.SelfReferencesBySelfReferenceId2(selfReferenceId2, limit, offset);
 
-			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
+			return this.DalSelfReferenceMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>61d05802178307a597b4869ab1f05761</Hash>
+    <Hash>7d2ea53d8a95d493a763d513436599ca</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiProductPhotoServerRequestModelValidator ProductPhotoModelValidator { get; private set; }
 
-		protected IBOLProductPhotoMapper BolProductPhotoMapper { get; private set; }
-
 		protected IDALProductPhotoMapper DalProductPhotoMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IProductPhotoRepository productPhotoRepository,
 			IApiProductPhotoServerRequestModelValidator productPhotoModelValidator,
-			IBOLProductPhotoMapper bolProductPhotoMapper,
 			IDALProductPhotoMapper dalProductPhotoMapper)
 			: base()
 		{
 			this.ProductPhotoRepository = productPhotoRepository;
 			this.ProductPhotoModelValidator = productPhotoModelValidator;
-			this.BolProductPhotoMapper = bolProductPhotoMapper;
 			this.DalProductPhotoMapper = dalProductPhotoMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiProductPhotoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductPhotoServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductPhotoRepository.All(limit, offset);
+			var records = await this.ProductPhotoRepository.All(limit, offset, query);
 
-			return this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(records));
+			return this.DalProductPhotoMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiProductPhotoServerResponseModel> Get(int productPhotoID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductPhotoMapper.MapBOToModel(this.DalProductPhotoMapper.MapEFToBO(record));
+				return this.DalProductPhotoMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolProductPhotoMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductPhotoRepository.Create(this.DalProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.DalProductPhotoMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductPhotoRepository.Create(bo);
 
-				var businessObject = this.DalProductPhotoMapper.MapEFToBO(record);
-				response.SetRecord(this.BolProductPhotoMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalProductPhotoMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ProductPhotoCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolProductPhotoMapper.MapModelToBO(productPhotoID, model);
-				await this.ProductPhotoRepository.Update(this.DalProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.DalProductPhotoMapper.MapModelToBO(productPhotoID, model);
+				await this.ProductPhotoRepository.Update(bo);
 
 				var record = await this.ProductPhotoRepository.Get(productPhotoID);
 
-				var businessObject = this.DalProductPhotoMapper.MapEFToBO(record);
-				var apiModel = this.BolProductPhotoMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalProductPhotoMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ProductPhotoUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductPhotoServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c32af9ad663df6feaae35e0caa25c85e</Hash>
+    <Hash>cd7537d006e2a3eb67d35a9fdfeca797</Hash>
 </Codenesium>*/

@@ -14,16 +14,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int shiftID,
 			TimeSpan endTime,
 			DateTime modifiedDate,
 			string name,
-			int shiftID,
 			TimeSpan startTime)
 		{
+			this.ShiftID = shiftID;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.ShiftID = shiftID;
 			this.StartTime = startTime;
 		}
 
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>abb3a57e5b1d40511a2a114d18a2aa54</Hash>
+    <Hash>1b3e662cb36c7041312dfd185a5b8c69</Hash>
 </Codenesium>*/

@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<PurchaseOrderHeaderRepository>> loggerMoc = PurchaseOrderHeaderRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
 			var entity = new PurchaseOrderHeader();
-			entity.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<PurchaseOrderHeader>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
 			var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 			PurchaseOrderHeader entity = new PurchaseOrderHeader();
-			entity.SetProperties(2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
+			entity.SetProperties(default(int), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2m, 2m, 2m, 2);
 			context.Set<PurchaseOrderHeader>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c17d53d36e7e0bdb5db01516c36f2a2</Hash>
+    <Hash>0e5db866b277659b7acc67b1133b09c2</Hash>
 </Codenesium>*/

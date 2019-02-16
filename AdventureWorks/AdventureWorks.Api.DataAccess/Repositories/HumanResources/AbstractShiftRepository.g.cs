@@ -26,9 +26,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.EndTime == query.ToTimespan() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ShiftID == query.ToInt() ||
+				                  x.StartTime == query.ToTimespan(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Shift> Get(int shiftID)
@@ -112,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67ff12909a3df46f6d12dc401da8d437</Hash>
+    <Hash>3017b1cc07bd67d0694c316937b5e9eb</Hash>
 </Codenesium>*/

@@ -18,12 +18,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiTeacherSkillServerResponseModel> Get(int id);
 
-		Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiRateServerResponseModel>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>90bce65674f7d0dc2c612bef4387b27e</Hash>
+    <Hash>171bcd4e19b934eb6dd3b9d68a1fcd81</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int? bucketId,
 			DateTime dateCreated,
 			string description,
@@ -22,11 +23,11 @@ namespace FileServiceNS.Api.DataAccess
 			Guid externalId,
 			double fileSizeInByte,
 			int fileTypeId,
-			int id,
 			string location,
 			string privateKey,
 			string publicKey)
 		{
+			this.Id = id;
 			this.BucketId = bucketId;
 			this.DateCreated = dateCreated;
 			this.Description = description;
@@ -35,7 +36,6 @@ namespace FileServiceNS.Api.DataAccess
 			this.ExternalId = externalId;
 			this.FileSizeInByte = fileSizeInByte;
 			this.FileTypeId = fileTypeId;
-			this.Id = id;
 			this.Location = location;
 			this.PrivateKey = privateKey;
 			this.PublicKey = publicKey;
@@ -84,23 +84,23 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual string PublicKey { get; private set; }
 
 		[ForeignKey("BucketId")]
-		public virtual Bucket BucketNavigation { get; private set; }
+		public virtual Bucket BucketIdNavigation { get; private set; }
 
-		public void SetBucketNavigation(Bucket item)
+		public void SetBucketIdNavigation(Bucket item)
 		{
-			this.BucketNavigation = item;
+			this.BucketIdNavigation = item;
 		}
 
 		[ForeignKey("FileTypeId")]
-		public virtual FileType FileTypeNavigation { get; private set; }
+		public virtual FileType FileTypeIdNavigation { get; private set; }
 
-		public void SetFileTypeNavigation(FileType item)
+		public void SetFileTypeIdNavigation(FileType item)
 		{
-			this.FileTypeNavigation = item;
+			this.FileTypeIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>398a6cb0c0f233c81fff6f04c4591543</Hash>
+    <Hash>3601a330c6bc2212c643bbe7681aeba3</Hash>
 </Codenesium>*/

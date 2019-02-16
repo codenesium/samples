@@ -14,14 +14,14 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			decimal amount,
 			string gatewayConfirmationNumber,
-			int id,
 			int transactionStatusId)
 		{
+			this.Id = id;
 			this.Amount = amount;
 			this.GatewayConfirmationNumber = gatewayConfirmationNumber;
-			this.Id = id;
 			this.TransactionStatusId = transactionStatusId;
 		}
 
@@ -40,15 +40,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual int TransactionStatusId { get; private set; }
 
 		[ForeignKey("TransactionStatusId")]
-		public virtual TransactionStatu TransactionStatuNavigation { get; private set; }
+		public virtual TransactionStatu TransactionStatusIdNavigation { get; private set; }
 
-		public void SetTransactionStatuNavigation(TransactionStatu item)
+		public void SetTransactionStatusIdNavigation(TransactionStatu item)
 		{
-			this.TransactionStatuNavigation = item;
+			this.TransactionStatusIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d44138a08340fe36f48eeb28ab8fd705</Hash>
+    <Hash>dafd8631a99f35fb1b266e999dcc7356</Hash>
 </Codenesium>*/

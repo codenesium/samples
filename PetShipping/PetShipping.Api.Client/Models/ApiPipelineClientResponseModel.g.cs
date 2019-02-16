@@ -20,6 +20,14 @@ namespace PetShippingNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiPipelineStatuClientResponseModel PipelineStatusIdNavigation { get; private set; }
+
+		public void SetPipelineStatusIdNavigation(ApiPipelineStatuClientResponseModel value)
+		{
+			this.PipelineStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>871bbb01f4f58b46510e5e47ac7889d2</Hash>
+    <Hash>498bf3063ff6589513cdf6a3b15a197f</Hash>
 </Codenesium>*/

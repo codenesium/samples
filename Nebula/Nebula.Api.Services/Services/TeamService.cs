@@ -12,17 +12,13 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			ITeamRepository teamRepository,
 			IApiTeamServerRequestModelValidator teamModelValidator,
-			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper,
-			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper)
 			: base(logger,
 			       mediator,
 			       teamRepository,
 			       teamModelValidator,
-			       bolTeamMapper,
 			       dalTeamMapper,
-			       bolChainMapper,
 			       dalChainMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31558f4972ba2f0160fb527cd109d8ff</Hash>
+    <Hash>191521dd2ab89125b2c4622d5cab7fa1</Hash>
 </Codenesium>*/

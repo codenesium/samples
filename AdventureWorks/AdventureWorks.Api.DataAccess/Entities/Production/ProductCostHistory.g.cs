@@ -14,15 +14,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productID,
 			DateTime? endDate,
 			DateTime modifiedDate,
-			int productID,
 			decimal standardCost,
 			DateTime startDate)
 		{
+			this.ProductID = productID;
 			this.EndDate = endDate;
 			this.ModifiedDate = modifiedDate;
-			this.ProductID = productID;
 			this.StandardCost = standardCost;
 			this.StartDate = startDate;
 		}
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be876dee98419a44805efa58d703f077</Hash>
+    <Hash>8b122e2ad9ee368ac98c57e86ff0d8ef</Hash>
 </Codenesium>*/

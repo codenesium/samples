@@ -26,9 +26,24 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Comment>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Comment>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CreationDate == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.PostId == query.ToInt() ||
+				                  x.Score == query.ToNullableInt() ||
+				                  x.Text.StartsWith(query) ||
+				                  x.UserId == query.ToNullableInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Comment> Get(int id)
@@ -87,7 +102,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Comment>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Comment>();
+			return await this.Context.Set<Comment>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Comment>();
 		}
 
 		private async Task<Comment> GetById(int id)
@@ -100,5 +117,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>77b6a45d9633d4a5d780ac14c51dfbd3</Hash>
+    <Hash>9ad7eadf6440c7d57779e60925c764e0</Hash>
 </Codenesium>*/

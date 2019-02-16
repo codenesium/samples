@@ -12,13 +12,11 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IFollowingRepository followingRepository,
 			IApiFollowingServerRequestModelValidator followingModelValidator,
-			IBOLFollowingMapper bolFollowingMapper,
 			IDALFollowingMapper dalFollowingMapper)
 			: base(logger,
 			       mediator,
 			       followingRepository,
 			       followingModelValidator,
-			       bolFollowingMapper,
 			       dalFollowingMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>feafd15772dc99f6ec87af869c83b165</Hash>
+    <Hash>10f705d7f3a8cb15349e9dac1e32e2ad</Hash>
 </Codenesium>*/

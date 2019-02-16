@@ -18,10 +18,10 @@ namespace TestsNS.Api.Services
 
 		Task<ApiTimestampCheckServerResponseModel> Get(int id);
 
-		Task<List<ApiTimestampCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTimestampCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4c91198cebba66c20b26e45be12f4fc</Hash>
+    <Hash>cdb652e6bbfcf6f5817ec7a54ce88bfa</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IOtherTransportRepository>();
 			var records = new List<OtherTransport>();
 			records.Add(new OtherTransport());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new OtherTransportService(mock.LoggerMock.Object,
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			List<ApiOtherTransportServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			ApiOtherTransportServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			ApiOtherTransportServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			CreateResponse<ApiOtherTransportServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			CreateResponse<ApiOtherTransportServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			UpdateResponse<ApiOtherTransportServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			UpdateResponse<ApiOtherTransportServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.OtherTransportModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                        mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07f72c1ba572ec4f7f645ad8df4be19a</Hash>
+    <Hash>453dbce8d997b014c1b929906d6e8c18</Hash>
 </Codenesium>*/

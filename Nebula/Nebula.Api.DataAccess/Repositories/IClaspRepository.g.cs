@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Clasp> Get(int id);
 
-		Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Chain> ChainByNextChainId(int nextChainId);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e15dd19430ba0bec65a88fb3bcd487ee</Hash>
+    <Hash>2a75a0987d7700629eaf5f852d44a7ad</Hash>
 </Codenesium>*/

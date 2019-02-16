@@ -14,18 +14,18 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime acquiredDate,
 			int breedId,
 			string description,
-			int id,
 			int penId,
 			decimal price,
 			int speciesId)
 		{
+			this.Id = id;
 			this.AcquiredDate = acquiredDate;
 			this.BreedId = breedId;
 			this.Description = description;
-			this.Id = id;
 			this.PenId = penId;
 			this.Price = price;
 			this.SpeciesId = speciesId;
@@ -55,31 +55,31 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual int SpeciesId { get; private set; }
 
 		[ForeignKey("BreedId")]
-		public virtual Breed BreedNavigation { get; private set; }
+		public virtual Breed BreedIdNavigation { get; private set; }
 
-		public void SetBreedNavigation(Breed item)
+		public void SetBreedIdNavigation(Breed item)
 		{
-			this.BreedNavigation = item;
+			this.BreedIdNavigation = item;
 		}
 
 		[ForeignKey("PenId")]
-		public virtual Pen PenNavigation { get; private set; }
+		public virtual Pen PenIdNavigation { get; private set; }
 
-		public void SetPenNavigation(Pen item)
+		public void SetPenIdNavigation(Pen item)
 		{
-			this.PenNavigation = item;
+			this.PenIdNavigation = item;
 		}
 
 		[ForeignKey("SpeciesId")]
-		public virtual Species SpeciesNavigation { get; private set; }
+		public virtual Species SpeciesIdNavigation { get; private set; }
 
-		public void SetSpeciesNavigation(Species item)
+		public void SetSpeciesIdNavigation(Species item)
 		{
-			this.SpeciesNavigation = item;
+			this.SpeciesIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>58da41b94852eae9dc8ccb0ef059fb90</Hash>
+    <Hash>76b2c458b5f621b8a12c87a21d4ae6b3</Hash>
 </Codenesium>*/

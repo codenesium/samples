@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiCurrencyRateServerRequestModelValidator CurrencyRateModelValidator { get; private set; }
 
-		protected IBOLCurrencyRateMapper BolCurrencyRateMapper { get; private set; }
-
 		protected IDALCurrencyRateMapper DalCurrencyRateMapper { get; private set; }
-
-		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICurrencyRateRepository currencyRateRepository,
 			IApiCurrencyRateServerRequestModelValidator currencyRateModelValidator,
-			IBOLCurrencyRateMapper bolCurrencyRateMapper,
 			IDALCurrencyRateMapper dalCurrencyRateMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
 		{
 			this.CurrencyRateRepository = currencyRateRepository;
 			this.CurrencyRateModelValidator = currencyRateModelValidator;
-			this.BolCurrencyRateMapper = bolCurrencyRateMapper;
 			this.DalCurrencyRateMapper = dalCurrencyRateMapper;
-			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCurrencyRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCurrencyRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CurrencyRateRepository.All(limit, offset);
+			var records = await this.CurrencyRateRepository.All(limit, offset, query);
 
-			return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(records));
+			return this.DalCurrencyRateMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiCurrencyRateServerResponseModel> Get(int currencyRateID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(record));
+				return this.DalCurrencyRateMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCurrencyRateMapper.MapModelToBO(default(int), model);
-				var record = await this.CurrencyRateRepository.Create(this.DalCurrencyRateMapper.MapBOToEF(bo));
+				var bo = this.DalCurrencyRateMapper.MapModelToBO(default(int), model);
+				var record = await this.CurrencyRateRepository.Create(bo);
 
-				var businessObject = this.DalCurrencyRateMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCurrencyRateMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCurrencyRateMapper.MapBOToModel(record));
 				await this.mediator.Publish(new CurrencyRateCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCurrencyRateMapper.MapModelToBO(currencyRateID, model);
-				await this.CurrencyRateRepository.Update(this.DalCurrencyRateMapper.MapBOToEF(bo));
+				var bo = this.DalCurrencyRateMapper.MapModelToBO(currencyRateID, model);
+				await this.CurrencyRateRepository.Update(bo);
 
 				var record = await this.CurrencyRateRepository.Get(currencyRateID);
 
-				var businessObject = this.DalCurrencyRateMapper.MapEFToBO(record);
-				var apiModel = this.BolCurrencyRateMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalCurrencyRateMapper.MapBOToModel(record);
 				await this.mediator.Publish(new CurrencyRateUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCurrencyRateServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(record));
+				return this.DalCurrencyRateMapper.MapBOToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<SalesOrderHeader> records = await this.CurrencyRateRepository.SalesOrderHeadersByCurrencyRateID(currencyRateID, limit, offset);
 
-			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
+			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5807a8b100aed0e3b57c10d16c62e2c</Hash>
+    <Hash>871439231a2270967865d02415e92086</Hash>
 </Codenesium>*/

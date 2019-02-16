@@ -12,13 +12,11 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			ITagRepository tagRepository,
 			IApiTagServerRequestModelValidator tagModelValidator,
-			IBOLTagMapper bolTagMapper,
 			IDALTagMapper dalTagMapper)
 			: base(logger,
 			       mediator,
 			       tagRepository,
 			       tagModelValidator,
-			       bolTagMapper,
 			       dalTagMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f7bbe5a51f9f274e7004e93b53b2354</Hash>
+    <Hash>b31872cf60e4ed19bd8564654aa9acf8</Hash>
 </Codenesium>*/

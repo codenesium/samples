@@ -14,12 +14,12 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int countryId,
 			int id,
+			int countryId,
 			string name)
 		{
-			this.CountryId = countryId;
 			this.Id = id;
+			this.CountryId = countryId;
 			this.Name = name;
 		}
 
@@ -35,15 +35,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual string Name { get; private set; }
 
 		[ForeignKey("CountryId")]
-		public virtual Country CountryNavigation { get; private set; }
+		public virtual Country CountryIdNavigation { get; private set; }
 
-		public void SetCountryNavigation(Country item)
+		public void SetCountryIdNavigation(Country item)
 		{
-			this.CountryNavigation = item;
+			this.CountryIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e074a84e9f51d953507962b67d09063f</Hash>
+    <Hash>5269bcda8aa543cf2f78eb0bea963081</Hash>
 </Codenesium>*/

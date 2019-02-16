@@ -32,17 +32,6 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.DatabaseUser).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void @EventRules()
-		{
-			this.RuleFor(x => x.@Event).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.@Event).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
-		public virtual void @ObjectRules()
-		{
-			this.RuleFor(x => x.@Object).Length(0, 128).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
 		public virtual void PostTimeRules()
 		{
 		}
@@ -65,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d855cdadc441183131a4daeb960cde97</Hash>
+    <Hash>5b1dbd58275eeeed3cc93016fe0e56b1</Hash>
 </Codenesium>*/

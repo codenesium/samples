@@ -26,18 +26,17 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISpaceFeatureRepository>();
 			var records = new List<SpaceFeature>();
 			records.Add(new SpaceFeature());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SpaceFeatureService(mock.LoggerMock.Object,
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			List<ApiSpaceFeatureServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			ApiSpaceFeatureServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			ApiSpaceFeatureServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			CreateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			UpdateResponse<ApiSpaceFeatureServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpaceFeatureModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpaceFeatureMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7b28c21450d6d06f9cba3e0371e16758</Hash>
+    <Hash>e02342e0930de9bcce95e4a9187f1ae6</Hash>
 </Codenesium>*/

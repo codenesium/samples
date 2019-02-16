@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVoteTypeRepository>();
 			var records = new List<VoteType>();
 			records.Add(new VoteType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new VoteTypeService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			List<ApiVoteTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			ApiVoteTypeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			ApiVoteTypeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			CreateResponse<ApiVoteTypeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			CreateResponse<ApiVoteTypeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			UpdateResponse<ApiVoteTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			UpdateResponse<ApiVoteTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.VoteTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLVoteTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALVoteTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>25038ea8702f555f1a5220b496181bb1</Hash>
+    <Hash>9eecc79c988c87cf27963fba0709bc74</Hash>
 </Codenesium>*/

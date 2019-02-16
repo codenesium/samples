@@ -16,8 +16,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiStudioServerRequestModelValidator StudioModelValidator { get; private set; }
 
-		protected IBOLStudioMapper BolStudioMapper { get; private set; }
-
 		protected IDALStudioMapper DalStudioMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IStudioRepository studioRepository,
 			IApiStudioServerRequestModelValidator studioModelValidator,
-			IBOLStudioMapper bolStudioMapper,
 			IDALStudioMapper dalStudioMapper)
 			: base()
 		{
 			this.StudioRepository = studioRepository;
 			this.StudioModelValidator = studioModelValidator;
-			this.BolStudioMapper = bolStudioMapper;
 			this.DalStudioMapper = dalStudioMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiStudioServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiStudioServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.StudioRepository.All(limit, offset);
+			List<Studio> records = await this.StudioRepository.All(limit, offset, query);
 
-			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
+			return this.DalStudioMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiStudioServerResponseModel> Get(int id)
 		{
-			var record = await this.StudioRepository.Get(id);
+			Studio record = await this.StudioRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record));
+				return this.DalStudioMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolStudioMapper.MapModelToBO(default(int), model);
-				var record = await this.StudioRepository.Create(this.DalStudioMapper.MapBOToEF(bo));
+				Studio record = this.DalStudioMapper.MapModelToEntity(default(int), model);
+				record = await this.StudioRepository.Create(record);
 
-				var businessObject = this.DalStudioMapper.MapEFToBO(record);
-				response.SetRecord(this.BolStudioMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalStudioMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new StudioCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolStudioMapper.MapModelToBO(id, model);
-				await this.StudioRepository.Update(this.DalStudioMapper.MapBOToEF(bo));
+				Studio record = this.DalStudioMapper.MapModelToEntity(id, model);
+				await this.StudioRepository.Update(record);
 
-				var record = await this.StudioRepository.Get(id);
+				record = await this.StudioRepository.Get(id);
 
-				var businessObject = this.DalStudioMapper.MapEFToBO(record);
-				var apiModel = this.BolStudioMapper.MapBOToModel(businessObject);
+				ApiStudioServerResponseModel apiModel = this.DalStudioMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new StudioUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiStudioServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>312e15b9b8c0488beee33919077ce89a</Hash>
+    <Hash>02b8b359ed459a7d0ef0329906bcd1bc</Hash>
 </Codenesium>*/

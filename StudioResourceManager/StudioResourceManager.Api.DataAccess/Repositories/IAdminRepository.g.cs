@@ -15,7 +15,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<Admin> Get(int id);
 
-		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Admin>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>76ac171fe9cb135ce94c0bf9883a73e1</Hash>
+    <Hash>548be6ef40f82537ce1388234ed261f3</Hash>
 </Codenesium>*/

@@ -14,12 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			DateTime modifiedDate,
 			int salesOrderID,
+			DateTime modifiedDate,
 			int salesReasonID)
 		{
-			this.ModifiedDate = modifiedDate;
 			this.SalesOrderID = salesOrderID;
+			this.ModifiedDate = modifiedDate;
 			this.SalesReasonID = salesReasonID;
 		}
 
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf8a98c28ec8218d6318b912f78329b8</Hash>
+    <Hash>7ac3e751eeb4f4d4f70da04d8200e1b2</Hash>
 </Codenesium>*/

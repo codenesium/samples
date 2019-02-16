@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
-			IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
 			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
 			: base(logger,
 			       mediator,
 			       salesTaxRateRepository,
 			       salesTaxRateModelValidator,
-			       bolSalesTaxRateMapper,
 			       dalSalesTaxRateMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72620f69be809579f60b6f1571d38482</Hash>
+    <Hash>afc4ae945c7cb0efdc9f868419f53205</Hash>
 </Codenesium>*/

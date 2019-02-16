@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiPostServerRequestModelValidator PostModelValidator { get; private set; }
 
-		protected IBOLPostMapper BolPostMapper { get; private set; }
-
 		protected IDALPostMapper DalPostMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IPostRepository postRepository,
 			IApiPostServerRequestModelValidator postModelValidator,
-			IBOLPostMapper bolPostMapper,
 			IDALPostMapper dalPostMapper)
 			: base()
 		{
 			this.PostRepository = postRepository;
 			this.PostModelValidator = postModelValidator;
-			this.BolPostMapper = bolPostMapper;
 			this.DalPostMapper = dalPostMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPostServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PostRepository.All(limit, offset);
+			List<Post> records = await this.PostRepository.All(limit, offset, query);
 
-			return this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(records));
+			return this.DalPostMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPostServerResponseModel> Get(int id)
 		{
-			var record = await this.PostRepository.Get(id);
+			Post record = await this.PostRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(record));
+				return this.DalPostMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPostMapper.MapModelToBO(default(int), model);
-				var record = await this.PostRepository.Create(this.DalPostMapper.MapBOToEF(bo));
+				Post record = this.DalPostMapper.MapModelToEntity(default(int), model);
+				record = await this.PostRepository.Create(record);
 
-				var businessObject = this.DalPostMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPostMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPostMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PostCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPostMapper.MapModelToBO(id, model);
-				await this.PostRepository.Update(this.DalPostMapper.MapBOToEF(bo));
+				Post record = this.DalPostMapper.MapModelToEntity(id, model);
+				await this.PostRepository.Update(record);
 
-				var record = await this.PostRepository.Get(id);
+				record = await this.PostRepository.Get(id);
 
-				var businessObject = this.DalPostMapper.MapEFToBO(record);
-				var apiModel = this.BolPostMapper.MapBOToModel(businessObject);
+				ApiPostServerResponseModel apiModel = this.DalPostMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PostUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPostServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace StackOverflowNS.Api.Services
 		{
 			List<Post> records = await this.PostRepository.ByOwnerUserId(ownerUserId, limit, offset);
 
-			return this.BolPostMapper.MapBOToModel(this.DalPostMapper.MapEFToBO(records));
+			return this.DalPostMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f9f6cd4590c2c90ecfbfd3fce91189f</Hash>
+    <Hash>bdfc0cccf448be7a1e194c35248e608d</Hash>
 </Codenesium>*/

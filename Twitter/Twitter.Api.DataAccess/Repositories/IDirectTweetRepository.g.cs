@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<DirectTweet> Get(int tweetId);
 
-		Task<List<DirectTweet>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<DirectTweet>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<DirectTweet>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3293f8bd1ed7ed42d42106b30f1e0ed9</Hash>
+    <Hash>cb877cb4ef7690437ee218d4b57ea98d</Hash>
 </Codenesium>*/

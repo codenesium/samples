@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiLocationServerResponseModel> Get(int locationId);
 
-		Task<List<ApiLocationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLocationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiTweetServerResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e960775d861e79cdfff2aeb00b9c1196</Hash>
+    <Hash>7aaf1be5d03202cd5140e0f98eac64e2</Hash>
 </Codenesium>*/

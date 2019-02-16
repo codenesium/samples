@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<ContactTypeRepository>> loggerMoc = ContactTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
 
 			ContactType entity = new ContactType();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ContactType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
 
 			var entity = new ContactType();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<ContactType>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
 			ContactType entity = new ContactType();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ContactType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
 			ContactType entity = new ContactType();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ContactType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
 			var repository = new ContactTypeRepository(loggerMoc.Object, context);
 			ContactType entity = new ContactType();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ContactType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51e958a51399c2397143b3db6419ea95</Hash>
+    <Hash>d2b310c3d790d072bb6a09289f712d8f</Hash>
 </Codenesium>*/

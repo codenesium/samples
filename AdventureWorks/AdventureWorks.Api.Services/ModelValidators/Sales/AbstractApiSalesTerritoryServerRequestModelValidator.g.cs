@@ -40,12 +40,6 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.CountryRegionCode).Length(0, 3).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		public virtual void @GroupRules()
-		{
-			this.RuleFor(x => x.@Group).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.@Group).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 		}
@@ -101,5 +95,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8d640041b0838f13795a92134770009</Hash>
+    <Hash>261dc93b568d48bb22c20ed2f38c1aa9</Hash>
 </Codenesium>*/

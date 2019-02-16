@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiTestAllFieldTypeServerRequestModelValidator TestAllFieldTypeModelValidator { get; private set; }
 
-		protected IBOLTestAllFieldTypeMapper BolTestAllFieldTypeMapper { get; private set; }
-
 		protected IDALTestAllFieldTypeMapper DalTestAllFieldTypeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
-			IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper,
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
 			: base()
 		{
 			this.TestAllFieldTypeRepository = testAllFieldTypeRepository;
 			this.TestAllFieldTypeModelValidator = testAllFieldTypeModelValidator;
-			this.BolTestAllFieldTypeMapper = bolTestAllFieldTypeMapper;
 			this.DalTestAllFieldTypeMapper = dalTestAllFieldTypeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTestAllFieldTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TestAllFieldTypeRepository.All(limit, offset);
+			List<TestAllFieldType> records = await this.TestAllFieldTypeRepository.All(limit, offset, query);
 
-			return this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(records));
+			return this.DalTestAllFieldTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTestAllFieldTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.TestAllFieldTypeRepository.Get(id);
+			TestAllFieldType record = await this.TestAllFieldTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record));
+				return this.DalTestAllFieldTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.TestAllFieldTypeRepository.Create(this.DalTestAllFieldTypeMapper.MapBOToEF(bo));
+				TestAllFieldType record = this.DalTestAllFieldTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.TestAllFieldTypeRepository.Create(record);
 
-				var businessObject = this.DalTestAllFieldTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTestAllFieldTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTestAllFieldTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TestAllFieldTypeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(id, model);
-				await this.TestAllFieldTypeRepository.Update(this.DalTestAllFieldTypeMapper.MapBOToEF(bo));
+				TestAllFieldType record = this.DalTestAllFieldTypeMapper.MapModelToEntity(id, model);
+				await this.TestAllFieldTypeRepository.Update(record);
 
-				var record = await this.TestAllFieldTypeRepository.Get(id);
+				record = await this.TestAllFieldTypeRepository.Get(id);
 
-				var businessObject = this.DalTestAllFieldTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolTestAllFieldTypeMapper.MapBOToModel(businessObject);
+				ApiTestAllFieldTypeServerResponseModel apiModel = this.DalTestAllFieldTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TestAllFieldTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTestAllFieldTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a884abf42e1c9f3e71c3c4e69856c77</Hash>
+    <Hash>2711c997d2bc51602955b49cac75064a</Hash>
 </Codenesium>*/

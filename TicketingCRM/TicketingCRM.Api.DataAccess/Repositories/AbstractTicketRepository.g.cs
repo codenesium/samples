@@ -26,9 +26,21 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Ticket>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Ticket>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.PublicId.StartsWith(query) ||
+				                  x.TicketStatusId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Ticket> Get(int id)
@@ -82,10 +94,18 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Where(x => x.TicketStatusId == ticketStatusId, limit, offset);
 		}
 
+		// Foreign key reference to this table SaleTicket via ticketId.
+		public async virtual Task<List<SaleTicket>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SaleTicket>()
+			       .Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
+		}
+
 		// Foreign key reference to table TicketStatu via ticketStatusId.
 		public async virtual Task<TicketStatu> TicketStatuByTicketStatusId(int ticketStatusId)
 		{
-			return await this.Context.Set<TicketStatu>().SingleOrDefaultAsync(x => x.Id == ticketStatusId);
+			return await this.Context.Set<TicketStatu>()
+			       .SingleOrDefaultAsync(x => x.Id == ticketStatusId);
 		}
 
 		protected async Task<List<Ticket>> Where(
@@ -99,7 +119,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Ticket>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Ticket>();
+			return await this.Context.Set<Ticket>()
+			       .Include(x => x.TicketStatusIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Ticket>();
 		}
 
 		private async Task<Ticket> GetById(int id)
@@ -112,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fcee3ab6e75416d34ba865399958df4d</Hash>
+    <Hash>f8f9cdc52dfb8e329087fae6f0f5692a</Hash>
 </Codenesium>*/

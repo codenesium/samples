@@ -46,15 +46,15 @@ namespace StackOverflowNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPostTypeServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiPostTypeServerResponseModel> response = await this.PostTypeService.All(query.Limit, query.Offset);
+			List<ApiPostTypeServerResponseModel> response = await this.PostTypeService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>31542a2161617a27154c3ccc7ee3b861</Hash>
+    <Hash>743c23efac2d6a18a6910ccb24e0aea2</Hash>
 </Codenesium>*/

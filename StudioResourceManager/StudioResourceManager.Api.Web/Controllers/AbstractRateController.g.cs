@@ -46,15 +46,15 @@ namespace StudioResourceManagerNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRateServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiRateServerResponseModel> response = await this.RateService.All(query.Limit, query.Offset);
+			List<ApiRateServerResponseModel> response = await this.RateService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -223,7 +223,7 @@ namespace StudioResourceManagerNS.Api.Web
 		public async virtual Task<IActionResult> ByTeacherId(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -240,7 +240,7 @@ namespace StudioResourceManagerNS.Api.Web
 		public async virtual Task<IActionResult> ByTeacherSkillId(int teacherSkillId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, string.Empty, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
@@ -269,5 +269,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4871bd96fd53528a0e5475a6216bd9e9</Hash>
+    <Hash>a6f97eda2339b241a31e27d1da32f94b</Hash>
 </Codenesium>*/

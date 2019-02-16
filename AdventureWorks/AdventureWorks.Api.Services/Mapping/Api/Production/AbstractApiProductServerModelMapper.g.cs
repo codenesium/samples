@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var response = new ApiProductServerResponseModel();
 			response.SetProperties(productID,
-			                       request.@Class,
 			                       request.Color,
 			                       request.DaysToManufacture,
 			                       request.DiscontinuedDate,
@@ -46,7 +45,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var request = new ApiProductServerRequestModel();
 			request.SetProperties(
-				response.@Class,
 				response.Color,
 				response.DaysToManufacture,
 				response.DiscontinuedDate,
@@ -78,7 +76,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var request = new ApiProductClientRequestModel();
 			request.SetProperties(
-				response.@Class,
 				response.Color,
 				response.DaysToManufacture,
 				response.DiscontinuedDate,
@@ -108,7 +105,6 @@ namespace AdventureWorksNS.Api.Services
 		public JsonPatchDocument<ApiProductServerRequestModel> CreatePatch(ApiProductServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiProductServerRequestModel>();
-			patch.Replace(x => x.@Class, model.@Class);
 			patch.Replace(x => x.Color, model.Color);
 			patch.Replace(x => x.DaysToManufacture, model.DaysToManufacture);
 			patch.Replace(x => x.DiscontinuedDate, model.DiscontinuedDate);
@@ -138,5 +134,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acd4797fc7f641be942f96fdad2fe70f</Hash>
+    <Hash>94e97c8d6adc51af8489c89377d31cf0</Hash>
 </Codenesium>*/

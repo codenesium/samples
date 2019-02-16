@@ -35,16 +35,15 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductClientRequestModel();
-			model.SetProperties("B", "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
 			var model2 = new ApiProductClientRequestModel();
-			model2.SetProperties("C", "C", 3, DateTime.Parse("1/1/1989 12:00:00 AM"), true, 3m, true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3, "C", 3, 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3m, "C", 3, "C");
+			model2.SetProperties("C", 3, DateTime.Parse("1/1/1989 12:00:00 AM"), true, 3m, true, DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3, "C", 3, 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3, DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", 3m, "C", 3, "C");
 			var request = new List<ApiProductClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiProductClientResponseModel>> result = await client.ProductBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<Product>().ToList()[1].@Class.Should().Be("B");
 			context.Set<Product>().ToList()[1].Color.Should().Be("B");
 			context.Set<Product>().ToList()[1].DaysToManufacture.Should().Be(2);
 			context.Set<Product>().ToList()[1].DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -69,7 +68,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[1].Weight.Should().Be(2);
 			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("B");
 
-			context.Set<Product>().ToList()[2].@Class.Should().Be("C");
 			context.Set<Product>().ToList()[2].Color.Should().Be("C");
 			context.Set<Product>().ToList()[2].DaysToManufacture.Should().Be(3);
 			context.Set<Product>().ToList()[2].DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
@@ -106,12 +104,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiProductClientRequestModel();
-			model.SetProperties("B", "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
 			CreateResponse<ApiProductClientResponseModel> result = await client.ProductCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<Product>().ToList()[1].@Class.Should().Be("B");
 			context.Set<Product>().ToList()[1].Color.Should().Be("B");
 			context.Set<Product>().ToList()[1].DaysToManufacture.Should().Be(2);
 			context.Set<Product>().ToList()[1].DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -136,7 +133,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[1].Weight.Should().Be(2);
 			context.Set<Product>().ToList()[1].WeightUnitMeasureCode.Should().Be("B");
 
-			result.Record.@Class.Should().Be("B");
 			result.Record.Color.Should().Be("B");
 			result.Record.DaysToManufacture.Should().Be(2);
 			result.Record.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -177,7 +173,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiProductServerResponseModel model = await service.Get(1);
 
 			ApiProductClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			request.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
 
 			UpdateResponse<ApiProductClientResponseModel> updateResponse = await client.ProductUpdateAsync(model.ProductID, request);
 
@@ -185,7 +181,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.ProductID.Should().Be(1);
-			context.Set<Product>().ToList()[0].@Class.Should().Be("B");
 			context.Set<Product>().ToList()[0].Color.Should().Be("B");
 			context.Set<Product>().ToList()[0].DaysToManufacture.Should().Be(2);
 			context.Set<Product>().ToList()[0].DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -211,7 +206,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<Product>().ToList()[0].WeightUnitMeasureCode.Should().Be("B");
 
 			updateResponse.Record.ProductID.Should().Be(1);
-			updateResponse.Record.@Class.Should().Be("B");
 			updateResponse.Record.Color.Should().Be("B");
 			updateResponse.Record.DaysToManufacture.Should().Be(2);
 			updateResponse.Record.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
@@ -249,7 +243,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IProductService service = testServer.Host.Services.GetService(typeof(IProductService)) as IProductService;
 			var model = new ApiProductServerRequestModel();
-			model.SetProperties("B", "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
+			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), true, 2m, true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", 2, 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2m, "B", 2, "B");
 			CreateResponse<ApiProductServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -276,7 +270,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiProductClientResponseModel response = await client.ProductGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -330,7 +323,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			List<ApiProductClientResponseModel> response = await client.ProductAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].@Class.Should().Be("A");
 			response[0].Color.Should().Be("A");
 			response[0].DaysToManufacture.Should().Be(1);
 			response[0].DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -370,7 +362,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -424,7 +415,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -478,7 +468,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -682,5 +671,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>24b11161125a42a82dc66f004674c17e</Hash>
+    <Hash>3d4cb9c0077dd4e3926e0df86216fb7e</Hash>
 </Codenesium>*/

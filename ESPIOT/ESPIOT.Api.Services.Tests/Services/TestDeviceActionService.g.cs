@@ -26,18 +26,17 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			var records = new List<DeviceAction>();
 			records.Add(new DeviceAction());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			List<ApiDeviceActionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			ApiDeviceActionServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			ApiDeviceActionServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			CreateResponse<ApiDeviceActionServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			CreateResponse<ApiDeviceActionServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			UpdateResponse<ApiDeviceActionServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			UpdateResponse<ApiDeviceActionServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			List<ApiDeviceActionServerResponseModel> response = await service.ByDeviceId(default(int));
@@ -240,7 +230,6 @@ namespace ESPIOTNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
 			                                      mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
 			List<ApiDeviceActionServerResponseModel> response = await service.ByDeviceId(default(int));
@@ -252,5 +241,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dda4408a35da1867863ece7b42dc89e8</Hash>
+    <Hash>0429b5f42afd99a7dd1f829898fd96ff</Hash>
 </Codenesium>*/

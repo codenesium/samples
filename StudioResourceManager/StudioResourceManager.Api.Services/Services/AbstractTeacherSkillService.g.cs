@@ -16,11 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiTeacherSkillServerRequestModelValidator TeacherSkillModelValidator { get; private set; }
 
-		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
-
 		protected IDALTeacherSkillMapper DalTeacherSkillMapper { get; private set; }
-
-		protected IBOLRateMapper BolRateMapper { get; private set; }
 
 		protected IDALRateMapper DalRateMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			ITeacherSkillRepository teacherSkillRepository,
 			IApiTeacherSkillServerRequestModelValidator teacherSkillModelValidator,
-			IBOLTeacherSkillMapper bolTeacherSkillMapper,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
-			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base()
 		{
 			this.TeacherSkillRepository = teacherSkillRepository;
 			this.TeacherSkillModelValidator = teacherSkillModelValidator;
-			this.BolTeacherSkillMapper = bolTeacherSkillMapper;
 			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
-			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTeacherSkillServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TeacherSkillRepository.All(limit, offset);
+			List<TeacherSkill> records = await this.TeacherSkillRepository.All(limit, offset, query);
 
-			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
+			return this.DalTeacherSkillMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTeacherSkillServerResponseModel> Get(int id)
 		{
-			var record = await this.TeacherSkillRepository.Get(id);
+			TeacherSkill record = await this.TeacherSkillRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record));
+				return this.DalTeacherSkillMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTeacherSkillMapper.MapModelToBO(default(int), model);
-				var record = await this.TeacherSkillRepository.Create(this.DalTeacherSkillMapper.MapBOToEF(bo));
+				TeacherSkill record = this.DalTeacherSkillMapper.MapModelToEntity(default(int), model);
+				record = await this.TeacherSkillRepository.Create(record);
 
-				var businessObject = this.DalTeacherSkillMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTeacherSkillMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTeacherSkillMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TeacherSkillCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTeacherSkillMapper.MapModelToBO(id, model);
-				await this.TeacherSkillRepository.Update(this.DalTeacherSkillMapper.MapBOToEF(bo));
+				TeacherSkill record = this.DalTeacherSkillMapper.MapModelToEntity(id, model);
+				await this.TeacherSkillRepository.Update(record);
 
-				var record = await this.TeacherSkillRepository.Get(id);
+				record = await this.TeacherSkillRepository.Get(id);
 
-				var businessObject = this.DalTeacherSkillMapper.MapEFToBO(record);
-				var apiModel = this.BolTeacherSkillMapper.MapBOToModel(businessObject);
+				ApiTeacherSkillServerResponseModel apiModel = this.DalTeacherSkillMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TeacherSkillUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTeacherSkillServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			List<Rate> records = await this.TeacherSkillRepository.RatesByTeacherSkillId(teacherSkillId, limit, offset);
 
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+			return this.DalRateMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0188168894dba77235ca883a0a014ad1</Hash>
+    <Hash>5ff0d3f1bd67822a6fb3daa5fd3628d5</Hash>
 </Codenesium>*/

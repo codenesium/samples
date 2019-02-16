@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
+			var repository = new LocationRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			Location entity = new Location();
-			entity.SetProperties(2, 2, 2, "B");
+			entity.SetProperties(default(int), 2, 2, "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			var entity = new Location();
-			entity.SetProperties(2, 2, 2, "B");
+			entity.SetProperties(default(int), 2, 2, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Location>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2, 2, "B");
+			entity.SetProperties(default(int), 2, 2, "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2, 2, "B");
+			entity.SetProperties(default(int), 2, 2, "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2, 2, "B");
+			entity.SetProperties(default(int), 2, 2, "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da31d3807f4886c889b82b4dbe189b89</Hash>
+    <Hash>65c7d02c3888ab446cd1b68133955e61</Hash>
 </Codenesium>*/

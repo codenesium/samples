@@ -14,20 +14,20 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productReviewID,
 			string comment,
 			string emailAddress,
 			DateTime modifiedDate,
 			int productID,
-			int productReviewID,
 			int rating,
 			DateTime reviewDate,
 			string reviewerName)
 		{
+			this.ProductReviewID = productReviewID;
 			this.Comment = comment;
 			this.EmailAddress = emailAddress;
 			this.ModifiedDate = modifiedDate;
 			this.ProductID = productID;
-			this.ProductReviewID = productReviewID;
 			this.Rating = rating;
 			this.ReviewDate = reviewDate;
 			this.ReviewerName = reviewerName;
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d3e73a340d8e84bbd5020e3adb8d0a4</Hash>
+    <Hash>4d0e5f1c1dbdffa154dfba1642d5c24e</Hash>
 </Codenesium>*/

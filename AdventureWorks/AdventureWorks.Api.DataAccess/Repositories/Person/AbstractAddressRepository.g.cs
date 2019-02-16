@@ -26,9 +26,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Address>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Address>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AddressID == query.ToInt() ||
+				                  x.AddressLine1.StartsWith(query) ||
+				                  x.AddressLine2.StartsWith(query) ||
+				                  x.City.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.PostalCode.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.StateProvinceID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Address> Get(int addressID)
@@ -118,5 +135,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>917a84810214e1b9760f37a08f41aaa9</Hash>
+    <Hash>0f713037408f50b8a69e9c48667a75c9</Hash>
 </Codenesium>*/

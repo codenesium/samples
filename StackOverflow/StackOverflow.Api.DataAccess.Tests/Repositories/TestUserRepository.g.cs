@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRepositoryMoc.GetContext();
+			var repository = new UserRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			User entity = new User();
-			entity.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			var entity = new User();
-			entity.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<User>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties("B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
+			entity.SetProperties(default(int), "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cbf75d6edfacd0d638976d491b2915a2</Hash>
+    <Hash>3ef2d573ce9f5eba491565bf9797b37c</Hash>
 </Codenesium>*/

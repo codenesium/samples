@@ -16,8 +16,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiSpaceFeatureServerRequestModelValidator SpaceFeatureModelValidator { get; private set; }
 
-		protected IBOLSpaceFeatureMapper BolSpaceFeatureMapper { get; private set; }
-
 		protected IDALSpaceFeatureMapper DalSpaceFeatureMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureServerRequestModelValidator spaceFeatureModelValidator,
-			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base()
 		{
 			this.SpaceFeatureRepository = spaceFeatureRepository;
 			this.SpaceFeatureModelValidator = spaceFeatureModelValidator;
-			this.BolSpaceFeatureMapper = bolSpaceFeatureMapper;
 			this.DalSpaceFeatureMapper = dalSpaceFeatureMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSpaceFeatureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSpaceFeatureServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SpaceFeatureRepository.All(limit, offset);
+			List<SpaceFeature> records = await this.SpaceFeatureRepository.All(limit, offset, query);
 
-			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
+			return this.DalSpaceFeatureMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSpaceFeatureServerResponseModel> Get(int id)
 		{
-			var record = await this.SpaceFeatureRepository.Get(id);
+			SpaceFeature record = await this.SpaceFeatureRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(record));
+				return this.DalSpaceFeatureMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSpaceFeatureMapper.MapModelToBO(default(int), model);
-				var record = await this.SpaceFeatureRepository.Create(this.DalSpaceFeatureMapper.MapBOToEF(bo));
+				SpaceFeature record = this.DalSpaceFeatureMapper.MapModelToEntity(default(int), model);
+				record = await this.SpaceFeatureRepository.Create(record);
 
-				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSpaceFeatureMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSpaceFeatureMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SpaceFeatureCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSpaceFeatureMapper.MapModelToBO(id, model);
-				await this.SpaceFeatureRepository.Update(this.DalSpaceFeatureMapper.MapBOToEF(bo));
+				SpaceFeature record = this.DalSpaceFeatureMapper.MapModelToEntity(id, model);
+				await this.SpaceFeatureRepository.Update(record);
 
-				var record = await this.SpaceFeatureRepository.Get(id);
+				record = await this.SpaceFeatureRepository.Get(id);
 
-				var businessObject = this.DalSpaceFeatureMapper.MapEFToBO(record);
-				var apiModel = this.BolSpaceFeatureMapper.MapBOToModel(businessObject);
+				ApiSpaceFeatureServerResponseModel apiModel = this.DalSpaceFeatureMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SpaceFeatureUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSpaceFeatureServerResponseModel>.UpdateResponse(apiModel);
@@ -118,16 +112,9 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiSpaceFeatureServerResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SpaceFeature> records = await this.SpaceFeatureRepository.BySpaceId(spaceId, limit, offset);
-
-			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b146ddd2da85eb717fa8c0e620de8120</Hash>
+    <Hash>d27a1a1b3d3b0379d155423b656047c0</Hash>
 </Codenesium>*/

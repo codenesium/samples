@@ -20,6 +20,14 @@ namespace TicketingCRMNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiTicketStatuClientResponseModel TicketStatusIdNavigation { get; private set; }
+
+		public void SetTicketStatusIdNavigation(ApiTicketStatuClientResponseModel value)
+		{
+			this.TicketStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>b328041b0d1e3babf0090f49c7844907</Hash>
+    <Hash>0b2e4585bdde46baafb4dfe78666a3fb</Hash>
 </Codenesium>*/

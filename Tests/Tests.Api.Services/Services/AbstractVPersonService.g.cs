@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiVPersonServerRequestModelValidator VPersonModelValidator { get; private set; }
 
-		protected IBOLVPersonMapper BolVPersonMapper { get; private set; }
-
 		protected IDALVPersonMapper DalVPersonMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IVPersonRepository vPersonRepository,
 			IApiVPersonServerRequestModelValidator vPersonModelValidator,
-			IBOLVPersonMapper bolVPersonMapper,
 			IDALVPersonMapper dalVPersonMapper)
 			: base()
 		{
 			this.VPersonRepository = vPersonRepository;
 			this.VPersonModelValidator = vPersonModelValidator;
-			this.BolVPersonMapper = bolVPersonMapper;
 			this.DalVPersonMapper = dalVPersonMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiVPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.VPersonRepository.All(limit, offset);
+			List<VPerson> records = await this.VPersonRepository.All(limit, offset, query);
 
-			return this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(records));
+			return this.DalVPersonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiVPersonServerResponseModel> Get(int personId)
 		{
-			var record = await this.VPersonRepository.Get(personId);
+			VPerson record = await this.VPersonRepository.Get(personId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolVPersonMapper.MapBOToModel(this.DalVPersonMapper.MapEFToBO(record));
+				return this.DalVPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolVPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.VPersonRepository.Create(this.DalVPersonMapper.MapBOToEF(bo));
+				VPerson record = this.DalVPersonMapper.MapModelToEntity(default(int), model);
+				record = await this.VPersonRepository.Create(record);
 
-				var businessObject = this.DalVPersonMapper.MapEFToBO(record);
-				response.SetRecord(this.BolVPersonMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalVPersonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new VPersonCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolVPersonMapper.MapModelToBO(personId, model);
-				await this.VPersonRepository.Update(this.DalVPersonMapper.MapBOToEF(bo));
+				VPerson record = this.DalVPersonMapper.MapModelToEntity(personId, model);
+				await this.VPersonRepository.Update(record);
 
-				var record = await this.VPersonRepository.Get(personId);
+				record = await this.VPersonRepository.Get(personId);
 
-				var businessObject = this.DalVPersonMapper.MapEFToBO(record);
-				var apiModel = this.BolVPersonMapper.MapBOToModel(businessObject);
+				ApiVPersonServerResponseModel apiModel = this.DalVPersonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new VPersonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiVPersonServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58ae2c7e2112a2a6453857c0d9f9b7b8</Hash>
+    <Hash>e149c64c9eeb301e10cf417cf1f2341f</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRepository>();
 			var records = new List<Event>();
 			records.Add(new Event());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new EventService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByCityId(default(int));
@@ -240,7 +230,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByCityId(default(int));
@@ -252,5 +241,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>441728ae09acc2ab4ab576bb5a240d02</Hash>
+    <Hash>42a51a262075bec14a880febea1d53ed</Hash>
 </Codenesium>*/

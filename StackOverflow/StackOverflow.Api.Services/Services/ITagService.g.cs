@@ -18,10 +18,10 @@ namespace StackOverflowNS.Api.Services
 
 		Task<ApiTagServerResponseModel> Get(int id);
 
-		Task<List<ApiTagServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTagServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c0d66586737f3698d6f3315a5e4dd4a</Hash>
+    <Hash>3a4526525a96d9d0ef5d7f2079622f86</Hash>
 </Codenesium>*/

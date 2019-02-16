@@ -14,12 +14,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string description,
 			int id,
+			string description,
 			string name)
 		{
-			this.Description = description;
 			this.Id = id;
+			this.Description = description;
 			this.Name = name;
 		}
 
@@ -38,5 +38,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0fda32992e617628528d2e067ccc44d</Hash>
+    <Hash>1cbc340e75d380cc6b62b58a3e03f864</Hash>
 </Codenesium>*/

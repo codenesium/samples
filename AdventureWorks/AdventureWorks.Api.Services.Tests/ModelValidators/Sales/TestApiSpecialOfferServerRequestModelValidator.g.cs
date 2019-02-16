@@ -121,54 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Type_Create_null()
-		{
-			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-			var validator = new ApiSpecialOfferServerRequestModelValidator(specialOfferRepository.Object);
-			await validator.ValidateCreateAsync(new ApiSpecialOfferServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-		}
-
-		[Fact]
-		public async void Type_Update_null()
-		{
-			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-			var validator = new ApiSpecialOfferServerRequestModelValidator(specialOfferRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.Type, null as string);
-		}
-
-		[Fact]
-		public async void Type_Create_length()
-		{
-			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-			var validator = new ApiSpecialOfferServerRequestModelValidator(specialOfferRepository.Object);
-			await validator.ValidateCreateAsync(new ApiSpecialOfferServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-		}
-
-		[Fact]
-		public async void Type_Update_length()
-		{
-			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
-			specialOfferRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SpecialOffer()));
-
-			var validator = new ApiSpecialOfferServerRequestModelValidator(specialOfferRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiSpecialOfferServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.Type, new string('A', 51));
-		}
-
-		[Fact]
 		private async void BeUniqueByRowguid_Create_Exists()
 		{
 			Mock<ISpecialOfferRepository> specialOfferRepository = new Mock<ISpecialOfferRepository>();
@@ -219,5 +171,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1625519b9284ecf5a8f8d95ccdf57660</Hash>
+    <Hash>8779d899f465f068b3aa41c71f3f6975</Hash>
 </Codenesium>*/

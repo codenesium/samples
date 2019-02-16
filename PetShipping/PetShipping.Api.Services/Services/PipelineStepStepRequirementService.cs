@@ -12,13 +12,11 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
 			IApiPipelineStepStepRequirementServerRequestModelValidator pipelineStepStepRequirementModelValidator,
-			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
 			IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper)
 			: base(logger,
 			       mediator,
 			       pipelineStepStepRequirementRepository,
 			       pipelineStepStepRequirementModelValidator,
-			       bolPipelineStepStepRequirementMapper,
 			       dalPipelineStepStepRequirementMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>942ba40d6f72069ec2578c5f24a171f0</Hash>
+    <Hash>2c6431bc0b1885df10748bdbff041d52</Hash>
 </Codenesium>*/

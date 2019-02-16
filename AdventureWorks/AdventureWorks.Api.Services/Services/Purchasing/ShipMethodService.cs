@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
-			IBOLShipMethodMapper bolShipMethodMapper,
 			IDALShipMethodMapper dalShipMethodMapper,
-			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
 			       mediator,
 			       shipMethodRepository,
 			       shipMethodModelValidator,
-			       bolShipMethodMapper,
 			       dalShipMethodMapper,
-			       bolPurchaseOrderHeaderMapper,
 			       dalPurchaseOrderHeaderMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce7ceb72426cf6e0f80b022829f2ea58</Hash>
+    <Hash>c93f674583ddeda03b728d3dc67196e3</Hash>
 </Codenesium>*/

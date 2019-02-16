@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int currencyRateID,
 			decimal averageRate,
 			DateTime currencyRateDate,
-			int currencyRateID,
 			decimal endOfDayRate,
 			string fromCurrencyCode,
 			DateTime modifiedDate,
 			string toCurrencyCode)
 		{
+			this.CurrencyRateID = currencyRateID;
 			this.AverageRate = averageRate;
 			this.CurrencyRateDate = currencyRateDate;
-			this.CurrencyRateID = currencyRateID;
 			this.EndOfDayRate = endOfDayRate;
 			this.FromCurrencyCode = fromCurrencyCode;
 			this.ModifiedDate = modifiedDate;
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70649586497bf74c82e7d00ece208e5a</Hash>
+    <Hash>15c9d63334db2160abbd2e68931d6382</Hash>
 </Codenesium>*/

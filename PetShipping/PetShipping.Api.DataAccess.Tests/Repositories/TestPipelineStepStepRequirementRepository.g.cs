@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<PipelineStepStepRequirementRepository>> loggerMoc = PipelineStepStepRequirementRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PipelineStepStepRequirementRepository>> loggerMoc = PipelineStepStepRequirementRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
+			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 
 			PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-			entity.SetProperties("B", 2, 1, true);
+			entity.SetProperties(default(int), "B", 1, true);
 			context.Set<PipelineStepStepRequirement>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 
 			var entity = new PipelineStepStepRequirement();
-			entity.SetProperties("B", 2, 1, true);
+			entity.SetProperties(default(int), "B", 1, true);
 			await repository.Create(entity);
 
 			var records = await context.Set<PipelineStepStepRequirement>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 			PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-			entity.SetProperties("B", 2, 1, true);
+			entity.SetProperties(default(int), "B", 1, true);
 			context.Set<PipelineStepStepRequirement>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 			PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-			entity.SetProperties("B", 2, 1, true);
+			entity.SetProperties(default(int), "B", 1, true);
 			context.Set<PipelineStepStepRequirement>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
 			var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 			PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-			entity.SetProperties("B", 2, 1, true);
+			entity.SetProperties(default(int), "B", 1, true);
 			context.Set<PipelineStepStepRequirement>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b17613bbd7cb28fe5ee67092415e1e95</Hash>
+    <Hash>5bb02e4dbaf72b890f197a1dce383ccc</Hash>
 </Codenesium>*/

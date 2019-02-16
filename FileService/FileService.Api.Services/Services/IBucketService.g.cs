@@ -18,7 +18,7 @@ namespace FileServiceNS.Api.Services
 
 		Task<ApiBucketServerResponseModel> Get(int id);
 
-		Task<List<ApiBucketServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBucketServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiBucketServerResponseModel> ByExternalId(Guid externalId);
 
@@ -29,5 +29,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6ec0ca735b2113926e3f25b3768559a</Hash>
+    <Hash>62d367df8630bf1913dac95422d993ae</Hash>
 </Codenesium>*/

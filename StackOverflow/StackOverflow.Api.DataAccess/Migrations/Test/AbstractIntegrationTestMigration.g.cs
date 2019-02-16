@@ -19,11 +19,11 @@ namespace StackOverflowNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var badgeItem1 = new Badge();
-			badgeItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1);
+			badgeItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 			this.Context.Badges.Add(badgeItem1);
 
 			var commentItem1 = new Comment();
-			commentItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A", 1);
+			commentItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1);
 			this.Context.Comments.Add(commentItem1);
 
 			var linkTypeItem1 = new LinkType();
@@ -31,7 +31,7 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context.LinkTypes.Add(linkTypeItem1);
 
 			var postHistoryItem1 = new PostHistory();
-			postHistoryItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A", "A", "A", 1);
+			postHistoryItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A", "A", 1);
 			this.Context.PostHistories.Add(postHistoryItem1);
 
 			var postHistoryTypeItem1 = new PostHistoryType();
@@ -39,11 +39,11 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context.PostHistoryTypes.Add(postHistoryTypeItem1);
 
 			var postLinkItem1 = new PostLink();
-			postLinkItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1);
+			postLinkItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
 			this.Context.PostLinks.Add(postLinkItem1);
 
 			var postItem1 = new Post();
-			postItem1.SetProperties(1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
+			postItem1.SetProperties(1, 1, 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, 1, 1, "A", "A", 1);
 			this.Context.Posts.Add(postItem1);
 
 			var postTypeItem1 = new PostType();
@@ -55,11 +55,11 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context.Tags.Add(tagItem1);
 
 			var userItem1 = new User();
-			userItem1.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+			userItem1.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
 			this.Context.Users.Add(userItem1);
 
 			var voteItem1 = new Vote();
-			voteItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1);
+			voteItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1);
 			this.Context.Votes.Add(voteItem1);
 
 			var voteTypeItem1 = new VoteType();
@@ -72,5 +72,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>677a3102c7320b85b39605b792b15e0e</Hash>
+    <Hash>7f77a3ec0547dd980de1c13288fec0c8</Hash>
 </Codenesium>*/

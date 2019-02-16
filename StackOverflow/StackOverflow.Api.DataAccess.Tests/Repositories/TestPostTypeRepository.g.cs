@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<PostTypeRepository>> loggerMoc = PostTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PostTypeRepositoryMoc.GetContext();
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PostTypeRepository>> loggerMoc = PostTypeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PostTypeRepositoryMoc.GetContext();
+			var repository = new PostTypeRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
 
 			PostType entity = new PostType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
 
 			var entity = new PostType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<PostType>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostTypeRepositoryMoc.GetContext();
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
 			PostType entity = new PostType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostTypeRepositoryMoc.GetContext();
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
 			PostType entity = new PostType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostType>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostTypeRepositoryMoc.GetContext();
 			var repository = new PostTypeRepository(loggerMoc.Object, context);
 			PostType entity = new PostType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>60dcbe35ed018803e509b11033e355b0</Hash>
+    <Hash>f90a548825c1ebb470c723a4956f9759</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IContactTypeRepository>();
 			var records = new List<ContactType>();
 			records.Add(new ContactType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ContactTypeService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			List<ApiContactTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ApiContactTypeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ApiContactTypeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			CreateResponse<ApiContactTypeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			CreateResponse<ApiContactTypeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			UpdateResponse<ApiContactTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			UpdateResponse<ApiContactTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ApiContactTypeServerResponseModel response = await service.ByName("test_value");
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ContactTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLContactTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALContactTypeMapperMock);
 
 			ApiContactTypeServerResponseModel response = await service.ByName("test_value");
@@ -251,5 +240,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7e70288a68eb8b10a56121e2bc202ba5</Hash>
+    <Hash>3ad5cb66263d9149fbabaaf94e365db8</Hash>
 </Codenesium>*/

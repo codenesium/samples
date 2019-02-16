@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiPostHistoryServerRequestModelValidator PostHistoryModelValidator { get; private set; }
 
-		protected IBOLPostHistoryMapper BolPostHistoryMapper { get; private set; }
-
 		protected IDALPostHistoryMapper DalPostHistoryMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IPostHistoryRepository postHistoryRepository,
 			IApiPostHistoryServerRequestModelValidator postHistoryModelValidator,
-			IBOLPostHistoryMapper bolPostHistoryMapper,
 			IDALPostHistoryMapper dalPostHistoryMapper)
 			: base()
 		{
 			this.PostHistoryRepository = postHistoryRepository;
 			this.PostHistoryModelValidator = postHistoryModelValidator;
-			this.BolPostHistoryMapper = bolPostHistoryMapper;
 			this.DalPostHistoryMapper = dalPostHistoryMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPostHistoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostHistoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PostHistoryRepository.All(limit, offset);
+			List<PostHistory> records = await this.PostHistoryRepository.All(limit, offset, query);
 
-			return this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(records));
+			return this.DalPostHistoryMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPostHistoryServerResponseModel> Get(int id)
 		{
-			var record = await this.PostHistoryRepository.Get(id);
+			PostHistory record = await this.PostHistoryRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(record));
+				return this.DalPostHistoryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPostHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.PostHistoryRepository.Create(this.DalPostHistoryMapper.MapBOToEF(bo));
+				PostHistory record = this.DalPostHistoryMapper.MapModelToEntity(default(int), model);
+				record = await this.PostHistoryRepository.Create(record);
 
-				var businessObject = this.DalPostHistoryMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPostHistoryMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPostHistoryMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PostHistoryCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPostHistoryMapper.MapModelToBO(id, model);
-				await this.PostHistoryRepository.Update(this.DalPostHistoryMapper.MapBOToEF(bo));
+				PostHistory record = this.DalPostHistoryMapper.MapModelToEntity(id, model);
+				await this.PostHistoryRepository.Update(record);
 
-				var record = await this.PostHistoryRepository.Get(id);
+				record = await this.PostHistoryRepository.Get(id);
 
-				var businessObject = this.DalPostHistoryMapper.MapEFToBO(record);
-				var apiModel = this.BolPostHistoryMapper.MapBOToModel(businessObject);
+				ApiPostHistoryServerResponseModel apiModel = this.DalPostHistoryMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PostHistoryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPostHistoryServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>afa745aef2b73b3bf1a925022895e4b5</Hash>
+    <Hash>c3229da7c7020563b22967aa50d521af</Hash>
 </Codenesium>*/

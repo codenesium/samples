@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<CountryRegionRepository>> loggerMoc = CountryRegionRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
 
 			CountryRegion entity = new CountryRegion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<CountryRegion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
 
 			var entity = new CountryRegion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<CountryRegion>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
 			CountryRegion entity = new CountryRegion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<CountryRegion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
 			CountryRegion entity = new CountryRegion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<CountryRegion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
 			var repository = new CountryRegionRepository(loggerMoc.Object, context);
 			CountryRegion entity = new CountryRegion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<CountryRegion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee8892d706b3691c36a3f7266a5cb8ed</Hash>
+    <Hash>ab7602c81ae67fcccb3f3c5551d47d42</Hash>
 </Codenesium>*/

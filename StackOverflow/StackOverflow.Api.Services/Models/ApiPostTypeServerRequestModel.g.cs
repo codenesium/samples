@@ -16,9 +16,9 @@ namespace StackOverflowNS.Api.Services
 		}
 
 		public virtual void SetProperties(
-			string type)
+			string rwtype)
 		{
-			this.Type = type;
+			this.Type = rwtype;
 		}
 
 		[Required]
@@ -28,5 +28,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a1a1dcc2ffad7e01ab9b744f3049284</Hash>
+    <Hash>af67eb6949f7a8a22ff6cd9f1308a690</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IQuoteTweetRepository>();
 			var records = new List<QuoteTweet>();
 			records.Add(new QuoteTweet());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new QuoteTweetService(mock.LoggerMock.Object,
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			ApiQuoteTweetServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			ApiQuoteTweetServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			CreateResponse<ApiQuoteTweetServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			CreateResponse<ApiQuoteTweetServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			UpdateResponse<ApiQuoteTweetServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			UpdateResponse<ApiQuoteTweetServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.ByRetweeterUserId(default(int));
@@ -240,7 +230,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.ByRetweeterUserId(default(int));
@@ -260,7 +249,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.BySourceTweetId(default(int));
@@ -278,7 +266,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.QuoteTweetModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                                    mock.DALMapperMockFactory.DALQuoteTweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.BySourceTweetId(default(int));
@@ -290,5 +277,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bf5b3d6d776aba74c9d16905149a5ba8</Hash>
+    <Hash>50a42bc221e9ffd4bc6e13cfb2649f30</Hash>
 </Codenesium>*/

@@ -35,6 +35,14 @@ namespace TwitterNS.Api.Services
 		public string ReplierUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
+		public ApiUserServerResponseModel ReplierUserIdNavigation { get; private set; }
+
+		public void SetReplierUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.ReplierUserIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int ReplyId { get; private set; }
 
 		[JsonProperty]
@@ -43,5 +51,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c60cc6025f92ccf482df1995220da959</Hash>
+    <Hash>00f1bfb2c58d65f50c3062ac93d2aee1</Hash>
 </Codenesium>*/

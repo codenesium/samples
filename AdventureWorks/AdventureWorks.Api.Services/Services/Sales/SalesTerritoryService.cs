@@ -12,25 +12,17 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			IApiSalesTerritoryServerRequestModelValidator salesTerritoryModelValidator,
-			IBOLSalesTerritoryMapper bolSalesTerritoryMapper,
 			IDALSalesTerritoryMapper dalSalesTerritoryMapper,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
-			IBOLSalesPersonMapper bolSalesPersonMapper,
 			IDALSalesPersonMapper dalSalesPersonMapper)
 			: base(logger,
 			       mediator,
 			       salesTerritoryRepository,
 			       salesTerritoryModelValidator,
-			       bolSalesTerritoryMapper,
 			       dalSalesTerritoryMapper,
-			       bolCustomerMapper,
 			       dalCustomerMapper,
-			       bolSalesOrderHeaderMapper,
 			       dalSalesOrderHeaderMapper,
-			       bolSalesPersonMapper,
 			       dalSalesPersonMapper)
 		{
 		}
@@ -38,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9836b39eafe3b89712cef96ea45178b9</Hash>
+    <Hash>c68f148102ea20ee44c80baf56d3bb82</Hash>
 </Codenesium>*/

@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IDatabaseLogRepository databaseLogRepository,
 			IApiDatabaseLogServerRequestModelValidator databaseLogModelValidator,
-			IBOLDatabaseLogMapper bolDatabaseLogMapper,
 			IDALDatabaseLogMapper dalDatabaseLogMapper)
 			: base(logger,
 			       mediator,
 			       databaseLogRepository,
 			       databaseLogModelValidator,
-			       bolDatabaseLogMapper,
 			       dalDatabaseLogMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00fa34080b0cbb816c9a63ca3efe6c5b</Hash>
+    <Hash>cc3a0069ef673d841918772c2d145f07</Hash>
 </Codenesium>*/

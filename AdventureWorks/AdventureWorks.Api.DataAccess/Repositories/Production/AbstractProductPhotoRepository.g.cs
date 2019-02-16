@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.LargePhotoFileName.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.ProductPhotoID == query.ToInt() ||
+				                  x.ThumbnailPhotoFileName.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ProductPhoto> Get(int productPhotoID)
@@ -100,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1fefa2e972b747d3556dff47e7b87957</Hash>
+    <Hash>5bf6013a875aecfcbda73d0f27096197</Hash>
 </Codenesium>*/

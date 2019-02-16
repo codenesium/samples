@@ -16,11 +16,7 @@ namespace TwitterNS.Api.Services
 
 		protected IApiMessageServerRequestModelValidator MessageModelValidator { get; private set; }
 
-		protected IBOLMessageMapper BolMessageMapper { get; private set; }
-
 		protected IDALMessageMapper DalMessageMapper { get; private set; }
-
-		protected IBOLMessengerMapper BolMessengerMapper { get; private set; }
 
 		protected IDALMessengerMapper DalMessengerMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IMessageRepository messageRepository,
 			IApiMessageServerRequestModelValidator messageModelValidator,
-			IBOLMessageMapper bolMessageMapper,
 			IDALMessageMapper dalMessageMapper,
-			IBOLMessengerMapper bolMessengerMapper,
 			IDALMessengerMapper dalMessengerMapper)
 			: base()
 		{
 			this.MessageRepository = messageRepository;
 			this.MessageModelValidator = messageModelValidator;
-			this.BolMessageMapper = bolMessageMapper;
 			this.DalMessageMapper = dalMessageMapper;
-			this.BolMessengerMapper = bolMessengerMapper;
 			this.DalMessengerMapper = dalMessengerMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiMessageServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiMessageServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.MessageRepository.All(limit, offset);
+			List<Message> records = await this.MessageRepository.All(limit, offset, query);
 
-			return this.BolMessageMapper.MapBOToModel(this.DalMessageMapper.MapEFToBO(records));
+			return this.DalMessageMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiMessageServerResponseModel> Get(int messageId)
 		{
-			var record = await this.MessageRepository.Get(messageId);
+			Message record = await this.MessageRepository.Get(messageId);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolMessageMapper.MapBOToModel(this.DalMessageMapper.MapEFToBO(record));
+				return this.DalMessageMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolMessageMapper.MapModelToBO(default(int), model);
-				var record = await this.MessageRepository.Create(this.DalMessageMapper.MapBOToEF(bo));
+				Message record = this.DalMessageMapper.MapModelToEntity(default(int), model);
+				record = await this.MessageRepository.Create(record);
 
-				var businessObject = this.DalMessageMapper.MapEFToBO(record);
-				response.SetRecord(this.BolMessageMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalMessageMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new MessageCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolMessageMapper.MapModelToBO(messageId, model);
-				await this.MessageRepository.Update(this.DalMessageMapper.MapBOToEF(bo));
+				Message record = this.DalMessageMapper.MapModelToEntity(messageId, model);
+				await this.MessageRepository.Update(record);
 
-				var record = await this.MessageRepository.Get(messageId);
+				record = await this.MessageRepository.Get(messageId);
 
-				var businessObject = this.DalMessageMapper.MapEFToBO(record);
-				var apiModel = this.BolMessageMapper.MapBOToModel(businessObject);
+				ApiMessageServerResponseModel apiModel = this.DalMessageMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new MessageUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiMessageServerResponseModel>.UpdateResponse(apiModel);
@@ -131,18 +121,18 @@ namespace TwitterNS.Api.Services
 		{
 			List<Message> records = await this.MessageRepository.BySenderUserId(senderUserId, limit, offset);
 
-			return this.BolMessageMapper.MapBOToModel(this.DalMessageMapper.MapEFToBO(records));
+			return this.DalMessageMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiMessengerServerResponseModel>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Messenger> records = await this.MessageRepository.MessengersByMessageId(messageId, limit, offset);
 
-			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
+			return this.DalMessengerMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>652632409850fbe88a6cdff204919e90</Hash>
+    <Hash>8874a7e3222b84f95725ce03b48f4a31</Hash>
 </Codenesium>*/

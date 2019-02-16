@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
 			var repository = new VPersonRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<VPersonRepository>> loggerMoc = VPersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
+			var repository = new VPersonRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new VPersonRepository(loggerMoc.Object, context);
 
 			VPerson entity = new VPerson();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VPerson>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new VPersonRepository(loggerMoc.Object, context);
 
 			var entity = new VPerson();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<VPerson>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
 			var repository = new VPersonRepository(loggerMoc.Object, context);
 			VPerson entity = new VPerson();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VPerson>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
 			var repository = new VPersonRepository(loggerMoc.Object, context);
 			VPerson entity = new VPerson();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VPerson>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = VPersonRepositoryMoc.GetContext();
 			var repository = new VPersonRepository(loggerMoc.Object, context);
 			VPerson entity = new VPerson();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VPerson>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b822f11e47d5ad0c5cc13c8059be3eb4</Hash>
+    <Hash>50b7e6ce698e19f6dbfb1be4094b163b</Hash>
 </Codenesium>*/

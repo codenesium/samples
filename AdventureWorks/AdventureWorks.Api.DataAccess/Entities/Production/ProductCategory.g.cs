@@ -14,14 +14,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productCategoryID,
 			DateTime modifiedDate,
 			string name,
-			int productCategoryID,
 			Guid rowguid)
 		{
+			this.ProductCategoryID = productCategoryID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.ProductCategoryID = productCategoryID;
 			this.Rowguid = rowguid;
 		}
 
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f0f8dd6a8c4d8c2d293cd87f7174220</Hash>
+    <Hash>aee10acca0aafedae5beb7427e6de8ad</Hash>
 </Codenesium>*/

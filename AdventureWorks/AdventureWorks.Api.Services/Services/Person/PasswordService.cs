@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IPasswordRepository passwordRepository,
 			IApiPasswordServerRequestModelValidator passwordModelValidator,
-			IBOLPasswordMapper bolPasswordMapper,
 			IDALPasswordMapper dalPasswordMapper)
 			: base(logger,
 			       mediator,
 			       passwordRepository,
 			       passwordModelValidator,
-			       bolPasswordMapper,
 			       dalPasswordMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8559182efccda0f041aea26062d55bd3</Hash>
+    <Hash>64209ac96d4661116d034ad84d0fac76</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<PipelineStep> Get(int id);
 
-		Task<List<PipelineStep>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<PipelineStep>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<HandlerPipelineStep>> HandlerPipelineStepsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
@@ -34,5 +34,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9fd36c4fea0e9a5665eff9946623fbe1</Hash>
+    <Hash>62693b82c6f860769292f02499d86c7f</Hash>
 </Codenesium>*/

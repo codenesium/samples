@@ -10,7 +10,6 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual void SetProperties(
 			int territoryID,
-			string @group,
 			decimal costLastYear,
 			decimal costYTD,
 			string countryRegionCode,
@@ -21,7 +20,6 @@ namespace AdventureWorksNS.Api.Services
 			decimal salesYTD)
 		{
 			this.TerritoryID = territoryID;
-			this.@Group = @group;
 			this.CostLastYear = costLastYear;
 			this.CostYTD = costYTD;
 			this.CountryRegionCode = countryRegionCode;
@@ -40,9 +38,6 @@ namespace AdventureWorksNS.Api.Services
 
 		[JsonProperty]
 		public string CountryRegionCode { get; private set; }
-
-		[JsonProperty]
-		public string @Group { get; private set; }
 
 		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; }
@@ -65,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e5288874e5192676a682730f1774189</Hash>
+    <Hash>6186100c491e9059fa58a3d7e5e7e4e9</Hash>
 </Codenesium>*/

@@ -16,11 +16,7 @@ namespace PetStoreNS.Api.Services
 
 		protected IApiPenServerRequestModelValidator PenModelValidator { get; private set; }
 
-		protected IBOLPenMapper BolPenMapper { get; private set; }
-
 		protected IDALPenMapper DalPenMapper { get; private set; }
-
-		protected IBOLPetMapper BolPetMapper { get; private set; }
 
 		protected IDALPetMapper DalPetMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			IPenRepository penRepository,
 			IApiPenServerRequestModelValidator penModelValidator,
-			IBOLPenMapper bolPenMapper,
 			IDALPenMapper dalPenMapper,
-			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base()
 		{
 			this.PenRepository = penRepository;
 			this.PenModelValidator = penModelValidator;
-			this.BolPenMapper = bolPenMapper;
 			this.DalPenMapper = dalPenMapper;
-			this.BolPetMapper = bolPetMapper;
 			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPenServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPenServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PenRepository.All(limit, offset);
+			List<Pen> records = await this.PenRepository.All(limit, offset, query);
 
-			return this.BolPenMapper.MapBOToModel(this.DalPenMapper.MapEFToBO(records));
+			return this.DalPenMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPenServerResponseModel> Get(int id)
 		{
-			var record = await this.PenRepository.Get(id);
+			Pen record = await this.PenRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.BolPenMapper.MapBOToModel(this.DalPenMapper.MapEFToBO(record));
+				return this.DalPenMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPenMapper.MapModelToBO(default(int), model);
-				var record = await this.PenRepository.Create(this.DalPenMapper.MapBOToEF(bo));
+				Pen record = this.DalPenMapper.MapModelToEntity(default(int), model);
+				record = await this.PenRepository.Create(record);
 
-				var businessObject = this.DalPenMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPenMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPenMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PenCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetStoreNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPenMapper.MapModelToBO(id, model);
-				await this.PenRepository.Update(this.DalPenMapper.MapBOToEF(bo));
+				Pen record = this.DalPenMapper.MapModelToEntity(id, model);
+				await this.PenRepository.Update(record);
 
-				var record = await this.PenRepository.Get(id);
+				record = await this.PenRepository.Get(id);
 
-				var businessObject = this.DalPenMapper.MapEFToBO(record);
-				var apiModel = this.BolPenMapper.MapBOToModel(businessObject);
+				ApiPenServerResponseModel apiModel = this.DalPenMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PenUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPenServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetStoreNS.Api.Services
 		{
 			List<Pet> records = await this.PenRepository.PetsByPenId(penId, limit, offset);
 
-			return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(records));
+			return this.DalPetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>33f0fd09ce32de8964404f001dcacfdb</Hash>
+    <Hash>b00c3a3959e2558065c26b3e44140a70</Hash>
 </Codenesium>*/

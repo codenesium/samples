@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Employee> Get(int businessEntityID);
 
-		Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Employee> ByLoginID(string loginID);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f8f841f2d415da6e84718c0211ba5f08</Hash>
+    <Hash>666007791256a120f334d7b04a61c8f8</Hash>
 </Codenesium>*/

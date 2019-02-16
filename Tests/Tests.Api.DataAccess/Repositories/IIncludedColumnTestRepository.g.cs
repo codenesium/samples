@@ -15,10 +15,10 @@ namespace TestsNS.Api.DataAccess
 
 		Task<IncludedColumnTest> Get(int id);
 
-		Task<List<IncludedColumnTest>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<IncludedColumnTest>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0135ad1c2c61db20be8734b1b01e316b</Hash>
+    <Hash>1e4389fdb3e20e3423dddf8511bde8fa</Hash>
 </Codenesium>*/

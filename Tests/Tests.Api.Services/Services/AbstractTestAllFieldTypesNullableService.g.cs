@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiTestAllFieldTypesNullableServerRequestModelValidator TestAllFieldTypesNullableModelValidator { get; private set; }
 
-		protected IBOLTestAllFieldTypesNullableMapper BolTestAllFieldTypesNullableMapper { get; private set; }
-
 		protected IDALTestAllFieldTypesNullableMapper DalTestAllFieldTypesNullableMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
 			IApiTestAllFieldTypesNullableServerRequestModelValidator testAllFieldTypesNullableModelValidator,
-			IBOLTestAllFieldTypesNullableMapper bolTestAllFieldTypesNullableMapper,
 			IDALTestAllFieldTypesNullableMapper dalTestAllFieldTypesNullableMapper)
 			: base()
 		{
 			this.TestAllFieldTypesNullableRepository = testAllFieldTypesNullableRepository;
 			this.TestAllFieldTypesNullableModelValidator = testAllFieldTypesNullableModelValidator;
-			this.BolTestAllFieldTypesNullableMapper = bolTestAllFieldTypesNullableMapper;
 			this.DalTestAllFieldTypesNullableMapper = dalTestAllFieldTypesNullableMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypesNullableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTestAllFieldTypesNullableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TestAllFieldTypesNullableRepository.All(limit, offset);
+			List<TestAllFieldTypesNullable> records = await this.TestAllFieldTypesNullableRepository.All(limit, offset, query);
 
-			return this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(records));
+			return this.DalTestAllFieldTypesNullableMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTestAllFieldTypesNullableServerResponseModel> Get(int id)
 		{
-			var record = await this.TestAllFieldTypesNullableRepository.Get(id);
+			TestAllFieldTypesNullable record = await this.TestAllFieldTypesNullableRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolTestAllFieldTypesNullableMapper.MapBOToModel(this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record));
+				return this.DalTestAllFieldTypesNullableMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTestAllFieldTypesNullableMapper.MapModelToBO(default(int), model);
-				var record = await this.TestAllFieldTypesNullableRepository.Create(this.DalTestAllFieldTypesNullableMapper.MapBOToEF(bo));
+				TestAllFieldTypesNullable record = this.DalTestAllFieldTypesNullableMapper.MapModelToEntity(default(int), model);
+				record = await this.TestAllFieldTypesNullableRepository.Create(record);
 
-				var businessObject = this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTestAllFieldTypesNullableMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTestAllFieldTypesNullableMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TestAllFieldTypesNullableCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTestAllFieldTypesNullableMapper.MapModelToBO(id, model);
-				await this.TestAllFieldTypesNullableRepository.Update(this.DalTestAllFieldTypesNullableMapper.MapBOToEF(bo));
+				TestAllFieldTypesNullable record = this.DalTestAllFieldTypesNullableMapper.MapModelToEntity(id, model);
+				await this.TestAllFieldTypesNullableRepository.Update(record);
 
-				var record = await this.TestAllFieldTypesNullableRepository.Get(id);
+				record = await this.TestAllFieldTypesNullableRepository.Get(id);
 
-				var businessObject = this.DalTestAllFieldTypesNullableMapper.MapEFToBO(record);
-				var apiModel = this.BolTestAllFieldTypesNullableMapper.MapBOToModel(businessObject);
+				ApiTestAllFieldTypesNullableServerResponseModel apiModel = this.DalTestAllFieldTypesNullableMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TestAllFieldTypesNullableUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTestAllFieldTypesNullableServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>436786279c44397561f84df11c5b2920</Hash>
+    <Hash>6e4e94bca89f0f3faf4b0d303dc79b77</Hash>
 </Codenesium>*/

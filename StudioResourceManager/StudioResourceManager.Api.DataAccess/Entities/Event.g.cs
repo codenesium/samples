@@ -14,21 +14,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime? actualEndDate,
 			DateTime? actualStartDate,
 			decimal? billAmount,
 			int eventStatusId,
-			int id,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
 			string studentNote,
 			string teacherNote)
 		{
+			this.Id = id;
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
 			this.BillAmount = billAmount;
 			this.EventStatusId = eventStatusId;
-			this.Id = id;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
@@ -66,15 +66,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public virtual string TeacherNote { get; private set; }
 
 		[ForeignKey("EventStatusId")]
-		public virtual EventStatu EventStatuNavigation { get; private set; }
+		public virtual EventStatus EventStatusIdNavigation { get; private set; }
 
-		public void SetEventStatuNavigation(EventStatu item)
+		public void SetEventStatusIdNavigation(EventStatus item)
 		{
-			this.EventStatuNavigation = item;
+			this.EventStatusIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dedeae18aae56c5f00ee547a3348cde5</Hash>
+    <Hash>077c8db531a65f290a42770c607a5e31</Hash>
 </Codenesium>*/

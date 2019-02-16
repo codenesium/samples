@@ -14,14 +14,14 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int locationId,
 			int gpsLat,
 			int gpsLong,
-			int locationId,
 			string locationName)
 		{
+			this.LocationId = locationId;
 			this.GpsLat = gpsLat;
 			this.GpsLong = gpsLong;
-			this.LocationId = locationId;
 			this.LocationName = locationName;
 		}
 
@@ -42,5 +42,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e9178c72e6ed483ac235abe35c5d7929</Hash>
+    <Hash>7b4e1190fc29c91ae03da4f3fbecbe6d</Hash>
 </Codenesium>*/

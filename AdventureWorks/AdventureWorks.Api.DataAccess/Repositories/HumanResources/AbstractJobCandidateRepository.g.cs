@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.BusinessEntityID == query.ToNullableInt() ||
+				                  x.JobCandidateID == query.ToInt() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Resume.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<JobCandidate> Get(int jobCandidateID)
@@ -106,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1071f10ba4ba540cb53c50253341f5e4</Hash>
+    <Hash>bcb2033cff331c71a43f1c0eaa18fe6d</Hash>
 </Codenesium>*/

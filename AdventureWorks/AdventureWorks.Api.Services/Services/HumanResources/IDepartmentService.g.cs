@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiDepartmentServerResponseModel> Get(short departmentID);
 
-		Task<List<ApiDepartmentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDepartmentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiDepartmentServerResponseModel> ByName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d720933b2c566d029d6d5491a4d53f87</Hash>
+    <Hash>15a09c30fa6e4f194efbe8e43e3f4422</Hash>
 </Codenesium>*/

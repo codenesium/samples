@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 
 			ProductPhoto entity = new ProductPhoto();
-			entity.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, BitConverter.GetBytes(2), "B");
+			entity.SetProperties(default(int), BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
 			context.Set<ProductPhoto>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 
 			var entity = new ProductPhoto();
-			entity.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, BitConverter.GetBytes(2), "B");
+			entity.SetProperties(default(int), BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<ProductPhoto>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 			ProductPhoto entity = new ProductPhoto();
-			entity.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, BitConverter.GetBytes(2), "B");
+			entity.SetProperties(default(int), BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
 			context.Set<ProductPhoto>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 			ProductPhoto entity = new ProductPhoto();
-			entity.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, BitConverter.GetBytes(2), "B");
+			entity.SetProperties(default(int), BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
 			context.Set<ProductPhoto>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
 			var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 			ProductPhoto entity = new ProductPhoto();
-			entity.SetProperties(BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, BitConverter.GetBytes(2), "B");
+			entity.SetProperties(default(int), BitConverter.GetBytes(2), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), BitConverter.GetBytes(2), "B");
 			context.Set<ProductPhoto>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ff579bc24e4d0316f85c5ff02ee7507</Hash>
+    <Hash>dccaabe666752e3e12a3aafc57801213</Hash>
 </Codenesium>*/

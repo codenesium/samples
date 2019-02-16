@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var records = new List<Location>();
 			records.Add(new Location());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			List<ApiLocationServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ApiLocationServerResponseModel response = await service.Get(default(short));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ApiLocationServerResponseModel response = await service.Get(default(short));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(short), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(short), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ActionResponse response = await service.Delete(default(short));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ActionResponse response = await service.Delete(default(short));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ApiLocationServerResponseModel response = await service.ByName("test_value");
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock);
 
 			ApiLocationServerResponseModel response = await service.ByName("test_value");
@@ -251,5 +240,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4e693bd9a047c15e95f171de65bef9c1</Hash>
+    <Hash>4ae0a1bab69fcd2620750cfa2d0b0e70</Hash>
 </Codenesium>*/

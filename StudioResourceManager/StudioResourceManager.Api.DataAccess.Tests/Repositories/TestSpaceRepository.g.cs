@@ -47,10 +47,19 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
 			var repository = new SpaceRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
+			var repository = new SpaceRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new SpaceRepository(loggerMoc.Object, context);
 
 			Space entity = new Space();
-			entity.SetProperties("B", 2, "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<Space>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new SpaceRepository(loggerMoc.Object, context);
 
 			var entity = new Space();
-			entity.SetProperties("B", 2, "B");
+			entity.SetProperties(default(int), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Space>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
 			var repository = new SpaceRepository(loggerMoc.Object, context);
 			Space entity = new Space();
-			entity.SetProperties("B", 2, "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<Space>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
 			var repository = new SpaceRepository(loggerMoc.Object, context);
 			Space entity = new Space();
-			entity.SetProperties("B", 2, "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<Space>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
 			var repository = new SpaceRepository(loggerMoc.Object, context);
 			Space entity = new Space();
-			entity.SetProperties("B", 2, "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<Space>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>823710f1b922063581f09cf6f9cb56b1</Hash>
+    <Hash>6692d5d3c1364183e5e48cc74a79549e</Hash>
 </Codenesium>*/

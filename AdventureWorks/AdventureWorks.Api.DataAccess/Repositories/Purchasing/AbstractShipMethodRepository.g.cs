@@ -26,9 +26,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.ShipBase.ToDecimal() == query.ToDecimal() ||
+				                  x.ShipMethodID == query.ToInt() ||
+				                  x.ShipRate.ToDecimal() == query.ToDecimal(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ShipMethod> Get(int shipMethodID)
@@ -118,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2785c3db2ef5f9c68a1cd30a222d2ff5</Hash>
+    <Hash>cefe28d9f288a1ce54bef6b07c7938b6</Hash>
 </Codenesium>*/

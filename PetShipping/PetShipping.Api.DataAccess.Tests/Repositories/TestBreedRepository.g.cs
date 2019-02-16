@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<BreedRepository>> loggerMoc = BreedRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
+			var repository = new BreedRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new BreedRepository(loggerMoc.Object, context);
 
 			Breed entity = new Breed();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new BreedRepository(loggerMoc.Object, context);
 
 			var entity = new Breed();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Breed>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = BreedRepositoryMoc.GetContext();
 			var repository = new BreedRepository(loggerMoc.Object, context);
 			Breed entity = new Breed();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Breed>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ec4fb3d4f48cca47c5c5d9ea647b53c</Hash>
+    <Hash>eb2c853fae6de69d53059fe74509b89c</Hash>
 </Codenesium>*/

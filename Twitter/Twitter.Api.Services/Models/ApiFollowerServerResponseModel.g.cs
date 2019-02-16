@@ -42,10 +42,26 @@ namespace TwitterNS.Api.Services
 		public string FollowedUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
+		public ApiUserServerResponseModel FollowedUserIdNavigation { get; private set; }
+
+		public void SetFollowedUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.FollowedUserIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int FollowingUserId { get; private set; }
 
 		[JsonProperty]
 		public string FollowingUserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel FollowingUserIdNavigation { get; private set; }
+
+		public void SetFollowingUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.FollowingUserIdNavigation = value;
+		}
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -56,5 +72,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e3e7a3b04271a8d8042d14483ff4fa7</Hash>
+    <Hash>35b92d7e8fbd7f75e931997a5a969c78</Hash>
 </Codenesium>*/

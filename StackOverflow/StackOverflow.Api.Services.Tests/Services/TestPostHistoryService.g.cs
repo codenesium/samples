@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPostHistoryRepository>();
 			var records = new List<PostHistory>();
 			records.Add(new PostHistory());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new PostHistoryService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			List<ApiPostHistoryServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			ApiPostHistoryServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			ApiPostHistoryServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			CreateResponse<ApiPostHistoryServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			CreateResponse<ApiPostHistoryServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			UpdateResponse<ApiPostHistoryServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			UpdateResponse<ApiPostHistoryServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PostHistoryModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPostHistoryMapperMock,
 			                                     mock.DALMapperMockFactory.DALPostHistoryMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e2739eda74f9411996a447c9d845eabe</Hash>
+    <Hash>4fe7cb3135d0260d783dadef7101fec3</Hash>
 </Codenesium>*/

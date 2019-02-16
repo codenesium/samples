@@ -26,9 +26,25 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Messenger>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Messenger>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Date == query.ToNullableDateTime() ||
+				                  x.FromUserId == query.ToNullableInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.MessageId == query.ToNullableInt() ||
+				                  x.Time == query.ToNullableTimespan() ||
+				                  x.ToUserId == query.ToInt() ||
+				                  x.UserId == query.ToNullableInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Messenger> Get(int id)
@@ -97,19 +113,22 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table Message via messageId.
 		public async virtual Task<Message> MessageByMessageId(int? messageId)
 		{
-			return await this.Context.Set<Message>().SingleOrDefaultAsync(x => x.MessageId == messageId);
+			return await this.Context.Set<Message>()
+			       .SingleOrDefaultAsync(x => x.MessageId == messageId);
 		}
 
 		// Foreign key reference to table User via toUserId.
 		public async virtual Task<User> UserByToUserId(int toUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == toUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == toUserId);
 		}
 
 		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int? userId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == userId);
 		}
 
 		protected async Task<List<Messenger>> Where(
@@ -123,7 +142,12 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Messenger>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Messenger>();
+			return await this.Context.Set<Messenger>()
+			       .Include(x => x.MessageIdNavigation)
+			       .Include(x => x.ToUserIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
 		private async Task<Messenger> GetById(int id)
@@ -136,5 +160,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b549331f99c8e03d10c2727a923bed6e</Hash>
+    <Hash>f55626af5f40d4559882955da5c22941</Hash>
 </Codenesium>*/

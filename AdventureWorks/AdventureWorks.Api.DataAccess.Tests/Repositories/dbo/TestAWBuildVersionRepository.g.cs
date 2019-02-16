@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<AWBuildVersionRepository>> loggerMoc = AWBuildVersionRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = AWBuildVersionRepositoryMoc.GetContext();
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
 
 			AWBuildVersion entity = new AWBuildVersion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AWBuildVersion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
 
 			var entity = new AWBuildVersion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
 			var records = await context.Set<AWBuildVersion>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AWBuildVersionRepositoryMoc.GetContext();
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
 			AWBuildVersion entity = new AWBuildVersion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AWBuildVersion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AWBuildVersionRepositoryMoc.GetContext();
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
 			AWBuildVersion entity = new AWBuildVersion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AWBuildVersion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = AWBuildVersionRepositoryMoc.GetContext();
 			var repository = new AWBuildVersionRepository(loggerMoc.Object, context);
 			AWBuildVersion entity = new AWBuildVersion();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<AWBuildVersion>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af91dc71557ba9bc6b5f84154a4d3b47</Hash>
+    <Hash>c19295d72e6ef63c504ca359f4b166f3</Hash>
 </Codenesium>*/

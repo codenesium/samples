@@ -46,15 +46,15 @@ namespace AdventureWorksNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPasswordServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiPasswordServerResponseModel> response = await this.PasswordService.All(query.Limit, query.Offset);
+			List<ApiPasswordServerResponseModel> response = await this.PasswordService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>404ab4c9e8f80d1880a71937ac1da2dc</Hash>
+    <Hash>3bc9b72ca9ed8686e5c107310b7b8d96</Hash>
 </Codenesium>*/

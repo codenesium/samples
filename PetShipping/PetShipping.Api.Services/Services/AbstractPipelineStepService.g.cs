@@ -16,27 +16,15 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiPipelineStepServerRequestModelValidator PipelineStepModelValidator { get; private set; }
 
-		protected IBOLPipelineStepMapper BolPipelineStepMapper { get; private set; }
-
 		protected IDALPipelineStepMapper DalPipelineStepMapper { get; private set; }
-
-		protected IBOLHandlerPipelineStepMapper BolHandlerPipelineStepMapper { get; private set; }
 
 		protected IDALHandlerPipelineStepMapper DalHandlerPipelineStepMapper { get; private set; }
 
-		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
-
 		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
-
-		protected IBOLPipelineStepDestinationMapper BolPipelineStepDestinationMapper { get; private set; }
 
 		protected IDALPipelineStepDestinationMapper DalPipelineStepDestinationMapper { get; private set; }
 
-		protected IBOLPipelineStepNoteMapper BolPipelineStepNoteMapper { get; private set; }
-
 		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
-
-		protected IBOLPipelineStepStepRequirementMapper BolPipelineStepStepRequirementMapper { get; private set; }
 
 		protected IDALPipelineStepStepRequirementMapper DalPipelineStepStepRequirementMapper { get; private set; }
 
@@ -47,49 +35,37 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineStepRepository pipelineStepRepository,
 			IApiPipelineStepServerRequestModelValidator pipelineStepModelValidator,
-			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
-			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
 			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
-			IBOLOtherTransportMapper bolOtherTransportMapper,
 			IDALOtherTransportMapper dalOtherTransportMapper,
-			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
 			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper,
-			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
-			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
 			IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper)
 			: base()
 		{
 			this.PipelineStepRepository = pipelineStepRepository;
 			this.PipelineStepModelValidator = pipelineStepModelValidator;
-			this.BolPipelineStepMapper = bolPipelineStepMapper;
 			this.DalPipelineStepMapper = dalPipelineStepMapper;
-			this.BolHandlerPipelineStepMapper = bolHandlerPipelineStepMapper;
 			this.DalHandlerPipelineStepMapper = dalHandlerPipelineStepMapper;
-			this.BolOtherTransportMapper = bolOtherTransportMapper;
 			this.DalOtherTransportMapper = dalOtherTransportMapper;
-			this.BolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
 			this.DalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
-			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
-			this.BolPipelineStepStepRequirementMapper = bolPipelineStepStepRequirementMapper;
 			this.DalPipelineStepStepRequirementMapper = dalPipelineStepStepRequirementMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPipelineStepServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineStepServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PipelineStepRepository.All(limit, offset);
+			List<PipelineStep> records = await this.PipelineStepRepository.All(limit, offset, query);
 
-			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
+			return this.DalPipelineStepMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPipelineStepServerResponseModel> Get(int id)
 		{
-			var record = await this.PipelineStepRepository.Get(id);
+			PipelineStep record = await this.PipelineStepRepository.Get(id);
 
 			if (record == null)
 			{
@@ -97,7 +73,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(record));
+				return this.DalPipelineStepMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -108,11 +84,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPipelineStepMapper.MapModelToBO(default(int), model);
-				var record = await this.PipelineStepRepository.Create(this.DalPipelineStepMapper.MapBOToEF(bo));
+				PipelineStep record = this.DalPipelineStepMapper.MapModelToEntity(default(int), model);
+				record = await this.PipelineStepRepository.Create(record);
 
-				var businessObject = this.DalPipelineStepMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPipelineStepMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPipelineStepMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PipelineStepCreatedNotification(response.Record));
 			}
 
@@ -127,13 +102,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPipelineStepMapper.MapModelToBO(id, model);
-				await this.PipelineStepRepository.Update(this.DalPipelineStepMapper.MapBOToEF(bo));
+				PipelineStep record = this.DalPipelineStepMapper.MapModelToEntity(id, model);
+				await this.PipelineStepRepository.Update(record);
 
-				var record = await this.PipelineStepRepository.Get(id);
+				record = await this.PipelineStepRepository.Get(id);
 
-				var businessObject = this.DalPipelineStepMapper.MapEFToBO(record);
-				var apiModel = this.BolPipelineStepMapper.MapBOToModel(businessObject);
+				ApiPipelineStepServerResponseModel apiModel = this.DalPipelineStepMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PipelineStepUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPipelineStepServerResponseModel>.UpdateResponse(apiModel);
@@ -163,39 +137,39 @@ namespace PetShippingNS.Api.Services
 		{
 			List<HandlerPipelineStep> records = await this.PipelineStepRepository.HandlerPipelineStepsByPipelineStepId(pipelineStepId, limit, offset);
 
-			return this.BolHandlerPipelineStepMapper.MapBOToModel(this.DalHandlerPipelineStepMapper.MapEFToBO(records));
+			return this.DalHandlerPipelineStepMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiOtherTransportServerResponseModel>> OtherTransportsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<OtherTransport> records = await this.PipelineStepRepository.OtherTransportsByPipelineStepId(pipelineStepId, limit, offset);
 
-			return this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(records));
+			return this.DalOtherTransportMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPipelineStepDestinationServerResponseModel>> PipelineStepDestinationsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStepDestination> records = await this.PipelineStepRepository.PipelineStepDestinationsByPipelineStepId(pipelineStepId, limit, offset);
 
-			return this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(records));
+			return this.DalPipelineStepDestinationMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPipelineStepNoteServerResponseModel>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStepNote> records = await this.PipelineStepRepository.PipelineStepNotesByPipelineStepId(pipelineStepId, limit, offset);
 
-			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
+			return this.DalPipelineStepNoteMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiPipelineStepStepRequirementServerResponseModel>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<PipelineStepStepRequirement> records = await this.PipelineStepRepository.PipelineStepStepRequirementsByPipelineStepId(pipelineStepId, limit, offset);
 
-			return this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(records));
+			return this.DalPipelineStepStepRequirementMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3da04d1a1d92d52cae779cb3335eabc</Hash>
+    <Hash>0caeb9e2e05719851cb67627d94105a3</Hash>
 </Codenesium>*/

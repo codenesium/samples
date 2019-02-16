@@ -16,8 +16,6 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiVenueServerRequestModelValidator VenueModelValidator { get; private set; }
 
-		protected IBOLVenueMapper BolVenueMapper { get; private set; }
-
 		protected IDALVenueMapper DalVenueMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IVenueRepository venueRepository,
 			IApiVenueServerRequestModelValidator venueModelValidator,
-			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base()
 		{
 			this.VenueRepository = venueRepository;
 			this.VenueModelValidator = venueModelValidator;
-			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiVenueServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVenueServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.VenueRepository.All(limit, offset);
+			List<Venue> records = await this.VenueRepository.All(limit, offset, query);
 
-			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
+			return this.DalVenueMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiVenueServerResponseModel> Get(int id)
 		{
-			var record = await this.VenueRepository.Get(id);
+			Venue record = await this.VenueRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record));
+				return this.DalVenueMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolVenueMapper.MapModelToBO(default(int), model);
-				var record = await this.VenueRepository.Create(this.DalVenueMapper.MapBOToEF(bo));
+				Venue record = this.DalVenueMapper.MapModelToEntity(default(int), model);
+				record = await this.VenueRepository.Create(record);
 
-				var businessObject = this.DalVenueMapper.MapEFToBO(record);
-				response.SetRecord(this.BolVenueMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalVenueMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new VenueCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolVenueMapper.MapModelToBO(id, model);
-				await this.VenueRepository.Update(this.DalVenueMapper.MapBOToEF(bo));
+				Venue record = this.DalVenueMapper.MapModelToEntity(id, model);
+				await this.VenueRepository.Update(record);
 
-				var record = await this.VenueRepository.Get(id);
+				record = await this.VenueRepository.Get(id);
 
-				var businessObject = this.DalVenueMapper.MapEFToBO(record);
-				var apiModel = this.BolVenueMapper.MapBOToModel(businessObject);
+				ApiVenueServerResponseModel apiModel = this.DalVenueMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new VenueUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiVenueServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Venue> records = await this.VenueRepository.ByAdminId(adminId, limit, offset);
 
-			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
+			return this.DalVenueMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiVenueServerResponseModel>> ByProvinceId(int provinceId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Venue> records = await this.VenueRepository.ByProvinceId(provinceId, limit, offset);
 
-			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
+			return this.DalVenueMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8928f0e001c5ff32aa070ae679e5a623</Hash>
+    <Hash>ccf24ef78259ff36d3d89cd9d1247385</Hash>
 </Codenesium>*/

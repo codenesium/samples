@@ -26,9 +26,20 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Person>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Person>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.PersonId == query.ToInt() ||
+				                  x.PersonName.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Person> Get(int personId)
@@ -79,13 +90,15 @@ namespace TestsNS.Api.DataAccess
 		// Foreign key reference to this table ColumnSameAsFKTable via person.
 		public async virtual Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTablesByPerson(int person, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<ColumnSameAsFKTable>().Where(x => x.Person == person).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
+			return await this.Context.Set<ColumnSameAsFKTable>()
+			       .Where(x => x.Person == person).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
 		// Foreign key reference to this table ColumnSameAsFKTable via personId.
 		public async virtual Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTablesByPersonId(int personId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<ColumnSameAsFKTable>().Where(x => x.PersonId == personId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
+			return await this.Context.Set<ColumnSameAsFKTable>()
+			       .Where(x => x.PersonId == personId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
 		protected async Task<List<Person>> Where(
@@ -99,7 +112,9 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.PersonId;
 			}
 
-			return await this.Context.Set<Person>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Person>();
+			return await this.Context.Set<Person>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Person>();
 		}
 
 		private async Task<Person> GetById(int personId)
@@ -112,5 +127,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65790d431c32e29e3e5c69c28cde1da5</Hash>
+    <Hash>4e5995e530ffc0a6d82221475518df0d</Hash>
 </Codenesium>*/

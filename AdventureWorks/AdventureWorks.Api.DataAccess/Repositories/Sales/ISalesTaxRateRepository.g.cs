@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<SalesTaxRate> Get(int salesTaxRateID);
 
-		Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<SalesTaxRate> ByRowguid(Guid rowguid);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aca998fd7d86dcce979f0681ebf8da5a</Hash>
+    <Hash>a2809550dc89c2ea53bb1c1e022e75cb</Hash>
 </Codenesium>*/

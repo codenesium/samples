@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<AirlineRepository>> loggerMoc = AirlineRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = AirlineRepositoryMoc.GetContext();
 			var repository = new AirlineRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<AirlineRepository>> loggerMoc = AirlineRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AirlineRepositoryMoc.GetContext();
+			var repository = new AirlineRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirlineRepository(loggerMoc.Object, context);
 
 			Airline entity = new Airline();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Airline>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new AirlineRepository(loggerMoc.Object, context);
 
 			var entity = new Airline();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Airline>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirlineRepositoryMoc.GetContext();
 			var repository = new AirlineRepository(loggerMoc.Object, context);
 			Airline entity = new Airline();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Airline>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirlineRepositoryMoc.GetContext();
 			var repository = new AirlineRepository(loggerMoc.Object, context);
 			Airline entity = new Airline();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Airline>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = AirlineRepositoryMoc.GetContext();
 			var repository = new AirlineRepository(loggerMoc.Object, context);
 			Airline entity = new Airline();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Airline>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>38e615ffd5fab42c13373cee798c465d</Hash>
+    <Hash>8c5fd1d3d36a64696f4fd5eaeb83c42f</Hash>
 </Codenesium>*/

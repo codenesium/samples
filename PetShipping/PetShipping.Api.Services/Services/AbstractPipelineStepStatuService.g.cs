@@ -16,11 +16,7 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiPipelineStepStatuServerRequestModelValidator PipelineStepStatuModelValidator { get; private set; }
 
-		protected IBOLPipelineStepStatuMapper BolPipelineStepStatuMapper { get; private set; }
-
 		protected IDALPipelineStepStatuMapper DalPipelineStepStatuMapper { get; private set; }
-
-		protected IBOLPipelineStepMapper BolPipelineStepMapper { get; private set; }
 
 		protected IDALPipelineStepMapper DalPipelineStepMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineStepStatuRepository pipelineStepStatuRepository,
 			IApiPipelineStepStatuServerRequestModelValidator pipelineStepStatuModelValidator,
-			IBOLPipelineStepStatuMapper bolPipelineStepStatuMapper,
 			IDALPipelineStepStatuMapper dalPipelineStepStatuMapper,
-			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper)
 			: base()
 		{
 			this.PipelineStepStatuRepository = pipelineStepStatuRepository;
 			this.PipelineStepStatuModelValidator = pipelineStepStatuModelValidator;
-			this.BolPipelineStepStatuMapper = bolPipelineStepStatuMapper;
 			this.DalPipelineStepStatuMapper = dalPipelineStepStatuMapper;
-			this.BolPipelineStepMapper = bolPipelineStepMapper;
 			this.DalPipelineStepMapper = dalPipelineStepMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPipelineStepStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineStepStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PipelineStepStatuRepository.All(limit, offset);
+			List<PipelineStepStatu> records = await this.PipelineStepStatuRepository.All(limit, offset, query);
 
-			return this.BolPipelineStepStatuMapper.MapBOToModel(this.DalPipelineStepStatuMapper.MapEFToBO(records));
+			return this.DalPipelineStepStatuMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPipelineStepStatuServerResponseModel> Get(int id)
 		{
-			var record = await this.PipelineStepStatuRepository.Get(id);
+			PipelineStepStatu record = await this.PipelineStepStatuRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolPipelineStepStatuMapper.MapBOToModel(this.DalPipelineStepStatuMapper.MapEFToBO(record));
+				return this.DalPipelineStepStatuMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPipelineStepStatuMapper.MapModelToBO(default(int), model);
-				var record = await this.PipelineStepStatuRepository.Create(this.DalPipelineStepStatuMapper.MapBOToEF(bo));
+				PipelineStepStatu record = this.DalPipelineStepStatuMapper.MapModelToEntity(default(int), model);
+				record = await this.PipelineStepStatuRepository.Create(record);
 
-				var businessObject = this.DalPipelineStepStatuMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPipelineStepStatuMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPipelineStepStatuMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PipelineStepStatuCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPipelineStepStatuMapper.MapModelToBO(id, model);
-				await this.PipelineStepStatuRepository.Update(this.DalPipelineStepStatuMapper.MapBOToEF(bo));
+				PipelineStepStatu record = this.DalPipelineStepStatuMapper.MapModelToEntity(id, model);
+				await this.PipelineStepStatuRepository.Update(record);
 
-				var record = await this.PipelineStepStatuRepository.Get(id);
+				record = await this.PipelineStepStatuRepository.Get(id);
 
-				var businessObject = this.DalPipelineStepStatuMapper.MapEFToBO(record);
-				var apiModel = this.BolPipelineStepStatuMapper.MapBOToModel(businessObject);
+				ApiPipelineStepStatuServerResponseModel apiModel = this.DalPipelineStepStatuMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PipelineStepStatuUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPipelineStepStatuServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetShippingNS.Api.Services
 		{
 			List<PipelineStep> records = await this.PipelineStepStatuRepository.PipelineStepsByPipelineStepStatusId(pipelineStepStatusId, limit, offset);
 
-			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
+			return this.DalPipelineStepMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>38c7030f3d2a20b7589f06656a43fbc8</Hash>
+    <Hash>9c52cf4b01b8dfbd06fd8f2fa907abe8</Hash>
 </Codenesium>*/

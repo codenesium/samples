@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<TagRepository>> loggerMoc = TagRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TagRepositoryMoc.GetContext();
 			var repository = new TagRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TagRepository>> loggerMoc = TagRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TagRepositoryMoc.GetContext();
+			var repository = new TagRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new TagRepository(loggerMoc.Object, context);
 
 			Tag entity = new Tag();
-			entity.SetProperties(2, 2, 2, "B", 2);
+			entity.SetProperties(default(int), 2, 2, "B", 2);
 			context.Set<Tag>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new TagRepository(loggerMoc.Object, context);
 
 			var entity = new Tag();
-			entity.SetProperties(2, 2, 2, "B", 2);
+			entity.SetProperties(default(int), 2, 2, "B", 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Tag>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = TagRepositoryMoc.GetContext();
 			var repository = new TagRepository(loggerMoc.Object, context);
 			Tag entity = new Tag();
-			entity.SetProperties(2, 2, 2, "B", 2);
+			entity.SetProperties(default(int), 2, 2, "B", 2);
 			context.Set<Tag>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = TagRepositoryMoc.GetContext();
 			var repository = new TagRepository(loggerMoc.Object, context);
 			Tag entity = new Tag();
-			entity.SetProperties(2, 2, 2, "B", 2);
+			entity.SetProperties(default(int), 2, 2, "B", 2);
 			context.Set<Tag>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = TagRepositoryMoc.GetContext();
 			var repository = new TagRepository(loggerMoc.Object, context);
 			Tag entity = new Tag();
-			entity.SetProperties(2, 2, 2, "B", 2);
+			entity.SetProperties(default(int), 2, 2, "B", 2);
 			context.Set<Tag>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>041376047b0ac26cb4d6bc6b786efce1</Hash>
+    <Hash>bceec0bd31e9e086bb4bec162e976159</Hash>
 </Codenesium>*/

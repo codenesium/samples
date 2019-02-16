@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Password> Get(int businessEntityID);
 
-		Task<List<Password>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Password>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>42e0b83e9d7ba82e26fbb9a409ad3ca4</Hash>
+    <Hash>47b3e24acf1137277397cb46927074d8</Hash>
 </Codenesium>*/

@@ -18,12 +18,12 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiReplyServerResponseModel> Get(int replyId);
 
-		Task<List<ApiReplyServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiReplyServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiReplyServerResponseModel>> ByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fc850dc75354fef8f51ad7d65c34936</Hash>
+    <Hash>7f3b19c71bf8308b87d49fd31127eeab</Hash>
 </Codenesium>*/

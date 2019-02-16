@@ -46,15 +46,15 @@ namespace AdventureWorksNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductPhotoServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiProductPhotoServerResponseModel> response = await this.ProductPhotoService.All(query.Limit, query.Offset);
+			List<ApiProductPhotoServerResponseModel> response = await this.ProductPhotoService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1530f7ed135afbc819ecb191866a31af</Hash>
+    <Hash>2d4218896bafb0313dd3d17ae6ff29d0</Hash>
 </Codenesium>*/

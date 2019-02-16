@@ -16,19 +16,11 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiSalesTerritoryServerRequestModelValidator SalesTerritoryModelValidator { get; private set; }
 
-		protected IBOLSalesTerritoryMapper BolSalesTerritoryMapper { get; private set; }
-
 		protected IDALSalesTerritoryMapper DalSalesTerritoryMapper { get; private set; }
-
-		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
 
 		protected IDALCustomerMapper DalCustomerMapper { get; private set; }
 
-		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
-
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
-
-		protected IBOLSalesPersonMapper BolSalesPersonMapper { get; private set; }
 
 		protected IDALSalesPersonMapper DalSalesPersonMapper { get; private set; }
 
@@ -39,36 +31,28 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			IApiSalesTerritoryServerRequestModelValidator salesTerritoryModelValidator,
-			IBOLSalesTerritoryMapper bolSalesTerritoryMapper,
 			IDALSalesTerritoryMapper dalSalesTerritoryMapper,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
-			IBOLSalesPersonMapper bolSalesPersonMapper,
 			IDALSalesPersonMapper dalSalesPersonMapper)
 			: base()
 		{
 			this.SalesTerritoryRepository = salesTerritoryRepository;
 			this.SalesTerritoryModelValidator = salesTerritoryModelValidator;
-			this.BolSalesTerritoryMapper = bolSalesTerritoryMapper;
 			this.DalSalesTerritoryMapper = dalSalesTerritoryMapper;
-			this.BolCustomerMapper = bolCustomerMapper;
 			this.DalCustomerMapper = dalCustomerMapper;
-			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
-			this.BolSalesPersonMapper = bolSalesPersonMapper;
 			this.DalSalesPersonMapper = dalSalesPersonMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSalesTerritoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesTerritoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesTerritoryRepository.All(limit, offset);
+			var records = await this.SalesTerritoryRepository.All(limit, offset, query);
 
-			return this.BolSalesTerritoryMapper.MapBOToModel(this.DalSalesTerritoryMapper.MapEFToBO(records));
+			return this.DalSalesTerritoryMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiSalesTerritoryServerResponseModel> Get(int territoryID)
@@ -81,7 +65,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTerritoryMapper.MapBOToModel(this.DalSalesTerritoryMapper.MapEFToBO(record));
+				return this.DalSalesTerritoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -92,11 +76,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSalesTerritoryMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesTerritoryRepository.Create(this.DalSalesTerritoryMapper.MapBOToEF(bo));
+				var bo = this.DalSalesTerritoryMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesTerritoryRepository.Create(bo);
 
-				var businessObject = this.DalSalesTerritoryMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSalesTerritoryMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSalesTerritoryMapper.MapBOToModel(record));
 				await this.mediator.Publish(new SalesTerritoryCreatedNotification(response.Record));
 			}
 
@@ -111,13 +94,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSalesTerritoryMapper.MapModelToBO(territoryID, model);
-				await this.SalesTerritoryRepository.Update(this.DalSalesTerritoryMapper.MapBOToEF(bo));
+				var bo = this.DalSalesTerritoryMapper.MapModelToBO(territoryID, model);
+				await this.SalesTerritoryRepository.Update(bo);
 
 				var record = await this.SalesTerritoryRepository.Get(territoryID);
 
-				var businessObject = this.DalSalesTerritoryMapper.MapEFToBO(record);
-				var apiModel = this.BolSalesTerritoryMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalSalesTerritoryMapper.MapBOToModel(record);
 				await this.mediator.Publish(new SalesTerritoryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesTerritoryServerResponseModel>.UpdateResponse(apiModel);
@@ -153,7 +135,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTerritoryMapper.MapBOToModel(this.DalSalesTerritoryMapper.MapEFToBO(record));
+				return this.DalSalesTerritoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -167,7 +149,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTerritoryMapper.MapBOToModel(this.DalSalesTerritoryMapper.MapEFToBO(record));
+				return this.DalSalesTerritoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -175,25 +157,25 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Customer> records = await this.SalesTerritoryRepository.CustomersByTerritoryID(territoryID, limit, offset);
 
-			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
+			return this.DalCustomerMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.SalesTerritoryRepository.SalesOrderHeadersByTerritoryID(territoryID, limit, offset);
 
-			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
+			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiSalesPersonServerResponseModel>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesPerson> records = await this.SalesTerritoryRepository.SalesPersonsByTerritoryID(territoryID, limit, offset);
 
-			return this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(records));
+			return this.DalSalesPersonMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9763d9dc67de69aa7234b445914c5eb</Hash>
+    <Hash>66019de04f001f0760834f4cfe4c9f0a</Hash>
 </Codenesium>*/

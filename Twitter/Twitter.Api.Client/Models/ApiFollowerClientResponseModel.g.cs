@@ -25,7 +25,24 @@ namespace TwitterNS.Api.Client
 			this.Muted = muted;
 
 			this.FollowedUserIdEntity = nameof(ApiResponse.Users);
+
 			this.FollowingUserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel FollowedUserIdNavigation { get; private set; }
+
+		public void SetFollowedUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.FollowedUserIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel FollowingUserIdNavigation { get; private set; }
+
+		public void SetFollowingUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.FollowingUserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -58,5 +75,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>97c753f535c15cace10cf22104b46cb2</Hash>
+    <Hash>5d9acb0df3e2bbfe37ed7237796b4ce4</Hash>
 </Codenesium>*/

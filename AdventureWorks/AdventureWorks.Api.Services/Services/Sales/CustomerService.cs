@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       mediator,
 			       customerRepository,
 			       customerModelValidator,
-			       bolCustomerMapper,
 			       dalCustomerMapper,
-			       bolSalesOrderHeaderMapper,
 			       dalSalesOrderHeaderMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7cc20c11e40836f3d475a994f80862e</Hash>
+    <Hash>8bf45698b189230f5d5b7b3dde68892f</Hash>
 </Codenesium>*/

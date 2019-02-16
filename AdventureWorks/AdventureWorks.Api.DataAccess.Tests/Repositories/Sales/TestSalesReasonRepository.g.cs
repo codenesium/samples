@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<SalesReasonRepository>> loggerMoc = SalesReasonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
 
 			SalesReason entity = new SalesReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<SalesReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
 
 			var entity = new SalesReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<SalesReason>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
 			SalesReason entity = new SalesReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<SalesReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
 			SalesReason entity = new SalesReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<SalesReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
 			var repository = new SalesReasonRepository(loggerMoc.Object, context);
 			SalesReason entity = new SalesReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			context.Set<SalesReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57e1a29c7a388afd1c77d35ed84c3929</Hash>
+    <Hash>f454302d4c01c0d505d7a6725de25947</Hash>
 </Codenesium>*/

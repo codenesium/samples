@@ -26,9 +26,38 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Post>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Post>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AcceptedAnswerId == query.ToNullableInt() ||
+				                  x.AnswerCount == query.ToNullableInt() ||
+				                  x.Body.StartsWith(query) ||
+				                  x.ClosedDate == query.ToNullableDateTime() ||
+				                  x.CommentCount == query.ToNullableInt() ||
+				                  x.CommunityOwnedDate == query.ToNullableDateTime() ||
+				                  x.CreationDate == query.ToDateTime() ||
+				                  x.FavoriteCount == query.ToNullableInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastActivityDate == query.ToDateTime() ||
+				                  x.LastEditDate == query.ToNullableDateTime() ||
+				                  x.LastEditorDisplayName.StartsWith(query) ||
+				                  x.LastEditorUserId == query.ToNullableInt() ||
+				                  x.OwnerUserId == query.ToNullableInt() ||
+				                  x.ParentId == query.ToNullableInt() ||
+				                  x.PostTypeId == query.ToInt() ||
+				                  x.Score == query.ToInt() ||
+				                  x.Tag.StartsWith(query) ||
+				                  x.Title.StartsWith(query) ||
+				                  x.ViewCount == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Post> Get(int id)
@@ -93,7 +122,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Post>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Post>();
+			return await this.Context.Set<Post>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Post>();
 		}
 
 		private async Task<Post> GetById(int id)
@@ -106,5 +137,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a0baaa77477a8f4c2d8c023371471151</Hash>
+    <Hash>4c41f52a488438094ae5dc9e63cac551</Hash>
 </Codenesium>*/

@@ -26,20 +26,18 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			var records = new List<Transaction>();
 			records.Add(new Transaction());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiTransactionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ApiTransactionServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ApiTransactionServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			CreateResponse<ApiTransactionServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			CreateResponse<ApiTransactionServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			UpdateResponse<ApiTransactionServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			UpdateResponse<ApiTransactionServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiTransactionServerResponseModel> response = await service.ByTransactionStatusId(default(int));
@@ -260,9 +240,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiTransactionServerResponseModel> response = await service.ByTransactionStatusId(default(int));
@@ -282,9 +260,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiSaleServerResponseModel> response = await service.SalesByTransactionId(default(int));
@@ -302,9 +278,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLTransactionMapperMock,
 			                                     mock.DALMapperMockFactory.DALTransactionMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiSaleServerResponseModel> response = await service.SalesByTransactionId(default(int));
@@ -316,5 +290,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>01b707ccfcf110410b035aa1ae0d49e7</Hash>
+    <Hash>e31b7550f3651d5c711e25d1b858db4d</Hash>
 </Codenesium>*/

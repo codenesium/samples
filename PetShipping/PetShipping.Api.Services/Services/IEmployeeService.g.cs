@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 
 		Task<ApiEmployeeServerResponseModel> Get(int id);
 
-		Task<List<ApiEmployeeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiCustomerCommunicationServerResponseModel>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0);
 
@@ -29,5 +29,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c28987e55b02c4536543ec6ca87b4760</Hash>
+    <Hash>16e2d751ecd31e19e66361f9778013be</Hash>
 </Codenesium>*/

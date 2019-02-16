@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITestAllFieldTypesNullableRepository>();
 			var records = new List<TestAllFieldTypesNullable>();
 			records.Add(new TestAllFieldTypesNullable());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TestAllFieldTypesNullableService(mock.LoggerMock.Object,
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			List<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			ApiTestAllFieldTypesNullableServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			ApiTestAllFieldTypesNullableServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			UpdateResponse<ApiTestAllFieldTypesNullableServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   mock.ModelValidatorMockFactory.TestAllFieldTypesNullableModelValidatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                                   mock.MediatorMock.Object,
 			                                                   mock.RepositoryMock.Object,
 			                                                   validatorMock.Object,
-			                                                   mock.BOLMapperMockFactory.BOLTestAllFieldTypesNullableMapperMock,
 			                                                   mock.DALMapperMockFactory.DALTestAllFieldTypesNullableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>212a5388ea43e6f50cf97e94f24e59b8</Hash>
+    <Hash>1a8c6976ab6d49d553f8cb172cb61043</Hash>
 </Codenesium>*/

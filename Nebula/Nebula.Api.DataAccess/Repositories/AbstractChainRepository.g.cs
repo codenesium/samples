@@ -26,9 +26,23 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ChainStatusId == query.ToInt() ||
+				                  x.ExternalId == query.ToGuid() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.TeamId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Chain> Get(int id)
@@ -79,37 +93,46 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Chain_ExternalId.
 		public async virtual Task<Chain> ByExternalId(Guid externalId)
 		{
-			return await this.Context.Set<Chain>().FirstOrDefaultAsync(x => x.ExternalId == externalId);
+			return await this.Context.Set<Chain>()
+			       .Include(x => x.ChainStatusIdNavigation)
+			       .Include(x => x.TeamIdNavigation)
+
+			       .FirstOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		// Foreign key reference to this table Clasp via nextChainId.
 		public async virtual Task<List<Clasp>> ClaspsByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
+			return await this.Context.Set<Clasp>()
+			       .Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
 		}
 
 		// Foreign key reference to this table Clasp via previousChainId.
 		public async virtual Task<List<Clasp>> ClaspsByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Clasp>().Where(x => x.PreviousChainId == previousChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
+			return await this.Context.Set<Clasp>()
+			       .Where(x => x.PreviousChainId == previousChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
 		}
 
 		// Foreign key reference to this table Link via chainId.
 		public async virtual Task<List<Link>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+			return await this.Context.Set<Link>()
+			       .Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
 		// Foreign key reference to table ChainStatus via chainStatusId.
 		public async virtual Task<ChainStatus> ChainStatusByChainStatusId(int chainStatusId)
 		{
-			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
+			return await this.Context.Set<ChainStatus>()
+			       .SingleOrDefaultAsync(x => x.Id == chainStatusId);
 		}
 
 		// Foreign key reference to table Team via teamId.
 		public async virtual Task<Team> TeamByTeamId(int teamId)
 		{
-			return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
+			return await this.Context.Set<Team>()
+			       .SingleOrDefaultAsync(x => x.Id == teamId);
 		}
 
 		protected async Task<List<Chain>> Where(
@@ -123,7 +146,11 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Chain>();
+			return await this.Context.Set<Chain>()
+			       .Include(x => x.ChainStatusIdNavigation)
+			       .Include(x => x.TeamIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
 
 		private async Task<Chain> GetById(int id)
@@ -136,5 +163,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4bb77c5ba2dd6dd1c992e3298fa83a59</Hash>
+    <Hash>97b881c3dc57870a0971b7a9ef4977d4</Hash>
 </Codenesium>*/

@@ -14,8 +14,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			decimal bonus,
 			int businessEntityID,
+			decimal bonus,
 			decimal commissionPct,
 			DateTime modifiedDate,
 			Guid rowguid,
@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal salesYTD,
 			int? territoryID)
 		{
-			this.Bonus = bonus;
 			this.BusinessEntityID = businessEntityID;
+			this.Bonus = bonus;
 			this.CommissionPct = commissionPct;
 			this.ModifiedDate = modifiedDate;
 			this.Rowguid = rowguid;
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b39673adbafb240a9eb427cf99487c9</Hash>
+    <Hash>87b65443dc87ca47bc107b0d126291a3</Hash>
 </Codenesium>*/

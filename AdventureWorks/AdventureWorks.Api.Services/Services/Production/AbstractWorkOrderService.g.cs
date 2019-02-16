@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiWorkOrderServerRequestModelValidator WorkOrderModelValidator { get; private set; }
 
-		protected IBOLWorkOrderMapper BolWorkOrderMapper { get; private set; }
-
 		protected IDALWorkOrderMapper DalWorkOrderMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IWorkOrderRepository workOrderRepository,
 			IApiWorkOrderServerRequestModelValidator workOrderModelValidator,
-			IBOLWorkOrderMapper bolWorkOrderMapper,
 			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base()
 		{
 			this.WorkOrderRepository = workOrderRepository;
 			this.WorkOrderModelValidator = workOrderModelValidator;
-			this.BolWorkOrderMapper = bolWorkOrderMapper;
 			this.DalWorkOrderMapper = dalWorkOrderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiWorkOrderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiWorkOrderServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.WorkOrderRepository.All(limit, offset);
+			var records = await this.WorkOrderRepository.All(limit, offset, query);
 
-			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
+			return this.DalWorkOrderMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiWorkOrderServerResponseModel> Get(int workOrderID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record));
+				return this.DalWorkOrderMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolWorkOrderMapper.MapModelToBO(default(int), model);
-				var record = await this.WorkOrderRepository.Create(this.DalWorkOrderMapper.MapBOToEF(bo));
+				var bo = this.DalWorkOrderMapper.MapModelToBO(default(int), model);
+				var record = await this.WorkOrderRepository.Create(bo);
 
-				var businessObject = this.DalWorkOrderMapper.MapEFToBO(record);
-				response.SetRecord(this.BolWorkOrderMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalWorkOrderMapper.MapBOToModel(record));
 				await this.mediator.Publish(new WorkOrderCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolWorkOrderMapper.MapModelToBO(workOrderID, model);
-				await this.WorkOrderRepository.Update(this.DalWorkOrderMapper.MapBOToEF(bo));
+				var bo = this.DalWorkOrderMapper.MapModelToBO(workOrderID, model);
+				await this.WorkOrderRepository.Update(bo);
 
 				var record = await this.WorkOrderRepository.Get(workOrderID);
 
-				var businessObject = this.DalWorkOrderMapper.MapEFToBO(record);
-				var apiModel = this.BolWorkOrderMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalWorkOrderMapper.MapBOToModel(record);
 				await this.mediator.Publish(new WorkOrderUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiWorkOrderServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<WorkOrder> records = await this.WorkOrderRepository.ByProductID(productID, limit, offset);
 
-			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
+			return this.DalWorkOrderMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiWorkOrderServerResponseModel>> ByScrapReasonID(short? scrapReasonID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<WorkOrder> records = await this.WorkOrderRepository.ByScrapReasonID(scrapReasonID, limit, offset);
 
-			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
+			return this.DalWorkOrderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d87497b3d5814358e664cbeb5cd4c140</Hash>
+    <Hash>97672c0f660a360635a4f469e6d623cb</Hash>
 </Codenesium>*/

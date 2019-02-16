@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int workOrderID,
 			DateTime dueDate,
 			DateTime? endDate,
 			DateTime modifiedDate,
@@ -22,9 +23,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			short scrappedQty,
 			short? scrapReasonID,
 			DateTime startDate,
-			int stockedQty,
-			int workOrderID)
+			int stockedQty)
 		{
+			this.WorkOrderID = workOrderID;
 			this.DueDate = dueDate;
 			this.EndDate = endDate;
 			this.ModifiedDate = modifiedDate;
@@ -34,7 +35,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ScrapReasonID = scrapReasonID;
 			this.StartDate = startDate;
 			this.StockedQty = stockedQty;
-			this.WorkOrderID = workOrderID;
 		}
 
 		[Column("DueDate")]
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>846502ec9fbcbeeacbef87e2f342b221</Hash>
+    <Hash>809faa14334a9fc52a7a9d5be1644a62</Hash>
 </Codenesium>*/

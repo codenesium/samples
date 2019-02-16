@@ -24,6 +24,14 @@ namespace TwitterNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiUserClientResponseModel ReplierUserIdNavigation { get; private set; }
+
+		public void SetReplierUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.ReplierUserIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string Content { get; private set; }
 
 		[JsonProperty]
@@ -44,5 +52,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c520c827a8044404cb33c9c1e42ffb26</Hash>
+    <Hash>99093dd54cb1712dbe9124bd9c368b8e</Hash>
 </Codenesium>*/

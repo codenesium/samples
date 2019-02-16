@@ -12,17 +12,13 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationServerRequestModelValidator organizationModelValidator,
-			IBOLOrganizationMapper bolOrganizationMapper,
 			IDALOrganizationMapper dalOrganizationMapper,
-			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper)
 			: base(logger,
 			       mediator,
 			       organizationRepository,
 			       organizationModelValidator,
-			       bolOrganizationMapper,
 			       dalOrganizationMapper,
-			       bolTeamMapper,
 			       dalTeamMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f407561cdd0cfc5fc780047956324901</Hash>
+    <Hash>068fc8569c028cd2cc58b9e7f2bceb3a</Hash>
 </Codenesium>*/

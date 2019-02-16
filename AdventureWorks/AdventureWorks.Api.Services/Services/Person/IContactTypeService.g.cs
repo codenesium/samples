@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiContactTypeServerResponseModel> Get(int contactTypeID);
 
-		Task<List<ApiContactTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiContactTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiContactTypeServerResponseModel> ByName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>dcb5d840731b429ede3149edd82b19fe</Hash>
+    <Hash>36d4893eaaa2b323998dc83fb6111485</Hash>
 </Codenesium>*/

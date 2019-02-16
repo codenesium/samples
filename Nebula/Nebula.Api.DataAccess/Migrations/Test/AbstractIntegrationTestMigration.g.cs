@@ -19,7 +19,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var chainItem1 = new Chain();
-			chainItem1.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
+			chainItem1.SetProperties(1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
 			this.Context.Chains.Add(chainItem1);
 
 			var chainStatusItem1 = new ChainStatus();
@@ -31,11 +31,11 @@ namespace NebulaNS.Api.DataAccess
 			this.Context.Clasps.Add(claspItem1);
 
 			var linkItem1 = new Link();
-			linkItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", 1, "A", "A", 1);
+			linkItem1.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
 			this.Context.Links.Add(linkItem1);
 
 			var linkLogItem1 = new LinkLog();
-			linkLogItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
+			linkLogItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 			this.Context.LinkLogs.Add(linkLogItem1);
 
 			var linkStatusItem1 = new LinkStatus();
@@ -43,7 +43,7 @@ namespace NebulaNS.Api.DataAccess
 			this.Context.LinkStatuses.Add(linkStatusItem1);
 
 			var machineItem1 = new Machine();
-			machineItem1.SetProperties("A", 1, "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
+			machineItem1.SetProperties(1, "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			this.Context.Machines.Add(machineItem1);
 
 			var organizationItem1 = new Organization();
@@ -60,5 +60,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5170d1130f301fee6aa3a2ad67f066c</Hash>
+    <Hash>554158aa691f38217cae6a841ad359f1</Hash>
 </Codenesium>*/

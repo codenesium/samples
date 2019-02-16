@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
+			var repository = new CountryRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new CountryRepository(loggerMoc.Object, context);
 
 			Country entity = new Country();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new CountryRepository(loggerMoc.Object, context);
 
 			var entity = new Country();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Country>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CountryRepositoryMoc.GetContext();
 			var repository = new CountryRepository(loggerMoc.Object, context);
 			Country entity = new Country();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Country>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8790028f6f0589d56054e89ba3f93e61</Hash>
+    <Hash>a700bfc04c2023c57657506ce954c349</Hash>
 </Codenesium>*/

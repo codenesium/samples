@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBadgeRepository>();
 			var records = new List<Badge>();
 			records.Add(new Badge());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new BadgeService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			List<ApiBadgeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			ApiBadgeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			ApiBadgeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			CreateResponse<ApiBadgeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			CreateResponse<ApiBadgeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			UpdateResponse<ApiBadgeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			UpdateResponse<ApiBadgeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BadgeModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBadgeMapperMock,
 			                               mock.DALMapperMockFactory.DALBadgeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7a0430c2cf1aedd0b25adecfe29e0444</Hash>
+    <Hash>b8828bd5001bcb714eedf56d5a2b705d</Hash>
 </Codenesium>*/

@@ -19,11 +19,11 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var deviceItem1 = new Device();
-			deviceItem1.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+			deviceItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			this.Context.Devices.Add(deviceItem1);
 
 			var deviceActionItem1 = new DeviceAction();
-			deviceActionItem1.SetProperties("A", 1, 1, "A");
+			deviceActionItem1.SetProperties(1, "A", 1, "A");
 			this.Context.DeviceActions.Add(deviceActionItem1);
 
 			await this.Context.SaveChangesAsync();
@@ -32,5 +32,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b1db372615c54e75a36011f80f41c93</Hash>
+    <Hash>fe8bbab7778f50377eb81b55b7111506</Hash>
 </Codenesium>*/

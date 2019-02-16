@@ -18,12 +18,12 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiDirectTweetServerResponseModel> Get(int tweetId);
 
-		Task<List<ApiDirectTweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDirectTweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiDirectTweetServerResponseModel>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0919ee2ab140079c2405c2d1756ffe4</Hash>
+    <Hash>75bac3b383ad84321441c08442e3e81d</Hash>
 </Codenesium>*/

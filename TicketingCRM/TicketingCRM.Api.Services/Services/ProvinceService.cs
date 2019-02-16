@@ -12,21 +12,15 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IProvinceRepository provinceRepository,
 			IApiProvinceServerRequestModelValidator provinceModelValidator,
-			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper,
-			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
-			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       mediator,
 			       provinceRepository,
 			       provinceModelValidator,
-			       bolProvinceMapper,
 			       dalProvinceMapper,
-			       bolCityMapper,
 			       dalCityMapper,
-			       bolVenueMapper,
 			       dalVenueMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c59b5c2c7267e527e82dd8d1678d72f6</Hash>
+    <Hash>e7199fecb7ea84456e9f09e7a1b047de</Hash>
 </Codenesium>*/

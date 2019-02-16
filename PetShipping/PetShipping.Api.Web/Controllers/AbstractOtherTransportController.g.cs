@@ -46,15 +46,15 @@ namespace PetShippingNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiOtherTransportServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiOtherTransportServerResponseModel> response = await this.OtherTransportService.All(query.Limit, query.Offset);
+			List<ApiOtherTransportServerResponseModel> response = await this.OtherTransportService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b4471cd6c9537d213f9b101c552188c1</Hash>
+    <Hash>df217b9bdb172f3ff222c902e357038a</Hash>
 </Codenesium>*/

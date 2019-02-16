@@ -26,20 +26,18 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAdminRepository>();
 			var records = new List<Admin>();
 			records.Add(new Admin());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			List<ApiAdminServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			ApiAdminServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			ApiAdminServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			CreateResponse<ApiAdminServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			CreateResponse<ApiAdminServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			UpdateResponse<ApiAdminServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			UpdateResponse<ApiAdminServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			List<ApiVenueServerResponseModel> response = await service.VenuesByAdminId(default(int));
@@ -260,9 +240,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
 			                               mock.DALMapperMockFactory.DALAdminMapperMock,
-			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
 			List<ApiVenueServerResponseModel> response = await service.VenuesByAdminId(default(int));
@@ -274,5 +252,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>40f7a35c76985121aa77d4d4f5d5897f</Hash>
+    <Hash>2a25c79fa1b4fa24c036b2f1336ec219</Hash>
 </Codenesium>*/

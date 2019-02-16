@@ -26,20 +26,18 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IChainStatusRepository>();
 			var records = new List<ChainStatus>();
 			records.Add(new ChainStatus());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ChainStatusService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			List<ApiChainStatusServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiChainStatusServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiChainStatusServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			CreateResponse<ApiChainStatusServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			CreateResponse<ApiChainStatusServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			UpdateResponse<ApiChainStatusServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			UpdateResponse<ApiChainStatusServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiChainStatusServerResponseModel response = await service.ByName("test_value");
@@ -259,9 +239,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			ApiChainStatusServerResponseModel response = await service.ByName("test_value");
@@ -281,9 +259,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			List<ApiChainServerResponseModel> response = await service.ChainsByChainStatusId(default(int));
@@ -301,9 +277,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ChainStatusModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLChainStatusMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainStatusMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                                     mock.DALMapperMockFactory.DALChainMapperMock);
 
 			List<ApiChainServerResponseModel> response = await service.ChainsByChainStatusId(default(int));
@@ -315,5 +289,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8b7d03f454e4d1d2d05fb64423333fbc</Hash>
+    <Hash>27305c36fbc2d7bad9fca907ce2ea8bc</Hash>
 </Codenesium>*/

@@ -14,8 +14,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			DateTime birthDate,
 			int businessEntityID,
+			DateTime birthDate,
 			bool currentFlag,
 			string gender,
 			DateTime hireDate,
@@ -30,8 +30,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			short sickLeaveHour,
 			short vacationHour)
 		{
-			this.BirthDate = birthDate;
 			this.BusinessEntityID = businessEntityID;
+			this.BirthDate = birthDate;
 			this.CurrentFlag = currentFlag;
 			this.Gender = gender;
 			this.HireDate = hireDate;
@@ -101,5 +101,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>386d5c9bf977f46644b394f76bc61e0d</Hash>
+    <Hash>ede0539cde539eb9f6a065f848563fa1</Hash>
 </Codenesium>*/

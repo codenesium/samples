@@ -26,9 +26,20 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PipelineStepStatu>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PipelineStepStatu>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PipelineStepStatu> Get(int id)
@@ -79,7 +90,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table PipelineStep via pipelineStepStatusId.
 		public async virtual Task<List<PipelineStep>> PipelineStepsByPipelineStepStatusId(int pipelineStepStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PipelineStep>().Where(x => x.PipelineStepStatusId == pipelineStepStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStep>();
+			return await this.Context.Set<PipelineStep>()
+			       .Where(x => x.PipelineStepStatusId == pipelineStepStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStep>();
 		}
 
 		protected async Task<List<PipelineStepStatu>> Where(
@@ -93,7 +105,9 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PipelineStepStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStatu>();
+			return await this.Context.Set<PipelineStepStatu>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStatu>();
 		}
 
 		private async Task<PipelineStepStatu> GetById(int id)
@@ -106,5 +120,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>efbcdce36d46af6c2d8542ecfc9a8c10</Hash>
+    <Hash>664590fc2e579ba0a78b28dfcf2ca610</Hash>
 </Codenesium>*/

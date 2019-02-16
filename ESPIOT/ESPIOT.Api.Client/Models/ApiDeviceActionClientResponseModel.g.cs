@@ -9,17 +9,28 @@ namespace ESPIOTNS.Api.Client
 	{
 		public virtual void SetProperties(
 			int id,
-			string @value,
+			string action,
 			int deviceId,
 			string name)
 		{
 			this.Id = id;
-			this.@Value = @value;
+			this.Action = action;
 			this.DeviceId = deviceId;
 			this.Name = name;
 
 			this.DeviceIdEntity = nameof(ApiResponse.Devices);
 		}
+
+		[JsonProperty]
+		public ApiDeviceClientResponseModel DeviceIdNavigation { get; private set; }
+
+		public void SetDeviceIdNavigation(ApiDeviceClientResponseModel value)
+		{
+			this.DeviceIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public string Action { get; private set; }
 
 		[JsonProperty]
 		public int DeviceId { get; private set; }
@@ -32,12 +43,9 @@ namespace ESPIOTNS.Api.Client
 
 		[JsonProperty]
 		public string Name { get; private set; }
-
-		[JsonProperty]
-		public string @Value { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>51a0f13a6ec631566a289c9b986ec9f3</Hash>
+    <Hash>a75c7d56edb7cc848ec060acb46f6b13</Hash>
 </Codenesium>*/

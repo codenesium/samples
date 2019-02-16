@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiDatabaseLogServerRequestModelValidator DatabaseLogModelValidator { get; private set; }
 
-		protected IBOLDatabaseLogMapper BolDatabaseLogMapper { get; private set; }
-
 		protected IDALDatabaseLogMapper DalDatabaseLogMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IDatabaseLogRepository databaseLogRepository,
 			IApiDatabaseLogServerRequestModelValidator databaseLogModelValidator,
-			IBOLDatabaseLogMapper bolDatabaseLogMapper,
 			IDALDatabaseLogMapper dalDatabaseLogMapper)
 			: base()
 		{
 			this.DatabaseLogRepository = databaseLogRepository;
 			this.DatabaseLogModelValidator = databaseLogModelValidator;
-			this.BolDatabaseLogMapper = bolDatabaseLogMapper;
 			this.DalDatabaseLogMapper = dalDatabaseLogMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiDatabaseLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDatabaseLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DatabaseLogRepository.All(limit, offset);
+			var records = await this.DatabaseLogRepository.All(limit, offset, query);
 
-			return this.BolDatabaseLogMapper.MapBOToModel(this.DalDatabaseLogMapper.MapEFToBO(records));
+			return this.DalDatabaseLogMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiDatabaseLogServerResponseModel> Get(int databaseLogID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolDatabaseLogMapper.MapBOToModel(this.DalDatabaseLogMapper.MapEFToBO(record));
+				return this.DalDatabaseLogMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolDatabaseLogMapper.MapModelToBO(default(int), model);
-				var record = await this.DatabaseLogRepository.Create(this.DalDatabaseLogMapper.MapBOToEF(bo));
+				var bo = this.DalDatabaseLogMapper.MapModelToBO(default(int), model);
+				var record = await this.DatabaseLogRepository.Create(bo);
 
-				var businessObject = this.DalDatabaseLogMapper.MapEFToBO(record);
-				response.SetRecord(this.BolDatabaseLogMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalDatabaseLogMapper.MapBOToModel(record));
 				await this.mediator.Publish(new DatabaseLogCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolDatabaseLogMapper.MapModelToBO(databaseLogID, model);
-				await this.DatabaseLogRepository.Update(this.DalDatabaseLogMapper.MapBOToEF(bo));
+				var bo = this.DalDatabaseLogMapper.MapModelToBO(databaseLogID, model);
+				await this.DatabaseLogRepository.Update(bo);
 
 				var record = await this.DatabaseLogRepository.Get(databaseLogID);
 
-				var businessObject = this.DalDatabaseLogMapper.MapEFToBO(record);
-				var apiModel = this.BolDatabaseLogMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalDatabaseLogMapper.MapBOToModel(record);
 				await this.mediator.Publish(new DatabaseLogUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDatabaseLogServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cdb3a3ed2839de84410aaafc88210554</Hash>
+    <Hash>192f4452a0c33ba38ab0b43d7b79a86d</Hash>
 </Codenesium>*/

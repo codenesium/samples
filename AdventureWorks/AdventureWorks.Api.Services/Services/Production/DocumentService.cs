@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IDocumentRepository documentRepository,
 			IApiDocumentServerRequestModelValidator documentModelValidator,
-			IBOLDocumentMapper bolDocumentMapper,
 			IDALDocumentMapper dalDocumentMapper)
 			: base(logger,
 			       mediator,
 			       documentRepository,
 			       documentModelValidator,
-			       bolDocumentMapper,
 			       dalDocumentMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34268b1f6cd060bbd48a4f71c3b88e8f</Hash>
+    <Hash>078f0d7d3b2c26883a91e22ed379c4b4</Hash>
 </Codenesium>*/

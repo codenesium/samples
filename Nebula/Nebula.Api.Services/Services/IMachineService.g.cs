@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiMachineServerResponseModel> Get(int id);
 
-		Task<List<ApiMachineServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMachineServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiMachineServerResponseModel> ByMachineGuid(Guid machineGuid);
 
@@ -27,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07c2dc0818776df9741fa42bc47945ab</Hash>
+    <Hash>9db2257f653cec06143353e034287cf1</Hash>
 </Codenesium>*/

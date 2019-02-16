@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 
 		Task<ApiPipelineStepServerResponseModel> Get(int id);
 
-		Task<List<ApiPipelineStepServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPipelineStepServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiHandlerPipelineStepServerResponseModel>> HandlerPipelineStepsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
@@ -33,5 +33,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f8d461e0f22b3ec3b97f6ec533945ad</Hash>
+    <Hash>2691257b0dde004c5db6ac898987348a</Hash>
 </Codenesium>*/

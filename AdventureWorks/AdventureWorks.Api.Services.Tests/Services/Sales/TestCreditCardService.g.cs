@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
 			var records = new List<CreditCard>();
 			records.Add(new CreditCard());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CreditCardService(mock.LoggerMock.Object,
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiCreditCardServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiCreditCardServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiCreditCardServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			CreateResponse<ApiCreditCardServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			CreateResponse<ApiCreditCardServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			UpdateResponse<ApiCreditCardServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			UpdateResponse<ApiCreditCardServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiCreditCardServerResponseModel response = await service.ByCardNumber("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiCreditCardServerResponseModel response = await service.ByCardNumber("test_value");
@@ -281,9 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.SalesOrderHeadersByCreditCardID(default(int));
@@ -301,9 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.SalesOrderHeadersByCreditCardID(default(int));
@@ -315,5 +289,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2af9e81c2b4d7a8d5e2582912876f543</Hash>
+    <Hash>7a319849cddf6596aed349b0f909c458</Hash>
 </Codenesium>*/

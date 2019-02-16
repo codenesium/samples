@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductServerResponseModel> Get(int productID);
 
-		Task<List<ApiProductServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiProductServerResponseModel> ByName(string name);
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d124fc8e9abd969243fd8886e223b21</Hash>
+    <Hash>4af1f64148453cf9295b507365543dd4</Hash>
 </Codenesium>*/

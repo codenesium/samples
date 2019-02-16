@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string @class,
+			int productID,
 			string color,
 			int daysToManufacture,
 			DateTime? discontinuedDate,
@@ -23,7 +23,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			bool makeFlag,
 			DateTime modifiedDate,
 			string name,
-			int productID,
 			string productLine,
 			int? productModelID,
 			string productNumber,
@@ -40,7 +39,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			double? weight,
 			string weightUnitMeasureCode)
 		{
-			this.@Class = @class;
+			this.ProductID = productID;
 			this.Color = color;
 			this.DaysToManufacture = daysToManufacture;
 			this.DiscontinuedDate = discontinuedDate;
@@ -49,7 +48,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.MakeFlag = makeFlag;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.ProductID = productID;
 			this.ProductLine = productLine;
 			this.ProductModelID = productModelID;
 			this.ProductNumber = productNumber;
@@ -66,10 +64,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Weight = weight;
 			this.WeightUnitMeasureCode = weightUnitMeasureCode;
 		}
-
-		[MaxLength(2)]
-		[Column("Class")]
-		public virtual string @Class { get; private set; }
 
 		[MaxLength(15)]
 		[Column("Color")]
@@ -155,5 +149,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a50a7c6c3bd4ed2eb4915f683a735312</Hash>
+    <Hash>c19bce60cad9209e4476bf89478a2c9c</Hash>
 </Codenesium>*/

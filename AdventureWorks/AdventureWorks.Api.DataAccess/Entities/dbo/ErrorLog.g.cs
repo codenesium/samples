@@ -14,8 +14,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int? errorLine,
 			int errorLogID,
+			int? errorLine,
 			string errorMessage,
 			int errorNumber,
 			string errorProcedure,
@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime errorTime,
 			string userName)
 		{
-			this.ErrorLine = errorLine;
 			this.ErrorLogID = errorLogID;
+			this.ErrorLine = errorLine;
 			this.ErrorMessage = errorMessage;
 			this.ErrorNumber = errorNumber;
 			this.ErrorProcedure = errorProcedure;
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fdfb3e202751ec018c346503895c0837</Hash>
+    <Hash>11b0d939dce3eafcc877b2866f39473d</Hash>
 </Codenesium>*/

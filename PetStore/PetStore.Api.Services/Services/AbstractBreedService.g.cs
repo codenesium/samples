@@ -16,11 +16,7 @@ namespace PetStoreNS.Api.Services
 
 		protected IApiBreedServerRequestModelValidator BreedModelValidator { get; private set; }
 
-		protected IBOLBreedMapper BolBreedMapper { get; private set; }
-
 		protected IDALBreedMapper DalBreedMapper { get; private set; }
-
-		protected IBOLPetMapper BolPetMapper { get; private set; }
 
 		protected IDALPetMapper DalPetMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			IBreedRepository breedRepository,
 			IApiBreedServerRequestModelValidator breedModelValidator,
-			IBOLBreedMapper bolBreedMapper,
 			IDALBreedMapper dalBreedMapper,
-			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base()
 		{
 			this.BreedRepository = breedRepository;
 			this.BreedModelValidator = breedModelValidator;
-			this.BolBreedMapper = bolBreedMapper;
 			this.DalBreedMapper = dalBreedMapper;
-			this.BolPetMapper = bolPetMapper;
 			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiBreedServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBreedServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BreedRepository.All(limit, offset);
+			List<Breed> records = await this.BreedRepository.All(limit, offset, query);
 
-			return this.BolBreedMapper.MapBOToModel(this.DalBreedMapper.MapEFToBO(records));
+			return this.DalBreedMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiBreedServerResponseModel> Get(int id)
 		{
-			var record = await this.BreedRepository.Get(id);
+			Breed record = await this.BreedRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.BolBreedMapper.MapBOToModel(this.DalBreedMapper.MapEFToBO(record));
+				return this.DalBreedMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolBreedMapper.MapModelToBO(default(int), model);
-				var record = await this.BreedRepository.Create(this.DalBreedMapper.MapBOToEF(bo));
+				Breed record = this.DalBreedMapper.MapModelToEntity(default(int), model);
+				record = await this.BreedRepository.Create(record);
 
-				var businessObject = this.DalBreedMapper.MapEFToBO(record);
-				response.SetRecord(this.BolBreedMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalBreedMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new BreedCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetStoreNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolBreedMapper.MapModelToBO(id, model);
-				await this.BreedRepository.Update(this.DalBreedMapper.MapBOToEF(bo));
+				Breed record = this.DalBreedMapper.MapModelToEntity(id, model);
+				await this.BreedRepository.Update(record);
 
-				var record = await this.BreedRepository.Get(id);
+				record = await this.BreedRepository.Get(id);
 
-				var businessObject = this.DalBreedMapper.MapEFToBO(record);
-				var apiModel = this.BolBreedMapper.MapBOToModel(businessObject);
+				ApiBreedServerResponseModel apiModel = this.DalBreedMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new BreedUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBreedServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetStoreNS.Api.Services
 		{
 			List<Pet> records = await this.BreedRepository.PetsByBreedId(breedId, limit, offset);
 
-			return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(records));
+			return this.DalPetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e74595ce38d9846ba17f865b588f586</Hash>
+    <Hash>526d20576c5d704524d0e8d69a83d8fb</Hash>
 </Codenesium>*/

@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ProductCategory>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ProductCategory>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ProductCategoryID == query.ToInt() ||
+				                  x.Rowguid == query.ToGuid(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ProductCategory> Get(int productCategoryID)
@@ -118,5 +131,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c8c8ea8c9787a8fab1257ab0cc08cf50</Hash>
+    <Hash>954b029ec59673c34855daec5f84dfe7</Hash>
 </Codenesium>*/

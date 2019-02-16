@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiAddressServerResponseModel> Get(int addressID);
 
-		Task<List<ApiAddressServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAddressServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiAddressServerResponseModel> ByRowguid(Guid rowguid);
 
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd793fee3b56b6d6ffd2116c8c8f8252</Hash>
+    <Hash>1307cf211547d5e0f6f8c9dc649b6ecd</Hash>
 </Codenesium>*/

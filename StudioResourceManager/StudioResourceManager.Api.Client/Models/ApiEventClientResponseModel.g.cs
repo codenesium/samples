@@ -32,6 +32,14 @@ namespace StudioResourceManagerNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiEventStatusClientResponseModel EventStatusIdNavigation { get; private set; }
+
+		public void SetEventStatusIdNavigation(ApiEventStatusClientResponseModel value)
+		{
+			this.EventStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime? ActualEndDate { get; private set; }
 
 		[JsonProperty]
@@ -64,5 +72,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a8833482fc3d878d525339148d26560f</Hash>
+    <Hash>c1c91e0e54f139f51c95db9801ac719c</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
+    <PackageReference Include="Codenesium.DataConversionExtensions" Version="2019.1.2" />
 	<PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9" />

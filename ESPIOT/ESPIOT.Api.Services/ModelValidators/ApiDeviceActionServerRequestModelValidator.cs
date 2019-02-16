@@ -15,17 +15,17 @@ namespace ESPIOTNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiDeviceActionServerRequestModel model)
 		{
+			this.ActionRules();
 			this.DeviceIdRules();
 			this.NameRules();
-			this.@ValueRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceActionServerRequestModel model)
 		{
+			this.ActionRules();
 			this.DeviceIdRules();
 			this.NameRules();
-			this.@ValueRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -37,5 +37,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b2e326793771c48a1841220cfd22282</Hash>
+    <Hash>3faa1832173a930a1b5e95a36dd43ee1</Hash>
 </Codenesium>*/

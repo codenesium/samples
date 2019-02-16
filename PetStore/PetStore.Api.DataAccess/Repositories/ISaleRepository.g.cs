@@ -15,7 +15,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		Task<Sale> Get(int id);
 
-		Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<PaymentType> PaymentTypeByPaymentTypeId(int paymentTypeId);
 
@@ -24,5 +24,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d905fc59109eb364a3f9ead75ad61ad1</Hash>
+    <Hash>0f18c3f83080b501d0b962e2d413bbb0</Hash>
 </Codenesium>*/

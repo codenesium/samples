@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
 			UnitMeasure entity = new UnitMeasure();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<UnitMeasure>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
 			var entity = new UnitMeasure();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<UnitMeasure>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 			UnitMeasure entity = new UnitMeasure();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<UnitMeasure>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 			UnitMeasure entity = new UnitMeasure();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<UnitMeasure>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
 			var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 			UnitMeasure entity = new UnitMeasure();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<UnitMeasure>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>796b4b0e37204c70a79454ea21dd8601</Hash>
+    <Hash>b7b1848fb0c160dd3fc7ac993094c96b</Hash>
 </Codenesium>*/

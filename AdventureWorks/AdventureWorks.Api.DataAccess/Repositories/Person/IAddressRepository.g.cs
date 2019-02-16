@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Address> Get(int addressID);
 
-		Task<List<Address>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Address>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Address> ByRowguid(Guid rowguid);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d23a2841adf9a0666293e6f301200cf6</Hash>
+    <Hash>4d7a66b9c6bac40eb167551a5b25b411</Hash>
 </Codenesium>*/

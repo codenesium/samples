@@ -14,13 +14,13 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int userId,
 			DateTime? dateFollowed,
-			string muted,
-			int userId)
+			string muted)
 		{
+			this.UserId = userId;
 			this.DateFollowed = dateFollowed;
 			this.Muted = muted;
-			this.UserId = userId;
 		}
 
 		[Column("date_followed")]
@@ -37,5 +37,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1e7918efa58a4445ba078d27f8d211e</Hash>
+    <Hash>05d3ea279c03afe06b082ade26fade74</Hash>
 </Codenesium>*/

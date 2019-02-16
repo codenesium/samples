@@ -26,9 +26,20 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Pen> Get(int id)
@@ -79,7 +90,8 @@ namespace PetStoreNS.Api.DataAccess
 		// Foreign key reference to this table Pet via penId.
 		public async virtual Task<List<Pet>> PetsByPenId(int penId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Pet>().Where(x => x.PenId == penId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
+			return await this.Context.Set<Pet>()
+			       .Where(x => x.PenId == penId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
 		protected async Task<List<Pen>> Where(
@@ -93,7 +105,9 @@ namespace PetStoreNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pen>();
+			return await this.Context.Set<Pen>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pen>();
 		}
 
 		private async Task<Pen> GetById(int id)
@@ -106,5 +120,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7728b31e1b14ceda3520d58e13730297</Hash>
+    <Hash>6ba942e879acd837b536d6f8f67122f3</Hash>
 </Codenesium>*/

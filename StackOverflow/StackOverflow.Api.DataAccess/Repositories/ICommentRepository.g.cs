@@ -15,10 +15,10 @@ namespace StackOverflowNS.Api.DataAccess
 
 		Task<Comment> Get(int id);
 
-		Task<List<Comment>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Comment>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa6095ca6f73952828953a857dcd3966</Hash>
+    <Hash>c3b7173b24b951400d3738e419603270</Hash>
 </Codenesium>*/

@@ -46,15 +46,15 @@ namespace StudioResourceManagerNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSpaceFeatureServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiSpaceFeatureServerResponseModel> response = await this.SpaceFeatureService.All(query.Limit, query.Offset);
+			List<ApiSpaceFeatureServerResponseModel> response = await this.SpaceFeatureService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -216,23 +216,6 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("bySpaceId/{spaceId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceFeatureServerResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySpaceId(int spaceId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpaceFeatureServerResponseModel> response = await this.SpaceFeatureService.BySpaceId(spaceId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiSpaceFeatureServerRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceFeatureServerRequestModel> patch)
 		{
 			var record = await this.SpaceFeatureService.Get(id);
@@ -252,5 +235,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5676b04df1b8321a865eaba7f08f4643</Hash>
+    <Hash>0a402745a101b6904016f68c87850a69</Hash>
 </Codenesium>*/

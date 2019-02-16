@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int countryId,
-			string detail,
-			int id)
+			string detail)
 		{
+			this.Id = id;
 			this.CountryId = countryId;
 			this.Detail = detail;
-			this.Id = id;
 		}
 
 		[Column("countryId")]
@@ -35,15 +35,15 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int Id { get; private set; }
 
 		[ForeignKey("CountryId")]
-		public virtual Country CountryNavigation { get; private set; }
+		public virtual Country CountryIdNavigation { get; private set; }
 
-		public void SetCountryNavigation(Country item)
+		public void SetCountryIdNavigation(Country item)
 		{
-			this.CountryNavigation = item;
+			this.CountryIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5819955975c4e87bba7384a5fff8f5b2</Hash>
+    <Hash>ed986319b2cade3c10e5682bc7ba47b7</Hash>
 </Codenesium>*/

@@ -116,32 +116,8 @@ namespace FileServiceNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
-
-	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public virtual ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FileService.Api.Web");
-
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appSettings.{environment}.json")
-			                                   .AddEnvironmentVariables()
-			                                   .Build();
-
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
-
-			builder.UseSqlServer(connectionString);
-
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
 }
 
 /*<Codenesium>
-    <Hash>f3ead272903f0f042352ae426564cbc0</Hash>
+    <Hash>832a163ee5e4e9cb14df5bbaf1ff1989</Hash>
 </Codenesium>*/

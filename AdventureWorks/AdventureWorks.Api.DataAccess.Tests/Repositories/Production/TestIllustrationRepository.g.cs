@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<IllustrationRepository>> loggerMoc = IllustrationRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
 
 			Illustration entity = new Illustration();
-			entity.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Illustration>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
 
 			var entity = new Illustration();
-			entity.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
 			var records = await context.Set<Illustration>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
 			Illustration entity = new Illustration();
-			entity.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Illustration>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
 			Illustration entity = new Illustration();
-			entity.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Illustration>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
 			var repository = new IllustrationRepository(loggerMoc.Object, context);
 			Illustration entity = new Illustration();
-			entity.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<Illustration>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d145acf36219d949fa9f82086fefa35e</Hash>
+    <Hash>d58bb5f24f71a20452ebfbe24343cc14</Hash>
 </Codenesium>*/

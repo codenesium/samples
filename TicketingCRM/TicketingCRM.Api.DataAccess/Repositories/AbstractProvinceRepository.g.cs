@@ -26,9 +26,21 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Province>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Province>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CountryId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Province> Get(int id)
@@ -85,19 +97,22 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table City via provinceId.
 		public async virtual Task<List<City>> CitiesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<City>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<City>();
+			return await this.Context.Set<City>()
+			       .Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<City>();
 		}
 
 		// Foreign key reference to this table Venue via provinceId.
 		public async virtual Task<List<Venue>> VenuesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Venue>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
+			return await this.Context.Set<Venue>()
+			       .Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
 		}
 
 		// Foreign key reference to table Country via countryId.
 		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
-			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
+			return await this.Context.Set<Country>()
+			       .SingleOrDefaultAsync(x => x.Id == countryId);
 		}
 
 		protected async Task<List<Province>> Where(
@@ -111,7 +126,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Province>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Province>();
+			return await this.Context.Set<Province>()
+			       .Include(x => x.CountryIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Province>();
 		}
 
 		private async Task<Province> GetById(int id)
@@ -124,5 +142,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4042da02a40057ee8df61c06addb172b</Hash>
+    <Hash>8efb68ec361650662b2aeba3f4da9624</Hash>
 </Codenesium>*/

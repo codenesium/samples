@@ -12,17 +12,13 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			ILinkRepository linkRepository,
 			IApiLinkServerRequestModelValidator linkModelValidator,
-			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper,
-			IBOLLinkLogMapper bolLinkLogMapper,
 			IDALLinkLogMapper dalLinkLogMapper)
 			: base(logger,
 			       mediator,
 			       linkRepository,
 			       linkModelValidator,
-			       bolLinkMapper,
 			       dalLinkMapper,
-			       bolLinkLogMapper,
 			       dalLinkLogMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d3805c9d131562161b47c5f7120ff5e</Hash>
+    <Hash>c05e5d6b6d92bdd9f5041d970360b1bf</Hash>
 </Codenesium>*/

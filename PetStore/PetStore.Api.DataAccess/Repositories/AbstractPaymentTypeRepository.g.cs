@@ -26,9 +26,20 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PaymentType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PaymentType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PaymentType> Get(int id)
@@ -79,7 +90,8 @@ namespace PetStoreNS.Api.DataAccess
 		// Foreign key reference to this table Sale via paymentTypeId.
 		public async virtual Task<List<Sale>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+			return await this.Context.Set<Sale>()
+			       .Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		protected async Task<List<PaymentType>> Where(
@@ -93,7 +105,9 @@ namespace PetStoreNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
+			return await this.Context.Set<PaymentType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PaymentType>();
 		}
 
 		private async Task<PaymentType> GetById(int id)
@@ -106,5 +120,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3fa6be6fcc18a7bf2b5b1977f2d92377</Hash>
+    <Hash>a35280a5a3669c4128380e252806432f</Hash>
 </Codenesium>*/

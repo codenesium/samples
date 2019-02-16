@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Client
 			                       request.MinQty,
 			                       request.ModifiedDate,
 			                       request.Rowguid,
-			                       request.StartDate,
-			                       request.Type);
+			                       request.StartDate);
 			return response;
 		}
 
@@ -38,13 +37,12 @@ namespace AdventureWorksNS.Api.Client
 				response.MinQty,
 				response.ModifiedDate,
 				response.Rowguid,
-				response.StartDate,
-				response.Type);
+				response.StartDate);
 			return request;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0939fe9a68d8f7848bec281f25d70e2a</Hash>
+    <Hash>2f330f2467a98e74d7505b256c4fdcee</Hash>
 </Codenesium>*/

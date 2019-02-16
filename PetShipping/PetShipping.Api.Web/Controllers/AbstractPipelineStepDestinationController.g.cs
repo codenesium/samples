@@ -46,15 +46,15 @@ namespace PetShippingNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPipelineStepDestinationServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiPipelineStepDestinationServerResponseModel> response = await this.PipelineStepDestinationService.All(query.Limit, query.Offset);
+			List<ApiPipelineStepDestinationServerResponseModel> response = await this.PipelineStepDestinationService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f1903876e0e80c5f40b51c2d368fd3c6</Hash>
+    <Hash>8459362a5d99531b47841b3d31944c22</Hash>
 </Codenesium>*/

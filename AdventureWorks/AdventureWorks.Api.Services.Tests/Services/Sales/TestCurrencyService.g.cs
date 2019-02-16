@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
 			var records = new List<Currency>();
 			records.Add(new Currency());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CurrencyService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			List<ApiCurrencyServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ApiCurrencyServerResponseModel response = await service.Get(default(string));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ApiCurrencyServerResponseModel response = await service.Get(default(string));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			CreateResponse<ApiCurrencyServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			CreateResponse<ApiCurrencyServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			UpdateResponse<ApiCurrencyServerResponseModel> response = await service.Update(default(string), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			UpdateResponse<ApiCurrencyServerResponseModel> response = await service.Update(default(string), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ApiCurrencyServerResponseModel response = await service.ByName("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			ApiCurrencyServerResponseModel response = await service.ByName("test_value");
@@ -281,9 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
@@ -301,9 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
@@ -323,9 +297,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
@@ -343,9 +315,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
 			List<ApiCurrencyRateServerResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
@@ -357,5 +327,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>24270f042d1ec2aa3667be6263d24c14</Hash>
+    <Hash>8e61f0d270841839482c40eff8bc5314</Hash>
 </Codenesium>*/

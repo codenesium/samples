@@ -46,10 +46,26 @@ namespace NebulaNS.Api.Services
 		public string AssignedMachineIdEntity { get; private set; } = RouteConstants.Machines;
 
 		[JsonProperty]
+		public ApiMachineServerResponseModel AssignedMachineIdNavigation { get; private set; }
+
+		public void SetAssignedMachineIdNavigation(ApiMachineServerResponseModel value)
+		{
+			this.AssignedMachineIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int ChainId { get; private set; }
 
 		[JsonProperty]
 		public string ChainIdEntity { get; private set; } = RouteConstants.Chains;
+
+		[JsonProperty]
+		public ApiChainServerResponseModel ChainIdNavigation { get; private set; }
+
+		public void SetChainIdNavigation(ApiChainServerResponseModel value)
+		{
+			this.ChainIdNavigation = value;
+		}
 
 		[Required]
 		[JsonProperty]
@@ -76,6 +92,14 @@ namespace NebulaNS.Api.Services
 		public string LinkStatusIdEntity { get; private set; } = RouteConstants.LinkStatuses;
 
 		[JsonProperty]
+		public ApiLinkStatusServerResponseModel LinkStatusIdNavigation { get; private set; }
+
+		public void SetLinkStatusIdNavigation(ApiLinkStatusServerResponseModel value)
+		{
+			this.LinkStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string Name { get; private set; }
 
 		[JsonProperty]
@@ -95,5 +119,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>90d6fd3a78196dc7a89416457dc8cda4</Hash>
+    <Hash>618e827f1caa0fb0b492187a1b6d2e64</Hash>
 </Codenesium>*/

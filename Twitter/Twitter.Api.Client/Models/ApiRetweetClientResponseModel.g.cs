@@ -21,7 +21,24 @@ namespace TwitterNS.Api.Client
 			this.TweetTweetId = tweetTweetId;
 
 			this.RetwitterUserIdEntity = nameof(ApiResponse.Users);
+
 			this.TweetTweetIdEntity = nameof(ApiResponse.Tweets);
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel RetwitterUserIdNavigation { get; private set; }
+
+		public void SetRetwitterUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.RetwitterUserIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiTweetClientResponseModel TweetTweetIdNavigation { get; private set; }
+
+		public void SetTweetTweetIdNavigation(ApiTweetClientResponseModel value)
+		{
+			this.TweetTweetIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -48,5 +65,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>35476f5675739f3dd8ee9f88ca731776</Hash>
+    <Hash>86fbb1f7a65eaf3892c05b73686c2f4f</Hash>
 </Codenesium>*/

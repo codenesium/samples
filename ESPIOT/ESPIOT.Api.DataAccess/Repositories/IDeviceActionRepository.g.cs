@@ -15,7 +15,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		Task<DeviceAction> Get(int id);
 
-		Task<List<DeviceAction>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<DeviceAction>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<DeviceAction>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e18d25271eaddc2f290b16f05b05d4b8</Hash>
+    <Hash>b10cb5d4b96f287019d24d3375e07f97</Hash>
 </Codenesium>*/

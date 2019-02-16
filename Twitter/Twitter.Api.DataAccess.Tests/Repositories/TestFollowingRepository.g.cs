@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<FollowingRepository>> loggerMoc = FollowingRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = FollowingRepositoryMoc.GetContext();
 			var repository = new FollowingRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<FollowingRepository>> loggerMoc = FollowingRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FollowingRepositoryMoc.GetContext();
+			var repository = new FollowingRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new FollowingRepository(loggerMoc.Object, context);
 
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Following>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new FollowingRepository(loggerMoc.Object, context);
 
 			var entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Following>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = FollowingRepositoryMoc.GetContext();
 			var repository = new FollowingRepository(loggerMoc.Object, context);
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Following>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = FollowingRepositoryMoc.GetContext();
 			var repository = new FollowingRepository(loggerMoc.Object, context);
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Following>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = FollowingRepositoryMoc.GetContext();
 			var repository = new FollowingRepository(loggerMoc.Object, context);
 			Following entity = new Following();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Following>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a174be0b8853d7b6ac49896d245717bf</Hash>
+    <Hash>9a5470df68af3c59528bd9891e9313d8</Hash>
 </Codenesium>*/

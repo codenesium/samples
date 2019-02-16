@@ -16,11 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiTeacherServerRequestModelValidator TeacherModelValidator { get; private set; }
 
-		protected IBOLTeacherMapper BolTeacherMapper { get; private set; }
-
 		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
-
-		protected IBOLRateMapper BolRateMapper { get; private set; }
 
 		protected IDALRateMapper DalRateMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			ITeacherRepository teacherRepository,
 			IApiTeacherServerRequestModelValidator teacherModelValidator,
-			IBOLTeacherMapper bolTeacherMapper,
 			IDALTeacherMapper dalTeacherMapper,
-			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base()
 		{
 			this.TeacherRepository = teacherRepository;
 			this.TeacherModelValidator = teacherModelValidator;
-			this.BolTeacherMapper = bolTeacherMapper;
 			this.DalTeacherMapper = dalTeacherMapper;
-			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTeacherServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTeacherServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TeacherRepository.All(limit, offset);
+			List<Teacher> records = await this.TeacherRepository.All(limit, offset, query);
 
-			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
+			return this.DalTeacherMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTeacherServerResponseModel> Get(int id)
 		{
-			var record = await this.TeacherRepository.Get(id);
+			Teacher record = await this.TeacherRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(record));
+				return this.DalTeacherMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTeacherMapper.MapModelToBO(default(int), model);
-				var record = await this.TeacherRepository.Create(this.DalTeacherMapper.MapBOToEF(bo));
+				Teacher record = this.DalTeacherMapper.MapModelToEntity(default(int), model);
+				record = await this.TeacherRepository.Create(record);
 
-				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTeacherMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTeacherMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TeacherCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTeacherMapper.MapModelToBO(id, model);
-				await this.TeacherRepository.Update(this.DalTeacherMapper.MapBOToEF(bo));
+				Teacher record = this.DalTeacherMapper.MapModelToEntity(id, model);
+				await this.TeacherRepository.Update(record);
 
-				var record = await this.TeacherRepository.Get(id);
+				record = await this.TeacherRepository.Get(id);
 
-				var businessObject = this.DalTeacherMapper.MapEFToBO(record);
-				var apiModel = this.BolTeacherMapper.MapBOToModel(businessObject);
+				ApiTeacherServerResponseModel apiModel = this.DalTeacherMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TeacherUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTeacherServerResponseModel>.UpdateResponse(apiModel);
@@ -131,25 +121,18 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			List<Teacher> records = await this.TeacherRepository.ByUserId(userId, limit, offset);
 
-			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
+			return this.DalTeacherMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiRateServerResponseModel>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Rate> records = await this.TeacherRepository.RatesByTeacherId(teacherId, limit, offset);
 
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiTeacherServerResponseModel>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Teacher> records = await this.TeacherRepository.ByEventId(eventId, limit, offset);
-
-			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
+			return this.DalRateMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1a2a8c84e61e0f7e92f99204161cfd4</Hash>
+    <Hash>3b7ca3a34ae3d6a1a4b5a95327371744</Hash>
 </Codenesium>*/

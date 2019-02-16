@@ -35,25 +35,21 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiDatabaseLogClientRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			var model2 = new ApiDatabaseLogClientRequestModel();
-			model2.SetProperties("C", "C", "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C");
+			model2.SetProperties("C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", "C", "C");
 			var request = new List<ApiDatabaseLogClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiDatabaseLogClientResponseModel>> result = await client.DatabaseLogBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<DatabaseLog>().ToList()[1].@Event.Should().Be("B");
-			context.Set<DatabaseLog>().ToList()[1].@Object.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].DatabaseUser.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].PostTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<DatabaseLog>().ToList()[1].Schema.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].Tsql.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].XmlEvent.Should().Be("B");
 
-			context.Set<DatabaseLog>().ToList()[2].@Event.Should().Be("C");
-			context.Set<DatabaseLog>().ToList()[2].@Object.Should().Be("C");
 			context.Set<DatabaseLog>().ToList()[2].DatabaseUser.Should().Be("C");
 			context.Set<DatabaseLog>().ToList()[2].PostTime.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<DatabaseLog>().ToList()[2].Schema.Should().Be("C");
@@ -72,21 +68,17 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiDatabaseLogClientRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			CreateResponse<ApiDatabaseLogClientResponseModel> result = await client.DatabaseLogCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<DatabaseLog>().ToList()[1].@Event.Should().Be("B");
-			context.Set<DatabaseLog>().ToList()[1].@Object.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].DatabaseUser.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].PostTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<DatabaseLog>().ToList()[1].Schema.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].Tsql.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[1].XmlEvent.Should().Be("B");
 
-			result.Record.@Event.Should().Be("B");
-			result.Record.@Object.Should().Be("B");
 			result.Record.DatabaseUser.Should().Be("B");
 			result.Record.PostTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Schema.Should().Be("B");
@@ -109,7 +101,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiDatabaseLogServerResponseModel model = await service.Get(1);
 
 			ApiDatabaseLogClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			request.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 
 			UpdateResponse<ApiDatabaseLogClientResponseModel> updateResponse = await client.DatabaseLogUpdateAsync(model.DatabaseLogID, request);
 
@@ -117,8 +109,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.DatabaseLogID.Should().Be(1);
-			context.Set<DatabaseLog>().ToList()[0].@Event.Should().Be("B");
-			context.Set<DatabaseLog>().ToList()[0].@Object.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[0].DatabaseUser.Should().Be("B");
 			context.Set<DatabaseLog>().ToList()[0].PostTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<DatabaseLog>().ToList()[0].Schema.Should().Be("B");
@@ -126,8 +116,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<DatabaseLog>().ToList()[0].XmlEvent.Should().Be("B");
 
 			updateResponse.Record.DatabaseLogID.Should().Be(1);
-			updateResponse.Record.@Event.Should().Be("B");
-			updateResponse.Record.@Object.Should().Be("B");
 			updateResponse.Record.DatabaseUser.Should().Be("B");
 			updateResponse.Record.PostTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Schema.Should().Be("B");
@@ -147,7 +135,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			IDatabaseLogService service = testServer.Host.Services.GetService(typeof(IDatabaseLogService)) as IDatabaseLogService;
 			var model = new ApiDatabaseLogServerRequestModel();
-			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			CreateResponse<ApiDatabaseLogServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -174,8 +162,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiDatabaseLogClientResponseModel response = await client.DatabaseLogGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.@Event.Should().Be("A");
-			response.@Object.Should().Be("A");
 			response.DatabaseLogID.Should().Be(1);
 			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -211,8 +197,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			List<ApiDatabaseLogClientResponseModel> response = await client.DatabaseLogAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].@Event.Should().Be("A");
-			response[0].@Object.Should().Be("A");
 			response[0].DatabaseLogID.Should().Be(1);
 			response[0].DatabaseUser.Should().Be("A");
 			response[0].PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -244,5 +228,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ee7c19ba257e59f9438ca095fac5ecc7</Hash>
+    <Hash>a83c676986fab438ab848bc44e608640</Hash>
 </Codenesium>*/

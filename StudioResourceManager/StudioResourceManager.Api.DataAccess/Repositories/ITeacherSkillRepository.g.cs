@@ -15,12 +15,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<TeacherSkill> Get(int id);
 
-		Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6da0d057cac727a43b45a9ac32a834ef</Hash>
+    <Hash>cc8ae280d5fdc81f00283fc9452dfb55</Hash>
 </Codenesium>*/

@@ -45,10 +45,26 @@ namespace PetStoreNS.Api.Services
 		public string PaymentTypeIdEntity { get; private set; } = RouteConstants.PaymentTypes;
 
 		[JsonProperty]
+		public ApiPaymentTypeServerResponseModel PaymentTypeIdNavigation { get; private set; }
+
+		public void SetPaymentTypeIdNavigation(ApiPaymentTypeServerResponseModel value)
+		{
+			this.PaymentTypeIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int PetId { get; private set; }
 
 		[JsonProperty]
 		public string PetIdEntity { get; private set; } = RouteConstants.Pets;
+
+		[JsonProperty]
+		public ApiPetServerResponseModel PetIdNavigation { get; private set; }
+
+		public void SetPetIdNavigation(ApiPetServerResponseModel value)
+		{
+			this.PetIdNavigation = value;
+		}
 
 		[JsonProperty]
 		public string Phone { get; private set; }
@@ -56,5 +72,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd138aec000d7d0e4f66d41338b55541</Hash>
+    <Hash>c2520c59706924b2e7f6c527a7538f4e</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int specialOfferID,
 			string category,
 			string description,
 			decimal discountPct,
@@ -22,10 +23,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			int minQty,
 			DateTime modifiedDate,
 			Guid rowguid,
-			int specialOfferID,
-			DateTime startDate,
-			string type)
+			DateTime startDate)
 		{
+			this.SpecialOfferID = specialOfferID;
 			this.Category = category;
 			this.Description = description;
 			this.DiscountPct = discountPct;
@@ -34,9 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.MinQty = minQty;
 			this.ModifiedDate = modifiedDate;
 			this.Rowguid = rowguid;
-			this.SpecialOfferID = specialOfferID;
 			this.StartDate = startDate;
-			this.Type = type;
 		}
 
 		[MaxLength(50)]
@@ -71,13 +69,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("StartDate")]
 		public virtual DateTime StartDate { get; private set; }
-
-		[MaxLength(50)]
-		[Column("Type")]
-		public virtual string Type { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5f240d987ee7dffae3b75bbf6e73d48</Hash>
+    <Hash>e97083e59c98900a11c1db29073f9958</Hash>
 </Codenesium>*/

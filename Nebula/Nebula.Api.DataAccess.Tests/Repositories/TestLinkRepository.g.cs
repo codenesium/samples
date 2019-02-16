@@ -47,10 +47,19 @@ namespace NebulaNS.Api.DataAccess
 			Mock<ILogger<LinkRepository>> loggerMoc = LinkRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = LinkRepositoryMoc.GetContext();
 			var repository = new LinkRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<LinkRepository>> loggerMoc = LinkRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkRepositoryMoc.GetContext();
+			var repository = new LinkRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new LinkRepository(loggerMoc.Object, context);
 
 			Link entity = new Link();
-			entity.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", 2, "B", "B", 2);
+			entity.SetProperties(default(int), 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
 			context.Set<Link>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new LinkRepository(loggerMoc.Object, context);
 
 			var entity = new Link();
-			entity.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", 2, "B", "B", 2);
+			entity.SetProperties(default(int), 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Link>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkRepositoryMoc.GetContext();
 			var repository = new LinkRepository(loggerMoc.Object, context);
 			Link entity = new Link();
-			entity.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", 2, "B", "B", 2);
+			entity.SetProperties(default(int), 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
 			context.Set<Link>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkRepositoryMoc.GetContext();
 			var repository = new LinkRepository(loggerMoc.Object, context);
 			Link entity = new Link();
-			entity.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", 2, "B", "B", 2);
+			entity.SetProperties(default(int), 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
 			context.Set<Link>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkRepositoryMoc.GetContext();
 			var repository = new LinkRepository(loggerMoc.Object, context);
 			Link entity = new Link();
-			entity.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", 2, "B", "B", 2);
+			entity.SetProperties(default(int), 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
 			context.Set<Link>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd5d8c1ae29b6a39b4968724cb912109</Hash>
+    <Hash>df9593b8d9d00672259e7c6176ebde3e</Hash>
 </Codenesium>*/

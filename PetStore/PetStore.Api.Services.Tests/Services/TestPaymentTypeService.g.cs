@@ -26,20 +26,18 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPaymentTypeRepository>();
 			var records = new List<PaymentType>();
 			records.Add(new PaymentType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new PaymentTypeService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiPaymentTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ApiPaymentTypeServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			CreateResponse<ApiPaymentTypeServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			CreateResponse<ApiPaymentTypeServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			UpdateResponse<ApiPaymentTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			UpdateResponse<ApiPaymentTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
@@ -260,9 +240,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PaymentTypeModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLPaymentTypeMapperMock,
 			                                     mock.DALMapperMockFactory.DALPaymentTypeMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
 			List<ApiSaleServerResponseModel> response = await service.SalesByPaymentTypeId(default(int));
@@ -274,5 +252,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>af46b560e7d2d8a430c97293cb74dc56</Hash>
+    <Hash>ca23ec35e596754738de5834a1c2e41b</Hash>
 </Codenesium>*/

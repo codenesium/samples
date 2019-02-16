@@ -14,6 +14,7 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string aboutMe,
 			int? accountId,
 			int? age,
@@ -21,7 +22,6 @@ namespace StackOverflowNS.Api.DataAccess
 			string displayName,
 			int downVote,
 			string emailHash,
-			int id,
 			DateTime lastAccessDate,
 			string location,
 			int reputation,
@@ -29,6 +29,7 @@ namespace StackOverflowNS.Api.DataAccess
 			int view,
 			string websiteUrl)
 		{
+			this.Id = id;
 			this.AboutMe = aboutMe;
 			this.AccountId = accountId;
 			this.Age = age;
@@ -36,7 +37,6 @@ namespace StackOverflowNS.Api.DataAccess
 			this.DisplayName = displayName;
 			this.DownVote = downVote;
 			this.EmailHash = emailHash;
-			this.Id = id;
 			this.LastAccessDate = lastAccessDate;
 			this.Location = location;
 			this.Reputation = reputation;
@@ -95,5 +95,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2afd139102a332513d64812c170e1a6</Hash>
+    <Hash>00a6d73c4f29bbb496cff3d59913a87b</Hash>
 </Codenesium>*/

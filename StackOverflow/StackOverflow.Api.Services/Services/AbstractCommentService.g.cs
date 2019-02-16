@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiCommentServerRequestModelValidator CommentModelValidator { get; private set; }
 
-		protected IBOLCommentMapper BolCommentMapper { get; private set; }
-
 		protected IDALCommentMapper DalCommentMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			ICommentRepository commentRepository,
 			IApiCommentServerRequestModelValidator commentModelValidator,
-			IBOLCommentMapper bolCommentMapper,
 			IDALCommentMapper dalCommentMapper)
 			: base()
 		{
 			this.CommentRepository = commentRepository;
 			this.CommentModelValidator = commentModelValidator;
-			this.BolCommentMapper = bolCommentMapper;
 			this.DalCommentMapper = dalCommentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCommentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCommentServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CommentRepository.All(limit, offset);
+			List<Comment> records = await this.CommentRepository.All(limit, offset, query);
 
-			return this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(records));
+			return this.DalCommentMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCommentServerResponseModel> Get(int id)
 		{
-			var record = await this.CommentRepository.Get(id);
+			Comment record = await this.CommentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolCommentMapper.MapBOToModel(this.DalCommentMapper.MapEFToBO(record));
+				return this.DalCommentMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCommentMapper.MapModelToBO(default(int), model);
-				var record = await this.CommentRepository.Create(this.DalCommentMapper.MapBOToEF(bo));
+				Comment record = this.DalCommentMapper.MapModelToEntity(default(int), model);
+				record = await this.CommentRepository.Create(record);
 
-				var businessObject = this.DalCommentMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCommentMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCommentMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CommentCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCommentMapper.MapModelToBO(id, model);
-				await this.CommentRepository.Update(this.DalCommentMapper.MapBOToEF(bo));
+				Comment record = this.DalCommentMapper.MapModelToEntity(id, model);
+				await this.CommentRepository.Update(record);
 
-				var record = await this.CommentRepository.Get(id);
+				record = await this.CommentRepository.Get(id);
 
-				var businessObject = this.DalCommentMapper.MapEFToBO(record);
-				var apiModel = this.BolCommentMapper.MapBOToModel(businessObject);
+				ApiCommentServerResponseModel apiModel = this.DalCommentMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CommentUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCommentServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>006a4d4b7f79d5794ce1e264718a9a50</Hash>
+    <Hash>42cc39b47df1a7cb1ab32808230d8b5d</Hash>
 </Codenesium>*/

@@ -14,14 +14,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productID,
 			DateTime modifiedDate,
 			bool primary,
-			int productID,
 			int productPhotoID)
 		{
+			this.ProductID = productID;
 			this.ModifiedDate = modifiedDate;
 			this.Primary = primary;
-			this.ProductID = productID;
 			this.ProductPhotoID = productPhotoID;
 		}
 
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee52a82bf9a1f5f35d71ddc7810e2fbb</Hash>
+    <Hash>2ca842b747bbefc572fb2815e8741027</Hash>
 </Codenesium>*/

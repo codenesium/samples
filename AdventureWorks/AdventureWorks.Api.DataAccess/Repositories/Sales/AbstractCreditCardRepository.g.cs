@@ -26,9 +26,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<CreditCard>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<CreditCard>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CardNumber.StartsWith(query) ||
+				                  x.CardType.StartsWith(query) ||
+				                  x.CreditCardID == query.ToInt() ||
+				                  x.ExpMonth == query.ToInt() ||
+				                  x.ExpYear == query.ToShort() ||
+				                  x.ModifiedDate == query.ToDateTime(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<CreditCard> Get(int creditCardID)
@@ -112,5 +127,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>978c5d81832306375ca2a4fedff35096</Hash>
+    <Hash>bdc50c33c692e7e5054d27b5c1c5efcd</Hash>
 </Codenesium>*/

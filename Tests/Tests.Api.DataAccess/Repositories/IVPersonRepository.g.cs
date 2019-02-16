@@ -15,10 +15,10 @@ namespace TestsNS.Api.DataAccess
 
 		Task<VPerson> Get(int personId);
 
-		Task<List<VPerson>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<VPerson>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f07dacd6897fb3b6da554e5fc77560b</Hash>
+    <Hash>99ebeb40400562340c44d43bc337774b</Hash>
 </Codenesium>*/

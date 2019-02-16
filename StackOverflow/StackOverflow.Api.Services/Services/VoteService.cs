@@ -12,13 +12,11 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IVoteRepository voteRepository,
 			IApiVoteServerRequestModelValidator voteModelValidator,
-			IBOLVoteMapper bolVoteMapper,
 			IDALVoteMapper dalVoteMapper)
 			: base(logger,
 			       mediator,
 			       voteRepository,
 			       voteModelValidator,
-			       bolVoteMapper,
 			       dalVoteMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>03ed419e59f1d406a0d8fa5a3b5c36b0</Hash>
+    <Hash>323825c2dc5439228ee58c113a41eeb5</Hash>
 </Codenesium>*/

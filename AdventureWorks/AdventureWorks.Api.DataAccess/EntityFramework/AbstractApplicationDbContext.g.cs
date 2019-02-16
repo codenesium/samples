@@ -1193,9 +1193,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			modelBuilder.Entity<VSalesPersonSalesByFiscalYear>()
 			.HasKey(c => new
 			{
-				c.@A2002,
-				c.@A2003,
-				c.@A2004,
 				c.FullName,
 				c.JobTitle,
 				c.SalesPersonID,
@@ -1253,32 +1250,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
-
-	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public virtual ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "AdventureWorks.Api.Web");
-
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appSettings.{environment}.json")
-			                                   .AddEnvironmentVariables()
-			                                   .Build();
-
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
-
-			builder.UseSqlServer(connectionString);
-
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
 }
 
 /*<Codenesium>
-    <Hash>7874e0777aa7ede792a9b5f99d55d80e</Hash>
+    <Hash>e62d645890ab2f515166f7755b5b7f00</Hash>
 </Codenesium>*/

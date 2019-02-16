@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Location> Get(short locationID);
 
-		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Location> ByName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a31564c95b4b68488a957d10e5fa822</Hash>
+    <Hash>fb1d8f6528a5cb8653467424c0f18f21</Hash>
 </Codenesium>*/

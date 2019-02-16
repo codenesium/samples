@@ -14,12 +14,12 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int destinationId,
 			int id,
+			int destinationId,
 			int pipelineStepId)
 		{
-			this.DestinationId = destinationId;
 			this.Id = id;
+			this.DestinationId = destinationId;
 			this.PipelineStepId = pipelineStepId;
 		}
 
@@ -34,23 +34,23 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int PipelineStepId { get; private set; }
 
 		[ForeignKey("DestinationId")]
-		public virtual Destination DestinationNavigation { get; private set; }
+		public virtual Destination DestinationIdNavigation { get; private set; }
 
-		public void SetDestinationNavigation(Destination item)
+		public void SetDestinationIdNavigation(Destination item)
 		{
-			this.DestinationNavigation = item;
+			this.DestinationIdNavigation = item;
 		}
 
 		[ForeignKey("PipelineStepId")]
-		public virtual PipelineStep PipelineStepNavigation { get; private set; }
+		public virtual PipelineStep PipelineStepIdNavigation { get; private set; }
 
-		public void SetPipelineStepNavigation(PipelineStep item)
+		public void SetPipelineStepIdNavigation(PipelineStep item)
 		{
-			this.PipelineStepNavigation = item;
+			this.PipelineStepIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4cb0a51a973b8dae9e07c197f35caafd</Hash>
+    <Hash>10fa42ebe108974ec824eb2513efd4d7</Hash>
 </Codenesium>*/

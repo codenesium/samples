@@ -26,9 +26,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Password.StartsWith(query) ||
+				                  x.Username.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<User> Get(int id)
@@ -79,19 +91,22 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		// Foreign key reference to this table Admin via userId.
 		public async virtual Task<List<Admin>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Admin>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
+			return await this.Context.Set<Admin>()
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		// Foreign key reference to this table Student via userId.
 		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Student>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+			return await this.Context.Set<Student>()
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
 		// Foreign key reference to this table Teacher via userId.
 		public async virtual Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Teacher>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
+			return await this.Context.Set<Teacher>()
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
 
 		protected async Task<List<User>> Where(
@@ -105,7 +120,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+			return await this.Context.Set<User>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
 		private async Task<User> GetById(int id)
@@ -118,5 +135,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>29d85a2f48b771ffa02025578837a55f</Hash>
+    <Hash>64b243e1be215774bc87be9dfb05a8e1</Hash>
 </Codenesium>*/

@@ -26,9 +26,22 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Destination>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Destination>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CountryId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Order == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Destination> Get(int id)
@@ -79,13 +92,15 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table PipelineStepDestination via destinationId.
 		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinationsByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PipelineStepDestination>().Where(x => x.DestinationId == destinationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+			return await this.Context.Set<PipelineStepDestination>()
+			       .Where(x => x.DestinationId == destinationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
 		}
 
 		// Foreign key reference to table Country via countryId.
 		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
-			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
+			return await this.Context.Set<Country>()
+			       .SingleOrDefaultAsync(x => x.Id == countryId);
 		}
 
 		protected async Task<List<Destination>> Where(
@@ -99,7 +114,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Destination>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Destination>();
+			return await this.Context.Set<Destination>()
+			       .Include(x => x.CountryIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Destination>();
 		}
 
 		private async Task<Destination> GetById(int id)
@@ -112,5 +130,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>804bbdf81c846f670bbda885df3be927</Hash>
+    <Hash>11322c3f4f6d1f2ce90fb5334a04c580</Hash>
 </Codenesium>*/

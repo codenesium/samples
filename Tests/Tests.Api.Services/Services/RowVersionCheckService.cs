@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
-			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base(logger,
 			       mediator,
 			       rowVersionCheckRepository,
 			       rowVersionCheckModelValidator,
-			       bolRowVersionCheckMapper,
 			       dalRowVersionCheckMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eafbcec9a65f09a2c0c356e4044779fa</Hash>
+    <Hash>0760295a2a24f72cb35b9f24c1f5c9de</Hash>
 </Codenesium>*/

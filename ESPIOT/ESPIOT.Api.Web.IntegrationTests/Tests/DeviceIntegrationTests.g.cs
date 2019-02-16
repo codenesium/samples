@@ -35,18 +35,22 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiDeviceClientRequestModel();
-			model.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			var model2 = new ApiDeviceClientRequestModel();
-			model2.SetProperties("C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
+			model2.SetProperties(DateTime.Parse("1/1/1989 12:00:00 AM"), true, "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			var request = new List<ApiDeviceClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiDeviceClientResponseModel>> result = await client.DeviceBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
+			context.Set<Device>().ToList()[1].DateOfLastPing.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Device>().ToList()[1].IsActive.Should().Be(true);
 			context.Set<Device>().ToList()[1].Name.Should().Be("B");
 			context.Set<Device>().ToList()[1].PublicId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 
+			context.Set<Device>().ToList()[2].DateOfLastPing.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
+			context.Set<Device>().ToList()[2].IsActive.Should().Be(true);
 			context.Set<Device>().ToList()[2].Name.Should().Be("C");
 			context.Set<Device>().ToList()[2].PublicId.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 		}
@@ -62,14 +66,18 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiDeviceClientRequestModel();
-			model.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			CreateResponse<ApiDeviceClientResponseModel> result = await client.DeviceCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
+			context.Set<Device>().ToList()[1].DateOfLastPing.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Device>().ToList()[1].IsActive.Should().Be(true);
 			context.Set<Device>().ToList()[1].Name.Should().Be("B");
 			context.Set<Device>().ToList()[1].PublicId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 
+			result.Record.DateOfLastPing.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			result.Record.IsActive.Should().Be(true);
 			result.Record.Name.Should().Be("B");
 			result.Record.PublicId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 		}
@@ -89,7 +97,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			ApiDeviceServerResponseModel model = await service.Get(1);
 
 			ApiDeviceClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			request.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 
 			UpdateResponse<ApiDeviceClientResponseModel> updateResponse = await client.DeviceUpdateAsync(model.Id, request);
 
@@ -97,10 +105,14 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
+			context.Set<Device>().ToList()[0].DateOfLastPing.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			context.Set<Device>().ToList()[0].IsActive.Should().Be(true);
 			context.Set<Device>().ToList()[0].Name.Should().Be("B");
 			context.Set<Device>().ToList()[0].PublicId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 
 			updateResponse.Record.Id.Should().Be(1);
+			updateResponse.Record.DateOfLastPing.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
+			updateResponse.Record.IsActive.Should().Be(true);
 			updateResponse.Record.Name.Should().Be("B");
 			updateResponse.Record.PublicId.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 		}
@@ -117,7 +129,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 
 			IDeviceService service = testServer.Host.Services.GetService(typeof(IDeviceService)) as IDeviceService;
 			var model = new ApiDeviceServerRequestModel();
-			model.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			CreateResponse<ApiDeviceServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -144,7 +156,9 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			ApiDeviceClientResponseModel response = await client.DeviceGetAsync(1);
 
 			response.Should().NotBeNull();
+			response.DateOfLastPing.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
+			response.IsActive.Should().Be(true);
 			response.Name.Should().Be("A");
 			response.PublicId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 		}
@@ -176,7 +190,9 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			List<ApiDeviceClientResponseModel> response = await client.DeviceAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
+			response[0].DateOfLastPing.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].Id.Should().Be(1);
+			response[0].IsActive.Should().Be(true);
 			response[0].Name.Should().Be("A");
 			response[0].PublicId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 		}
@@ -194,7 +210,9 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
+			response.DateOfLastPing.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Id.Should().Be(1);
+			response.IsActive.Should().Be(true);
 			response.Name.Should().Be("A");
 			response.PublicId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 		}
@@ -264,5 +282,5 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>6f1ab3e931bc676f8516fdb99e3df478</Hash>
+    <Hash>dd90f2389f07362272b41da2c210769b</Hash>
 </Codenesium>*/

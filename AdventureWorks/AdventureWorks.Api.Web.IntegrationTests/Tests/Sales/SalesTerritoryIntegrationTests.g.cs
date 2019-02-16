@@ -35,16 +35,15 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiSalesTerritoryClientRequestModel();
-			model.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
+			model.SetProperties(2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
 			var model2 = new ApiSalesTerritoryClientRequestModel();
-			model2.SetProperties("C", 3m, 3m, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3m, 3m);
+			model2.SetProperties(3m, 3m, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), "C", Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), 3m, 3m);
 			var request = new List<ApiSalesTerritoryClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiSalesTerritoryClientResponseModel>> result = await client.SalesTerritoryBulkInsertAsync(request);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<SalesTerritory>().ToList()[1].@Group.Should().Be("B");
 			context.Set<SalesTerritory>().ToList()[1].CostLastYear.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].CostYTD.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].CountryRegionCode.Should().Be("B");
@@ -54,7 +53,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SalesTerritory>().ToList()[1].SalesLastYear.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].SalesYTD.Should().Be(2m);
 
-			context.Set<SalesTerritory>().ToList()[2].@Group.Should().Be("C");
 			context.Set<SalesTerritory>().ToList()[2].CostLastYear.Should().Be(3m);
 			context.Set<SalesTerritory>().ToList()[2].CostYTD.Should().Be(3m);
 			context.Set<SalesTerritory>().ToList()[2].CountryRegionCode.Should().Be("C");
@@ -76,12 +74,11 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiSalesTerritoryClientRequestModel();
-			model.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
+			model.SetProperties(2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
 			CreateResponse<ApiSalesTerritoryClientResponseModel> result = await client.SalesTerritoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<SalesTerritory>().ToList()[1].@Group.Should().Be("B");
 			context.Set<SalesTerritory>().ToList()[1].CostLastYear.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].CostYTD.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].CountryRegionCode.Should().Be("B");
@@ -91,7 +88,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SalesTerritory>().ToList()[1].SalesLastYear.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[1].SalesYTD.Should().Be(2m);
 
-			result.Record.@Group.Should().Be("B");
 			result.Record.CostLastYear.Should().Be(2m);
 			result.Record.CostYTD.Should().Be(2m);
 			result.Record.CountryRegionCode.Should().Be("B");
@@ -117,7 +113,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiSalesTerritoryServerResponseModel model = await service.Get(1);
 
 			ApiSalesTerritoryClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
+			request.SetProperties(2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
 
 			UpdateResponse<ApiSalesTerritoryClientResponseModel> updateResponse = await client.SalesTerritoryUpdateAsync(model.TerritoryID, request);
 
@@ -125,7 +121,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.TerritoryID.Should().Be(1);
-			context.Set<SalesTerritory>().ToList()[0].@Group.Should().Be("B");
 			context.Set<SalesTerritory>().ToList()[0].CostLastYear.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[0].CostYTD.Should().Be(2m);
 			context.Set<SalesTerritory>().ToList()[0].CountryRegionCode.Should().Be("B");
@@ -136,7 +131,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SalesTerritory>().ToList()[0].SalesYTD.Should().Be(2m);
 
 			updateResponse.Record.TerritoryID.Should().Be(1);
-			updateResponse.Record.@Group.Should().Be("B");
 			updateResponse.Record.CostLastYear.Should().Be(2m);
 			updateResponse.Record.CostYTD.Should().Be(2m);
 			updateResponse.Record.CountryRegionCode.Should().Be("B");
@@ -159,7 +153,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			ISalesTerritoryService service = testServer.Host.Services.GetService(typeof(ISalesTerritoryService)) as ISalesTerritoryService;
 			var model = new ApiSalesTerritoryServerRequestModel();
-			model.SetProperties("B", 2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
+			model.SetProperties(2m, 2m, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m);
 			CreateResponse<ApiSalesTerritoryServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -186,7 +180,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiSalesTerritoryClientResponseModel response = await client.SalesTerritoryGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -225,7 +218,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			List<ApiSalesTerritoryClientResponseModel> response = await client.SalesTerritoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].@Group.Should().Be("A");
 			response[0].CostLastYear.Should().Be(1m);
 			response[0].CostYTD.Should().Be(1m);
 			response[0].CountryRegionCode.Should().Be("A");
@@ -250,7 +242,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -289,7 +280,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			response.Should().NotBeNull();
 
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -422,5 +412,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0151a8e3a9b7fba0dc36f898950cfeee</Hash>
+    <Hash>a279481eeffe51abc1429d6cbbbe1bd4</Hash>
 </Codenesium>*/

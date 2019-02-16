@@ -20,6 +20,14 @@ namespace TicketingCRMNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiProvinceClientResponseModel ProvinceIdNavigation { get; private set; }
+
+		public void SetProvinceIdNavigation(ApiProvinceClientResponseModel value)
+		{
+			this.ProvinceIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bdf7187954b0c41d3fe22738afe13f31</Hash>
+    <Hash>c62c12a1202a49d9c54df7f73e55cb98</Hash>
 </Codenesium>*/

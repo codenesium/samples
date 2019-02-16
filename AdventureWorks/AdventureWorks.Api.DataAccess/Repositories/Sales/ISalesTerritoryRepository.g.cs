@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<SalesTerritory> Get(int territoryID);
 
-		Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<SalesTerritory> ByName(string name);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>32730c8f6e9367a88b6842f31e20787b</Hash>
+    <Hash>79a7b8d66a190ce4d697beaa61717b93</Hash>
 </Codenesium>*/

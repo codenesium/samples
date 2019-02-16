@@ -18,10 +18,10 @@ namespace PetShippingNS.Api.Services
 
 		Task<ApiAirTransportServerResponseModel> Get(int airlineId);
 
-		Task<List<ApiAirTransportServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAirTransportServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>af4247baa1dffb3a7ecf0dfe48859e5d</Hash>
+    <Hash>9d844c05514af173da9427fd56908fad</Hash>
 </Codenesium>*/

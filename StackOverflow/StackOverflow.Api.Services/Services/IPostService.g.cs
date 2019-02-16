@@ -18,12 +18,12 @@ namespace StackOverflowNS.Api.Services
 
 		Task<ApiPostServerResponseModel> Get(int id);
 
-		Task<List<ApiPostServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPostServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiPostServerResponseModel>> ByOwnerUserId(int? ownerUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>006cef99d027ebe167f59e3619562f16</Hash>
+    <Hash>d4dfdea55edb4b85a254a9c2c36030fd</Hash>
 </Codenesium>*/

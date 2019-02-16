@@ -35,6 +35,14 @@ namespace TwitterNS.Api.Services
 		public string TaggedUserIdEntity { get; private set; } = RouteConstants.Users;
 
 		[JsonProperty]
+		public ApiUserServerResponseModel TaggedUserIdNavigation { get; private set; }
+
+		public void SetTaggedUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.TaggedUserIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public TimeSpan Time { get; private set; }
 
 		[JsonProperty]
@@ -43,5 +51,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15b51b129f876c37fc1aac56a57b327c</Hash>
+    <Hash>7730a0bbc7252f6dab57e55d41e84f67</Hash>
 </Codenesium>*/

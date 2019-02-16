@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiBillOfMaterialServerResponseModel> Get(int billOfMaterialsID);
 
-		Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiBillOfMaterialServerResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bcc78aa908fb0b5b551ddd46623c9b8</Hash>
+    <Hash>ccf8875c2b1487863533bacbb14cde69</Hash>
 </Codenesium>*/

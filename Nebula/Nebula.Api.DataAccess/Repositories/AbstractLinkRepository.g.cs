@@ -26,9 +26,31 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Link>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Link>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AssignedMachineId == query.ToNullableInt() ||
+				                  x.ChainId == query.ToInt() ||
+				                  x.DateCompleted == query.ToNullableDateTime() ||
+				                  x.DateStarted == query.ToNullableDateTime() ||
+				                  x.DynamicParameter.StartsWith(query) ||
+				                  x.ExternalId == query.ToGuid() ||
+				                  x.Id == query.ToInt() ||
+				                  x.LinkStatusId == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Order == query.ToInt() ||
+				                  x.Response.StartsWith(query) ||
+				                  x.StaticParameter.StartsWith(query) ||
+				                  x.TimeoutInSecond == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Link> Get(int id)
@@ -79,7 +101,12 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Link_ExternalId.
 		public async virtual Task<Link> ByExternalId(Guid externalId)
 		{
-			return await this.Context.Set<Link>().FirstOrDefaultAsync(x => x.ExternalId == externalId);
+			return await this.Context.Set<Link>()
+			       .Include(x => x.AssignedMachineIdNavigation)
+			       .Include(x => x.ChainIdNavigation)
+			       .Include(x => x.LinkStatusIdNavigation)
+
+			       .FirstOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		// Non-unique constraint AX_Link_ChainId.
@@ -91,25 +118,29 @@ namespace NebulaNS.Api.DataAccess
 		// Foreign key reference to this table LinkLog via linkId.
 		public async virtual Task<List<LinkLog>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
+			return await this.Context.Set<LinkLog>()
+			       .Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
 		// Foreign key reference to table Machine via assignedMachineId.
 		public async virtual Task<Machine> MachineByAssignedMachineId(int? assignedMachineId)
 		{
-			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
+			return await this.Context.Set<Machine>()
+			       .SingleOrDefaultAsync(x => x.Id == assignedMachineId);
 		}
 
 		// Foreign key reference to table Chain via chainId.
 		public async virtual Task<Chain> ChainByChainId(int chainId)
 		{
-			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
+			return await this.Context.Set<Chain>()
+			       .SingleOrDefaultAsync(x => x.Id == chainId);
 		}
 
 		// Foreign key reference to table LinkStatus via linkStatusId.
 		public async virtual Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId)
 		{
-			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
+			return await this.Context.Set<LinkStatus>()
+			       .SingleOrDefaultAsync(x => x.Id == linkStatusId);
 		}
 
 		protected async Task<List<Link>> Where(
@@ -123,7 +154,12 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Link>();
+			return await this.Context.Set<Link>()
+			       .Include(x => x.AssignedMachineIdNavigation)
+			       .Include(x => x.ChainIdNavigation)
+			       .Include(x => x.LinkStatusIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
 		private async Task<Link> GetById(int id)
@@ -136,5 +172,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb9e7d91c31fe246521511dcf47792f1</Hash>
+    <Hash>1fe6edc6f5102fa57c959edd3012a6d9</Hash>
 </Codenesium>*/

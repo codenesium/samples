@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceServerRequestModelValidator selfReferenceModelValidator,
-			IBOLSelfReferenceMapper bolSelfReferenceMapper,
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
 			: base(logger,
 			       mediator,
 			       selfReferenceRepository,
 			       selfReferenceModelValidator,
-			       bolSelfReferenceMapper,
 			       dalSelfReferenceMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c9e1460631d10f7145d3a2580f828a0</Hash>
+    <Hash>ef29f69d3f1a80e897300e8ce5036a5f</Hash>
 </Codenesium>*/

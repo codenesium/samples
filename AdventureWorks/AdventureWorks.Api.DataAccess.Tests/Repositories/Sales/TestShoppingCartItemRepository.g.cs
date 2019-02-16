@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
 			ShoppingCartItem entity = new ShoppingCartItem();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
 			context.Set<ShoppingCartItem>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
 			var entity = new ShoppingCartItem();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<ShoppingCartItem>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 			ShoppingCartItem entity = new ShoppingCartItem();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
 			context.Set<ShoppingCartItem>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 			ShoppingCartItem entity = new ShoppingCartItem();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
 			context.Set<ShoppingCartItem>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
 			var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 			ShoppingCartItem entity = new ShoppingCartItem();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
 			context.Set<ShoppingCartItem>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cd356f831103ad6a4e2d37cc098622ef</Hash>
+    <Hash>7549abcdec70f4a0ade5d4decd1fcbaa</Hash>
 </Codenesium>*/

@@ -35,15 +35,15 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int SpeciesId { get; private set; }
 
 		[ForeignKey("SpeciesId")]
-		public virtual Species SpeciesNavigation { get; private set; }
+		public virtual Species SpeciesIdNavigation { get; private set; }
 
-		public void SetSpeciesNavigation(Species item)
+		public void SetSpeciesIdNavigation(Species item)
 		{
-			this.SpeciesNavigation = item;
+			this.SpeciesIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9f0123dcfea87abdbd5e814a5d7b945</Hash>
+    <Hash>eaf93f5d257f76d5cca4d2b7a7548099</Hash>
 </Codenesium>*/

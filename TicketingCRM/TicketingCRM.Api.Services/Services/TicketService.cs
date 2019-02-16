@@ -12,19 +12,19 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ITicketRepository ticketRepository,
 			IApiTicketServerRequestModelValidator ticketModelValidator,
-			IBOLTicketMapper bolTicketMapper,
-			IDALTicketMapper dalTicketMapper)
+			IDALTicketMapper dalTicketMapper,
+			IDALSaleTicketMapper dalSaleTicketMapper)
 			: base(logger,
 			       mediator,
 			       ticketRepository,
 			       ticketModelValidator,
-			       bolTicketMapper,
-			       dalTicketMapper)
+			       dalTicketMapper,
+			       dalSaleTicketMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf3afaabaf0db0aa523f14e2bcec34c8</Hash>
+    <Hash>d5a1a73bb98e5d00ce846388acfce2d8</Hash>
 </Codenesium>*/

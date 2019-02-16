@@ -16,8 +16,6 @@ namespace NebulaNS.Api.Services
 
 		protected IApiClaspServerRequestModelValidator ClaspModelValidator { get; private set; }
 
-		protected IBOLClaspMapper BolClaspMapper { get; private set; }
-
 		protected IDALClaspMapper DalClaspMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IClaspRepository claspRepository,
 			IApiClaspServerRequestModelValidator claspModelValidator,
-			IBOLClaspMapper bolClaspMapper,
 			IDALClaspMapper dalClaspMapper)
 			: base()
 		{
 			this.ClaspRepository = claspRepository;
 			this.ClaspModelValidator = claspModelValidator;
-			this.BolClaspMapper = bolClaspMapper;
 			this.DalClaspMapper = dalClaspMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiClaspServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiClaspServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ClaspRepository.All(limit, offset);
+			List<Clasp> records = await this.ClaspRepository.All(limit, offset, query);
 
-			return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(records));
+			return this.DalClaspMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiClaspServerResponseModel> Get(int id)
 		{
-			var record = await this.ClaspRepository.Get(id);
+			Clasp record = await this.ClaspRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record));
+				return this.DalClaspMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolClaspMapper.MapModelToBO(default(int), model);
-				var record = await this.ClaspRepository.Create(this.DalClaspMapper.MapBOToEF(bo));
+				Clasp record = this.DalClaspMapper.MapModelToEntity(default(int), model);
+				record = await this.ClaspRepository.Create(record);
 
-				var businessObject = this.DalClaspMapper.MapEFToBO(record);
-				response.SetRecord(this.BolClaspMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalClaspMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ClaspCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolClaspMapper.MapModelToBO(id, model);
-				await this.ClaspRepository.Update(this.DalClaspMapper.MapBOToEF(bo));
+				Clasp record = this.DalClaspMapper.MapModelToEntity(id, model);
+				await this.ClaspRepository.Update(record);
 
-				var record = await this.ClaspRepository.Get(id);
+				record = await this.ClaspRepository.Get(id);
 
-				var businessObject = this.DalClaspMapper.MapEFToBO(record);
-				var apiModel = this.BolClaspMapper.MapBOToModel(businessObject);
+				ApiClaspServerResponseModel apiModel = this.DalClaspMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ClaspUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiClaspServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2eab80603150d2f78401bd1ec3f340d8</Hash>
+    <Hash>037ea50838dd053d61381f448325bbb4</Hash>
 </Codenesium>*/

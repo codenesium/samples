@@ -1,3 +1,4 @@
+using FileServiceNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c72ca97327aed9d3e7e8dafc1a3b30fb</Hash>
+    <Hash>414fc7aa9f5b89496d295ef920c03d0e</Hash>
 </Codenesium>*/

@@ -208,32 +208,8 @@ namespace TestsNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
-
-	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public virtual ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Tests.Api.Web");
-
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appSettings.{environment}.json")
-			                                   .AddEnvironmentVariables()
-			                                   .Build();
-
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
-
-			builder.UseSqlServer(connectionString);
-
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
 }
 
 /*<Codenesium>
-    <Hash>08f9abf5be7935f11d304657ad4e3a4c</Hash>
+    <Hash>5903a9c62e1862e07d33880c2c4e6fce</Hash>
 </Codenesium>*/

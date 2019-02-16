@@ -14,11 +14,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int spaceFeatureId,
-			int spaceId)
+			int spaceId,
+			int spaceFeatureId)
 		{
-			this.SpaceFeatureId = spaceFeatureId;
 			this.SpaceId = spaceId;
+			this.SpaceFeatureId = spaceFeatureId;
 		}
 
 		[Key]
@@ -32,5 +32,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30841939af21dd1398efa9a2b8f72f04</Hash>
+    <Hash>68b2cf7be9d9d7fa2e161b9a295fc674</Hash>
 </Codenesium>*/

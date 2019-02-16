@@ -12,13 +12,11 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
-			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       mediator,
 			       saleRepository,
 			       saleModelValidator,
-			       bolSaleMapper,
 			       dalSaleMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d911cc2fbab0a21c4f2513f1a7b5cd5</Hash>
+    <Hash>b18bc59be8309bd72d1b8273d5ede794</Hash>
 </Codenesium>*/

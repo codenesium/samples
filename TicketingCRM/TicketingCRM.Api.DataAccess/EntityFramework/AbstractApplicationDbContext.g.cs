@@ -238,32 +238,8 @@ namespace TicketingCRMNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
-
-	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public virtual ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "TicketingCRM.Api.Web");
-
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appSettings.{environment}.json")
-			                                   .AddEnvironmentVariables()
-			                                   .Build();
-
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
-
-			builder.UseSqlServer(connectionString);
-
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
 }
 
 /*<Codenesium>
-    <Hash>39ebc1b73812337635e6de87f117e265</Hash>
+    <Hash>dbab15df7b1873c73ea462bfa4fcfb59</Hash>
 </Codenesium>*/

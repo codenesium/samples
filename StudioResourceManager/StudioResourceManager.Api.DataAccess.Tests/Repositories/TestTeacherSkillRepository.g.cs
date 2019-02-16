@@ -47,10 +47,19 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TeacherSkillRepository>> loggerMoc = TeacherSkillRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
+			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 
 			TeacherSkill entity = new TeacherSkill();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 
 			var entity = new TeacherSkill();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<TeacherSkill>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 			TeacherSkill entity = new TeacherSkill();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 			TeacherSkill entity = new TeacherSkill();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherSkillRepositoryMoc.GetContext();
 			var repository = new TeacherSkillRepository(loggerMoc.Object, context);
 			TeacherSkill entity = new TeacherSkill();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a72d527fa0f2a3ee2c3367294a3add93</Hash>
+    <Hash>d3b328af21bfeb74af91102c04bcfe01</Hash>
 </Codenesium>*/

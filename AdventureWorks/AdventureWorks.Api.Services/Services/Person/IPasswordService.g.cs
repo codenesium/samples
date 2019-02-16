@@ -18,10 +18,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiPasswordServerResponseModel> Get(int businessEntityID);
 
-		Task<List<ApiPasswordServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPasswordServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>de148d96b774a0d86eb90e59a61ad5b4</Hash>
+    <Hash>e7cec1d674626a358674ebe6ab50d877</Hash>
 </Codenesium>*/

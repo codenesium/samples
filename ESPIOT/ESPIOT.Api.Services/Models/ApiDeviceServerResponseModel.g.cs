@@ -10,16 +10,26 @@ namespace ESPIOTNS.Api.Services
 	{
 		public virtual void SetProperties(
 			int id,
+			DateTime dateOfLastPing,
+			bool isActive,
 			string name,
 			Guid publicId)
 		{
 			this.Id = id;
+			this.DateOfLastPing = dateOfLastPing;
+			this.IsActive = isActive;
 			this.Name = name;
 			this.PublicId = publicId;
 		}
 
 		[JsonProperty]
+		public DateTime DateOfLastPing { get; private set; }
+
+		[JsonProperty]
 		public int Id { get; private set; }
+
+		[JsonProperty]
+		public bool IsActive { get; private set; }
 
 		[JsonProperty]
 		public string Name { get; private set; }
@@ -30,5 +40,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7806e144e44d39cb6dac2aca04587499</Hash>
+    <Hash>82a149f4f3f586439dca4ca734c9726d</Hash>
 </Codenesium>*/

@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 
 			ScrapReason entity = new ScrapReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(short), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ScrapReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 
 			var entity = new ScrapReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(short), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<ScrapReason>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 			ScrapReason entity = new ScrapReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(short), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ScrapReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 			ScrapReason entity = new ScrapReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(short), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ScrapReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
 			var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 			ScrapReason entity = new ScrapReason();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(short), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<ScrapReason>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d472c0ea8dd1a6e13ad6360e9ec536ed</Hash>
+    <Hash>86a491114e15b14d34ee3663bd848971</Hash>
 </Codenesium>*/

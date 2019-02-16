@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiProductReviewServerRequestModelValidator ProductReviewModelValidator { get; private set; }
 
-		protected IBOLProductReviewMapper BolProductReviewMapper { get; private set; }
-
 		protected IDALProductReviewMapper DalProductReviewMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IProductReviewRepository productReviewRepository,
 			IApiProductReviewServerRequestModelValidator productReviewModelValidator,
-			IBOLProductReviewMapper bolProductReviewMapper,
 			IDALProductReviewMapper dalProductReviewMapper)
 			: base()
 		{
 			this.ProductReviewRepository = productReviewRepository;
 			this.ProductReviewModelValidator = productReviewModelValidator;
-			this.BolProductReviewMapper = bolProductReviewMapper;
 			this.DalProductReviewMapper = dalProductReviewMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiProductReviewServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductReviewServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductReviewRepository.All(limit, offset);
+			var records = await this.ProductReviewRepository.All(limit, offset, query);
 
-			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
+			return this.DalProductReviewMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiProductReviewServerResponseModel> Get(int productReviewID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(record));
+				return this.DalProductReviewMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolProductReviewMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductReviewRepository.Create(this.DalProductReviewMapper.MapBOToEF(bo));
+				var bo = this.DalProductReviewMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductReviewRepository.Create(bo);
 
-				var businessObject = this.DalProductReviewMapper.MapEFToBO(record);
-				response.SetRecord(this.BolProductReviewMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalProductReviewMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ProductReviewCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolProductReviewMapper.MapModelToBO(productReviewID, model);
-				await this.ProductReviewRepository.Update(this.DalProductReviewMapper.MapBOToEF(bo));
+				var bo = this.DalProductReviewMapper.MapModelToBO(productReviewID, model);
+				await this.ProductReviewRepository.Update(bo);
 
 				var record = await this.ProductReviewRepository.Get(productReviewID);
 
-				var businessObject = this.DalProductReviewMapper.MapEFToBO(record);
-				var apiModel = this.BolProductReviewMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalProductReviewMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ProductReviewUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductReviewServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ProductReview> records = await this.ProductReviewRepository.ByProductIDReviewerName(productID, reviewerName, limit, offset);
 
-			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
+			return this.DalProductReviewMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a9f9c2223af02bd64615c3d42a03597</Hash>
+    <Hash>576ba0a05aa59bcfa4546aa63599ef4b</Hash>
 </Codenesium>*/

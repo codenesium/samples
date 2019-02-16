@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCreditCardServerResponseModel> Get(int creditCardID);
 
-		Task<List<ApiCreditCardServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCreditCardServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiCreditCardServerResponseModel> ByCardNumber(string cardNumber);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a9a05b6c8df8020e9ffbfc9d177b402</Hash>
+    <Hash>83ac4ca0e7853490cb2e2bbfff38e22e</Hash>
 </Codenesium>*/

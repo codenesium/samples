@@ -16,7 +16,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new ApiTestAllFieldTypeServerModelMapper();
 			var model = new ApiTestAllFieldTypeServerRequestModel();
-			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 			ApiTestAllFieldTypeServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.FieldBigInt.Should().Be(1);
@@ -27,7 +27,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldDateTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
-			response.FieldDecimal.Should().Be(1);
+			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
@@ -54,7 +54,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new ApiTestAllFieldTypeServerModelMapper();
 			var model = new ApiTestAllFieldTypeServerResponseModel();
-			model.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			model.SetProperties(1, 1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 			ApiTestAllFieldTypeServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.FieldBigInt.Should().Be(1);
@@ -65,7 +65,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldDateTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
-			response.FieldDecimal.Should().Be(1);
+			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
@@ -92,7 +92,7 @@ namespace TestsNS.Api.Services.Tests
 		{
 			var mapper = new ApiTestAllFieldTypeServerModelMapper();
 			var model = new ApiTestAllFieldTypeServerRequestModel();
-			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
+			model.SetProperties(1, BitConverter.GetBytes(1), true, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1m, 1, BitConverter.GetBytes(1), 1m, "A", "A", 1m, "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, "A", TimeSpan.Parse("01:00:00"), BitConverter.GetBytes(1), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), BitConverter.GetBytes(1), "A", "A");
 
 			JsonPatchDocument<ApiTestAllFieldTypeServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiTestAllFieldTypeServerRequestModel();
@@ -105,7 +105,7 @@ namespace TestsNS.Api.Services.Tests
 			response.FieldDateTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
-			response.FieldDecimal.Should().Be(1);
+			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
@@ -130,5 +130,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dfe80ebec5f3f8d896ebb0453f05f136</Hash>
+    <Hash>3fcb710301a45665db1d9731db6d39e7</Hash>
 </Codenesium>*/

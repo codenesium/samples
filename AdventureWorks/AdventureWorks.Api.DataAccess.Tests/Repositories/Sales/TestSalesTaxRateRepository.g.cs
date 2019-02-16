@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<SalesTaxRateRepository>> loggerMoc = SalesTaxRateRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 
 			SalesTaxRate entity = new SalesTaxRate();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2, 2m, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2m, 2);
 			context.Set<SalesTaxRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 
 			var entity = new SalesTaxRate();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2, 2m, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2m, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<SalesTaxRate>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 			SalesTaxRate entity = new SalesTaxRate();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2, 2m, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2m, 2);
 			context.Set<SalesTaxRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 			SalesTaxRate entity = new SalesTaxRate();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2, 2m, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2m, 2);
 			context.Set<SalesTaxRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
 			var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 			SalesTaxRate entity = new SalesTaxRate();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2, 2m, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 2m, 2);
 			context.Set<SalesTaxRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fab55e60912d72aa82197848ce14d903</Hash>
+    <Hash>130e05cec4d054ba5ec5fd72064cccbe</Hash>
 </Codenesium>*/

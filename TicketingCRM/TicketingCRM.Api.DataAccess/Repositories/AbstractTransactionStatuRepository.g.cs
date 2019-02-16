@@ -26,9 +26,20 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TransactionStatu>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TransactionStatu>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TransactionStatu> Get(int id)
@@ -79,7 +90,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table Transaction via transactionStatusId.
 		public async virtual Task<List<Transaction>> TransactionsByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Transaction>().Where(x => x.TransactionStatusId == transactionStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Transaction>();
+			return await this.Context.Set<Transaction>()
+			       .Where(x => x.TransactionStatusId == transactionStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Transaction>();
 		}
 
 		protected async Task<List<TransactionStatu>> Where(
@@ -93,7 +105,9 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<TransactionStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionStatu>();
+			return await this.Context.Set<TransactionStatu>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionStatu>();
 		}
 
 		private async Task<TransactionStatu> GetById(int id)
@@ -106,5 +120,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2641cbaacdfd2fbf076fafd0f17730a1</Hash>
+    <Hash>e3b45fd6d42529cd2a49e13ade2b7b89</Hash>
 </Codenesium>*/

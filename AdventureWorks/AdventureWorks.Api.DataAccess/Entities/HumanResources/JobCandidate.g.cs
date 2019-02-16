@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int? businessEntityID,
 			int jobCandidateID,
+			int? businessEntityID,
 			DateTime modifiedDate,
 			string resume)
 		{
-			this.BusinessEntityID = businessEntityID;
 			this.JobCandidateID = jobCandidateID;
+			this.BusinessEntityID = businessEntityID;
 			this.ModifiedDate = modifiedDate;
 			this.Resume = resume;
 		}
@@ -41,5 +41,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75a38a7c19686e04ccb5c4ed36d13823</Hash>
+    <Hash>706b1fcf8f1d91796f816b1642361df6</Hash>
 </Codenesium>*/

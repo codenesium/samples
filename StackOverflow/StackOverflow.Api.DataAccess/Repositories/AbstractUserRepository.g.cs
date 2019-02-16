@@ -26,9 +26,32 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AboutMe.StartsWith(query) ||
+				                  x.AccountId == query.ToNullableInt() ||
+				                  x.Age == query.ToNullableInt() ||
+				                  x.CreationDate == query.ToDateTime() ||
+				                  x.DisplayName.StartsWith(query) ||
+				                  x.DownVote == query.ToInt() ||
+				                  x.EmailHash.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastAccessDate == query.ToDateTime() ||
+				                  x.Location.StartsWith(query) ||
+				                  x.Reputation == query.ToInt() ||
+				                  x.UpVote == query.ToInt() ||
+				                  x.View == query.ToInt() ||
+				                  x.WebsiteUrl.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<User> Get(int id)
@@ -87,7 +110,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+			return await this.Context.Set<User>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
 		private async Task<User> GetById(int id)
@@ -100,5 +125,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b971440a7cd2fbb952dc9bed66d58755</Hash>
+    <Hash>d6eeead999a51e07258b685a544f1aad</Hash>
 </Codenesium>*/

@@ -16,11 +16,7 @@ namespace FileServiceNS.Api.Services
 
 		protected IApiBucketServerRequestModelValidator BucketModelValidator { get; private set; }
 
-		protected IBOLBucketMapper BolBucketMapper { get; private set; }
-
 		protected IDALBucketMapper DalBucketMapper { get; private set; }
-
-		protected IBOLFileMapper BolFileMapper { get; private set; }
 
 		protected IDALFileMapper DalFileMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace FileServiceNS.Api.Services
 			IMediator mediator,
 			IBucketRepository bucketRepository,
 			IApiBucketServerRequestModelValidator bucketModelValidator,
-			IBOLBucketMapper bolBucketMapper,
 			IDALBucketMapper dalBucketMapper,
-			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base()
 		{
 			this.BucketRepository = bucketRepository;
 			this.BucketModelValidator = bucketModelValidator;
-			this.BolBucketMapper = bolBucketMapper;
 			this.DalBucketMapper = dalBucketMapper;
-			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiBucketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBucketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BucketRepository.All(limit, offset);
+			List<Bucket> records = await this.BucketRepository.All(limit, offset, query);
 
-			return this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(records));
+			return this.DalBucketMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiBucketServerResponseModel> Get(int id)
 		{
-			var record = await this.BucketRepository.Get(id);
+			Bucket record = await this.BucketRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(record));
+				return this.DalBucketMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace FileServiceNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolBucketMapper.MapModelToBO(default(int), model);
-				var record = await this.BucketRepository.Create(this.DalBucketMapper.MapBOToEF(bo));
+				Bucket record = this.DalBucketMapper.MapModelToEntity(default(int), model);
+				record = await this.BucketRepository.Create(record);
 
-				var businessObject = this.DalBucketMapper.MapEFToBO(record);
-				response.SetRecord(this.BolBucketMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalBucketMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new BucketCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace FileServiceNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolBucketMapper.MapModelToBO(id, model);
-				await this.BucketRepository.Update(this.DalBucketMapper.MapBOToEF(bo));
+				Bucket record = this.DalBucketMapper.MapModelToEntity(id, model);
+				await this.BucketRepository.Update(record);
 
-				var record = await this.BucketRepository.Get(id);
+				record = await this.BucketRepository.Get(id);
 
-				var businessObject = this.DalBucketMapper.MapEFToBO(record);
-				var apiModel = this.BolBucketMapper.MapBOToModel(businessObject);
+				ApiBucketServerResponseModel apiModel = this.DalBucketMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new BucketUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBucketServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(record));
+				return this.DalBucketMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -151,7 +141,7 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.BolBucketMapper.MapBOToModel(this.DalBucketMapper.MapEFToBO(record));
+				return this.DalBucketMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -159,11 +149,11 @@ namespace FileServiceNS.Api.Services
 		{
 			List<File> records = await this.BucketRepository.FilesByBucketId(bucketId, limit, offset);
 
-			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
+			return this.DalFileMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c30e9a3ed76510984eb543dbcaf265c</Hash>
+    <Hash>e02907cb1250996f49cce650c24c01de</Hash>
 </Codenesium>*/

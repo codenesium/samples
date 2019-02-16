@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int phoneNumberTypeID,
 			DateTime modifiedDate,
-			string name,
-			int phoneNumberTypeID)
+			string name)
 		{
+			this.PhoneNumberTypeID = phoneNumberTypeID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.PhoneNumberTypeID = phoneNumberTypeID;
 		}
 
 		[Column("ModifiedDate")]
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>96d0634b47713809b61d07e3e8b3df8b</Hash>
+    <Hash>56075edd943f49a9a0d073e52c885212</Hash>
 </Codenesium>*/

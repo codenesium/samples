@@ -1,3 +1,4 @@
+using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bdee1d2d85f675e38443997dbd89b81f</Hash>
+    <Hash>166d21bc90d3f5954b3cc53b946c08ee</Hash>
 </Codenesium>*/

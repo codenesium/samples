@@ -12,17 +12,13 @@ namespace FileServiceNS.Api.Services
 			IMediator mediator,
 			IBucketRepository bucketRepository,
 			IApiBucketServerRequestModelValidator bucketModelValidator,
-			IBOLBucketMapper bolBucketMapper,
 			IDALBucketMapper dalBucketMapper,
-			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base(logger,
 			       mediator,
 			       bucketRepository,
 			       bucketModelValidator,
-			       bolBucketMapper,
 			       dalBucketMapper,
-			       bolFileMapper,
 			       dalFileMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9223e861ef45e6253e02ecc0e948ea9c</Hash>
+    <Hash>e2f820804228dc230510a02f5bcefed6</Hash>
 </Codenesium>*/

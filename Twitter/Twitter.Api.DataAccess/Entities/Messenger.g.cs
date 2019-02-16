@@ -14,17 +14,17 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime? date,
 			int? fromUserId,
-			int id,
 			int? messageId,
 			TimeSpan? time,
 			int toUserId,
 			int? userId)
 		{
+			this.Id = id;
 			this.Date = date;
 			this.FromUserId = fromUserId;
-			this.Id = id;
 			this.MessageId = messageId;
 			this.Time = time;
 			this.ToUserId = toUserId;
@@ -54,31 +54,31 @@ namespace TwitterNS.Api.DataAccess
 		public virtual int? UserId { get; private set; }
 
 		[ForeignKey("MessageId")]
-		public virtual Message MessageNavigation { get; private set; }
+		public virtual Message MessageIdNavigation { get; private set; }
 
-		public void SetMessageNavigation(Message item)
+		public void SetMessageIdNavigation(Message item)
 		{
-			this.MessageNavigation = item;
+			this.MessageIdNavigation = item;
 		}
 
 		[ForeignKey("ToUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User ToUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetToUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.ToUserIdNavigation = item;
 		}
 
 		[ForeignKey("UserId")]
-		public virtual User User1Navigation { get; private set; }
+		public virtual User UserIdNavigation { get; private set; }
 
-		public void SetUser1Navigation(User item)
+		public void SetUserIdNavigation(User item)
 		{
-			this.User1Navigation = item;
+			this.UserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9053f062fc8af7e60394d941c8563e56</Hash>
+    <Hash>44a37a936a03600f68722b3c3ae969ba</Hash>
 </Codenesium>*/

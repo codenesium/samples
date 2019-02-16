@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bolLocationMapper,
 			IDALLocationMapper dalLocationMapper)
 			: base(logger,
 			       mediator,
 			       locationRepository,
 			       locationModelValidator,
-			       bolLocationMapper,
 			       dalLocationMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff17bfff91067ce2dd624719c4e08c04</Hash>
+    <Hash>1daaf55e6592c5f0163eb345bcce7762</Hash>
 </Codenesium>*/

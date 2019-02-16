@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<Retweet> Get(int id);
 
-		Task<List<Retweet>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Retweet>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Retweet>> ByRetwitterUserId(int? retwitterUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>77e090075a781ce79337ca39e31637da</Hash>
+    <Hash>624941e54e2b632f28f161e16094e9ed</Hash>
 </Codenesium>*/

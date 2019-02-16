@@ -12,21 +12,15 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IApiUnitMeasureServerRequestModelValidator unitMeasureModelValidator,
-			IBOLUnitMeasureMapper bolUnitMeasureMapper,
 			IDALUnitMeasureMapper dalUnitMeasureMapper,
-			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper,
-			IBOLProductMapper bolProductMapper,
 			IDALProductMapper dalProductMapper)
 			: base(logger,
 			       mediator,
 			       unitMeasureRepository,
 			       unitMeasureModelValidator,
-			       bolUnitMeasureMapper,
 			       dalUnitMeasureMapper,
-			       bolBillOfMaterialMapper,
 			       dalBillOfMaterialMapper,
-			       bolProductMapper,
 			       dalProductMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5be951c4804f00ced4599570b5ca6937</Hash>
+    <Hash>605a8b5a31987bd7503e75f0fa8cd89b</Hash>
 </Codenesium>*/

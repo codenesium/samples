@@ -22,8 +22,7 @@ namespace AdventureWorksNS.Api.Services
 			                       request.MinQty,
 			                       request.ModifiedDate,
 			                       request.Rowguid,
-			                       request.StartDate,
-			                       request.Type);
+			                       request.StartDate);
 			return response;
 		}
 
@@ -40,8 +39,7 @@ namespace AdventureWorksNS.Api.Services
 				response.MinQty,
 				response.ModifiedDate,
 				response.Rowguid,
-				response.StartDate,
-				response.Type);
+				response.StartDate);
 			return request;
 		}
 
@@ -58,8 +56,7 @@ namespace AdventureWorksNS.Api.Services
 				response.MinQty,
 				response.ModifiedDate,
 				response.Rowguid,
-				response.StartDate,
-				response.Type);
+				response.StartDate);
 			return request;
 		}
 
@@ -75,12 +72,11 @@ namespace AdventureWorksNS.Api.Services
 			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
 			patch.Replace(x => x.Rowguid, model.Rowguid);
 			patch.Replace(x => x.StartDate, model.StartDate);
-			patch.Replace(x => x.Type, model.Type);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c5b1e9fda5f3ce443c4f84bf17ddc2b</Hash>
+    <Hash>4e6b2f7af3681d088554593d86cf60b7</Hash>
 </Codenesium>*/

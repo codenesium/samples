@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			Location entity = new Location();
-			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new LocationRepository(loggerMoc.Object, context);
 
 			var entity = new Location();
-			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Location>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = LocationRepositoryMoc.GetContext();
 			var repository = new LocationRepository(loggerMoc.Object, context);
 			Location entity = new Location();
-			entity.SetProperties(2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Location>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5de4c8e25a3bc98a31dd822344117a8c</Hash>
+    <Hash>6190c033a8f53e92fd81e3479d64983e</Hash>
 </Codenesium>*/

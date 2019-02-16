@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ITransactionHistoryRepository transactionHistoryRepository,
 			IApiTransactionHistoryServerRequestModelValidator transactionHistoryModelValidator,
-			IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
 			IDALTransactionHistoryMapper dalTransactionHistoryMapper)
 			: base(logger,
 			       mediator,
 			       transactionHistoryRepository,
 			       transactionHistoryModelValidator,
-			       bolTransactionHistoryMapper,
 			       dalTransactionHistoryMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4356d7f44d10b6a54d9b24cad825265</Hash>
+    <Hash>19f90f04fce66a0015623c52d5f1596f</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSpecialOfferServerModelMapper();
 			var model = new ApiSpecialOfferServerRequestModel();
-			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiSpecialOfferServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.Category.Should().Be("A");
@@ -28,7 +28,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -36,7 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSpecialOfferServerModelMapper();
 			var model = new ApiSpecialOfferServerResponseModel();
-			model.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			model.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiSpecialOfferServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.Category.Should().Be("A");
@@ -48,7 +47,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -56,7 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSpecialOfferServerModelMapper();
 			var model = new ApiSpecialOfferServerRequestModel();
-			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			JsonPatchDocument<ApiSpecialOfferServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiSpecialOfferServerRequestModel();
@@ -70,11 +68,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8e3514d29e2cf35a1eb06acbc6d6e28</Hash>
+    <Hash>7674f2d20ad09caa59cad18c80d9904a</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCustomerServerResponseModel> Get(int customerID);
 
-		Task<List<ApiCustomerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiCustomerServerResponseModel> ByAccountNumber(string accountNumber);
 
@@ -31,5 +31,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91989ba8aae7970e8e4a749959deeda2</Hash>
+    <Hash>a0adb07114663b5f5e9c947e8f65b7ee</Hash>
 </Codenesium>*/

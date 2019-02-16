@@ -14,16 +14,16 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int? bountyAmount,
 			DateTime creationDate,
-			int id,
 			int postId,
 			int? userId,
 			int voteTypeId)
 		{
+			this.Id = id;
 			this.BountyAmount = bountyAmount;
 			this.CreationDate = creationDate;
-			this.Id = id;
 			this.PostId = postId;
 			this.UserId = userId;
 			this.VoteTypeId = voteTypeId;
@@ -51,5 +51,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58d0c2c9cc20ce3a9c4569fadef78b53</Hash>
+    <Hash>fe99a5f7f084e9b0e4c0625d936c3e74</Hash>
 </Codenesium>*/

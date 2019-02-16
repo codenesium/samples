@@ -12,13 +12,11 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IReplyRepository replyRepository,
 			IApiReplyServerRequestModelValidator replyModelValidator,
-			IBOLReplyMapper bolReplyMapper,
 			IDALReplyMapper dalReplyMapper)
 			: base(logger,
 			       mediator,
 			       replyRepository,
 			       replyModelValidator,
-			       bolReplyMapper,
 			       dalReplyMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>416b2c75a74b702a3efed01d8f4a3b9a</Hash>
+    <Hash>7b848393e6a30a36fa07800a765db131</Hash>
 </Codenesium>*/

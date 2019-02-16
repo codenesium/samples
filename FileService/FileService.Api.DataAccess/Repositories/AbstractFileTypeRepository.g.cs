@@ -26,9 +26,20 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<FileType> Get(int id)
@@ -79,7 +90,8 @@ namespace FileServiceNS.Api.DataAccess
 		// Foreign key reference to this table File via fileTypeId.
 		public async virtual Task<List<File>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<File>().Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
+			return await this.Context.Set<File>()
+			       .Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
 		}
 
 		protected async Task<List<FileType>> Where(
@@ -93,7 +105,9 @@ namespace FileServiceNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
+			return await this.Context.Set<FileType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
 		}
 
 		private async Task<FileType> GetById(int id)
@@ -106,5 +120,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>308d916187673c1aa8104c3445b4e98f</Hash>
+    <Hash>6bfcce5e1a80fea0b4b93e45d6b394f0</Hash>
 </Codenesium>*/

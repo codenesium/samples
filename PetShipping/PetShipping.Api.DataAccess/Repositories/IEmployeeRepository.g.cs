@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<Employee> Get(int id);
 
-		Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<CustomerCommunication>> CustomerCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0);
 
@@ -26,5 +26,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd9c6b9e8de53ac1c94c133b5f4390f1</Hash>
+    <Hash>81dbe33cd5db45f7bf13a8ac29c48e0b</Hash>
 </Codenesium>*/

@@ -26,9 +26,29 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Address1.StartsWith(query) ||
+				                  x.Address2.StartsWith(query) ||
+				                  x.CityId == query.ToInt() ||
+				                  x.Date == query.ToDateTime() ||
+				                  x.Description.StartsWith(query) ||
+				                  x.EndDate == query.ToDateTime() ||
+				                  x.Facebook.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.StartDate == query.ToDateTime() ||
+				                  x.Website.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Event> Get(int id)
@@ -85,7 +105,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to table City via cityId.
 		public async virtual Task<City> CityByCityId(int cityId)
 		{
-			return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
+			return await this.Context.Set<City>()
+			       .SingleOrDefaultAsync(x => x.Id == cityId);
 		}
 
 		protected async Task<List<Event>> Where(
@@ -99,7 +120,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
+			return await this.Context.Set<Event>()
+			       .Include(x => x.CityIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
 		private async Task<Event> GetById(int id)
@@ -112,5 +136,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5f5fdd113031a219fd370426d292b880</Hash>
+    <Hash>1b62200b467d09cce5b9246efc3b37fc</Hash>
 </Codenesium>*/

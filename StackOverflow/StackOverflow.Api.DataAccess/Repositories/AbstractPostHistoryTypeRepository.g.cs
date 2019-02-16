@@ -26,9 +26,20 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PostHistoryType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PostHistoryType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Type.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PostHistoryType> Get(int id)
@@ -87,7 +98,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PostHistoryType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistoryType>();
+			return await this.Context.Set<PostHistoryType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistoryType>();
 		}
 
 		private async Task<PostHistoryType> GetById(int id)
@@ -100,5 +113,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>93486ebea48f423ed99c592d9b31f592</Hash>
+    <Hash>de26b61e4e87f00f72d80b0dcad261c2</Hash>
 </Codenesium>*/

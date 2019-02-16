@@ -12,17 +12,13 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolCountryMapper,
 			IDALCountryMapper dalCountryMapper,
-			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper)
 			: base(logger,
 			       mediator,
 			       countryRepository,
 			       countryModelValidator,
-			       bolCountryMapper,
 			       dalCountryMapper,
-			       bolProvinceMapper,
 			       dalProvinceMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b84500434d4da874dfca76c98818e96</Hash>
+    <Hash>1a9ce92412b00513d2030c364a42f158</Hash>
 </Codenesium>*/

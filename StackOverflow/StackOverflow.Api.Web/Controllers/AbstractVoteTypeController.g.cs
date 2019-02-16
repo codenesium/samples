@@ -46,15 +46,15 @@ namespace StackOverflowNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiVoteTypeServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiVoteTypeServerResponseModel> response = await this.VoteTypeService.All(query.Limit, query.Offset);
+			List<ApiVoteTypeServerResponseModel> response = await this.VoteTypeService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f84766e1ea3b217baa0e40236db2bb34</Hash>
+    <Hash>605db6e925f2cb71b793848cf96140b9</Hash>
 </Codenesium>*/

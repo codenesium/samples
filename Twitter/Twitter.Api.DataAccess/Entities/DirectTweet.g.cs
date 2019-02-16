@@ -14,17 +14,17 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int tweetId,
 			string content,
 			DateTime date,
 			int taggedUserId,
-			TimeSpan time,
-			int tweetId)
+			TimeSpan time)
 		{
+			this.TweetId = tweetId;
 			this.Content = content;
 			this.Date = date;
 			this.TaggedUserId = taggedUserId;
 			this.Time = time;
-			this.TweetId = tweetId;
 		}
 
 		[MaxLength(140)]
@@ -45,15 +45,15 @@ namespace TwitterNS.Api.DataAccess
 		public virtual int TweetId { get; private set; }
 
 		[ForeignKey("TaggedUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User TaggedUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetTaggedUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.TaggedUserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74c87bcc17616355d889ea4585b0c0ee</Hash>
+    <Hash>f506bb88248fe7d0d1fe7ce8657eefea</Hash>
 </Codenesium>*/

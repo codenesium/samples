@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ScrapReason> Get(short scrapReasonID);
 
-		Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ScrapReason> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe89617f3dd69a0b403d49a2f881c297</Hash>
+    <Hash>c744532154bc0b28c994deea7d312c0c</Hash>
 </Codenesium>*/

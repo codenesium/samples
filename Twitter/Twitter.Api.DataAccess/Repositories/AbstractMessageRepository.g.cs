@@ -26,9 +26,21 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Message>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Message>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Content.StartsWith(query) ||
+				                  x.MessageId == query.ToInt() ||
+				                  x.SenderUserId == query.ToNullableInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Message> Get(int messageId)
@@ -85,13 +97,15 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to this table Messenger via messageId.
 		public async virtual Task<List<Messenger>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Messenger>().Where(x => x.MessageId == messageId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
+			return await this.Context.Set<Messenger>()
+			       .Where(x => x.MessageId == messageId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
 		// Foreign key reference to table User via senderUserId.
 		public async virtual Task<User> UserBySenderUserId(int? senderUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == senderUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == senderUserId);
 		}
 
 		protected async Task<List<Message>> Where(
@@ -105,7 +119,10 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.MessageId;
 			}
 
-			return await this.Context.Set<Message>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Message>();
+			return await this.Context.Set<Message>()
+			       .Include(x => x.SenderUserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
 		private async Task<Message> GetById(int messageId)
@@ -118,5 +135,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0d4193f02736ad399927b4f358f68701</Hash>
+    <Hash>710c81f8841586be055db61ec4d6e05b</Hash>
 </Codenesium>*/

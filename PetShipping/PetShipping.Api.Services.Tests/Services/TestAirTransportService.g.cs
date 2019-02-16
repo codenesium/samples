@@ -26,18 +26,17 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAirTransportRepository>();
 			var records = new List<AirTransport>();
 			records.Add(new AirTransport());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new AirTransportService(mock.LoggerMock.Object,
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			List<ApiAirTransportServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			ApiAirTransportServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			ApiAirTransportServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			CreateResponse<ApiAirTransportServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			CreateResponse<ApiAirTransportServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			UpdateResponse<ApiAirTransportServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			UpdateResponse<ApiAirTransportServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.AirTransportModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b75d9d2729fb40a673079156faa27863</Hash>
+    <Hash>8b712132f4609327fc3b7e29ff7d5bfd</Hash>
 </Codenesium>*/

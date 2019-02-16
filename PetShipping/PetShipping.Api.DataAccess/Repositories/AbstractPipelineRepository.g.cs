@@ -26,9 +26,21 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Pipeline>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Pipeline>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.PipelineStatusId == query.ToInt() ||
+				                  x.SaleId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Pipeline> Get(int id)
@@ -79,7 +91,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table PipelineStatu via pipelineStatusId.
 		public async virtual Task<PipelineStatu> PipelineStatuByPipelineStatusId(int pipelineStatusId)
 		{
-			return await this.Context.Set<PipelineStatu>().SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
+			return await this.Context.Set<PipelineStatu>()
+			       .SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
 		}
 
 		protected async Task<List<Pipeline>> Where(
@@ -93,7 +106,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Pipeline>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pipeline>();
+			return await this.Context.Set<Pipeline>()
+			       .Include(x => x.PipelineStatusIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pipeline>();
 		}
 
 		private async Task<Pipeline> GetById(int id)
@@ -106,5 +122,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d7a8632a4249260980d93608d38ddce</Hash>
+    <Hash>bff0ed0a4114fa2966e4f766423ed0ae</Hash>
 </Codenesium>*/

@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IDepartmentRepository departmentRepository,
 			IApiDepartmentServerRequestModelValidator departmentModelValidator,
-			IBOLDepartmentMapper bolDepartmentMapper,
 			IDALDepartmentMapper dalDepartmentMapper)
 			: base(logger,
 			       mediator,
 			       departmentRepository,
 			       departmentModelValidator,
-			       bolDepartmentMapper,
 			       dalDepartmentMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb5e452e16af504f7ac3c0168f883c70</Hash>
+    <Hash>d9a95b09f112af2fde04024f159f89e1</Hash>
 </Codenesium>*/

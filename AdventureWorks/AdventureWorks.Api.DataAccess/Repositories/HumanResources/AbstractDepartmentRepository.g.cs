@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Department>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Department>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DepartmentID == query.ToShort() ||
+				                  x.GroupName.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Department> Get(short departmentID)
@@ -106,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bcd09f2a219b5828a59bbd690bc252ab</Hash>
+    <Hash>5c132b8ca233ddf33537814cbc677b9e</Hash>
 </Codenesium>*/

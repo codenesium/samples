@@ -47,10 +47,19 @@ namespace ESPIOTNS.Api.DataAccess
 			Mock<ILogger<DeviceRepository>> loggerMoc = DeviceRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DeviceRepositoryMoc.GetContext();
 			var repository = new DeviceRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<DeviceRepository>> loggerMoc = DeviceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DeviceRepositoryMoc.GetContext();
+			var repository = new DeviceRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace ESPIOTNS.Api.DataAccess
 			var repository = new DeviceRepository(loggerMoc.Object, context);
 
 			Device entity = new Device();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Device>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace ESPIOTNS.Api.DataAccess
 			var repository = new DeviceRepository(loggerMoc.Object, context);
 
 			var entity = new Device();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			await repository.Create(entity);
 
 			var records = await context.Set<Device>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace ESPIOTNS.Api.DataAccess
 			ApplicationDbContext context = DeviceRepositoryMoc.GetContext();
 			var repository = new DeviceRepository(loggerMoc.Object, context);
 			Device entity = new Device();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Device>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace ESPIOTNS.Api.DataAccess
 			ApplicationDbContext context = DeviceRepositoryMoc.GetContext();
 			var repository = new DeviceRepository(loggerMoc.Object, context);
 			Device entity = new Device();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Device>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace ESPIOTNS.Api.DataAccess
 			ApplicationDbContext context = DeviceRepositoryMoc.GetContext();
 			var repository = new DeviceRepository(loggerMoc.Object, context);
 			Device entity = new Device();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<Device>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb03fff074696bcbebcfd4e51ae3bb71</Hash>
+    <Hash>af37eab038aac90c199a4bb2b1eff52b</Hash>
 </Codenesium>*/

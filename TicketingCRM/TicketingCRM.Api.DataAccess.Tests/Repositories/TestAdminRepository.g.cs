@@ -47,10 +47,19 @@ namespace TicketingCRMNS.Api.DataAccess
 			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
+			var repository = new AdminRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new AdminRepository(loggerMoc.Object, context);
 
 			Admin entity = new Admin();
-			entity.SetProperties("B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B");
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new AdminRepository(loggerMoc.Object, context);
 
 			var entity = new Admin();
-			entity.SetProperties("B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Admin>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties("B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B");
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties("B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B");
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = AdminRepositoryMoc.GetContext();
 			var repository = new AdminRepository(loggerMoc.Object, context);
 			Admin entity = new Admin();
-			entity.SetProperties("B", "B", 2, "B", "B", "B", "B");
+			entity.SetProperties(default(int), "B", "B", "B", "B", "B", "B");
 			context.Set<Admin>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c70bc11710a0d8519552cf57d69b6767</Hash>
+    <Hash>71420e63623c4d5d22e1e391f255b415</Hash>
 </Codenesium>*/

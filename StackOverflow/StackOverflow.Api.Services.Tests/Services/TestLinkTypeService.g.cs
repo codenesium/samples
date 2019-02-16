@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkTypeRepository>();
 			var records = new List<LinkType>();
 			records.Add(new LinkType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new LinkTypeService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			List<ApiLinkTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			ApiLinkTypeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			ApiLinkTypeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			CreateResponse<ApiLinkTypeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			CreateResponse<ApiLinkTypeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			UpdateResponse<ApiLinkTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			UpdateResponse<ApiLinkTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LinkTypeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLinkTypeMapperMock,
 			                                  mock.DALMapperMockFactory.DALLinkTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>477f5cdb84f42ce1b9684b395fdd418b</Hash>
+    <Hash>206568470f7f5e8a4f8c84571b3ebbf4</Hash>
 </Codenesium>*/

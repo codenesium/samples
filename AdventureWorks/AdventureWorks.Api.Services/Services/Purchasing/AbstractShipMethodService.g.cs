@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiShipMethodServerRequestModelValidator ShipMethodModelValidator { get; private set; }
 
-		protected IBOLShipMethodMapper BolShipMethodMapper { get; private set; }
-
 		protected IDALShipMethodMapper DalShipMethodMapper { get; private set; }
-
-		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
 		protected IDALPurchaseOrderHeaderMapper DalPurchaseOrderHeaderMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodServerRequestModelValidator shipMethodModelValidator,
-			IBOLShipMethodMapper bolShipMethodMapper,
 			IDALShipMethodMapper dalShipMethodMapper,
-			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base()
 		{
 			this.ShipMethodRepository = shipMethodRepository;
 			this.ShipMethodModelValidator = shipMethodModelValidator;
-			this.BolShipMethodMapper = bolShipMethodMapper;
 			this.DalShipMethodMapper = dalShipMethodMapper;
-			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
 			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiShipMethodServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiShipMethodServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShipMethodRepository.All(limit, offset);
+			var records = await this.ShipMethodRepository.All(limit, offset, query);
 
-			return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(records));
+			return this.DalShipMethodMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiShipMethodServerResponseModel> Get(int shipMethodID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
+				return this.DalShipMethodMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolShipMethodMapper.MapModelToBO(default(int), model);
-				var record = await this.ShipMethodRepository.Create(this.DalShipMethodMapper.MapBOToEF(bo));
+				var bo = this.DalShipMethodMapper.MapModelToBO(default(int), model);
+				var record = await this.ShipMethodRepository.Create(bo);
 
-				var businessObject = this.DalShipMethodMapper.MapEFToBO(record);
-				response.SetRecord(this.BolShipMethodMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalShipMethodMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ShipMethodCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolShipMethodMapper.MapModelToBO(shipMethodID, model);
-				await this.ShipMethodRepository.Update(this.DalShipMethodMapper.MapBOToEF(bo));
+				var bo = this.DalShipMethodMapper.MapModelToBO(shipMethodID, model);
+				await this.ShipMethodRepository.Update(bo);
 
 				var record = await this.ShipMethodRepository.Get(shipMethodID);
 
-				var businessObject = this.DalShipMethodMapper.MapEFToBO(record);
-				var apiModel = this.BolShipMethodMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalShipMethodMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ShipMethodUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShipMethodServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
+				return this.DalShipMethodMapper.MapBOToModel(record);
 			}
 		}
 
@@ -151,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
+				return this.DalShipMethodMapper.MapBOToModel(record);
 			}
 		}
 
@@ -159,11 +149,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeadersByShipMethodID(shipMethodID, limit, offset);
 
-			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.DalPurchaseOrderHeaderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa2aa19c22a3869d8efdd6d8b41037d5</Hash>
+    <Hash>ede4316b21ca9a21133dabbea2fe30b3</Hash>
 </Codenesium>*/

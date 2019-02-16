@@ -37,8 +37,34 @@ namespace NebulaNS.Api.Client
 			this.TimeoutInSecond = timeoutInSecond;
 
 			this.AssignedMachineIdEntity = nameof(ApiResponse.Machines);
+
 			this.ChainIdEntity = nameof(ApiResponse.Chains);
+
 			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatuses);
+		}
+
+		[JsonProperty]
+		public ApiMachineClientResponseModel AssignedMachineIdNavigation { get; private set; }
+
+		public void SetAssignedMachineIdNavigation(ApiMachineClientResponseModel value)
+		{
+			this.AssignedMachineIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiChainClientResponseModel ChainIdNavigation { get; private set; }
+
+		public void SetChainIdNavigation(ApiChainClientResponseModel value)
+		{
+			this.ChainIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiLinkStatusClientResponseModel LinkStatusIdNavigation { get; private set; }
+
+		public void SetLinkStatusIdNavigation(ApiLinkStatusClientResponseModel value)
+		{
+			this.LinkStatusIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -92,5 +118,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bd0d610541272dd35aac141a55a995e9</Hash>
+    <Hash>ea769d754543da89fed760ccc243d54f</Hash>
 </Codenesium>*/

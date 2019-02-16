@@ -19,15 +19,15 @@ namespace TwitterNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var directTweetItem1 = new DirectTweet();
-			directTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
+			directTweetItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
 			this.Context.DirectTweets.Add(directTweetItem1);
 
 			var followerItem1 = new Follower();
-			followerItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", 1, "A");
+			followerItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A", "A");
 			this.Context.Followers.Add(followerItem1);
 
 			var followingItem1 = new Following();
-			followingItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
+			followingItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			this.Context.Followings.Add(followingItem1);
 
 			var locationItem1 = new Location();
@@ -35,31 +35,31 @@ namespace TwitterNS.Api.DataAccess
 			this.Context.Locations.Add(locationItem1);
 
 			var messageItem1 = new Message();
-			messageItem1.SetProperties("A", 1, 1);
+			messageItem1.SetProperties(1, "A", 1);
 			this.Context.Messages.Add(messageItem1);
 
 			var messengerItem1 = new Messenger();
-			messengerItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"), 1, 1);
+			messengerItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"), 1, 1);
 			this.Context.Messengers.Add(messengerItem1);
 
 			var quoteTweetItem1 = new QuoteTweet();
-			quoteTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, TimeSpan.Parse("01:00:00"));
+			quoteTweetItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
 			this.Context.QuoteTweets.Add(quoteTweetItem1);
 
 			var replyItem1 = new Reply();
-			replyItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"));
+			replyItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"));
 			this.Context.Replies.Add(replyItem1);
 
 			var retweetItem1 = new Retweet();
-			retweetItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, TimeSpan.Parse("01:00:00"), 1);
+			retweetItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
 			this.Context.Retweets.Add(retweetItem1);
 
 			var tweetItem1 = new Tweet();
-			tweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1, 1);
+			tweetItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("01:00:00"), 1);
 			this.Context.Tweets.Add(tweetItem1);
 
 			var userItem1 = new User();
-			userItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", 1, "A", "A");
+			userItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", 1, "A", "A", "A", "A", "A");
 			this.Context.Users.Add(userItem1);
 
 			await this.Context.SaveChangesAsync();
@@ -68,5 +68,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5886cb9354c703fe1a7563871f81b7e4</Hash>
+    <Hash>696a6cf1625a4c742fbbf7436aa27a24</Hash>
 </Codenesium>*/

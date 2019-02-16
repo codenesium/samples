@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiAddressTypeServerResponseModel> Get(int addressTypeID);
 
-		Task<List<ApiAddressTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAddressTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiAddressTypeServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15d5c8deb9647072387ba3809a579ecc</Hash>
+    <Hash>1c58fcdf3195240aaa39ef83ccdf760f</Hash>
 </Codenesium>*/

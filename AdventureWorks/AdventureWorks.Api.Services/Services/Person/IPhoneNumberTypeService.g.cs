@@ -18,10 +18,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiPhoneNumberTypeServerResponseModel> Get(int phoneNumberTypeID);
 
-		Task<List<ApiPhoneNumberTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPhoneNumberTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>55a8c53b13853620d579e9c9bd4ae20e</Hash>
+    <Hash>930f4649e8ae6411828e7d5fe558681f</Hash>
 </Codenesium>*/

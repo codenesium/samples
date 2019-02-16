@@ -26,9 +26,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Comment.StartsWith(query) ||
+				                  x.EmailAddress.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.ProductID == query.ToInt() ||
+				                  x.ProductReviewID == query.ToInt() ||
+				                  x.Rating == query.ToInt() ||
+				                  x.ReviewDate == query.ToDateTime() ||
+				                  x.ReviewerName.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ProductReview> Get(int productReviewID)
@@ -106,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4f71729bab54ae740334db081899f5b</Hash>
+    <Hash>9b346ea99795d1601693b25c90ce6b24</Hash>
 </Codenesium>*/

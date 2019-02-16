@@ -26,28 +26,22 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPipelineStepRepository>();
 			var records = new List<PipelineStep>();
 			records.Add(new PipelineStep());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new PipelineStepService(mock.LoggerMock.Object,
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -60,17 +54,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			ApiPipelineStepServerResponseModel response = await service.Get(default(int));
@@ -88,17 +76,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			ApiPipelineStepServerResponseModel response = await service.Get(default(int));
@@ -117,17 +99,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			CreateResponse<ApiPipelineStepServerResponseModel> response = await service.Create(model);
@@ -150,17 +126,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			CreateResponse<ApiPipelineStepServerResponseModel> response = await service.Create(model);
@@ -182,17 +152,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			UpdateResponse<ApiPipelineStepServerResponseModel> response = await service.Update(default(int), model);
@@ -216,17 +180,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			UpdateResponse<ApiPipelineStepServerResponseModel> response = await service.Update(default(int), model);
@@ -247,17 +205,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -280,17 +232,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -312,17 +258,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiHandlerPipelineStepServerResponseModel> response = await service.HandlerPipelineStepsByPipelineStepId(default(int));
@@ -340,17 +280,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiHandlerPipelineStepServerResponseModel> response = await service.HandlerPipelineStepsByPipelineStepId(default(int));
@@ -370,17 +304,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiOtherTransportServerResponseModel> response = await service.OtherTransportsByPipelineStepId(default(int));
@@ -398,17 +326,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiOtherTransportServerResponseModel> response = await service.OtherTransportsByPipelineStepId(default(int));
@@ -428,17 +350,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepDestinationServerResponseModel> response = await service.PipelineStepDestinationsByPipelineStepId(default(int));
@@ -456,17 +372,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepDestinationServerResponseModel> response = await service.PipelineStepDestinationsByPipelineStepId(default(int));
@@ -486,17 +396,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepNoteServerResponseModel> response = await service.PipelineStepNotesByPipelineStepId(default(int));
@@ -514,17 +418,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepNoteServerResponseModel> response = await service.PipelineStepNotesByPipelineStepId(default(int));
@@ -544,17 +442,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepStepRequirementServerResponseModel> response = await service.PipelineStepStepRequirementsByPipelineStepId(default(int));
@@ -572,17 +464,11 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
 			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
 			List<ApiPipelineStepStepRequirementServerResponseModel> response = await service.PipelineStepStepRequirementsByPipelineStepId(default(int));
@@ -594,5 +480,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>33d28d9a0a93f277a8e4ec4027783faf</Hash>
+    <Hash>d3d346929d3e2037a3a4c8c2239f0422</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		Task<File> Get(int id);
 
-		Task<List<File>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<File>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Bucket> BucketByBucketId(int? bucketId);
 
@@ -24,5 +24,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>257af16483c5bd384ac41ef43fb653d4</Hash>
+    <Hash>6826aa2fbb3c8bf6af6de29600f3638c</Hash>
 </Codenesium>*/

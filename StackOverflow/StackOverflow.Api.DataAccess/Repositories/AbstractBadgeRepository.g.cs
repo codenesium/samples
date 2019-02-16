@@ -26,9 +26,22 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Badge>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Badge>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Date == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Badge> Get(int id)
@@ -87,7 +100,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Badge>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Badge>();
+			return await this.Context.Set<Badge>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Badge>();
 		}
 
 		private async Task<Badge> GetById(int id)
@@ -100,5 +115,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7da602a5997d273af607d242e56c921c</Hash>
+    <Hash>5db4c14bbde386da306b093a97e313c8</Hash>
 </Codenesium>*/

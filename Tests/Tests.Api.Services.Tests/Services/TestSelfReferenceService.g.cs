@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
 			var records = new List<SelfReference>();
 			records.Add(new SelfReference());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SelfReferenceService(mock.LoggerMock.Object,
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			List<ApiSelfReferenceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			ApiSelfReferenceServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			ApiSelfReferenceServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			CreateResponse<ApiSelfReferenceServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			CreateResponse<ApiSelfReferenceServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			UpdateResponse<ApiSelfReferenceServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			UpdateResponse<ApiSelfReferenceServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			List<ApiSelfReferenceServerResponseModel> response = await service.SelfReferencesBySelfReferenceId(default(int));
@@ -240,7 +230,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			List<ApiSelfReferenceServerResponseModel> response = await service.SelfReferencesBySelfReferenceId(default(int));
@@ -260,7 +249,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			List<ApiSelfReferenceServerResponseModel> response = await service.SelfReferencesBySelfReferenceId2(default(int));
@@ -278,7 +266,6 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
 			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
 
 			List<ApiSelfReferenceServerResponseModel> response = await service.SelfReferencesBySelfReferenceId2(default(int));
@@ -290,5 +277,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fa3ccdc9560e0d22ad14f6982fca0769</Hash>
+    <Hash>3261ead75f8ba986d62b32c297503843</Hash>
 </Codenesium>*/

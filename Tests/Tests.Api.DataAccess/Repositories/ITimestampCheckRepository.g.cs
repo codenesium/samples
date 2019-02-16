@@ -15,10 +15,10 @@ namespace TestsNS.Api.DataAccess
 
 		Task<TimestampCheck> Get(int id);
 
-		Task<List<TimestampCheck>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<TimestampCheck>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3388e9b4739b1c8ea0c9e7c1985567cc</Hash>
+    <Hash>a52a195c55a55b36fb00705d597bcac8</Hash>
 </Codenesium>*/

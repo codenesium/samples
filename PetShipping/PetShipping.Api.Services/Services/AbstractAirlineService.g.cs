@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiAirlineServerRequestModelValidator AirlineModelValidator { get; private set; }
 
-		protected IBOLAirlineMapper BolAirlineMapper { get; private set; }
-
 		protected IDALAirlineMapper DalAirlineMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IAirlineRepository airlineRepository,
 			IApiAirlineServerRequestModelValidator airlineModelValidator,
-			IBOLAirlineMapper bolAirlineMapper,
 			IDALAirlineMapper dalAirlineMapper)
 			: base()
 		{
 			this.AirlineRepository = airlineRepository;
 			this.AirlineModelValidator = airlineModelValidator;
-			this.BolAirlineMapper = bolAirlineMapper;
 			this.DalAirlineMapper = dalAirlineMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAirlineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAirlineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AirlineRepository.All(limit, offset);
+			List<Airline> records = await this.AirlineRepository.All(limit, offset, query);
 
-			return this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(records));
+			return this.DalAirlineMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAirlineServerResponseModel> Get(int id)
 		{
-			var record = await this.AirlineRepository.Get(id);
+			Airline record = await this.AirlineRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolAirlineMapper.MapBOToModel(this.DalAirlineMapper.MapEFToBO(record));
+				return this.DalAirlineMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAirlineMapper.MapModelToBO(default(int), model);
-				var record = await this.AirlineRepository.Create(this.DalAirlineMapper.MapBOToEF(bo));
+				Airline record = this.DalAirlineMapper.MapModelToEntity(default(int), model);
+				record = await this.AirlineRepository.Create(record);
 
-				var businessObject = this.DalAirlineMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAirlineMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAirlineMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AirlineCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAirlineMapper.MapModelToBO(id, model);
-				await this.AirlineRepository.Update(this.DalAirlineMapper.MapBOToEF(bo));
+				Airline record = this.DalAirlineMapper.MapModelToEntity(id, model);
+				await this.AirlineRepository.Update(record);
 
-				var record = await this.AirlineRepository.Get(id);
+				record = await this.AirlineRepository.Get(id);
 
-				var businessObject = this.DalAirlineMapper.MapEFToBO(record);
-				var apiModel = this.BolAirlineMapper.MapBOToModel(businessObject);
+				ApiAirlineServerResponseModel apiModel = this.DalAirlineMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AirlineUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAirlineServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8dd09fc1ca5669a4c2830473e80d8172</Hash>
+    <Hash>a961da79e91ffb9cbf3fc5baa1cea59c</Hash>
 </Codenesium>*/

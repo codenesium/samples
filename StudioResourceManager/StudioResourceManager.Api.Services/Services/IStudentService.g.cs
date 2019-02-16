@@ -18,16 +18,14 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiStudentServerResponseModel> Get(int id);
 
-		Task<List<ApiStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiStudentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiStudentServerResponseModel>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiStudentServerResponseModel>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiStudentServerResponseModel>> ByEventId(int studentId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ad63378682da147ea475c0e6ab5b909</Hash>
+    <Hash>703f4651998031390d30fe9f448f30c4</Hash>
 </Codenesium>*/

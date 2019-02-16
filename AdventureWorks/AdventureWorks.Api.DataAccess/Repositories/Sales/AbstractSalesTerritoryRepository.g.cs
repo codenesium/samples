@@ -26,9 +26,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CostLastYear.ToDecimal() == query.ToDecimal() ||
+				                  x.CostYTD.ToDecimal() == query.ToDecimal() ||
+				                  x.CountryRegionCode.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SalesLastYear.ToDecimal() == query.ToDecimal() ||
+				                  x.SalesYTD.ToDecimal() == query.ToDecimal() ||
+				                  x.TerritoryID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SalesTerritory> Get(int territoryID)
@@ -130,5 +148,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e053d55a636bdab8e9c41463ceb3b5e</Hash>
+    <Hash>5718548ef7c433743d00d44959ed1e72</Hash>
 </Codenesium>*/

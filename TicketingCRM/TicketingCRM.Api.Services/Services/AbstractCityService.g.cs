@@ -16,11 +16,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiCityServerRequestModelValidator CityModelValidator { get; private set; }
 
-		protected IBOLCityMapper BolCityMapper { get; private set; }
-
 		protected IDALCityMapper DalCityMapper { get; private set; }
-
-		protected IBOLEventMapper BolEventMapper { get; private set; }
 
 		protected IDALEventMapper DalEventMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ICityRepository cityRepository,
 			IApiCityServerRequestModelValidator cityModelValidator,
-			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
-			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base()
 		{
 			this.CityRepository = cityRepository;
 			this.CityModelValidator = cityModelValidator;
-			this.BolCityMapper = bolCityMapper;
 			this.DalCityMapper = dalCityMapper;
-			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCityServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CityRepository.All(limit, offset);
+			List<City> records = await this.CityRepository.All(limit, offset, query);
 
-			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
+			return this.DalCityMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCityServerResponseModel> Get(int id)
 		{
-			var record = await this.CityRepository.Get(id);
+			City record = await this.CityRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(record));
+				return this.DalCityMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCityMapper.MapModelToBO(default(int), model);
-				var record = await this.CityRepository.Create(this.DalCityMapper.MapBOToEF(bo));
+				City record = this.DalCityMapper.MapModelToEntity(default(int), model);
+				record = await this.CityRepository.Create(record);
 
-				var businessObject = this.DalCityMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCityMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCityMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CityCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCityMapper.MapModelToBO(id, model);
-				await this.CityRepository.Update(this.DalCityMapper.MapBOToEF(bo));
+				City record = this.DalCityMapper.MapModelToEntity(id, model);
+				await this.CityRepository.Update(record);
 
-				var record = await this.CityRepository.Get(id);
+				record = await this.CityRepository.Get(id);
 
-				var businessObject = this.DalCityMapper.MapEFToBO(record);
-				var apiModel = this.BolCityMapper.MapBOToModel(businessObject);
+				ApiCityServerResponseModel apiModel = this.DalCityMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CityUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCityServerResponseModel>.UpdateResponse(apiModel);
@@ -131,18 +121,18 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<City> records = await this.CityRepository.ByProvinceId(provinceId, limit, offset);
 
-			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
+			return this.DalCityMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiEventServerResponseModel>> EventsByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Event> records = await this.CityRepository.EventsByCityId(cityId, limit, offset);
 
-			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+			return this.DalEventMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e98372bfce822370a6eb852f8ad7644d</Hash>
+    <Hash>85a86dae9b092e99ce9b953fb609af36</Hash>
 </Codenesium>*/

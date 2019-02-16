@@ -19,11 +19,11 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var bucketItem1 = new Bucket();
-			bucketItem1.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
+			bucketItem1.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 			this.Context.Buckets.Add(bucketItem1);
 
 			var fileItem1 = new File();
-			fileItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, "A", "A", "A");
+			fileItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
 			this.Context.Files.Add(fileItem1);
 
 			var fileTypeItem1 = new FileType();
@@ -36,5 +36,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>78d55db52f281987a7d2bec1f84f62df</Hash>
+    <Hash>c6526e7e721f645dccfbd337b2af8d79</Hash>
 </Codenesium>*/

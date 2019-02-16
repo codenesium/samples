@@ -16,7 +16,6 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		public virtual void SetProperties(
-			string @group,
 			decimal costLastYear,
 			decimal costYTD,
 			string countryRegionCode,
@@ -26,7 +25,6 @@ namespace AdventureWorksNS.Api.Services
 			decimal salesLastYear,
 			decimal salesYTD)
 		{
-			this.@Group = @group;
 			this.CostLastYear = costLastYear;
 			this.CostYTD = costYTD;
 			this.CountryRegionCode = countryRegionCode;
@@ -51,10 +49,6 @@ namespace AdventureWorksNS.Api.Services
 
 		[Required]
 		[JsonProperty]
-		public string @Group { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
 		public DateTime ModifiedDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
@@ -76,5 +70,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0a7c63cb40228e195b8fbd34fb5a60e</Hash>
+    <Hash>80f2526cae6b04ed80ab888b5d2edf3b</Hash>
 </Codenesium>*/

@@ -26,9 +26,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ContactType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ContactType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ContactTypeID == query.ToInt() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ContactType> Get(int contactTypeID)
@@ -106,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8cbd7b65d8949d6a1c0ee57569ea9f8</Hash>
+    <Hash>8456dadcfc36369a042cbafd94a4f495</Hash>
 </Codenesium>*/

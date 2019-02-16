@@ -26,9 +26,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PhoneNumberType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PhoneNumberType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.PhoneNumberTypeID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PhoneNumberType> Get(int phoneNumberTypeID)
@@ -100,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7efb2fc795c84daf7f2a2e41a1837a36</Hash>
+    <Hash>ccb1f1c8c3440488c00277c5e82677b4</Hash>
 </Codenesium>*/

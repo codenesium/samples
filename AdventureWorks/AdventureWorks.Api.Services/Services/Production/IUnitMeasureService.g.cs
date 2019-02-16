@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiUnitMeasureServerResponseModel> Get(string unitMeasureCode);
 
-		Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUnitMeasureServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiUnitMeasureServerResponseModel> ByName(string name);
 
@@ -31,5 +31,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4be86d91cce676052f2e2ee41db8a29b</Hash>
+    <Hash>1530d7de86cda9d9bdeb4b2c3008e2cd</Hash>
 </Codenesium>*/

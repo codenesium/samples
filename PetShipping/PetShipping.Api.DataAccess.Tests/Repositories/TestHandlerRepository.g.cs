@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<HandlerRepository>> loggerMoc = HandlerRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
 			var repository = new HandlerRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<HandlerRepository>> loggerMoc = HandlerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
+			var repository = new HandlerRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new HandlerRepository(loggerMoc.Object, context);
 
 			Handler entity = new Handler();
-			entity.SetProperties(2, "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), 2, "B", "B", "B", "B");
 			context.Set<Handler>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new HandlerRepository(loggerMoc.Object, context);
 
 			var entity = new Handler();
-			entity.SetProperties(2, "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), 2, "B", "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Handler>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
 			var repository = new HandlerRepository(loggerMoc.Object, context);
 			Handler entity = new Handler();
-			entity.SetProperties(2, "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), 2, "B", "B", "B", "B");
 			context.Set<Handler>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
 			var repository = new HandlerRepository(loggerMoc.Object, context);
 			Handler entity = new Handler();
-			entity.SetProperties(2, "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), 2, "B", "B", "B", "B");
 			context.Set<Handler>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
 			var repository = new HandlerRepository(loggerMoc.Object, context);
 			Handler entity = new Handler();
-			entity.SetProperties(2, "B", "B", 2, "B", "B");
+			entity.SetProperties(default(int), 2, "B", "B", "B", "B");
 			context.Set<Handler>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>129b4fa34e34f2c094963c8b862d7f15</Hash>
+    <Hash>db670772e4d5c6d8c948fe2a3740e868</Hash>
 </Codenesium>*/

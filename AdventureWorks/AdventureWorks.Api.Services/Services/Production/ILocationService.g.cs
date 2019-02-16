@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiLocationServerResponseModel> Get(short locationID);
 
-		Task<List<ApiLocationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLocationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiLocationServerResponseModel> ByName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6f8daf6d5b0a32568e833f60a0c36f0</Hash>
+    <Hash>6798098981fc91f2ed24eed07241157f</Hash>
 </Codenesium>*/

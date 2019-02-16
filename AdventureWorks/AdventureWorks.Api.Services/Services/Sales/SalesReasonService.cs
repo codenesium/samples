@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesReasonRepository salesReasonRepository,
 			IApiSalesReasonServerRequestModelValidator salesReasonModelValidator,
-			IBOLSalesReasonMapper bolSalesReasonMapper,
 			IDALSalesReasonMapper dalSalesReasonMapper)
 			: base(logger,
 			       mediator,
 			       salesReasonRepository,
 			       salesReasonModelValidator,
-			       bolSalesReasonMapper,
 			       dalSalesReasonMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3e0a907340d53cd358bcf26255a8d9f8</Hash>
+    <Hash>1f1802a755e694a635532db1c5d9af79</Hash>
 </Codenesium>*/

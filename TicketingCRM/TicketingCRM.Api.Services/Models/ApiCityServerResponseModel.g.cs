@@ -29,9 +29,17 @@ namespace TicketingCRMNS.Api.Services
 
 		[JsonProperty]
 		public string ProvinceIdEntity { get; private set; } = RouteConstants.Provinces;
+
+		[JsonProperty]
+		public ApiProvinceServerResponseModel ProvinceIdNavigation { get; private set; }
+
+		public void SetProvinceIdNavigation(ApiProvinceServerResponseModel value)
+		{
+			this.ProvinceIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c729aa4e6ceb22079c305d5801222fc8</Hash>
+    <Hash>52746663609cfd97f0bd1fed00c5adec</Hash>
 </Codenesium>*/

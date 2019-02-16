@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int salesOrderID,
 			string accountNumber,
 			int billToAddressID,
 			string comment,
@@ -29,7 +30,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			string purchaseOrderNumber,
 			int revisionNumber,
 			Guid rowguid,
-			int salesOrderID,
 			string salesOrderNumber,
 			int? salesPersonID,
 			DateTime? shipDate,
@@ -41,6 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			int? territoryID,
 			decimal totalDue)
 		{
+			this.SalesOrderID = salesOrderID;
 			this.AccountNumber = accountNumber;
 			this.BillToAddressID = billToAddressID;
 			this.Comment = comment;
@@ -56,7 +57,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.PurchaseOrderNumber = purchaseOrderNumber;
 			this.RevisionNumber = revisionNumber;
 			this.Rowguid = rowguid;
-			this.SalesOrderID = salesOrderID;
 			this.SalesOrderNumber = salesOrderNumber;
 			this.SalesPersonID = salesPersonID;
 			this.ShipDate = shipDate;
@@ -196,5 +196,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>126e3085684283839b6545ea1cf0ab4d</Hash>
+    <Hash>302449c57f25b4b231af70cfbfaa2cf5</Hash>
 </Codenesium>*/

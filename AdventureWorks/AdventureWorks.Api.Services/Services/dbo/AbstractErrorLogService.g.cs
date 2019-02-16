@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiErrorLogServerRequestModelValidator ErrorLogModelValidator { get; private set; }
 
-		protected IBOLErrorLogMapper BolErrorLogMapper { get; private set; }
-
 		protected IDALErrorLogMapper DalErrorLogMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IErrorLogRepository errorLogRepository,
 			IApiErrorLogServerRequestModelValidator errorLogModelValidator,
-			IBOLErrorLogMapper bolErrorLogMapper,
 			IDALErrorLogMapper dalErrorLogMapper)
 			: base()
 		{
 			this.ErrorLogRepository = errorLogRepository;
 			this.ErrorLogModelValidator = errorLogModelValidator;
-			this.BolErrorLogMapper = bolErrorLogMapper;
 			this.DalErrorLogMapper = dalErrorLogMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiErrorLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiErrorLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ErrorLogRepository.All(limit, offset);
+			var records = await this.ErrorLogRepository.All(limit, offset, query);
 
-			return this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(records));
+			return this.DalErrorLogMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiErrorLogServerResponseModel> Get(int errorLogID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(record));
+				return this.DalErrorLogMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolErrorLogMapper.MapModelToBO(default(int), model);
-				var record = await this.ErrorLogRepository.Create(this.DalErrorLogMapper.MapBOToEF(bo));
+				var bo = this.DalErrorLogMapper.MapModelToBO(default(int), model);
+				var record = await this.ErrorLogRepository.Create(bo);
 
-				var businessObject = this.DalErrorLogMapper.MapEFToBO(record);
-				response.SetRecord(this.BolErrorLogMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalErrorLogMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ErrorLogCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolErrorLogMapper.MapModelToBO(errorLogID, model);
-				await this.ErrorLogRepository.Update(this.DalErrorLogMapper.MapBOToEF(bo));
+				var bo = this.DalErrorLogMapper.MapModelToBO(errorLogID, model);
+				await this.ErrorLogRepository.Update(bo);
 
 				var record = await this.ErrorLogRepository.Get(errorLogID);
 
-				var businessObject = this.DalErrorLogMapper.MapEFToBO(record);
-				var apiModel = this.BolErrorLogMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalErrorLogMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ErrorLogUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiErrorLogServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84b28c05532c2d395c1ec09679b952d0</Hash>
+    <Hash>703c7b3189fca351be1142be409484e4</Hash>
 </Codenesium>*/

@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
 			var records = new List<ScrapReason>();
 			records.Add(new ScrapReason());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiScrapReasonServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiScrapReasonServerResponseModel response = await service.Get(default(short));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiScrapReasonServerResponseModel response = await service.Get(default(short));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			CreateResponse<ApiScrapReasonServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			CreateResponse<ApiScrapReasonServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			UpdateResponse<ApiScrapReasonServerResponseModel> response = await service.Update(default(short), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			UpdateResponse<ApiScrapReasonServerResponseModel> response = await service.Update(default(short), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ActionResponse response = await service.Delete(default(short));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     validatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ActionResponse response = await service.Delete(default(short));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiScrapReasonServerResponseModel response = await service.ByName("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiScrapReasonServerResponseModel response = await service.ByName("test_value");
@@ -281,9 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
@@ -301,9 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.MediatorMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLScrapReasonMapperMock,
 			                                     mock.DALMapperMockFactory.DALScrapReasonMapperMock,
-			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
@@ -315,5 +289,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>004df07e982151187382612b05296748</Hash>
+    <Hash>98c2c1a591efe0b7d22fd43b6536b524</Hash>
 </Codenesium>*/

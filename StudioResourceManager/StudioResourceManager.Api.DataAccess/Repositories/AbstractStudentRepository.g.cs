@@ -26,9 +26,29 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Student>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Student>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Birthday == query.ToDateTime() ||
+				                  x.Email.StartsWith(query) ||
+				                  x.EmailRemindersEnabled == query.ToBoolean() ||
+				                  x.FamilyId == query.ToInt() ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.IsAdult == query.ToBoolean() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Phone.StartsWith(query) ||
+				                  x.SmsRemindersEnabled == query.ToBoolean() ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Student> Get(int id)
@@ -91,40 +111,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		// Foreign key reference to table Family via familyId.
 		public async virtual Task<Family> FamilyByFamilyId(int familyId)
 		{
-			return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
+			return await this.Context.Set<Family>()
+			       .SingleOrDefaultAsync(x => x.Id == familyId);
 		}
 
 		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Student.
-		public async virtual Task<List<Student>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.EventStudents
-			              join students in this.Context.Students on
-			              refTable.StudentId equals students.Id
-			              where refTable.EventId == eventId
-			              select students).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Student.
-		public async virtual Task<EventStudent> CreateEventStudent(EventStudent item)
-		{
-			this.Context.Set<EventStudent>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Student.
-		public async virtual Task DeleteEventStudent(EventStudent item)
-		{
-			this.Context.Set<EventStudent>().Remove(item);
-			await this.Context.SaveChangesAsync();
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.Id == userId);
 		}
 
 		protected async Task<List<Student>> Where(
@@ -138,7 +133,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
+			return await this.Context.Set<Student>()
+			       .Include(x => x.FamilyIdNavigation)
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
 		private async Task<Student> GetById(int id)
@@ -151,5 +150,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>844e24feaf6a2d48b1587dce85f94115</Hash>
+    <Hash>7c9e1dc9ff55a6bc4cd68af16e0b47c1</Hash>
 </Codenesium>*/

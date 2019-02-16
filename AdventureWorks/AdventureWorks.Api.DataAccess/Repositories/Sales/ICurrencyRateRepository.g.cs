@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<CurrencyRate> Get(int currencyRateID);
 
-		Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f1ba3eb6c30b520dae3188a684ea3209</Hash>
+    <Hash>4d6fedb7d13d0b5ee3e3a37aa2bef16b</Hash>
 </Codenesium>*/

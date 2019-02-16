@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<AddressType> Get(int addressTypeID);
 
-		Task<List<AddressType>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<AddressType>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<AddressType> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>111deee084b9baf9a29c74c4bf28bfa7</Hash>
+    <Hash>32047b4a51834d1fe5430e5b608c3246</Hash>
 </Codenesium>*/

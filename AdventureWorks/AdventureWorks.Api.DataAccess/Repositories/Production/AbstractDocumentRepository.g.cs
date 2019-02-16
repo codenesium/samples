@@ -26,9 +26,30 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Document>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Document>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ChangeNumber == query.ToInt() ||
+				                  x.DocumentLevel == query.ToNullableShort() ||
+				                  x.DocumentSummary.StartsWith(query) ||
+				                  x.FileExtension.StartsWith(query) ||
+				                  x.FileName.StartsWith(query) ||
+				                  x.FolderFlag == query.ToBoolean() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Owner == query.ToInt() ||
+				                  x.Revision.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.Status == query.ToInt() ||
+				                  x.Title.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Document> Get(Guid rowguid)
@@ -112,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>06c46360b5b4cbc868208a9ad59d71e1</Hash>
+    <Hash>4f7315eecfe4d0d8ca0ea2255cdec06e</Hash>
 </Codenesium>*/

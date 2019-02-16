@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IColumnSameAsFKTableRepository>();
 			var records = new List<ColumnSameAsFKTable>();
 			records.Add(new ColumnSameAsFKTable());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ColumnSameAsFKTableService(mock.LoggerMock.Object,
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			List<ApiColumnSameAsFKTableServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ApiColumnSameAsFKTableServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ApiColumnSameAsFKTableServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			CreateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			CreateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			UpdateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			UpdateResponse<ApiColumnSameAsFKTableServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.ColumnSameAsFKTableModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                             mock.MediatorMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             validatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
 			                                             mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0d7dbbeefe5b08cd63151f439d1099da</Hash>
+    <Hash>b00eeb7c25fda3e7603b90346bb0757c</Hash>
 </Codenesium>*/

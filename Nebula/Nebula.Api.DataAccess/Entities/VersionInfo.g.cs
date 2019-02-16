@@ -14,13 +14,13 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			long version,
 			DateTime? appliedOn,
-			string description,
-			long version)
+			string description)
 		{
+			this.Version = version;
 			this.AppliedOn = appliedOn;
 			this.Description = description;
-			this.Version = version;
 		}
 
 		[Column("AppliedOn")]
@@ -37,5 +37,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e5945cc6b987a1455b7c65853a6bd5ba</Hash>
+    <Hash>2a016985cadb1254120577ef988d0bd7</Hash>
 </Codenesium>*/

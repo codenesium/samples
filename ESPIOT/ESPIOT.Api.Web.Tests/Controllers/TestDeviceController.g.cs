@@ -27,36 +27,36 @@ namespace ESPIOTNS.Api.Web.Tests
 			var record = new ApiDeviceServerResponseModel();
 			var records = new List<ApiDeviceServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiDeviceServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			DeviceControllerMockFacade mock = new DeviceControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiDeviceServerResponseModel>>(new List<ApiDeviceServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiDeviceServerResponseModel>>(new List<ApiDeviceServerResponseModel>()));
 			DeviceController controller = new DeviceController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiDeviceServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -194,7 +194,7 @@ namespace ESPIOTNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiDeviceServerRequestModel>()))
 			.Callback<int, ApiDeviceServerRequestModel>(
-				(id, model) => model.Name.Should().Be("A")
+				(id, model) => model.DateOfLastPing.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiDeviceServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiDeviceServerResponseModel>(new ApiDeviceServerResponseModel()));
@@ -203,7 +203,7 @@ namespace ESPIOTNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiDeviceServerRequestModel>();
-			patch.Replace(x => x.Name, "A");
+			patch.Replace(x => x.DateOfLastPing, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace ESPIOTNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiDeviceServerRequestModel>();
-			patch.Replace(x => x.Name, "A");
+			patch.Replace(x => x.DateOfLastPing, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace ESPIOTNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b1e730bf3dc1fb565910bb939fcfb5c</Hash>
+    <Hash>fceeb95b3f4be32a35546026c2ada933</Hash>
 </Codenesium>*/

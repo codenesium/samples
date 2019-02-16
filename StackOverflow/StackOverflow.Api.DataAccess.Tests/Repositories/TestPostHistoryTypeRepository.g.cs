@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<PostHistoryTypeRepository>> loggerMoc = PostHistoryTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PostHistoryTypeRepositoryMoc.GetContext();
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PostHistoryTypeRepository>> loggerMoc = PostHistoryTypeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PostHistoryTypeRepositoryMoc.GetContext();
+			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
 
 			PostHistoryType entity = new PostHistoryType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostHistoryType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
 
 			var entity = new PostHistoryType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<PostHistoryType>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryTypeRepositoryMoc.GetContext();
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
 			PostHistoryType entity = new PostHistoryType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostHistoryType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryTypeRepositoryMoc.GetContext();
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
 			PostHistoryType entity = new PostHistoryType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostHistoryType>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostHistoryTypeRepositoryMoc.GetContext();
 			var repository = new PostHistoryTypeRepository(loggerMoc.Object, context);
 			PostHistoryType entity = new PostHistoryType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<PostHistoryType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>89cc710fffa45c7daacda4f9fd7adf17</Hash>
+    <Hash>3565650eccf7371678a240e24b7507ed</Hash>
 </Codenesium>*/

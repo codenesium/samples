@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiChainServerResponseModel> Get(int id);
 
-		Task<List<ApiChainServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiChainServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiChainServerResponseModel> ByExternalId(Guid externalId);
 
@@ -31,5 +31,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56be1968751201c20ab82f5c6d6ffdf1</Hash>
+    <Hash>5053bfa2c1f55372d4d57ffa5212c23f</Hash>
 </Codenesium>*/

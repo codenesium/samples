@@ -22,6 +22,14 @@ namespace NebulaNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiLinkClientResponseModel LinkIdNavigation { get; private set; }
+
+		public void SetLinkIdNavigation(ApiLinkClientResponseModel value)
+		{
+			this.LinkIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime DateEntered { get; private set; }
 
 		[JsonProperty]
@@ -39,5 +47,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d209fb16c56b45decaad19a4f30da256</Hash>
+    <Hash>b59249c33927b0bcea6fd4f804e0b976</Hash>
 </Codenesium>*/

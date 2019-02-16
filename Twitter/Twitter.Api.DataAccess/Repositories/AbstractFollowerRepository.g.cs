@@ -26,9 +26,25 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Follower>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Follower>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Blocked.StartsWith(query) ||
+				                  x.DateFollowed == query.ToDateTime() ||
+				                  x.FollowRequestStatu.StartsWith(query) ||
+				                  x.FollowedUserId == query.ToInt() ||
+				                  x.FollowingUserId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Muted.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Follower> Get(int id)
@@ -91,13 +107,15 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table User via followedUserId.
 		public async virtual Task<User> UserByFollowedUserId(int followedUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == followedUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == followedUserId);
 		}
 
 		// Foreign key reference to table User via followingUserId.
 		public async virtual Task<User> UserByFollowingUserId(int followingUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == followingUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == followingUserId);
 		}
 
 		protected async Task<List<Follower>> Where(
@@ -111,7 +129,11 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Follower>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Follower>();
+			return await this.Context.Set<Follower>()
+			       .Include(x => x.FollowedUserIdNavigation)
+			       .Include(x => x.FollowingUserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
 		private async Task<Follower> GetById(int id)
@@ -124,5 +146,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5cc2a29c9b5057e6c27c70cd8820701b</Hash>
+    <Hash>0b9cf646bfe9fc11baba0911839944cb</Hash>
 </Codenesium>*/

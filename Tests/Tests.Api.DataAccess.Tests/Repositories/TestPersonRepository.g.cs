@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
+			var repository = new PersonRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new PersonRepository(loggerMoc.Object, context);
 
 			Person entity = new Person();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new PersonRepository(loggerMoc.Object, context);
 
 			var entity = new Person();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Person>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39ba5ae7130f479b8e1570e0694b131c</Hash>
+    <Hash>e1238bf4de2d546ba1c080d70a2c2c2d</Hash>
 </Codenesium>*/

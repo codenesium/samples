@@ -35,7 +35,24 @@ namespace FileServiceNS.Api.Client
 			this.PublicKey = publicKey;
 
 			this.BucketIdEntity = nameof(ApiResponse.Buckets);
+
 			this.FileTypeIdEntity = nameof(ApiResponse.FileTypes);
+		}
+
+		[JsonProperty]
+		public ApiBucketClientResponseModel BucketIdNavigation { get; private set; }
+
+		public void SetBucketIdNavigation(ApiBucketClientResponseModel value)
+		{
+			this.BucketIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiFileTypeClientResponseModel FileTypeIdNavigation { get; private set; }
+
+		public void SetFileTypeIdNavigation(ApiFileTypeClientResponseModel value)
+		{
+			this.FileTypeIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -83,5 +100,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1e7d73d78b693f68eba1db4c8f9526a7</Hash>
+    <Hash>aec6f253751967a698517e3c14b49e98</Hash>
 </Codenesium>*/

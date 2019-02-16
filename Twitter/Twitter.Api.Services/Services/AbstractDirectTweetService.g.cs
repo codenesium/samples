@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiDirectTweetServerRequestModelValidator DirectTweetModelValidator { get; private set; }
 
-		protected IBOLDirectTweetMapper BolDirectTweetMapper { get; private set; }
-
 		protected IDALDirectTweetMapper DalDirectTweetMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IDirectTweetRepository directTweetRepository,
 			IApiDirectTweetServerRequestModelValidator directTweetModelValidator,
-			IBOLDirectTweetMapper bolDirectTweetMapper,
 			IDALDirectTweetMapper dalDirectTweetMapper)
 			: base()
 		{
 			this.DirectTweetRepository = directTweetRepository;
 			this.DirectTweetModelValidator = directTweetModelValidator;
-			this.BolDirectTweetMapper = bolDirectTweetMapper;
 			this.DalDirectTweetMapper = dalDirectTweetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiDirectTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDirectTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DirectTweetRepository.All(limit, offset);
+			List<DirectTweet> records = await this.DirectTweetRepository.All(limit, offset, query);
 
-			return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(records));
+			return this.DalDirectTweetMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDirectTweetServerResponseModel> Get(int tweetId)
 		{
-			var record = await this.DirectTweetRepository.Get(tweetId);
+			DirectTweet record = await this.DirectTweetRepository.Get(tweetId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(record));
+				return this.DalDirectTweetMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolDirectTweetMapper.MapModelToBO(default(int), model);
-				var record = await this.DirectTweetRepository.Create(this.DalDirectTweetMapper.MapBOToEF(bo));
+				DirectTweet record = this.DalDirectTweetMapper.MapModelToEntity(default(int), model);
+				record = await this.DirectTweetRepository.Create(record);
 
-				var businessObject = this.DalDirectTweetMapper.MapEFToBO(record);
-				response.SetRecord(this.BolDirectTweetMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalDirectTweetMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DirectTweetCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolDirectTweetMapper.MapModelToBO(tweetId, model);
-				await this.DirectTweetRepository.Update(this.DalDirectTweetMapper.MapBOToEF(bo));
+				DirectTweet record = this.DalDirectTweetMapper.MapModelToEntity(tweetId, model);
+				await this.DirectTweetRepository.Update(record);
 
-				var record = await this.DirectTweetRepository.Get(tweetId);
+				record = await this.DirectTweetRepository.Get(tweetId);
 
-				var businessObject = this.DalDirectTweetMapper.MapEFToBO(record);
-				var apiModel = this.BolDirectTweetMapper.MapBOToModel(businessObject);
+				ApiDirectTweetServerResponseModel apiModel = this.DalDirectTweetMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DirectTweetUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDirectTweetServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace TwitterNS.Api.Services
 		{
 			List<DirectTweet> records = await this.DirectTweetRepository.ByTaggedUserId(taggedUserId, limit, offset);
 
-			return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(records));
+			return this.DalDirectTweetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5790cec43804b54bdd47817821fe1cc3</Hash>
+    <Hash>ce38d2c1b89efcbd4cbf34e241bda24f</Hash>
 </Codenesium>*/

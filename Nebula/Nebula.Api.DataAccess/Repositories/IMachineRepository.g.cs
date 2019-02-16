@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Machine> Get(int id);
 
-		Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Machine> ByMachineGuid(Guid machineGuid);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f67770551d2f4d85600acab2e451f4c9</Hash>
+    <Hash>75bc4d75d49b03f2c030dd7a4b0d11da</Hash>
 </Codenesium>*/

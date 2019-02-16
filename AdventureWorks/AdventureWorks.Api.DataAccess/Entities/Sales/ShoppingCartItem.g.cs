@@ -14,19 +14,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int shoppingCartItemID,
 			DateTime dateCreated,
 			DateTime modifiedDate,
 			int productID,
 			int quantity,
-			string shoppingCartID,
-			int shoppingCartItemID)
+			string shoppingCartID)
 		{
+			this.ShoppingCartItemID = shoppingCartItemID;
 			this.DateCreated = dateCreated;
 			this.ModifiedDate = modifiedDate;
 			this.ProductID = productID;
 			this.Quantity = quantity;
 			this.ShoppingCartID = shoppingCartID;
-			this.ShoppingCartItemID = shoppingCartItemID;
 		}
 
 		[Column("DateCreated")]
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9637067eec932a6db0cea697c8a1064</Hash>
+    <Hash>b3ba63e30eb06c5d3b5d6f06cd32ec90</Hash>
 </Codenesium>*/

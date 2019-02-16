@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiRetweetServerRequestModelValidator RetweetModelValidator { get; private set; }
 
-		protected IBOLRetweetMapper BolRetweetMapper { get; private set; }
-
 		protected IDALRetweetMapper DalRetweetMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IRetweetRepository retweetRepository,
 			IApiRetweetServerRequestModelValidator retweetModelValidator,
-			IBOLRetweetMapper bolRetweetMapper,
 			IDALRetweetMapper dalRetweetMapper)
 			: base()
 		{
 			this.RetweetRepository = retweetRepository;
 			this.RetweetModelValidator = retweetModelValidator;
-			this.BolRetweetMapper = bolRetweetMapper;
 			this.DalRetweetMapper = dalRetweetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiRetweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRetweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.RetweetRepository.All(limit, offset);
+			List<Retweet> records = await this.RetweetRepository.All(limit, offset, query);
 
-			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
+			return this.DalRetweetMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiRetweetServerResponseModel> Get(int id)
 		{
-			var record = await this.RetweetRepository.Get(id);
+			Retweet record = await this.RetweetRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(record));
+				return this.DalRetweetMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolRetweetMapper.MapModelToBO(default(int), model);
-				var record = await this.RetweetRepository.Create(this.DalRetweetMapper.MapBOToEF(bo));
+				Retweet record = this.DalRetweetMapper.MapModelToEntity(default(int), model);
+				record = await this.RetweetRepository.Create(record);
 
-				var businessObject = this.DalRetweetMapper.MapEFToBO(record);
-				response.SetRecord(this.BolRetweetMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalRetweetMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new RetweetCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolRetweetMapper.MapModelToBO(id, model);
-				await this.RetweetRepository.Update(this.DalRetweetMapper.MapBOToEF(bo));
+				Retweet record = this.DalRetweetMapper.MapModelToEntity(id, model);
+				await this.RetweetRepository.Update(record);
 
-				var record = await this.RetweetRepository.Get(id);
+				record = await this.RetweetRepository.Get(id);
 
-				var businessObject = this.DalRetweetMapper.MapEFToBO(record);
-				var apiModel = this.BolRetweetMapper.MapBOToModel(businessObject);
+				ApiRetweetServerResponseModel apiModel = this.DalRetweetMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new RetweetUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiRetweetServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace TwitterNS.Api.Services
 		{
 			List<Retweet> records = await this.RetweetRepository.ByRetwitterUserId(retwitterUserId, limit, offset);
 
-			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
+			return this.DalRetweetMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiRetweetServerResponseModel>> ByTweetTweetId(int tweetTweetId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Retweet> records = await this.RetweetRepository.ByTweetTweetId(tweetTweetId, limit, offset);
 
-			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
+			return this.DalRetweetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccf0de512f72dfc2c371df16e99505da</Hash>
+    <Hash>c759e89b5f1efc4832d6ce8aca40aab3</Hash>
 </Codenesium>*/

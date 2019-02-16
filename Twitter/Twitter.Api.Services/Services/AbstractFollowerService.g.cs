@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiFollowerServerRequestModelValidator FollowerModelValidator { get; private set; }
 
-		protected IBOLFollowerMapper BolFollowerMapper { get; private set; }
-
 		protected IDALFollowerMapper DalFollowerMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IFollowerRepository followerRepository,
 			IApiFollowerServerRequestModelValidator followerModelValidator,
-			IBOLFollowerMapper bolFollowerMapper,
 			IDALFollowerMapper dalFollowerMapper)
 			: base()
 		{
 			this.FollowerRepository = followerRepository;
 			this.FollowerModelValidator = followerModelValidator;
-			this.BolFollowerMapper = bolFollowerMapper;
 			this.DalFollowerMapper = dalFollowerMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiFollowerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFollowerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.FollowerRepository.All(limit, offset);
+			List<Follower> records = await this.FollowerRepository.All(limit, offset, query);
 
-			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
+			return this.DalFollowerMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiFollowerServerResponseModel> Get(int id)
 		{
-			var record = await this.FollowerRepository.Get(id);
+			Follower record = await this.FollowerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(record));
+				return this.DalFollowerMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolFollowerMapper.MapModelToBO(default(int), model);
-				var record = await this.FollowerRepository.Create(this.DalFollowerMapper.MapBOToEF(bo));
+				Follower record = this.DalFollowerMapper.MapModelToEntity(default(int), model);
+				record = await this.FollowerRepository.Create(record);
 
-				var businessObject = this.DalFollowerMapper.MapEFToBO(record);
-				response.SetRecord(this.BolFollowerMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalFollowerMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new FollowerCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolFollowerMapper.MapModelToBO(id, model);
-				await this.FollowerRepository.Update(this.DalFollowerMapper.MapBOToEF(bo));
+				Follower record = this.DalFollowerMapper.MapModelToEntity(id, model);
+				await this.FollowerRepository.Update(record);
 
-				var record = await this.FollowerRepository.Get(id);
+				record = await this.FollowerRepository.Get(id);
 
-				var businessObject = this.DalFollowerMapper.MapEFToBO(record);
-				var apiModel = this.BolFollowerMapper.MapBOToModel(businessObject);
+				ApiFollowerServerResponseModel apiModel = this.DalFollowerMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new FollowerUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiFollowerServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace TwitterNS.Api.Services
 		{
 			List<Follower> records = await this.FollowerRepository.ByFollowedUserId(followedUserId, limit, offset);
 
-			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
+			return this.DalFollowerMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiFollowerServerResponseModel>> ByFollowingUserId(int followingUserId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Follower> records = await this.FollowerRepository.ByFollowingUserId(followingUserId, limit, offset);
 
-			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
+			return this.DalFollowerMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8918cbb02bac594d5abffd64a700020b</Hash>
+    <Hash>13d98d5cb71c3e1c0bc0a5bf53b04c7f</Hash>
 </Codenesium>*/

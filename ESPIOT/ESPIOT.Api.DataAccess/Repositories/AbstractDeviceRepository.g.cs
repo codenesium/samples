@@ -26,9 +26,23 @@ namespace ESPIOTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Device>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Device>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DateOfLastPing == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.IsActive == query.ToBoolean() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.PublicId == query.ToGuid(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Device> Get(int id)
@@ -79,13 +93,16 @@ namespace ESPIOTNS.Api.DataAccess
 		// unique constraint IX_Device.
 		public async virtual Task<Device> ByPublicId(Guid publicId)
 		{
-			return await this.Context.Set<Device>().FirstOrDefaultAsync(x => x.PublicId == publicId);
+			return await this.Context.Set<Device>()
+
+			       .FirstOrDefaultAsync(x => x.PublicId == publicId);
 		}
 
 		// Foreign key reference to this table DeviceAction via deviceId.
 		public async virtual Task<List<DeviceAction>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<DeviceAction>().Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
+			return await this.Context.Set<DeviceAction>()
+			       .Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
 		}
 
 		protected async Task<List<Device>> Where(
@@ -99,7 +116,9 @@ namespace ESPIOTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
+			return await this.Context.Set<Device>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
 		}
 
 		private async Task<Device> GetById(int id)
@@ -112,5 +131,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3cc0714d7cafe7961b6105e2aeaffc24</Hash>
+    <Hash>8e97673e3df8fc358bd10154cba36a09</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiShiftServerResponseModel> Get(int shiftID);
 
-		Task<List<ApiShiftServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiShiftServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiShiftServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb314c6b95a2a23ecf2e526b77929fb6</Hash>
+    <Hash>47d24e826700b94630ef146ab8a9226b</Hash>
 </Codenesium>*/

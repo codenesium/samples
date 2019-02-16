@@ -15,7 +15,7 @@ namespace TestsNS.Api.DataAccess
 
 		Task<Person> Get(int personId);
 
-		Task<List<Person>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Person>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTablesByPerson(int person, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e04b5acd7bd61e90263b954e5f8ce744</Hash>
+    <Hash>1b8f9cf9b09bbd83c16adf288ff9d41d</Hash>
 </Codenesium>*/

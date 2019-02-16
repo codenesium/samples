@@ -26,9 +26,20 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ChainStatus>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ChainStatus>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ChainStatus> Get(int id)
@@ -79,13 +90,16 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_ChainStatus_Name.
 		public async virtual Task<ChainStatus> ByName(string name)
 		{
-			return await this.Context.Set<ChainStatus>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<ChainStatus>()
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Chain via chainStatusId.
 		public async virtual Task<List<Chain>> ChainsByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Chain>().Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+			return await this.Context.Set<Chain>()
+			       .Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
 
 		protected async Task<List<ChainStatus>> Where(
@@ -99,7 +113,9 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<ChainStatus>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ChainStatus>();
+			return await this.Context.Set<ChainStatus>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ChainStatus>();
 		}
 
 		private async Task<ChainStatus> GetById(int id)
@@ -112,5 +128,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b8683b2bf6c7f09b190f42b1d9fd7c48</Hash>
+    <Hash>1e38033d43455d28dfef822b76af40b9</Hash>
 </Codenesium>*/

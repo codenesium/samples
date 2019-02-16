@@ -12,17 +12,13 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
-			IBOLFamilyMapper bolFamilyMapper,
 			IDALFamilyMapper dalFamilyMapper,
-			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       mediator,
 			       familyRepository,
 			       familyModelValidator,
-			       bolFamilyMapper,
 			       dalFamilyMapper,
-			       bolStudentMapper,
 			       dalStudentMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>189d24c6fcac7fd61c442ebb418686da</Hash>
+    <Hash>114d32c528ac0c5f0831a7c552fa11fb</Hash>
 </Codenesium>*/

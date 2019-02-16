@@ -26,9 +26,27 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ActualEndDate == query.ToNullableDateTime() ||
+				                  x.ActualStartDate == query.ToNullableDateTime() ||
+				                  x.BillAmount.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.EventStatusId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.ScheduledEndDate == query.ToNullableDateTime() ||
+				                  x.ScheduledStartDate == query.ToNullableDateTime() ||
+				                  x.StudentNote.StartsWith(query) ||
+				                  x.TeacherNote.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Event> Get(int id)
@@ -82,64 +100,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Where(x => x.EventStatusId == eventStatusId, limit, offset);
 		}
 
-		// Foreign key reference to table EventStatu via eventStatusId.
-		public async virtual Task<EventStatu> EventStatuByEventStatusId(int eventStatusId)
+		// Foreign key reference to table EventStatus via eventStatusId.
+		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
 		{
-			return await this.Context.Set<EventStatu>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Event.
-		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.EventStudents
-			              join events in this.Context.Events on
-			              refTable.EventId equals events.Id
-			              where refTable.StudentId == studentId
-			              select events).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Event.
-		public async virtual Task<EventStudent> CreateEventStudent(EventStudent item)
-		{
-			this.Context.Set<EventStudent>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventStudent. Foreign Table Event.
-		public async virtual Task DeleteEventStudent(EventStudent item)
-		{
-			this.Context.Set<EventStudent>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Event.
-		public async virtual Task<List<Event>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.EventTeachers
-			              join events in this.Context.Events on
-			              refTable.EventId equals events.Id
-			              where refTable.TeacherId == teacherId
-			              select events).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Event.
-		public async virtual Task<EventTeacher> CreateEventTeacher(EventTeacher item)
-		{
-			this.Context.Set<EventTeacher>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table EventTeacher. Foreign Table Event.
-		public async virtual Task DeleteEventTeacher(EventTeacher item)
-		{
-			this.Context.Set<EventTeacher>().Remove(item);
-			await this.Context.SaveChangesAsync();
+			return await this.Context.Set<EventStatus>()
+			       .SingleOrDefaultAsync(x => x.Id == eventStatusId);
 		}
 
 		protected async Task<List<Event>> Where(
@@ -153,7 +118,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
+			return await this.Context.Set<Event>()
+			       .Include(x => x.EventStatusIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
 		private async Task<Event> GetById(int id)
@@ -166,5 +134,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3967151de0b82df1aae6a79f591025d5</Hash>
+    <Hash>a47867d2d576e0bd1063b2173a687108</Hash>
 </Codenesium>*/

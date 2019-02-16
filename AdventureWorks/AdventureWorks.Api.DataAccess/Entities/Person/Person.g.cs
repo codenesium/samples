@@ -14,8 +14,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string additionalContactInfo,
 			int businessEntityID,
+			string additionalContactInfo,
 			string demographic,
 			int emailPromotion,
 			string firstName,
@@ -28,8 +28,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			string suffix,
 			string title)
 		{
-			this.AdditionalContactInfo = additionalContactInfo;
 			this.BusinessEntityID = businessEntityID;
+			this.AdditionalContactInfo = additionalContactInfo;
 			this.Demographic = demographic;
 			this.EmailPromotion = emailPromotion;
 			this.FirstName = firstName;
@@ -92,5 +92,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e6a013afb0ccc2e14f99819dd805bab</Hash>
+    <Hash>357bd7bc6c10a6f6a4cec24778d926d6</Hash>
 </Codenesium>*/

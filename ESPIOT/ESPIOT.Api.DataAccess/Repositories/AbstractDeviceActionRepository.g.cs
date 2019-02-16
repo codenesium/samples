@@ -26,9 +26,22 @@ namespace ESPIOTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<DeviceAction>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<DeviceAction>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Action.StartsWith(query) ||
+				                  x.DeviceId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<DeviceAction> Get(int id)
@@ -85,7 +98,8 @@ namespace ESPIOTNS.Api.DataAccess
 		// Foreign key reference to table Device via deviceId.
 		public async virtual Task<Device> DeviceByDeviceId(int deviceId)
 		{
-			return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.Id == deviceId);
+			return await this.Context.Set<Device>()
+			       .SingleOrDefaultAsync(x => x.Id == deviceId);
 		}
 
 		protected async Task<List<DeviceAction>> Where(
@@ -99,7 +113,10 @@ namespace ESPIOTNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
+			return await this.Context.Set<DeviceAction>()
+			       .Include(x => x.DeviceIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
 		}
 
 		private async Task<DeviceAction> GetById(int id)
@@ -112,5 +129,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>46fe47bd279e1ef9692fd36aefb03d70</Hash>
+    <Hash>1f8a7c7498095e903cd93ad237e39bb7</Hash>
 </Codenesium>*/

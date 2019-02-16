@@ -26,9 +26,23 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<DirectTweet>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<DirectTweet>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Content.StartsWith(query) ||
+				                  x.Date == query.ToDateTime() ||
+				                  x.TaggedUserId == query.ToInt() ||
+				                  x.Time == query.ToTimespan() ||
+				                  x.TweetId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<DirectTweet> Get(int tweetId)
@@ -85,7 +99,8 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table User via taggedUserId.
 		public async virtual Task<User> UserByTaggedUserId(int taggedUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == taggedUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == taggedUserId);
 		}
 
 		protected async Task<List<DirectTweet>> Where(
@@ -99,7 +114,10 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.TweetId;
 			}
 
-			return await this.Context.Set<DirectTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DirectTweet>();
+			return await this.Context.Set<DirectTweet>()
+			       .Include(x => x.TaggedUserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
 		private async Task<DirectTweet> GetById(int tweetId)
@@ -112,5 +130,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af169740e2f14c15a84ebcf0f88d75b8</Hash>
+    <Hash>289ffbb46afeaf3bccd332e3bb28d1bd</Hash>
 </Codenesium>*/

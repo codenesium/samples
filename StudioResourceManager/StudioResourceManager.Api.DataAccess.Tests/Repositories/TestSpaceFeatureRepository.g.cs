@@ -47,10 +47,19 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Mock<ILogger<SpaceFeatureRepository>> loggerMoc = SpaceFeatureRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<SpaceFeatureRepository>> loggerMoc = SpaceFeatureRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpaceFeatureRepositoryMoc.GetContext();
+			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
 
 			SpaceFeature entity = new SpaceFeature();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<SpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
 
 			var entity = new SpaceFeature();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<SpaceFeature>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceFeature entity = new SpaceFeature();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<SpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceFeature entity = new SpaceFeature();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<SpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = SpaceFeatureRepositoryMoc.GetContext();
 			var repository = new SpaceFeatureRepository(loggerMoc.Object, context);
 			SpaceFeature entity = new SpaceFeature();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<SpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d1d001c4a50977d38f9854a90de8b876</Hash>
+    <Hash>e87877f2bd5038f865cd40dcf9369c2f</Hash>
 </Codenesium>*/

@@ -26,9 +26,22 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.EmployeeId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Note.StartsWith(query) ||
+				                  x.PipelineStepId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PipelineStepNote> Get(int id)
@@ -79,13 +92,15 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table Employee via employeeId.
 		public async virtual Task<Employee> EmployeeByEmployeeId(int employeeId)
 		{
-			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
+			return await this.Context.Set<Employee>()
+			       .SingleOrDefaultAsync(x => x.Id == employeeId);
 		}
 
 		// Foreign key reference to table PipelineStep via pipelineStepId.
 		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
-			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
+			return await this.Context.Set<PipelineStep>()
+			       .SingleOrDefaultAsync(x => x.Id == pipelineStepId);
 		}
 
 		protected async Task<List<PipelineStepNote>> Where(
@@ -99,7 +114,11 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PipelineStepNote>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
+			return await this.Context.Set<PipelineStepNote>()
+			       .Include(x => x.EmployeeIdNavigation)
+			       .Include(x => x.PipelineStepIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
 		}
 
 		private async Task<PipelineStepNote> GetById(int id)
@@ -112,5 +131,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8d4d909f248e7cfde3c61eb78c09274</Hash>
+    <Hash>99eb768b9612e665e72824682d99f88c</Hash>
 </Codenesium>*/

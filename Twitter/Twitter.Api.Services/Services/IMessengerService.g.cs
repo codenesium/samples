@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiMessengerServerResponseModel> Get(int id);
 
-		Task<List<ApiMessengerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessengerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiMessengerServerResponseModel>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0);
 
@@ -29,5 +29,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb461278129c56267d14cc0dfe1ab9f2</Hash>
+    <Hash>f73359f76f14b8e1acabd0e93af90794</Hash>
 </Codenesium>*/

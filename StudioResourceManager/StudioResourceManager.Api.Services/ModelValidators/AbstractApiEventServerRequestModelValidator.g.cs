@@ -40,7 +40,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void EventStatusIdRules()
 		{
-			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatuByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
+			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatusByEventStatusId).When(x => !x?.EventStatusId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -61,9 +61,9 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
-		protected async Task<bool> BeValidEventStatuByEventStatusId(int id,  CancellationToken cancellationToken)
+		protected async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.EventRepository.EventStatuByEventStatusId(id);
+			var record = await this.EventRepository.EventStatusByEventStatusId(id);
 
 			return record != null;
 		}
@@ -71,5 +71,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c340471532a1483230bbc194ce92f43a</Hash>
+    <Hash>0da64c9279a27fc4b58b34fb86442432</Hash>
 </Codenesium>*/

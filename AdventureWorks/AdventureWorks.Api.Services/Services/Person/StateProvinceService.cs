@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IStateProvinceRepository stateProvinceRepository,
 			IApiStateProvinceServerRequestModelValidator stateProvinceModelValidator,
-			IBOLStateProvinceMapper bolStateProvinceMapper,
 			IDALStateProvinceMapper dalStateProvinceMapper,
-			IBOLAddressMapper bolAddressMapper,
 			IDALAddressMapper dalAddressMapper)
 			: base(logger,
 			       mediator,
 			       stateProvinceRepository,
 			       stateProvinceModelValidator,
-			       bolStateProvinceMapper,
 			       dalStateProvinceMapper,
-			       bolAddressMapper,
 			       dalAddressMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08b42eb8ff9fcdaf70472cceb413ef1c</Hash>
+    <Hash>4ee60c60c7b70bdcbb528afece574c67</Hash>
 </Codenesium>*/

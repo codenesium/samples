@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IWorkOrderRepository workOrderRepository,
 			IApiWorkOrderServerRequestModelValidator workOrderModelValidator,
-			IBOLWorkOrderMapper bolWorkOrderMapper,
 			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base(logger,
 			       mediator,
 			       workOrderRepository,
 			       workOrderModelValidator,
-			       bolWorkOrderMapper,
 			       dalWorkOrderMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79c9f86d6024e1b797e134fdbde44ea5</Hash>
+    <Hash>2954852797f123867e6a954de8d39a4c</Hash>
 </Codenesium>*/

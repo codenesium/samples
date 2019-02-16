@@ -15,10 +15,10 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<Following> Get(int userId);
 
-		Task<List<Following>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Following>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5da8e5ef9ba14701352bf2551886c2ac</Hash>
+    <Hash>4e4f59971eba7136260cbd043f63148e</Hash>
 </Codenesium>*/

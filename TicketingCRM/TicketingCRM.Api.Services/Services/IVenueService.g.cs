@@ -18,7 +18,7 @@ namespace TicketingCRMNS.Api.Services
 
 		Task<ApiVenueServerResponseModel> Get(int id);
 
-		Task<List<ApiVenueServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVenueServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiVenueServerResponseModel>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c86eec00ebc2992e349b8103e39f34b8</Hash>
+    <Hash>58bb0e832f6fa3640d1aa46561bef0d6</Hash>
 </Codenesium>*/

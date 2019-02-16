@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productID,
 			int averageLeadTime,
 			int businessEntityID,
 			decimal? lastReceiptCost,
@@ -22,10 +23,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int minOrderQty,
 			DateTime modifiedDate,
 			int? onOrderQty,
-			int productID,
 			decimal standardPrice,
 			string unitMeasureCode)
 		{
+			this.ProductID = productID;
 			this.AverageLeadTime = averageLeadTime;
 			this.BusinessEntityID = businessEntityID;
 			this.LastReceiptCost = lastReceiptCost;
@@ -34,7 +35,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.MinOrderQty = minOrderQty;
 			this.ModifiedDate = modifiedDate;
 			this.OnOrderQty = onOrderQty;
-			this.ProductID = productID;
 			this.StandardPrice = standardPrice;
 			this.UnitMeasureCode = unitMeasureCode;
 		}
@@ -78,5 +78,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18e7f92afb787cc35548ea6d8550fede</Hash>
+    <Hash>19c09fcdeaf48000b860de24073aafd0</Hash>
 </Codenesium>*/

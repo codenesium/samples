@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void @ClassRules()
-		{
-			this.RuleFor(x => x.@Class).Length(0, 2).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
 		public virtual void ColorRules()
 		{
 			this.RuleFor(x => x.Color).Length(0, 15).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
@@ -181,5 +176,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91f201bd936b714d1e2bdcc162f9bbff</Hash>
+    <Hash>36347cff1341538d9ef97cfe4a0be3e3</Hash>
 </Codenesium>*/

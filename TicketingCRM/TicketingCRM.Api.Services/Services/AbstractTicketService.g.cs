@@ -16,9 +16,9 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiTicketServerRequestModelValidator TicketModelValidator { get; private set; }
 
-		protected IBOLTicketMapper BolTicketMapper { get; private set; }
-
 		protected IDALTicketMapper DalTicketMapper { get; private set; }
+
+		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -27,29 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ITicketRepository ticketRepository,
 			IApiTicketServerRequestModelValidator ticketModelValidator,
-			IBOLTicketMapper bolTicketMapper,
-			IDALTicketMapper dalTicketMapper)
+			IDALTicketMapper dalTicketMapper,
+			IDALSaleTicketMapper dalSaleTicketMapper)
 			: base()
 		{
 			this.TicketRepository = ticketRepository;
 			this.TicketModelValidator = ticketModelValidator;
-			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
+			this.DalSaleTicketMapper = dalSaleTicketMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTicketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTicketServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TicketRepository.All(limit, offset);
+			List<Ticket> records = await this.TicketRepository.All(limit, offset, query);
 
-			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
+			return this.DalTicketMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTicketServerResponseModel> Get(int id)
 		{
-			var record = await this.TicketRepository.Get(id);
+			Ticket record = await this.TicketRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(record));
+				return this.DalTicketMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTicketMapper.MapModelToBO(default(int), model);
-				var record = await this.TicketRepository.Create(this.DalTicketMapper.MapBOToEF(bo));
+				Ticket record = this.DalTicketMapper.MapModelToEntity(default(int), model);
+				record = await this.TicketRepository.Create(record);
 
-				var businessObject = this.DalTicketMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTicketMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTicketMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TicketCreatedNotification(response.Record));
 			}
 
@@ -87,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTicketMapper.MapModelToBO(id, model);
-				await this.TicketRepository.Update(this.DalTicketMapper.MapBOToEF(bo));
+				Ticket record = this.DalTicketMapper.MapModelToEntity(id, model);
+				await this.TicketRepository.Update(record);
 
-				var record = await this.TicketRepository.Get(id);
+				record = await this.TicketRepository.Get(id);
 
-				var businessObject = this.DalTicketMapper.MapEFToBO(record);
-				var apiModel = this.BolTicketMapper.MapBOToModel(businessObject);
+				ApiTicketServerResponseModel apiModel = this.DalTicketMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TicketUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTicketServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +121,18 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Ticket> records = await this.TicketRepository.ByTicketStatusId(ticketStatusId, limit, offset);
 
-			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
+			return this.DalTicketMapper.MapEntityToModel(records);
+		}
+
+		public async virtual Task<List<ApiSaleTicketServerResponseModel>> SaleTicketsByTicketId(int ticketId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SaleTicket> records = await this.TicketRepository.SaleTicketsByTicketId(ticketId, limit, offset);
+
+			return this.DalSaleTicketMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dee799cae6155476fb808274494f9a54</Hash>
+    <Hash>83a02c30f98dfbdcf510f2915bfd3f1d</Hash>
 </Codenesium>*/

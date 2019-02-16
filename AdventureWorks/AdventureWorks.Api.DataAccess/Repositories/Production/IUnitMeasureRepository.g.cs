@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<UnitMeasure> Get(string unitMeasureCode);
 
-		Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<UnitMeasure> ByName(string name);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb87ca7eaddb6be8e3a40c03b54ed9b9</Hash>
+    <Hash>47adedb15c5d896518c5bed3788c22a4</Hash>
 </Codenesium>*/

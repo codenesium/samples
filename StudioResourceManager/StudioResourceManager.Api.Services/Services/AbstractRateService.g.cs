@@ -16,8 +16,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiRateServerRequestModelValidator RateModelValidator { get; private set; }
 
-		protected IBOLRateMapper BolRateMapper { get; private set; }
-
 		protected IDALRateMapper DalRateMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IRateRepository rateRepository,
 			IApiRateServerRequestModelValidator rateModelValidator,
-			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper)
 			: base()
 		{
 			this.RateRepository = rateRepository;
 			this.RateModelValidator = rateModelValidator;
-			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.RateRepository.All(limit, offset);
+			List<Rate> records = await this.RateRepository.All(limit, offset, query);
 
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+			return this.DalRateMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiRateServerResponseModel> Get(int id)
 		{
-			var record = await this.RateRepository.Get(id);
+			Rate record = await this.RateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record));
+				return this.DalRateMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolRateMapper.MapModelToBO(default(int), model);
-				var record = await this.RateRepository.Create(this.DalRateMapper.MapBOToEF(bo));
+				Rate record = this.DalRateMapper.MapModelToEntity(default(int), model);
+				record = await this.RateRepository.Create(record);
 
-				var businessObject = this.DalRateMapper.MapEFToBO(record);
-				response.SetRecord(this.BolRateMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalRateMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new RateCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolRateMapper.MapModelToBO(id, model);
-				await this.RateRepository.Update(this.DalRateMapper.MapBOToEF(bo));
+				Rate record = this.DalRateMapper.MapModelToEntity(id, model);
+				await this.RateRepository.Update(record);
 
-				var record = await this.RateRepository.Get(id);
+				record = await this.RateRepository.Get(id);
 
-				var businessObject = this.DalRateMapper.MapEFToBO(record);
-				var apiModel = this.BolRateMapper.MapBOToModel(businessObject);
+				ApiRateServerResponseModel apiModel = this.DalRateMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new RateUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiRateServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			List<Rate> records = await this.RateRepository.ByTeacherId(teacherId, limit, offset);
 
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+			return this.DalRateMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiRateServerResponseModel>> ByTeacherSkillId(int teacherSkillId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<Rate> records = await this.RateRepository.ByTeacherSkillId(teacherSkillId, limit, offset);
 
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+			return this.DalRateMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3da31b7de8fc00b85bf32a45aaf451e9</Hash>
+    <Hash>68a2e91345ad39b9d9d4f0cb5fc55d53</Hash>
 </Codenesium>*/

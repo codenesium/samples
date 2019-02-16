@@ -14,15 +14,15 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string description,
 			int id,
+			string description,
 			string jwtKey,
 			string lastIpAddress,
 			Guid machineGuid,
 			string name)
 		{
-			this.Description = description;
 			this.Id = id;
+			this.Description = description;
 			this.JwtKey = jwtKey;
 			this.LastIpAddress = lastIpAddress;
 			this.MachineGuid = machineGuid;
@@ -55,5 +55,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>686bf1c0d5aadd0908818184e3d99896</Hash>
+    <Hash>9da9e97c15f7bf00f4b4f3c64934e727</Hash>
 </Codenesium>*/

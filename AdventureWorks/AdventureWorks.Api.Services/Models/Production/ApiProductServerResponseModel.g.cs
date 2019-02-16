@@ -10,7 +10,6 @@ namespace AdventureWorksNS.Api.Services
 	{
 		public virtual void SetProperties(
 			int productID,
-			string @class,
 			string color,
 			int daysToManufacture,
 			DateTime? discontinuedDate,
@@ -36,7 +35,6 @@ namespace AdventureWorksNS.Api.Services
 			string weightUnitMeasureCode)
 		{
 			this.ProductID = productID;
-			this.@Class = @class;
 			this.Color = color;
 			this.DaysToManufacture = daysToManufacture;
 			this.DiscontinuedDate = discontinuedDate;
@@ -61,10 +59,6 @@ namespace AdventureWorksNS.Api.Services
 			this.Weight = weight;
 			this.WeightUnitMeasureCode = weightUnitMeasureCode;
 		}
-
-		[Required]
-		[JsonProperty]
-		public string @Class { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -152,5 +146,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84377bbcdf17aa2d69eda76858d473d4</Hash>
+    <Hash>20ae269b366461368451e9615695c339</Hash>
 </Codenesium>*/

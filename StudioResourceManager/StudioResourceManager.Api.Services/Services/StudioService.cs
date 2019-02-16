@@ -12,13 +12,11 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IStudioRepository studioRepository,
 			IApiStudioServerRequestModelValidator studioModelValidator,
-			IBOLStudioMapper bolStudioMapper,
 			IDALStudioMapper dalStudioMapper)
 			: base(logger,
 			       mediator,
 			       studioRepository,
 			       studioModelValidator,
-			       bolStudioMapper,
 			       dalStudioMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3418baa2291716afc025794d23c1bf2b</Hash>
+    <Hash>12468f348106ecd77acd9f638b6536d7</Hash>
 </Codenesium>*/

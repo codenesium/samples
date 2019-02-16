@@ -33,13 +33,29 @@ namespace PetShippingNS.Api.Services
 		public string PipelineStepStatusIdEntity { get; private set; } = RouteConstants.PipelineStepStatus;
 
 		[JsonProperty]
+		public ApiPipelineStepStatuServerResponseModel PipelineStepStatusIdNavigation { get; private set; }
+
+		public void SetPipelineStepStatusIdNavigation(ApiPipelineStepStatuServerResponseModel value)
+		{
+			this.PipelineStepStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int ShipperId { get; private set; }
 
 		[JsonProperty]
 		public string ShipperIdEntity { get; private set; } = RouteConstants.Employees;
+
+		[JsonProperty]
+		public ApiEmployeeServerResponseModel ShipperIdNavigation { get; private set; }
+
+		public void SetShipperIdNavigation(ApiEmployeeServerResponseModel value)
+		{
+			this.ShipperIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>620cec6f9954146fa3b4701752578243</Hash>
+    <Hash>36bc62aa2e20438eaae37ad0b39072e7</Hash>
 </Codenesium>*/

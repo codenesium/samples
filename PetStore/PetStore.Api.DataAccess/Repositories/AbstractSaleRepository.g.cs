@@ -26,9 +26,25 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Amount.ToDecimal() == query.ToDecimal() ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.PaymentTypeId == query.ToInt() ||
+				                  x.PetId == query.ToInt() ||
+				                  x.Phone.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Sale> Get(int id)
@@ -79,13 +95,15 @@ namespace PetStoreNS.Api.DataAccess
 		// Foreign key reference to table PaymentType via paymentTypeId.
 		public async virtual Task<PaymentType> PaymentTypeByPaymentTypeId(int paymentTypeId)
 		{
-			return await this.Context.Set<PaymentType>().SingleOrDefaultAsync(x => x.Id == paymentTypeId);
+			return await this.Context.Set<PaymentType>()
+			       .SingleOrDefaultAsync(x => x.Id == paymentTypeId);
 		}
 
 		// Foreign key reference to table Pet via petId.
 		public async virtual Task<Pet> PetByPetId(int petId)
 		{
-			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
+			return await this.Context.Set<Pet>()
+			       .SingleOrDefaultAsync(x => x.Id == petId);
 		}
 
 		protected async Task<List<Sale>> Where(
@@ -99,7 +117,11 @@ namespace PetStoreNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
+			return await this.Context.Set<Sale>()
+			       .Include(x => x.PaymentTypeIdNavigation)
+			       .Include(x => x.PetIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		private async Task<Sale> GetById(int id)
@@ -112,5 +134,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>884f6dd399bbc51f0570b415a8720250</Hash>
+    <Hash>5dd28bbebd5b3edca013b34ce75f78bc</Hash>
 </Codenesium>*/

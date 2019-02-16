@@ -47,10 +47,19 @@ namespace NebulaNS.Api.DataAccess
 			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<LinkLogRepository>> loggerMoc = LinkLogRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
+			var repository = new LinkLogRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
 
 			LinkLog entity = new LinkLog();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<LinkLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
 
 			var entity = new LinkLog();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<LinkLog>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
 			LinkLog entity = new LinkLog();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<LinkLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
 			LinkLog entity = new LinkLog();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<LinkLog>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = LinkLogRepositoryMoc.GetContext();
 			var repository = new LinkLogRepository(loggerMoc.Object, context);
 			LinkLog entity = new LinkLog();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, "B");
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<LinkLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>89a1e891887fe34a2c3be6cc0d26fadc</Hash>
+    <Hash>7c9f17b2b18c15d9dcf292fdac5de38d</Hash>
 </Codenesium>*/

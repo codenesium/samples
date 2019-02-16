@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IJobCandidateRepository jobCandidateRepository,
 			IApiJobCandidateServerRequestModelValidator jobCandidateModelValidator,
-			IBOLJobCandidateMapper bolJobCandidateMapper,
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base(logger,
 			       mediator,
 			       jobCandidateRepository,
 			       jobCandidateModelValidator,
-			       bolJobCandidateMapper,
 			       dalJobCandidateMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e84136fcbd118ee3478fa92b024f4f2</Hash>
+    <Hash>b581489e61a641622e2b27712433893f</Hash>
 </Codenesium>*/

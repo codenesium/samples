@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			Guid rowguid,
 			int changeNumber,
 			byte[] document1,
 			short? documentLevel,
@@ -24,10 +25,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			int owner,
 			string revision,
-			Guid rowguid,
 			int status,
 			string title)
 		{
+			this.Rowguid = rowguid;
 			this.ChangeNumber = changeNumber;
 			this.Document1 = document1;
 			this.DocumentLevel = documentLevel;
@@ -38,7 +39,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ModifiedDate = modifiedDate;
 			this.Owner = owner;
 			this.Revision = revision;
-			this.Rowguid = rowguid;
 			this.Status = status;
 			this.Title = title;
 		}
@@ -90,5 +90,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce5b7d2754dceddb3ba2f6182ddae321</Hash>
+    <Hash>a4f8c4df7bc8eaa5fdb6a7d6d52b6765</Hash>
 </Codenesium>*/

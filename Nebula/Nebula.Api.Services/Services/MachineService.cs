@@ -12,17 +12,13 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
-			IBOLMachineMapper bolMachineMapper,
 			IDALMachineMapper dalMachineMapper,
-			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base(logger,
 			       mediator,
 			       machineRepository,
 			       machineModelValidator,
-			       bolMachineMapper,
 			       dalMachineMapper,
-			       bolLinkMapper,
 			       dalLinkMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d35138376a3a560426e6dc3fe2cf87c2</Hash>
+    <Hash>8dd259ac2b7e4bcafb8e1e2d208ebb36</Hash>
 </Codenesium>*/

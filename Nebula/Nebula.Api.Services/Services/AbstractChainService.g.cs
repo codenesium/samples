@@ -16,15 +16,9 @@ namespace NebulaNS.Api.Services
 
 		protected IApiChainServerRequestModelValidator ChainModelValidator { get; private set; }
 
-		protected IBOLChainMapper BolChainMapper { get; private set; }
-
 		protected IDALChainMapper DalChainMapper { get; private set; }
 
-		protected IBOLClaspMapper BolClaspMapper { get; private set; }
-
 		protected IDALClaspMapper DalClaspMapper { get; private set; }
-
-		protected IBOLLinkMapper BolLinkMapper { get; private set; }
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
 
@@ -35,37 +29,31 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IChainRepository chainRepository,
 			IApiChainServerRequestModelValidator chainModelValidator,
-			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper,
-			IBOLClaspMapper bolClaspMapper,
 			IDALClaspMapper dalClaspMapper,
-			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base()
 		{
 			this.ChainRepository = chainRepository;
 			this.ChainModelValidator = chainModelValidator;
-			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
-			this.BolClaspMapper = bolClaspMapper;
 			this.DalClaspMapper = dalClaspMapper;
-			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiChainServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiChainServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ChainRepository.All(limit, offset);
+			List<Chain> records = await this.ChainRepository.All(limit, offset, query);
 
-			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
+			return this.DalChainMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiChainServerResponseModel> Get(int id)
 		{
-			var record = await this.ChainRepository.Get(id);
+			Chain record = await this.ChainRepository.Get(id);
 
 			if (record == null)
 			{
@@ -73,7 +61,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(record));
+				return this.DalChainMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -84,11 +72,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolChainMapper.MapModelToBO(default(int), model);
-				var record = await this.ChainRepository.Create(this.DalChainMapper.MapBOToEF(bo));
+				Chain record = this.DalChainMapper.MapModelToEntity(default(int), model);
+				record = await this.ChainRepository.Create(record);
 
-				var businessObject = this.DalChainMapper.MapEFToBO(record);
-				response.SetRecord(this.BolChainMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalChainMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ChainCreatedNotification(response.Record));
 			}
 
@@ -103,13 +90,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolChainMapper.MapModelToBO(id, model);
-				await this.ChainRepository.Update(this.DalChainMapper.MapBOToEF(bo));
+				Chain record = this.DalChainMapper.MapModelToEntity(id, model);
+				await this.ChainRepository.Update(record);
 
-				var record = await this.ChainRepository.Get(id);
+				record = await this.ChainRepository.Get(id);
 
-				var businessObject = this.DalChainMapper.MapEFToBO(record);
-				var apiModel = this.BolChainMapper.MapBOToModel(businessObject);
+				ApiChainServerResponseModel apiModel = this.DalChainMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ChainUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiChainServerResponseModel>.UpdateResponse(apiModel);
@@ -145,7 +131,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(record));
+				return this.DalChainMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -153,25 +139,25 @@ namespace NebulaNS.Api.Services
 		{
 			List<Clasp> records = await this.ChainRepository.ClaspsByNextChainId(nextChainId, limit, offset);
 
-			return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(records));
+			return this.DalClaspMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiClaspServerResponseModel>> ClaspsByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Clasp> records = await this.ChainRepository.ClaspsByPreviousChainId(previousChainId, limit, offset);
 
-			return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(records));
+			return this.DalClaspMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiLinkServerResponseModel>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Link> records = await this.ChainRepository.LinksByChainId(chainId, limit, offset);
 
-			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
+			return this.DalLinkMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>efe06ecbc8f7aa55a64cbac94ba7317b</Hash>
+    <Hash>92d962874c0dbd4c260da73a1f5e7fd8</Hash>
 </Codenesium>*/

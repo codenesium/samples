@@ -18,10 +18,10 @@ namespace TestsNS.Api.Services
 
 		Task<ApiVPersonServerResponseModel> Get(int personId);
 
-		Task<List<ApiVPersonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiVPersonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7af4d82cd2a8850b3a75fff2047953e9</Hash>
+    <Hash>29e3da068ea202bf363c24d9e319407f</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPipelineStepNoteRepository>();
 			var records = new List<PipelineStepNote>();
 			records.Add(new PipelineStepNote());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new PipelineStepNoteService(mock.LoggerMock.Object,
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			List<ApiPipelineStepNoteServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			ApiPipelineStepNoteServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			ApiPipelineStepNoteServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			CreateResponse<ApiPipelineStepNoteServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			CreateResponse<ApiPipelineStepNoteServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			UpdateResponse<ApiPipelineStepNoteServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			UpdateResponse<ApiPipelineStepNoteServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.PipelineStepNoteModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                          mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1ba0165815e9ab92ec9d3a6c42f1d3cc</Hash>
+    <Hash>458ef8936e2ac37c2743279b32e2e61a</Hash>
 </Codenesium>*/

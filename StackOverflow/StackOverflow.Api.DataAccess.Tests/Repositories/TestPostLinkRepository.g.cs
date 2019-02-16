@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<PostLinkRepository>> loggerMoc = PostLinkRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PostLinkRepositoryMoc.GetContext();
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PostLinkRepository>> loggerMoc = PostLinkRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PostLinkRepositoryMoc.GetContext();
+			var repository = new PostLinkRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
 
 			PostLink entity = new PostLink();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<PostLink>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
 
 			var entity = new PostLink();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<PostLink>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostLinkRepositoryMoc.GetContext();
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
 			PostLink entity = new PostLink();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<PostLink>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostLinkRepositoryMoc.GetContext();
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
 			PostLink entity = new PostLink();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<PostLink>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = PostLinkRepositoryMoc.GetContext();
 			var repository = new PostLinkRepository(loggerMoc.Object, context);
 			PostLink entity = new PostLink();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<PostLink>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05891759d076cdf437b4f0844d770fd8</Hash>
+    <Hash>f007c9dc33e60a44a4d2d9d557f9bcd6</Hash>
 </Codenesium>*/

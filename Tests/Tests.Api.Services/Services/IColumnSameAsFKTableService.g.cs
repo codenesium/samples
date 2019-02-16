@@ -18,10 +18,10 @@ namespace TestsNS.Api.Services
 
 		Task<ApiColumnSameAsFKTableServerResponseModel> Get(int id);
 
-		Task<List<ApiColumnSameAsFKTableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiColumnSameAsFKTableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d6f8af8deb1f55479f6558c58eb3925</Hash>
+    <Hash>a5cc3ee90cc2f25d092e035b066deb23</Hash>
 </Codenesium>*/

@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
 			var records = new List<BillOfMaterial>();
 			records.Add(new BillOfMaterial());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			List<ApiBillOfMaterialServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			ApiBillOfMaterialServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			ApiBillOfMaterialServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			CreateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			CreateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			UpdateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			UpdateResponse<ApiBillOfMaterialServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			List<ApiBillOfMaterialServerResponseModel> response = await service.ByUnitMeasureCode("test_value");
@@ -240,7 +230,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
 			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
 
 			List<ApiBillOfMaterialServerResponseModel> response = await service.ByUnitMeasureCode("test_value");
@@ -252,5 +241,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb0b891f5768594b32ee59f2cb889cd4</Hash>
+    <Hash>5886ee124db113af15cd3cfd7cc4f392</Hash>
 </Codenesium>*/

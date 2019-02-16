@@ -47,6 +47,14 @@ namespace TicketingCRMNS.Api.Services
 		public string CityIdEntity { get; private set; } = RouteConstants.Cities;
 
 		[JsonProperty]
+		public ApiCityServerResponseModel CityIdNavigation { get; private set; }
+
+		public void SetCityIdNavigation(ApiCityServerResponseModel value)
+		{
+			this.CityIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime Date { get; private set; }
 
 		[JsonProperty]
@@ -73,5 +81,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8c94e9ad684ef8db7b98bc053cf8980</Hash>
+    <Hash>137c8a8f88e91e5c52c41070b1f18c05</Hash>
 </Codenesium>*/

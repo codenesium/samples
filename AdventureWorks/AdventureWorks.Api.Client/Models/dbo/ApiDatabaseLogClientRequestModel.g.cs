@@ -15,16 +15,12 @@ namespace AdventureWorksNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			string @event,
-			string @object,
 			string databaseUser,
 			DateTime postTime,
 			string schema,
 			string tsql,
 			string xmlEvent)
 		{
-			this.@Event = @event;
-			this.@Object = @object;
 			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
 			this.Schema = schema;
@@ -34,12 +30,6 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public string DatabaseUser { get; private set; } = default(string);
-
-		[JsonProperty]
-		public string @Event { get; private set; } = default(string);
-
-		[JsonProperty]
-		public string @Object { get; private set; } = default(string);
 
 		[JsonProperty]
 		public DateTime PostTime { get; private set; } = SqlDateTime.MinValue.Value;
@@ -56,5 +46,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>529a9fd0a97b6ff56f475840a5eb47ac</Hash>
+    <Hash>91e02d2efd51f0238cbd7ec4f405cb39</Hash>
 </Codenesium>*/

@@ -14,15 +14,15 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int chainStatusId,
 			Guid externalId,
-			int id,
 			string name,
 			int teamId)
 		{
+			this.Id = id;
 			this.ChainStatusId = chainStatusId;
 			this.ExternalId = externalId;
-			this.Id = id;
 			this.Name = name;
 			this.TeamId = teamId;
 		}
@@ -45,23 +45,23 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int TeamId { get; private set; }
 
 		[ForeignKey("ChainStatusId")]
-		public virtual ChainStatus ChainStatusNavigation { get; private set; }
+		public virtual ChainStatus ChainStatusIdNavigation { get; private set; }
 
-		public void SetChainStatusNavigation(ChainStatus item)
+		public void SetChainStatusIdNavigation(ChainStatus item)
 		{
-			this.ChainStatusNavigation = item;
+			this.ChainStatusIdNavigation = item;
 		}
 
 		[ForeignKey("TeamId")]
-		public virtual Team TeamNavigation { get; private set; }
+		public virtual Team TeamIdNavigation { get; private set; }
 
-		public void SetTeamNavigation(Team item)
+		public void SetTeamIdNavigation(Team item)
 		{
-			this.TeamNavigation = item;
+			this.TeamIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a70dc457218a03a284e97202612605af</Hash>
+    <Hash>797653c245fd7de9ebe570c11eb18f02</Hash>
 </Codenesium>*/

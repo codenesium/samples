@@ -15,7 +15,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<Student> Get(int id);
 
-		Task<List<Student>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Student>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Student>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,15 +24,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<Family> FamilyByFamilyId(int familyId);
 
 		Task<User> UserByUserId(int userId);
-
-		Task<List<Student>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
-
-		Task<EventStudent> CreateEventStudent(EventStudent item);
-
-		Task DeleteEventStudent(EventStudent item);
 	}
 }
 
 /*<Codenesium>
-    <Hash>699b12173164e437759d0be43b0b50a9</Hash>
+    <Hash>faf5ab86edad5848f58a057a663dbd78</Hash>
 </Codenesium>*/

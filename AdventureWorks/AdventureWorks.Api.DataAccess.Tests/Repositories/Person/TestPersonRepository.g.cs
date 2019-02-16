@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PersonRepository(loggerMoc.Object, context);
 
 			Person entity = new Person();
-			entity.SetProperties("B", 2, "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
+			entity.SetProperties(default(int), "B", "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PersonRepository(loggerMoc.Object, context);
 
 			var entity = new Person();
-			entity.SetProperties("B", 2, "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
+			entity.SetProperties(default(int), "B", "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Person>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties("B", 2, "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
+			entity.SetProperties(default(int), "B", "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties("B", 2, "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
+			entity.SetProperties(default(int), "B", "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PersonRepositoryMoc.GetContext();
 			var repository = new PersonRepository(loggerMoc.Object, context);
 			Person entity = new Person();
-			entity.SetProperties("B", 2, "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
+			entity.SetProperties(default(int), "B", "B", 2, "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", "B");
 			context.Set<Person>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e373b2eff2fedf0c2927157c6d8db31a</Hash>
+    <Hash>596f45f4c6671875397e0908175dbe7d</Hash>
 </Codenesium>*/

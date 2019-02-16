@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
 
 			Department entity = new Department();
-			entity.SetProperties(2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Department>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
 
 			var entity = new Department();
-			entity.SetProperties(2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Department>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
 			Department entity = new Department();
-			entity.SetProperties(2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Department>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
 			Department entity = new Department();
-			entity.SetProperties(2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Department>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
 			var repository = new DepartmentRepository(loggerMoc.Object, context);
 			Department entity = new Department();
-			entity.SetProperties(2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(short), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Department>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0169f331cbd543f6a3c9eb2b5f35fa68</Hash>
+    <Hash>f40c6f5c83ea0bef9c7a6890711db58f</Hash>
 </Codenesium>*/

@@ -27,6 +27,14 @@ namespace PetShippingNS.Api.Services
 		public string EmployeeIdEntity { get; private set; } = RouteConstants.Employees;
 
 		[JsonProperty]
+		public ApiEmployeeServerResponseModel EmployeeIdNavigation { get; private set; }
+
+		public void SetEmployeeIdNavigation(ApiEmployeeServerResponseModel value)
+		{
+			this.EmployeeIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -37,9 +45,17 @@ namespace PetShippingNS.Api.Services
 
 		[JsonProperty]
 		public string PipelineStepIdEntity { get; private set; } = RouteConstants.PipelineSteps;
+
+		[JsonProperty]
+		public ApiPipelineStepServerResponseModel PipelineStepIdNavigation { get; private set; }
+
+		public void SetPipelineStepIdNavigation(ApiPipelineStepServerResponseModel value)
+		{
+			this.PipelineStepIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9bc87c856f6c397ae9d5953bc6a8210</Hash>
+    <Hash>5da3465277439e329ce6a42127de9759</Hash>
 </Codenesium>*/

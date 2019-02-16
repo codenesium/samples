@@ -26,9 +26,23 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.IpAddress.StartsWith(query) ||
+				                  x.Note.StartsWith(query) ||
+				                  x.SaleDate == query.ToDateTime() ||
+				                  x.TransactionId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Sale> Get(int id)
@@ -82,37 +96,18 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Where(x => x.TransactionId == transactionId, limit, offset);
 		}
 
+		// Foreign key reference to this table SaleTicket via saleId.
+		public async virtual Task<List<SaleTicket>> SaleTicketsBySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SaleTicket>()
+			       .Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
+		}
+
 		// Foreign key reference to table Transaction via transactionId.
 		public async virtual Task<Transaction> TransactionByTransactionId(int transactionId)
 		{
-			return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
-		}
-
-		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
-		public async virtual Task<List<Sale>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.SaleTickets
-			              join sales in this.Context.Sales on
-			              refTable.SaleId equals sales.Id
-			              where refTable.SaleId == saleId
-			              select sales).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
-		public async virtual Task<SaleTicket> CreateSaleTicket(SaleTicket item)
-		{
-			this.Context.Set<SaleTicket>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table SaleTicket. Foreign Table Sale.
-		public async virtual Task DeleteSaleTicket(SaleTicket item)
-		{
-			this.Context.Set<SaleTicket>().Remove(item);
-			await this.Context.SaveChangesAsync();
+			return await this.Context.Set<Transaction>()
+			       .SingleOrDefaultAsync(x => x.Id == transactionId);
 		}
 
 		protected async Task<List<Sale>> Where(
@@ -126,7 +121,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
+			return await this.Context.Set<Sale>()
+			       .Include(x => x.TransactionIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		private async Task<Sale> GetById(int id)
@@ -139,5 +137,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>941055cb13fd75243c40f97515f11eb0</Hash>
+    <Hash>2c5773f1207fd404a3ee58a045dfa57e</Hash>
 </Codenesium>*/

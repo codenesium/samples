@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiPostHistoryTypeServerRequestModelValidator PostHistoryTypeModelValidator { get; private set; }
 
-		protected IBOLPostHistoryTypeMapper BolPostHistoryTypeMapper { get; private set; }
-
 		protected IDALPostHistoryTypeMapper DalPostHistoryTypeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IPostHistoryTypeRepository postHistoryTypeRepository,
 			IApiPostHistoryTypeServerRequestModelValidator postHistoryTypeModelValidator,
-			IBOLPostHistoryTypeMapper bolPostHistoryTypeMapper,
 			IDALPostHistoryTypeMapper dalPostHistoryTypeMapper)
 			: base()
 		{
 			this.PostHistoryTypeRepository = postHistoryTypeRepository;
 			this.PostHistoryTypeModelValidator = postHistoryTypeModelValidator;
-			this.BolPostHistoryTypeMapper = bolPostHistoryTypeMapper;
 			this.DalPostHistoryTypeMapper = dalPostHistoryTypeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPostHistoryTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPostHistoryTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PostHistoryTypeRepository.All(limit, offset);
+			List<PostHistoryType> records = await this.PostHistoryTypeRepository.All(limit, offset, query);
 
-			return this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(records));
+			return this.DalPostHistoryTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPostHistoryTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.PostHistoryTypeRepository.Get(id);
+			PostHistoryType record = await this.PostHistoryTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolPostHistoryTypeMapper.MapBOToModel(this.DalPostHistoryTypeMapper.MapEFToBO(record));
+				return this.DalPostHistoryTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPostHistoryTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.PostHistoryTypeRepository.Create(this.DalPostHistoryTypeMapper.MapBOToEF(bo));
+				PostHistoryType record = this.DalPostHistoryTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.PostHistoryTypeRepository.Create(record);
 
-				var businessObject = this.DalPostHistoryTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPostHistoryTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPostHistoryTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PostHistoryTypeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPostHistoryTypeMapper.MapModelToBO(id, model);
-				await this.PostHistoryTypeRepository.Update(this.DalPostHistoryTypeMapper.MapBOToEF(bo));
+				PostHistoryType record = this.DalPostHistoryTypeMapper.MapModelToEntity(id, model);
+				await this.PostHistoryTypeRepository.Update(record);
 
-				var record = await this.PostHistoryTypeRepository.Get(id);
+				record = await this.PostHistoryTypeRepository.Get(id);
 
-				var businessObject = this.DalPostHistoryTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolPostHistoryTypeMapper.MapBOToModel(businessObject);
+				ApiPostHistoryTypeServerResponseModel apiModel = this.DalPostHistoryTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PostHistoryTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPostHistoryTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cd79b45ec66545c6854d863ce39c25f</Hash>
+    <Hash>a9fdc1cb8e27c31303de3333837a4e90</Hash>
 </Codenesium>*/

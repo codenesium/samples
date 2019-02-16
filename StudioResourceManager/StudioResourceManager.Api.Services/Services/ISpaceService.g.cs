@@ -18,12 +18,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiSpaceServerResponseModel> Get(int id);
 
-		Task<List<ApiSpaceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiSpaceServerResponseModel>> BySpaceFeatureId(int spaceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpaceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b08ed351e71c4b800c619c8098a12fde</Hash>
+    <Hash>6dcd6e727dbbe74db86db838021737dc</Hash>
 </Codenesium>*/

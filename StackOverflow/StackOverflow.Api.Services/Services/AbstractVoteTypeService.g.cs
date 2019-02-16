@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiVoteTypeServerRequestModelValidator VoteTypeModelValidator { get; private set; }
 
-		protected IBOLVoteTypeMapper BolVoteTypeMapper { get; private set; }
-
 		protected IDALVoteTypeMapper DalVoteTypeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IVoteTypeRepository voteTypeRepository,
 			IApiVoteTypeServerRequestModelValidator voteTypeModelValidator,
-			IBOLVoteTypeMapper bolVoteTypeMapper,
 			IDALVoteTypeMapper dalVoteTypeMapper)
 			: base()
 		{
 			this.VoteTypeRepository = voteTypeRepository;
 			this.VoteTypeModelValidator = voteTypeModelValidator;
-			this.BolVoteTypeMapper = bolVoteTypeMapper;
 			this.DalVoteTypeMapper = dalVoteTypeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiVoteTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiVoteTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.VoteTypeRepository.All(limit, offset);
+			List<VoteType> records = await this.VoteTypeRepository.All(limit, offset, query);
 
-			return this.BolVoteTypeMapper.MapBOToModel(this.DalVoteTypeMapper.MapEFToBO(records));
+			return this.DalVoteTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiVoteTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.VoteTypeRepository.Get(id);
+			VoteType record = await this.VoteTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolVoteTypeMapper.MapBOToModel(this.DalVoteTypeMapper.MapEFToBO(record));
+				return this.DalVoteTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolVoteTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.VoteTypeRepository.Create(this.DalVoteTypeMapper.MapBOToEF(bo));
+				VoteType record = this.DalVoteTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.VoteTypeRepository.Create(record);
 
-				var businessObject = this.DalVoteTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolVoteTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalVoteTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new VoteTypeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolVoteTypeMapper.MapModelToBO(id, model);
-				await this.VoteTypeRepository.Update(this.DalVoteTypeMapper.MapBOToEF(bo));
+				VoteType record = this.DalVoteTypeMapper.MapModelToEntity(id, model);
+				await this.VoteTypeRepository.Update(record);
 
-				var record = await this.VoteTypeRepository.Get(id);
+				record = await this.VoteTypeRepository.Get(id);
 
-				var businessObject = this.DalVoteTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolVoteTypeMapper.MapBOToModel(businessObject);
+				ApiVoteTypeServerResponseModel apiModel = this.DalVoteTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new VoteTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiVoteTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc07226b85acd3c60fed8a47c68c1be8</Hash>
+    <Hash>b9ffb9a9107dba2a10c19a9070aa0a07</Hash>
 </Codenesium>*/

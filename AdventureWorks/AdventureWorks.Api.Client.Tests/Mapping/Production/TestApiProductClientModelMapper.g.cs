@@ -15,10 +15,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiProductModelMapper();
 			var model = new ApiProductClientRequestModel();
-			model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
+			model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 			ApiProductClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -49,10 +48,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiProductModelMapper();
 			var model = new ApiProductClientResponseModel();
-			model.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
+			model.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1m, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1m, "A", 1, "A");
 			ApiProductClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Class.Should().Be("A");
 			response.Color.Should().Be("A");
 			response.DaysToManufacture.Should().Be(1);
 			response.DiscontinuedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -81,5 +79,5 @@ namespace AdventureWorksNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>9fcac32708bd36d8f08b3172aabd98d3</Hash>
+    <Hash>c02c1b26defa12d0d34ed8a870800f06</Hash>
 </Codenesium>*/

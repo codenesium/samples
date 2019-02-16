@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiUserServerRequestModelValidator UserModelValidator { get; private set; }
 
-		protected IBOLUserMapper BolUserMapper { get; private set; }
-
 		protected IDALUserMapper DalUserMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IUserRepository userRepository,
 			IApiUserServerRequestModelValidator userModelValidator,
-			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base()
 		{
 			this.UserRepository = userRepository;
 			this.UserModelValidator = userModelValidator;
-			this.BolUserMapper = bolUserMapper;
 			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiUserServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.UserRepository.All(limit, offset);
+			List<User> records = await this.UserRepository.All(limit, offset, query);
 
-			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
+			return this.DalUserMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiUserServerResponseModel> Get(int id)
 		{
-			var record = await this.UserRepository.Get(id);
+			User record = await this.UserRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record));
+				return this.DalUserMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolUserMapper.MapModelToBO(default(int), model);
-				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
+				User record = this.DalUserMapper.MapModelToEntity(default(int), model);
+				record = await this.UserRepository.Create(record);
 
-				var businessObject = this.DalUserMapper.MapEFToBO(record);
-				response.SetRecord(this.BolUserMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalUserMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new UserCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolUserMapper.MapModelToBO(id, model);
-				await this.UserRepository.Update(this.DalUserMapper.MapBOToEF(bo));
+				User record = this.DalUserMapper.MapModelToEntity(id, model);
+				await this.UserRepository.Update(record);
 
-				var record = await this.UserRepository.Get(id);
+				record = await this.UserRepository.Get(id);
 
-				var businessObject = this.DalUserMapper.MapEFToBO(record);
-				var apiModel = this.BolUserMapper.MapBOToModel(businessObject);
+				ApiUserServerResponseModel apiModel = this.DalUserMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new UserUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiUserServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>670de1ab5926f8cdf06951f405df2acc</Hash>
+    <Hash>4a96e4cb353f0ee72b0b37b7b9f0859c</Hash>
 </Codenesium>*/

@@ -12,13 +12,11 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IBadgeRepository badgeRepository,
 			IApiBadgeServerRequestModelValidator badgeModelValidator,
-			IBOLBadgeMapper bolBadgeMapper,
 			IDALBadgeMapper dalBadgeMapper)
 			: base(logger,
 			       mediator,
 			       badgeRepository,
 			       badgeModelValidator,
-			       bolBadgeMapper,
 			       dalBadgeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6dfb5c901c522af4819247bc47641cd9</Hash>
+    <Hash>b77fcf77dc35cd1acd64cbadf2606e16</Hash>
 </Codenesium>*/

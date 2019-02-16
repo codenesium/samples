@@ -23,8 +23,7 @@ namespace AdventureWorksNS.Api.Client
 			int minQty,
 			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime startDate,
-			string type)
+			DateTime startDate)
 		{
 			this.Category = category;
 			this.Description = description;
@@ -35,7 +34,6 @@ namespace AdventureWorksNS.Api.Client
 			this.ModifiedDate = modifiedDate;
 			this.Rowguid = rowguid;
 			this.StartDate = startDate;
-			this.Type = type;
 		}
 
 		[JsonProperty]
@@ -64,12 +62,9 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public DateTime StartDate { get; private set; } = SqlDateTime.MinValue.Value;
-
-		[JsonProperty]
-		public string Type { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9af84574aa9228fa63cb4e76648e6f30</Hash>
+    <Hash>89af28cef9cce833e9af80eb4cc0a4cb</Hash>
 </Codenesium>*/

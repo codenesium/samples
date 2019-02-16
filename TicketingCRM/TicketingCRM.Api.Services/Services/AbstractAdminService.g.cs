@@ -16,11 +16,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiAdminServerRequestModelValidator AdminModelValidator { get; private set; }
 
-		protected IBOLAdminMapper BolAdminMapper { get; private set; }
-
 		protected IDALAdminMapper DalAdminMapper { get; private set; }
-
-		protected IBOLVenueMapper BolVenueMapper { get; private set; }
 
 		protected IDALVenueMapper DalVenueMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
-			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper,
-			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base()
 		{
 			this.AdminRepository = adminRepository;
 			this.AdminModelValidator = adminModelValidator;
-			this.BolAdminMapper = bolAdminMapper;
 			this.DalAdminMapper = dalAdminMapper;
-			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAdminServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AdminRepository.All(limit, offset);
+			List<Admin> records = await this.AdminRepository.All(limit, offset, query);
 
-			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
+			return this.DalAdminMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiAdminServerResponseModel> Get(int id)
 		{
-			var record = await this.AdminRepository.Get(id);
+			Admin record = await this.AdminRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record));
+				return this.DalAdminMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
-				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
+				Admin record = this.DalAdminMapper.MapModelToEntity(default(int), model);
+				record = await this.AdminRepository.Create(record);
 
-				var businessObject = this.DalAdminMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAdminMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAdminMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new AdminCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAdminMapper.MapModelToBO(id, model);
-				await this.AdminRepository.Update(this.DalAdminMapper.MapBOToEF(bo));
+				Admin record = this.DalAdminMapper.MapModelToEntity(id, model);
+				await this.AdminRepository.Update(record);
 
-				var record = await this.AdminRepository.Get(id);
+				record = await this.AdminRepository.Get(id);
 
-				var businessObject = this.DalAdminMapper.MapEFToBO(record);
-				var apiModel = this.BolAdminMapper.MapBOToModel(businessObject);
+				ApiAdminServerResponseModel apiModel = this.DalAdminMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new AdminUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAdminServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Venue> records = await this.AdminRepository.VenuesByAdminId(adminId, limit, offset);
 
-			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
+			return this.DalVenueMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4fd5c085e764c28613de1b9cf51ef846</Hash>
+    <Hash>9f91c6c539e8cb02de03d57446a931f5</Hash>
 </Codenesium>*/

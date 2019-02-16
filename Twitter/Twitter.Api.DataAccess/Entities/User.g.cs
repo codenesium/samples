@@ -14,6 +14,7 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int userId,
 			string bioImgUrl,
 			DateTime? birthday,
 			string contentDescription,
@@ -25,10 +26,10 @@ namespace TwitterNS.Api.DataAccess
 			string password,
 			string phoneNumber,
 			string privacy,
-			int userId,
 			string username,
 			string website)
 		{
+			this.UserId = userId;
 			this.BioImgUrl = bioImgUrl;
 			this.Birthday = birthday;
 			this.ContentDescription = contentDescription;
@@ -40,7 +41,6 @@ namespace TwitterNS.Api.DataAccess
 			this.Password = password;
 			this.PhoneNumber = phoneNumber;
 			this.Privacy = privacy;
-			this.UserId = userId;
 			this.Username = username;
 			this.Website = website;
 		}
@@ -100,15 +100,15 @@ namespace TwitterNS.Api.DataAccess
 		public virtual string Website { get; private set; }
 
 		[ForeignKey("LocationLocationId")]
-		public virtual Location LocationNavigation { get; private set; }
+		public virtual Location LocationLocationIdNavigation { get; private set; }
 
-		public void SetLocationNavigation(Location item)
+		public void SetLocationLocationIdNavigation(Location item)
 		{
-			this.LocationNavigation = item;
+			this.LocationLocationIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1dfb48526689c0c20522175f54cb27b8</Hash>
+    <Hash>24e6efbba4176e3e802c50bfbe04be2b</Hash>
 </Codenesium>*/

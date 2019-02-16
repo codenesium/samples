@@ -26,9 +26,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Person>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Person>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AdditionalContactInfo.StartsWith(query) ||
+				                  x.BusinessEntityID == query.ToInt() ||
+				                  x.Demographic.StartsWith(query) ||
+				                  x.EmailPromotion == query.ToInt() ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.MiddleName.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.NameStyle == query.ToBoolean() ||
+				                  x.PersonType.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.Suffix.StartsWith(query) ||
+				                  x.Title.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Person> Get(int businessEntityID)
@@ -130,5 +152,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0496be7ff4aea0abee58c899c4f24155</Hash>
+    <Hash>e471c427ac56af903b6b23ee386e1010</Hash>
 </Codenesium>*/

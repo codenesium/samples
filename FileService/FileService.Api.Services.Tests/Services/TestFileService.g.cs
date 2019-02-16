@@ -26,18 +26,17 @@ namespace FileServiceNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IFileRepository>();
 			var records = new List<File>();
 			records.Add(new File());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new FileService(mock.LoggerMock.Object,
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			List<ApiFileServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			ApiFileServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			ApiFileServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			CreateResponse<ApiFileServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			CreateResponse<ApiFileServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			UpdateResponse<ApiFileServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			UpdateResponse<ApiFileServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.FileModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace FileServiceNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLFileMapperMock,
 			                              mock.DALMapperMockFactory.DALFileMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ad13d5bc39b05bc46f17035495c83bbb</Hash>
+    <Hash>d28d162739bbf8f241ad74622bdbb589</Hash>
 </Codenesium>*/

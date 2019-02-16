@@ -67,12 +67,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		public virtual void TypeRules()
-		{
-			this.RuleFor(x => x.Type).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.Type).Length(0, 50).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
 		protected async Task<bool> BeUniqueByRowguid(ApiSpecialOfferServerRequestModel model,  CancellationToken cancellationToken)
 		{
 			SpecialOffer record = await this.SpecialOfferRepository.ByRowguid(model.Rowguid);
@@ -90,5 +84,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bed31a95f470f900e5c8231f8f02af48</Hash>
+    <Hash>bab8f85857f5c702171e3837f25e55b9</Hash>
 </Codenesium>*/

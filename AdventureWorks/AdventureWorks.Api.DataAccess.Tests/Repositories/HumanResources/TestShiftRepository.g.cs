@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
 			var repository = new ShiftRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ShiftRepository(loggerMoc.Object, context);
 
 			Shift entity = new Shift();
-			entity.SetProperties(TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, TimeSpan.Parse("02:00:00"));
+			entity.SetProperties(default(int), TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("02:00:00"));
 			context.Set<Shift>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new ShiftRepository(loggerMoc.Object, context);
 
 			var entity = new Shift();
-			entity.SetProperties(TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, TimeSpan.Parse("02:00:00"));
+			entity.SetProperties(default(int), TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("02:00:00"));
 			await repository.Create(entity);
 
 			var records = await context.Set<Shift>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
 			var repository = new ShiftRepository(loggerMoc.Object, context);
 			Shift entity = new Shift();
-			entity.SetProperties(TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, TimeSpan.Parse("02:00:00"));
+			entity.SetProperties(default(int), TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("02:00:00"));
 			context.Set<Shift>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
 			var repository = new ShiftRepository(loggerMoc.Object, context);
 			Shift entity = new Shift();
-			entity.SetProperties(TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, TimeSpan.Parse("02:00:00"));
+			entity.SetProperties(default(int), TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("02:00:00"));
 			context.Set<Shift>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
 			var repository = new ShiftRepository(loggerMoc.Object, context);
 			Shift entity = new Shift();
-			entity.SetProperties(TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, TimeSpan.Parse("02:00:00"));
+			entity.SetProperties(default(int), TimeSpan.Parse("02:00:00"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", TimeSpan.Parse("02:00:00"));
 			context.Set<Shift>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a162acac7bef87d0f2968209b6c30bd5</Hash>
+    <Hash>e60d3961574c84da71070b558bc85175</Hash>
 </Codenesium>*/

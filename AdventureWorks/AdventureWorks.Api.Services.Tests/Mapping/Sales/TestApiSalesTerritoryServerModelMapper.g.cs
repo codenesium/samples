@@ -16,10 +16,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSalesTerritoryServerModelMapper();
 			var model = new ApiSalesTerritoryServerRequestModel();
-			model.SetProperties("A", 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
+			model.SetProperties(1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 			ApiSalesTerritoryServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -35,10 +34,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSalesTerritoryServerModelMapper();
 			var model = new ApiSalesTerritoryServerResponseModel();
-			model.SetProperties(1, "A", 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
+			model.SetProperties(1, 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 			ApiSalesTerritoryServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -54,12 +52,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 			var mapper = new ApiSalesTerritoryServerModelMapper();
 			var model = new ApiSalesTerritoryServerRequestModel();
-			model.SetProperties("A", 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
+			model.SetProperties(1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 
 			JsonPatchDocument<ApiSalesTerritoryServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiSalesTerritoryServerRequestModel();
 			patch.ApplyTo(response);
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -73,5 +70,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>47ea7eef5cc7ede8f013b6c012b850ff</Hash>
+    <Hash>9bb9e164d09a0b1ae064645d0751b970</Hash>
 </Codenesium>*/

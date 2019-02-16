@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
 			CurrencyRate entity = new CurrencyRate();
-			entity.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<CurrencyRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
 			var entity = new CurrencyRate();
-			entity.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			await repository.Create(entity);
 
 			var records = await context.Set<CurrencyRate>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 			CurrencyRate entity = new CurrencyRate();
-			entity.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<CurrencyRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 			CurrencyRate entity = new CurrencyRate();
-			entity.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<CurrencyRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
 			var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 			CurrencyRate entity = new CurrencyRate();
-			entity.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
+			entity.SetProperties(default(int), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
 			context.Set<CurrencyRate>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dbd087179202e4ccc55b53895ec869e2</Hash>
+    <Hash>badf2521b3c1b3e6ebeb9de5a242a6b8</Hash>
 </Codenesium>*/

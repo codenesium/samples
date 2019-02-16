@@ -26,9 +26,21 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<RowVersionCheck>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<RowVersionCheck>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.RowVersion == query.ToGuid(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<RowVersionCheck> Get(int id)
@@ -87,7 +99,9 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<RowVersionCheck>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<RowVersionCheck>();
+			return await this.Context.Set<RowVersionCheck>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<RowVersionCheck>();
 		}
 
 		private async Task<RowVersionCheck> GetById(int id)
@@ -100,5 +114,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f0c4446bd8e96ac40ac6b3a779d77e99</Hash>
+    <Hash>81a4320a0d127843da6a707f251cdaf4</Hash>
 </Codenesium>*/

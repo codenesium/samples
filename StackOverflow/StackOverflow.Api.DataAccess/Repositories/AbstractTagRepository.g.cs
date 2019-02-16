@@ -26,9 +26,23 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Tag>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Tag>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Count == query.ToInt() ||
+				                  x.ExcerptPostId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.TagName.StartsWith(query) ||
+				                  x.WikiPostId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Tag> Get(int id)
@@ -87,7 +101,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Tag>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Tag>();
+			return await this.Context.Set<Tag>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Tag>();
 		}
 
 		private async Task<Tag> GetById(int id)
@@ -100,5 +116,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2494b70049ffa224c67ddcdbd5f28632</Hash>
+    <Hash>1a306f2938f199557f95613ccb441a93</Hash>
 </Codenesium>*/

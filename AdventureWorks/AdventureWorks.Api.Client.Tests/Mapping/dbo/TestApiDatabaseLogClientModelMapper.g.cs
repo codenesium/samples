@@ -15,11 +15,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiDatabaseLogModelMapper();
 			var model = new ApiDatabaseLogClientRequestModel();
-			model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 			ApiDatabaseLogClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Event.Should().Be("A");
-			response.@Object.Should().Be("A");
 			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
@@ -32,11 +30,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiDatabaseLogModelMapper();
 			var model = new ApiDatabaseLogClientResponseModel();
-			model.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
+			model.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 			ApiDatabaseLogClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Event.Should().Be("A");
-			response.@Object.Should().Be("A");
 			response.DatabaseUser.Should().Be("A");
 			response.PostTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Schema.Should().Be("A");
@@ -47,5 +43,5 @@ namespace AdventureWorksNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>93213b146007a899aa40589ed87ad261</Hash>
+    <Hash>42e1284a681048b1bd1d840189638981</Hash>
 </Codenesium>*/

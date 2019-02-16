@@ -47,10 +47,19 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Mock<ILogger<TeacherRepository>> loggerMoc = TeacherRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TeacherRepository>> loggerMoc = TeacherRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
+			var repository = new TeacherRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 
 			var entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Teacher>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = TeacherRepositoryMoc.GetContext();
 			var repository = new TeacherRepository(loggerMoc.Object, context);
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", 2, "B", "B", 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			context.Set<Teacher>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d5dcc930ed2a9031df6b5660541cc7e0</Hash>
+    <Hash>0710d5bc7d48e89a667afc02b9cf639e</Hash>
 </Codenesium>*/

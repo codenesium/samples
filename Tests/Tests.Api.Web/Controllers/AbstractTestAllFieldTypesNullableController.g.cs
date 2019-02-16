@@ -46,15 +46,15 @@ namespace TestsNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTestAllFieldTypesNullableServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTestAllFieldTypesNullableServerResponseModel> response = await this.TestAllFieldTypesNullableService.All(query.Limit, query.Offset);
+			List<ApiTestAllFieldTypesNullableServerResponseModel> response = await this.TestAllFieldTypesNullableService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>531dacbd2f97e092427dcc386fffe90a</Hash>
+    <Hash>fca282b573655743fd4ccf8458e5bace</Hash>
 </Codenesium>*/

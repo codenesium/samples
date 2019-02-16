@@ -14,7 +14,7 @@ namespace ESPIOTNS.Api.Services
 		{
 			var response = new ApiDeviceActionServerResponseModel();
 			response.SetProperties(id,
-			                       request.@Value,
+			                       request.Action,
 			                       request.DeviceId,
 			                       request.Name);
 			return response;
@@ -25,7 +25,7 @@ namespace ESPIOTNS.Api.Services
 		{
 			var request = new ApiDeviceActionServerRequestModel();
 			request.SetProperties(
-				response.@Value,
+				response.Action,
 				response.DeviceId,
 				response.Name);
 			return request;
@@ -36,7 +36,7 @@ namespace ESPIOTNS.Api.Services
 		{
 			var request = new ApiDeviceActionClientRequestModel();
 			request.SetProperties(
-				response.@Value,
+				response.Action,
 				response.DeviceId,
 				response.Name);
 			return request;
@@ -45,14 +45,14 @@ namespace ESPIOTNS.Api.Services
 		public JsonPatchDocument<ApiDeviceActionServerRequestModel> CreatePatch(ApiDeviceActionServerRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiDeviceActionServerRequestModel>();
+			patch.Replace(x => x.Action, model.Action);
 			patch.Replace(x => x.DeviceId, model.DeviceId);
 			patch.Replace(x => x.Name, model.Name);
-			patch.Replace(x => x.@Value, model.@Value);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc6fd95c1c2b8d998f165b7db40701ad</Hash>
+    <Hash>b7830fc53762d4572b2f55436a93f4f3</Hash>
 </Codenesium>*/

@@ -12,17 +12,13 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
 			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base(logger,
 			       mediator,
 			       customerRepository,
 			       customerModelValidator,
-			       bolCustomerMapper,
 			       dalCustomerMapper,
-			       bolCustomerCommunicationMapper,
 			       dalCustomerCommunicationMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f1c9aa709af5a7a78e6dff51544060d9</Hash>
+    <Hash>520a1999a5108b72b891b482f5d30f2a</Hash>
 </Codenesium>*/

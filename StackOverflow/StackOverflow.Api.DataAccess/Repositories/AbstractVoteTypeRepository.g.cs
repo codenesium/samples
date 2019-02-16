@@ -26,9 +26,20 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<VoteType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<VoteType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<VoteType> Get(int id)
@@ -87,7 +98,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<VoteType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VoteType>();
+			return await this.Context.Set<VoteType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VoteType>();
 		}
 
 		private async Task<VoteType> GetById(int id)
@@ -100,5 +113,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed2dd4f37b66ddfc18a283c7775faaec</Hash>
+    <Hash>b3c1780bcc60f7b86199ae2e3e687297</Hash>
 </Codenesium>*/

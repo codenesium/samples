@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<QuoteTweet> Get(int quoteTweetId);
 
-		Task<List<QuoteTweet>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<QuoteTweet>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<QuoteTweet>> ByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ea56e36ebce51ed4dcdfb6aa1f90b62c</Hash>
+    <Hash>d7a9fb37692b771d6605bb4f3f1110e2</Hash>
 </Codenesium>*/

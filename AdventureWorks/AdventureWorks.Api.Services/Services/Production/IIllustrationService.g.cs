@@ -18,10 +18,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiIllustrationServerResponseModel> Get(int illustrationID);
 
-		Task<List<ApiIllustrationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiIllustrationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>99e6a68cbc68a5394378d499986e85b3</Hash>
+    <Hash>d2ea4860a2edc6780b3c474aa773fdea</Hash>
 </Codenesium>*/

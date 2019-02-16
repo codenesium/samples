@@ -26,9 +26,21 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<City>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<City>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ProvinceId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<City> Get(int id)
@@ -85,13 +97,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table Event via cityId.
 		public async virtual Task<List<Event>> EventsByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Event>().Where(x => x.CityId == cityId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+			return await this.Context.Set<Event>()
+			       .Where(x => x.CityId == cityId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
 		}
 
 		// Foreign key reference to table Province via provinceId.
 		public async virtual Task<Province> ProvinceByProvinceId(int provinceId)
 		{
-			return await this.Context.Set<Province>().SingleOrDefaultAsync(x => x.Id == provinceId);
+			return await this.Context.Set<Province>()
+			       .SingleOrDefaultAsync(x => x.Id == provinceId);
 		}
 
 		protected async Task<List<City>> Where(
@@ -105,7 +119,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<City>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<City>();
+			return await this.Context.Set<City>()
+			       .Include(x => x.ProvinceIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<City>();
 		}
 
 		private async Task<City> GetById(int id)
@@ -118,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>489ffc0368ef8f67f4f759a3f0ea1794</Hash>
+    <Hash>9eb30cf0d6efe2107ae98b0a816d2c3e</Hash>
 </Codenesium>*/

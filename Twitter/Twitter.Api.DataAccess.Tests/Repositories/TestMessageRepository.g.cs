@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<MessageRepository>> loggerMoc = MessageRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = MessageRepositoryMoc.GetContext();
 			var repository = new MessageRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<MessageRepository>> loggerMoc = MessageRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MessageRepositoryMoc.GetContext();
+			var repository = new MessageRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new MessageRepository(loggerMoc.Object, context);
 
 			Message entity = new Message();
-			entity.SetProperties("B", 2, 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Message>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new MessageRepository(loggerMoc.Object, context);
 
 			var entity = new Message();
-			entity.SetProperties("B", 2, 1);
+			entity.SetProperties(default(int), "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Message>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessageRepositoryMoc.GetContext();
 			var repository = new MessageRepository(loggerMoc.Object, context);
 			Message entity = new Message();
-			entity.SetProperties("B", 2, 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Message>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessageRepositoryMoc.GetContext();
 			var repository = new MessageRepository(loggerMoc.Object, context);
 			Message entity = new Message();
-			entity.SetProperties("B", 2, 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Message>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessageRepositoryMoc.GetContext();
 			var repository = new MessageRepository(loggerMoc.Object, context);
 			Message entity = new Message();
-			entity.SetProperties("B", 2, 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Message>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d803d5dae9491df82f4c4d887b3e530</Hash>
+    <Hash>ae6fcedb7106158a07b6931c88096e22</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCountryRegionServerResponseModel> Get(string countryRegionCode);
 
-		Task<List<ApiCountryRegionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCountryRegionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiCountryRegionServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd6eab0c4cbccdfdbc36fada63edb8d1</Hash>
+    <Hash>a2d4376d6f8f99071975041a9d39cf96</Hash>
 </Codenesium>*/

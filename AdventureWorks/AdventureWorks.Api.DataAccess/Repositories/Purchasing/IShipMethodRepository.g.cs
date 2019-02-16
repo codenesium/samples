@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ShipMethod> Get(int shipMethodID);
 
-		Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ShipMethod> ByName(string name);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b47dbaf24032b142583e3144a56d016</Hash>
+    <Hash>944279008cc12e1cd1971574550f65ca</Hash>
 </Codenesium>*/

@@ -14,15 +14,15 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			DateTime creationDate,
 			int id,
+			DateTime creationDate,
 			int postId,
 			int? score,
 			string text,
 			int? userId)
 		{
-			this.CreationDate = creationDate;
 			this.Id = id;
+			this.CreationDate = creationDate;
 			this.PostId = postId;
 			this.Score = score;
 			this.Text = text;
@@ -52,5 +52,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>883f366c091201ac1ddb2b4947a96dd3</Hash>
+    <Hash>75525ac6d17cb33e9291df310448d68b</Hash>
 </Codenesium>*/

@@ -26,9 +26,25 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Email.StartsWith(query) ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Password.StartsWith(query) ||
+				                  x.Phone.StartsWith(query) ||
+				                  x.Username.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Admin> Get(int id)
@@ -79,7 +95,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table Venue via adminId.
 		public async virtual Task<List<Venue>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Venue>().Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
+			return await this.Context.Set<Venue>()
+			       .Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
 		}
 
 		protected async Task<List<Admin>> Where(
@@ -93,7 +110,9 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
+			return await this.Context.Set<Admin>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		private async Task<Admin> GetById(int id)
@@ -106,5 +125,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8cf024912f624a3cdeb07926a43c0b0a</Hash>
+    <Hash>8004c63b099ad9dedcd4731111be98ae</Hash>
 </Codenesium>*/

@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISpecialOfferRepository specialOfferRepository,
 			IApiSpecialOfferServerRequestModelValidator specialOfferModelValidator,
-			IBOLSpecialOfferMapper bolSpecialOfferMapper,
 			IDALSpecialOfferMapper dalSpecialOfferMapper)
 			: base(logger,
 			       mediator,
 			       specialOfferRepository,
 			       specialOfferModelValidator,
-			       bolSpecialOfferMapper,
 			       dalSpecialOfferMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58ad8f955de684c379634b9c83059f2b</Hash>
+    <Hash>524e67dd75ef2ef57fbe9bc8f1a306b3</Hash>
 </Codenesium>*/

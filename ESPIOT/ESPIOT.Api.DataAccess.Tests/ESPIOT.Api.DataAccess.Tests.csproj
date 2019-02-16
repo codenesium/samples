@@ -25,6 +25,10 @@
 	<ProjectReference Include="../ESPIOT.Api.DataAccess/ESPIOT.Api.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>ESPIOT.Api.DataAccess.Tests.ruleset</CodeAnalysisRuleSet>
    </PropertyGroup>

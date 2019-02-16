@@ -29,9 +29,17 @@ namespace PetShippingNS.Api.Services
 
 		[JsonProperty]
 		public string SpeciesIdEntity { get; private set; } = RouteConstants.Species;
+
+		[JsonProperty]
+		public ApiSpeciesServerResponseModel SpeciesIdNavigation { get; private set; }
+
+		public void SetSpeciesIdNavigation(ApiSpeciesServerResponseModel value)
+		{
+			this.SpeciesIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9517e77b21e1dcb793b9c59ad77f1d63</Hash>
+    <Hash>6b90b3baf5c4b7c56f23aca297f8b326</Hash>
 </Codenesium>*/

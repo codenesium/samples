@@ -35,15 +35,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual int ProvinceId { get; private set; }
 
 		[ForeignKey("ProvinceId")]
-		public virtual Province ProvinceNavigation { get; private set; }
+		public virtual Province ProvinceIdNavigation { get; private set; }
 
-		public void SetProvinceNavigation(Province item)
+		public void SetProvinceIdNavigation(Province item)
 		{
-			this.ProvinceNavigation = item;
+			this.ProvinceIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b01153164763f106374b6f7c2667c3f4</Hash>
+    <Hash>0c32b598c753e5b5dc1c74f1bd83e306</Hash>
 </Codenesium>*/

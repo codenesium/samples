@@ -26,20 +26,18 @@ namespace NebulaNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILinkRepository>();
 			var records = new List<Link>();
 			records.Add(new Link());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new LinkService(mock.LoggerMock.Object,
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			List<ApiLinkServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ApiLinkServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ApiLinkServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			CreateResponse<ApiLinkServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			CreateResponse<ApiLinkServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			UpdateResponse<ApiLinkServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			UpdateResponse<ApiLinkServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ApiLinkServerResponseModel response = await service.ByExternalId(default(Guid));
@@ -259,9 +239,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			ApiLinkServerResponseModel response = await service.ByExternalId(default(Guid));
@@ -281,9 +259,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			List<ApiLinkServerResponseModel> response = await service.ByChainId(default(int));
@@ -301,9 +277,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			List<ApiLinkServerResponseModel> response = await service.ByChainId(default(int));
@@ -323,9 +297,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			List<ApiLinkLogServerResponseModel> response = await service.LinkLogsByLinkId(default(int));
@@ -343,9 +315,7 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
 			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
 			List<ApiLinkLogServerResponseModel> response = await service.LinkLogsByLinkId(default(int));
@@ -357,5 +327,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cdada3d73034327c2e31170f14321781</Hash>
+    <Hash>e6d10eb6cd02c215df9650bf18855b8d</Hash>
 </Codenesium>*/

@@ -14,9 +14,9 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string comment,
 			DateTime creationDate,
-			int id,
 			int postHistoryTypeId,
 			int postId,
 			string revisionGUID,
@@ -24,9 +24,9 @@ namespace StackOverflowNS.Api.DataAccess
 			string userDisplayName,
 			int? userId)
 		{
+			this.Id = id;
 			this.Comment = comment;
 			this.CreationDate = creationDate;
-			this.Id = id;
 			this.PostHistoryTypeId = postHistoryTypeId;
 			this.PostId = postId;
 			this.RevisionGUID = revisionGUID;
@@ -70,5 +70,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f7f9ce744bbf030a3dbecd4edf16f3d6</Hash>
+    <Hash>c97e2ce3b76f757baac284f8ef068d93</Hash>
 </Codenesium>*/

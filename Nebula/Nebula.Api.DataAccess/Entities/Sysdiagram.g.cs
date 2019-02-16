@@ -14,14 +14,14 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			byte[] definition,
 			int diagramId,
+			byte[] definition,
 			string name,
 			int principalId,
 			int? version)
 		{
-			this.Definition = definition;
 			this.DiagramId = diagramId;
+			this.Definition = definition;
 			this.Name = name;
 			this.PrincipalId = principalId;
 			this.Version = version;
@@ -48,5 +48,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd814ab08386935679c77c4904d2d465</Hash>
+    <Hash>0e1ab2458a04d6a7a459d86ba24fc153</Hash>
 </Codenesium>*/

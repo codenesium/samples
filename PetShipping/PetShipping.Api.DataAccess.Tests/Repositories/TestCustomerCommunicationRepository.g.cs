@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<CustomerCommunicationRepository>> loggerMoc = CustomerCommunicationRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CustomerCommunicationRepositoryMoc.GetContext();
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<CustomerCommunicationRepository>> loggerMoc = CustomerCommunicationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CustomerCommunicationRepositoryMoc.GetContext();
+			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
 
 			CustomerCommunication entity = new CustomerCommunication();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<CustomerCommunication>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
 
 			var entity = new CustomerCommunication();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<CustomerCommunication>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CustomerCommunicationRepositoryMoc.GetContext();
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
 			CustomerCommunication entity = new CustomerCommunication();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<CustomerCommunication>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CustomerCommunicationRepositoryMoc.GetContext();
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
 			CustomerCommunication entity = new CustomerCommunication();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<CustomerCommunication>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = CustomerCommunicationRepositoryMoc.GetContext();
 			var repository = new CustomerCommunicationRepository(loggerMoc.Object, context);
 			CustomerCommunication entity = new CustomerCommunication();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 2, "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
 			context.Set<CustomerCommunication>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75144c7820be0332ffde535e6c0aad1a</Hash>
+    <Hash>c468d368d1d87176aad2c3a85460d9f6</Hash>
 </Codenesium>*/

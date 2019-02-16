@@ -14,18 +14,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int businessEntityID,
 			string accountNumber,
 			bool activeFlag,
-			int businessEntityID,
 			int creditRating,
 			DateTime modifiedDate,
 			string name,
 			bool preferredVendorStatu,
 			string purchasingWebServiceURL)
 		{
+			this.BusinessEntityID = businessEntityID;
 			this.AccountNumber = accountNumber;
 			this.ActiveFlag = activeFlag;
-			this.BusinessEntityID = businessEntityID;
 			this.CreditRating = creditRating;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7889b858c73328b650798e5acd351e14</Hash>
+    <Hash>71a19bed7049cc748df75aac897bc555</Hash>
 </Codenesium>*/

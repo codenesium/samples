@@ -26,20 +26,18 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMessageRepository>();
 			var records = new List<Message>();
 			records.Add(new Message());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new MessageService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			List<ApiMessageServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			ApiMessageServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			ApiMessageServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			CreateResponse<ApiMessageServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			CreateResponse<ApiMessageServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			UpdateResponse<ApiMessageServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			UpdateResponse<ApiMessageServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			List<ApiMessageServerResponseModel> response = await service.BySenderUserId(default(int));
@@ -260,9 +240,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			List<ApiMessageServerResponseModel> response = await service.BySenderUserId(default(int));
@@ -282,9 +260,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			List<ApiMessengerServerResponseModel> response = await service.MessengersByMessageId(default(int));
@@ -302,9 +278,7 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessageMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
 			List<ApiMessengerServerResponseModel> response = await service.MessengersByMessageId(default(int));
@@ -316,5 +290,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d1b6f2e6272457622028a5f828324075</Hash>
+    <Hash>c20f5ca43a8f2987d00cb24a30b38ca7</Hash>
 </Codenesium>*/

@@ -26,9 +26,21 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ColumnSameAsFKTable>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ColumnSameAsFKTable>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Person == query.ToInt() ||
+				                  x.PersonId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ColumnSameAsFKTable> Get(int id)
@@ -79,13 +91,15 @@ namespace TestsNS.Api.DataAccess
 		// Foreign key reference to table Person via person.
 		public async virtual Task<Person> PersonByPerson(int person)
 		{
-			return await this.Context.Set<Person>().SingleOrDefaultAsync(x => x.PersonId == person);
+			return await this.Context.Set<Person>()
+			       .SingleOrDefaultAsync(x => x.PersonId == person);
 		}
 
 		// Foreign key reference to table Person via personId.
 		public async virtual Task<Person> PersonByPersonId(int personId)
 		{
-			return await this.Context.Set<Person>().SingleOrDefaultAsync(x => x.PersonId == personId);
+			return await this.Context.Set<Person>()
+			       .SingleOrDefaultAsync(x => x.PersonId == personId);
 		}
 
 		protected async Task<List<ColumnSameAsFKTable>> Where(
@@ -99,7 +113,11 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<ColumnSameAsFKTable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
+			return await this.Context.Set<ColumnSameAsFKTable>()
+			       .Include(x => x.PersonNavigation)
+			       .Include(x => x.PersonIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
 		}
 
 		private async Task<ColumnSameAsFKTable> GetById(int id)
@@ -112,5 +130,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65fe4fbf8cb3d0297254e0c320c9daf2</Hash>
+    <Hash>de90c8487f6f285a458ccc9536fbb1f5</Hash>
 </Codenesium>*/

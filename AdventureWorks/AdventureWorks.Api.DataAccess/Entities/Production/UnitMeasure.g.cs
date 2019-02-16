@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			string unitMeasureCode,
 			DateTime modifiedDate,
-			string name,
-			string unitMeasureCode)
+			string name)
 		{
+			this.UnitMeasureCode = unitMeasureCode;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		[Column("ModifiedDate")]
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>99edb217c170fd944d9c07097b726605</Hash>
+    <Hash>1a3ade59777a3423e90f893d6f972c86</Hash>
 </Codenesium>*/

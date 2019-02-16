@@ -26,9 +26,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DueDate == query.ToDateTime() ||
+				                  x.EndDate == query.ToNullableDateTime() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.OrderQty == query.ToInt() ||
+				                  x.ProductID == query.ToInt() ||
+				                  x.ScrappedQty == query.ToShort() ||
+				                  x.ScrapReasonID == query.ToNullableShort() ||
+				                  x.StartDate == query.ToDateTime() ||
+				                  x.StockedQty == query.ToInt() ||
+				                  x.WorkOrderID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<WorkOrder> Get(int workOrderID)
@@ -112,5 +131,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eab5ffcad1ee30a24de68065a1c17072</Hash>
+    <Hash>693b3619301d8bd772ca3f648c340a01</Hash>
 </Codenesium>*/

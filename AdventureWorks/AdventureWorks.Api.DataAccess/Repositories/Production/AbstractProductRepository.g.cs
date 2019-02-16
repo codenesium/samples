@@ -26,9 +26,42 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Product>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Product>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Color.StartsWith(query) ||
+				                  x.DaysToManufacture == query.ToInt() ||
+				                  x.DiscontinuedDate == query.ToNullableDateTime() ||
+				                  x.FinishedGoodsFlag == query.ToBoolean() ||
+				                  x.ListPrice.ToDecimal() == query.ToDecimal() ||
+				                  x.MakeFlag == query.ToBoolean() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ProductID == query.ToInt() ||
+				                  x.ProductLine.StartsWith(query) ||
+				                  x.ProductModelID == query.ToNullableInt() ||
+				                  x.ProductNumber.StartsWith(query) ||
+				                  x.ProductSubcategoryID == query.ToNullableInt() ||
+				                  x.ReorderPoint == query.ToShort() ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SafetyStockLevel == query.ToShort() ||
+				                  x.SellEndDate == query.ToNullableDateTime() ||
+				                  x.SellStartDate == query.ToDateTime() ||
+				                  x.Size.StartsWith(query) ||
+				                  x.SizeUnitMeasureCode.StartsWith(query) ||
+				                  x.StandardCost.ToDecimal() == query.ToDecimal() ||
+				                  x.Style.StartsWith(query) ||
+				                  x.Weight == query.ToNullableDouble() ||
+				                  x.WeightUnitMeasureCode.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Product> Get(int productID)
@@ -148,5 +181,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1ab2af77912dc6ff9aab1f4a78aa5759</Hash>
+    <Hash>2034fe1c5300a35161baa79c75f8bd78</Hash>
 </Codenesium>*/

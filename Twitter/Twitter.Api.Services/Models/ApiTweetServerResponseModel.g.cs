@@ -37,6 +37,14 @@ namespace TwitterNS.Api.Services
 		public string LocationIdEntity { get; private set; } = RouteConstants.Locations;
 
 		[JsonProperty]
+		public ApiLocationServerResponseModel LocationIdNavigation { get; private set; }
+
+		public void SetLocationIdNavigation(ApiLocationServerResponseModel value)
+		{
+			this.LocationIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public TimeSpan Time { get; private set; }
 
 		[JsonProperty]
@@ -47,9 +55,17 @@ namespace TwitterNS.Api.Services
 
 		[JsonProperty]
 		public string UserUserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel UserUserIdNavigation { get; private set; }
+
+		public void SetUserUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.UserUserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dcb09861890bc192f5f0902139f6c0c9</Hash>
+    <Hash>fd408156cb1a9f45677423399fa7a6e7</Hash>
 </Codenesium>*/

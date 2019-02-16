@@ -47,10 +47,19 @@ namespace NebulaNS.Api.DataAccess
 			Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
 			var repository = new MachineRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
+			var repository = new MachineRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new MachineRepository(loggerMoc.Object, context);
 
 			Machine entity = new Machine();
-			entity.SetProperties("B", 2, "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			entity.SetProperties(default(int), "B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Machine>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new MachineRepository(loggerMoc.Object, context);
 
 			var entity = new Machine();
-			entity.SetProperties("B", 2, "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			entity.SetProperties(default(int), "B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Machine>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
 			var repository = new MachineRepository(loggerMoc.Object, context);
 			Machine entity = new Machine();
-			entity.SetProperties("B", 2, "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			entity.SetProperties(default(int), "B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Machine>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
 			var repository = new MachineRepository(loggerMoc.Object, context);
 			Machine entity = new Machine();
-			entity.SetProperties("B", 2, "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			entity.SetProperties(default(int), "B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Machine>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = MachineRepositoryMoc.GetContext();
 			var repository = new MachineRepository(loggerMoc.Object, context);
 			Machine entity = new Machine();
-			entity.SetProperties("B", 2, "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			entity.SetProperties(default(int), "B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Machine>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6a64256c32e35b152b92ea8e51ebe21</Hash>
+    <Hash>47ac61852cac8b31640b25ad71e3861b</Hash>
 </Codenesium>*/

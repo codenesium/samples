@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiSpecialOfferModelMapper();
 			var model = new ApiSpecialOfferClientRequestModel();
-			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			model.SetProperties("A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiSpecialOfferClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
 			response.Category.Should().Be("A");
@@ -27,7 +27,6 @@ namespace AdventureWorksNS.Api.Client.Tests
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -35,7 +34,7 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiSpecialOfferModelMapper();
 			var model = new ApiSpecialOfferClientResponseModel();
-			model.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			model.SetProperties(1, "A", "A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 			ApiSpecialOfferClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
 			response.Category.Should().Be("A");
@@ -47,11 +46,10 @@ namespace AdventureWorksNS.Api.Client.Tests
 			response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1fe3965f0200df5ecdba16118ba6f0c5</Hash>
+    <Hash>8c7d84ff42e8b2d770341b9d5743b1d8</Hash>
 </Codenesium>*/

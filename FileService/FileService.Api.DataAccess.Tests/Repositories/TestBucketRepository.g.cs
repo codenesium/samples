@@ -47,10 +47,19 @@ namespace FileServiceNS.Api.DataAccess
 			Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
+			var repository = new BucketRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new BucketRepository(loggerMoc.Object, context);
 
 			Bucket entity = new Bucket();
-			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(int), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new BucketRepository(loggerMoc.Object, context);
 
 			var entity = new Bucket();
-			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(int), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Bucket>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
-			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(int), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
-			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(int), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = BucketRepositoryMoc.GetContext();
 			var repository = new BucketRepository(loggerMoc.Object, context);
 			Bucket entity = new Bucket();
-			entity.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(int), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
 			context.Set<Bucket>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3190a5660f482125eb773e08bcff0f4</Hash>
+    <Hash>9884537a21f1440456152947e1d0b432</Hash>
 </Codenesium>*/

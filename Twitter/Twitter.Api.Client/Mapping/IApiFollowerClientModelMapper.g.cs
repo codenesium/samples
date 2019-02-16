@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TwitterNS.Api.Contracts;
 
 namespace TwitterNS.Api.Client
 {
@@ -16,5 +17,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3ac668bd0096af8ff9a3504ae6879448</Hash>
+    <Hash>2175a936489e61fa38d21f7d95119d51</Hash>
 </Codenesium>*/

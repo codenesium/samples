@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IIncludedColumnTestRepository>();
 			var records = new List<IncludedColumnTest>();
 			records.Add(new IncludedColumnTest());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new IncludedColumnTestService(mock.LoggerMock.Object,
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			List<ApiIncludedColumnTestServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			ApiIncludedColumnTestServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			ApiIncludedColumnTestServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			CreateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			CreateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			UpdateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			UpdateResponse<ApiIncludedColumnTestServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.IncludedColumnTestModelValidatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                            mock.MediatorMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            validatorMock.Object,
-			                                            mock.BOLMapperMockFactory.BOLIncludedColumnTestMapperMock,
 			                                            mock.DALMapperMockFactory.DALIncludedColumnTestMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e2eec0140989ddc58ae00570de5e616d</Hash>
+    <Hash>70afc65ca728a9f67523df8df9095fac</Hash>
 </Codenesium>*/

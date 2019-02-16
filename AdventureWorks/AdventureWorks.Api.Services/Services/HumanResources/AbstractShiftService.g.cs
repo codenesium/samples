@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiShiftServerRequestModelValidator ShiftModelValidator { get; private set; }
 
-		protected IBOLShiftMapper BolShiftMapper { get; private set; }
-
 		protected IDALShiftMapper DalShiftMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IShiftRepository shiftRepository,
 			IApiShiftServerRequestModelValidator shiftModelValidator,
-			IBOLShiftMapper bolShiftMapper,
 			IDALShiftMapper dalShiftMapper)
 			: base()
 		{
 			this.ShiftRepository = shiftRepository;
 			this.ShiftModelValidator = shiftModelValidator;
-			this.BolShiftMapper = bolShiftMapper;
 			this.DalShiftMapper = dalShiftMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiShiftServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiShiftServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShiftRepository.All(limit, offset);
+			var records = await this.ShiftRepository.All(limit, offset, query);
 
-			return this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(records));
+			return this.DalShiftMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiShiftServerResponseModel> Get(int shiftID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(record));
+				return this.DalShiftMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolShiftMapper.MapModelToBO(default(int), model);
-				var record = await this.ShiftRepository.Create(this.DalShiftMapper.MapBOToEF(bo));
+				var bo = this.DalShiftMapper.MapModelToBO(default(int), model);
+				var record = await this.ShiftRepository.Create(bo);
 
-				var businessObject = this.DalShiftMapper.MapEFToBO(record);
-				response.SetRecord(this.BolShiftMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalShiftMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ShiftCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolShiftMapper.MapModelToBO(shiftID, model);
-				await this.ShiftRepository.Update(this.DalShiftMapper.MapBOToEF(bo));
+				var bo = this.DalShiftMapper.MapModelToBO(shiftID, model);
+				await this.ShiftRepository.Update(bo);
 
 				var record = await this.ShiftRepository.Get(shiftID);
 
-				var businessObject = this.DalShiftMapper.MapEFToBO(record);
-				var apiModel = this.BolShiftMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalShiftMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ShiftUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShiftServerResponseModel>.UpdateResponse(apiModel);
@@ -129,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(record));
+				return this.DalShiftMapper.MapBOToModel(record);
 			}
 		}
 
@@ -143,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShiftMapper.MapBOToModel(this.DalShiftMapper.MapEFToBO(record));
+				return this.DalShiftMapper.MapBOToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4692a4f124babad71af2f3c9e10ddd3b</Hash>
+    <Hash>898cc0fc45e29da8bd0255f588ffac1b</Hash>
 </Codenesium>*/

@@ -24,6 +24,14 @@ namespace PetShippingNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiBreedClientResponseModel BreedIdNavigation { get; private set; }
+
+		public void SetBreedIdNavigation(ApiBreedClientResponseModel value)
+		{
+			this.BreedIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int BreedId { get; private set; }
 
 		[JsonProperty]
@@ -44,5 +52,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9d89cc8e4b63cf67b8ecb450c8f45fdb</Hash>
+    <Hash>5396cbf457708a411dff36c6bc7f4934</Hash>
 </Codenesium>*/

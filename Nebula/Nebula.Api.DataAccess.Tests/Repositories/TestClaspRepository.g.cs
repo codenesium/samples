@@ -47,10 +47,19 @@ namespace NebulaNS.Api.DataAccess
 			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
 			var repository = new ClaspRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
+			var repository = new ClaspRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new ClaspRepository(loggerMoc.Object, context);
 
 			Clasp entity = new Clasp();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<Clasp>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new ClaspRepository(loggerMoc.Object, context);
 
 			var entity = new Clasp();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Clasp>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
 			var repository = new ClaspRepository(loggerMoc.Object, context);
 			Clasp entity = new Clasp();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<Clasp>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
 			var repository = new ClaspRepository(loggerMoc.Object, context);
 			Clasp entity = new Clasp();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<Clasp>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
 			var repository = new ClaspRepository(loggerMoc.Object, context);
 			Clasp entity = new Clasp();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<Clasp>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>79ae136362a3f3851f770d9709b7fe20</Hash>
+    <Hash>8253cabe4135a6d3851fbfce5021248e</Hash>
 </Codenesium>*/

@@ -16,12 +16,24 @@ namespace ESPIOTNS.Api.Services
 		}
 
 		public virtual void SetProperties(
+			DateTime dateOfLastPing,
+			bool isActive,
 			string name,
 			Guid publicId)
 		{
+			this.DateOfLastPing = dateOfLastPing;
+			this.IsActive = isActive;
 			this.Name = name;
 			this.PublicId = publicId;
 		}
+
+		[Required]
+		[JsonProperty]
+		public DateTime DateOfLastPing { get; private set; } = SqlDateTime.MinValue.Value;
+
+		[Required]
+		[JsonProperty]
+		public bool IsActive { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
@@ -34,5 +46,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93ef19768cffb825a66777809cd6feb0</Hash>
+    <Hash>38951712b07ad59406fadf505b58e68e</Hash>
 </Codenesium>*/

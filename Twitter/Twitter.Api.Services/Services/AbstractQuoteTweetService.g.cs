@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiQuoteTweetServerRequestModelValidator QuoteTweetModelValidator { get; private set; }
 
-		protected IBOLQuoteTweetMapper BolQuoteTweetMapper { get; private set; }
-
 		protected IDALQuoteTweetMapper DalQuoteTweetMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IQuoteTweetRepository quoteTweetRepository,
 			IApiQuoteTweetServerRequestModelValidator quoteTweetModelValidator,
-			IBOLQuoteTweetMapper bolQuoteTweetMapper,
 			IDALQuoteTweetMapper dalQuoteTweetMapper)
 			: base()
 		{
 			this.QuoteTweetRepository = quoteTweetRepository;
 			this.QuoteTweetModelValidator = quoteTweetModelValidator;
-			this.BolQuoteTweetMapper = bolQuoteTweetMapper;
 			this.DalQuoteTweetMapper = dalQuoteTweetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiQuoteTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiQuoteTweetServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.QuoteTweetRepository.All(limit, offset);
+			List<QuoteTweet> records = await this.QuoteTweetRepository.All(limit, offset, query);
 
-			return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(records));
+			return this.DalQuoteTweetMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiQuoteTweetServerResponseModel> Get(int quoteTweetId)
 		{
-			var record = await this.QuoteTweetRepository.Get(quoteTweetId);
+			QuoteTweet record = await this.QuoteTweetRepository.Get(quoteTweetId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(record));
+				return this.DalQuoteTweetMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolQuoteTweetMapper.MapModelToBO(default(int), model);
-				var record = await this.QuoteTweetRepository.Create(this.DalQuoteTweetMapper.MapBOToEF(bo));
+				QuoteTweet record = this.DalQuoteTweetMapper.MapModelToEntity(default(int), model);
+				record = await this.QuoteTweetRepository.Create(record);
 
-				var businessObject = this.DalQuoteTweetMapper.MapEFToBO(record);
-				response.SetRecord(this.BolQuoteTweetMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalQuoteTweetMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new QuoteTweetCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolQuoteTweetMapper.MapModelToBO(quoteTweetId, model);
-				await this.QuoteTweetRepository.Update(this.DalQuoteTweetMapper.MapBOToEF(bo));
+				QuoteTweet record = this.DalQuoteTweetMapper.MapModelToEntity(quoteTweetId, model);
+				await this.QuoteTweetRepository.Update(record);
 
-				var record = await this.QuoteTweetRepository.Get(quoteTweetId);
+				record = await this.QuoteTweetRepository.Get(quoteTweetId);
 
-				var businessObject = this.DalQuoteTweetMapper.MapEFToBO(record);
-				var apiModel = this.BolQuoteTweetMapper.MapBOToModel(businessObject);
+				ApiQuoteTweetServerResponseModel apiModel = this.DalQuoteTweetMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new QuoteTweetUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiQuoteTweetServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace TwitterNS.Api.Services
 		{
 			List<QuoteTweet> records = await this.QuoteTweetRepository.ByRetweeterUserId(retweeterUserId, limit, offset);
 
-			return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(records));
+			return this.DalQuoteTweetMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiQuoteTweetServerResponseModel>> BySourceTweetId(int sourceTweetId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<QuoteTweet> records = await this.QuoteTweetRepository.BySourceTweetId(sourceTweetId, limit, offset);
 
-			return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(records));
+			return this.DalQuoteTweetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>871e68371fae359317200e9a62712b2e</Hash>
+    <Hash>043d6cc0657718baa0df79d9e1937634</Hash>
 </Codenesium>*/

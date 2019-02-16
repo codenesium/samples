@@ -26,9 +26,43 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TestAllFieldType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TestAllFieldType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.FieldBigInt == query.ToLong() ||
+				                  x.FieldBit == query.ToBoolean() ||
+				                  x.FieldChar.StartsWith(query) ||
+				                  x.FieldDate == query.ToDateTime() ||
+				                  x.FieldDateTime == query.ToDateTime() ||
+				                  x.FieldDateTime2 == query.ToDateTime() ||
+				                  x.FieldDateTimeOffset == query.ToDateTimeOffset() ||
+				                  x.FieldDecimal.ToDecimal() == query.ToDecimal() ||
+				                  x.FieldFloat == query.ToDouble() ||
+				                  x.FieldMoney.ToDecimal() == query.ToDecimal() ||
+				                  x.FieldNChar.StartsWith(query) ||
+				                  x.FieldNText.StartsWith(query) ||
+				                  x.FieldNumeric.ToDecimal() == query.ToDecimal() ||
+				                  x.FieldNVarchar.StartsWith(query) ||
+				                  x.FieldReal.ToDecimal() == query.ToDecimal() ||
+				                  x.FieldSmallDateTime == query.ToDateTime() ||
+				                  x.FieldSmallInt == query.ToShort() ||
+				                  x.FieldSmallMoney.ToDecimal() == query.ToDecimal() ||
+				                  x.FieldText.StartsWith(query) ||
+				                  x.FieldTime == query.ToTimespan() ||
+				                  x.FieldTinyInt == query.ToInt() ||
+				                  x.FieldUniqueIdentifier == query.ToGuid() ||
+				                  x.FieldVarchar.StartsWith(query) ||
+				                  x.FieldXML.StartsWith(query) ||
+				                  x.Id == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TestAllFieldType> Get(int id)
@@ -87,7 +121,9 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<TestAllFieldType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldType>();
+			return await this.Context.Set<TestAllFieldType>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldType>();
 		}
 
 		private async Task<TestAllFieldType> GetById(int id)
@@ -100,5 +136,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80d033720290337a316cff0cef76467c</Hash>
+    <Hash>3ece1c29f2922ff7f616d143647edd7c</Hash>
 </Codenesium>*/

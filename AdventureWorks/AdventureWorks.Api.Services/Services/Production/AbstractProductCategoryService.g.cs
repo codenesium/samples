@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiProductCategoryServerRequestModelValidator ProductCategoryModelValidator { get; private set; }
 
-		protected IBOLProductCategoryMapper BolProductCategoryMapper { get; private set; }
-
 		protected IDALProductCategoryMapper DalProductCategoryMapper { get; private set; }
-
-		protected IBOLProductSubcategoryMapper BolProductSubcategoryMapper { get; private set; }
 
 		protected IDALProductSubcategoryMapper DalProductSubcategoryMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IProductCategoryRepository productCategoryRepository,
 			IApiProductCategoryServerRequestModelValidator productCategoryModelValidator,
-			IBOLProductCategoryMapper bolProductCategoryMapper,
 			IDALProductCategoryMapper dalProductCategoryMapper,
-			IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
 			IDALProductSubcategoryMapper dalProductSubcategoryMapper)
 			: base()
 		{
 			this.ProductCategoryRepository = productCategoryRepository;
 			this.ProductCategoryModelValidator = productCategoryModelValidator;
-			this.BolProductCategoryMapper = bolProductCategoryMapper;
 			this.DalProductCategoryMapper = dalProductCategoryMapper;
-			this.BolProductSubcategoryMapper = bolProductSubcategoryMapper;
 			this.DalProductSubcategoryMapper = dalProductSubcategoryMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiProductCategoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductCategoryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductCategoryRepository.All(limit, offset);
+			var records = await this.ProductCategoryRepository.All(limit, offset, query);
 
-			return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(records));
+			return this.DalProductCategoryMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiProductCategoryServerResponseModel> Get(int productCategoryID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record));
+				return this.DalProductCategoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolProductCategoryMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductCategoryRepository.Create(this.DalProductCategoryMapper.MapBOToEF(bo));
+				var bo = this.DalProductCategoryMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductCategoryRepository.Create(bo);
 
-				var businessObject = this.DalProductCategoryMapper.MapEFToBO(record);
-				response.SetRecord(this.BolProductCategoryMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalProductCategoryMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ProductCategoryCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolProductCategoryMapper.MapModelToBO(productCategoryID, model);
-				await this.ProductCategoryRepository.Update(this.DalProductCategoryMapper.MapBOToEF(bo));
+				var bo = this.DalProductCategoryMapper.MapModelToBO(productCategoryID, model);
+				await this.ProductCategoryRepository.Update(bo);
 
 				var record = await this.ProductCategoryRepository.Get(productCategoryID);
 
-				var businessObject = this.DalProductCategoryMapper.MapEFToBO(record);
-				var apiModel = this.BolProductCategoryMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalProductCategoryMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ProductCategoryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductCategoryServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record));
+				return this.DalProductCategoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -151,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductCategoryMapper.MapBOToModel(this.DalProductCategoryMapper.MapEFToBO(record));
+				return this.DalProductCategoryMapper.MapBOToModel(record);
 			}
 		}
 
@@ -159,11 +149,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ProductSubcategory> records = await this.ProductCategoryRepository.ProductSubcategoriesByProductCategoryID(productCategoryID, limit, offset);
 
-			return this.BolProductSubcategoryMapper.MapBOToModel(this.DalProductSubcategoryMapper.MapEFToBO(records));
+			return this.DalProductSubcategoryMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa9f95657469d491bd60e0ab39112efa</Hash>
+    <Hash>a922f49881a431f7b856e21c874d0061</Hash>
 </Codenesium>*/

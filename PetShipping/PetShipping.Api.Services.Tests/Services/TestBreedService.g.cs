@@ -26,20 +26,18 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBreedRepository>();
 			var records = new List<Breed>();
 			records.Add(new Breed());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new BreedService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiBreedServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiBreedServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiBreedServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiBreedServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiBreedServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiBreedServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiBreedServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiPetServerResponseModel> response = await service.PetsByBreedId(default(int));
@@ -260,9 +240,7 @@ namespace PetShippingNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.BreedModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                               mock.DALMapperMockFactory.DALBreedMapperMock,
-			                               mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                               mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiPetServerResponseModel> response = await service.PetsByBreedId(default(int));
@@ -274,5 +252,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1af3642fa007b4102bce15240a910a23</Hash>
+    <Hash>f5014b15d9898feea07e8c0a5d562ccd</Hash>
 </Codenesium>*/

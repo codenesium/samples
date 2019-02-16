@@ -12,17 +12,13 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ITransactionRepository transactionRepository,
 			IApiTransactionServerRequestModelValidator transactionModelValidator,
-			IBOLTransactionMapper bolTransactionMapper,
 			IDALTransactionMapper dalTransactionMapper,
-			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       mediator,
 			       transactionRepository,
 			       transactionModelValidator,
-			       bolTransactionMapper,
 			       dalTransactionMapper,
-			       bolSaleMapper,
 			       dalSaleMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>358880701b6577b126ce6982ffbbb24a</Hash>
+    <Hash>f298c128d10ad93b8dd746efc83ac4e5</Hash>
 </Codenesium>*/

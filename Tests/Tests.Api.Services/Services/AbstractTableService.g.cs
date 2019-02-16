@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiTableServerRequestModelValidator TableModelValidator { get; private set; }
 
-		protected IBOLTableMapper BolTableMapper { get; private set; }
-
 		protected IDALTableMapper DalTableMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITableRepository tableRepository,
 			IApiTableServerRequestModelValidator tableModelValidator,
-			IBOLTableMapper bolTableMapper,
 			IDALTableMapper dalTableMapper)
 			: base()
 		{
 			this.TableRepository = tableRepository;
 			this.TableModelValidator = tableModelValidator;
-			this.BolTableMapper = bolTableMapper;
 			this.DalTableMapper = dalTableMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTableServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TableRepository.All(limit, offset);
+			List<Table> records = await this.TableRepository.All(limit, offset, query);
 
-			return this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(records));
+			return this.DalTableMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTableServerResponseModel> Get(int id)
 		{
-			var record = await this.TableRepository.Get(id);
+			Table record = await this.TableRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record));
+				return this.DalTableMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTableMapper.MapModelToBO(default(int), model);
-				var record = await this.TableRepository.Create(this.DalTableMapper.MapBOToEF(bo));
+				Table record = this.DalTableMapper.MapModelToEntity(default(int), model);
+				record = await this.TableRepository.Create(record);
 
-				var businessObject = this.DalTableMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTableMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTableMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TableCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTableMapper.MapModelToBO(id, model);
-				await this.TableRepository.Update(this.DalTableMapper.MapBOToEF(bo));
+				Table record = this.DalTableMapper.MapModelToEntity(id, model);
+				await this.TableRepository.Update(record);
 
-				var record = await this.TableRepository.Get(id);
+				record = await this.TableRepository.Get(id);
 
-				var businessObject = this.DalTableMapper.MapEFToBO(record);
-				var apiModel = this.BolTableMapper.MapBOToModel(businessObject);
+				ApiTableServerResponseModel apiModel = this.DalTableMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TableUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTableServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bfe6807d2d7b12895313dd029c420f42</Hash>
+    <Hash>48b01f24026c7dbd81ffda03ac23303a</Hash>
 </Codenesium>*/

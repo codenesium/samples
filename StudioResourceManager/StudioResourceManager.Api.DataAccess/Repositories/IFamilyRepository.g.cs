@@ -15,12 +15,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<Family> Get(int id);
 
-		Task<List<Family>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Family>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Student>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f2713a89a6a3c5f3d6aef70d9413692</Hash>
+    <Hash>f147c6c28ae3b7295d951918e2d5ca93</Hash>
 </Codenesium>*/

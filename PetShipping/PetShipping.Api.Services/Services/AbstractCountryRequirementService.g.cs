@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiCountryRequirementServerRequestModelValidator CountryRequirementModelValidator { get; private set; }
 
-		protected IBOLCountryRequirementMapper BolCountryRequirementMapper { get; private set; }
-
 		protected IDALCountryRequirementMapper DalCountryRequirementMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICountryRequirementRepository countryRequirementRepository,
 			IApiCountryRequirementServerRequestModelValidator countryRequirementModelValidator,
-			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper)
 			: base()
 		{
 			this.CountryRequirementRepository = countryRequirementRepository;
 			this.CountryRequirementModelValidator = countryRequirementModelValidator;
-			this.BolCountryRequirementMapper = bolCountryRequirementMapper;
 			this.DalCountryRequirementMapper = dalCountryRequirementMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCountryRequirementServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCountryRequirementServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CountryRequirementRepository.All(limit, offset);
+			List<CountryRequirement> records = await this.CountryRequirementRepository.All(limit, offset, query);
 
-			return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(records));
+			return this.DalCountryRequirementMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCountryRequirementServerResponseModel> Get(int id)
 		{
-			var record = await this.CountryRequirementRepository.Get(id);
+			CountryRequirement record = await this.CountryRequirementRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(record));
+				return this.DalCountryRequirementMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCountryRequirementMapper.MapModelToBO(default(int), model);
-				var record = await this.CountryRequirementRepository.Create(this.DalCountryRequirementMapper.MapBOToEF(bo));
+				CountryRequirement record = this.DalCountryRequirementMapper.MapModelToEntity(default(int), model);
+				record = await this.CountryRequirementRepository.Create(record);
 
-				var businessObject = this.DalCountryRequirementMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCountryRequirementMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCountryRequirementMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CountryRequirementCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCountryRequirementMapper.MapModelToBO(id, model);
-				await this.CountryRequirementRepository.Update(this.DalCountryRequirementMapper.MapBOToEF(bo));
+				CountryRequirement record = this.DalCountryRequirementMapper.MapModelToEntity(id, model);
+				await this.CountryRequirementRepository.Update(record);
 
-				var record = await this.CountryRequirementRepository.Get(id);
+				record = await this.CountryRequirementRepository.Get(id);
 
-				var businessObject = this.DalCountryRequirementMapper.MapEFToBO(record);
-				var apiModel = this.BolCountryRequirementMapper.MapBOToModel(businessObject);
+				ApiCountryRequirementServerResponseModel apiModel = this.DalCountryRequirementMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CountryRequirementUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCountryRequirementServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d1715a94516783b432f37a2815fb7734</Hash>
+    <Hash>b9c1beb025309a542981a8c679442561</Hash>
 </Codenesium>*/

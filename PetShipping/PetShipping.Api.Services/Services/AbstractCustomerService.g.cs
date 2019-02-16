@@ -16,11 +16,7 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
 
-		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
-
 		protected IDALCustomerMapper DalCustomerMapper { get; private set; }
-
-		protected IBOLCustomerCommunicationMapper BolCustomerCommunicationMapper { get; private set; }
 
 		protected IDALCustomerCommunicationMapper DalCustomerCommunicationMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
 			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base()
 		{
 			this.CustomerRepository = customerRepository;
 			this.CustomerModelValidator = customerModelValidator;
-			this.BolCustomerMapper = bolCustomerMapper;
 			this.DalCustomerMapper = dalCustomerMapper;
-			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
 			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CustomerRepository.All(limit, offset);
+			List<Customer> records = await this.CustomerRepository.All(limit, offset, query);
 
-			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
+			return this.DalCustomerMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCustomerServerResponseModel> Get(int id)
 		{
-			var record = await this.CustomerRepository.Get(id);
+			Customer record = await this.CustomerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
+				return this.DalCustomerMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
-				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
+				Customer record = this.DalCustomerMapper.MapModelToEntity(default(int), model);
+				record = await this.CustomerRepository.Create(record);
 
-				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCustomerMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCustomerMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CustomerCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCustomerMapper.MapModelToBO(id, model);
-				await this.CustomerRepository.Update(this.DalCustomerMapper.MapBOToEF(bo));
+				Customer record = this.DalCustomerMapper.MapModelToEntity(id, model);
+				await this.CustomerRepository.Update(record);
 
-				var record = await this.CustomerRepository.Get(id);
+				record = await this.CustomerRepository.Get(id);
 
-				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
-				var apiModel = this.BolCustomerMapper.MapBOToModel(businessObject);
+				ApiCustomerServerResponseModel apiModel = this.DalCustomerMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CustomerUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetShippingNS.Api.Services
 		{
 			List<CustomerCommunication> records = await this.CustomerRepository.CustomerCommunicationsByCustomerId(customerId, limit, offset);
 
-			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+			return this.DalCustomerCommunicationMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76817a40df5c8af8c8e8036df54022b7</Hash>
+    <Hash>da97ec30fc3da9f7e04a3c6add675bef</Hash>
 </Codenesium>*/

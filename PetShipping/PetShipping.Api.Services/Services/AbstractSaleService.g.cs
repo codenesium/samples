@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiSaleServerRequestModelValidator SaleModelValidator { get; private set; }
 
-		protected IBOLSaleMapper BolSaleMapper { get; private set; }
-
 		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ISaleRepository saleRepository,
 			IApiSaleServerRequestModelValidator saleModelValidator,
-			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
 			this.SaleRepository = saleRepository;
 			this.SaleModelValidator = saleModelValidator;
-			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSaleServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSaleServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SaleRepository.All(limit, offset);
+			List<Sale> records = await this.SaleRepository.All(limit, offset, query);
 
-			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
+			return this.DalSaleMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSaleServerResponseModel> Get(int id)
 		{
-			var record = await this.SaleRepository.Get(id);
+			Sale record = await this.SaleRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record));
+				return this.DalSaleMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
-				var record = await this.SaleRepository.Create(this.DalSaleMapper.MapBOToEF(bo));
+				Sale record = this.DalSaleMapper.MapModelToEntity(default(int), model);
+				record = await this.SaleRepository.Create(record);
 
-				var businessObject = this.DalSaleMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSaleMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSaleMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SaleCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSaleMapper.MapModelToBO(id, model);
-				await this.SaleRepository.Update(this.DalSaleMapper.MapBOToEF(bo));
+				Sale record = this.DalSaleMapper.MapModelToEntity(id, model);
+				await this.SaleRepository.Update(record);
 
-				var record = await this.SaleRepository.Get(id);
+				record = await this.SaleRepository.Get(id);
 
-				var businessObject = this.DalSaleMapper.MapEFToBO(record);
-				var apiModel = this.BolSaleMapper.MapBOToModel(businessObject);
+				ApiSaleServerResponseModel apiModel = this.DalSaleMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SaleUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSaleServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af70cca27204c74426f3d4a16d67b2d7</Hash>
+    <Hash>1dac89750ad54ddfaf8c7a111983f1a1</Hash>
 </Codenesium>*/

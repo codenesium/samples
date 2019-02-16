@@ -12,21 +12,15 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			ITweetRepository tweetRepository,
 			IApiTweetServerRequestModelValidator tweetModelValidator,
-			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
-			IBOLQuoteTweetMapper bolQuoteTweetMapper,
 			IDALQuoteTweetMapper dalQuoteTweetMapper,
-			IBOLRetweetMapper bolRetweetMapper,
 			IDALRetweetMapper dalRetweetMapper)
 			: base(logger,
 			       mediator,
 			       tweetRepository,
 			       tweetModelValidator,
-			       bolTweetMapper,
 			       dalTweetMapper,
-			       bolQuoteTweetMapper,
 			       dalQuoteTweetMapper,
-			       bolRetweetMapper,
 			       dalRetweetMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6278c8eecb197b1fabe16917d0eb54a</Hash>
+    <Hash>11626f4ef6360613de730d6ae8f4a6c0</Hash>
 </Codenesium>*/

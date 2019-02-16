@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITestAllFieldTypeRepository>();
 			var records = new List<TestAllFieldType>();
 			records.Add(new TestAllFieldType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TestAllFieldTypeService(mock.LoggerMock.Object,
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			List<ApiTestAllFieldTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			ApiTestAllFieldTypeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			ApiTestAllFieldTypeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			CreateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			CreateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			UpdateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			UpdateResponse<ApiTestAllFieldTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.TestAllFieldTypeModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLTestAllFieldTypeMapperMock,
 			                                          mock.DALMapperMockFactory.DALTestAllFieldTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ae30dc99c29b439adb32f6f59927dc16</Hash>
+    <Hash>a31ac9727de7525704a3bc372eb63b7b</Hash>
 </Codenesium>*/

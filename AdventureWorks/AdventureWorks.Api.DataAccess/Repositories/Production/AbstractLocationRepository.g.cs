@@ -26,9 +26,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Location>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Location>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Availability == query.ToDouble() ||
+				                  x.CostRate.ToDecimal() == query.ToDecimal() ||
+				                  x.LocationID == query.ToShort() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Location> Get(short locationID)
@@ -106,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb59fa8d04e5d9043ebe259159a6e09c</Hash>
+    <Hash>9cf360dee758de1622cf96de20aea57e</Hash>
 </Codenesium>*/

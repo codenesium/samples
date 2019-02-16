@@ -26,9 +26,31 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.EmployeeID == query.ToInt() ||
+				                  x.Freight.ToDecimal() == query.ToDecimal() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.OrderDate == query.ToDateTime() ||
+				                  x.PurchaseOrderID == query.ToInt() ||
+				                  x.RevisionNumber == query.ToInt() ||
+				                  x.ShipDate == query.ToNullableDateTime() ||
+				                  x.ShipMethodID == query.ToInt() ||
+				                  x.Status == query.ToInt() ||
+				                  x.SubTotal.ToDecimal() == query.ToDecimal() ||
+				                  x.TaxAmt.ToDecimal() == query.ToDecimal() ||
+				                  x.TotalDue.ToDecimal() == query.ToDecimal() ||
+				                  x.VendorID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PurchaseOrderHeader> Get(int purchaseOrderID)
@@ -112,5 +134,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>125c8b4b584855eea0a2b1aabbda2315</Hash>
+    <Hash>2ddf57f6e8a928289b368d640afeaa01</Hash>
 </Codenesium>*/

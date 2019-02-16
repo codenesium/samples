@@ -42,6 +42,14 @@ namespace TwitterNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiLocationClientResponseModel LocationLocationIdNavigation { get; private set; }
+
+		public void SetLocationLocationIdNavigation(ApiLocationClientResponseModel value)
+		{
+			this.LocationLocationIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string BioImgUrl { get; private set; }
 
 		[JsonProperty]
@@ -89,5 +97,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>6dea254cd939b80ec272ca04c31dbb71</Hash>
+    <Hash>c4776e34e953dd6825f26e26b5e66f36</Hash>
 </Codenesium>*/

@@ -29,6 +29,14 @@ namespace NebulaNS.Api.Services
 		public string ChainStatusIdEntity { get; private set; } = RouteConstants.ChainStatuses;
 
 		[JsonProperty]
+		public ApiChainStatusServerResponseModel ChainStatusIdNavigation { get; private set; }
+
+		public void SetChainStatusIdNavigation(ApiChainStatusServerResponseModel value)
+		{
+			this.ChainStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
 		[JsonProperty]
@@ -42,9 +50,17 @@ namespace NebulaNS.Api.Services
 
 		[JsonProperty]
 		public string TeamIdEntity { get; private set; } = RouteConstants.Teams;
+
+		[JsonProperty]
+		public ApiTeamServerResponseModel TeamIdNavigation { get; private set; }
+
+		public void SetTeamIdNavigation(ApiTeamServerResponseModel value)
+		{
+			this.TeamIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b1ad39d4f01fcbd5819c2fab99d24da</Hash>
+    <Hash>39ace339e6db87174cfb057eb40182ed</Hash>
 </Codenesium>*/

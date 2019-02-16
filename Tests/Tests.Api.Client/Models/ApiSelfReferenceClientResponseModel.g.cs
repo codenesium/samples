@@ -17,7 +17,24 @@ namespace TestsNS.Api.Client
 			this.SelfReferenceId2 = selfReferenceId2;
 
 			this.SelfReferenceIdEntity = nameof(ApiResponse.SelfReferences);
+
 			this.SelfReferenceId2Entity = nameof(ApiResponse.SelfReferences);
+		}
+
+		[JsonProperty]
+		public ApiSelfReferenceClientResponseModel SelfReferenceIdNavigation { get; private set; }
+
+		public void SetSelfReferenceIdNavigation(ApiSelfReferenceClientResponseModel value)
+		{
+			this.SelfReferenceIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiSelfReferenceClientResponseModel SelfReferenceId2Navigation { get; private set; }
+
+		public void SetSelfReferenceId2Navigation(ApiSelfReferenceClientResponseModel value)
+		{
+			this.SelfReferenceId2Navigation = value;
 		}
 
 		[JsonProperty]
@@ -38,5 +55,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>315403f43895f209a6c9ef0bb7be700e</Hash>
+    <Hash>880416525ec9112380f437d11afb1754</Hash>
 </Codenesium>*/

@@ -14,18 +14,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int salesTaxRateID,
 			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
-			int salesTaxRateID,
 			int stateProvinceID,
 			decimal taxRate,
 			int taxType)
 		{
+			this.SalesTaxRateID = salesTaxRateID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
 			this.Rowguid = rowguid;
-			this.SalesTaxRateID = salesTaxRateID;
 			this.StateProvinceID = stateProvinceID;
 			this.TaxRate = taxRate;
 			this.TaxType = taxType;
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b41e0dd234000146e779d83a2e283e0a</Hash>
+    <Hash>7bb9839150eae9d131fc3a49ab9b0845</Hash>
 </Codenesium>*/

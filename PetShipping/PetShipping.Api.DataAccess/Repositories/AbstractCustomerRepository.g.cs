@@ -26,9 +26,24 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Email.StartsWith(query) ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Note.StartsWith(query) ||
+				                  x.Phone.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Customer> Get(int id)
@@ -79,7 +94,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table CustomerCommunication via customerId.
 		public async virtual Task<List<CustomerCommunication>> CustomerCommunicationsByCustomerId(int customerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<CustomerCommunication>().Where(x => x.CustomerId == customerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CustomerCommunication>();
+			return await this.Context.Set<CustomerCommunication>()
+			       .Where(x => x.CustomerId == customerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CustomerCommunication>();
 		}
 
 		protected async Task<List<Customer>> Where(
@@ -93,7 +109,9 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Customer>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Customer>();
+			return await this.Context.Set<Customer>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
 		private async Task<Customer> GetById(int id)
@@ -106,5 +124,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d06fc2cecc9a85dcfdebad7247c060f3</Hash>
+    <Hash>946a61eeb58f7906d54982bc84167358</Hash>
 </Codenesium>*/

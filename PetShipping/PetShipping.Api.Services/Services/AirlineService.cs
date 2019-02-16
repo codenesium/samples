@@ -12,13 +12,11 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IAirlineRepository airlineRepository,
 			IApiAirlineServerRequestModelValidator airlineModelValidator,
-			IBOLAirlineMapper bolAirlineMapper,
 			IDALAirlineMapper dalAirlineMapper)
 			: base(logger,
 			       mediator,
 			       airlineRepository,
 			       airlineModelValidator,
-			       bolAirlineMapper,
 			       dalAirlineMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56e66720e9602747e0a04bea45187917</Hash>
+    <Hash>90390d94eccb2df5c2089e023ef090d6</Hash>
 </Codenesium>*/

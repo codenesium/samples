@@ -15,26 +15,26 @@ namespace ESPIOTNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			string @value,
+			string action,
 			int deviceId,
 			string name)
 		{
-			this.@Value = @value;
+			this.Action = action;
 			this.DeviceId = deviceId;
 			this.Name = name;
 		}
+
+		[JsonProperty]
+		public string Action { get; private set; } = default(string);
 
 		[JsonProperty]
 		public int DeviceId { get; private set; }
 
 		[JsonProperty]
 		public string Name { get; private set; } = default(string);
-
-		[JsonProperty]
-		public string @Value { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c55c937c99f00f5d1cdb3ac16f051d8d</Hash>
+    <Hash>9650c4add1bda9dcd7ab2a18000ff3cc</Hash>
 </Codenesium>*/

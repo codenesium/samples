@@ -26,9 +26,25 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Birthday == query.ToNullableDateTime() ||
+				                  x.Email.StartsWith(query) ||
+				                  x.FirstName.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.LastName.StartsWith(query) ||
+				                  x.Phone.StartsWith(query) ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Admin> Get(int id)
@@ -85,7 +101,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		// Foreign key reference to table User via userId.
 		public async virtual Task<User> UserByUserId(int userId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.Id == userId);
 		}
 
 		protected async Task<List<Admin>> Where(
@@ -99,7 +116,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
+			return await this.Context.Set<Admin>()
+			       .Include(x => x.UserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		private async Task<Admin> GetById(int id)
@@ -112,5 +132,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb98db2e0a65ec70a0a72d0af2eea753</Hash>
+    <Hash>870e0f3da492b6e89ce18d408a3af436</Hash>
 </Codenesium>*/

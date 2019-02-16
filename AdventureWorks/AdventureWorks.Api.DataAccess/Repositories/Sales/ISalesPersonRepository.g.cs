@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<SalesPerson> Get(int businessEntityID);
 
-		Task<List<SalesPerson>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesPerson>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<SalesPerson> ByRowguid(Guid rowguid);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fdc0317c13da757cd5795fcc969feffe</Hash>
+    <Hash>26e23ea340917ff2f07e3f2bfb8a57c5</Hash>
 </Codenesium>*/

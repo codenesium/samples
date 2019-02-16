@@ -73,78 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void @Event_Create_null()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateCreateAsync(new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Event, null as string);
-		}
-
-		[Fact]
-		public async void @Event_Update_null()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Event, null as string);
-		}
-
-		[Fact]
-		public async void @Event_Create_length()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateCreateAsync(new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Event, new string('A', 129));
-		}
-
-		[Fact]
-		public async void @Event_Update_length()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Event, new string('A', 129));
-		}
-
-		[Fact]
-		public async void @Object_Create_length()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateCreateAsync(new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Object, new string('A', 129));
-		}
-
-		[Fact]
-		public async void @Object_Update_length()
-		{
-			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
-			databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
-
-			var validator = new ApiDatabaseLogServerRequestModelValidator(databaseLogRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Object, new string('A', 129));
-		}
-
-		[Fact]
 		public async void Schema_Create_length()
 		{
 			Mock<IDatabaseLogRepository> databaseLogRepository = new Mock<IDatabaseLogRepository>();
@@ -219,5 +147,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f6c65872c5ff292e547ae9555a326b5d</Hash>
+    <Hash>5abaf0d0604bbc73bf098207f037c8b4</Hash>
 </Codenesium>*/

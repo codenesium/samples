@@ -12,8 +12,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var response = new ApiDatabaseLogClientResponseModel();
 			response.SetProperties(databaseLogID,
-			                       request.@Event,
-			                       request.@Object,
 			                       request.DatabaseUser,
 			                       request.PostTime,
 			                       request.Schema,
@@ -27,8 +25,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var request = new ApiDatabaseLogClientRequestModel();
 			request.SetProperties(
-				response.@Event,
-				response.@Object,
 				response.DatabaseUser,
 				response.PostTime,
 				response.Schema,
@@ -40,5 +36,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>15d2e273f90be3e3ffdf441b98533074</Hash>
+    <Hash>a3a324ff58d70fe3ff8219e4ddb22329</Hash>
 </Codenesium>*/

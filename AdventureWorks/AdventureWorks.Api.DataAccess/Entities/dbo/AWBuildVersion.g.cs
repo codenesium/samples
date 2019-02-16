@@ -14,14 +14,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int systemInformationID,
 			string database_Version,
 			DateTime modifiedDate,
-			int systemInformationID,
 			DateTime versionDate)
 		{
+			this.SystemInformationID = systemInformationID;
 			this.Database_Version = database_Version;
 			this.ModifiedDate = modifiedDate;
-			this.SystemInformationID = systemInformationID;
 			this.VersionDate = versionDate;
 		}
 
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>860d7c2393935b7d4f94bbc6f83f9c4c</Hash>
+    <Hash>19820ae72c6df19ad593adb62b0ecb9f</Hash>
 </Codenesium>*/

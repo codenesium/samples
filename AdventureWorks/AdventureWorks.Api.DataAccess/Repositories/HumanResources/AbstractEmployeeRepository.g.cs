@@ -26,9 +26,33 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.BirthDate == query.ToDateTime() ||
+				                  x.BusinessEntityID == query.ToInt() ||
+				                  x.CurrentFlag == query.ToBoolean() ||
+				                  x.Gender.StartsWith(query) ||
+				                  x.HireDate == query.ToDateTime() ||
+				                  x.JobTitle.StartsWith(query) ||
+				                  x.LoginID.StartsWith(query) ||
+				                  x.MaritalStatu.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.NationalIDNumber.StartsWith(query) ||
+				                  x.OrganizationLevel == query.ToNullableShort() ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SalariedFlag == query.ToBoolean() ||
+				                  x.SickLeaveHour == query.ToShort() ||
+				                  x.VacationHour == query.ToShort(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Employee> Get(int businessEntityID)
@@ -124,5 +148,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb9cf61b39026748196f3a429c328247</Hash>
+    <Hash>e65a915cb8c0986e2366253cc64d2cff</Hash>
 </Codenesium>*/

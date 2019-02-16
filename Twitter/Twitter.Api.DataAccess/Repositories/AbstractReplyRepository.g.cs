@@ -26,9 +26,23 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Reply>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Reply>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Content.StartsWith(query) ||
+				                  x.Date == query.ToDateTime() ||
+				                  x.ReplierUserId == query.ToInt() ||
+				                  x.ReplyId == query.ToInt() ||
+				                  x.Time == query.ToTimespan(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Reply> Get(int replyId)
@@ -85,7 +99,8 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table User via replierUserId.
 		public async virtual Task<User> UserByReplierUserId(int replierUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == replierUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == replierUserId);
 		}
 
 		protected async Task<List<Reply>> Where(
@@ -99,7 +114,10 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.ReplyId;
 			}
 
-			return await this.Context.Set<Reply>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Reply>();
+			return await this.Context.Set<Reply>()
+			       .Include(x => x.ReplierUserIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Reply>();
 		}
 
 		private async Task<Reply> GetById(int replyId)
@@ -112,5 +130,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a850ef3a7463037e4605241dc0795a6</Hash>
+    <Hash>00f5fa48d786268134ab7fe74d44a1ca</Hash>
 </Codenesium>*/

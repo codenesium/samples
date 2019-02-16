@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiUserServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiUserServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiUserServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiUserServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                              mock.MediatorMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              validatorMock.Object,
-			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                              mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>43f7bd9cd20b324850d83201fa078d72</Hash>
+    <Hash>0db9fc60cfed6a05ec352fcee326a129</Hash>
 </Codenesium>*/

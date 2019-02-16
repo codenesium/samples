@@ -26,22 +26,19 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var records = new List<Tweet>();
 			records.Add(new Tweet());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TweetService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -54,11 +51,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			ApiTweetServerResponseModel response = await service.Get(default(int));
@@ -76,11 +70,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			ApiTweetServerResponseModel response = await service.Get(default(int));
@@ -99,11 +90,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			CreateResponse<ApiTweetServerResponseModel> response = await service.Create(model);
@@ -126,11 +114,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			CreateResponse<ApiTweetServerResponseModel> response = await service.Create(model);
@@ -152,11 +137,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			UpdateResponse<ApiTweetServerResponseModel> response = await service.Update(default(int), model);
@@ -180,11 +162,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			UpdateResponse<ApiTweetServerResponseModel> response = await service.Update(default(int), model);
@@ -205,11 +184,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -232,11 +208,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -258,11 +231,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.ByLocationId(default(int));
@@ -280,11 +250,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.ByLocationId(default(int));
@@ -304,11 +271,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.ByUserUserId(default(int));
@@ -326,11 +290,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.ByUserUserId(default(int));
@@ -350,11 +311,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.QuoteTweetsBySourceTweetId(default(int));
@@ -372,11 +330,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiQuoteTweetServerResponseModel> response = await service.QuoteTweetsBySourceTweetId(default(int));
@@ -396,11 +351,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiRetweetServerResponseModel> response = await service.RetweetsByTweetTweetId(default(int));
@@ -418,11 +370,8 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
 			                               mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
-			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
 			List<ApiRetweetServerResponseModel> response = await service.RetweetsByTweetTweetId(default(int));
@@ -434,5 +383,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>41ebcd6fe9d6cb8ab2a8a34fb8f96f0d</Hash>
+    <Hash>4d8489a329fa617f6d954f76d94e40aa</Hash>
 </Codenesium>*/

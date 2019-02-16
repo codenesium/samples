@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiBadgeServerRequestModelValidator BadgeModelValidator { get; private set; }
 
-		protected IBOLBadgeMapper BolBadgeMapper { get; private set; }
-
 		protected IDALBadgeMapper DalBadgeMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			IBadgeRepository badgeRepository,
 			IApiBadgeServerRequestModelValidator badgeModelValidator,
-			IBOLBadgeMapper bolBadgeMapper,
 			IDALBadgeMapper dalBadgeMapper)
 			: base()
 		{
 			this.BadgeRepository = badgeRepository;
 			this.BadgeModelValidator = badgeModelValidator;
-			this.BolBadgeMapper = bolBadgeMapper;
 			this.DalBadgeMapper = dalBadgeMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiBadgeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBadgeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BadgeRepository.All(limit, offset);
+			List<Badge> records = await this.BadgeRepository.All(limit, offset, query);
 
-			return this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(records));
+			return this.DalBadgeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiBadgeServerResponseModel> Get(int id)
 		{
-			var record = await this.BadgeRepository.Get(id);
+			Badge record = await this.BadgeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolBadgeMapper.MapBOToModel(this.DalBadgeMapper.MapEFToBO(record));
+				return this.DalBadgeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolBadgeMapper.MapModelToBO(default(int), model);
-				var record = await this.BadgeRepository.Create(this.DalBadgeMapper.MapBOToEF(bo));
+				Badge record = this.DalBadgeMapper.MapModelToEntity(default(int), model);
+				record = await this.BadgeRepository.Create(record);
 
-				var businessObject = this.DalBadgeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolBadgeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalBadgeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new BadgeCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolBadgeMapper.MapModelToBO(id, model);
-				await this.BadgeRepository.Update(this.DalBadgeMapper.MapBOToEF(bo));
+				Badge record = this.DalBadgeMapper.MapModelToEntity(id, model);
+				await this.BadgeRepository.Update(record);
 
-				var record = await this.BadgeRepository.Get(id);
+				record = await this.BadgeRepository.Get(id);
 
-				var businessObject = this.DalBadgeMapper.MapEFToBO(record);
-				var apiModel = this.BolBadgeMapper.MapBOToModel(businessObject);
+				ApiBadgeServerResponseModel apiModel = this.DalBadgeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new BadgeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBadgeServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd0699c478b8010d28f3a0c76c474859</Hash>
+    <Hash>48b69e1fb5e8d6eadd7c12b4094b4703</Hash>
 </Codenesium>*/

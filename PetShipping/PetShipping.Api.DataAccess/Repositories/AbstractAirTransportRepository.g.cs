@@ -26,9 +26,25 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AirlineId == query.ToInt() ||
+				                  x.FlightNumber.StartsWith(query) ||
+				                  x.HandlerId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.LandDate == query.ToDateTime() ||
+				                  x.PipelineStepId == query.ToInt() ||
+				                  x.TakeoffDate == query.ToDateTime(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<AirTransport> Get(int airlineId)
@@ -79,7 +95,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table Handler via handlerId.
 		public async virtual Task<Handler> HandlerByHandlerId(int handlerId)
 		{
-			return await this.Context.Set<Handler>().SingleOrDefaultAsync(x => x.Id == handlerId);
+			return await this.Context.Set<Handler>()
+			       .SingleOrDefaultAsync(x => x.Id == handlerId);
 		}
 
 		protected async Task<List<AirTransport>> Where(
@@ -93,7 +110,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.AirlineId;
 			}
 
-			return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
+			return await this.Context.Set<AirTransport>()
+			       .Include(x => x.HandlerIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
 		private async Task<AirTransport> GetById(int airlineId)
@@ -106,5 +126,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c9ef71435c598a19bc2c6aa5111c7878</Hash>
+    <Hash>a45185e074764a6a013e8b19bfcd4b13</Hash>
 </Codenesium>*/

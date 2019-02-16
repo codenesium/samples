@@ -18,10 +18,10 @@ namespace StackOverflowNS.Api.Services
 
 		Task<ApiLinkTypeServerResponseModel> Get(int id);
 
-		Task<List<ApiLinkTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLinkTypeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a240077a586c3d79fded16bcd47fca67</Hash>
+    <Hash>b256cf010371be13a731c2a05b80bdf4</Hash>
 </Codenesium>*/

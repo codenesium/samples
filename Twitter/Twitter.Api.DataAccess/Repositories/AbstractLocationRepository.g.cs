@@ -26,9 +26,22 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Location>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Location>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.GpsLat == query.ToInt() ||
+				                  x.GpsLong == query.ToInt() ||
+				                  x.LocationId == query.ToInt() ||
+				                  x.LocationName.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Location> Get(int locationId)
@@ -79,13 +92,15 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to this table Tweet via locationId.
 		public async virtual Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Tweet>().Where(x => x.LocationId == locationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
+			return await this.Context.Set<Tweet>()
+			       .Where(x => x.LocationId == locationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
 		// Foreign key reference to this table User via locationLocationId.
 		public async virtual Task<List<User>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<User>().Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
+			return await this.Context.Set<User>()
+			       .Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
 		protected async Task<List<Location>> Where(
@@ -99,7 +114,9 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.LocationId;
 			}
 
-			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
+			return await this.Context.Set<Location>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Location>();
 		}
 
 		private async Task<Location> GetById(int locationId)
@@ -112,5 +129,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ecf6694596c6b5209cd47f73c18168f0</Hash>
+    <Hash>fba26fafe3ac0b8ca42b301998a3fbb1</Hash>
 </Codenesium>*/

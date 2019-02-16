@@ -44,11 +44,11 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
 
-			context.Set<DeviceAction>().ToList()[1].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[1].Action.Should().Be("B");
 			context.Set<DeviceAction>().ToList()[1].DeviceId.Should().Be(1);
 			context.Set<DeviceAction>().ToList()[1].Name.Should().Be("B");
 
-			context.Set<DeviceAction>().ToList()[2].@Value.Should().Be("C");
+			context.Set<DeviceAction>().ToList()[2].Action.Should().Be("C");
 			context.Set<DeviceAction>().ToList()[2].DeviceId.Should().Be(1);
 			context.Set<DeviceAction>().ToList()[2].Name.Should().Be("C");
 		}
@@ -69,11 +69,11 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 
 			result.Success.Should().BeTrue();
 			result.Record.Should().NotBeNull();
-			context.Set<DeviceAction>().ToList()[1].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[1].Action.Should().Be("B");
 			context.Set<DeviceAction>().ToList()[1].DeviceId.Should().Be(1);
 			context.Set<DeviceAction>().ToList()[1].Name.Should().Be("B");
 
-			result.Record.@Value.Should().Be("B");
+			result.Record.Action.Should().Be("B");
 			result.Record.DeviceId.Should().Be(1);
 			result.Record.Name.Should().Be("B");
 		}
@@ -101,12 +101,12 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
 			updateResponse.Record.Id.Should().Be(1);
-			context.Set<DeviceAction>().ToList()[0].@Value.Should().Be("B");
+			context.Set<DeviceAction>().ToList()[0].Action.Should().Be("B");
 			context.Set<DeviceAction>().ToList()[0].DeviceId.Should().Be(1);
 			context.Set<DeviceAction>().ToList()[0].Name.Should().Be("B");
 
 			updateResponse.Record.Id.Should().Be(1);
-			updateResponse.Record.@Value.Should().Be("B");
+			updateResponse.Record.Action.Should().Be("B");
 			updateResponse.Record.DeviceId.Should().Be(1);
 			updateResponse.Record.Name.Should().Be("B");
 		}
@@ -150,7 +150,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			ApiDeviceActionClientResponseModel response = await client.DeviceActionGetAsync(1);
 
 			response.Should().NotBeNull();
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
@@ -183,7 +183,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			List<ApiDeviceActionClientResponseModel> response = await client.DeviceActionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
-			response[0].@Value.Should().Be("A");
+			response[0].Action.Should().Be("A");
 			response[0].DeviceId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
@@ -201,7 +201,7 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 			List<ApiDeviceActionClientResponseModel> response = await client.ByDeviceActionByDeviceId(1);
 
 			response.Should().NotBeEmpty();
-			response[0].@Value.Should().Be("A");
+			response[0].Action.Should().Be("A");
 			response[0].DeviceId.Should().Be(1);
 			response[0].Id.Should().Be(1);
 			response[0].Name.Should().Be("A");
@@ -244,5 +244,5 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b7e1fae627d2c68d04af71d3b2f40b33</Hash>
+    <Hash>c0799b811c650807106655e186e2537f</Hash>
 </Codenesium>*/

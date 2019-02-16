@@ -26,18 +26,17 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISpaceRepository>();
 			var records = new List<Space>();
 			records.Add(new Space());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SpaceService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			List<ApiSpaceServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ApiSpaceServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ApiSpaceServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			CreateResponse<ApiSpaceServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			CreateResponse<ApiSpaceServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			UpdateResponse<ApiSpaceServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			UpdateResponse<ApiSpaceServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d9ea72449573a8797fda9b5d0b7a5758</Hash>
+    <Hash>a0751321e07a5fd672e6de0b2ee9ef66</Hash>
 </Codenesium>*/

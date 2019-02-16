@@ -12,6 +12,8 @@ namespace ESPIOTNS.Api.Client
 		{
 			var response = new ApiDeviceClientResponseModel();
 			response.SetProperties(id,
+			                       request.DateOfLastPing,
+			                       request.IsActive,
 			                       request.Name,
 			                       request.PublicId);
 			return response;
@@ -22,6 +24,8 @@ namespace ESPIOTNS.Api.Client
 		{
 			var request = new ApiDeviceClientRequestModel();
 			request.SetProperties(
+				response.DateOfLastPing,
+				response.IsActive,
 				response.Name,
 				response.PublicId);
 			return request;
@@ -30,5 +34,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fc49e254b75fd7e48a02376de1a6815a</Hash>
+    <Hash>72b1d4659c5bf0e2eb1f078d38a5b1a7</Hash>
 </Codenesium>*/

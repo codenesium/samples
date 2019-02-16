@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiChainStatusServerResponseModel> Get(int id);
 
-		Task<List<ApiChainStatusServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiChainStatusServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiChainStatusServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb3cf06740a62ee5f4c8e9e444acdbf1</Hash>
+    <Hash>71855b0be04652992595881c18fad236</Hash>
 </Codenesium>*/

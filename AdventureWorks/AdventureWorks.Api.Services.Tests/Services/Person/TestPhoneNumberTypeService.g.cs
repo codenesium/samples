@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
 			var records = new List<PhoneNumberType>();
 			records.Add(new PhoneNumberType());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			List<ApiPhoneNumberTypeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			ApiPhoneNumberTypeServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			ApiPhoneNumberTypeServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			CreateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			CreateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			UpdateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			UpdateResponse<ApiPhoneNumberTypeServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.MediatorMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         validatorMock.Object,
-			                                         mock.BOLMapperMockFactory.BOLPhoneNumberTypeMapperMock,
 			                                         mock.DALMapperMockFactory.DALPhoneNumberTypeMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7323515e386645c430c0b780f8b18c07</Hash>
+    <Hash>ee2bad96c80313b37ecbda87f599d2af</Hash>
 </Codenesium>*/

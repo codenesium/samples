@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<DocumentRepository>> loggerMoc = DocumentRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DocumentRepositoryMoc.GetContext();
 			var repository = new DocumentRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DocumentRepository(loggerMoc.Object, context);
 
 			Document entity = new Document();
-			entity.SetProperties(2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(Guid), 2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2, "B");
 			context.Set<Document>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DocumentRepository(loggerMoc.Object, context);
 
 			var entity = new Document();
-			entity.SetProperties(2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(Guid), 2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Document>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DocumentRepositoryMoc.GetContext();
 			var repository = new DocumentRepository(loggerMoc.Object, context);
 			Document entity = new Document();
-			entity.SetProperties(2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(Guid), 2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2, "B");
 			context.Set<Document>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DocumentRepositoryMoc.GetContext();
 			var repository = new DocumentRepository(loggerMoc.Object, context);
 			Document entity = new Document();
-			entity.SetProperties(2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(Guid), 2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2, "B");
 			context.Set<Document>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DocumentRepositoryMoc.GetContext();
 			var repository = new DocumentRepository(loggerMoc.Object, context);
 			Document entity = new Document();
-			entity.SetProperties(2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, "B");
+			entity.SetProperties(default(Guid), 2, BitConverter.GetBytes(2), 2, "B", "B", "B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2, "B");
 			context.Set<Document>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2708bd491f60343dd6d330c36097b0f5</Hash>
+    <Hash>6108b3afe1cf3ecc766d83fc7e9328a2</Hash>
 </Codenesium>*/

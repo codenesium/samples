@@ -26,9 +26,27 @@ namespace StackOverflowNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PostHistory>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PostHistory>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Comment.StartsWith(query) ||
+				                  x.CreationDate == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.PostHistoryTypeId == query.ToInt() ||
+				                  x.PostId == query.ToInt() ||
+				                  x.RevisionGUID.StartsWith(query) ||
+				                  x.Text.StartsWith(query) ||
+				                  x.UserDisplayName.StartsWith(query) ||
+				                  x.UserId == query.ToNullableInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PostHistory> Get(int id)
@@ -87,7 +105,9 @@ namespace StackOverflowNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PostHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistory>();
+			return await this.Context.Set<PostHistory>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PostHistory>();
 		}
 
 		private async Task<PostHistory> GetById(int id)
@@ -100,5 +120,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd9db0ad8a3d81961be06f186d27e7d7</Hash>
+    <Hash>2db998f06e5288514022da91f1101bb6</Hash>
 </Codenesium>*/

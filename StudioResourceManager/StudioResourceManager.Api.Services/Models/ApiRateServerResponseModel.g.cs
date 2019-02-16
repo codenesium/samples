@@ -33,13 +33,29 @@ namespace StudioResourceManagerNS.Api.Services
 		public string TeacherIdEntity { get; private set; } = RouteConstants.Teachers;
 
 		[JsonProperty]
+		public ApiTeacherServerResponseModel TeacherIdNavigation { get; private set; }
+
+		public void SetTeacherIdNavigation(ApiTeacherServerResponseModel value)
+		{
+			this.TeacherIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int TeacherSkillId { get; private set; }
 
 		[JsonProperty]
 		public string TeacherSkillIdEntity { get; private set; } = RouteConstants.TeacherSkills;
+
+		[JsonProperty]
+		public ApiTeacherSkillServerResponseModel TeacherSkillIdNavigation { get; private set; }
+
+		public void SetTeacherSkillIdNavigation(ApiTeacherSkillServerResponseModel value)
+		{
+			this.TeacherSkillIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69ffda0eb4c26f3bb6c1ed3d2d4e7b13</Hash>
+    <Hash>8f9cf76228181c8deaad68ece415f4f1</Hash>
 </Codenesium>*/

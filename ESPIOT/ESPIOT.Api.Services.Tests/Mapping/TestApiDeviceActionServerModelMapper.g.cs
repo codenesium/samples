@@ -19,7 +19,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			model.SetProperties("A", 1, "A");
 			ApiDeviceActionServerResponseModel response = mapper.MapServerRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
@@ -32,7 +32,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			model.SetProperties(1, "A", 1, "A");
 			ApiDeviceActionServerRequestModel response = mapper.MapServerResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
@@ -47,7 +47,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			JsonPatchDocument<ApiDeviceActionServerRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiDeviceActionServerRequestModel();
 			patch.ApplyTo(response);
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
@@ -55,5 +55,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>389afff6cdffd85fa435f730a34078d2</Hash>
+    <Hash>d2effd51bb2cb42404d136fabef40718</Hash>
 </Codenesium>*/

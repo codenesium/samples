@@ -26,9 +26,20 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PipelineStatu>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PipelineStatu>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PipelineStatu> Get(int id)
@@ -79,7 +90,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table Pipeline via pipelineStatusId.
 		public async virtual Task<List<Pipeline>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Pipeline>().Where(x => x.PipelineStatusId == pipelineStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pipeline>();
+			return await this.Context.Set<Pipeline>()
+			       .Where(x => x.PipelineStatusId == pipelineStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pipeline>();
 		}
 
 		protected async Task<List<PipelineStatu>> Where(
@@ -93,7 +105,9 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PipelineStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStatu>();
+			return await this.Context.Set<PipelineStatu>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStatu>();
 		}
 
 		private async Task<PipelineStatu> GetById(int id)
@@ -106,5 +120,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f2e48c9c8984bdba41c5ce39c5dbfcff</Hash>
+    <Hash>cae00c6e3702186e30827d923021864c</Hash>
 </Codenesium>*/

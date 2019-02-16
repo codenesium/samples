@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeServerRequestModelValidator testAllFieldTypeModelValidator,
-			IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper,
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
 			: base(logger,
 			       mediator,
 			       testAllFieldTypeRepository,
 			       testAllFieldTypeModelValidator,
-			       bolTestAllFieldTypeMapper,
 			       dalTestAllFieldTypeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>354ed4178b42c5b08b257dbcf67e1def</Hash>
+    <Hash>222a7c491feda9bf0ebac4f1bfcbff07</Hash>
 </Codenesium>*/

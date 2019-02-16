@@ -26,18 +26,18 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITicketRepository>();
 			var records = new List<Ticket>();
 			records.Add(new Ticket());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TicketService(mock.LoggerMock.Object,
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			List<ApiTicketServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,8 +50,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			ApiTicketServerResponseModel response = await service.Get(default(int));
 
@@ -68,8 +68,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			ApiTicketServerResponseModel response = await service.Get(default(int));
 
@@ -87,8 +87,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			CreateResponse<ApiTicketServerResponseModel> response = await service.Create(model);
 
@@ -110,8 +110,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			CreateResponse<ApiTicketServerResponseModel> response = await service.Create(model);
 
@@ -132,8 +132,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			UpdateResponse<ApiTicketServerResponseModel> response = await service.Update(default(int), model);
 
@@ -156,8 +156,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			UpdateResponse<ApiTicketServerResponseModel> response = await service.Update(default(int), model);
 
@@ -177,8 +177,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -200,8 +200,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                validatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -222,8 +222,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			List<ApiTicketServerResponseModel> response = await service.ByTicketStatusId(default(int));
 
@@ -240,17 +240,55 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.MediatorMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
 
 			List<ApiTicketServerResponseModel> response = await service.ByTicketStatusId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByTicketStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void SaleTicketsByTicketId_Exists()
+		{
+			var mock = new ServiceMockFacade<ITicketRepository>();
+			var records = new List<SaleTicket>();
+			records.Add(new SaleTicket());
+			mock.RepositoryMock.Setup(x => x.SaleTicketsByTicketId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+
+			List<ApiSaleTicketServerResponseModel> response = await service.SaleTicketsByTicketId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.SaleTicketsByTicketId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void SaleTicketsByTicketId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITicketRepository>();
+			mock.RepositoryMock.Setup(x => x.SaleTicketsByTicketId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SaleTicket>>(new List<SaleTicket>()));
+			var service = new TicketService(mock.LoggerMock.Object,
+			                                mock.MediatorMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
+			                                mock.DALMapperMockFactory.DALTicketMapperMock,
+			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+
+			List<ApiSaleTicketServerResponseModel> response = await service.SaleTicketsByTicketId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.SaleTicketsByTicketId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea9b6bd8102fc50307f94cd2ab8b5d68</Hash>
+    <Hash>ca7b470ad9807a8e1d9070723bf5262e</Hash>
 </Codenesium>*/

@@ -47,10 +47,19 @@ namespace TicketingCRMNS.Api.DataAccess
 			Mock<ILogger<TicketStatuRepository>> loggerMoc = TicketStatuRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TicketStatuRepositoryMoc.GetContext();
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TicketStatuRepository>> loggerMoc = TicketStatuRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TicketStatuRepositoryMoc.GetContext();
+			var repository = new TicketStatuRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
 
 			TicketStatu entity = new TicketStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TicketStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
 
 			var entity = new TicketStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<TicketStatu>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = TicketStatuRepositoryMoc.GetContext();
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
 			TicketStatu entity = new TicketStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TicketStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = TicketStatuRepositoryMoc.GetContext();
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
 			TicketStatu entity = new TicketStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TicketStatu>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = TicketStatuRepositoryMoc.GetContext();
 			var repository = new TicketStatuRepository(loggerMoc.Object, context);
 			TicketStatu entity = new TicketStatu();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<TicketStatu>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70e850f3f1e5230c2218df92542dd041</Hash>
+    <Hash>edd64b264a1ed5d5cab97d0a7e0c770f</Hash>
 </Codenesium>*/

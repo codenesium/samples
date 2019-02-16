@@ -14,16 +14,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int creditCardID,
 			string cardNumber,
 			string cardType,
-			int creditCardID,
 			int expMonth,
 			short expYear,
 			DateTime modifiedDate)
 		{
+			this.CreditCardID = creditCardID;
 			this.CardNumber = cardNumber;
 			this.CardType = cardType;
-			this.CreditCardID = creditCardID;
 			this.ExpMonth = expMonth;
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate;
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>654a45ced1a74b2600b06fbc44ead5ce</Hash>
+    <Hash>2f7f8fcef46af6aecb2b3ec85948fd36</Hash>
 </Codenesium>*/

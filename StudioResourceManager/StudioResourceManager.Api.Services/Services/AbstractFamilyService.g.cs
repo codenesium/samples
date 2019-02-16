@@ -16,11 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IApiFamilyServerRequestModelValidator FamilyModelValidator { get; private set; }
 
-		protected IBOLFamilyMapper BolFamilyMapper { get; private set; }
-
 		protected IDALFamilyMapper DalFamilyMapper { get; private set; }
-
-		protected IBOLStudentMapper BolStudentMapper { get; private set; }
 
 		protected IDALStudentMapper DalStudentMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace StudioResourceManagerNS.Api.Services
 			IMediator mediator,
 			IFamilyRepository familyRepository,
 			IApiFamilyServerRequestModelValidator familyModelValidator,
-			IBOLFamilyMapper bolFamilyMapper,
 			IDALFamilyMapper dalFamilyMapper,
-			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper)
 			: base()
 		{
 			this.FamilyRepository = familyRepository;
 			this.FamilyModelValidator = familyModelValidator;
-			this.BolFamilyMapper = bolFamilyMapper;
 			this.DalFamilyMapper = dalFamilyMapper;
-			this.BolStudentMapper = bolStudentMapper;
 			this.DalStudentMapper = dalStudentMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiFamilyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFamilyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.FamilyRepository.All(limit, offset);
+			List<Family> records = await this.FamilyRepository.All(limit, offset, query);
 
-			return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(records));
+			return this.DalFamilyMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiFamilyServerResponseModel> Get(int id)
 		{
-			var record = await this.FamilyRepository.Get(id);
+			Family record = await this.FamilyRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace StudioResourceManagerNS.Api.Services
 			}
 			else
 			{
-				return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(record));
+				return this.DalFamilyMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolFamilyMapper.MapModelToBO(default(int), model);
-				var record = await this.FamilyRepository.Create(this.DalFamilyMapper.MapBOToEF(bo));
+				Family record = this.DalFamilyMapper.MapModelToEntity(default(int), model);
+				record = await this.FamilyRepository.Create(record);
 
-				var businessObject = this.DalFamilyMapper.MapEFToBO(record);
-				response.SetRecord(this.BolFamilyMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalFamilyMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new FamilyCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolFamilyMapper.MapModelToBO(id, model);
-				await this.FamilyRepository.Update(this.DalFamilyMapper.MapBOToEF(bo));
+				Family record = this.DalFamilyMapper.MapModelToEntity(id, model);
+				await this.FamilyRepository.Update(record);
 
-				var record = await this.FamilyRepository.Get(id);
+				record = await this.FamilyRepository.Get(id);
 
-				var businessObject = this.DalFamilyMapper.MapEFToBO(record);
-				var apiModel = this.BolFamilyMapper.MapBOToModel(businessObject);
+				ApiFamilyServerResponseModel apiModel = this.DalFamilyMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new FamilyUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiFamilyServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			List<Student> records = await this.FamilyRepository.StudentsByFamilyId(familyId, limit, offset);
 
-			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
+			return this.DalStudentMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a8849353158efb0f9b6440971ba2503</Hash>
+    <Hash>09160409b1d61bf82e41793990aae085</Hash>
 </Codenesium>*/

@@ -15,9 +15,9 @@ namespace StackOverflowNS.Api.Client
 		}
 
 		public virtual void SetProperties(
-			string type)
+			string rwtype)
 		{
-			this.Type = type;
+			this.Type = rwtype;
 		}
 
 		[JsonProperty]
@@ -26,5 +26,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>e1c63cee75491487f318a86226dfd395</Hash>
+    <Hash>54ceecede751480641158e06b782b592</Hash>
 </Codenesium>*/

@@ -46,15 +46,15 @@ namespace TestsNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRowVersionCheckServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiRowVersionCheckServerResponseModel> response = await this.RowVersionCheckService.All(query.Limit, query.Offset);
+			List<ApiRowVersionCheckServerResponseModel> response = await this.RowVersionCheckService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1f48c43568b53ec275afcde3d45469db</Hash>
+    <Hash>b1bcab1d923cf755236f709f5a129327</Hash>
 </Codenesium>*/

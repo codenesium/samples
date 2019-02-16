@@ -26,9 +26,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ActualCost.ToDecimal() == query.ToDecimal() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.ProductID == query.ToInt() ||
+				                  x.Quantity == query.ToInt() ||
+				                  x.ReferenceOrderID == query.ToInt() ||
+				                  x.ReferenceOrderLineID == query.ToInt() ||
+				                  x.TransactionDate == query.ToDateTime() ||
+				                  x.TransactionID == query.ToInt() ||
+				                  x.TransactionType.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TransactionHistoryArchive> Get(int transactionID)
@@ -112,5 +130,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be919cb93155a9066773afc01b02b2f2</Hash>
+    <Hash>a9200668b3d6d3da6492bee258e4cc96</Hash>
 </Codenesium>*/

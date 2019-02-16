@@ -16,11 +16,7 @@ namespace NebulaNS.Api.Services
 
 		protected IApiMachineServerRequestModelValidator MachineModelValidator { get; private set; }
 
-		protected IBOLMachineMapper BolMachineMapper { get; private set; }
-
 		protected IDALMachineMapper DalMachineMapper { get; private set; }
-
-		protected IBOLLinkMapper BolLinkMapper { get; private set; }
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IMachineRepository machineRepository,
 			IApiMachineServerRequestModelValidator machineModelValidator,
-			IBOLMachineMapper bolMachineMapper,
 			IDALMachineMapper dalMachineMapper,
-			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base()
 		{
 			this.MachineRepository = machineRepository;
 			this.MachineModelValidator = machineModelValidator;
-			this.BolMachineMapper = bolMachineMapper;
 			this.DalMachineMapper = dalMachineMapper;
-			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiMachineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiMachineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.MachineRepository.All(limit, offset);
+			List<Machine> records = await this.MachineRepository.All(limit, offset, query);
 
-			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
+			return this.DalMachineMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiMachineServerResponseModel> Get(int id)
 		{
-			var record = await this.MachineRepository.Get(id);
+			Machine record = await this.MachineRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record));
+				return this.DalMachineMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolMachineMapper.MapModelToBO(default(int), model);
-				var record = await this.MachineRepository.Create(this.DalMachineMapper.MapBOToEF(bo));
+				Machine record = this.DalMachineMapper.MapModelToEntity(default(int), model);
+				record = await this.MachineRepository.Create(record);
 
-				var businessObject = this.DalMachineMapper.MapEFToBO(record);
-				response.SetRecord(this.BolMachineMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalMachineMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new MachineCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolMachineMapper.MapModelToBO(id, model);
-				await this.MachineRepository.Update(this.DalMachineMapper.MapBOToEF(bo));
+				Machine record = this.DalMachineMapper.MapModelToEntity(id, model);
+				await this.MachineRepository.Update(record);
 
-				var record = await this.MachineRepository.Get(id);
+				record = await this.MachineRepository.Get(id);
 
-				var businessObject = this.DalMachineMapper.MapEFToBO(record);
-				var apiModel = this.BolMachineMapper.MapBOToModel(businessObject);
+				ApiMachineServerResponseModel apiModel = this.DalMachineMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new MachineUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiMachineServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record));
+				return this.DalMachineMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace NebulaNS.Api.Services
 		{
 			List<Link> records = await this.MachineRepository.LinksByAssignedMachineId(assignedMachineId, limit, offset);
 
-			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
+			return this.DalLinkMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e89e1d1185ebd64e4b91138fa8a2628f</Hash>
+    <Hash>29f572bcbaee80825c3042919eef8754</Hash>
 </Codenesium>*/

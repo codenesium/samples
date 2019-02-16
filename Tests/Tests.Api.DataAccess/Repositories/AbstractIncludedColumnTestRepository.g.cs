@@ -26,9 +26,21 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<IncludedColumnTest>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<IncludedColumnTest>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Name2.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<IncludedColumnTest> Get(int id)
@@ -87,7 +99,9 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<IncludedColumnTest>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<IncludedColumnTest>();
+			return await this.Context.Set<IncludedColumnTest>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<IncludedColumnTest>();
 		}
 
 		private async Task<IncludedColumnTest> GetById(int id)
@@ -100,5 +114,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc7eb2c03400bb43017ab058dd26c1d1</Hash>
+    <Hash>d2d43a042c14c60209e1cbd607707cc1</Hash>
 </Codenesium>*/

@@ -26,9 +26,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DatabaseLogID == query.ToInt() ||
+				                  x.DatabaseUser.StartsWith(query) ||
+				                  x.PostTime == query.ToDateTime() ||
+				                  x.Schema.StartsWith(query) ||
+				                  x.Tsql.StartsWith(query) ||
+				                  x.XmlEvent.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<DatabaseLog> Get(int databaseLogID)
@@ -100,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b3b852cf6ec937200902b4a90b3c666</Hash>
+    <Hash>bf193af4b114a9727ebdfc8472742e24</Hash>
 </Codenesium>*/

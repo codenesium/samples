@@ -34,23 +34,23 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int PreviousChainId { get; private set; }
 
 		[ForeignKey("NextChainId")]
-		public virtual Chain ChainNavigation { get; private set; }
+		public virtual Chain NextChainIdNavigation { get; private set; }
 
-		public void SetChainNavigation(Chain item)
+		public void SetNextChainIdNavigation(Chain item)
 		{
-			this.ChainNavigation = item;
+			this.NextChainIdNavigation = item;
 		}
 
 		[ForeignKey("PreviousChainId")]
-		public virtual Chain Chain1Navigation { get; private set; }
+		public virtual Chain PreviousChainIdNavigation { get; private set; }
 
-		public void SetChain1Navigation(Chain item)
+		public void SetPreviousChainIdNavigation(Chain item)
 		{
-			this.Chain1Navigation = item;
+			this.PreviousChainIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b2fc6755e70da8c65de3109bd41fed2</Hash>
+    <Hash>e6ce6d8e68e125602e7bad914efa771c</Hash>
 </Codenesium>*/

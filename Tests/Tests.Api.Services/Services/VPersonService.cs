@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IVPersonRepository vPersonRepository,
 			IApiVPersonServerRequestModelValidator vPersonModelValidator,
-			IBOLVPersonMapper bolVPersonMapper,
 			IDALVPersonMapper dalVPersonMapper)
 			: base(logger,
 			       mediator,
 			       vPersonRepository,
 			       vPersonModelValidator,
-			       bolVPersonMapper,
 			       dalVPersonMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>228ecac1a61f88238db64b2ad41f8832</Hash>
+    <Hash>a176499a26941c4aabcaf0c010f164dc</Hash>
 </Codenesium>*/

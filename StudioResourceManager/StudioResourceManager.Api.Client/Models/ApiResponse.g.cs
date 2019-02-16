@@ -15,7 +15,7 @@ namespace StudioResourceManagerNS.Api.Client
 		{
 			from.Admins.ForEach(x => this.AddAdmin(x));
 			from.Events.ForEach(x => this.AddEvent(x));
-			from.EventStatus.ForEach(x => this.AddEventStatu(x));
+			from.EventStatus.ForEach(x => this.AddEventStatus(x));
 			from.Families.ForEach(x => this.AddFamily(x));
 			from.Rates.ForEach(x => this.AddRate(x));
 			from.Spaces.ForEach(x => this.AddSpace(x));
@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.Client
 
 		public List<ApiEventClientResponseModel> Events { get; private set; } = new List<ApiEventClientResponseModel>();
 
-		public List<ApiEventStatuClientResponseModel> EventStatus { get; private set; } = new List<ApiEventStatuClientResponseModel>();
+		public List<ApiEventStatusClientResponseModel> EventStatus { get; private set; } = new List<ApiEventStatusClientResponseModel>();
 
 		public List<ApiFamilyClientResponseModel> Families { get; private set; } = new List<ApiFamilyClientResponseModel>();
 
@@ -67,7 +67,7 @@ namespace StudioResourceManagerNS.Api.Client
 			}
 		}
 
-		public void AddEventStatu(ApiEventStatuClientResponseModel item)
+		public void AddEventStatus(ApiEventStatusClientResponseModel item)
 		{
 			if (!this.EventStatus.Any(x => x.Id == item.Id))
 			{
@@ -150,5 +150,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>56817049e099b2fca14cfb0cb84d9556</Hash>
+    <Hash>1e079aeafc117ad82c90bfb57746979c</Hash>
 </Codenesium>*/

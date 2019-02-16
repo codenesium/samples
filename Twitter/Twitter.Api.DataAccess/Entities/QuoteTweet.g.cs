@@ -14,16 +14,16 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int quoteTweetId,
 			string content,
 			DateTime date,
-			int quoteTweetId,
 			int retweeterUserId,
 			int sourceTweetId,
 			TimeSpan time)
 		{
+			this.QuoteTweetId = quoteTweetId;
 			this.Content = content;
 			this.Date = date;
-			this.QuoteTweetId = quoteTweetId;
 			this.RetweeterUserId = retweeterUserId;
 			this.SourceTweetId = sourceTweetId;
 			this.Time = time;
@@ -50,23 +50,23 @@ namespace TwitterNS.Api.DataAccess
 		public virtual TimeSpan Time { get; private set; }
 
 		[ForeignKey("RetweeterUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User RetweeterUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetRetweeterUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.RetweeterUserIdNavigation = item;
 		}
 
 		[ForeignKey("SourceTweetId")]
-		public virtual Tweet TweetNavigation { get; private set; }
+		public virtual Tweet SourceTweetIdNavigation { get; private set; }
 
-		public void SetTweetNavigation(Tweet item)
+		public void SetSourceTweetIdNavigation(Tweet item)
 		{
-			this.TweetNavigation = item;
+			this.SourceTweetIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a297edff1b720fb2a376cf047659fb81</Hash>
+    <Hash>b60c2893486415a056e439b0bfabe91d</Hash>
 </Codenesium>*/

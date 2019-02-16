@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<CountryRegion> Get(string countryRegionCode);
 
-		Task<List<CountryRegion>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<CountryRegion>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<CountryRegion> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8a0f6a4b2f35d8c6b61ef082202fb7f7</Hash>
+    <Hash>b695a6328f28b9eaaf82519ccebd2b13</Hash>
 </Codenesium>*/

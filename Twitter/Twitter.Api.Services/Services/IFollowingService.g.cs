@@ -18,10 +18,10 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiFollowingServerResponseModel> Get(int userId);
 
-		Task<List<ApiFollowingServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowingServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9e18e4b054b3ed6ad8fbfb8ff930280</Hash>
+    <Hash>2c911ae5a0806840fb831919b089373f</Hash>
 </Codenesium>*/

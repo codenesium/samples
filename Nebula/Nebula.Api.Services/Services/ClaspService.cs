@@ -12,13 +12,11 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IClaspRepository claspRepository,
 			IApiClaspServerRequestModelValidator claspModelValidator,
-			IBOLClaspMapper bolClaspMapper,
 			IDALClaspMapper dalClaspMapper)
 			: base(logger,
 			       mediator,
 			       claspRepository,
 			       claspModelValidator,
-			       bolClaspMapper,
 			       dalClaspMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>401ffb9ef4fdf5788a1f6320ff66e576</Hash>
+    <Hash>29190b163dd23086656f1975b846ef92</Hash>
 </Codenesium>*/

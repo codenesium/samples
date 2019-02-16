@@ -16,16 +16,12 @@ namespace AdventureWorksNS.Api.Services
 		}
 
 		public virtual void SetProperties(
-			string @event,
-			string @object,
 			string databaseUser,
 			DateTime postTime,
 			string schema,
 			string tsql,
 			string xmlEvent)
 		{
-			this.@Event = @event;
-			this.@Object = @object;
 			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
 			this.Schema = schema;
@@ -36,13 +32,6 @@ namespace AdventureWorksNS.Api.Services
 		[Required]
 		[JsonProperty]
 		public string DatabaseUser { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
-		public string @Event { get; private set; } = default(string);
-
-		[JsonProperty]
-		public string @Object { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
@@ -62,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c13d543f002a95cddfbb2cf8efa2ab35</Hash>
+    <Hash>1397502c3064f99457ee629dc1682523</Hash>
 </Codenesium>*/

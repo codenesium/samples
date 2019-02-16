@@ -35,9 +35,9 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiSpecialOfferClientRequestModel();
-			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			var model2 = new ApiSpecialOfferClientRequestModel();
-			model2.SetProperties("C", "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), DateTime.Parse("1/1/1989 12:00:00 AM"), "C");
+			model2.SetProperties("C", "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3, DateTime.Parse("1/1/1989 12:00:00 AM"), Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), DateTime.Parse("1/1/1989 12:00:00 AM"));
 			var request = new List<ApiSpecialOfferClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiSpecialOfferClientResponseModel>> result = await client.SpecialOfferBulkInsertAsync(request);
 
@@ -53,7 +53,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SpecialOffer>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<SpecialOffer>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<SpecialOffer>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<SpecialOffer>().ToList()[1].Type.Should().Be("B");
 
 			context.Set<SpecialOffer>().ToList()[2].Category.Should().Be("C");
 			context.Set<SpecialOffer>().ToList()[2].Description.Should().Be("C");
@@ -64,7 +63,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SpecialOffer>().ToList()[2].ModifiedDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<SpecialOffer>().ToList()[2].Rowguid.Should().Be(Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"));
 			context.Set<SpecialOffer>().ToList()[2].StartDate.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<SpecialOffer>().ToList()[2].Type.Should().Be("C");
 		}
 
 		[Fact]
@@ -78,7 +76,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiSpecialOfferClientRequestModel();
-			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			CreateResponse<ApiSpecialOfferClientResponseModel> result = await client.SpecialOfferCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -92,7 +90,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SpecialOffer>().ToList()[1].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<SpecialOffer>().ToList()[1].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<SpecialOffer>().ToList()[1].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<SpecialOffer>().ToList()[1].Type.Should().Be("B");
 
 			result.Record.Category.Should().Be("B");
 			result.Record.Description.Should().Be("B");
@@ -103,7 +100,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			result.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			result.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.Type.Should().Be("B");
 		}
 
 		[Fact]
@@ -121,7 +117,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			ApiSpecialOfferServerResponseModel model = await service.Get(1);
 
 			ApiSpecialOfferClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			request.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 
 			UpdateResponse<ApiSpecialOfferClientResponseModel> updateResponse = await client.SpecialOfferUpdateAsync(model.SpecialOfferID, request);
 
@@ -138,7 +134,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			context.Set<SpecialOffer>().ToList()[0].ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<SpecialOffer>().ToList()[0].Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<SpecialOffer>().ToList()[0].StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<SpecialOffer>().ToList()[0].Type.Should().Be("B");
 
 			updateResponse.Record.SpecialOfferID.Should().Be(1);
 			updateResponse.Record.Category.Should().Be("B");
@@ -150,7 +145,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			updateResponse.Record.ModifiedDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.Rowguid.Should().Be(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			updateResponse.Record.StartDate.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.Type.Should().Be("B");
 		}
 
 		[Fact]
@@ -165,7 +159,7 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 
 			ISpecialOfferService service = testServer.Host.Services.GetService(typeof(ISpecialOfferService)) as ISpecialOfferService;
 			var model = new ApiSpecialOfferServerRequestModel();
-			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			model.SetProperties("B", "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), DateTime.Parse("1/1/1988 12:00:00 AM"));
 			CreateResponse<ApiSpecialOfferServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -202,7 +196,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.SpecialOfferID.Should().Be(1);
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -242,7 +235,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			response[0].Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response[0].SpecialOfferID.Should().Be(1);
 			response[0].StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response[0].Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -268,7 +260,6 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 			response.Rowguid.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			response.SpecialOfferID.Should().Be(1);
 			response.StartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.Type.Should().Be("A");
 		}
 
 		[Fact]
@@ -308,5 +299,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7f4a4f64f1b308e6d7f2f2815cd96f94</Hash>
+    <Hash>5defa51ada5781223d85bbcf78a3e9e7</Hash>
 </Codenesium>*/

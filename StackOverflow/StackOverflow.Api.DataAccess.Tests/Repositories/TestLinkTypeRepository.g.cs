@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<LinkTypeRepository>> loggerMoc = LinkTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = LinkTypeRepositoryMoc.GetContext();
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<LinkTypeRepository>> loggerMoc = LinkTypeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = LinkTypeRepositoryMoc.GetContext();
+			var repository = new LinkTypeRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
 
 			LinkType entity = new LinkType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<LinkType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
 
 			var entity = new LinkType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<LinkType>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = LinkTypeRepositoryMoc.GetContext();
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
 			LinkType entity = new LinkType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<LinkType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = LinkTypeRepositoryMoc.GetContext();
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
 			LinkType entity = new LinkType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<LinkType>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = LinkTypeRepositoryMoc.GetContext();
 			var repository = new LinkTypeRepository(loggerMoc.Object, context);
 			LinkType entity = new LinkType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<LinkType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>012e13cf2f327b3893300357fabf61ff</Hash>
+    <Hash>00f9a7ee966b56914e60842a6f0f6be0</Hash>
 </Codenesium>*/

@@ -15,7 +15,6 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiProductServerRequestModel model)
 		{
-			this.@ClassRules();
 			this.ColorRules();
 			this.DaysToManufactureRules();
 			this.DiscontinuedDateRules();
@@ -44,7 +43,6 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductServerRequestModel model)
 		{
-			this.@ClassRules();
 			this.ColorRules();
 			this.DaysToManufactureRules();
 			this.DiscontinuedDateRules();
@@ -79,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e53c7fc27264427d22e312493f08a02</Hash>
+    <Hash>4f075321b3474af070e3af3f6f3dcc42</Hash>
 </Codenesium>*/

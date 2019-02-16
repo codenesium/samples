@@ -35,9 +35,9 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTestAllFieldTypesNullableClientRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
 			var model2 = new ApiTestAllFieldTypesNullableClientRequestModel();
-			model2.SetProperties(3, BitConverter.GetBytes(3), true, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTimeOffset.Parse("1/1/1989 12:00:00 AM"), 3, 3, BitConverter.GetBytes(3), 3m, "C", "C", 3m, "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3m, "C", TimeSpan.Parse("03:00:00"), BitConverter.GetBytes(3), 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), BitConverter.GetBytes(3), "C", "C");
+			model2.SetProperties(3, BitConverter.GetBytes(3), true, "C", DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTime.Parse("1/1/1989 12:00:00 AM"), DateTimeOffset.Parse("1/1/1989 12:00:00 AM"), 3m, 3, BitConverter.GetBytes(3), 3m, "C", "C", 3m, "C", 3m, DateTime.Parse("1/1/1989 12:00:00 AM"), 3, 3m, "C", TimeSpan.Parse("03:00:00"), BitConverter.GetBytes(3), 3, Guid.Parse("8d721ec8-4c9d-632f-6f06-7f89cc14862c"), BitConverter.GetBytes(3), "C", "C");
 			var request = new List<ApiTestAllFieldTypesNullableClientRequestModel>() {model, model2};
 			CreateResponse<List<ApiTestAllFieldTypesNullableClientResponseModel>> result = await client.TestAllFieldTypesNullableBulkInsertAsync(request);
 
@@ -52,7 +52,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTime2.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDecimal.Should().Be(2);
+			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldFloat.Should().Be(2);
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldMoney.Should().Be(2m);
@@ -81,7 +81,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldDateTime.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldDateTime2.Should().Be(DateTime.Parse("1/1/1989 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1989 12:00:00 AM"));
-			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldDecimal.Should().Be(3);
+			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldDecimal.Should().Be(3m);
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldFloat.Should().Be(3);
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(3));
 			context.Set<TestAllFieldTypesNullable>().ToList()[2].FieldMoney.Should().Be(3m);
@@ -114,7 +114,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApplicationDbContext context = testServer.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
 
 			var model = new ApiTestAllFieldTypesNullableClientRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
 			CreateResponse<ApiTestAllFieldTypesNullableClientResponseModel> result = await client.TestAllFieldTypesNullableCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -127,7 +127,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTime2.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDecimal.Should().Be(2);
+			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldFloat.Should().Be(2);
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldTypesNullable>().ToList()[1].FieldMoney.Should().Be(2m);
@@ -156,7 +156,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			result.Record.FieldDateTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			result.Record.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
-			result.Record.FieldDecimal.Should().Be(2);
+			result.Record.FieldDecimal.Should().Be(2m);
 			result.Record.FieldFloat.Should().Be(2);
 			result.Record.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			result.Record.FieldMoney.Should().Be(2m);
@@ -193,7 +193,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			ApiTestAllFieldTypesNullableServerResponseModel model = await service.Get(1);
 
 			ApiTestAllFieldTypesNullableClientRequestModel request = mapper.MapServerResponseToClientRequest(model);
-			request.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			request.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
 
 			UpdateResponse<ApiTestAllFieldTypesNullableClientResponseModel> updateResponse = await client.TestAllFieldTypesNullableUpdateAsync(model.Id, request);
 
@@ -209,7 +209,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldDateTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldDateTime2.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
-			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldDecimal.Should().Be(2);
+			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldDecimal.Should().Be(2m);
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldFloat.Should().Be(2);
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			context.Set<TestAllFieldTypesNullable>().ToList()[0].FieldMoney.Should().Be(2m);
@@ -239,7 +239,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			updateResponse.Record.FieldDateTime.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1988 12:00:00 AM"));
 			updateResponse.Record.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1988 12:00:00 AM"));
-			updateResponse.Record.FieldDecimal.Should().Be(2);
+			updateResponse.Record.FieldDecimal.Should().Be(2m);
 			updateResponse.Record.FieldFloat.Should().Be(2);
 			updateResponse.Record.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(2));
 			updateResponse.Record.FieldMoney.Should().Be(2m);
@@ -273,7 +273,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			ITestAllFieldTypesNullableService service = testServer.Host.Services.GetService(typeof(ITestAllFieldTypesNullableService)) as ITestAllFieldTypesNullableService;
 			var model = new ApiTestAllFieldTypesNullableServerRequestModel();
-			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
+			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2m, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("02:00:00"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
 			CreateResponse<ApiTestAllFieldTypesNullableServerResponseModel> createdResponse = await service.Create(model);
 
 			createdResponse.Success.Should().BeTrue();
@@ -308,7 +308,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response.FieldDateTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTime2.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
-			response.FieldDecimal.Should().Be(1);
+			response.FieldDecimal.Should().Be(1m);
 			response.FieldFloat.Should().Be(1);
 			response.FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response.FieldMoney.Should().Be(1m);
@@ -366,7 +366,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 			response[0].FieldDateTime.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].FieldDateTime2.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response[0].FieldDateTimeOffset.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
-			response[0].FieldDecimal.Should().Be(1);
+			response[0].FieldDecimal.Should().Be(1m);
 			response[0].FieldFloat.Should().Be(1);
 			response[0].FieldImage.Should().BeEquivalentTo(BitConverter.GetBytes(1));
 			response[0].FieldMoney.Should().Be(1m);
@@ -412,5 +412,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7028fa6cbb64344c7092bb80d7f8177f</Hash>
+    <Hash>315d20a24a5012f7d2e8d39bfb08bedc</Hash>
 </Codenesium>*/

@@ -46,15 +46,15 @@ namespace TestsNS.Api.Web
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTestAllFieldTypeServerResponseModel>), 200)]
 
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
+		public async virtual Task<IActionResult> All(int? limit, int? offset, string query)
 		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			SearchQuery searchQuery = new SearchQuery();
+			if (!searchQuery.Process(this.MaxLimit, this.DefaultLimit, limit, offset, query, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
 			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, searchQuery.Error);
 			}
 
-			List<ApiTestAllFieldTypeServerResponseModel> response = await this.TestAllFieldTypeService.All(query.Limit, query.Offset);
+			List<ApiTestAllFieldTypeServerResponseModel> response = await this.TestAllFieldTypeService.All(searchQuery.Limit, searchQuery.Offset, searchQuery.Query);
 
 			return this.Ok(response);
 		}
@@ -235,5 +235,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>83815f20e69541f7a8896f4c69fcc6bb</Hash>
+    <Hash>406d1d2f32fff4a761977a0a7e86b4fa</Hash>
 </Codenesium>*/

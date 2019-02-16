@@ -13,8 +13,6 @@ namespace ESPIOTNS.Api.Services.Tests
 
         public Mock<T> RepositoryMock { get; set; } = new Mock<T>();
 
-        public BOLMapperMockFactory BOLMapperMockFactory { get; private set; } = new BOLMapperMockFactory();
-
         public DALMapperMockFactory DALMapperMockFactory { get; private set; } = new DALMapperMockFactory();
 
         public ModelValidatorMockFactory ModelValidatorMockFactory { get; private set; } = new ModelValidatorMockFactory();

@@ -14,20 +14,20 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string blocked,
 			DateTime dateFollowed,
 			int followedUserId,
 			int followingUserId,
 			string followRequestStatu,
-			int id,
 			string muted)
 		{
+			this.Id = id;
 			this.Blocked = blocked;
 			this.DateFollowed = dateFollowed;
 			this.FollowedUserId = followedUserId;
 			this.FollowingUserId = followingUserId;
 			this.FollowRequestStatu = followRequestStatu;
-			this.Id = id;
 			this.Muted = muted;
 		}
 
@@ -57,23 +57,23 @@ namespace TwitterNS.Api.DataAccess
 		public virtual string Muted { get; private set; }
 
 		[ForeignKey("FollowedUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User FollowedUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetFollowedUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.FollowedUserIdNavigation = item;
 		}
 
 		[ForeignKey("FollowingUserId")]
-		public virtual User User1Navigation { get; private set; }
+		public virtual User FollowingUserIdNavigation { get; private set; }
 
-		public void SetUser1Navigation(User item)
+		public void SetFollowingUserIdNavigation(User item)
 		{
-			this.User1Navigation = item;
+			this.FollowingUserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d475b9564dac19b33f7de294310be38a</Hash>
+    <Hash>aaa609ed4e7a262dd55e9ed0fb2b6863</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiReplyServerRequestModelValidator ReplyModelValidator { get; private set; }
 
-		protected IBOLReplyMapper BolReplyMapper { get; private set; }
-
 		protected IDALReplyMapper DalReplyMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IReplyRepository replyRepository,
 			IApiReplyServerRequestModelValidator replyModelValidator,
-			IBOLReplyMapper bolReplyMapper,
 			IDALReplyMapper dalReplyMapper)
 			: base()
 		{
 			this.ReplyRepository = replyRepository;
 			this.ReplyModelValidator = replyModelValidator;
-			this.BolReplyMapper = bolReplyMapper;
 			this.DalReplyMapper = dalReplyMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiReplyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiReplyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ReplyRepository.All(limit, offset);
+			List<Reply> records = await this.ReplyRepository.All(limit, offset, query);
 
-			return this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(records));
+			return this.DalReplyMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiReplyServerResponseModel> Get(int replyId)
 		{
-			var record = await this.ReplyRepository.Get(replyId);
+			Reply record = await this.ReplyRepository.Get(replyId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(record));
+				return this.DalReplyMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolReplyMapper.MapModelToBO(default(int), model);
-				var record = await this.ReplyRepository.Create(this.DalReplyMapper.MapBOToEF(bo));
+				Reply record = this.DalReplyMapper.MapModelToEntity(default(int), model);
+				record = await this.ReplyRepository.Create(record);
 
-				var businessObject = this.DalReplyMapper.MapEFToBO(record);
-				response.SetRecord(this.BolReplyMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalReplyMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ReplyCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolReplyMapper.MapModelToBO(replyId, model);
-				await this.ReplyRepository.Update(this.DalReplyMapper.MapBOToEF(bo));
+				Reply record = this.DalReplyMapper.MapModelToEntity(replyId, model);
+				await this.ReplyRepository.Update(record);
 
-				var record = await this.ReplyRepository.Get(replyId);
+				record = await this.ReplyRepository.Get(replyId);
 
-				var businessObject = this.DalReplyMapper.MapEFToBO(record);
-				var apiModel = this.BolReplyMapper.MapBOToModel(businessObject);
+				ApiReplyServerResponseModel apiModel = this.DalReplyMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ReplyUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiReplyServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace TwitterNS.Api.Services
 		{
 			List<Reply> records = await this.ReplyRepository.ByReplierUserId(replierUserId, limit, offset);
 
-			return this.BolReplyMapper.MapBOToModel(this.DalReplyMapper.MapEFToBO(records));
+			return this.DalReplyMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>abc5627690fe2ad2b84acaeb7e8316f6</Hash>
+    <Hash>5b84621014135da11ee814cf2a42aa72</Hash>
 </Codenesium>*/

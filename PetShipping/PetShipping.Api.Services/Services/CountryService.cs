@@ -12,21 +12,15 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolCountryMapper,
 			IDALCountryMapper dalCountryMapper,
-			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper,
-			IBOLDestinationMapper bolDestinationMapper,
 			IDALDestinationMapper dalDestinationMapper)
 			: base(logger,
 			       mediator,
 			       countryRepository,
 			       countryModelValidator,
-			       bolCountryMapper,
 			       dalCountryMapper,
-			       bolCountryRequirementMapper,
 			       dalCountryRequirementMapper,
-			       bolDestinationMapper,
 			       dalDestinationMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ced9d641ea4fd86bc4c59b8cc9d533d7</Hash>
+    <Hash>4cfe605acfec46b3b3f97695cf0a54cf</Hash>
 </Codenesium>*/

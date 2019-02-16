@@ -15,10 +15,10 @@ namespace StackOverflowNS.Api.DataAccess
 
 		Task<PostLink> Get(int id);
 
-		Task<List<PostLink>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<PostLink>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3cf5a89f9413d849c4f04d073016c1a0</Hash>
+    <Hash>0baf0eac9558c7abaf9c02758b41a353</Hash>
 </Codenesium>*/

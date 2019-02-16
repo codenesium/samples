@@ -23,6 +23,8 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 		public Mock<IApiSaleServerRequestModelValidator> SaleModelValidatorMock { get; set; } = new Mock<IApiSaleServerRequestModelValidator>();
 
+		public Mock<IApiSaleTicketServerRequestModelValidator> SaleTicketModelValidatorMock { get; set; } = new Mock<IApiSaleTicketServerRequestModelValidator>();
+
 		public Mock<IApiTicketServerRequestModelValidator> TicketModelValidatorMock { get; set; } = new Mock<IApiTicketServerRequestModelValidator>();
 
 		public Mock<IApiTicketStatuServerRequestModelValidator> TicketStatuModelValidatorMock { get; set; } = new Mock<IApiTicketStatuServerRequestModelValidator>();
@@ -63,6 +65,10 @@ namespace TicketingCRMNS.Api.Services.Tests
 			this.SaleModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SaleModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSaleTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.TicketModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TicketModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketServerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TicketModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -87,5 +93,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c0a49adc9fe2cf995e8fda2cf6f1d8b5</Hash>
+    <Hash>b146d9134d629a2527ebc71942142027</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiRowVersionCheckServerRequestModelValidator RowVersionCheckModelValidator { get; private set; }
 
-		protected IBOLRowVersionCheckMapper BolRowVersionCheckMapper { get; private set; }
-
 		protected IDALRowVersionCheckMapper DalRowVersionCheckMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckServerRequestModelValidator rowVersionCheckModelValidator,
-			IBOLRowVersionCheckMapper bolRowVersionCheckMapper,
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base()
 		{
 			this.RowVersionCheckRepository = rowVersionCheckRepository;
 			this.RowVersionCheckModelValidator = rowVersionCheckModelValidator;
-			this.BolRowVersionCheckMapper = bolRowVersionCheckMapper;
 			this.DalRowVersionCheckMapper = dalRowVersionCheckMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.RowVersionCheckRepository.All(limit, offset);
+			List<RowVersionCheck> records = await this.RowVersionCheckRepository.All(limit, offset, query);
 
-			return this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(records));
+			return this.DalRowVersionCheckMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiRowVersionCheckServerResponseModel> Get(int id)
 		{
-			var record = await this.RowVersionCheckRepository.Get(id);
+			RowVersionCheck record = await this.RowVersionCheckRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record));
+				return this.DalRowVersionCheckMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolRowVersionCheckMapper.MapModelToBO(default(int), model);
-				var record = await this.RowVersionCheckRepository.Create(this.DalRowVersionCheckMapper.MapBOToEF(bo));
+				RowVersionCheck record = this.DalRowVersionCheckMapper.MapModelToEntity(default(int), model);
+				record = await this.RowVersionCheckRepository.Create(record);
 
-				var businessObject = this.DalRowVersionCheckMapper.MapEFToBO(record);
-				response.SetRecord(this.BolRowVersionCheckMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalRowVersionCheckMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new RowVersionCheckCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolRowVersionCheckMapper.MapModelToBO(id, model);
-				await this.RowVersionCheckRepository.Update(this.DalRowVersionCheckMapper.MapBOToEF(bo));
+				RowVersionCheck record = this.DalRowVersionCheckMapper.MapModelToEntity(id, model);
+				await this.RowVersionCheckRepository.Update(record);
 
-				var record = await this.RowVersionCheckRepository.Get(id);
+				record = await this.RowVersionCheckRepository.Get(id);
 
-				var businessObject = this.DalRowVersionCheckMapper.MapEFToBO(record);
-				var apiModel = this.BolRowVersionCheckMapper.MapBOToModel(businessObject);
+				ApiRowVersionCheckServerResponseModel apiModel = this.DalRowVersionCheckMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new RowVersionCheckUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiRowVersionCheckServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>447d38348132676dd4e2ad572d76431b</Hash>
+    <Hash>23ae5c9b57f04f4723c41cc1216f52ea</Hash>
 </Codenesium>*/

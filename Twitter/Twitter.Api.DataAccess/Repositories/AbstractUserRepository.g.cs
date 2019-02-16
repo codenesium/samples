@@ -26,9 +26,32 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.BioImgUrl.StartsWith(query) ||
+				                  x.Birthday == query.ToNullableDateTime() ||
+				                  x.ContentDescription.StartsWith(query) ||
+				                  x.Email.StartsWith(query) ||
+				                  x.FullName.StartsWith(query) ||
+				                  x.HeaderImgUrl.StartsWith(query) ||
+				                  x.Interest.StartsWith(query) ||
+				                  x.LocationLocationId == query.ToInt() ||
+				                  x.Password.StartsWith(query) ||
+				                  x.PhoneNumber.StartsWith(query) ||
+				                  x.Privacy.StartsWith(query) ||
+				                  x.UserId == query.ToInt() ||
+				                  x.Username.StartsWith(query) ||
+				                  x.Website.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<User> Get(int userId)
@@ -85,67 +108,105 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to this table DirectTweet via taggedUserId.
 		public async virtual Task<List<DirectTweet>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<DirectTweet>().Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
+			return await this.Context.Set<DirectTweet>()
+			       .Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
 		// Foreign key reference to this table Follower via followedUserId.
 		public async virtual Task<List<Follower>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Follower>().Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
+			return await this.Context.Set<Follower>()
+			       .Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
 		// Foreign key reference to this table Follower via followingUserId.
 		public async virtual Task<List<Follower>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Follower>().Where(x => x.FollowingUserId == followingUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
+			return await this.Context.Set<Follower>()
+			       .Where(x => x.FollowingUserId == followingUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
 		// Foreign key reference to this table Message via senderUserId.
 		public async virtual Task<List<Message>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Message>().Where(x => x.SenderUserId == senderUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Message>();
+			return await this.Context.Set<Message>()
+			       .Where(x => x.SenderUserId == senderUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
 		// Foreign key reference to this table Messenger via toUserId.
 		public async virtual Task<List<Messenger>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Messenger>().Where(x => x.ToUserId == toUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
+			return await this.Context.Set<Messenger>()
+			       .Where(x => x.ToUserId == toUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
 		// Foreign key reference to this table Messenger via userId.
 		public async virtual Task<List<Messenger>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Messenger>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
+			return await this.Context.Set<Messenger>()
+			       .Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
 		// Foreign key reference to this table QuoteTweet via retweeterUserId.
 		public async virtual Task<List<QuoteTweet>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<QuoteTweet>().Where(x => x.RetweeterUserId == retweeterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
+			return await this.Context.Set<QuoteTweet>()
+			       .Where(x => x.RetweeterUserId == retweeterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
 		// Foreign key reference to this table Reply via replierUserId.
 		public async virtual Task<List<Reply>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Reply>().Where(x => x.ReplierUserId == replierUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Reply>();
+			return await this.Context.Set<Reply>()
+			       .Where(x => x.ReplierUserId == replierUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Reply>();
 		}
 
 		// Foreign key reference to this table Retweet via retwitterUserId.
 		public async virtual Task<List<Retweet>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Retweet>().Where(x => x.RetwitterUserId == retwitterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
+			return await this.Context.Set<Retweet>()
+			       .Where(x => x.RetwitterUserId == retwitterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
 		// Foreign key reference to this table Tweet via userUserId.
 		public async virtual Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Tweet>().Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
+			return await this.Context.Set<Tweet>()
+			       .Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
 		// Foreign key reference to table Location via locationLocationId.
 		public async virtual Task<Location> LocationByLocationLocationId(int locationLocationId)
 		{
-			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
+			return await this.Context.Set<Location>()
+			       .SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
+		}
+
+		// Foreign key reference pass-though. Pass-thru table Like. Foreign Table User.
+		public async virtual Task<List<User>> ByTweetId(int tweetId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.Likes
+			              join users in this.Context.Users on
+			              refTable.LikerUserId equals users.UserId
+			              where refTable.TweetId == tweetId
+			              select users).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		// Foreign key reference pass-though. Pass-thru table Like. Foreign Table User.
+		public async virtual Task<Like> CreateLike(Like item)
+		{
+			this.Context.Set<Like>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		// Foreign key reference pass-though. Pass-thru table Like. Foreign Table User.
+		public async virtual Task DeleteLike(Like item)
+		{
+			this.Context.Set<Like>().Remove(item);
+			await this.Context.SaveChangesAsync();
 		}
 
 		protected async Task<List<User>> Where(
@@ -159,7 +220,10 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.UserId;
 			}
 
-			return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+			return await this.Context.Set<User>()
+			       .Include(x => x.LocationLocationIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
 		}
 
 		private async Task<User> GetById(int userId)
@@ -172,5 +236,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d25e7ce64e4905d62ad5fb528ca28af</Hash>
+    <Hash>092258e13fdd2b30b85d7aaee2aa5f1f</Hash>
 </Codenesium>*/

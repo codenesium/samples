@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiScrapReasonServerResponseModel> Get(short scrapReasonID);
 
-		Task<List<ApiScrapReasonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiScrapReasonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiScrapReasonServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7346c4976645d3e9655d5bf02f2bff14</Hash>
+    <Hash>c97041796438d9ff97d1b8e8a0b05e8b</Hash>
 </Codenesium>*/

@@ -12,17 +12,13 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IPersonRepository personRepository,
 			IApiPersonServerRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper,
-			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base(logger,
 			       mediator,
 			       personRepository,
 			       personModelValidator,
-			       bolPersonMapper,
 			       dalPersonMapper,
-			       bolColumnSameAsFKTableMapper,
 			       dalColumnSameAsFKTableMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3b48e5d405c85fbe93c9cb59461c1ea</Hash>
+    <Hash>7b170684e581ba58324895cf136a906f</Hash>
 </Codenesium>*/

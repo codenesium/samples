@@ -7,7 +7,7 @@
 
  <ItemGroup>
 	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
+    <PackageReference Include="Codenesium.DataConversionExtensions" Version="2019.1.2" />
   </ItemGroup> 
 
 

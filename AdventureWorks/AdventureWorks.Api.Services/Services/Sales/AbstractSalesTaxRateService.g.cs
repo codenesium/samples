@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiSalesTaxRateServerRequestModelValidator SalesTaxRateModelValidator { get; private set; }
 
-		protected IBOLSalesTaxRateMapper BolSalesTaxRateMapper { get; private set; }
-
 		protected IDALSalesTaxRateMapper DalSalesTaxRateMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateServerRequestModelValidator salesTaxRateModelValidator,
-			IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
 			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
 			: base()
 		{
 			this.SalesTaxRateRepository = salesTaxRateRepository;
 			this.SalesTaxRateModelValidator = salesTaxRateModelValidator;
-			this.BolSalesTaxRateMapper = bolSalesTaxRateMapper;
 			this.DalSalesTaxRateMapper = dalSalesTaxRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSalesTaxRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesTaxRateServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesTaxRateRepository.All(limit, offset);
+			var records = await this.SalesTaxRateRepository.All(limit, offset, query);
 
-			return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(records));
+			return this.DalSalesTaxRateMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiSalesTaxRateServerResponseModel> Get(int salesTaxRateID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
+				return this.DalSalesTaxRateMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSalesTaxRateMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesTaxRateRepository.Create(this.DalSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.DalSalesTaxRateMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesTaxRateRepository.Create(bo);
 
-				var businessObject = this.DalSalesTaxRateMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSalesTaxRateMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSalesTaxRateMapper.MapBOToModel(record));
 				await this.mediator.Publish(new SalesTaxRateCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
-				await this.SalesTaxRateRepository.Update(this.DalSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.DalSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
+				await this.SalesTaxRateRepository.Update(bo);
 
 				var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
-				var businessObject = this.DalSalesTaxRateMapper.MapEFToBO(record);
-				var apiModel = this.BolSalesTaxRateMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalSalesTaxRateMapper.MapBOToModel(record);
 				await this.mediator.Publish(new SalesTaxRateUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesTaxRateServerResponseModel>.UpdateResponse(apiModel);
@@ -129,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
+				return this.DalSalesTaxRateMapper.MapBOToModel(record);
 			}
 		}
 
@@ -143,12 +137,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
+				return this.DalSalesTaxRateMapper.MapBOToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>800f10ac588fa2ea2f0c847f0fe50298</Hash>
+    <Hash>3c77330c2bd68c70f8dd5996dd8cd2af</Hash>
 </Codenesium>*/

@@ -31,11 +31,11 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context.Pens.Add(penItem1);
 
 			var petItem1 = new Pet();
-			petItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1m, 1);
+			petItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1m, 1);
 			this.Context.Pets.Add(petItem1);
 
 			var saleItem1 = new Sale();
-			saleItem1.SetProperties(1m, "A", 1, "A", 1, 1, "A");
+			saleItem1.SetProperties(1, 1m, "A", "A", 1, 1, "A");
 			this.Context.Sales.Add(saleItem1);
 
 			var speciesItem1 = new Species();
@@ -48,5 +48,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e62a6d1c31d73c503bf2a229ab100f8</Hash>
+    <Hash>9e66ac2715406c405c290d4d941b287a</Hash>
 </Codenesium>*/

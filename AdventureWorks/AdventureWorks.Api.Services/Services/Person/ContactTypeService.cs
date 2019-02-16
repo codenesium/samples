@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IContactTypeRepository contactTypeRepository,
 			IApiContactTypeServerRequestModelValidator contactTypeModelValidator,
-			IBOLContactTypeMapper bolContactTypeMapper,
 			IDALContactTypeMapper dalContactTypeMapper)
 			: base(logger,
 			       mediator,
 			       contactTypeRepository,
 			       contactTypeModelValidator,
-			       bolContactTypeMapper,
 			       dalContactTypeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ca9304e6ed284934b9696e5752653590</Hash>
+    <Hash>0b970e40dd4e5da611ee6626736c5a28</Hash>
 </Codenesium>*/

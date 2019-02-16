@@ -26,20 +26,18 @@ namespace PetStoreNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISpeciesRepository>();
 			var records = new List<Species>();
 			records.Add(new Species());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SpeciesService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiSpeciesServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiSpeciesServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ApiSpeciesServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiSpeciesServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			CreateResponse<ApiSpeciesServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiSpeciesServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			UpdateResponse<ApiSpeciesServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiPetServerResponseModel> response = await service.PetsBySpeciesId(default(int));
@@ -260,9 +240,7 @@ namespace PetStoreNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLSpeciesMapperMock,
 			                                 mock.DALMapperMockFactory.DALSpeciesMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLPetMapperMock,
 			                                 mock.DALMapperMockFactory.DALPetMapperMock);
 
 			List<ApiPetServerResponseModel> response = await service.PetsBySpeciesId(default(int));
@@ -274,5 +252,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f8701f73471417ceab4bb393474fc4cd</Hash>
+    <Hash>46125c89a143556047f8b45e5899f1ea</Hash>
 </Codenesium>*/

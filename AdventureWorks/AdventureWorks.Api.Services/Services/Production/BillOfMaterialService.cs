@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
-			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base(logger,
 			       mediator,
 			       billOfMaterialRepository,
 			       billOfMaterialModelValidator,
-			       bolBillOfMaterialMapper,
 			       dalBillOfMaterialMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5a9c2350e739e4279eb8090b29a54fc8</Hash>
+    <Hash>d873774074430d3aebddbcf1253a37c0</Hash>
 </Codenesium>*/

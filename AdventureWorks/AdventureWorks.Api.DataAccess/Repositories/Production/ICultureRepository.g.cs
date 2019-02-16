@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Culture> Get(string cultureID);
 
-		Task<List<Culture>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Culture>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Culture> ByName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4528115490a45c9f41c0d4ac0d6da8eb</Hash>
+    <Hash>138aa670f07b2dd2959b1e5ff4922395</Hash>
 </Codenesium>*/

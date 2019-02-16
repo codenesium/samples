@@ -26,9 +26,24 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<QuoteTweet>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<QuoteTweet>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Content.StartsWith(query) ||
+				                  x.Date == query.ToDateTime() ||
+				                  x.QuoteTweetId == query.ToInt() ||
+				                  x.RetweeterUserId == query.ToInt() ||
+				                  x.SourceTweetId == query.ToInt() ||
+				                  x.Time == query.ToTimespan(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<QuoteTweet> Get(int quoteTweetId)
@@ -91,13 +106,15 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table User via retweeterUserId.
 		public async virtual Task<User> UserByRetweeterUserId(int retweeterUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == retweeterUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == retweeterUserId);
 		}
 
 		// Foreign key reference to table Tweet via sourceTweetId.
 		public async virtual Task<Tweet> TweetBySourceTweetId(int sourceTweetId)
 		{
-			return await this.Context.Set<Tweet>().SingleOrDefaultAsync(x => x.TweetId == sourceTweetId);
+			return await this.Context.Set<Tweet>()
+			       .SingleOrDefaultAsync(x => x.TweetId == sourceTweetId);
 		}
 
 		protected async Task<List<QuoteTweet>> Where(
@@ -111,7 +128,11 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.QuoteTweetId;
 			}
 
-			return await this.Context.Set<QuoteTweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
+			return await this.Context.Set<QuoteTweet>()
+			       .Include(x => x.RetweeterUserIdNavigation)
+			       .Include(x => x.SourceTweetIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
 		private async Task<QuoteTweet> GetById(int quoteTweetId)
@@ -124,5 +145,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ea3b01da5918d658749e7ebdc870eff</Hash>
+    <Hash>8b5bb0642b35d58d13f0bdb45a71bf38</Hash>
 </Codenesium>*/

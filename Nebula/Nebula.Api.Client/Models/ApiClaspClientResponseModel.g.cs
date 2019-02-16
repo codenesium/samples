@@ -17,7 +17,24 @@ namespace NebulaNS.Api.Client
 			this.PreviousChainId = previousChainId;
 
 			this.NextChainIdEntity = nameof(ApiResponse.Chains);
+
 			this.PreviousChainIdEntity = nameof(ApiResponse.Chains);
+		}
+
+		[JsonProperty]
+		public ApiChainClientResponseModel NextChainIdNavigation { get; private set; }
+
+		public void SetNextChainIdNavigation(ApiChainClientResponseModel value)
+		{
+			this.NextChainIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiChainClientResponseModel PreviousChainIdNavigation { get; private set; }
+
+		public void SetPreviousChainIdNavigation(ApiChainClientResponseModel value)
+		{
+			this.PreviousChainIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -38,5 +55,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f580a5844e195382f7de6828fe6bafd9</Hash>
+    <Hash>b40346b7f11d0c3cb9e93f7311652c93</Hash>
 </Codenesium>*/

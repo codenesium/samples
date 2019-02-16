@@ -16,11 +16,7 @@ namespace ESPIOTNS.Api.Services
 
 		protected IApiDeviceServerRequestModelValidator DeviceModelValidator { get; private set; }
 
-		protected IBOLDeviceMapper BolDeviceMapper { get; private set; }
-
 		protected IDALDeviceMapper DalDeviceMapper { get; private set; }
-
-		protected IBOLDeviceActionMapper BolDeviceActionMapper { get; private set; }
 
 		protected IDALDeviceActionMapper DalDeviceActionMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace ESPIOTNS.Api.Services
 			IMediator mediator,
 			IDeviceRepository deviceRepository,
 			IApiDeviceServerRequestModelValidator deviceModelValidator,
-			IBOLDeviceMapper bolDeviceMapper,
 			IDALDeviceMapper dalDeviceMapper,
-			IBOLDeviceActionMapper bolDeviceActionMapper,
 			IDALDeviceActionMapper dalDeviceActionMapper)
 			: base()
 		{
 			this.DeviceRepository = deviceRepository;
 			this.DeviceModelValidator = deviceModelValidator;
-			this.BolDeviceMapper = bolDeviceMapper;
 			this.DalDeviceMapper = dalDeviceMapper;
-			this.BolDeviceActionMapper = bolDeviceActionMapper;
 			this.DalDeviceActionMapper = dalDeviceActionMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiDeviceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDeviceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DeviceRepository.All(limit, offset);
+			List<Device> records = await this.DeviceRepository.All(limit, offset, query);
 
-			return this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(records));
+			return this.DalDeviceMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDeviceServerResponseModel> Get(int id)
 		{
-			var record = await this.DeviceRepository.Get(id);
+			Device record = await this.DeviceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				return this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record));
+				return this.DalDeviceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace ESPIOTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolDeviceMapper.MapModelToBO(default(int), model);
-				var record = await this.DeviceRepository.Create(this.DalDeviceMapper.MapBOToEF(bo));
+				Device record = this.DalDeviceMapper.MapModelToEntity(default(int), model);
+				record = await this.DeviceRepository.Create(record);
 
-				var businessObject = this.DalDeviceMapper.MapEFToBO(record);
-				response.SetRecord(this.BolDeviceMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalDeviceMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DeviceCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace ESPIOTNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolDeviceMapper.MapModelToBO(id, model);
-				await this.DeviceRepository.Update(this.DalDeviceMapper.MapBOToEF(bo));
+				Device record = this.DalDeviceMapper.MapModelToEntity(id, model);
+				await this.DeviceRepository.Update(record);
 
-				var record = await this.DeviceRepository.Get(id);
+				record = await this.DeviceRepository.Get(id);
 
-				var businessObject = this.DalDeviceMapper.MapEFToBO(record);
-				var apiModel = this.BolDeviceMapper.MapBOToModel(businessObject);
+				ApiDeviceServerResponseModel apiModel = this.DalDeviceMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DeviceUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDeviceServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				return this.BolDeviceMapper.MapBOToModel(this.DalDeviceMapper.MapEFToBO(record));
+				return this.DalDeviceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace ESPIOTNS.Api.Services
 		{
 			List<DeviceAction> records = await this.DeviceRepository.DeviceActionsByDeviceId(deviceId, limit, offset);
 
-			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
+			return this.DalDeviceActionMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab66b284d95e2e6307e29f510a54a33f</Hash>
+    <Hash>4162c9f7de2e62f487fca7ba91b44852</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiTransactionHistoryArchiveServerRequestModelValidator TransactionHistoryArchiveModelValidator { get; private set; }
 
-		protected IBOLTransactionHistoryArchiveMapper BolTransactionHistoryArchiveMapper { get; private set; }
-
 		protected IDALTransactionHistoryArchiveMapper DalTransactionHistoryArchiveMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			IApiTransactionHistoryArchiveServerRequestModelValidator transactionHistoryArchiveModelValidator,
-			IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
 			IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper)
 			: base()
 		{
 			this.TransactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
 			this.TransactionHistoryArchiveModelValidator = transactionHistoryArchiveModelValidator;
-			this.BolTransactionHistoryArchiveMapper = bolTransactionHistoryArchiveMapper;
 			this.DalTransactionHistoryArchiveMapper = dalTransactionHistoryArchiveMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTransactionHistoryArchiveServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTransactionHistoryArchiveServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TransactionHistoryArchiveRepository.All(limit, offset);
+			var records = await this.TransactionHistoryArchiveRepository.All(limit, offset, query);
 
-			return this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(records));
+			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiTransactionHistoryArchiveServerResponseModel> Get(int transactionID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(record));
+				return this.DalTransactionHistoryArchiveMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTransactionHistoryArchiveMapper.MapModelToBO(default(int), model);
-				var record = await this.TransactionHistoryArchiveRepository.Create(this.DalTransactionHistoryArchiveMapper.MapBOToEF(bo));
+				var bo = this.DalTransactionHistoryArchiveMapper.MapModelToBO(default(int), model);
+				var record = await this.TransactionHistoryArchiveRepository.Create(bo);
 
-				var businessObject = this.DalTransactionHistoryArchiveMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTransactionHistoryArchiveMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTransactionHistoryArchiveMapper.MapBOToModel(record));
 				await this.mediator.Publish(new TransactionHistoryArchiveCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTransactionHistoryArchiveMapper.MapModelToBO(transactionID, model);
-				await this.TransactionHistoryArchiveRepository.Update(this.DalTransactionHistoryArchiveMapper.MapBOToEF(bo));
+				var bo = this.DalTransactionHistoryArchiveMapper.MapModelToBO(transactionID, model);
+				await this.TransactionHistoryArchiveRepository.Update(bo);
 
 				var record = await this.TransactionHistoryArchiveRepository.Get(transactionID);
 
-				var businessObject = this.DalTransactionHistoryArchiveMapper.MapEFToBO(record);
-				var apiModel = this.BolTransactionHistoryArchiveMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalTransactionHistoryArchiveMapper.MapBOToModel(record);
 				await this.mediator.Publish(new TransactionHistoryArchiveUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTransactionHistoryArchiveServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<TransactionHistoryArchive> records = await this.TransactionHistoryArchiveRepository.ByProductID(productID, limit, offset);
 
-			return this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(records));
+			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiTransactionHistoryArchiveServerResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = 0, int offset = int.MaxValue)
 		{
 			List<TransactionHistoryArchive> records = await this.TransactionHistoryArchiveRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, limit, offset);
 
-			return this.BolTransactionHistoryArchiveMapper.MapBOToModel(this.DalTransactionHistoryArchiveMapper.MapEFToBO(records));
+			return this.DalTransactionHistoryArchiveMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>db8f5aa342d4d15015d7bf542036b8a3</Hash>
+    <Hash>94f0eef54ddf949ce6ea28555c5d938a</Hash>
 </Codenesium>*/

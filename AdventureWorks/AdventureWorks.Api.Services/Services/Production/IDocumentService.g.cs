@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiDocumentServerResponseModel> Get(Guid rowguid);
 
-		Task<List<ApiDocumentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDocumentServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiDocumentServerResponseModel> ByRowguid(Guid rowguid);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ba02fe8d2f7c074af52dce27f1765a04</Hash>
+    <Hash>2ac74f045495d37c039d399119d19ecf</Hash>
 </Codenesium>*/

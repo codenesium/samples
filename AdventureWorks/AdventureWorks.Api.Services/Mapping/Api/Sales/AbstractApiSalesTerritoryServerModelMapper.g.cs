@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var response = new ApiSalesTerritoryServerResponseModel();
 			response.SetProperties(territoryID,
-			                       request.@Group,
 			                       request.CostLastYear,
 			                       request.CostYTD,
 			                       request.CountryRegionCode,
@@ -31,7 +30,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var request = new ApiSalesTerritoryServerRequestModel();
 			request.SetProperties(
-				response.@Group,
 				response.CostLastYear,
 				response.CostYTD,
 				response.CountryRegionCode,
@@ -48,7 +46,6 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var request = new ApiSalesTerritoryClientRequestModel();
 			request.SetProperties(
-				response.@Group,
 				response.CostLastYear,
 				response.CostYTD,
 				response.CountryRegionCode,
@@ -66,7 +63,6 @@ namespace AdventureWorksNS.Api.Services
 			patch.Replace(x => x.CostLastYear, model.CostLastYear);
 			patch.Replace(x => x.CostYTD, model.CostYTD);
 			patch.Replace(x => x.CountryRegionCode, model.CountryRegionCode);
-			patch.Replace(x => x.@Group, model.@Group);
 			patch.Replace(x => x.ModifiedDate, model.ModifiedDate);
 			patch.Replace(x => x.Name, model.Name);
 			patch.Replace(x => x.Rowguid, model.Rowguid);
@@ -78,5 +74,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4dd93ab02d57f8d401695a762352cd4f</Hash>
+    <Hash>aae534e47ef08f560c06a98994d2038c</Hash>
 </Codenesium>*/

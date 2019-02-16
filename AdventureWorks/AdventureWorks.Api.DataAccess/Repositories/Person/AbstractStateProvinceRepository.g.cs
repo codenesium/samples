@@ -26,9 +26,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CountryRegionCode.StartsWith(query) ||
+				                  x.IsOnlyStateProvinceFlag == query.ToBoolean() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.StateProvinceCode.StartsWith(query) ||
+				                  x.StateProvinceID == query.ToInt() ||
+				                  x.TerritoryID == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<StateProvince> Get(int stateProvinceID)
@@ -124,5 +141,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be0a2e712b5634dd5a30a33227cc03f6</Hash>
+    <Hash>ff2f02841f2b5d4c237a4e57fc419513</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Client
 {
@@ -16,5 +17,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d2067b0f80a1023785866a8fabd968a6</Hash>
+    <Hash>956f6e3a317104dcf562a448c22ff95f</Hash>
 </Codenesium>*/

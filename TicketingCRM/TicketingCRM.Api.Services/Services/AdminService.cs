@@ -12,17 +12,13 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IAdminRepository adminRepository,
 			IApiAdminServerRequestModelValidator adminModelValidator,
-			IBOLAdminMapper bolAdminMapper,
 			IDALAdminMapper dalAdminMapper,
-			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       mediator,
 			       adminRepository,
 			       adminModelValidator,
-			       bolAdminMapper,
 			       dalAdminMapper,
-			       bolVenueMapper,
 			       dalVenueMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9c885d0160ad883c1ef34aea123cadb</Hash>
+    <Hash>7dc619aca65742369dfa03ad3f010ce8</Hash>
 </Codenesium>*/

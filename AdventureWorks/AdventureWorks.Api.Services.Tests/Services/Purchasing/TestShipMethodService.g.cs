@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShipMethodRepository>();
 			var records = new List<ShipMethod>();
 			records.Add(new ShipMethod());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ShipMethodService(mock.LoggerMock.Object,
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			List<ApiShipMethodServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			CreateResponse<ApiShipMethodServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			CreateResponse<ApiShipMethodServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			UpdateResponse<ApiShipMethodServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			UpdateResponse<ApiShipMethodServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    validatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.ByName("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.ByName("test_value");
@@ -280,9 +258,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -300,9 +276,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			ApiShipMethodServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -322,9 +296,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			List<ApiPurchaseOrderHeaderServerResponseModel> response = await service.PurchaseOrderHeadersByShipMethodID(default(int));
@@ -342,9 +314,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.MediatorMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLShipMethodMapperMock,
 			                                    mock.DALMapperMockFactory.DALShipMethodMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
 			List<ApiPurchaseOrderHeaderServerResponseModel> response = await service.PurchaseOrderHeadersByShipMethodID(default(int));
@@ -356,5 +326,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>48fe92e133f7f6680688d24449a037e4</Hash>
+    <Hash>4996463bf041705b8cb274a0ec30111a</Hash>
 </Codenesium>*/

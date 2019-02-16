@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int purchaseOrderID,
 			int employeeID,
 			decimal freight,
 			DateTime modifiedDate,
 			DateTime orderDate,
-			int purchaseOrderID,
 			int revisionNumber,
 			DateTime? shipDate,
 			int shipMethodID,
@@ -28,11 +28,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal totalDue,
 			int vendorID)
 		{
+			this.PurchaseOrderID = purchaseOrderID;
 			this.EmployeeID = employeeID;
 			this.Freight = freight;
 			this.ModifiedDate = modifiedDate;
 			this.OrderDate = orderDate;
-			this.PurchaseOrderID = purchaseOrderID;
 			this.RevisionNumber = revisionNumber;
 			this.ShipDate = shipDate;
 			this.ShipMethodID = shipMethodID;
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a875d1231e78132fc0b4549d8d7551d8</Hash>
+    <Hash>ec62b8579568629d80ee87eba4d312e4</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using ESPIOTNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>db72e740030d0612072244b2b8052255</Hash>
+    <Hash>78dd9edbb137c2821be8e4b4a1cba027</Hash>
 </Codenesium>*/

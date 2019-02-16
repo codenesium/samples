@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<IncludedColumnTestRepository>> loggerMoc = IncludedColumnTestRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = IncludedColumnTestRepositoryMoc.GetContext();
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<IncludedColumnTestRepository>> loggerMoc = IncludedColumnTestRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = IncludedColumnTestRepositoryMoc.GetContext();
+			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
 
 			IncludedColumnTest entity = new IncludedColumnTest();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<IncludedColumnTest>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
 
 			var entity = new IncludedColumnTest();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<IncludedColumnTest>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = IncludedColumnTestRepositoryMoc.GetContext();
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
 			IncludedColumnTest entity = new IncludedColumnTest();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<IncludedColumnTest>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = IncludedColumnTestRepositoryMoc.GetContext();
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
 			IncludedColumnTest entity = new IncludedColumnTest();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<IncludedColumnTest>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = IncludedColumnTestRepositoryMoc.GetContext();
 			var repository = new IncludedColumnTestRepository(loggerMoc.Object, context);
 			IncludedColumnTest entity = new IncludedColumnTest();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<IncludedColumnTest>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e627db11f46cfa59260c93d79b91514</Hash>
+    <Hash>5091e01b8b8957632a92ec3bb0545f22</Hash>
 </Codenesium>*/

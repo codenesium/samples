@@ -14,17 +14,17 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			decimal amount,
 			int cutomerId,
-			int id,
 			string note,
 			int petId,
 			DateTime saleDate,
 			int salesPersonId)
 		{
+			this.Id = id;
 			this.Amount = amount;
 			this.CutomerId = cutomerId;
-			this.Id = id;
 			this.Note = note;
 			this.PetId = petId;
 			this.SaleDate = saleDate;
@@ -55,15 +55,15 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int SalesPersonId { get; private set; }
 
 		[ForeignKey("PetId")]
-		public virtual Pet PetNavigation { get; private set; }
+		public virtual Pet PetIdNavigation { get; private set; }
 
-		public void SetPetNavigation(Pet item)
+		public void SetPetIdNavigation(Pet item)
 		{
-			this.PetNavigation = item;
+			this.PetIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>439eab2660382a55942216fc5715bb4d</Hash>
+    <Hash>c61f9335e819777a218d66625a5e2fd4</Hash>
 </Codenesium>*/

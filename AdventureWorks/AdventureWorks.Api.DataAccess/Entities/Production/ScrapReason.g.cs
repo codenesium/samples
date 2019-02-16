@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			short scrapReasonID,
 			DateTime modifiedDate,
-			string name,
-			short scrapReasonID)
+			string name)
 		{
+			this.ScrapReasonID = scrapReasonID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
-			this.ScrapReasonID = scrapReasonID;
 		}
 
 		[Column("ModifiedDate")]
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfff8507d58fefc6c737d12105725940</Hash>
+    <Hash>0ab55ca6753659a30e66d99c6fa3274c</Hash>
 </Codenesium>*/

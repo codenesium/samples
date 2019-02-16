@@ -15,7 +15,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<Rate> Get(int id);
 
-		Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Rate>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d7a40963385ff7ab468ee0e56a7291f</Hash>
+    <Hash>40073cefc21270efee3065b0d8f0b8a7</Hash>
 </Codenesium>*/

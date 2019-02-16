@@ -12,21 +12,15 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IChainRepository chainRepository,
 			IApiChainServerRequestModelValidator chainModelValidator,
-			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper,
-			IBOLClaspMapper bolClaspMapper,
 			IDALClaspMapper dalClaspMapper,
-			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base(logger,
 			       mediator,
 			       chainRepository,
 			       chainModelValidator,
-			       bolChainMapper,
 			       dalChainMapper,
-			       bolClaspMapper,
 			       dalClaspMapper,
-			       bolLinkMapper,
 			       dalLinkMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0b9272fee9b7ab127c0d27e912c1823</Hash>
+    <Hash>91111e5e38e4c89b678a21c5cc5599df</Hash>
 </Codenesium>*/

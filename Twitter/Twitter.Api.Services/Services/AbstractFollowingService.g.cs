@@ -16,8 +16,6 @@ namespace TwitterNS.Api.Services
 
 		protected IApiFollowingServerRequestModelValidator FollowingModelValidator { get; private set; }
 
-		protected IBOLFollowingMapper BolFollowingMapper { get; private set; }
-
 		protected IDALFollowingMapper DalFollowingMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			IFollowingRepository followingRepository,
 			IApiFollowingServerRequestModelValidator followingModelValidator,
-			IBOLFollowingMapper bolFollowingMapper,
 			IDALFollowingMapper dalFollowingMapper)
 			: base()
 		{
 			this.FollowingRepository = followingRepository;
 			this.FollowingModelValidator = followingModelValidator;
-			this.BolFollowingMapper = bolFollowingMapper;
 			this.DalFollowingMapper = dalFollowingMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiFollowingServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFollowingServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.FollowingRepository.All(limit, offset);
+			List<Following> records = await this.FollowingRepository.All(limit, offset, query);
 
-			return this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(records));
+			return this.DalFollowingMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiFollowingServerResponseModel> Get(int userId)
 		{
-			var record = await this.FollowingRepository.Get(userId);
+			Following record = await this.FollowingRepository.Get(userId);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolFollowingMapper.MapBOToModel(this.DalFollowingMapper.MapEFToBO(record));
+				return this.DalFollowingMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolFollowingMapper.MapModelToBO(default(int), model);
-				var record = await this.FollowingRepository.Create(this.DalFollowingMapper.MapBOToEF(bo));
+				Following record = this.DalFollowingMapper.MapModelToEntity(default(int), model);
+				record = await this.FollowingRepository.Create(record);
 
-				var businessObject = this.DalFollowingMapper.MapEFToBO(record);
-				response.SetRecord(this.BolFollowingMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalFollowingMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new FollowingCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolFollowingMapper.MapModelToBO(userId, model);
-				await this.FollowingRepository.Update(this.DalFollowingMapper.MapBOToEF(bo));
+				Following record = this.DalFollowingMapper.MapModelToEntity(userId, model);
+				await this.FollowingRepository.Update(record);
 
-				var record = await this.FollowingRepository.Get(userId);
+				record = await this.FollowingRepository.Get(userId);
 
-				var businessObject = this.DalFollowingMapper.MapEFToBO(record);
-				var apiModel = this.BolFollowingMapper.MapBOToModel(businessObject);
+				ApiFollowingServerResponseModel apiModel = this.DalFollowingMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new FollowingUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiFollowingServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4051ce303cfeb5f7a593272c40cc7082</Hash>
+    <Hash>b1e6e6bc60a8fec5f715c074f5c5aced</Hash>
 </Codenesium>*/

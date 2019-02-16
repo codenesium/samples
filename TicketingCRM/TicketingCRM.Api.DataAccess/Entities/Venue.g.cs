@@ -14,23 +14,23 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string address1,
 			string address2,
 			int adminId,
 			string email,
 			string facebook,
-			int id,
 			string name,
 			string phone,
 			int provinceId,
 			string website)
 		{
+			this.Id = id;
 			this.Address1 = address1;
 			this.Address2 = address2;
 			this.AdminId = adminId;
 			this.Email = email;
 			this.Facebook = facebook;
-			this.Id = id;
 			this.Name = name;
 			this.Phone = phone;
 			this.ProvinceId = provinceId;
@@ -76,23 +76,23 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual string Website { get; private set; }
 
 		[ForeignKey("AdminId")]
-		public virtual Admin AdminNavigation { get; private set; }
+		public virtual Admin AdminIdNavigation { get; private set; }
 
-		public void SetAdminNavigation(Admin item)
+		public void SetAdminIdNavigation(Admin item)
 		{
-			this.AdminNavigation = item;
+			this.AdminIdNavigation = item;
 		}
 
 		[ForeignKey("ProvinceId")]
-		public virtual Province ProvinceNavigation { get; private set; }
+		public virtual Province ProvinceIdNavigation { get; private set; }
 
-		public void SetProvinceNavigation(Province item)
+		public void SetProvinceIdNavigation(Province item)
 		{
-			this.ProvinceNavigation = item;
+			this.ProvinceIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>50573f9b9b4cad68e23d64645e09ca85</Hash>
+    <Hash>dc422741a04047c19d2cc181d914639c</Hash>
 </Codenesium>*/

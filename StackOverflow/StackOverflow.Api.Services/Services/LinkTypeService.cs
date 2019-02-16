@@ -12,13 +12,11 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeServerRequestModelValidator linkTypeModelValidator,
-			IBOLLinkTypeMapper bolLinkTypeMapper,
 			IDALLinkTypeMapper dalLinkTypeMapper)
 			: base(logger,
 			       mediator,
 			       linkTypeRepository,
 			       linkTypeModelValidator,
-			       bolLinkTypeMapper,
 			       dalLinkTypeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbb29c44604544fd43cd8b6b4d0473fb</Hash>
+    <Hash>4faba38bf1aa536a2f6080a6e158d065</Hash>
 </Codenesium>*/

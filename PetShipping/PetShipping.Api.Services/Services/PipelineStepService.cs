@@ -12,33 +12,21 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineStepRepository pipelineStepRepository,
 			IApiPipelineStepServerRequestModelValidator pipelineStepModelValidator,
-			IBOLPipelineStepMapper bolPipelineStepMapper,
 			IDALPipelineStepMapper dalPipelineStepMapper,
-			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
 			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
-			IBOLOtherTransportMapper bolOtherTransportMapper,
 			IDALOtherTransportMapper dalOtherTransportMapper,
-			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
 			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper,
-			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
-			IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
 			IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper)
 			: base(logger,
 			       mediator,
 			       pipelineStepRepository,
 			       pipelineStepModelValidator,
-			       bolPipelineStepMapper,
 			       dalPipelineStepMapper,
-			       bolHandlerPipelineStepMapper,
 			       dalHandlerPipelineStepMapper,
-			       bolOtherTransportMapper,
 			       dalOtherTransportMapper,
-			       bolPipelineStepDestinationMapper,
 			       dalPipelineStepDestinationMapper,
-			       bolPipelineStepNoteMapper,
 			       dalPipelineStepNoteMapper,
-			       bolPipelineStepStepRequirementMapper,
 			       dalPipelineStepStepRequirementMapper)
 		{
 		}
@@ -46,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81c1b1e39e85b773cebb815a6adfdd74</Hash>
+    <Hash>b605add31387447cf30ea5f2dae4c7be</Hash>
 </Codenesium>*/

@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<VoteRepository>> loggerMoc = VoteRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = VoteRepositoryMoc.GetContext();
 			var repository = new VoteRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<VoteRepository>> loggerMoc = VoteRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VoteRepositoryMoc.GetContext();
+			var repository = new VoteRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new VoteRepository(loggerMoc.Object, context);
 
 			Vote entity = new Vote();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<Vote>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new VoteRepository(loggerMoc.Object, context);
 
 			var entity = new Vote();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Vote>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteRepositoryMoc.GetContext();
 			var repository = new VoteRepository(loggerMoc.Object, context);
 			Vote entity = new Vote();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<Vote>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteRepositoryMoc.GetContext();
 			var repository = new VoteRepository(loggerMoc.Object, context);
 			Vote entity = new Vote();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<Vote>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteRepositoryMoc.GetContext();
 			var repository = new VoteRepository(loggerMoc.Object, context);
 			Vote entity = new Vote();
-			entity.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2);
+			entity.SetProperties(default(int), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
 			context.Set<Vote>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e27a619b06702e2af2a222db80d59d99</Hash>
+    <Hash>b39d0323f81179a7f2e173244f0bc2a1</Hash>
 </Codenesium>*/

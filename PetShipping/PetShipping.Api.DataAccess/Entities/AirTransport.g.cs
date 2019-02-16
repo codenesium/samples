@@ -55,15 +55,15 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual DateTime TakeoffDate { get; private set; }
 
 		[ForeignKey("HandlerId")]
-		public virtual Handler HandlerNavigation { get; private set; }
+		public virtual Handler HandlerIdNavigation { get; private set; }
 
-		public void SetHandlerNavigation(Handler item)
+		public void SetHandlerIdNavigation(Handler item)
 		{
-			this.HandlerNavigation = item;
+			this.HandlerIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c9a9776c58611ae3db4144dffcf0d5b</Hash>
+    <Hash>735b6e14feffa4bc8000aab4e8dfd84b</Hash>
 </Codenesium>*/

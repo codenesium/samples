@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<SelfReferenceRepository>> loggerMoc = SelfReferenceRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SelfReferenceRepositoryMoc.GetContext();
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<SelfReferenceRepository>> loggerMoc = SelfReferenceRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SelfReferenceRepositoryMoc.GetContext();
+			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
 
 			SelfReference entity = new SelfReference();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SelfReference>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
 
 			var entity = new SelfReference();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<SelfReference>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = SelfReferenceRepositoryMoc.GetContext();
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
 			SelfReference entity = new SelfReference();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SelfReference>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = SelfReferenceRepositoryMoc.GetContext();
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
 			SelfReference entity = new SelfReference();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SelfReference>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = SelfReferenceRepositoryMoc.GetContext();
 			var repository = new SelfReferenceRepository(loggerMoc.Object, context);
 			SelfReference entity = new SelfReference();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<SelfReference>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f881d5036de8685ca58e7163806df54</Hash>
+    <Hash>a10d8d3b9111d5b58ca8d469bfee5b37</Hash>
 </Codenesium>*/

@@ -26,9 +26,20 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TicketStatu>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TicketStatu>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TicketStatu> Get(int id)
@@ -79,7 +90,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table Ticket via ticketStatusId.
 		public async virtual Task<List<Ticket>> TicketsByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Ticket>().Where(x => x.TicketStatusId == ticketStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Ticket>();
+			return await this.Context.Set<Ticket>()
+			       .Where(x => x.TicketStatusId == ticketStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Ticket>();
 		}
 
 		protected async Task<List<TicketStatu>> Where(
@@ -93,7 +105,9 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<TicketStatu>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TicketStatu>();
+			return await this.Context.Set<TicketStatu>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TicketStatu>();
 		}
 
 		private async Task<TicketStatu> GetById(int id)
@@ -106,5 +120,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff64b1da60accd67f168bbf85a55709f</Hash>
+    <Hash>7f129d029ae762f583ef7f30ab9282ac</Hash>
 </Codenesium>*/

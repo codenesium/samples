@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			CreateResponse<ApiSalesOrderHeaderServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			CreateResponse<ApiSalesOrderHeaderServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			UpdateResponse<ApiSalesOrderHeaderServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			UpdateResponse<ApiSalesOrderHeaderServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          validatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -258,7 +247,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.BySalesOrderNumber("test_value");
@@ -276,7 +264,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			ApiSalesOrderHeaderServerResponseModel response = await service.BySalesOrderNumber("test_value");
@@ -296,7 +283,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.ByCustomerID(default(int));
@@ -314,7 +300,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.ByCustomerID(default(int));
@@ -334,7 +319,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.BySalesPersonID(default(int));
@@ -352,7 +336,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.MediatorMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
 			List<ApiSalesOrderHeaderServerResponseModel> response = await service.BySalesPersonID(default(int));
@@ -364,5 +347,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8d9ed0af7f68f9128bf9317b74175f49</Hash>
+    <Hash>f17e54b5c7187656e62beecbf361f27d</Hash>
 </Codenesium>*/

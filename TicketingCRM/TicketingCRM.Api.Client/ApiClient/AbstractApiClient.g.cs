@@ -584,6 +584,87 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketsBySaleId(int saleId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Sales/{saleId}/SaleTickets", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<List<ApiSaleTicketClientResponseModel>>> SaleTicketBulkInsertAsync(List<ApiSaleTicketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SaleTickets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<List<ApiSaleTicketClientResponseModel>>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiSaleTicketClientResponseModel>> SaleTicketCreateAsync(ApiSaleTicketClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/SaleTickets", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<CreateResponse<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiSaleTicketClientResponseModel>> SaleTicketUpdateAsync(int id, ApiSaleTicketClientRequestModel item, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.PutAsJsonAsync($"api/SaleTickets/{id}", item, cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> SaleTicketDeleteAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.DeleteAsync($"api/SaleTickets/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiSaleTicketClientResponseModel> SaleTicketGetAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets/{id}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<ApiSaleTicketClientResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+		{
+			int offset = 0;
+			bool moreRecords = true;
+			List<ApiSaleTicketClientResponseModel> response = new List<ApiSaleTicketClientResponseModel>();
+			while (moreRecords)
+			{
+				HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets?limit={this.MaxLimit}&offset={offset}", cancellationToken).ConfigureAwait(false);
+
+				this.HandleResponseCode(httpResponse);
+				List<ApiSaleTicketClientResponseModel> records = JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+				response.AddRange(records);
+				if (records.Count < this.MaxLimit)
+				{
+					moreRecords = false;
+				}
+				else
+				{
+					offset += this.MaxLimit;
+				}
+			}
+
+			return response;
+		}
+
+		public virtual async Task<List<ApiSaleTicketClientResponseModel>> BySaleTicketByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/SaleTickets/byTicketId/{ticketId}", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<List<ApiTicketClientResponseModel>>> TicketBulkInsertAsync(List<ApiTicketClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			HttpResponseMessage httpResponse = await this.Client.PostAsJsonAsync($"api/Tickets/BulkInsert", items, cancellationToken).ConfigureAwait(false);
@@ -655,6 +736,14 @@ namespace TicketingCRMNS.Api.Client
 
 			this.HandleResponseCode(httpResponse);
 			return JsonConvert.DeserializeObject<List<ApiTicketClientResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSaleTicketClientResponseModel>> SaleTicketsByTicketId(int ticketId, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			HttpResponseMessage httpResponse = await this.Client.GetAsync($"api/Tickets/{ticketId}/SaleTickets", cancellationToken).ConfigureAwait(false);
+
+			this.HandleResponseCode(httpResponse);
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<List<ApiTicketStatuClientResponseModel>>> TicketStatuBulkInsertAsync(List<ApiTicketStatuClientRequestModel> items, CancellationToken cancellationToken = default(CancellationToken))
@@ -993,5 +1082,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>47c38dae12f98b43a178f14b5b85ac5a</Hash>
+    <Hash>fd8a613bf17fc853d8a03269af241067</Hash>
 </Codenesium>*/

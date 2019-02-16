@@ -18,10 +18,10 @@ namespace TestsNS.Api.Services
 
 		Task<ApiRowVersionCheckServerResponseModel> Get(int id);
 
-		Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiRowVersionCheckServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>139bcf649c4d49474a5baa780e76c5ce</Hash>
+    <Hash>4e86a9ef482e1d63b4360313d5a9a4db</Hash>
 </Codenesium>*/

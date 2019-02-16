@@ -14,13 +14,13 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			DateTime dateEntered,
 			int id,
+			DateTime dateEntered,
 			int linkId,
 			string log)
 		{
-			this.DateEntered = dateEntered;
 			this.Id = id;
+			this.DateEntered = dateEntered;
 			this.LinkId = linkId;
 			this.Log = log;
 		}
@@ -40,15 +40,15 @@ namespace NebulaNS.Api.DataAccess
 		public virtual string Log { get; private set; }
 
 		[ForeignKey("LinkId")]
-		public virtual Link LinkNavigation { get; private set; }
+		public virtual Link LinkIdNavigation { get; private set; }
 
-		public void SetLinkNavigation(Link item)
+		public void SetLinkIdNavigation(Link item)
 		{
-			this.LinkNavigation = item;
+			this.LinkIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59a131106a7353d12adafa8dfd85a3a4</Hash>
+    <Hash>5525a5bcfe423a521cd8e13a7ae265d7</Hash>
 </Codenesium>*/

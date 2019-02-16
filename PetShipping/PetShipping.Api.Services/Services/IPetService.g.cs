@@ -18,12 +18,12 @@ namespace PetShippingNS.Api.Services
 
 		Task<ApiPetServerResponseModel> Get(int id);
 
-		Task<List<ApiPetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiSaleServerResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>03a816d85167be6c2ae3363193806ef1</Hash>
+    <Hash>d946eda40cb94d45ce78ccb388eb28f5</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			long version,
 			DateTime? appliedOn,
-			string description,
-			long version)
+			string description)
 		{
+			this.Version = version;
 			this.AppliedOn = appliedOn;
 			this.Description = description;
-			this.Version = version;
 		}
 
 		[Column("AppliedOn")]
@@ -37,5 +37,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c354c201578579b7623f7deb02bd6f0</Hash>
+    <Hash>9f48325060649d2f6049bba8d8957680</Hash>
 </Codenesium>*/

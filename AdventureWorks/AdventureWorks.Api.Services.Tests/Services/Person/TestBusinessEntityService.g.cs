@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBusinessEntityRepository>();
 			var records = new List<BusinessEntity>();
 			records.Add(new BusinessEntity());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new BusinessEntityService(mock.LoggerMock.Object,
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			List<ApiBusinessEntityServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ApiBusinessEntityServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ApiBusinessEntityServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			CreateResponse<ApiBusinessEntityServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			CreateResponse<ApiBusinessEntityServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			UpdateResponse<ApiBusinessEntityServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			UpdateResponse<ApiBusinessEntityServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ApiBusinessEntityServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			ApiBusinessEntityServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -281,9 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			List<ApiPersonServerResponseModel> response = await service.PeopleByBusinessEntityID(default(int));
@@ -301,9 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBusinessEntityMapperMock,
 			                                        mock.DALMapperMockFactory.DALBusinessEntityMapperMock,
-			                                        mock.BOLMapperMockFactory.BOLPersonMapperMock,
 			                                        mock.DALMapperMockFactory.DALPersonMapperMock);
 
 			List<ApiPersonServerResponseModel> response = await service.PeopleByBusinessEntityID(default(int));
@@ -315,5 +289,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b29418a2818659a9455b0216044778b</Hash>
+    <Hash>1c97b9daf5dbf8b79bbbe844ef2d6ddd</Hash>
 </Codenesium>*/

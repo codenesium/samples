@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IShiftRepository shiftRepository,
 			IApiShiftServerRequestModelValidator shiftModelValidator,
-			IBOLShiftMapper bolShiftMapper,
 			IDALShiftMapper dalShiftMapper)
 			: base(logger,
 			       mediator,
 			       shiftRepository,
 			       shiftModelValidator,
-			       bolShiftMapper,
 			       dalShiftMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>206d96899a1571b4da53803189cc6df0</Hash>
+    <Hash>14a985a91e275497ca430d29a227feb1</Hash>
 </Codenesium>*/

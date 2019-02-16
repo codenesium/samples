@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiStateProvinceServerResponseModel> Get(int stateProvinceID);
 
-		Task<List<ApiStateProvinceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiStateProvinceServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiStateProvinceServerResponseModel> ByName(string name);
 
@@ -31,5 +31,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5b9864f3d519464f5080bf5afb3e556</Hash>
+    <Hash>06a5cbe82f4f23f6c1ca01e8bfe9b3f6</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<Studio> Get(int id);
 
-		Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d0ac2a47fc306883412e8fddc3dd87a</Hash>
+    <Hash>25393779b41abcabcb4c9c74afc92409</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiCustomerCommunicationServerRequestModelValidator CustomerCommunicationModelValidator { get; private set; }
 
-		protected IBOLCustomerCommunicationMapper BolCustomerCommunicationMapper { get; private set; }
-
 		protected IDALCustomerCommunicationMapper DalCustomerCommunicationMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICustomerCommunicationRepository customerCommunicationRepository,
 			IApiCustomerCommunicationServerRequestModelValidator customerCommunicationModelValidator,
-			IBOLCustomerCommunicationMapper bolCustomerCommunicationMapper,
 			IDALCustomerCommunicationMapper dalCustomerCommunicationMapper)
 			: base()
 		{
 			this.CustomerCommunicationRepository = customerCommunicationRepository;
 			this.CustomerCommunicationModelValidator = customerCommunicationModelValidator;
-			this.BolCustomerCommunicationMapper = bolCustomerCommunicationMapper;
 			this.DalCustomerCommunicationMapper = dalCustomerCommunicationMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCustomerCommunicationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCustomerCommunicationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CustomerCommunicationRepository.All(limit, offset);
+			List<CustomerCommunication> records = await this.CustomerCommunicationRepository.All(limit, offset, query);
 
-			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+			return this.DalCustomerCommunicationMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCustomerCommunicationServerResponseModel> Get(int id)
 		{
-			var record = await this.CustomerCommunicationRepository.Get(id);
+			CustomerCommunication record = await this.CustomerCommunicationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(record));
+				return this.DalCustomerCommunicationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCustomerCommunicationMapper.MapModelToBO(default(int), model);
-				var record = await this.CustomerCommunicationRepository.Create(this.DalCustomerCommunicationMapper.MapBOToEF(bo));
+				CustomerCommunication record = this.DalCustomerCommunicationMapper.MapModelToEntity(default(int), model);
+				record = await this.CustomerCommunicationRepository.Create(record);
 
-				var businessObject = this.DalCustomerCommunicationMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCustomerCommunicationMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCustomerCommunicationMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CustomerCommunicationCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCustomerCommunicationMapper.MapModelToBO(id, model);
-				await this.CustomerCommunicationRepository.Update(this.DalCustomerCommunicationMapper.MapBOToEF(bo));
+				CustomerCommunication record = this.DalCustomerCommunicationMapper.MapModelToEntity(id, model);
+				await this.CustomerCommunicationRepository.Update(record);
 
-				var record = await this.CustomerCommunicationRepository.Get(id);
+				record = await this.CustomerCommunicationRepository.Get(id);
 
-				var businessObject = this.DalCustomerCommunicationMapper.MapEFToBO(record);
-				var apiModel = this.BolCustomerCommunicationMapper.MapBOToModel(businessObject);
+				ApiCustomerCommunicationServerResponseModel apiModel = this.DalCustomerCommunicationMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CustomerCommunicationUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCustomerCommunicationServerResponseModel>.UpdateResponse(apiModel);
@@ -123,18 +117,18 @@ namespace PetShippingNS.Api.Services
 		{
 			List<CustomerCommunication> records = await this.CustomerCommunicationRepository.ByCustomerId(customerId, limit, offset);
 
-			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+			return this.DalCustomerCommunicationMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiCustomerCommunicationServerResponseModel>> ByEmployeeId(int employeeId, int limit = 0, int offset = int.MaxValue)
 		{
 			List<CustomerCommunication> records = await this.CustomerCommunicationRepository.ByEmployeeId(employeeId, limit, offset);
 
-			return this.BolCustomerCommunicationMapper.MapBOToModel(this.DalCustomerCommunicationMapper.MapEFToBO(records));
+			return this.DalCustomerCommunicationMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ae288d41ac4607d1474465be9590863</Hash>
+    <Hash>7ad5f08cbd3a9b48658113da6ba25ec3</Hash>
 </Codenesium>*/

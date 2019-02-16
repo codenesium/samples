@@ -14,6 +14,7 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int? acceptedAnswerId,
 			int? answerCount,
 			string body,
@@ -22,7 +23,6 @@ namespace StackOverflowNS.Api.DataAccess
 			DateTime? communityOwnedDate,
 			DateTime creationDate,
 			int? favoriteCount,
-			int id,
 			DateTime lastActivityDate,
 			DateTime? lastEditDate,
 			string lastEditorDisplayName,
@@ -35,6 +35,7 @@ namespace StackOverflowNS.Api.DataAccess
 			string title,
 			int viewCount)
 		{
+			this.Id = id;
 			this.AcceptedAnswerId = acceptedAnswerId;
 			this.AnswerCount = answerCount;
 			this.Body = body;
@@ -43,7 +44,6 @@ namespace StackOverflowNS.Api.DataAccess
 			this.CommunityOwnedDate = communityOwnedDate;
 			this.CreationDate = creationDate;
 			this.FavoriteCount = favoriteCount;
-			this.Id = id;
 			this.LastActivityDate = lastActivityDate;
 			this.LastEditDate = lastEditDate;
 			this.LastEditorDisplayName = lastEditorDisplayName;
@@ -124,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>86f4d7c7b60c0fec465b05100623badf</Hash>
+    <Hash>ff0b5342b4d88ae840a4afc7411dcd58</Hash>
 </Codenesium>*/

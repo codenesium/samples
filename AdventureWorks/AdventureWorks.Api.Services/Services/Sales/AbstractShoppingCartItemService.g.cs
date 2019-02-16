@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiShoppingCartItemServerRequestModelValidator ShoppingCartItemModelValidator { get; private set; }
 
-		protected IBOLShoppingCartItemMapper BolShoppingCartItemMapper { get; private set; }
-
 		protected IDALShoppingCartItemMapper DalShoppingCartItemMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IApiShoppingCartItemServerRequestModelValidator shoppingCartItemModelValidator,
-			IBOLShoppingCartItemMapper bolShoppingCartItemMapper,
 			IDALShoppingCartItemMapper dalShoppingCartItemMapper)
 			: base()
 		{
 			this.ShoppingCartItemRepository = shoppingCartItemRepository;
 			this.ShoppingCartItemModelValidator = shoppingCartItemModelValidator;
-			this.BolShoppingCartItemMapper = bolShoppingCartItemMapper;
 			this.DalShoppingCartItemMapper = dalShoppingCartItemMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiShoppingCartItemServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiShoppingCartItemServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ShoppingCartItemRepository.All(limit, offset);
+			var records = await this.ShoppingCartItemRepository.All(limit, offset, query);
 
-			return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(records));
+			return this.DalShoppingCartItemMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiShoppingCartItemServerResponseModel> Get(int shoppingCartItemID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record));
+				return this.DalShoppingCartItemMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolShoppingCartItemMapper.MapModelToBO(default(int), model);
-				var record = await this.ShoppingCartItemRepository.Create(this.DalShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.DalShoppingCartItemMapper.MapModelToBO(default(int), model);
+				var record = await this.ShoppingCartItemRepository.Create(bo);
 
-				var businessObject = this.DalShoppingCartItemMapper.MapEFToBO(record);
-				response.SetRecord(this.BolShoppingCartItemMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalShoppingCartItemMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ShoppingCartItemCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
-				await this.ShoppingCartItemRepository.Update(this.DalShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.DalShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
+				await this.ShoppingCartItemRepository.Update(bo);
 
 				var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
-				var businessObject = this.DalShoppingCartItemMapper.MapEFToBO(record);
-				var apiModel = this.BolShoppingCartItemMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalShoppingCartItemMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ShoppingCartItemUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiShoppingCartItemServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ShoppingCartItem> records = await this.ShoppingCartItemRepository.ByShoppingCartIDProductID(shoppingCartID, productID, limit, offset);
 
-			return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(records));
+			return this.DalShoppingCartItemMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1926123953fdc10f7baf289bf92ad0e4</Hash>
+    <Hash>18eb20314f3b85c3b93f176b26a5d81e</Hash>
 </Codenesium>*/

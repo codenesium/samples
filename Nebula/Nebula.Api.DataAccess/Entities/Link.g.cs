@@ -14,13 +14,13 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int? assignedMachineId,
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
 			string dynamicParameter,
 			Guid externalId,
-			int id,
 			int linkStatusId,
 			string name,
 			int order,
@@ -28,13 +28,13 @@ namespace NebulaNS.Api.DataAccess
 			string staticParameter,
 			int timeoutInSecond)
 		{
+			this.Id = id;
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
 			this.DynamicParameter = dynamicParameter;
 			this.ExternalId = externalId;
-			this.Id = id;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
@@ -88,31 +88,31 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int TimeoutInSecond { get; private set; }
 
 		[ForeignKey("AssignedMachineId")]
-		public virtual Machine MachineNavigation { get; private set; }
+		public virtual Machine AssignedMachineIdNavigation { get; private set; }
 
-		public void SetMachineNavigation(Machine item)
+		public void SetAssignedMachineIdNavigation(Machine item)
 		{
-			this.MachineNavigation = item;
+			this.AssignedMachineIdNavigation = item;
 		}
 
 		[ForeignKey("ChainId")]
-		public virtual Chain ChainNavigation { get; private set; }
+		public virtual Chain ChainIdNavigation { get; private set; }
 
-		public void SetChainNavigation(Chain item)
+		public void SetChainIdNavigation(Chain item)
 		{
-			this.ChainNavigation = item;
+			this.ChainIdNavigation = item;
 		}
 
 		[ForeignKey("LinkStatusId")]
-		public virtual LinkStatus LinkStatusNavigation { get; private set; }
+		public virtual LinkStatus LinkStatusIdNavigation { get; private set; }
 
-		public void SetLinkStatusNavigation(LinkStatus item)
+		public void SetLinkStatusIdNavigation(LinkStatus item)
 		{
-			this.LinkStatusNavigation = item;
+			this.LinkStatusIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d5fe1ac2eeab43c139e79f37725bd322</Hash>
+    <Hash>acdae36eb7f65231ddcfec4c9006ca35</Hash>
 </Codenesium>*/

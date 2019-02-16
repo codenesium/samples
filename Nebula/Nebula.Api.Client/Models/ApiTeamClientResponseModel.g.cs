@@ -20,6 +20,14 @@ namespace NebulaNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiOrganizationClientResponseModel OrganizationIdNavigation { get; private set; }
+
+		public void SetOrganizationIdNavigation(ApiOrganizationClientResponseModel value)
+		{
+			this.OrganizationIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>28e4f19162c5e942eebc2f751954d938</Hash>
+    <Hash>fe6b5b0f24d8a751e55509bb709611fe</Hash>
 </Codenesium>*/

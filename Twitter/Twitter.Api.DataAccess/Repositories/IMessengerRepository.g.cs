@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<Messenger> Get(int id);
 
-		Task<List<Messenger>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Messenger>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Messenger>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0);
 
@@ -32,5 +32,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7865202079ce20c978fa8cf8454d968c</Hash>
+    <Hash>944c941d1284fc0d1d30059fabd60b1b</Hash>
 </Codenesium>*/

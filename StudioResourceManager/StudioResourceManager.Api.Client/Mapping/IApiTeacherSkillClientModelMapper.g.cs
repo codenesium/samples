@@ -1,3 +1,4 @@
+using StudioResourceManagerNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>41b56de46795c57627bdd8ed072d4301</Hash>
+    <Hash>004a826dfe70740ace40491331e9d6b5</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3a7eca88f4e140dd815140c293cb2e1c</Hash>
+    <Hash>fec1da25fb3b940231272086d33bc7bf</Hash>
 </Codenesium>*/

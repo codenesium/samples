@@ -36,6 +36,14 @@ namespace TicketingCRMNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiCityClientResponseModel CityIdNavigation { get; private set; }
+
+		public void SetCityIdNavigation(ApiCityClientResponseModel value)
+		{
+			this.CityIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string Address1 { get; private set; }
 
 		[JsonProperty]
@@ -74,5 +82,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9c20f21cfe259120b6289d2835e0a765</Hash>
+    <Hash>fb059d886b2f8675c63ae0eb4d6f7f20</Hash>
 </Codenesium>*/

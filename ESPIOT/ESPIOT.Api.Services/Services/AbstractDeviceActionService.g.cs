@@ -16,8 +16,6 @@ namespace ESPIOTNS.Api.Services
 
 		protected IApiDeviceActionServerRequestModelValidator DeviceActionModelValidator { get; private set; }
 
-		protected IBOLDeviceActionMapper BolDeviceActionMapper { get; private set; }
-
 		protected IDALDeviceActionMapper DalDeviceActionMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace ESPIOTNS.Api.Services
 			IMediator mediator,
 			IDeviceActionRepository deviceActionRepository,
 			IApiDeviceActionServerRequestModelValidator deviceActionModelValidator,
-			IBOLDeviceActionMapper bolDeviceActionMapper,
 			IDALDeviceActionMapper dalDeviceActionMapper)
 			: base()
 		{
 			this.DeviceActionRepository = deviceActionRepository;
 			this.DeviceActionModelValidator = deviceActionModelValidator;
-			this.BolDeviceActionMapper = bolDeviceActionMapper;
 			this.DalDeviceActionMapper = dalDeviceActionMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiDeviceActionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiDeviceActionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.DeviceActionRepository.All(limit, offset);
+			List<DeviceAction> records = await this.DeviceActionRepository.All(limit, offset, query);
 
-			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
+			return this.DalDeviceActionMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiDeviceActionServerResponseModel> Get(int id)
 		{
-			var record = await this.DeviceActionRepository.Get(id);
+			DeviceAction record = await this.DeviceActionRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(record));
+				return this.DalDeviceActionMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace ESPIOTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolDeviceActionMapper.MapModelToBO(default(int), model);
-				var record = await this.DeviceActionRepository.Create(this.DalDeviceActionMapper.MapBOToEF(bo));
+				DeviceAction record = this.DalDeviceActionMapper.MapModelToEntity(default(int), model);
+				record = await this.DeviceActionRepository.Create(record);
 
-				var businessObject = this.DalDeviceActionMapper.MapEFToBO(record);
-				response.SetRecord(this.BolDeviceActionMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalDeviceActionMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new DeviceActionCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace ESPIOTNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolDeviceActionMapper.MapModelToBO(id, model);
-				await this.DeviceActionRepository.Update(this.DalDeviceActionMapper.MapBOToEF(bo));
+				DeviceAction record = this.DalDeviceActionMapper.MapModelToEntity(id, model);
+				await this.DeviceActionRepository.Update(record);
 
-				var record = await this.DeviceActionRepository.Get(id);
+				record = await this.DeviceActionRepository.Get(id);
 
-				var businessObject = this.DalDeviceActionMapper.MapEFToBO(record);
-				var apiModel = this.BolDeviceActionMapper.MapBOToModel(businessObject);
+				ApiDeviceActionServerResponseModel apiModel = this.DalDeviceActionMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new DeviceActionUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiDeviceActionServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace ESPIOTNS.Api.Services
 		{
 			List<DeviceAction> records = await this.DeviceActionRepository.ByDeviceId(deviceId, limit, offset);
 
-			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
+			return this.DalDeviceActionMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0493711abdc7008cdcc71862b9c3ea2</Hash>
+    <Hash>5e4adf8765c8485afcc03c47e808eb5f</Hash>
 </Codenesium>*/

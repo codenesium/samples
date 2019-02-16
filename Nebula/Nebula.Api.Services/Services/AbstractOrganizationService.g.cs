@@ -16,11 +16,7 @@ namespace NebulaNS.Api.Services
 
 		protected IApiOrganizationServerRequestModelValidator OrganizationModelValidator { get; private set; }
 
-		protected IBOLOrganizationMapper BolOrganizationMapper { get; private set; }
-
 		protected IDALOrganizationMapper DalOrganizationMapper { get; private set; }
-
-		protected IBOLTeamMapper BolTeamMapper { get; private set; }
 
 		protected IDALTeamMapper DalTeamMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationServerRequestModelValidator organizationModelValidator,
-			IBOLOrganizationMapper bolOrganizationMapper,
 			IDALOrganizationMapper dalOrganizationMapper,
-			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper)
 			: base()
 		{
 			this.OrganizationRepository = organizationRepository;
 			this.OrganizationModelValidator = organizationModelValidator;
-			this.BolOrganizationMapper = bolOrganizationMapper;
 			this.DalOrganizationMapper = dalOrganizationMapper;
-			this.BolTeamMapper = bolTeamMapper;
 			this.DalTeamMapper = dalTeamMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiOrganizationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiOrganizationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.OrganizationRepository.All(limit, offset);
+			List<Organization> records = await this.OrganizationRepository.All(limit, offset, query);
 
-			return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(records));
+			return this.DalOrganizationMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiOrganizationServerResponseModel> Get(int id)
 		{
-			var record = await this.OrganizationRepository.Get(id);
+			Organization record = await this.OrganizationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record));
+				return this.DalOrganizationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolOrganizationMapper.MapModelToBO(default(int), model);
-				var record = await this.OrganizationRepository.Create(this.DalOrganizationMapper.MapBOToEF(bo));
+				Organization record = this.DalOrganizationMapper.MapModelToEntity(default(int), model);
+				record = await this.OrganizationRepository.Create(record);
 
-				var businessObject = this.DalOrganizationMapper.MapEFToBO(record);
-				response.SetRecord(this.BolOrganizationMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalOrganizationMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new OrganizationCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolOrganizationMapper.MapModelToBO(id, model);
-				await this.OrganizationRepository.Update(this.DalOrganizationMapper.MapBOToEF(bo));
+				Organization record = this.DalOrganizationMapper.MapModelToEntity(id, model);
+				await this.OrganizationRepository.Update(record);
 
-				var record = await this.OrganizationRepository.Get(id);
+				record = await this.OrganizationRepository.Get(id);
 
-				var businessObject = this.DalOrganizationMapper.MapEFToBO(record);
-				var apiModel = this.BolOrganizationMapper.MapBOToModel(businessObject);
+				ApiOrganizationServerResponseModel apiModel = this.DalOrganizationMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new OrganizationUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiOrganizationServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record));
+				return this.DalOrganizationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace NebulaNS.Api.Services
 		{
 			List<Team> records = await this.OrganizationRepository.TeamsByOrganizationId(organizationId, limit, offset);
 
-			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
+			return this.DalTeamMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fa3be3fb98d964f76811925f79bd5c5</Hash>
+    <Hash>5998094f3c87a41422437dffea29d903</Hash>
 </Codenesium>*/

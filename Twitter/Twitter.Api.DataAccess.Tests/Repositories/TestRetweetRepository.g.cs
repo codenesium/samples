@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<RetweetRepository>> loggerMoc = RetweetRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = RetweetRepositoryMoc.GetContext();
 			var repository = new RetweetRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<RetweetRepository>> loggerMoc = RetweetRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = RetweetRepositoryMoc.GetContext();
+			var repository = new RetweetRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new RetweetRepository(loggerMoc.Object, context);
 
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			context.Set<Retweet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new RetweetRepository(loggerMoc.Object, context);
 
 			var entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Retweet>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = RetweetRepositoryMoc.GetContext();
 			var repository = new RetweetRepository(loggerMoc.Object, context);
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			context.Set<Retweet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = RetweetRepositoryMoc.GetContext();
 			var repository = new RetweetRepository(loggerMoc.Object, context);
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			context.Set<Retweet>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = RetweetRepositoryMoc.GetContext();
 			var repository = new RetweetRepository(loggerMoc.Object, context);
 			Retweet entity = new Retweet();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("02:00:00"), 1);
 			context.Set<Retweet>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>33bf114ab6d4744fb26d0bb271c1ad6f</Hash>
+    <Hash>4f5b05f132769801e466fcaf9deb9b4b</Hash>
 </Codenesium>*/

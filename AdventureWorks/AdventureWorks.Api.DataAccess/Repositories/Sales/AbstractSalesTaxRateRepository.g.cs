@@ -26,9 +26,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SalesTaxRateID == query.ToInt() ||
+				                  x.StateProvinceID == query.ToInt() ||
+				                  x.TaxRate.ToDecimal() == query.ToDecimal() ||
+				                  x.TaxType == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SalesTaxRate> Get(int salesTaxRateID)
@@ -112,5 +128,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dca6f9a90d14517c71281958042a4a97</Hash>
+    <Hash>2efbccfc77e5d90f9afc87859ab358ba</Hash>
 </Codenesium>*/

@@ -10,10 +10,10 @@ namespace StackOverflowNS.Api.Services
 	{
 		public virtual void SetProperties(
 			int id,
-			string type)
+			string rwtype)
 		{
 			this.Id = id;
-			this.Type = type;
+			this.Type = rwtype;
 		}
 
 		[JsonProperty]
@@ -25,5 +25,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f5ec2d8573b56df4e3cb7c7e1de1ab5</Hash>
+    <Hash>976b32d2fb2a2fc67589d6fa3036a317</Hash>
 </Codenesium>*/

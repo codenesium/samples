@@ -45,6 +45,14 @@ namespace PetShippingNS.Api.Services
 		public string PetIdEntity { get; private set; } = RouteConstants.Pets;
 
 		[JsonProperty]
+		public ApiPetServerResponseModel PetIdNavigation { get; private set; }
+
+		public void SetPetIdNavigation(ApiPetServerResponseModel value)
+		{
+			this.PetIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime SaleDate { get; private set; }
 
 		[JsonProperty]
@@ -53,5 +61,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1f8d0e04c1a70e05a46675d9e47e4d8</Hash>
+    <Hash>5aa9a143c7729594a11e0c6704b74921</Hash>
 </Codenesium>*/

@@ -26,9 +26,43 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TestAllFieldTypesNullable>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TestAllFieldTypesNullable>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.FieldBigInt == query.ToNullableLong() ||
+				                  x.FieldBit == query.ToNullableBoolean() ||
+				                  x.FieldChar.StartsWith(query) ||
+				                  x.FieldDate == query.ToNullableDateTime() ||
+				                  x.FieldDateTime == query.ToNullableDateTime() ||
+				                  x.FieldDateTime2 == query.ToNullableDateTime() ||
+				                  x.FieldDateTimeOffset == query.ToNullableDateTimeOffset() ||
+				                  x.FieldDecimal.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.FieldFloat == query.ToNullableDouble() ||
+				                  x.FieldMoney.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.FieldNChar.StartsWith(query) ||
+				                  x.FieldNText.StartsWith(query) ||
+				                  x.FieldNumeric.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.FieldNVarchar.StartsWith(query) ||
+				                  x.FieldReal.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.FieldSmallDateTime == query.ToNullableDateTime() ||
+				                  x.FieldSmallInt == query.ToNullableShort() ||
+				                  x.FieldSmallMoney.ToNullableDecimal() == query.ToNullableDecimal() ||
+				                  x.FieldText.StartsWith(query) ||
+				                  x.FieldTime == query.ToNullableTimespan() ||
+				                  x.FieldTinyInt == query.ToNullableInt() ||
+				                  x.FieldUniqueIdentifier == query.ToNullableGuid() ||
+				                  x.FieldVarchar.StartsWith(query) ||
+				                  x.FieldXML.StartsWith(query) ||
+				                  x.Id == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TestAllFieldTypesNullable> Get(int id)
@@ -87,7 +121,9 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<TestAllFieldTypesNullable>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldTypesNullable>();
+			return await this.Context.Set<TestAllFieldTypesNullable>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TestAllFieldTypesNullable>();
 		}
 
 		private async Task<TestAllFieldTypesNullable> GetById(int id)
@@ -100,5 +136,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2debe334729ebfd219393a44af86b98</Hash>
+    <Hash>44f5ab5ac5f35d4b5b8f7a22586d44be</Hash>
 </Codenesium>*/

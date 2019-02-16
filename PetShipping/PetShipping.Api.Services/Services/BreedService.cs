@@ -12,17 +12,13 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IBreedRepository breedRepository,
 			IApiBreedServerRequestModelValidator breedModelValidator,
-			IBOLBreedMapper bolBreedMapper,
 			IDALBreedMapper dalBreedMapper,
-			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base(logger,
 			       mediator,
 			       breedRepository,
 			       breedModelValidator,
-			       bolBreedMapper,
 			       dalBreedMapper,
-			       bolPetMapper,
 			       dalPetMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc3183c7c9b585e7e5e1147870673dcb</Hash>
+    <Hash>3eca25c279554d28d703e70fbebfedde</Hash>
 </Codenesium>*/

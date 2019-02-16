@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
 			var records = new List<SpecialOffer>();
 			records.Add(new SpecialOffer());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new SpecialOfferService(mock.LoggerMock.Object,
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			List<ApiSpecialOfferServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			CreateResponse<ApiSpecialOfferServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			CreateResponse<ApiSpecialOfferServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			UpdateResponse<ApiSpecialOfferServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			UpdateResponse<ApiSpecialOfferServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      validatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.MediatorMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
 			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -251,5 +240,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9f57dde0b04b89799f8912c3f9c0b820</Hash>
+    <Hash>b92c5a039b97df73b8bea7517d0960a2</Hash>
 </Codenesium>*/

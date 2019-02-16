@@ -12,21 +12,15 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bolLocationMapper,
 			IDALLocationMapper dalLocationMapper,
-			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
-			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base(logger,
 			       mediator,
 			       locationRepository,
 			       locationModelValidator,
-			       bolLocationMapper,
 			       dalLocationMapper,
-			       bolTweetMapper,
 			       dalTweetMapper,
-			       bolUserMapper,
 			       dalUserMapper)
 		{
 		}
@@ -34,5 +28,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40a20b2bd9e582081184b23f9f69bab8</Hash>
+    <Hash>9f38ebd37fcfa2bedd177c7e61ee84c0</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Organization> Get(int id);
 
-		Task<List<Organization>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Organization>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Organization> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6986dafa3aaf5b2ed530d9e6b95038b2</Hash>
+    <Hash>60f8af9c16fac735eb4829b1903f3c4c</Hash>
 </Codenesium>*/

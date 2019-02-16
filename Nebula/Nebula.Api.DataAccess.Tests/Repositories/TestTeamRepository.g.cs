@@ -47,10 +47,19 @@ namespace NebulaNS.Api.DataAccess
 			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
 			var repository = new TeamRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
+			var repository = new TeamRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new TeamRepository(loggerMoc.Object, context);
 
 			Team entity = new Team();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Team>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace NebulaNS.Api.DataAccess
 			var repository = new TeamRepository(loggerMoc.Object, context);
 
 			var entity = new Team();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Team>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
 			var repository = new TeamRepository(loggerMoc.Object, context);
 			Team entity = new Team();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Team>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
 			var repository = new TeamRepository(loggerMoc.Object, context);
 			Team entity = new Team();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Team>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context = TeamRepositoryMoc.GetContext();
 			var repository = new TeamRepository(loggerMoc.Object, context);
 			Team entity = new Team();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<Team>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8b436a4c009cc6d4591fe87ab92bd96</Hash>
+    <Hash>525a36d15260f1edc710809c82fdcf36</Hash>
 </Codenesium>*/

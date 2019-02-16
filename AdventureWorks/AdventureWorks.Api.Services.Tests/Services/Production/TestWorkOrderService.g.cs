@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkOrderRepository>();
 			var records = new List<WorkOrder>();
 			records.Add(new WorkOrder());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new WorkOrderService(mock.LoggerMock.Object,
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiWorkOrderServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ApiWorkOrderServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			CreateResponse<ApiWorkOrderServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			CreateResponse<ApiWorkOrderServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			UpdateResponse<ApiWorkOrderServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			UpdateResponse<ApiWorkOrderServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.ByProductID(default(int));
@@ -240,7 +230,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.ByProductID(default(int));
@@ -260,7 +249,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.ByScrapReasonID(default(short));
@@ -278,7 +266,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.WorkOrderModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                   mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
 			List<ApiWorkOrderServerResponseModel> response = await service.ByScrapReasonID(default(short));
@@ -290,5 +277,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a93524d082a5270878631cba84b65cf2</Hash>
+    <Hash>2de0267acb4cf57ca3278e673cff6df5</Hash>
 </Codenesium>*/

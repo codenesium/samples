@@ -26,9 +26,22 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Transaction>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Transaction>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Amount.ToDecimal() == query.ToDecimal() ||
+				                  x.GatewayConfirmationNumber.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.TransactionStatusId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Transaction> Get(int id)
@@ -85,13 +98,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		// Foreign key reference to this table Sale via transactionId.
 		public async virtual Task<List<Sale>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Sale>().Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+			return await this.Context.Set<Sale>()
+			       .Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		// Foreign key reference to table TransactionStatu via transactionStatusId.
 		public async virtual Task<TransactionStatu> TransactionStatuByTransactionStatusId(int transactionStatusId)
 		{
-			return await this.Context.Set<TransactionStatu>().SingleOrDefaultAsync(x => x.Id == transactionStatusId);
+			return await this.Context.Set<TransactionStatu>()
+			       .SingleOrDefaultAsync(x => x.Id == transactionStatusId);
 		}
 
 		protected async Task<List<Transaction>> Where(
@@ -105,7 +120,10 @@ namespace TicketingCRMNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
+			return await this.Context.Set<Transaction>()
+			       .Include(x => x.TransactionStatusIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
 		}
 
 		private async Task<Transaction> GetById(int id)
@@ -118,5 +136,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>958868bcbae3afab1e77339774b27814</Hash>
+    <Hash>5030517d9dd44b271605b764e0ce3296</Hash>
 </Codenesium>*/

@@ -14,15 +14,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			short locationID,
 			double availability,
 			decimal costRate,
-			short locationID,
 			DateTime modifiedDate,
 			string name)
 		{
+			this.LocationID = locationID;
 			this.Availability = availability;
 			this.CostRate = costRate;
-			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate;
 			this.Name = name;
 		}
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c30a544ed804b75fe682a4c06ba44d8f</Hash>
+    <Hash>9b5553306019c17ed813e506e2557bb8</Hash>
 </Codenesium>*/

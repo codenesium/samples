@@ -14,8 +14,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string @event,
-			string @object,
 			int databaseLogID,
 			string databaseUser,
 			DateTime postTime,
@@ -23,8 +21,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			string tsql,
 			string xmlEvent)
 		{
-			this.@Event = @event;
-			this.@Object = @object;
 			this.DatabaseLogID = databaseLogID;
 			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
@@ -40,14 +36,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("DatabaseUser")]
 		public virtual string DatabaseUser { get; private set; }
-
-		[MaxLength(128)]
-		[Column("Event")]
-		public virtual string @Event { get; private set; }
-
-		[MaxLength(128)]
-		[Column("Object")]
-		public virtual string @Object { get; private set; }
 
 		[Column("PostTime")]
 		public virtual DateTime PostTime { get; private set; }
@@ -65,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>52b773cd25419d48a3cdd4d4dc266525</Hash>
+    <Hash>6b6a51be6b2d314cd9b5c34148abe7c8</Hash>
 </Codenesium>*/

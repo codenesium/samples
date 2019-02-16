@@ -15,10 +15,10 @@ namespace TestsNS.Api.DataAccess
 
 		Task<TestAllFieldTypesNullable> Get(int id);
 
-		Task<List<TestAllFieldTypesNullable>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<TestAllFieldTypesNullable>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>818959e197112e6c6e9b5cb221d374c3</Hash>
+    <Hash>6b926554dd6d339435800374ee919579</Hash>
 </Codenesium>*/

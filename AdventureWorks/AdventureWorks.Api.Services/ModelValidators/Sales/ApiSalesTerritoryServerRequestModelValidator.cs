@@ -18,7 +18,6 @@ namespace AdventureWorksNS.Api.Services
 			this.CostLastYearRules();
 			this.CostYTDRules();
 			this.CountryRegionCodeRules();
-			this.@GroupRules();
 			this.ModifiedDateRules();
 			this.NameRules();
 			this.RowguidRules();
@@ -32,7 +31,6 @@ namespace AdventureWorksNS.Api.Services
 			this.CostLastYearRules();
 			this.CostYTDRules();
 			this.CountryRegionCodeRules();
-			this.@GroupRules();
 			this.ModifiedDateRules();
 			this.NameRules();
 			this.RowguidRules();
@@ -49,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f9aeea3a5797f32654d2cf2e08a3976</Hash>
+    <Hash>57989bf3e8da8a46164bc8915a6ba67a</Hash>
 </Codenesium>*/

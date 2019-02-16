@@ -26,18 +26,17 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRepository>();
 			var records = new List<Event>();
 			records.Add(new Event());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new EventService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ApiEventServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			CreateResponse<ApiEventServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			UpdateResponse<ApiEventServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -222,7 +213,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
@@ -240,7 +230,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLEventMapperMock,
 			                               mock.DALMapperMockFactory.DALEventMapperMock);
 
 			List<ApiEventServerResponseModel> response = await service.ByEventStatusId(default(int));
@@ -252,5 +241,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>db8583b1a84e394cf56730129ae9c653</Hash>
+    <Hash>2d9176fb631a507f9ec10b7a3256560f</Hash>
 </Codenesium>*/

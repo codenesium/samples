@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<ChainStatus> Get(int id);
 
-		Task<List<ChainStatus>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ChainStatus>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ChainStatus> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da6fe4271d124d2728f8055b6c7b9703</Hash>
+    <Hash>3ebe21d01908051d4d1383b67f6dd0c6</Hash>
 </Codenesium>*/

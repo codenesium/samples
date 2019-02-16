@@ -15,12 +15,12 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<LinkLog> Get(int id);
 
-		Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Link> LinkByLinkId(int linkId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4ba2396398ed4ab0f7b4ce052d2fa21</Hash>
+    <Hash>592d25ac30dbb1af8bed38d61685632c</Hash>
 </Codenesium>*/

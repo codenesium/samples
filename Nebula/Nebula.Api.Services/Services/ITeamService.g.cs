@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiTeamServerResponseModel> Get(int id);
 
-		Task<List<ApiTeamServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeamServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiTeamServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10c33c43cffe2ca36959ad2243ad63f9</Hash>
+    <Hash>06c4f6e50dba4014760a6b7084a54a5b</Hash>
 </Codenesium>*/

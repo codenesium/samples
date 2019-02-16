@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int workOrderID,
 			decimal? actualCost,
 			DateTime? actualEndDate,
 			double? actualResourceHr,
@@ -24,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal plannedCost,
 			int productID,
 			DateTime scheduledEndDate,
-			DateTime scheduledStartDate,
-			int workOrderID)
+			DateTime scheduledStartDate)
 		{
+			this.WorkOrderID = workOrderID;
 			this.ActualCost = actualCost;
 			this.ActualEndDate = actualEndDate;
 			this.ActualResourceHr = actualResourceHr;
@@ -38,7 +39,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ProductID = productID;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.WorkOrderID = workOrderID;
 		}
 
 		[Column("ActualCost")]
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2339e3ecc0e8f5054f49d30e1fa85883</Hash>
+    <Hash>dd1f22a87d6cfab7392a7aa4d18c83d8</Hash>
 </Codenesium>*/

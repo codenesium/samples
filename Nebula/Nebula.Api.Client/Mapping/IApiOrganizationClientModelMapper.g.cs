@@ -1,3 +1,4 @@
+using NebulaNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>28aef75aec574d763cd23ef52eed5221</Hash>
+    <Hash>00fdfae99b4b52658b0b48cef8b519fc</Hash>
 </Codenesium>*/

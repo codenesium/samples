@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Vendor> Get(int businessEntityID);
 
-		Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Vendor> ByAccountNumber(string accountNumber);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>63573d24d6e2675ab6ae1d7602ef0226</Hash>
+    <Hash>28bd805cc1613c978efb449cbd50b116</Hash>
 </Codenesium>*/

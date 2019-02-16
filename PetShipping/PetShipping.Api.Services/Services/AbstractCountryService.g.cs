@@ -16,15 +16,9 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiCountryServerRequestModelValidator CountryModelValidator { get; private set; }
 
-		protected IBOLCountryMapper BolCountryMapper { get; private set; }
-
 		protected IDALCountryMapper DalCountryMapper { get; private set; }
 
-		protected IBOLCountryRequirementMapper BolCountryRequirementMapper { get; private set; }
-
 		protected IDALCountryRequirementMapper DalCountryRequirementMapper { get; private set; }
-
-		protected IBOLDestinationMapper BolDestinationMapper { get; private set; }
 
 		protected IDALDestinationMapper DalDestinationMapper { get; private set; }
 
@@ -35,37 +29,31 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolCountryMapper,
 			IDALCountryMapper dalCountryMapper,
-			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper,
-			IBOLDestinationMapper bolDestinationMapper,
 			IDALDestinationMapper dalDestinationMapper)
 			: base()
 		{
 			this.CountryRepository = countryRepository;
 			this.CountryModelValidator = countryModelValidator;
-			this.BolCountryMapper = bolCountryMapper;
 			this.DalCountryMapper = dalCountryMapper;
-			this.BolCountryRequirementMapper = bolCountryRequirementMapper;
 			this.DalCountryRequirementMapper = dalCountryRequirementMapper;
-			this.BolDestinationMapper = bolDestinationMapper;
 			this.DalDestinationMapper = dalDestinationMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CountryRepository.All(limit, offset);
+			List<Country> records = await this.CountryRepository.All(limit, offset, query);
 
-			return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(records));
+			return this.DalCountryMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCountryServerResponseModel> Get(int id)
 		{
-			var record = await this.CountryRepository.Get(id);
+			Country record = await this.CountryRepository.Get(id);
 
 			if (record == null)
 			{
@@ -73,7 +61,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record));
+				return this.DalCountryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -84,11 +72,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
-				var record = await this.CountryRepository.Create(this.DalCountryMapper.MapBOToEF(bo));
+				Country record = this.DalCountryMapper.MapModelToEntity(default(int), model);
+				record = await this.CountryRepository.Create(record);
 
-				var businessObject = this.DalCountryMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCountryMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCountryMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CountryCreatedNotification(response.Record));
 			}
 
@@ -103,13 +90,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCountryMapper.MapModelToBO(id, model);
-				await this.CountryRepository.Update(this.DalCountryMapper.MapBOToEF(bo));
+				Country record = this.DalCountryMapper.MapModelToEntity(id, model);
+				await this.CountryRepository.Update(record);
 
-				var record = await this.CountryRepository.Get(id);
+				record = await this.CountryRepository.Get(id);
 
-				var businessObject = this.DalCountryMapper.MapEFToBO(record);
-				var apiModel = this.BolCountryMapper.MapBOToModel(businessObject);
+				ApiCountryServerResponseModel apiModel = this.DalCountryMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CountryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(apiModel);
@@ -139,18 +125,18 @@ namespace PetShippingNS.Api.Services
 		{
 			List<CountryRequirement> records = await this.CountryRepository.CountryRequirementsByCountryId(countryId, limit, offset);
 
-			return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(records));
+			return this.DalCountryRequirementMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiDestinationServerResponseModel>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Destination> records = await this.CountryRepository.DestinationsByCountryId(countryId, limit, offset);
 
-			return this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(records));
+			return this.DalDestinationMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76421e7bcadd2728b17a64fcdd56b709</Hash>
+    <Hash>0f3b480e23927a0e78eabb8dbb3b1d63</Hash>
 </Codenesium>*/

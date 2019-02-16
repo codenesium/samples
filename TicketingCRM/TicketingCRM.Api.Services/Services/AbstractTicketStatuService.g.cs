@@ -16,11 +16,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiTicketStatuServerRequestModelValidator TicketStatuModelValidator { get; private set; }
 
-		protected IBOLTicketStatuMapper BolTicketStatuMapper { get; private set; }
-
 		protected IDALTicketStatuMapper DalTicketStatuMapper { get; private set; }
-
-		protected IBOLTicketMapper BolTicketMapper { get; private set; }
 
 		protected IDALTicketMapper DalTicketMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ITicketStatuRepository ticketStatuRepository,
 			IApiTicketStatuServerRequestModelValidator ticketStatuModelValidator,
-			IBOLTicketStatuMapper bolTicketStatuMapper,
 			IDALTicketStatuMapper dalTicketStatuMapper,
-			IBOLTicketMapper bolTicketMapper,
 			IDALTicketMapper dalTicketMapper)
 			: base()
 		{
 			this.TicketStatuRepository = ticketStatuRepository;
 			this.TicketStatuModelValidator = ticketStatuModelValidator;
-			this.BolTicketStatuMapper = bolTicketStatuMapper;
 			this.DalTicketStatuMapper = dalTicketStatuMapper;
-			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTicketStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTicketStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TicketStatuRepository.All(limit, offset);
+			List<TicketStatu> records = await this.TicketStatuRepository.All(limit, offset, query);
 
-			return this.BolTicketStatuMapper.MapBOToModel(this.DalTicketStatuMapper.MapEFToBO(records));
+			return this.DalTicketStatuMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTicketStatuServerResponseModel> Get(int id)
 		{
-			var record = await this.TicketStatuRepository.Get(id);
+			TicketStatu record = await this.TicketStatuRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolTicketStatuMapper.MapBOToModel(this.DalTicketStatuMapper.MapEFToBO(record));
+				return this.DalTicketStatuMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTicketStatuMapper.MapModelToBO(default(int), model);
-				var record = await this.TicketStatuRepository.Create(this.DalTicketStatuMapper.MapBOToEF(bo));
+				TicketStatu record = this.DalTicketStatuMapper.MapModelToEntity(default(int), model);
+				record = await this.TicketStatuRepository.Create(record);
 
-				var businessObject = this.DalTicketStatuMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTicketStatuMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTicketStatuMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TicketStatuCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTicketStatuMapper.MapModelToBO(id, model);
-				await this.TicketStatuRepository.Update(this.DalTicketStatuMapper.MapBOToEF(bo));
+				TicketStatu record = this.DalTicketStatuMapper.MapModelToEntity(id, model);
+				await this.TicketStatuRepository.Update(record);
 
-				var record = await this.TicketStatuRepository.Get(id);
+				record = await this.TicketStatuRepository.Get(id);
 
-				var businessObject = this.DalTicketStatuMapper.MapEFToBO(record);
-				var apiModel = this.BolTicketStatuMapper.MapBOToModel(businessObject);
+				ApiTicketStatuServerResponseModel apiModel = this.DalTicketStatuMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TicketStatuUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTicketStatuServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Ticket> records = await this.TicketStatuRepository.TicketsByTicketStatusId(ticketStatusId, limit, offset);
 
-			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
+			return this.DalTicketMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1799073ac97fdf2421cba7b81986cb3</Hash>
+    <Hash>8bded00e54190160da9237ce52b4d336</Hash>
 </Codenesium>*/

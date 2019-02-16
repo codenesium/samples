@@ -20,6 +20,14 @@ namespace TicketingCRMNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiCountryClientResponseModel CountryIdNavigation { get; private set; }
+
+		public void SetCountryIdNavigation(ApiCountryClientResponseModel value)
+		{
+			this.CountryIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f976c785cc0c4fa575bcb504573af1f1</Hash>
+    <Hash>93447d58bbc3d9e8aecd8ab4e806e1f0</Hash>
 </Codenesium>*/

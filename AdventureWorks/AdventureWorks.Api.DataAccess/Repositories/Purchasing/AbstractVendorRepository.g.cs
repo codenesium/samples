@@ -26,9 +26,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AccountNumber.StartsWith(query) ||
+				                  x.ActiveFlag == query.ToBoolean() ||
+				                  x.BusinessEntityID == query.ToInt() ||
+				                  x.CreditRating == query.ToInt() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.PreferredVendorStatu == query.ToBoolean() ||
+				                  x.PurchasingWebServiceURL.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Vendor> Get(int businessEntityID)
@@ -112,5 +129,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c0d60eec4113555625038661e37f503d</Hash>
+    <Hash>dcb6eed97b483239c8bb9dbcac01ef7c</Hash>
 </Codenesium>*/

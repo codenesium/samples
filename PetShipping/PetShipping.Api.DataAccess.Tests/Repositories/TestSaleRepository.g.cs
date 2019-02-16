@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<SaleRepository>> loggerMoc = SaleRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<SaleRepository>> loggerMoc = SaleRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
+			var repository = new SaleRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1m.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new SaleRepository(loggerMoc.Object, context);
 
 			Sale entity = new Sale();
-			entity.SetProperties(2m, 2, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new SaleRepository(loggerMoc.Object, context);
 
 			var entity = new Sale();
-			entity.SetProperties(2m, 2, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Sale>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
-			entity.SetProperties(2m, 2, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
-			entity.SetProperties(2m, 2, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = SaleRepositoryMoc.GetContext();
 			var repository = new SaleRepository(loggerMoc.Object, context);
 			Sale entity = new Sale();
-			entity.SetProperties(2m, 2, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
+			entity.SetProperties(default(int), 2m, 2, "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
 			context.Set<Sale>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f7f06283b03f8098cf14baac6a8afc30</Hash>
+    <Hash>efe42a0f7499f191f4c0cfcca13822f5</Hash>
 </Codenesium>*/

@@ -16,15 +16,9 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiProvinceServerRequestModelValidator ProvinceModelValidator { get; private set; }
 
-		protected IBOLProvinceMapper BolProvinceMapper { get; private set; }
-
 		protected IDALProvinceMapper DalProvinceMapper { get; private set; }
 
-		protected IBOLCityMapper BolCityMapper { get; private set; }
-
 		protected IDALCityMapper DalCityMapper { get; private set; }
-
-		protected IBOLVenueMapper BolVenueMapper { get; private set; }
 
 		protected IDALVenueMapper DalVenueMapper { get; private set; }
 
@@ -35,37 +29,31 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IProvinceRepository provinceRepository,
 			IApiProvinceServerRequestModelValidator provinceModelValidator,
-			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper,
-			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
-			IBOLVenueMapper bolVenueMapper,
 			IDALVenueMapper dalVenueMapper)
 			: base()
 		{
 			this.ProvinceRepository = provinceRepository;
 			this.ProvinceModelValidator = provinceModelValidator;
-			this.BolProvinceMapper = bolProvinceMapper;
 			this.DalProvinceMapper = dalProvinceMapper;
-			this.BolCityMapper = bolCityMapper;
 			this.DalCityMapper = dalCityMapper;
-			this.BolVenueMapper = bolVenueMapper;
 			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProvinceServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProvinceRepository.All(limit, offset);
+			List<Province> records = await this.ProvinceRepository.All(limit, offset, query);
 
-			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
+			return this.DalProvinceMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiProvinceServerResponseModel> Get(int id)
 		{
-			var record = await this.ProvinceRepository.Get(id);
+			Province record = await this.ProvinceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -73,7 +61,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record));
+				return this.DalProvinceMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -84,11 +72,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolProvinceMapper.MapModelToBO(default(int), model);
-				var record = await this.ProvinceRepository.Create(this.DalProvinceMapper.MapBOToEF(bo));
+				Province record = this.DalProvinceMapper.MapModelToEntity(default(int), model);
+				record = await this.ProvinceRepository.Create(record);
 
-				var businessObject = this.DalProvinceMapper.MapEFToBO(record);
-				response.SetRecord(this.BolProvinceMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalProvinceMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new ProvinceCreatedNotification(response.Record));
 			}
 
@@ -103,13 +90,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolProvinceMapper.MapModelToBO(id, model);
-				await this.ProvinceRepository.Update(this.DalProvinceMapper.MapBOToEF(bo));
+				Province record = this.DalProvinceMapper.MapModelToEntity(id, model);
+				await this.ProvinceRepository.Update(record);
 
-				var record = await this.ProvinceRepository.Get(id);
+				record = await this.ProvinceRepository.Get(id);
 
-				var businessObject = this.DalProvinceMapper.MapEFToBO(record);
-				var apiModel = this.BolProvinceMapper.MapBOToModel(businessObject);
+				ApiProvinceServerResponseModel apiModel = this.DalProvinceMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new ProvinceUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProvinceServerResponseModel>.UpdateResponse(apiModel);
@@ -139,25 +125,25 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Province> records = await this.ProvinceRepository.ByCountryId(countryId, limit, offset);
 
-			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
+			return this.DalProvinceMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiCityServerResponseModel>> CitiesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<City> records = await this.ProvinceRepository.CitiesByProvinceId(provinceId, limit, offset);
 
-			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
+			return this.DalCityMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiVenueServerResponseModel>> VenuesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Venue> records = await this.ProvinceRepository.VenuesByProvinceId(provinceId, limit, offset);
 
-			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
+			return this.DalVenueMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4869e944c9c74fe13a516ffd928d273f</Hash>
+    <Hash>10474d5d726fe59c2b37895f43aa03f0</Hash>
 </Codenesium>*/

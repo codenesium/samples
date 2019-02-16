@@ -26,9 +26,20 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SpaceFeature> Get(int id)
@@ -76,33 +87,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		// Foreign key reference pass-though. Pass-thru table SpaceSpaceFeature. Foreign Table SpaceFeature.
-		public async virtual Task<List<SpaceFeature>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.SpaceSpaceFeatures
-			              join spaceFeatures in this.Context.SpaceFeatures on
-			              refTable.SpaceFeatureId equals spaceFeatures.Id
-			              where refTable.SpaceId == spaceId
-			              select spaceFeatures).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		// Foreign key reference pass-though. Pass-thru table SpaceSpaceFeature. Foreign Table SpaceFeature.
-		public async virtual Task<SpaceSpaceFeature> CreateSpaceSpaceFeature(SpaceSpaceFeature item)
-		{
-			this.Context.Set<SpaceSpaceFeature>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		// Foreign key reference pass-though. Pass-thru table SpaceSpaceFeature. Foreign Table SpaceFeature.
-		public async virtual Task DeleteSpaceSpaceFeature(SpaceSpaceFeature item)
-		{
-			this.Context.Set<SpaceSpaceFeature>().Remove(item);
-			await this.Context.SaveChangesAsync();
-		}
-
 		protected async Task<List<SpaceFeature>> Where(
 			Expression<Func<SpaceFeature, bool>> predicate,
 			int limit = int.MaxValue,
@@ -114,7 +98,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
+			return await this.Context.Set<SpaceFeature>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
 		}
 
 		private async Task<SpaceFeature> GetById(int id)
@@ -127,5 +113,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c8fe03ed672d3467374f6cd065b5b45b</Hash>
+    <Hash>195114f68e250162f11232ccfa2c92ee</Hash>
 </Codenesium>*/

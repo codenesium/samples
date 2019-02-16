@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiCurrencyServerRequestModelValidator CurrencyModelValidator { get; private set; }
 
-		protected IBOLCurrencyMapper BolCurrencyMapper { get; private set; }
-
 		protected IDALCurrencyMapper DalCurrencyMapper { get; private set; }
-
-		protected IBOLCurrencyRateMapper BolCurrencyRateMapper { get; private set; }
 
 		protected IDALCurrencyRateMapper DalCurrencyRateMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICurrencyRepository currencyRepository,
 			IApiCurrencyServerRequestModelValidator currencyModelValidator,
-			IBOLCurrencyMapper bolCurrencyMapper,
 			IDALCurrencyMapper dalCurrencyMapper,
-			IBOLCurrencyRateMapper bolCurrencyRateMapper,
 			IDALCurrencyRateMapper dalCurrencyRateMapper)
 			: base()
 		{
 			this.CurrencyRepository = currencyRepository;
 			this.CurrencyModelValidator = currencyModelValidator;
-			this.BolCurrencyMapper = bolCurrencyMapper;
 			this.DalCurrencyMapper = dalCurrencyMapper;
-			this.BolCurrencyRateMapper = bolCurrencyRateMapper;
 			this.DalCurrencyRateMapper = dalCurrencyRateMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCurrencyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCurrencyServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CurrencyRepository.All(limit, offset);
+			var records = await this.CurrencyRepository.All(limit, offset, query);
 
-			return this.BolCurrencyMapper.MapBOToModel(this.DalCurrencyMapper.MapEFToBO(records));
+			return this.DalCurrencyMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiCurrencyServerResponseModel> Get(string currencyCode)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCurrencyMapper.MapBOToModel(this.DalCurrencyMapper.MapEFToBO(record));
+				return this.DalCurrencyMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCurrencyMapper.MapModelToBO(default(string), model);
-				var record = await this.CurrencyRepository.Create(this.DalCurrencyMapper.MapBOToEF(bo));
+				var bo = this.DalCurrencyMapper.MapModelToBO(default(string), model);
+				var record = await this.CurrencyRepository.Create(bo);
 
-				var businessObject = this.DalCurrencyMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCurrencyMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCurrencyMapper.MapBOToModel(record));
 				await this.mediator.Publish(new CurrencyCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCurrencyMapper.MapModelToBO(currencyCode, model);
-				await this.CurrencyRepository.Update(this.DalCurrencyMapper.MapBOToEF(bo));
+				var bo = this.DalCurrencyMapper.MapModelToBO(currencyCode, model);
+				await this.CurrencyRepository.Update(bo);
 
 				var record = await this.CurrencyRepository.Get(currencyCode);
 
-				var businessObject = this.DalCurrencyMapper.MapEFToBO(record);
-				var apiModel = this.BolCurrencyMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalCurrencyMapper.MapBOToModel(record);
 				await this.mediator.Publish(new CurrencyUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCurrencyServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCurrencyMapper.MapBOToModel(this.DalCurrencyMapper.MapEFToBO(record));
+				return this.DalCurrencyMapper.MapBOToModel(record);
 			}
 		}
 
@@ -145,18 +135,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRatesByFromCurrencyCode(fromCurrencyCode, limit, offset);
 
-			return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(records));
+			return this.DalCurrencyRateMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiCurrencyRateServerResponseModel>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRatesByToCurrencyCode(toCurrencyCode, limit, offset);
 
-			return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(records));
+			return this.DalCurrencyRateMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39367570b378485781f33f8615fa26a0</Hash>
+    <Hash>f6b9c8b6aec1de16f1e73ff03abaded4</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<PipelineStepNote> Get(int id);
 
-		Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Employee> EmployeeByEmployeeId(int employeeId);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>170fbe0221e6aa8e27840070abe6275b</Hash>
+    <Hash>b1f2aba642131261a1fc45470fd6e1ca</Hash>
 </Codenesium>*/

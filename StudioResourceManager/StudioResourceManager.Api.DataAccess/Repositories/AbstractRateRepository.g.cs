@@ -26,9 +26,22 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AmountPerMinute.ToDecimal() == query.ToDecimal() ||
+				                  x.Id == query.ToInt() ||
+				                  x.TeacherId == query.ToInt() ||
+				                  x.TeacherSkillId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Rate> Get(int id)
@@ -91,13 +104,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		// Foreign key reference to table Teacher via teacherId.
 		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
 		{
-			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
+			return await this.Context.Set<Teacher>()
+			       .SingleOrDefaultAsync(x => x.Id == teacherId);
 		}
 
 		// Foreign key reference to table TeacherSkill via teacherSkillId.
 		public async virtual Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId)
 		{
-			return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
+			return await this.Context.Set<TeacherSkill>()
+			       .SingleOrDefaultAsync(x => x.Id == teacherSkillId);
 		}
 
 		protected async Task<List<Rate>> Where(
@@ -111,7 +126,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
+			return await this.Context.Set<Rate>()
+			       .Include(x => x.TeacherIdNavigation)
+			       .Include(x => x.TeacherSkillIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		private async Task<Rate> GetById(int id)
@@ -124,5 +143,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>478296f5d3b02150f6a1b3a9624fe704</Hash>
+    <Hash>00638dbf16a35c3b79534f1a5fdb76f7</Hash>
 </Codenesium>*/

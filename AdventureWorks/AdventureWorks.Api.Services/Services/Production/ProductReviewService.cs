@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IProductReviewRepository productReviewRepository,
 			IApiProductReviewServerRequestModelValidator productReviewModelValidator,
-			IBOLProductReviewMapper bolProductReviewMapper,
 			IDALProductReviewMapper dalProductReviewMapper)
 			: base(logger,
 			       mediator,
 			       productReviewRepository,
 			       productReviewModelValidator,
-			       bolProductReviewMapper,
 			       dalProductReviewMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17cf0ab09683ed93d715975c79a43ab7</Hash>
+    <Hash>f37494c4ef823ddda390be6fe58d7f0a</Hash>
 </Codenesium>*/

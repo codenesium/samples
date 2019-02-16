@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITimestampCheckRepository timestampCheckRepository,
 			IApiTimestampCheckServerRequestModelValidator timestampCheckModelValidator,
-			IBOLTimestampCheckMapper bolTimestampCheckMapper,
 			IDALTimestampCheckMapper dalTimestampCheckMapper)
 			: base(logger,
 			       mediator,
 			       timestampCheckRepository,
 			       timestampCheckModelValidator,
-			       bolTimestampCheckMapper,
 			       dalTimestampCheckMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6cda00c34bce281b64134f7e6ee5c7d4</Hash>
+    <Hash>baf03a275acce86d1db134cd55f87914</Hash>
 </Codenesium>*/

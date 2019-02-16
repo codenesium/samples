@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
 			IApiPhoneNumberTypeServerRequestModelValidator phoneNumberTypeModelValidator,
-			IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper,
 			IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper)
 			: base(logger,
 			       mediator,
 			       phoneNumberTypeRepository,
 			       phoneNumberTypeModelValidator,
-			       bolPhoneNumberTypeMapper,
 			       dalPhoneNumberTypeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f76a68a11eb248e55de4b642d80ca172</Hash>
+    <Hash>f1fb6338a97c4192c14fcc169728f7c0</Hash>
 </Codenesium>*/

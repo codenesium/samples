@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Chain> Get(int id);
 
-		Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Chain> ByExternalId(Guid externalId);
 
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>081523efec8e790342adffe530dea509</Hash>
+    <Hash>8dc0c571510d0e2b5748b83a4c5e7eb1</Hash>
 </Codenesium>*/

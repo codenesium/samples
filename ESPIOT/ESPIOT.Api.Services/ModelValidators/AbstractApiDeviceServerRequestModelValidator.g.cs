@@ -26,6 +26,14 @@ namespace ESPIOTNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
+		public virtual void DateOfLastPingRules()
+		{
+		}
+
+		public virtual void IsActiveRules()
+		{
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
@@ -54,5 +62,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f84ca59c044c7b8ba1f392e70499920c</Hash>
+    <Hash>eb8e044e744a26575cb2b87945e948bb</Hash>
 </Codenesium>*/

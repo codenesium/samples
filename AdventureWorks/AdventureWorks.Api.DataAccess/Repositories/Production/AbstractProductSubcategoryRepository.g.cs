@@ -26,9 +26,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ProductCategoryID == query.ToInt() ||
+				                  x.ProductSubcategoryID == query.ToInt() ||
+				                  x.Rowguid == query.ToGuid(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ProductSubcategory> Get(int productSubcategoryID)
@@ -118,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>939539d0f4c03dd9880493e805004b06</Hash>
+    <Hash>38e19dd0bd802faf01f9c8d904aa290f</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiPipelineServerRequestModelValidator PipelineModelValidator { get; private set; }
 
-		protected IBOLPipelineMapper BolPipelineMapper { get; private set; }
-
 		protected IDALPipelineMapper DalPipelineMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineRepository pipelineRepository,
 			IApiPipelineServerRequestModelValidator pipelineModelValidator,
-			IBOLPipelineMapper bolPipelineMapper,
 			IDALPipelineMapper dalPipelineMapper)
 			: base()
 		{
 			this.PipelineRepository = pipelineRepository;
 			this.PipelineModelValidator = pipelineModelValidator;
-			this.BolPipelineMapper = bolPipelineMapper;
 			this.DalPipelineMapper = dalPipelineMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPipelineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PipelineRepository.All(limit, offset);
+			List<Pipeline> records = await this.PipelineRepository.All(limit, offset, query);
 
-			return this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(records));
+			return this.DalPipelineMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPipelineServerResponseModel> Get(int id)
 		{
-			var record = await this.PipelineRepository.Get(id);
+			Pipeline record = await this.PipelineRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(record));
+				return this.DalPipelineMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPipelineMapper.MapModelToBO(default(int), model);
-				var record = await this.PipelineRepository.Create(this.DalPipelineMapper.MapBOToEF(bo));
+				Pipeline record = this.DalPipelineMapper.MapModelToEntity(default(int), model);
+				record = await this.PipelineRepository.Create(record);
 
-				var businessObject = this.DalPipelineMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPipelineMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPipelineMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PipelineCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPipelineMapper.MapModelToBO(id, model);
-				await this.PipelineRepository.Update(this.DalPipelineMapper.MapBOToEF(bo));
+				Pipeline record = this.DalPipelineMapper.MapModelToEntity(id, model);
+				await this.PipelineRepository.Update(record);
 
-				var record = await this.PipelineRepository.Get(id);
+				record = await this.PipelineRepository.Get(id);
 
-				var businessObject = this.DalPipelineMapper.MapEFToBO(record);
-				var apiModel = this.BolPipelineMapper.MapBOToModel(businessObject);
+				ApiPipelineServerResponseModel apiModel = this.DalPipelineMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PipelineUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPipelineServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>28fe857c1b3121897e1f3c868df8ba1e</Hash>
+    <Hash>650a0ee109e8ab51bf134e6b1d2333b5</Hash>
 </Codenesium>*/

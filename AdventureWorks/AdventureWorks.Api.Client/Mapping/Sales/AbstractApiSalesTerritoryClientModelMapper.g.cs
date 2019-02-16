@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var response = new ApiSalesTerritoryClientResponseModel();
 			response.SetProperties(territoryID,
-			                       request.@Group,
 			                       request.CostLastYear,
 			                       request.CostYTD,
 			                       request.CountryRegionCode,
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var request = new ApiSalesTerritoryClientRequestModel();
 			request.SetProperties(
-				response.@Group,
 				response.CostLastYear,
 				response.CostYTD,
 				response.CountryRegionCode,
@@ -44,5 +42,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>e76bd42f9c123c6660086ebeb46f3ac2</Hash>
+    <Hash>bc9b92c3097f6f9c0a0ef6e31f2850e6</Hash>
 </Codenesium>*/

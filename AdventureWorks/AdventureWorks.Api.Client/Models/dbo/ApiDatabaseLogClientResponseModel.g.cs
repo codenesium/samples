@@ -9,8 +9,6 @@ namespace AdventureWorksNS.Api.Client
 	{
 		public virtual void SetProperties(
 			int databaseLogID,
-			string @event,
-			string @object,
 			string databaseUser,
 			DateTime postTime,
 			string schema,
@@ -18,8 +16,6 @@ namespace AdventureWorksNS.Api.Client
 			string xmlEvent)
 		{
 			this.DatabaseLogID = databaseLogID;
-			this.@Event = @event;
-			this.@Object = @object;
 			this.DatabaseUser = databaseUser;
 			this.PostTime = postTime;
 			this.Schema = schema;
@@ -32,12 +28,6 @@ namespace AdventureWorksNS.Api.Client
 
 		[JsonProperty]
 		public string DatabaseUser { get; private set; }
-
-		[JsonProperty]
-		public string @Event { get; private set; }
-
-		[JsonProperty]
-		public string @Object { get; private set; }
 
 		[JsonProperty]
 		public DateTime PostTime { get; private set; }
@@ -54,5 +44,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3a0c75dfc7b4c5780235b97ffcb69f54</Hash>
+    <Hash>51115ca8acdd22c2ed2f8ae9c21569c0</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace TestsNS.Api.Services
 
 		protected IApiIncludedColumnTestServerRequestModelValidator IncludedColumnTestModelValidator { get; private set; }
 
-		protected IBOLIncludedColumnTestMapper BolIncludedColumnTestMapper { get; private set; }
-
 		protected IDALIncludedColumnTestMapper DalIncludedColumnTestMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IIncludedColumnTestRepository includedColumnTestRepository,
 			IApiIncludedColumnTestServerRequestModelValidator includedColumnTestModelValidator,
-			IBOLIncludedColumnTestMapper bolIncludedColumnTestMapper,
 			IDALIncludedColumnTestMapper dalIncludedColumnTestMapper)
 			: base()
 		{
 			this.IncludedColumnTestRepository = includedColumnTestRepository;
 			this.IncludedColumnTestModelValidator = includedColumnTestModelValidator;
-			this.BolIncludedColumnTestMapper = bolIncludedColumnTestMapper;
 			this.DalIncludedColumnTestMapper = dalIncludedColumnTestMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiIncludedColumnTestServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiIncludedColumnTestServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.IncludedColumnTestRepository.All(limit, offset);
+			List<IncludedColumnTest> records = await this.IncludedColumnTestRepository.All(limit, offset, query);
 
-			return this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(records));
+			return this.DalIncludedColumnTestMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiIncludedColumnTestServerResponseModel> Get(int id)
 		{
-			var record = await this.IncludedColumnTestRepository.Get(id);
+			IncludedColumnTest record = await this.IncludedColumnTestRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolIncludedColumnTestMapper.MapBOToModel(this.DalIncludedColumnTestMapper.MapEFToBO(record));
+				return this.DalIncludedColumnTestMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolIncludedColumnTestMapper.MapModelToBO(default(int), model);
-				var record = await this.IncludedColumnTestRepository.Create(this.DalIncludedColumnTestMapper.MapBOToEF(bo));
+				IncludedColumnTest record = this.DalIncludedColumnTestMapper.MapModelToEntity(default(int), model);
+				record = await this.IncludedColumnTestRepository.Create(record);
 
-				var businessObject = this.DalIncludedColumnTestMapper.MapEFToBO(record);
-				response.SetRecord(this.BolIncludedColumnTestMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalIncludedColumnTestMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new IncludedColumnTestCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolIncludedColumnTestMapper.MapModelToBO(id, model);
-				await this.IncludedColumnTestRepository.Update(this.DalIncludedColumnTestMapper.MapBOToEF(bo));
+				IncludedColumnTest record = this.DalIncludedColumnTestMapper.MapModelToEntity(id, model);
+				await this.IncludedColumnTestRepository.Update(record);
 
-				var record = await this.IncludedColumnTestRepository.Get(id);
+				record = await this.IncludedColumnTestRepository.Get(id);
 
-				var businessObject = this.DalIncludedColumnTestMapper.MapEFToBO(record);
-				var apiModel = this.BolIncludedColumnTestMapper.MapBOToModel(businessObject);
+				ApiIncludedColumnTestServerResponseModel apiModel = this.DalIncludedColumnTestMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new IncludedColumnTestUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiIncludedColumnTestServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be691fecdea8900e1a143a462927d99b</Hash>
+    <Hash>37f87b5f9142ca1c0b7fead542bb0a67</Hash>
 </Codenesium>*/

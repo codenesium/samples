@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAWBuildVersionRepository>();
 			var records = new List<AWBuildVersion>();
 			records.Add(new AWBuildVersion());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new AWBuildVersionService(mock.LoggerMock.Object,
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			List<ApiAWBuildVersionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			ApiAWBuildVersionServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			ApiAWBuildVersionServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			CreateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			CreateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			UpdateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			UpdateResponse<ApiAWBuildVersionServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.AWBuildVersionModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                        mock.MediatorMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        validatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLAWBuildVersionMapperMock,
 			                                        mock.DALMapperMockFactory.DALAWBuildVersionMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f5b51dc703e4a189b72bb58550f763af</Hash>
+    <Hash>328a73c7410617010d83e159c25d932b</Hash>
 </Codenesium>*/

@@ -47,10 +47,19 @@ namespace TicketingCRMNS.Api.DataAccess
 			Mock<ILogger<CityRepository>> loggerMoc = CityRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CityRepositoryMoc.GetContext();
 			var repository = new CityRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<CityRepository>> loggerMoc = CityRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = CityRepositoryMoc.GetContext();
+			var repository = new CityRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new CityRepository(loggerMoc.Object, context);
 
 			City entity = new City();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<City>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			var repository = new CityRepository(loggerMoc.Object, context);
 
 			var entity = new City();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<City>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CityRepositoryMoc.GetContext();
 			var repository = new CityRepository(loggerMoc.Object, context);
 			City entity = new City();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<City>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CityRepositoryMoc.GetContext();
 			var repository = new CityRepository(loggerMoc.Object, context);
 			City entity = new City();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<City>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			ApplicationDbContext context = CityRepositoryMoc.GetContext();
 			var repository = new CityRepository(loggerMoc.Object, context);
 			City entity = new City();
-			entity.SetProperties(2, "B", 1);
+			entity.SetProperties(default(int), "B", 1);
 			context.Set<City>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>181a0fd933eb0ea547aa503cbef1b2bf</Hash>
+    <Hash>9e988baed2e5bf0459dc0ccdda7a255c</Hash>
 </Codenesium>*/

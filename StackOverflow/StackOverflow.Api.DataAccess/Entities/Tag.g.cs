@@ -14,15 +14,15 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int count,
 			int excerptPostId,
-			int id,
 			string tagName,
 			int wikiPostId)
 		{
+			this.Id = id;
 			this.Count = count;
 			this.ExcerptPostId = excerptPostId;
-			this.Id = id;
 			this.TagName = tagName;
 			this.WikiPostId = wikiPostId;
 		}
@@ -47,5 +47,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0cc19e3d40aaa7e660752bad3ce2582d</Hash>
+    <Hash>9234e2b8983875ec958791ded88070ce</Hash>
 </Codenesium>*/

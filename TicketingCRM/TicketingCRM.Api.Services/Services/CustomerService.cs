@@ -12,13 +12,11 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper)
 			: base(logger,
 			       mediator,
 			       customerRepository,
 			       customerModelValidator,
-			       bolCustomerMapper,
 			       dalCustomerMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9a4c9d4d6b1a468508bb21f4a4719b2</Hash>
+    <Hash>4905be25ee83f30dd8293798968260d3</Hash>
 </Codenesium>*/

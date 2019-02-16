@@ -26,9 +26,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.UnitMeasureCode.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<UnitMeasure> Get(string unitMeasureCode)
@@ -124,5 +136,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b82ef34cc2fbe902c4f331e1935eb85a</Hash>
+    <Hash>fe9303f340878b7beccdfbb6dc5dcddc</Hash>
 </Codenesium>*/

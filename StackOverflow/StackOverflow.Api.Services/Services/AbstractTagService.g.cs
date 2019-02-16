@@ -16,8 +16,6 @@ namespace StackOverflowNS.Api.Services
 
 		protected IApiTagServerRequestModelValidator TagModelValidator { get; private set; }
 
-		protected IBOLTagMapper BolTagMapper { get; private set; }
-
 		protected IDALTagMapper DalTagMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace StackOverflowNS.Api.Services
 			IMediator mediator,
 			ITagRepository tagRepository,
 			IApiTagServerRequestModelValidator tagModelValidator,
-			IBOLTagMapper bolTagMapper,
 			IDALTagMapper dalTagMapper)
 			: base()
 		{
 			this.TagRepository = tagRepository;
 			this.TagModelValidator = tagModelValidator;
-			this.BolTagMapper = bolTagMapper;
 			this.DalTagMapper = dalTagMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTagServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTagServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TagRepository.All(limit, offset);
+			List<Tag> records = await this.TagRepository.All(limit, offset, query);
 
-			return this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(records));
+			return this.DalTagMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTagServerResponseModel> Get(int id)
 		{
-			var record = await this.TagRepository.Get(id);
+			Tag record = await this.TagRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.BolTagMapper.MapBOToModel(this.DalTagMapper.MapEFToBO(record));
+				return this.DalTagMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace StackOverflowNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTagMapper.MapModelToBO(default(int), model);
-				var record = await this.TagRepository.Create(this.DalTagMapper.MapBOToEF(bo));
+				Tag record = this.DalTagMapper.MapModelToEntity(default(int), model);
+				record = await this.TagRepository.Create(record);
 
-				var businessObject = this.DalTagMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTagMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTagMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TagCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace StackOverflowNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTagMapper.MapModelToBO(id, model);
-				await this.TagRepository.Update(this.DalTagMapper.MapBOToEF(bo));
+				Tag record = this.DalTagMapper.MapModelToEntity(id, model);
+				await this.TagRepository.Update(record);
 
-				var record = await this.TagRepository.Get(id);
+				record = await this.TagRepository.Get(id);
 
-				var businessObject = this.DalTagMapper.MapEFToBO(record);
-				var apiModel = this.BolTagMapper.MapBOToModel(businessObject);
+				ApiTagServerResponseModel apiModel = this.DalTagMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TagUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTagServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc78060e4b67bcc88bae418b6397d5a2</Hash>
+    <Hash>1d01356ca9d5fe5bc59ad15e293bf6a6</Hash>
 </Codenesium>*/

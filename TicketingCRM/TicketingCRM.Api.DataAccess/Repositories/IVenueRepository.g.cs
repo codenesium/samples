@@ -15,7 +15,7 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		Task<Venue> Get(int id);
 
-		Task<List<Venue>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Venue>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Venue>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a862a14b0185a6b743e092c9cabb5710</Hash>
+    <Hash>3339e028a8ccd8e9de57e9f005718280</Hash>
 </Codenesium>*/

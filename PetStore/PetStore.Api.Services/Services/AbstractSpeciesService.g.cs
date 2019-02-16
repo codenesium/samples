@@ -16,11 +16,7 @@ namespace PetStoreNS.Api.Services
 
 		protected IApiSpeciesServerRequestModelValidator SpeciesModelValidator { get; private set; }
 
-		protected IBOLSpeciesMapper BolSpeciesMapper { get; private set; }
-
 		protected IDALSpeciesMapper DalSpeciesMapper { get; private set; }
-
-		protected IBOLPetMapper BolPetMapper { get; private set; }
 
 		protected IDALPetMapper DalPetMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesServerRequestModelValidator speciesModelValidator,
-			IBOLSpeciesMapper bolSpeciesMapper,
 			IDALSpeciesMapper dalSpeciesMapper,
-			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper)
 			: base()
 		{
 			this.SpeciesRepository = speciesRepository;
 			this.SpeciesModelValidator = speciesModelValidator;
-			this.BolSpeciesMapper = bolSpeciesMapper;
 			this.DalSpeciesMapper = dalSpeciesMapper;
-			this.BolPetMapper = bolPetMapper;
 			this.DalPetMapper = dalPetMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSpeciesServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSpeciesServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SpeciesRepository.All(limit, offset);
+			List<Species> records = await this.SpeciesRepository.All(limit, offset, query);
 
-			return this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(records));
+			return this.DalSpeciesMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiSpeciesServerResponseModel> Get(int id)
 		{
-			var record = await this.SpeciesRepository.Get(id);
+			Species record = await this.SpeciesRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record));
+				return this.DalSpeciesMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSpeciesMapper.MapModelToBO(default(int), model);
-				var record = await this.SpeciesRepository.Create(this.DalSpeciesMapper.MapBOToEF(bo));
+				Species record = this.DalSpeciesMapper.MapModelToEntity(default(int), model);
+				record = await this.SpeciesRepository.Create(record);
 
-				var businessObject = this.DalSpeciesMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSpeciesMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSpeciesMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new SpeciesCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetStoreNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSpeciesMapper.MapModelToBO(id, model);
-				await this.SpeciesRepository.Update(this.DalSpeciesMapper.MapBOToEF(bo));
+				Species record = this.DalSpeciesMapper.MapModelToEntity(id, model);
+				await this.SpeciesRepository.Update(record);
 
-				var record = await this.SpeciesRepository.Get(id);
+				record = await this.SpeciesRepository.Get(id);
 
-				var businessObject = this.DalSpeciesMapper.MapEFToBO(record);
-				var apiModel = this.BolSpeciesMapper.MapBOToModel(businessObject);
+				ApiSpeciesServerResponseModel apiModel = this.DalSpeciesMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new SpeciesUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSpeciesServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetStoreNS.Api.Services
 		{
 			List<Pet> records = await this.SpeciesRepository.PetsBySpeciesId(speciesId, limit, offset);
 
-			return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(records));
+			return this.DalPetMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aac1467956d4cfb40a678dc0553599e2</Hash>
+    <Hash>e9a9971bac9516ee1ffa63c0246188be</Hash>
 </Codenesium>*/

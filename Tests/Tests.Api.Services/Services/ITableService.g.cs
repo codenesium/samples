@@ -18,10 +18,10 @@ namespace TestsNS.Api.Services
 
 		Task<ApiTableServerResponseModel> Get(int id);
 
-		Task<List<ApiTableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTableServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7e6e8706d1f9982d4a34817e8cde8d7</Hash>
+    <Hash>21e875daf3f5c4fad838bfd89cdbe434</Hash>
 </Codenesium>*/

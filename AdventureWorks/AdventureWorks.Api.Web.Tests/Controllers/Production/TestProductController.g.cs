@@ -27,36 +27,36 @@ namespace AdventureWorksNS.Api.Web.Tests
 			var record = new ApiProductServerResponseModel();
 			var records = new List<ApiProductServerResponseModel>();
 			records.Add(record);
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			ProductController controller = new ProductController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiProductServerResponseModel>;
 			items.Count.Should().Be(1);
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
 		public async void All_Not_Exists()
 		{
 			ProductControllerMockFacade mock = new ProductControllerMockFacade();
-			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiProductServerResponseModel>>(new List<ApiProductServerResponseModel>()));
+			mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ApiProductServerResponseModel>>(new List<ApiProductServerResponseModel>()));
 			ProductController controller = new ProductController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object, mock.ModelMapperMock.Object);
 			controller.ControllerContext = new ControllerContext();
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-			IActionResult response = await controller.All(1000, 0);
+			IActionResult response = await controller.All(1000, 0, string.Empty);
 
 			response.Should().BeOfType<OkObjectResult>();
 			(response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			var items = (response as OkObjectResult).Value as List<ApiProductServerResponseModel>;
 			items.Should().BeEmpty();
-			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -194,7 +194,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductServerRequestModel>()))
 			.Callback<int, ApiProductServerRequestModel>(
-				(id, model) => model.@Class.Should().Be("A")
+				(id, model) => model.Color.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiProductServerResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductServerResponseModel>(new ApiProductServerResponseModel()));
@@ -203,7 +203,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiProductServerRequestModel>();
-			patch.Replace(x => x.@Class, "A");
+			patch.Replace(x => x.Color, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -223,7 +223,7 @@ namespace AdventureWorksNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiProductServerRequestModel>();
-			patch.Replace(x => x.@Class, "A");
+			patch.Replace(x => x.Color, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -341,5 +341,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e3a87be53a7865294edad94f3bb7fdb</Hash>
+    <Hash>7609a2446c38806471bc1e8f442abf01</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiShipMethodServerResponseModel> Get(int shipMethodID);
 
-		Task<List<ApiShipMethodServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiShipMethodServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiShipMethodServerResponseModel> ByName(string name);
 
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6820c27190633459d9bb947c0947ac6b</Hash>
+    <Hash>7f84498959821c1031bec9b285735a17</Hash>
 </Codenesium>*/

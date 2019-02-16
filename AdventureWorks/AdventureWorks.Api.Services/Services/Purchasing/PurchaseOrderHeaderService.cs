@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
 			IApiPurchaseOrderHeaderServerRequestModelValidator purchaseOrderHeaderModelValidator,
-			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
 			       mediator,
 			       purchaseOrderHeaderRepository,
 			       purchaseOrderHeaderModelValidator,
-			       bolPurchaseOrderHeaderMapper,
 			       dalPurchaseOrderHeaderMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbe2d8d1adba4103b5485cc2f6489671</Hash>
+    <Hash>8f0360695f91d8bdd11c693dedfc639f</Hash>
 </Codenesium>*/

@@ -26,9 +26,21 @@ namespace TestsNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SelfReference>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SelfReference>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.SelfReferenceId == query.ToNullableInt() ||
+				                  x.SelfReferenceId2 == query.ToNullableInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SelfReference> Get(int id)
@@ -79,25 +91,29 @@ namespace TestsNS.Api.DataAccess
 		// Foreign key reference to this table SelfReference via selfReferenceId.
 		public async virtual Task<List<SelfReference>> SelfReferencesBySelfReferenceId(int selfReferenceId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SelfReference>().Where(x => x.SelfReferenceId == selfReferenceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
+			return await this.Context.Set<SelfReference>()
+			       .Where(x => x.SelfReferenceId == selfReferenceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
 		}
 
 		// Foreign key reference to this table SelfReference via selfReferenceId2.
 		public async virtual Task<List<SelfReference>> SelfReferencesBySelfReferenceId2(int selfReferenceId2, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<SelfReference>().Where(x => x.SelfReferenceId2 == selfReferenceId2).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
+			return await this.Context.Set<SelfReference>()
+			       .Where(x => x.SelfReferenceId2 == selfReferenceId2).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
 		}
 
 		// Foreign key reference to table SelfReference via selfReferenceId.
 		public async virtual Task<SelfReference> SelfReferenceBySelfReferenceId(int? selfReferenceId)
 		{
-			return await this.Context.Set<SelfReference>().SingleOrDefaultAsync(x => x.Id == selfReferenceId);
+			return await this.Context.Set<SelfReference>()
+			       .SingleOrDefaultAsync(x => x.Id == selfReferenceId);
 		}
 
 		// Foreign key reference to table SelfReference via selfReferenceId2.
 		public async virtual Task<SelfReference> SelfReferenceBySelfReferenceId2(int? selfReferenceId2)
 		{
-			return await this.Context.Set<SelfReference>().SingleOrDefaultAsync(x => x.Id == selfReferenceId2);
+			return await this.Context.Set<SelfReference>()
+			       .SingleOrDefaultAsync(x => x.Id == selfReferenceId2);
 		}
 
 		protected async Task<List<SelfReference>> Where(
@@ -111,7 +127,11 @@ namespace TestsNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<SelfReference>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SelfReference>();
+			return await this.Context.Set<SelfReference>()
+			       .Include(x => x.SelfReferenceIdNavigation)
+			       .Include(x => x.SelfReferenceId2Navigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SelfReference>();
 		}
 
 		private async Task<SelfReference> GetById(int id)
@@ -124,5 +144,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ebaaaa2065886149d38594ae889086b7</Hash>
+    <Hash>6ef8140c6cd18d76ad0557b08807417e</Hash>
 </Codenesium>*/

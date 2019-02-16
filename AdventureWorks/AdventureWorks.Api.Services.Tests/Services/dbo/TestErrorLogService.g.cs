@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IErrorLogRepository>();
 			var records = new List<ErrorLog>();
 			records.Add(new ErrorLog());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ErrorLogService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			List<ApiErrorLogServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			ApiErrorLogServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			ApiErrorLogServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			CreateResponse<ApiErrorLogServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			CreateResponse<ApiErrorLogServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			UpdateResponse<ApiErrorLogServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			UpdateResponse<ApiErrorLogServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ErrorLogModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLErrorLogMapperMock,
 			                                  mock.DALMapperMockFactory.DALErrorLogMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9430513ae8cade633b09f77326bcc222</Hash>
+    <Hash>42b8690fa535432f536942a045d5d703</Hash>
 </Codenesium>*/

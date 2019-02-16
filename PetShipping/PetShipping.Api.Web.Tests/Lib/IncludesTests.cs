@@ -446,6 +446,34 @@ namespace Codenesium.Foundation.CommonMVC.Tests
 
 			execute.Should().Throw<Exception>();
 		}
+
+		[Fact]
+		public void SearchQuery_Process()
+		{
+			var searchQuery = new SearchQuery();
+
+			var parameters = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>();
+			parameters["aParameter"] = "t";
+
+			var response = searchQuery.Process(5, 5, 1, 0, "test", parameters);
+			searchQuery.Limit.Should().Be(1);
+			searchQuery.Offset.Should().Be(0);
+			searchQuery.Query.Should().Be("test");
+			searchQuery.QueryParameters.Should().BeEquivalentTo(parameters);
+			response.Should().Be(true);
+			searchQuery.Error.Should().BeEmpty();
+		}
+
+		[Fact]
+		public void SearchQuery_Process_InvalidLimit()
+		{
+			var searchQuery = new SearchQuery();
+
+			var response = searchQuery.Process(5, 5, 10, 0, "test", new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+
+			response.Should().Be(false);
+			searchQuery.Error.Should().Be($"Limit of 10 exceeds maximum request size of 5 records");
+		}
 	}
 
 	public class TestEntity

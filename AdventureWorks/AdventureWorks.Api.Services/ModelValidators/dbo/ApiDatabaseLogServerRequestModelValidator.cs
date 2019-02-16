@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiDatabaseLogServerRequestModel model)
 		{
 			this.DatabaseUserRules();
-			this.@EventRules();
-			this.@ObjectRules();
 			this.PostTimeRules();
 			this.SchemaRules();
 			this.TsqlRules();
@@ -28,8 +26,6 @@ namespace AdventureWorksNS.Api.Services
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiDatabaseLogServerRequestModel model)
 		{
 			this.DatabaseUserRules();
-			this.@EventRules();
-			this.@ObjectRules();
 			this.PostTimeRules();
 			this.SchemaRules();
 			this.TsqlRules();
@@ -45,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c36512deb752024daafe3bbc17a6e9a</Hash>
+    <Hash>13fd528a759f44f697873ad044020cd2</Hash>
 </Codenesium>*/

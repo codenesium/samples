@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
 			IApiColumnSameAsFKTableServerRequestModelValidator columnSameAsFKTableModelValidator,
-			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base(logger,
 			       mediator,
 			       columnSameAsFKTableRepository,
 			       columnSameAsFKTableModelValidator,
-			       bolColumnSameAsFKTableMapper,
 			       dalColumnSameAsFKTableMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25ab64e7bd6f575132cca7305be84274</Hash>
+    <Hash>a013fd8ac9bd0ae4c4e7ab4f070e5366</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			decimal amount,
 			string firstName,
-			int id,
 			string lastName,
 			int paymentTypeId,
 			int petId,
 			string phone)
 		{
+			this.Id = id;
 			this.Amount = amount;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.LastName = lastName;
 			this.PaymentTypeId = paymentTypeId;
 			this.PetId = petId;
@@ -57,23 +57,23 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual string Phone { get; private set; }
 
 		[ForeignKey("PaymentTypeId")]
-		public virtual PaymentType PaymentTypeNavigation { get; private set; }
+		public virtual PaymentType PaymentTypeIdNavigation { get; private set; }
 
-		public void SetPaymentTypeNavigation(PaymentType item)
+		public void SetPaymentTypeIdNavigation(PaymentType item)
 		{
-			this.PaymentTypeNavigation = item;
+			this.PaymentTypeIdNavigation = item;
 		}
 
 		[ForeignKey("PetId")]
-		public virtual Pet PetNavigation { get; private set; }
+		public virtual Pet PetIdNavigation { get; private set; }
 
-		public void SetPetNavigation(Pet item)
+		public void SetPetIdNavigation(Pet item)
 		{
-			this.PetNavigation = item;
+			this.PetIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>41f20f2330167eb36c838bd40581bdac</Hash>
+    <Hash>88e10b5ada008c3a4ba2986f1c417b12</Hash>
 </Codenesium>*/

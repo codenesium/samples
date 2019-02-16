@@ -25,8 +25,34 @@ namespace TwitterNS.Api.Client
 			this.UserId = userId;
 
 			this.MessageIdEntity = nameof(ApiResponse.Messages);
+
 			this.ToUserIdEntity = nameof(ApiResponse.Users);
+
 			this.UserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiMessageClientResponseModel MessageIdNavigation { get; private set; }
+
+		public void SetMessageIdNavigation(ApiMessageClientResponseModel value)
+		{
+			this.MessageIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel ToUserIdNavigation { get; private set; }
+
+		public void SetToUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.ToUserIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -62,5 +88,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d1cffcd57b2896fea94aa3a4ae85fe50</Hash>
+    <Hash>5f6c02321f1239fd4efd40f65d7fd5fe</Hash>
 </Codenesium>*/

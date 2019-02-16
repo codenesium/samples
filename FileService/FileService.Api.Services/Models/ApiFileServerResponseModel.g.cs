@@ -44,6 +44,14 @@ namespace FileServiceNS.Api.Services
 		public string BucketIdEntity { get; private set; } = RouteConstants.Buckets;
 
 		[JsonProperty]
+		public ApiBucketServerResponseModel BucketIdNavigation { get; private set; }
+
+		public void SetBucketIdNavigation(ApiBucketServerResponseModel value)
+		{
+			this.BucketIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime DateCreated { get; private set; }
 
 		[Required]
@@ -69,6 +77,14 @@ namespace FileServiceNS.Api.Services
 		public string FileTypeIdEntity { get; private set; } = RouteConstants.FileTypes;
 
 		[JsonProperty]
+		public ApiFileTypeServerResponseModel FileTypeIdNavigation { get; private set; }
+
+		public void SetFileTypeIdNavigation(ApiFileTypeServerResponseModel value)
+		{
+			this.FileTypeIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -83,5 +99,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5a943a3aa04c6a88f7f4f7968414ac1</Hash>
+    <Hash>4f069417f282559ce42e77c3cddc37bf</Hash>
 </Codenesium>*/

@@ -22,6 +22,14 @@ namespace TicketingCRMNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiTransactionStatuClientResponseModel TransactionStatusIdNavigation { get; private set; }
+
+		public void SetTransactionStatusIdNavigation(ApiTransactionStatuClientResponseModel value)
+		{
+			this.TransactionStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public decimal Amount { get; private set; }
 
 		[JsonProperty]
@@ -39,5 +47,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>e2bde8b4f8ef9989be39f9586a690c10</Hash>
+    <Hash>50471e732d12c193ddc620c90c8b4b0f</Hash>
 </Codenesium>*/

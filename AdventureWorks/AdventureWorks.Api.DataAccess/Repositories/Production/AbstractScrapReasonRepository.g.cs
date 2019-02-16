@@ -26,9 +26,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.ScrapReasonID == query.ToShort(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ScrapReason> Get(short scrapReasonID)
@@ -112,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c123eebaeeb450f822f3f6109355538</Hash>
+    <Hash>efd417cab8ceec0535160fade09c7175</Hash>
 </Codenesium>*/

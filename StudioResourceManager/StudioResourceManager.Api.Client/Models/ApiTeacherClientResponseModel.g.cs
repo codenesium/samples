@@ -28,6 +28,14 @@ namespace StudioResourceManagerNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiUserClientResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public DateTime Birthday { get; private set; }
 
 		[JsonProperty]
@@ -54,5 +62,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>349d1628754de39da880020e41563cbf</Hash>
+    <Hash>8b2e08679811b964e64b4206cd0b110d</Hash>
 </Codenesium>*/

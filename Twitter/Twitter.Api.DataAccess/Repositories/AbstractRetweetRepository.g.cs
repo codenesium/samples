@@ -26,9 +26,23 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Retweet>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Retweet>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Date == query.ToNullableDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.RetwitterUserId == query.ToNullableInt() ||
+				                  x.Time == query.ToNullableTimespan() ||
+				                  x.TweetTweetId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Retweet> Get(int id)
@@ -91,13 +105,15 @@ namespace TwitterNS.Api.DataAccess
 		// Foreign key reference to table User via retwitterUserId.
 		public async virtual Task<User> UserByRetwitterUserId(int? retwitterUserId)
 		{
-			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == retwitterUserId);
+			return await this.Context.Set<User>()
+			       .SingleOrDefaultAsync(x => x.UserId == retwitterUserId);
 		}
 
 		// Foreign key reference to table Tweet via tweetTweetId.
 		public async virtual Task<Tweet> TweetByTweetTweetId(int tweetTweetId)
 		{
-			return await this.Context.Set<Tweet>().SingleOrDefaultAsync(x => x.TweetId == tweetTweetId);
+			return await this.Context.Set<Tweet>()
+			       .SingleOrDefaultAsync(x => x.TweetId == tweetTweetId);
 		}
 
 		protected async Task<List<Retweet>> Where(
@@ -111,7 +127,11 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Retweet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Retweet>();
+			return await this.Context.Set<Retweet>()
+			       .Include(x => x.RetwitterUserIdNavigation)
+			       .Include(x => x.TweetTweetIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
 		private async Task<Retweet> GetById(int id)
@@ -124,5 +144,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75ff8be555f92bcf1d74fb214cd10228</Hash>
+    <Hash>518227e6da0c06d21e2ad6d1fb16c909</Hash>
 </Codenesium>*/

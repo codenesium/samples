@@ -26,18 +26,17 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IFollowingRepository>();
 			var records = new List<Following>();
 			records.Add(new Following());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new FollowingService(mock.LoggerMock.Object,
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			List<ApiFollowingServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			ApiFollowingServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			ApiFollowingServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			CreateResponse<ApiFollowingServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			CreateResponse<ApiFollowingServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			UpdateResponse<ApiFollowingServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			UpdateResponse<ApiFollowingServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.FollowingModelValidatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TwitterNS.Api.Services.Tests
 			                                   mock.MediatorMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   validatorMock.Object,
-			                                   mock.BOLMapperMockFactory.BOLFollowingMapperMock,
 			                                   mock.DALMapperMockFactory.DALFollowingMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2db8c696861f28cbffe1f28256965c08</Hash>
+    <Hash>b92082963087fa4a6b198acbe8e5d519</Hash>
 </Codenesium>*/

@@ -26,22 +26,19 @@ namespace PetShippingNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var records = new List<Country>();
 			records.Add(new Country());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			List<ApiCountryServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -54,11 +51,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			ApiCountryServerResponseModel response = await service.Get(default(int));
@@ -76,11 +70,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			ApiCountryServerResponseModel response = await service.Get(default(int));
@@ -99,11 +90,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
@@ -126,11 +114,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
@@ -152,11 +137,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
@@ -180,11 +162,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
@@ -205,11 +184,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -232,11 +208,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -258,11 +231,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			List<ApiCountryRequirementServerResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
@@ -280,11 +250,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			List<ApiCountryRequirementServerResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
@@ -304,11 +271,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			List<ApiDestinationServerResponseModel> response = await service.DestinationsByCountryId(default(int));
@@ -326,11 +290,8 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLCountryRequirementMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryRequirementMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
 			List<ApiDestinationServerResponseModel> response = await service.DestinationsByCountryId(default(int));
@@ -342,5 +303,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>620bbdba955ead0603f216e284233d3e</Hash>
+    <Hash>1737b6c6c9b30ca14d487969fb38e15b</Hash>
 </Codenesium>*/

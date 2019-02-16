@@ -34,23 +34,23 @@ namespace TestsNS.Api.DataAccess
 		public virtual int? SelfReferenceId2 { get; private set; }
 
 		[ForeignKey("SelfReferenceId")]
-		public virtual SelfReference SelfReference1Navigation { get; private set; }
+		public virtual SelfReference SelfReferenceIdNavigation { get; private set; }
 
-		public void SetSelfReference1Navigation(SelfReference item)
+		public void SetSelfReferenceIdNavigation(SelfReference item)
 		{
-			this.SelfReference1Navigation = item;
+			this.SelfReferenceIdNavigation = item;
 		}
 
 		[ForeignKey("SelfReferenceId2")]
-		public virtual SelfReference SelfReference2Navigation { get; private set; }
+		public virtual SelfReference SelfReferenceId2Navigation { get; private set; }
 
-		public void SetSelfReference2Navigation(SelfReference item)
+		public void SetSelfReferenceId2Navigation(SelfReference item)
 		{
-			this.SelfReference2Navigation = item;
+			this.SelfReferenceId2Navigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1e6955979b7a7aab7fe54dc8368e341</Hash>
+    <Hash>f1c9397be50aca1320ffbdb995758296</Hash>
 </Codenesium>*/

@@ -40,6 +40,8 @@ GO
 
 CREATE TABLE [dbo].[Device](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[dateOfLastPing] [datetime]     NOT NULL,
+[isActive] [bit]     NOT NULL,
 [name] [varchar]  (90)   NOT NULL,
 [publicId] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
@@ -47,9 +49,9 @@ GO
 
 CREATE TABLE [dbo].[DeviceAction](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[action] [varchar]  (4000)   NOT NULL,
 [deviceId] [int]     NOT NULL,
 [name] [varchar]  (90)   NOT NULL,
-[value] [varchar]  (4000)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -69,6 +71,11 @@ ADD CONSTRAINT[PK_Action] PRIMARY KEY CLUSTERED
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_DeviceAction_deviceActionId] ON[dbo].[DeviceAction]
+(
+[id] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_DeviceAction_DeviceId] ON[dbo].[DeviceAction]
 (

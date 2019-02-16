@@ -14,15 +14,15 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			int breedId,
 			int clientId,
-			int id,
 			string name,
 			int weight)
 		{
+			this.Id = id;
 			this.BreedId = breedId;
 			this.ClientId = clientId;
-			this.Id = id;
 			this.Name = name;
 			this.Weight = weight;
 		}
@@ -45,15 +45,15 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual int Weight { get; private set; }
 
 		[ForeignKey("BreedId")]
-		public virtual Breed BreedNavigation { get; private set; }
+		public virtual Breed BreedIdNavigation { get; private set; }
 
-		public void SetBreedNavigation(Breed item)
+		public void SetBreedIdNavigation(Breed item)
 		{
-			this.BreedNavigation = item;
+			this.BreedIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce4234756f3737f0cf6cc8ad32da4f2b</Hash>
+    <Hash>a90a85dfe433d6dabb9b3f8248949d23</Hash>
 </Codenesium>*/

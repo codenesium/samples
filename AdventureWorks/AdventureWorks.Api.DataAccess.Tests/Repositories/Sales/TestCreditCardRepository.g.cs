@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 
 			CreditCard entity = new CreditCard();
-			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 
 			var entity = new CreditCard();
-			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			await repository.Create(entity);
 
 			var records = await context.Set<CreditCard>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
-			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
-			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
 			var repository = new CreditCardRepository(loggerMoc.Object, context);
 			CreditCard entity = new CreditCard();
-			entity.SetProperties("B", "B", 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			entity.SetProperties(default(int), "B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
 			context.Set<CreditCard>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>473d7a07c1b9f0700ec8f29b6d33b271</Hash>
+    <Hash>16e4cc8ba047b35440b62893d7ccc672</Hash>
 </Codenesium>*/

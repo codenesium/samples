@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiFollowerServerResponseModel> Get(int id);
 
-		Task<List<ApiFollowerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiFollowerServerResponseModel>> ByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71d42b1dc4755d10b0c8fb149c0a9890</Hash>
+    <Hash>74b28f6d78ecca1bb6f47515e83a12e4</Hash>
 </Codenesium>*/

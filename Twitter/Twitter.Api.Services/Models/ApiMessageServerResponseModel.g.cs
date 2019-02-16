@@ -31,9 +31,17 @@ namespace TwitterNS.Api.Services
 
 		[JsonProperty]
 		public string SenderUserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel SenderUserIdNavigation { get; private set; }
+
+		public void SetSenderUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.SenderUserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1688cd5fc59f6e133da5c4531140b1ac</Hash>
+    <Hash>be88715d9bc634f5f77a165c90ead313</Hash>
 </Codenesium>*/

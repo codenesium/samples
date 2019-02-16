@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<AddressType>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<AddressType>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AddressTypeID == query.ToInt() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.Rowguid == query.ToGuid(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<AddressType> Get(int addressTypeID)
@@ -112,5 +125,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>980ad33416e04cd58ff3cff3cd0740c0</Hash>
+    <Hash>7b705ee3bda4ec0ebd2cb5822d9419ab</Hash>
 </Codenesium>*/

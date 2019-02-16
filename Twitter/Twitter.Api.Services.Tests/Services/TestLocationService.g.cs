@@ -26,22 +26,19 @@ namespace TwitterNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var records = new List<Location>();
 			records.Add(new Location());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiLocationServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -54,11 +51,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiLocationServerResponseModel response = await service.Get(default(int));
@@ -76,11 +70,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ApiLocationServerResponseModel response = await service.Get(default(int));
@@ -99,11 +90,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
@@ -126,11 +114,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			CreateResponse<ApiLocationServerResponseModel> response = await service.Create(model);
@@ -152,11 +137,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(int), model);
@@ -180,11 +162,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			UpdateResponse<ApiLocationServerResponseModel> response = await service.Update(default(int), model);
@@ -205,11 +184,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -232,11 +208,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -258,11 +231,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.TweetsByLocationId(default(int));
@@ -280,11 +250,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiTweetServerResponseModel> response = await service.TweetsByLocationId(default(int));
@@ -304,11 +271,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiUserServerResponseModel> response = await service.UsersByLocationLocationId(default(int));
@@ -326,11 +290,8 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLLocationMapperMock,
 			                                  mock.DALMapperMockFactory.DALLocationMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                                  mock.DALMapperMockFactory.DALTweetMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
 			List<ApiUserServerResponseModel> response = await service.UsersByLocationLocationId(default(int));
@@ -342,5 +303,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>55062f938c2dd655dbc6c17b386061a2</Hash>
+    <Hash>cb642ebb85fdccecd5cbd9c71dcf5f4b</Hash>
 </Codenesium>*/

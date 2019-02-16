@@ -14,16 +14,16 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string email,
 			string firstName,
-			int id,
 			string lastName,
 			string note,
 			string phone)
 		{
+			this.Id = id;
 			this.Email = email;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.LastName = lastName;
 			this.Note = note;
 			this.Phone = phone;
@@ -56,5 +56,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>99320f149a5c162aba2e639f8f5ecafe</Hash>
+    <Hash>1a48e8b3cadcd751676ed41560562f81</Hash>
 </Codenesium>*/

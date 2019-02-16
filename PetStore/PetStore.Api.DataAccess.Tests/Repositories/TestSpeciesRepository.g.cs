@@ -47,10 +47,19 @@ namespace PetStoreNS.Api.DataAccess
 			Mock<ILogger<SpeciesRepository>> loggerMoc = SpeciesRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = SpeciesRepositoryMoc.GetContext();
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<SpeciesRepository>> loggerMoc = SpeciesRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = SpeciesRepositoryMoc.GetContext();
+			var repository = new SpeciesRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
 
 			Species entity = new Species();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Species>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
 
 			var entity = new Species();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Species>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SpeciesRepositoryMoc.GetContext();
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
 			Species entity = new Species();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Species>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SpeciesRepositoryMoc.GetContext();
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
 			Species entity = new Species();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Species>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = SpeciesRepositoryMoc.GetContext();
 			var repository = new SpeciesRepository(loggerMoc.Object, context);
 			Species entity = new Species();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Species>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d07920e4fadfb72347926033928cd574</Hash>
+    <Hash>753064bfae02cc120675492b4f82964e</Hash>
 </Codenesium>*/

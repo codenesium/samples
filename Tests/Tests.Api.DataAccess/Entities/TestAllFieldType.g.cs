@@ -14,6 +14,7 @@ namespace TestsNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			long fieldBigInt,
 			byte[] fieldBinary,
 			bool fieldBit,
@@ -22,7 +23,7 @@ namespace TestsNS.Api.DataAccess
 			DateTime fieldDateTime,
 			DateTime fieldDateTime2,
 			DateTimeOffset fieldDateTimeOffset,
-			double fieldDecimal,
+			decimal fieldDecimal,
 			double fieldFloat,
 			byte[] fieldImage,
 			decimal fieldMoney,
@@ -41,9 +42,9 @@ namespace TestsNS.Api.DataAccess
 			Guid fieldUniqueIdentifier,
 			byte[] fieldVarBinary,
 			string fieldVarchar,
-			string fieldXML,
-			int id)
+			string fieldXML)
 		{
+			this.Id = id;
 			this.FieldBigInt = fieldBigInt;
 			this.FieldBinary = fieldBinary;
 			this.FieldBit = fieldBit;
@@ -72,7 +73,6 @@ namespace TestsNS.Api.DataAccess
 			this.FieldVarBinary = fieldVarBinary;
 			this.FieldVarchar = fieldVarchar;
 			this.FieldXML = fieldXML;
-			this.Id = id;
 		}
 
 		[Column("fieldBigInt")]
@@ -102,7 +102,7 @@ namespace TestsNS.Api.DataAccess
 		public virtual DateTimeOffset FieldDateTimeOffset { get; private set; }
 
 		[Column("fieldDecimal")]
-		public virtual double FieldDecimal { get; private set; }
+		public virtual decimal FieldDecimal { get; private set; }
 
 		[Column("fieldFloat")]
 		public virtual double FieldFloat { get; private set; }
@@ -174,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9a2e8d42c79ed6d4cc1e2392080c4a54</Hash>
+    <Hash>76eaf05965ca8cc45f4dd6e9bee49465</Hash>
 </Codenesium>*/

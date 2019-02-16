@@ -16,11 +16,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiTransactionStatuServerRequestModelValidator TransactionStatuModelValidator { get; private set; }
 
-		protected IBOLTransactionStatuMapper BolTransactionStatuMapper { get; private set; }
-
 		protected IDALTransactionStatuMapper DalTransactionStatuMapper { get; private set; }
-
-		protected IBOLTransactionMapper BolTransactionMapper { get; private set; }
 
 		protected IDALTransactionMapper DalTransactionMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ITransactionStatuRepository transactionStatuRepository,
 			IApiTransactionStatuServerRequestModelValidator transactionStatuModelValidator,
-			IBOLTransactionStatuMapper bolTransactionStatuMapper,
 			IDALTransactionStatuMapper dalTransactionStatuMapper,
-			IBOLTransactionMapper bolTransactionMapper,
 			IDALTransactionMapper dalTransactionMapper)
 			: base()
 		{
 			this.TransactionStatuRepository = transactionStatuRepository;
 			this.TransactionStatuModelValidator = transactionStatuModelValidator;
-			this.BolTransactionStatuMapper = bolTransactionStatuMapper;
 			this.DalTransactionStatuMapper = dalTransactionStatuMapper;
-			this.BolTransactionMapper = bolTransactionMapper;
 			this.DalTransactionMapper = dalTransactionMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTransactionStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTransactionStatuServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TransactionStatuRepository.All(limit, offset);
+			List<TransactionStatu> records = await this.TransactionStatuRepository.All(limit, offset, query);
 
-			return this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(records));
+			return this.DalTransactionStatuMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTransactionStatuServerResponseModel> Get(int id)
 		{
-			var record = await this.TransactionStatuRepository.Get(id);
+			TransactionStatu record = await this.TransactionStatuRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolTransactionStatuMapper.MapBOToModel(this.DalTransactionStatuMapper.MapEFToBO(record));
+				return this.DalTransactionStatuMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTransactionStatuMapper.MapModelToBO(default(int), model);
-				var record = await this.TransactionStatuRepository.Create(this.DalTransactionStatuMapper.MapBOToEF(bo));
+				TransactionStatu record = this.DalTransactionStatuMapper.MapModelToEntity(default(int), model);
+				record = await this.TransactionStatuRepository.Create(record);
 
-				var businessObject = this.DalTransactionStatuMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTransactionStatuMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTransactionStatuMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TransactionStatuCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTransactionStatuMapper.MapModelToBO(id, model);
-				await this.TransactionStatuRepository.Update(this.DalTransactionStatuMapper.MapBOToEF(bo));
+				TransactionStatu record = this.DalTransactionStatuMapper.MapModelToEntity(id, model);
+				await this.TransactionStatuRepository.Update(record);
 
-				var record = await this.TransactionStatuRepository.Get(id);
+				record = await this.TransactionStatuRepository.Get(id);
 
-				var businessObject = this.DalTransactionStatuMapper.MapEFToBO(record);
-				var apiModel = this.BolTransactionStatuMapper.MapBOToModel(businessObject);
+				ApiTransactionStatuServerResponseModel apiModel = this.DalTransactionStatuMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TransactionStatuUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTransactionStatuServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Transaction> records = await this.TransactionStatuRepository.TransactionsByTransactionStatusId(transactionStatusId, limit, offset);
 
-			return this.BolTransactionMapper.MapBOToModel(this.DalTransactionMapper.MapEFToBO(records));
+			return this.DalTransactionMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>656facd04fe13c2dcb16eb9040d72795</Hash>
+    <Hash>cbd1830bf6a24500c64fa6053426d730</Hash>
 </Codenesium>*/

@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiBillOfMaterialServerRequestModelValidator BillOfMaterialModelValidator { get; private set; }
 
-		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
-
 		protected IDALBillOfMaterialMapper DalBillOfMaterialMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialServerRequestModelValidator billOfMaterialModelValidator,
-			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base()
 		{
 			this.BillOfMaterialRepository = billOfMaterialRepository;
 			this.BillOfMaterialModelValidator = billOfMaterialModelValidator;
-			this.BolBillOfMaterialMapper = bolBillOfMaterialMapper;
 			this.DalBillOfMaterialMapper = dalBillOfMaterialMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiBillOfMaterialServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.BillOfMaterialRepository.All(limit, offset);
+			var records = await this.BillOfMaterialRepository.All(limit, offset, query);
 
-			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
+			return this.DalBillOfMaterialMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiBillOfMaterialServerResponseModel> Get(int billOfMaterialsID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record));
+				return this.DalBillOfMaterialMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolBillOfMaterialMapper.MapModelToBO(default(int), model);
-				var record = await this.BillOfMaterialRepository.Create(this.DalBillOfMaterialMapper.MapBOToEF(bo));
+				var bo = this.DalBillOfMaterialMapper.MapModelToBO(default(int), model);
+				var record = await this.BillOfMaterialRepository.Create(bo);
 
-				var businessObject = this.DalBillOfMaterialMapper.MapEFToBO(record);
-				response.SetRecord(this.BolBillOfMaterialMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalBillOfMaterialMapper.MapBOToModel(record));
 				await this.mediator.Publish(new BillOfMaterialCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolBillOfMaterialMapper.MapModelToBO(billOfMaterialsID, model);
-				await this.BillOfMaterialRepository.Update(this.DalBillOfMaterialMapper.MapBOToEF(bo));
+				var bo = this.DalBillOfMaterialMapper.MapModelToBO(billOfMaterialsID, model);
+				await this.BillOfMaterialRepository.Update(bo);
 
 				var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
-				var businessObject = this.DalBillOfMaterialMapper.MapEFToBO(record);
-				var apiModel = this.BolBillOfMaterialMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalBillOfMaterialMapper.MapBOToModel(record);
 				await this.mediator.Publish(new BillOfMaterialUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiBillOfMaterialServerResponseModel>.UpdateResponse(apiModel);
@@ -123,11 +117,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode, limit, offset);
 
-			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
+			return this.DalBillOfMaterialMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e15001f80d3795c88ff93e2687f661ad</Hash>
+    <Hash>400182300c89492afa029bfcf06f7f65</Hash>
 </Codenesium>*/

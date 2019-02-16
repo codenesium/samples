@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiAddressServerRequestModelValidator AddressModelValidator { get; private set; }
 
-		protected IBOLAddressMapper BolAddressMapper { get; private set; }
-
 		protected IDALAddressMapper DalAddressMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IAddressRepository addressRepository,
 			IApiAddressServerRequestModelValidator addressModelValidator,
-			IBOLAddressMapper bolAddressMapper,
 			IDALAddressMapper dalAddressMapper)
 			: base()
 		{
 			this.AddressRepository = addressRepository;
 			this.AddressModelValidator = addressModelValidator;
-			this.BolAddressMapper = bolAddressMapper;
 			this.DalAddressMapper = dalAddressMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiAddressServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiAddressServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.AddressRepository.All(limit, offset);
+			var records = await this.AddressRepository.All(limit, offset, query);
 
-			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
+			return this.DalAddressMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiAddressServerResponseModel> Get(int addressID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record));
+				return this.DalAddressMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolAddressMapper.MapModelToBO(default(int), model);
-				var record = await this.AddressRepository.Create(this.DalAddressMapper.MapBOToEF(bo));
+				var bo = this.DalAddressMapper.MapModelToBO(default(int), model);
+				var record = await this.AddressRepository.Create(bo);
 
-				var businessObject = this.DalAddressMapper.MapEFToBO(record);
-				response.SetRecord(this.BolAddressMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalAddressMapper.MapBOToModel(record));
 				await this.mediator.Publish(new AddressCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolAddressMapper.MapModelToBO(addressID, model);
-				await this.AddressRepository.Update(this.DalAddressMapper.MapBOToEF(bo));
+				var bo = this.DalAddressMapper.MapModelToBO(addressID, model);
+				await this.AddressRepository.Update(bo);
 
 				var record = await this.AddressRepository.Get(addressID);
 
-				var businessObject = this.DalAddressMapper.MapEFToBO(record);
-				var apiModel = this.BolAddressMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalAddressMapper.MapBOToModel(record);
 				await this.mediator.Publish(new AddressUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiAddressServerResponseModel>.UpdateResponse(apiModel);
@@ -129,7 +123,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record));
+				return this.DalAddressMapper.MapBOToModel(record);
 			}
 		}
 
@@ -143,7 +137,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(record));
+				return this.DalAddressMapper.MapBOToModel(record);
 			}
 		}
 
@@ -151,11 +145,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Address> records = await this.AddressRepository.ByStateProvinceID(stateProvinceID, limit, offset);
 
-			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
+			return this.DalAddressMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bcae78724ed58587632a3ebcc9ec8ab4</Hash>
+    <Hash>9da7d574681d9d49fdbe76ba8a494cc4</Hash>
 </Codenesium>*/

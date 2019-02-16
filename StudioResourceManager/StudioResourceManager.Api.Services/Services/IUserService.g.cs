@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiUserServerResponseModel> Get(int id);
 
-		Task<List<ApiUserServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUserServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiAdminServerResponseModel>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
@@ -29,5 +29,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5555a628a9278c0cdd5604b703e8972</Hash>
+    <Hash>0926c9426036e51c8caf0307c0598248</Hash>
 </Codenesium>*/

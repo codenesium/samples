@@ -18,12 +18,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiAdminServerResponseModel> Get(int id);
 
-		Task<List<ApiAdminServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiAdminServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiAdminServerResponseModel>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1314fd5e93b6416915d741332cb1c8ca</Hash>
+    <Hash>fff660e3ea60bd93462b6b6ef4e28946</Hash>
 </Codenesium>*/

@@ -26,9 +26,21 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Breed>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Breed>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.SpeciesId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Breed> Get(int id)
@@ -79,13 +91,15 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table Pet via breedId.
 		public async virtual Task<List<Pet>> PetsByBreedId(int breedId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Pet>().Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
+			return await this.Context.Set<Pet>()
+			       .Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
 		// Foreign key reference to table Species via speciesId.
 		public async virtual Task<Species> SpeciesBySpeciesId(int speciesId)
 		{
-			return await this.Context.Set<Species>().SingleOrDefaultAsync(x => x.Id == speciesId);
+			return await this.Context.Set<Species>()
+			       .SingleOrDefaultAsync(x => x.Id == speciesId);
 		}
 
 		protected async Task<List<Breed>> Where(
@@ -99,7 +113,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Breed>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Breed>();
+			return await this.Context.Set<Breed>()
+			       .Include(x => x.SpeciesIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Breed>();
 		}
 
 		private async Task<Breed> GetById(int id)
@@ -112,5 +129,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e3a6ec47c4dc31bd828e87ce2073aee</Hash>
+    <Hash>994fca44955657634c8417a26d4548fd</Hash>
 </Codenesium>*/

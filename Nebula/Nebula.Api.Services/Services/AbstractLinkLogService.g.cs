@@ -16,8 +16,6 @@ namespace NebulaNS.Api.Services
 
 		protected IApiLinkLogServerRequestModelValidator LinkLogModelValidator { get; private set; }
 
-		protected IBOLLinkLogMapper BolLinkLogMapper { get; private set; }
-
 		protected IDALLinkLogMapper DalLinkLogMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			ILinkLogRepository linkLogRepository,
 			IApiLinkLogServerRequestModelValidator linkLogModelValidator,
-			IBOLLinkLogMapper bolLinkLogMapper,
 			IDALLinkLogMapper dalLinkLogMapper)
 			: base()
 		{
 			this.LinkLogRepository = linkLogRepository;
 			this.LinkLogModelValidator = linkLogModelValidator;
-			this.BolLinkLogMapper = bolLinkLogMapper;
 			this.DalLinkLogMapper = dalLinkLogMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiLinkLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLinkLogServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.LinkLogRepository.All(limit, offset);
+			List<LinkLog> records = await this.LinkLogRepository.All(limit, offset, query);
 
-			return this.BolLinkLogMapper.MapBOToModel(this.DalLinkLogMapper.MapEFToBO(records));
+			return this.DalLinkLogMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiLinkLogServerResponseModel> Get(int id)
 		{
-			var record = await this.LinkLogRepository.Get(id);
+			LinkLog record = await this.LinkLogRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolLinkLogMapper.MapBOToModel(this.DalLinkLogMapper.MapEFToBO(record));
+				return this.DalLinkLogMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolLinkLogMapper.MapModelToBO(default(int), model);
-				var record = await this.LinkLogRepository.Create(this.DalLinkLogMapper.MapBOToEF(bo));
+				LinkLog record = this.DalLinkLogMapper.MapModelToEntity(default(int), model);
+				record = await this.LinkLogRepository.Create(record);
 
-				var businessObject = this.DalLinkLogMapper.MapEFToBO(record);
-				response.SetRecord(this.BolLinkLogMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalLinkLogMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new LinkLogCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolLinkLogMapper.MapModelToBO(id, model);
-				await this.LinkLogRepository.Update(this.DalLinkLogMapper.MapBOToEF(bo));
+				LinkLog record = this.DalLinkLogMapper.MapModelToEntity(id, model);
+				await this.LinkLogRepository.Update(record);
 
-				var record = await this.LinkLogRepository.Get(id);
+				record = await this.LinkLogRepository.Get(id);
 
-				var businessObject = this.DalLinkLogMapper.MapEFToBO(record);
-				var apiModel = this.BolLinkLogMapper.MapBOToModel(businessObject);
+				ApiLinkLogServerResponseModel apiModel = this.DalLinkLogMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new LinkLogUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiLinkLogServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1db1572218d1165b28a55bcb640a1c77</Hash>
+    <Hash>7a10aa53a56cc5fbeb34fa2c88ebabfd</Hash>
 </Codenesium>*/

@@ -21,7 +21,24 @@ namespace NebulaNS.Api.Client
 			this.TeamId = teamId;
 
 			this.ChainStatusIdEntity = nameof(ApiResponse.ChainStatuses);
+
 			this.TeamIdEntity = nameof(ApiResponse.Teams);
+		}
+
+		[JsonProperty]
+		public ApiChainStatusClientResponseModel ChainStatusIdNavigation { get; private set; }
+
+		public void SetChainStatusIdNavigation(ApiChainStatusClientResponseModel value)
+		{
+			this.ChainStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiTeamClientResponseModel TeamIdNavigation { get; private set; }
+
+		public void SetTeamIdNavigation(ApiTeamClientResponseModel value)
+		{
+			this.TeamIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -48,5 +65,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>91a5348c1142cd9b990fa12c6abcac84</Hash>
+    <Hash>11e5accf98c92831f5fa82e8eec19d1f</Hash>
 </Codenesium>*/

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
+	<PackageReference Include="Codenesium.DataConversionExtensions" Version="2019.1.2" />
 	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
 	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>

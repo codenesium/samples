@@ -28,6 +28,14 @@ namespace PetShippingNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiHandlerClientResponseModel HandlerIdNavigation { get; private set; }
+
+		public void SetHandlerIdNavigation(ApiHandlerClientResponseModel value)
+		{
+			this.HandlerIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int AirlineId { get; private set; }
 
 		[JsonProperty]
@@ -54,5 +62,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7e9518928599f5f6d6e569cb1cafd9e4</Hash>
+    <Hash>85f535ff178349e0e5e569f9ace20c32</Hash>
 </Codenesium>*/

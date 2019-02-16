@@ -26,6 +26,12 @@ namespace ESPIOTNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
+		public virtual void ActionRules()
+		{
+			this.RuleFor(x => x.Action).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
+			this.RuleFor(x => x.Action).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
+		}
+
 		public virtual void DeviceIdRules()
 		{
 			this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDeviceByDeviceId).When(x => !x?.DeviceId.IsEmptyOrZeroOrNull() ?? false).WithMessage("Invalid reference").WithErrorCode(ValidationErrorCodes.ViolatesForeignKeyConstraintRule);
@@ -35,12 +41,6 @@ namespace ESPIOTNS.Api.Services
 		{
 			this.RuleFor(x => x.Name).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
 			this.RuleFor(x => x.Name).Length(0, 90).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
-		}
-
-		public virtual void @ValueRules()
-		{
-			this.RuleFor(x => x.@Value).NotNull().WithErrorCode(ValidationErrorCodes.ViolatesShouldNotBeNullRule);
-			this.RuleFor(x => x.@Value).Length(0, 4000).WithErrorCode(ValidationErrorCodes.ViolatesLengthRule);
 		}
 
 		protected async Task<bool> BeValidDeviceByDeviceId(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8ce48587702b07d352e73098154513b</Hash>
+    <Hash>d082911f46be59efe5b2232a9b51a03d</Hash>
 </Codenesium>*/

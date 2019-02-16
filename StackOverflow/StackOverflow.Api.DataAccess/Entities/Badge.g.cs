@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			DateTime date,
 			int id,
+			DateTime date,
 			string name,
 			int userId)
 		{
-			this.Date = date;
 			this.Id = id;
+			this.Date = date;
 			this.Name = name;
 			this.UserId = userId;
 		}
@@ -42,5 +42,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>73c6f337cace06472f0f2ac936c2043d</Hash>
+    <Hash>27ca98c70f89150190ab846ea1baaf5f</Hash>
 </Codenesium>*/

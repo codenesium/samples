@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiCreditCardServerRequestModelValidator CreditCardModelValidator { get; private set; }
 
-		protected IBOLCreditCardMapper BolCreditCardMapper { get; private set; }
-
 		protected IDALCreditCardMapper DalCreditCardMapper { get; private set; }
-
-		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
-			IBOLCreditCardMapper bolCreditCardMapper,
 			IDALCreditCardMapper dalCreditCardMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
 		{
 			this.CreditCardRepository = creditCardRepository;
 			this.CreditCardModelValidator = creditCardModelValidator;
-			this.BolCreditCardMapper = bolCreditCardMapper;
 			this.DalCreditCardMapper = dalCreditCardMapper;
-			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCreditCardServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCreditCardServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CreditCardRepository.All(limit, offset);
+			var records = await this.CreditCardRepository.All(limit, offset, query);
 
-			return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(records));
+			return this.DalCreditCardMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiCreditCardServerResponseModel> Get(int creditCardID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record));
+				return this.DalCreditCardMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCreditCardMapper.MapModelToBO(default(int), model);
-				var record = await this.CreditCardRepository.Create(this.DalCreditCardMapper.MapBOToEF(bo));
+				var bo = this.DalCreditCardMapper.MapModelToBO(default(int), model);
+				var record = await this.CreditCardRepository.Create(bo);
 
-				var businessObject = this.DalCreditCardMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCreditCardMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCreditCardMapper.MapBOToModel(record));
 				await this.mediator.Publish(new CreditCardCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCreditCardMapper.MapModelToBO(creditCardID, model);
-				await this.CreditCardRepository.Update(this.DalCreditCardMapper.MapBOToEF(bo));
+				var bo = this.DalCreditCardMapper.MapModelToBO(creditCardID, model);
+				await this.CreditCardRepository.Update(bo);
 
 				var record = await this.CreditCardRepository.Get(creditCardID);
 
-				var businessObject = this.DalCreditCardMapper.MapEFToBO(record);
-				var apiModel = this.BolCreditCardMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalCreditCardMapper.MapBOToModel(record);
 				await this.mediator.Publish(new CreditCardUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCreditCardServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record));
+				return this.DalCreditCardMapper.MapBOToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeadersByCreditCardID(creditCardID, limit, offset);
 
-			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
+			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c02a1f1b33e7ffa359b2e647b49e59d</Hash>
+    <Hash>1ed88ae77da29f7c8ea3bb765a4d446b</Hash>
 </Codenesium>*/

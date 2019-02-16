@@ -12,17 +12,13 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			IPetRepository petRepository,
 			IApiPetServerRequestModelValidator petModelValidator,
-			IBOLPetMapper bolPetMapper,
 			IDALPetMapper dalPetMapper,
-			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       mediator,
 			       petRepository,
 			       petModelValidator,
-			       bolPetMapper,
 			       dalPetMapper,
-			       bolSaleMapper,
 			       dalSaleMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>526468f51ed50f6ab33ad4a3a6d41901</Hash>
+    <Hash>edd79ea7dee08f1adf253835c0b6c1f5</Hash>
 </Codenesium>*/

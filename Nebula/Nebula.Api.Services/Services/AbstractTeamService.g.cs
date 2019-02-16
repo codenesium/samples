@@ -16,11 +16,7 @@ namespace NebulaNS.Api.Services
 
 		protected IApiTeamServerRequestModelValidator TeamModelValidator { get; private set; }
 
-		protected IBOLTeamMapper BolTeamMapper { get; private set; }
-
 		protected IDALTeamMapper DalTeamMapper { get; private set; }
-
-		protected IBOLChainMapper BolChainMapper { get; private set; }
 
 		protected IDALChainMapper DalChainMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace NebulaNS.Api.Services
 			IMediator mediator,
 			ITeamRepository teamRepository,
 			IApiTeamServerRequestModelValidator teamModelValidator,
-			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper,
-			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper)
 			: base()
 		{
 			this.TeamRepository = teamRepository;
 			this.TeamModelValidator = teamModelValidator;
-			this.BolTeamMapper = bolTeamMapper;
 			this.DalTeamMapper = dalTeamMapper;
-			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiTeamServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiTeamServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.TeamRepository.All(limit, offset);
+			List<Team> records = await this.TeamRepository.All(limit, offset, query);
 
-			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
+			return this.DalTeamMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiTeamServerResponseModel> Get(int id)
 		{
-			var record = await this.TeamRepository.Get(id);
+			Team record = await this.TeamRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record));
+				return this.DalTeamMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolTeamMapper.MapModelToBO(default(int), model);
-				var record = await this.TeamRepository.Create(this.DalTeamMapper.MapBOToEF(bo));
+				Team record = this.DalTeamMapper.MapModelToEntity(default(int), model);
+				record = await this.TeamRepository.Create(record);
 
-				var businessObject = this.DalTeamMapper.MapEFToBO(record);
-				response.SetRecord(this.BolTeamMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalTeamMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new TeamCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace NebulaNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTeamMapper.MapModelToBO(id, model);
-				await this.TeamRepository.Update(this.DalTeamMapper.MapBOToEF(bo));
+				Team record = this.DalTeamMapper.MapModelToEntity(id, model);
+				await this.TeamRepository.Update(record);
 
-				var record = await this.TeamRepository.Get(id);
+				record = await this.TeamRepository.Get(id);
 
-				var businessObject = this.DalTeamMapper.MapEFToBO(record);
-				var apiModel = this.BolTeamMapper.MapBOToModel(businessObject);
+				ApiTeamServerResponseModel apiModel = this.DalTeamMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new TeamUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiTeamServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record));
+				return this.DalTeamMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -145,11 +135,11 @@ namespace NebulaNS.Api.Services
 		{
 			List<Chain> records = await this.TeamRepository.ChainsByTeamId(teamId, limit, offset);
 
-			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
+			return this.DalChainMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>50cf565f7c9ffe857e8e9490e7b77f2b</Hash>
+    <Hash>3d2166e0326ce13e9164146c7c4f13f4</Hash>
 </Codenesium>*/

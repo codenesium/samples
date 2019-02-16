@@ -15,12 +15,12 @@ namespace StackOverflowNS.Api.DataAccess
 
 		Task<Post> Get(int id);
 
-		Task<List<Post>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Post>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Post>> ByOwnerUserId(int? ownerUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c76c2bcd4c2ff71b0e6fb01ad5bacf38</Hash>
+    <Hash>affb9fd11026d1e1c2bd4f8fbea512b9</Hash>
 </Codenesium>*/

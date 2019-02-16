@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<ColumnSameAsFKTableRepository>> loggerMoc = ColumnSameAsFKTableRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = ColumnSameAsFKTableRepositoryMoc.GetContext();
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<ColumnSameAsFKTableRepository>> loggerMoc = ColumnSameAsFKTableRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = ColumnSameAsFKTableRepositoryMoc.GetContext();
+			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
 
 			ColumnSameAsFKTable entity = new ColumnSameAsFKTable();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<ColumnSameAsFKTable>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
 
 			var entity = new ColumnSameAsFKTable();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<ColumnSameAsFKTable>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = ColumnSameAsFKTableRepositoryMoc.GetContext();
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
 			ColumnSameAsFKTable entity = new ColumnSameAsFKTable();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<ColumnSameAsFKTable>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = ColumnSameAsFKTableRepositoryMoc.GetContext();
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
 			ColumnSameAsFKTable entity = new ColumnSameAsFKTable();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<ColumnSameAsFKTable>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = ColumnSameAsFKTableRepositoryMoc.GetContext();
 			var repository = new ColumnSameAsFKTableRepository(loggerMoc.Object, context);
 			ColumnSameAsFKTable entity = new ColumnSameAsFKTable();
-			entity.SetProperties(2, 1, 1);
+			entity.SetProperties(default(int), 1, 1);
 			context.Set<ColumnSameAsFKTable>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb428d429bfbbbb8b462e64195828964</Hash>
+    <Hash>332054f1bd70e1acbe3cd670fe143d5e</Hash>
 </Codenesium>*/

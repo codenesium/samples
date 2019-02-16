@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiPipelineStepNoteServerRequestModelValidator PipelineStepNoteModelValidator { get; private set; }
 
-		protected IBOLPipelineStepNoteMapper BolPipelineStepNoteMapper { get; private set; }
-
 		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IPipelineStepNoteRepository pipelineStepNoteRepository,
 			IApiPipelineStepNoteServerRequestModelValidator pipelineStepNoteModelValidator,
-			IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base()
 		{
 			this.PipelineStepNoteRepository = pipelineStepNoteRepository;
 			this.PipelineStepNoteModelValidator = pipelineStepNoteModelValidator;
-			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
 			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPipelineStepNoteServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPipelineStepNoteServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PipelineStepNoteRepository.All(limit, offset);
+			List<PipelineStepNote> records = await this.PipelineStepNoteRepository.All(limit, offset, query);
 
-			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
+			return this.DalPipelineStepNoteMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPipelineStepNoteServerResponseModel> Get(int id)
 		{
-			var record = await this.PipelineStepNoteRepository.Get(id);
+			PipelineStepNote record = await this.PipelineStepNoteRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(record));
+				return this.DalPipelineStepNoteMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPipelineStepNoteMapper.MapModelToBO(default(int), model);
-				var record = await this.PipelineStepNoteRepository.Create(this.DalPipelineStepNoteMapper.MapBOToEF(bo));
+				PipelineStepNote record = this.DalPipelineStepNoteMapper.MapModelToEntity(default(int), model);
+				record = await this.PipelineStepNoteRepository.Create(record);
 
-				var businessObject = this.DalPipelineStepNoteMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPipelineStepNoteMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPipelineStepNoteMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PipelineStepNoteCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPipelineStepNoteMapper.MapModelToBO(id, model);
-				await this.PipelineStepNoteRepository.Update(this.DalPipelineStepNoteMapper.MapBOToEF(bo));
+				PipelineStepNote record = this.DalPipelineStepNoteMapper.MapModelToEntity(id, model);
+				await this.PipelineStepNoteRepository.Update(record);
 
-				var record = await this.PipelineStepNoteRepository.Get(id);
+				record = await this.PipelineStepNoteRepository.Get(id);
 
-				var businessObject = this.DalPipelineStepNoteMapper.MapEFToBO(record);
-				var apiModel = this.BolPipelineStepNoteMapper.MapBOToModel(businessObject);
+				ApiPipelineStepNoteServerResponseModel apiModel = this.DalPipelineStepNoteMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PipelineStepNoteUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPipelineStepNoteServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a102a84804a1d973d1dfd02299b14b2d</Hash>
+    <Hash>ebe25657d72c61e52ced158dfd36cf72</Hash>
 </Codenesium>*/

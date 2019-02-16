@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiUserServerResponseModel> Get(int userId);
 
-		Task<List<ApiUserServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUserServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiUserServerResponseModel>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 
@@ -41,9 +41,11 @@ namespace TwitterNS.Api.Services
 		Task<List<ApiRetweetServerResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiTweetServerResponseModel>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiUserServerResponseModel>> ByTweetId(int likerUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d6517d9392ea3b3139a94d00f101775</Hash>
+    <Hash>3a1281bec7ad7dbd0babe232a9460921</Hash>
 </Codenesium>*/

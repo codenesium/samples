@@ -14,12 +14,12 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string content,
 			int messageId,
+			string content,
 			int? senderUserId)
 		{
-			this.Content = content;
 			this.MessageId = messageId;
+			this.Content = content;
 			this.SenderUserId = senderUserId;
 		}
 
@@ -35,15 +35,15 @@ namespace TwitterNS.Api.DataAccess
 		public virtual int? SenderUserId { get; private set; }
 
 		[ForeignKey("SenderUserId")]
-		public virtual User UserNavigation { get; private set; }
+		public virtual User SenderUserIdNavigation { get; private set; }
 
-		public void SetUserNavigation(User item)
+		public void SetSenderUserIdNavigation(User item)
 		{
-			this.UserNavigation = item;
+			this.SenderUserIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a321b41855df01c84d96bb1cc376f0f5</Hash>
+    <Hash>cf075507f023b4ff9fcbe00fbdd7695e</Hash>
 </Codenesium>*/

@@ -1,3 +1,4 @@
+using StackOverflowNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>da61c1a201b75c4a5dfe954dd65292a8</Hash>
+    <Hash>11919534e261174e13411f6564b7b246</Hash>
 </Codenesium>*/

@@ -47,10 +47,19 @@ namespace PetShippingNS.Api.DataAccess
 			Mock<ILogger<DestinationRepository>> loggerMoc = DestinationRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
 			var repository = new DestinationRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<DestinationRepository>> loggerMoc = DestinationRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
+			var repository = new DestinationRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new DestinationRepository(loggerMoc.Object, context);
 
 			Destination entity = new Destination();
-			entity.SetProperties(1, 2, "B", 2);
+			entity.SetProperties(default(int), 1, "B", 2);
 			context.Set<Destination>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetShippingNS.Api.DataAccess
 			var repository = new DestinationRepository(loggerMoc.Object, context);
 
 			var entity = new Destination();
-			entity.SetProperties(1, 2, "B", 2);
+			entity.SetProperties(default(int), 1, "B", 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Destination>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
 			var repository = new DestinationRepository(loggerMoc.Object, context);
 			Destination entity = new Destination();
-			entity.SetProperties(1, 2, "B", 2);
+			entity.SetProperties(default(int), 1, "B", 2);
 			context.Set<Destination>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
 			var repository = new DestinationRepository(loggerMoc.Object, context);
 			Destination entity = new Destination();
-			entity.SetProperties(1, 2, "B", 2);
+			entity.SetProperties(default(int), 1, "B", 2);
 			context.Set<Destination>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
 			var repository = new DestinationRepository(loggerMoc.Object, context);
 			Destination entity = new Destination();
-			entity.SetProperties(1, 2, "B", 2);
+			entity.SetProperties(default(int), 1, "B", 2);
 			context.Set<Destination>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ae2fb90a247e2bb6871b95457304028e</Hash>
+    <Hash>ad603dc77113055d7bc5b7d1774f0519</Hash>
 </Codenesium>*/

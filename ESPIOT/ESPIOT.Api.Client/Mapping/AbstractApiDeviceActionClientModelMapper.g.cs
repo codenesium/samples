@@ -12,7 +12,7 @@ namespace ESPIOTNS.Api.Client
 		{
 			var response = new ApiDeviceActionClientResponseModel();
 			response.SetProperties(id,
-			                       request.@Value,
+			                       request.Action,
 			                       request.DeviceId,
 			                       request.Name);
 			return response;
@@ -23,7 +23,7 @@ namespace ESPIOTNS.Api.Client
 		{
 			var request = new ApiDeviceActionClientRequestModel();
 			request.SetProperties(
-				response.@Value,
+				response.Action,
 				response.DeviceId,
 				response.Name);
 			return request;
@@ -32,5 +32,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>fd307ebfc8297728936c79d1b0f54c4f</Hash>
+    <Hash>0257e74fc7d6782a2785bed1da11f1f3</Hash>
 </Codenesium>*/

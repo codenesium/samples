@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiTweetServerResponseModel> Get(int tweetId);
 
-		Task<List<ApiTweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiTweetServerResponseModel>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,9 +27,11 @@ namespace TwitterNS.Api.Services
 		Task<List<ApiQuoteTweetServerResponseModel>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiRetweetServerResponseModel>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiTweetServerResponseModel>> ByLikerUserId(int tweetId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce390f53a04e1fa0b8123c5e00ae3340</Hash>
+    <Hash>1d1511f0bc6431b5e4980990743e3067</Hash>
 </Codenesium>*/

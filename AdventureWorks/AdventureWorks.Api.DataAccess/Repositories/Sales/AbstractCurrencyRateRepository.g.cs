@@ -26,9 +26,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AverageRate.ToDecimal() == query.ToDecimal() ||
+				                  x.CurrencyRateDate == query.ToDateTime() ||
+				                  x.CurrencyRateID == query.ToInt() ||
+				                  x.EndOfDayRate.ToDecimal() == query.ToDecimal() ||
+				                  x.FromCurrencyCode.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.ToCurrencyCode.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<CurrencyRate> Get(int currencyRateID)
@@ -124,5 +140,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad061ab5beaa9d09685f40fd19d7abc5</Hash>
+    <Hash>6e1c62c10129619168901ec090ddc9a9</Hash>
 </Codenesium>*/

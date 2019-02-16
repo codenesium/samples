@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string @group,
+			int territoryID,
 			decimal costLastYear,
 			decimal costYTD,
 			string countryRegionCode,
@@ -22,10 +22,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			string name,
 			Guid rowguid,
 			decimal salesLastYear,
-			decimal salesYTD,
-			int territoryID)
+			decimal salesYTD)
 		{
-			this.@Group = @group;
+			this.TerritoryID = territoryID;
 			this.CostLastYear = costLastYear;
 			this.CostYTD = costYTD;
 			this.CountryRegionCode = countryRegionCode;
@@ -34,7 +33,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Rowguid = rowguid;
 			this.SalesLastYear = salesLastYear;
 			this.SalesYTD = salesYTD;
-			this.TerritoryID = territoryID;
 		}
 
 		[Column("CostLastYear")]
@@ -46,10 +44,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		[MaxLength(3)]
 		[Column("CountryRegionCode")]
 		public virtual string CountryRegionCode { get; private set; }
-
-		[MaxLength(50)]
-		[Column("Group")]
-		public virtual string @Group { get; private set; }
 
 		[Column("ModifiedDate")]
 		public virtual DateTime ModifiedDate { get; private set; }
@@ -74,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>604c56c349acac72db5ec9708da8af4f</Hash>
+    <Hash>a82af69f05a2681d17d637790c1eed48</Hash>
 </Codenesium>*/

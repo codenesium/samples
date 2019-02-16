@@ -231,6 +231,34 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 		}
 
 		[Fact]
+		public virtual async void TestForeignKeySaleTicketsBySaleIdFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsBySaleId(1);
+
+			response.Should().NotBeEmpty();
+		}
+
+		[Fact]
+		public virtual async void TestForeignKeySaleTicketsBySaleIdNotFound()
+		{
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			List<ApiSaleTicketClientResponseModel> response = await client.SaleTicketsBySaleId(default(int));
+
+			response.Should().BeEmpty();
+		}
+
+		[Fact]
 		public virtual void TestClientCancellationToken()
 		{
 			Func<Task> testCancellation = async () =>
@@ -253,5 +281,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>afa7e75ccf4c29e404d4c63d06fce210</Hash>
+    <Hash>ac73d8df31c2f520155919784aa644fe</Hash>
 </Codenesium>*/

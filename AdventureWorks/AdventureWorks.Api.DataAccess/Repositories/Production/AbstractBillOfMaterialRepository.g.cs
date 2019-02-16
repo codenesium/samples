@@ -26,9 +26,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<BillOfMaterial>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<BillOfMaterial>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.BillOfMaterialsID == query.ToInt() ||
+				                  x.BOMLevel == query.ToShort() ||
+				                  x.ComponentID == query.ToInt() ||
+				                  x.EndDate == query.ToNullableDateTime() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.PerAssemblyQty == query.ToDouble() ||
+				                  x.ProductAssemblyID == query.ToNullableInt() ||
+				                  x.StartDate == query.ToDateTime() ||
+				                  x.UnitMeasureCode.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<BillOfMaterial> Get(int billOfMaterialsID)
@@ -106,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9bec6ff5c20f4f9a6b484f2990b6ae4f</Hash>
+    <Hash>a1175305c96fa0ed3ff2ef54a05562d7</Hash>
 </Codenesium>*/

@@ -29,9 +29,17 @@ namespace NebulaNS.Api.Services
 
 		[JsonProperty]
 		public string OrganizationIdEntity { get; private set; } = RouteConstants.Organizations;
+
+		[JsonProperty]
+		public ApiOrganizationServerResponseModel OrganizationIdNavigation { get; private set; }
+
+		public void SetOrganizationIdNavigation(ApiOrganizationServerResponseModel value)
+		{
+			this.OrganizationIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c1baaa4666489392443090e222a466a0</Hash>
+    <Hash>0b7e6d3780cf3ba8a7fe4ece16a4da98</Hash>
 </Codenesium>*/

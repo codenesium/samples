@@ -26,9 +26,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Database_Version.StartsWith(query) ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.SystemInformationID == query.ToInt() ||
+				                  x.VersionDate == query.ToDateTime(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<AWBuildVersion> Get(int systemInformationID)
@@ -100,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eff745eba8b7d07c17e77c207801df7b</Hash>
+    <Hash>4891e6c1ae73bc00d6b4b2cf50bc1b27</Hash>
 </Codenesium>*/

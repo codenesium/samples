@@ -25,6 +25,14 @@ namespace PetShippingNS.Api.Services
 		public string CountryIdEntity { get; private set; } = RouteConstants.Countries;
 
 		[JsonProperty]
+		public ApiCountryServerResponseModel CountryIdNavigation { get; private set; }
+
+		public void SetCountryIdNavigation(ApiCountryServerResponseModel value)
+		{
+			this.CountryIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string Detail { get; private set; }
 
 		[JsonProperty]
@@ -33,5 +41,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89df1802c2b8f6bd95ccebe60babe1c3</Hash>
+    <Hash>90f468c273ca85b326c7461539f24303</Hash>
 </Codenesium>*/

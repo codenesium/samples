@@ -19,7 +19,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual async Task Migrate()
 		{
 			var adminItem1 = new Admin();
-			adminItem1.SetProperties("A", "A", 1, "A", "A", "A", "A");
+			adminItem1.SetProperties(1, "A", "A", "A", "A", "A", "A");
 			this.Context.Admins.Add(adminItem1);
 
 			var cityItem1 = new City();
@@ -31,11 +31,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context.Countries.Add(countryItem1);
 
 			var customerItem1 = new Customer();
-			customerItem1.SetProperties("A", "A", 1, "A", "A");
+			customerItem1.SetProperties(1, "A", "A", "A", "A");
 			this.Context.Customers.Add(customerItem1);
 
 			var eventItem1 = new Event();
-			eventItem1.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
+			eventItem1.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			this.Context.Events.Add(eventItem1);
 
 			var provinceItem1 = new Province();
@@ -46,6 +46,10 @@ namespace TicketingCRMNS.Api.DataAccess
 			saleItem1.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			this.Context.Sales.Add(saleItem1);
 
+			var saleTicketItem1 = new SaleTicket();
+			saleTicketItem1.SetProperties(1, 1, 1);
+			this.Context.SaleTickets.Add(saleTicketItem1);
+
 			var ticketItem1 = new Ticket();
 			ticketItem1.SetProperties(1, "A", 1);
 			this.Context.Tickets.Add(ticketItem1);
@@ -55,7 +59,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context.TicketStatus.Add(ticketStatuItem1);
 
 			var transactionItem1 = new Transaction();
-			transactionItem1.SetProperties(1m, "A", 1, 1);
+			transactionItem1.SetProperties(1, 1m, "A", 1);
 			this.Context.Transactions.Add(transactionItem1);
 
 			var transactionStatuItem1 = new TransactionStatu();
@@ -63,7 +67,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Context.TransactionStatus.Add(transactionStatuItem1);
 
 			var venueItem1 = new Venue();
-			venueItem1.SetProperties("A", "A", 1, "A", "A", 1, "A", "A", 1, "A");
+			venueItem1.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
 			this.Context.Venues.Add(venueItem1);
 
 			await this.Context.SaveChangesAsync();
@@ -72,5 +76,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>853e691c23ebc8f73717109a7b178fdb</Hash>
+    <Hash>8f0edfb0112029385309e47baf5a3c7b</Hash>
 </Codenesium>*/

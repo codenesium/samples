@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiSalesReasonServerRequestModelValidator SalesReasonModelValidator { get; private set; }
 
-		protected IBOLSalesReasonMapper BolSalesReasonMapper { get; private set; }
-
 		protected IDALSalesReasonMapper DalSalesReasonMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ISalesReasonRepository salesReasonRepository,
 			IApiSalesReasonServerRequestModelValidator salesReasonModelValidator,
-			IBOLSalesReasonMapper bolSalesReasonMapper,
 			IDALSalesReasonMapper dalSalesReasonMapper)
 			: base()
 		{
 			this.SalesReasonRepository = salesReasonRepository;
 			this.SalesReasonModelValidator = salesReasonModelValidator;
-			this.BolSalesReasonMapper = bolSalesReasonMapper;
 			this.DalSalesReasonMapper = dalSalesReasonMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiSalesReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiSalesReasonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.SalesReasonRepository.All(limit, offset);
+			var records = await this.SalesReasonRepository.All(limit, offset, query);
 
-			return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(records));
+			return this.DalSalesReasonMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiSalesReasonServerResponseModel> Get(int salesReasonID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record));
+				return this.DalSalesReasonMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolSalesReasonMapper.MapModelToBO(default(int), model);
-				var record = await this.SalesReasonRepository.Create(this.DalSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.DalSalesReasonMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesReasonRepository.Create(bo);
 
-				var businessObject = this.DalSalesReasonMapper.MapEFToBO(record);
-				response.SetRecord(this.BolSalesReasonMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalSalesReasonMapper.MapBOToModel(record));
 				await this.mediator.Publish(new SalesReasonCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolSalesReasonMapper.MapModelToBO(salesReasonID, model);
-				await this.SalesReasonRepository.Update(this.DalSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.DalSalesReasonMapper.MapModelToBO(salesReasonID, model);
+				await this.SalesReasonRepository.Update(bo);
 
 				var record = await this.SalesReasonRepository.Get(salesReasonID);
 
-				var businessObject = this.DalSalesReasonMapper.MapEFToBO(record);
-				var apiModel = this.BolSalesReasonMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalSalesReasonMapper.MapBOToModel(record);
 				await this.mediator.Publish(new SalesReasonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiSalesReasonServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eaae0e14803bb5078eaa9352c3b34308</Hash>
+    <Hash>2c0f204f8b94838104afb36e31747f75</Hash>
 </Codenesium>*/

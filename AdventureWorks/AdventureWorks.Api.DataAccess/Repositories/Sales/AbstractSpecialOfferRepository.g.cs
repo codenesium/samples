@@ -26,9 +26,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Category.StartsWith(query) ||
+				                  x.Description.StartsWith(query) ||
+				                  x.DiscountPct.ToDecimal() == query.ToDecimal() ||
+				                  x.EndDate == query.ToDateTime() ||
+				                  x.MaxQty == query.ToNullableInt() ||
+				                  x.MinQty == query.ToInt() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SpecialOfferID == query.ToInt() ||
+				                  x.StartDate == query.ToDateTime(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SpecialOffer> Get(int specialOfferID)
@@ -106,5 +125,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c8f304ad10249ef684488e91acffa0b</Hash>
+    <Hash>faca27c335053a61aeba483a547588fd</Hash>
 </Codenesium>*/

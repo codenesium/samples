@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IIncludedColumnTestRepository includedColumnTestRepository,
 			IApiIncludedColumnTestServerRequestModelValidator includedColumnTestModelValidator,
-			IBOLIncludedColumnTestMapper bolIncludedColumnTestMapper,
 			IDALIncludedColumnTestMapper dalIncludedColumnTestMapper)
 			: base(logger,
 			       mediator,
 			       includedColumnTestRepository,
 			       includedColumnTestModelValidator,
-			       bolIncludedColumnTestMapper,
 			       dalIncludedColumnTestMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>158dec9a1e95ea170df6359fe88960a5</Hash>
+    <Hash>59b5ccb47a25f9862225c6348b51d7f6</Hash>
 </Codenesium>*/

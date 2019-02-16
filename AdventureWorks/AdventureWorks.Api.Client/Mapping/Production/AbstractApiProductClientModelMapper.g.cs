@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var response = new ApiProductClientResponseModel();
 			response.SetProperties(productID,
-			                       request.@Class,
 			                       request.Color,
 			                       request.DaysToManufacture,
 			                       request.DiscontinuedDate,
@@ -44,7 +43,6 @@ namespace AdventureWorksNS.Api.Client
 		{
 			var request = new ApiProductClientRequestModel();
 			request.SetProperties(
-				response.@Class,
 				response.Color,
 				response.DaysToManufacture,
 				response.DiscontinuedDate,
@@ -74,5 +72,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>b69736f852895046f3295ad0d4325313</Hash>
+    <Hash>bccfa80e4ff5b7b85a9a532c496dcfa9</Hash>
 </Codenesium>*/

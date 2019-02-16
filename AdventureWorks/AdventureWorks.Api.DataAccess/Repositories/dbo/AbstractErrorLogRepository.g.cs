@@ -26,9 +26,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.ErrorLine == query.ToNullableInt() ||
+				                  x.ErrorLogID == query.ToInt() ||
+				                  x.ErrorMessage.StartsWith(query) ||
+				                  x.ErrorNumber == query.ToInt() ||
+				                  x.ErrorProcedure.StartsWith(query) ||
+				                  x.ErrorSeverity == query.ToNullableInt() ||
+				                  x.ErrorState == query.ToNullableInt() ||
+				                  x.ErrorTime == query.ToDateTime() ||
+				                  x.UserName.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<ErrorLog> Get(int errorLogID)
@@ -100,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>63b526c8ba23c577a1fe081c437510b3</Hash>
+    <Hash>21085820725887903cbc53571316d2ce</Hash>
 </Codenesium>*/

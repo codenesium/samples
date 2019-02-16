@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Product> Get(int productID);
 
-		Task<List<Product>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Product>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Product> ByName(string name);
 
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed6ae72f49c0c0f8548d2d0643cf878d</Hash>
+    <Hash>eaaff96c83ca15a4436b025e92604b16</Hash>
 </Codenesium>*/

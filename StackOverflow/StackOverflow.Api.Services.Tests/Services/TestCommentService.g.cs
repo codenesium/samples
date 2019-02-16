@@ -26,18 +26,17 @@ namespace StackOverflowNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICommentRepository>();
 			var records = new List<Comment>();
 			records.Add(new Comment());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CommentService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			List<ApiCommentServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			ApiCommentServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			ApiCommentServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			CreateResponse<ApiCommentServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			CreateResponse<ApiCommentServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			UpdateResponse<ApiCommentServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			UpdateResponse<ApiCommentServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CommentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace StackOverflowNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCommentMapperMock,
 			                                 mock.DALMapperMockFactory.DALCommentMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3db12aa6fb0cf47fcf1f0042b2925a88</Hash>
+    <Hash>76be9cc9260e0575d0c8417f7ec12824</Hash>
 </Codenesium>*/

@@ -16,11 +16,7 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IApiCountryServerRequestModelValidator CountryModelValidator { get; private set; }
 
-		protected IBOLCountryMapper BolCountryMapper { get; private set; }
-
 		protected IDALCountryMapper DalCountryMapper { get; private set; }
-
-		protected IBOLProvinceMapper BolProvinceMapper { get; private set; }
 
 		protected IDALProvinceMapper DalProvinceMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			ICountryRepository countryRepository,
 			IApiCountryServerRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolCountryMapper,
 			IDALCountryMapper dalCountryMapper,
-			IBOLProvinceMapper bolProvinceMapper,
 			IDALProvinceMapper dalProvinceMapper)
 			: base()
 		{
 			this.CountryRepository = countryRepository;
 			this.CountryModelValidator = countryModelValidator;
-			this.BolCountryMapper = bolCountryMapper;
 			this.DalCountryMapper = dalCountryMapper;
-			this.BolProvinceMapper = bolProvinceMapper;
 			this.DalProvinceMapper = dalProvinceMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCountryServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CountryRepository.All(limit, offset);
+			List<Country> records = await this.CountryRepository.All(limit, offset, query);
 
-			return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(records));
+			return this.DalCountryMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiCountryServerResponseModel> Get(int id)
 		{
-			var record = await this.CountryRepository.Get(id);
+			Country record = await this.CountryRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record));
+				return this.DalCountryMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TicketingCRMNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
-				var record = await this.CountryRepository.Create(this.DalCountryMapper.MapBOToEF(bo));
+				Country record = this.DalCountryMapper.MapModelToEntity(default(int), model);
+				record = await this.CountryRepository.Create(record);
 
-				var businessObject = this.DalCountryMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCountryMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCountryMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new CountryCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TicketingCRMNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCountryMapper.MapModelToBO(id, model);
-				await this.CountryRepository.Update(this.DalCountryMapper.MapBOToEF(bo));
+				Country record = this.DalCountryMapper.MapModelToEntity(id, model);
+				await this.CountryRepository.Update(record);
 
-				var record = await this.CountryRepository.Get(id);
+				record = await this.CountryRepository.Get(id);
 
-				var businessObject = this.DalCountryMapper.MapEFToBO(record);
-				var apiModel = this.BolCountryMapper.MapBOToModel(businessObject);
+				ApiCountryServerResponseModel apiModel = this.DalCountryMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new CountryUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCountryServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace TicketingCRMNS.Api.Services
 		{
 			List<Province> records = await this.CountryRepository.ProvincesByCountryId(countryId, limit, offset);
 
-			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
+			return this.DalProvinceMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b4cbbc93cf8624e135b7d52efbfafc3</Hash>
+    <Hash>4d53cc666d8e197aa76f273de85e1b87</Hash>
 </Codenesium>*/

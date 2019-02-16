@@ -25,8 +25,34 @@ namespace PetStoreNS.Api.Client
 			this.SpeciesId = speciesId;
 
 			this.BreedIdEntity = nameof(ApiResponse.Breeds);
+
 			this.PenIdEntity = nameof(ApiResponse.Pens);
+
 			this.SpeciesIdEntity = nameof(ApiResponse.Species);
+		}
+
+		[JsonProperty]
+		public ApiBreedClientResponseModel BreedIdNavigation { get; private set; }
+
+		public void SetBreedIdNavigation(ApiBreedClientResponseModel value)
+		{
+			this.BreedIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiPenClientResponseModel PenIdNavigation { get; private set; }
+
+		public void SetPenIdNavigation(ApiPenClientResponseModel value)
+		{
+			this.PenIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiSpeciesClientResponseModel SpeciesIdNavigation { get; private set; }
+
+		public void SetSpeciesIdNavigation(ApiSpeciesClientResponseModel value)
+		{
+			this.SpeciesIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -62,5 +88,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a0342a89c876a80c5980d064b4da4310</Hash>
+    <Hash>0afbb46218f806b5a4e3b59b50945127</Hash>
 </Codenesium>*/

@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
 			var repository = new CultureRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CultureRepository(loggerMoc.Object, context);
 
 			Culture entity = new Culture();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Culture>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new CultureRepository(loggerMoc.Object, context);
 
 			var entity = new Culture();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Culture>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
 			var repository = new CultureRepository(loggerMoc.Object, context);
 			Culture entity = new Culture();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Culture>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
 			var repository = new CultureRepository(loggerMoc.Object, context);
 			Culture entity = new Culture();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Culture>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = CultureRepositoryMoc.GetContext();
 			var repository = new CultureRepository(loggerMoc.Object, context);
 			Culture entity = new Culture();
-			entity.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			entity.SetProperties(default(string), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<Culture>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb44d7eb3faf766e8516786e1e466e6f</Hash>
+    <Hash>58c25077bbbd5f4c211d370d5547ee63</Hash>
 </Codenesium>*/

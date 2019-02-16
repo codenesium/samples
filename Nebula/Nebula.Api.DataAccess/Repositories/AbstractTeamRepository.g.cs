@@ -26,9 +26,21 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Team>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Team>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.OrganizationId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Team> Get(int id)
@@ -79,19 +91,24 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Team_Name.
 		public async virtual Task<Team> ByName(string name)
 		{
-			return await this.Context.Set<Team>().FirstOrDefaultAsync(x => x.Name == name);
+			return await this.Context.Set<Team>()
+			       .Include(x => x.OrganizationIdNavigation)
+
+			       .FirstOrDefaultAsync(x => x.Name == name);
 		}
 
 		// Foreign key reference to this table Chain via teamId.
 		public async virtual Task<List<Chain>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+			return await this.Context.Set<Chain>()
+			       .Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
 
 		// Foreign key reference to table Organization via organizationId.
 		public async virtual Task<Organization> OrganizationByOrganizationId(int organizationId)
 		{
-			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
+			return await this.Context.Set<Organization>()
+			       .SingleOrDefaultAsync(x => x.Id == organizationId);
 		}
 
 		protected async Task<List<Team>> Where(
@@ -105,7 +122,10 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
+			return await this.Context.Set<Team>()
+			       .Include(x => x.OrganizationIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
 		}
 
 		private async Task<Team> GetById(int id)
@@ -118,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c2fcc8840069954d0e53688e1f744b5</Hash>
+    <Hash>038b71c3aa9bcb948699b748e69320c4</Hash>
 </Codenesium>*/

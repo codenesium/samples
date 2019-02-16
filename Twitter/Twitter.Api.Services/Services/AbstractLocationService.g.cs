@@ -16,15 +16,9 @@ namespace TwitterNS.Api.Services
 
 		protected IApiLocationServerRequestModelValidator LocationModelValidator { get; private set; }
 
-		protected IBOLLocationMapper BolLocationMapper { get; private set; }
-
 		protected IDALLocationMapper DalLocationMapper { get; private set; }
 
-		protected IBOLTweetMapper BolTweetMapper { get; private set; }
-
 		protected IDALTweetMapper DalTweetMapper { get; private set; }
-
-		protected IBOLUserMapper BolUserMapper { get; private set; }
 
 		protected IDALUserMapper DalUserMapper { get; private set; }
 
@@ -35,37 +29,31 @@ namespace TwitterNS.Api.Services
 			IMediator mediator,
 			ILocationRepository locationRepository,
 			IApiLocationServerRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bolLocationMapper,
 			IDALLocationMapper dalLocationMapper,
-			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
-			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base()
 		{
 			this.LocationRepository = locationRepository;
 			this.LocationModelValidator = locationModelValidator;
-			this.BolLocationMapper = bolLocationMapper;
 			this.DalLocationMapper = dalLocationMapper;
-			this.BolTweetMapper = bolTweetMapper;
 			this.DalTweetMapper = dalTweetMapper;
-			this.BolUserMapper = bolUserMapper;
 			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiLocationServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.LocationRepository.All(limit, offset);
+			List<Location> records = await this.LocationRepository.All(limit, offset, query);
 
-			return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(records));
+			return this.DalLocationMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiLocationServerResponseModel> Get(int locationId)
 		{
-			var record = await this.LocationRepository.Get(locationId);
+			Location record = await this.LocationRepository.Get(locationId);
 
 			if (record == null)
 			{
@@ -73,7 +61,7 @@ namespace TwitterNS.Api.Services
 			}
 			else
 			{
-				return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record));
+				return this.DalLocationMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -84,11 +72,10 @@ namespace TwitterNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolLocationMapper.MapModelToBO(default(int), model);
-				var record = await this.LocationRepository.Create(this.DalLocationMapper.MapBOToEF(bo));
+				Location record = this.DalLocationMapper.MapModelToEntity(default(int), model);
+				record = await this.LocationRepository.Create(record);
 
-				var businessObject = this.DalLocationMapper.MapEFToBO(record);
-				response.SetRecord(this.BolLocationMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalLocationMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new LocationCreatedNotification(response.Record));
 			}
 
@@ -103,13 +90,12 @@ namespace TwitterNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolLocationMapper.MapModelToBO(locationId, model);
-				await this.LocationRepository.Update(this.DalLocationMapper.MapBOToEF(bo));
+				Location record = this.DalLocationMapper.MapModelToEntity(locationId, model);
+				await this.LocationRepository.Update(record);
 
-				var record = await this.LocationRepository.Get(locationId);
+				record = await this.LocationRepository.Get(locationId);
 
-				var businessObject = this.DalLocationMapper.MapEFToBO(record);
-				var apiModel = this.BolLocationMapper.MapBOToModel(businessObject);
+				ApiLocationServerResponseModel apiModel = this.DalLocationMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new LocationUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiLocationServerResponseModel>.UpdateResponse(apiModel);
@@ -139,18 +125,18 @@ namespace TwitterNS.Api.Services
 		{
 			List<Tweet> records = await this.LocationRepository.TweetsByLocationId(locationId, limit, offset);
 
-			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
+			return this.DalTweetMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiUserServerResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<User> records = await this.LocationRepository.UsersByLocationLocationId(locationLocationId, limit, offset);
 
-			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
+			return this.DalUserMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>95e2933cd87fdb730d15a93c15c8ecfc</Hash>
+    <Hash>2ce686dcbbdb16fc1977dcf4c6267376</Hash>
 </Codenesium>*/

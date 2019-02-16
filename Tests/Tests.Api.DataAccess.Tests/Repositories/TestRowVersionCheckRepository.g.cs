@@ -47,10 +47,19 @@ namespace TestsNS.Api.DataAccess
 			Mock<ILogger<RowVersionCheckRepository>> loggerMoc = RowVersionCheckRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = RowVersionCheckRepositoryMoc.GetContext();
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<RowVersionCheckRepository>> loggerMoc = RowVersionCheckRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = RowVersionCheckRepositoryMoc.GetContext();
+			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
 
 			RowVersionCheck entity = new RowVersionCheck();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<RowVersionCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TestsNS.Api.DataAccess
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
 
 			var entity = new RowVersionCheck();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			await repository.Create(entity);
 
 			var records = await context.Set<RowVersionCheck>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = RowVersionCheckRepositoryMoc.GetContext();
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
 			RowVersionCheck entity = new RowVersionCheck();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<RowVersionCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = RowVersionCheckRepositoryMoc.GetContext();
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
 			RowVersionCheck entity = new RowVersionCheck();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<RowVersionCheck>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TestsNS.Api.DataAccess
 			ApplicationDbContext context = RowVersionCheckRepositoryMoc.GetContext();
 			var repository = new RowVersionCheckRepository(loggerMoc.Object, context);
 			RowVersionCheck entity = new RowVersionCheck();
-			entity.SetProperties(2, "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			entity.SetProperties(default(int), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
 			context.Set<RowVersionCheck>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af9e3504f62f92fe0ace31a485684d2e</Hash>
+    <Hash>a6b319abe51ca84fadbc488eb6f14bc7</Hash>
 </Codenesium>*/

@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEmployeeRepository>();
 			var records = new List<Employee>();
 			records.Add(new Employee());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new EmployeeService(mock.LoggerMock.Object,
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			List<ApiEmployeeServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			CreateResponse<ApiEmployeeServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			CreateResponse<ApiEmployeeServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			UpdateResponse<ApiEmployeeServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			UpdateResponse<ApiEmployeeServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  validatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByLoginID("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByLoginID("test_value");
@@ -280,9 +258,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByNationalIDNumber("test_value");
@@ -300,9 +276,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByNationalIDNumber("test_value");
@@ -321,9 +295,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -341,9 +313,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			ApiEmployeeServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -363,9 +333,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			List<ApiJobCandidateServerResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
@@ -383,9 +351,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.MediatorMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.EmployeeModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLEmployeeMapperMock,
 			                                  mock.DALMapperMockFactory.DALEmployeeMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLJobCandidateMapperMock,
 			                                  mock.DALMapperMockFactory.DALJobCandidateMapperMock);
 
 			List<ApiJobCandidateServerResponseModel> response = await service.JobCandidatesByBusinessEntityID(default(int));
@@ -397,5 +363,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>934206a76d6ff4a42ce7f93367d4a0b5</Hash>
+    <Hash>b50007a636f6cebfd7f9f70033525e6d</Hash>
 </Codenesium>*/

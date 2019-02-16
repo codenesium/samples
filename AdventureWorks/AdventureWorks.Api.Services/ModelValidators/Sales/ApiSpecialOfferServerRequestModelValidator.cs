@@ -24,7 +24,6 @@ namespace AdventureWorksNS.Api.Services
 			this.ModifiedDateRules();
 			this.RowguidRules();
 			this.StartDateRules();
-			this.TypeRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -39,7 +38,6 @@ namespace AdventureWorksNS.Api.Services
 			this.ModifiedDateRules();
 			this.RowguidRules();
 			this.StartDateRules();
-			this.TypeRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -51,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f92bea12bfed702bc66301e8eb903a8</Hash>
+    <Hash>87e4aeb1cc11e6788d756afe63162163</Hash>
 </Codenesium>*/

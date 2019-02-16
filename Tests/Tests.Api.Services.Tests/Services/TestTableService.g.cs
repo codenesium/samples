@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITableRepository>();
 			var records = new List<Table>();
 			records.Add(new Table());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new TableService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			List<ApiTableServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			ApiTableServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			ApiTableServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			CreateResponse<ApiTableServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			CreateResponse<ApiTableServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			UpdateResponse<ApiTableServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			UpdateResponse<ApiTableServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TableModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLTableMapperMock,
 			                               mock.DALMapperMockFactory.DALTableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>42185a8333f6fd79156ae01c3f55cbfa</Hash>
+    <Hash>9142007141c79466c1da3e880625475b</Hash>
 </Codenesium>*/

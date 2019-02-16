@@ -16,8 +16,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiProductDescriptionServerRequestModelValidator ProductDescriptionModelValidator { get; private set; }
 
-		protected IBOLProductDescriptionMapper BolProductDescriptionMapper { get; private set; }
-
 		protected IDALProductDescriptionMapper DalProductDescriptionMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,24 +25,22 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IProductDescriptionRepository productDescriptionRepository,
 			IApiProductDescriptionServerRequestModelValidator productDescriptionModelValidator,
-			IBOLProductDescriptionMapper bolProductDescriptionMapper,
 			IDALProductDescriptionMapper dalProductDescriptionMapper)
 			: base()
 		{
 			this.ProductDescriptionRepository = productDescriptionRepository;
 			this.ProductDescriptionModelValidator = productDescriptionModelValidator;
-			this.BolProductDescriptionMapper = bolProductDescriptionMapper;
 			this.DalProductDescriptionMapper = dalProductDescriptionMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiProductDescriptionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiProductDescriptionServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.ProductDescriptionRepository.All(limit, offset);
+			var records = await this.ProductDescriptionRepository.All(limit, offset, query);
 
-			return this.BolProductDescriptionMapper.MapBOToModel(this.DalProductDescriptionMapper.MapEFToBO(records));
+			return this.DalProductDescriptionMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiProductDescriptionServerResponseModel> Get(int productDescriptionID)
@@ -57,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductDescriptionMapper.MapBOToModel(this.DalProductDescriptionMapper.MapEFToBO(record));
+				return this.DalProductDescriptionMapper.MapBOToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolProductDescriptionMapper.MapModelToBO(default(int), model);
-				var record = await this.ProductDescriptionRepository.Create(this.DalProductDescriptionMapper.MapBOToEF(bo));
+				var bo = this.DalProductDescriptionMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductDescriptionRepository.Create(bo);
 
-				var businessObject = this.DalProductDescriptionMapper.MapEFToBO(record);
-				response.SetRecord(this.BolProductDescriptionMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalProductDescriptionMapper.MapBOToModel(record));
 				await this.mediator.Publish(new ProductDescriptionCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
-				await this.ProductDescriptionRepository.Update(this.DalProductDescriptionMapper.MapBOToEF(bo));
+				var bo = this.DalProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
+				await this.ProductDescriptionRepository.Update(bo);
 
 				var record = await this.ProductDescriptionRepository.Get(productDescriptionID);
 
-				var businessObject = this.DalProductDescriptionMapper.MapEFToBO(record);
-				var apiModel = this.BolProductDescriptionMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalProductDescriptionMapper.MapBOToModel(record);
 				await this.mediator.Publish(new ProductDescriptionUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiProductDescriptionServerResponseModel>.UpdateResponse(apiModel);
@@ -129,12 +123,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolProductDescriptionMapper.MapBOToModel(this.DalProductDescriptionMapper.MapEFToBO(record));
+				return this.DalProductDescriptionMapper.MapBOToModel(record);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a1355846f8e24dd1cb4258356f81fdfd</Hash>
+    <Hash>92c0e1f13ee1b782499f9c9c0f9d6143</Hash>
 </Codenesium>*/

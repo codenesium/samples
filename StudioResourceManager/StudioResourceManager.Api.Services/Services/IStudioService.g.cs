@@ -18,10 +18,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<ApiStudioServerResponseModel> Get(int id);
 
-		Task<List<ApiStudioServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiStudioServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>72fd3bc2d5585662e242c3a8249ef933</Hash>
+    <Hash>1ec2244ef34fae386838f18a981443e7</Hash>
 </Codenesium>*/

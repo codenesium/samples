@@ -16,8 +16,6 @@ namespace FileServiceNS.Api.Services
 
 		protected IApiFileServerRequestModelValidator FileModelValidator { get; private set; }
 
-		protected IBOLFileMapper BolFileMapper { get; private set; }
-
 		protected IDALFileMapper DalFileMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace FileServiceNS.Api.Services
 			IMediator mediator,
 			IFileRepository fileRepository,
 			IApiFileServerRequestModelValidator fileModelValidator,
-			IBOLFileMapper bolFileMapper,
 			IDALFileMapper dalFileMapper)
 			: base()
 		{
 			this.FileRepository = fileRepository;
 			this.FileModelValidator = fileModelValidator;
-			this.BolFileMapper = bolFileMapper;
 			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiFileServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiFileServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.FileRepository.All(limit, offset);
+			List<File> records = await this.FileRepository.All(limit, offset, query);
 
-			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
+			return this.DalFileMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiFileServerResponseModel> Get(int id)
 		{
-			var record = await this.FileRepository.Get(id);
+			File record = await this.FileRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record));
+				return this.DalFileMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace FileServiceNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolFileMapper.MapModelToBO(default(int), model);
-				var record = await this.FileRepository.Create(this.DalFileMapper.MapBOToEF(bo));
+				File record = this.DalFileMapper.MapModelToEntity(default(int), model);
+				record = await this.FileRepository.Create(record);
 
-				var businessObject = this.DalFileMapper.MapEFToBO(record);
-				response.SetRecord(this.BolFileMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalFileMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new FileCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace FileServiceNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolFileMapper.MapModelToBO(id, model);
-				await this.FileRepository.Update(this.DalFileMapper.MapBOToEF(bo));
+				File record = this.DalFileMapper.MapModelToEntity(id, model);
+				await this.FileRepository.Update(record);
 
-				var record = await this.FileRepository.Get(id);
+				record = await this.FileRepository.Get(id);
 
-				var businessObject = this.DalFileMapper.MapEFToBO(record);
-				var apiModel = this.BolFileMapper.MapBOToModel(businessObject);
+				ApiFileServerResponseModel apiModel = this.DalFileMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new FileUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiFileServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ecc0edfb78f61b08898039c18799c698</Hash>
+    <Hash>ab795bf99cd3369a45cf95391154fb68</Hash>
 </Codenesium>*/

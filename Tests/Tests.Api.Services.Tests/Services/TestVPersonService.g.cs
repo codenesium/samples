@@ -26,18 +26,17 @@ namespace TestsNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVPersonRepository>();
 			var records = new List<VPerson>();
 			records.Add(new VPerson());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new VPersonService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			List<ApiVPersonServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			ApiVPersonServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			ApiVPersonServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			CreateResponse<ApiVPersonServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			CreateResponse<ApiVPersonServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			UpdateResponse<ApiVPersonServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			UpdateResponse<ApiVPersonServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.VPersonModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace TestsNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLVPersonMapperMock,
 			                                 mock.DALMapperMockFactory.DALVPersonMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -214,5 +205,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a06aa34326226d525d304724a7ce057</Hash>
+    <Hash>f87868b4864b2b645b9dab212528f466</Hash>
 </Codenesium>*/

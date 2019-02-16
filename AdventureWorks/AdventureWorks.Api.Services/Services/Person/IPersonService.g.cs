@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiPersonServerResponseModel> Get(int businessEntityID);
 
-		Task<List<ApiPersonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPersonServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiPersonServerResponseModel> ByRowguid(Guid rowguid);
 
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1309f09b61d06a500d95eff020373644</Hash>
+    <Hash>b16ab5a0f57cb2ecc4a3940d827ac410</Hash>
 </Codenesium>*/

@@ -42,15 +42,15 @@ namespace TestsNS.Api.DataAccess
 		}
 
 		[ForeignKey("PersonId")]
-		public virtual Person Person1Navigation { get; private set; }
+		public virtual Person PersonIdNavigation { get; private set; }
 
-		public void SetPerson1Navigation(Person item)
+		public void SetPersonIdNavigation(Person item)
 		{
-			this.Person1Navigation = item;
+			this.PersonIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f0a1e6deae7fd140a7f80ed22ee6c33</Hash>
+    <Hash>8c596be0e8b5a98fad3bc1adfe3c4edb</Hash>
 </Codenesium>*/

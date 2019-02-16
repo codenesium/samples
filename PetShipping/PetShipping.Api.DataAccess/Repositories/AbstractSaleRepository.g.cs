@@ -26,9 +26,25 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Amount.ToDecimal() == query.ToDecimal() ||
+				                  x.CutomerId == query.ToInt() ||
+				                  x.Id == query.ToInt() ||
+				                  x.Note.StartsWith(query) ||
+				                  x.PetId == query.ToInt() ||
+				                  x.SaleDate == query.ToDateTime() ||
+				                  x.SalesPersonId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Sale> Get(int id)
@@ -79,7 +95,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table Pet via petId.
 		public async virtual Task<Pet> PetByPetId(int petId)
 		{
-			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
+			return await this.Context.Set<Pet>()
+			       .SingleOrDefaultAsync(x => x.Id == petId);
 		}
 
 		protected async Task<List<Sale>> Where(
@@ -93,7 +110,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
+			return await this.Context.Set<Sale>()
+			       .Include(x => x.PetIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
 		private async Task<Sale> GetById(int id)
@@ -106,5 +126,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a8b9dfda2f930e722fa89ddfc80be86</Hash>
+    <Hash>0b7d767366451baf05525f7f1579fd19</Hash>
 </Codenesium>*/

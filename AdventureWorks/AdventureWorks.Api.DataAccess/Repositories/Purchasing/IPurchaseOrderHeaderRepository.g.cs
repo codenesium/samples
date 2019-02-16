@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<PurchaseOrderHeader> Get(int purchaseOrderID);
 
-		Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58c7202f021d6f7071d9ede53fa7897f</Hash>
+    <Hash>286476b1a8db65f1cac5b7a8757648cb</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string address1,
 			string address2,
 			int cityId,
@@ -21,11 +22,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			string description,
 			DateTime endDate,
 			string facebook,
-			int id,
 			string name,
 			DateTime startDate,
 			string website)
 		{
+			this.Id = id;
 			this.Address1 = address1;
 			this.Address2 = address2;
 			this.CityId = cityId;
@@ -33,7 +34,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Description = description;
 			this.EndDate = endDate;
 			this.Facebook = facebook;
-			this.Id = id;
 			this.Name = name;
 			this.StartDate = startDate;
 			this.Website = website;
@@ -80,15 +80,15 @@ namespace TicketingCRMNS.Api.DataAccess
 		public virtual string Website { get; private set; }
 
 		[ForeignKey("CityId")]
-		public virtual City CityNavigation { get; private set; }
+		public virtual City CityIdNavigation { get; private set; }
 
-		public void SetCityNavigation(City item)
+		public void SetCityIdNavigation(City item)
 		{
-			this.CityNavigation = item;
+			this.CityIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bba9fc40a7d5a67997302d201483a32e</Hash>
+    <Hash>876314ccaffd8777d2578c1e49853280</Hash>
 </Codenesium>*/

@@ -26,20 +26,18 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var records = new List<Country>();
 			records.Add(new Country());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			List<ApiCountryServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			ApiCountryServerResponseModel response = await service.Get(default(int));
@@ -72,9 +68,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			ApiCountryServerResponseModel response = await service.Get(default(int));
@@ -93,9 +87,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			CreateResponse<ApiCountryServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
@@ -168,9 +156,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			UpdateResponse<ApiCountryServerResponseModel> response = await service.Update(default(int), model);
@@ -191,9 +177,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -216,9 +200,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -240,9 +222,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			List<ApiProvinceServerResponseModel> response = await service.ProvincesByCountryId(default(int));
@@ -260,9 +240,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLCountryMapperMock,
 			                                 mock.DALMapperMockFactory.DALCountryMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLProvinceMapperMock,
 			                                 mock.DALMapperMockFactory.DALProvinceMapperMock);
 
 			List<ApiProvinceServerResponseModel> response = await service.ProvincesByCountryId(default(int));
@@ -274,5 +252,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>caf9b49638869d844a6e45df97a40128</Hash>
+    <Hash>f8770e3a3d8a5e8ed818d7ccfdfbe5d0</Hash>
 </Codenesium>*/

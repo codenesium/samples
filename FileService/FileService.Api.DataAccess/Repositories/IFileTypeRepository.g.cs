@@ -15,12 +15,12 @@ namespace FileServiceNS.Api.DataAccess
 
 		Task<FileType> Get(int id);
 
-		Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<File>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>117673e2ff04b90ab6847e076498ccb8</Hash>
+    <Hash>f0254d46d461316ef50d0fbf9bab033a</Hash>
 </Codenesium>*/

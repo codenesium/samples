@@ -26,9 +26,44 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<SalesOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<SalesOrderHeader>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.AccountNumber.StartsWith(query) ||
+				                  x.BillToAddressID == query.ToInt() ||
+				                  x.Comment.StartsWith(query) ||
+				                  x.CreditCardApprovalCode.StartsWith(query) ||
+				                  x.CreditCardID == query.ToNullableInt() ||
+				                  x.CurrencyRateID == query.ToNullableInt() ||
+				                  x.CustomerID == query.ToInt() ||
+				                  x.DueDate == query.ToDateTime() ||
+				                  x.Freight.ToDecimal() == query.ToDecimal() ||
+				                  x.ModifiedDate == query.ToDateTime() ||
+				                  x.OnlineOrderFlag == query.ToBoolean() ||
+				                  x.OrderDate == query.ToDateTime() ||
+				                  x.PurchaseOrderNumber.StartsWith(query) ||
+				                  x.RevisionNumber == query.ToInt() ||
+				                  x.Rowguid == query.ToGuid() ||
+				                  x.SalesOrderID == query.ToInt() ||
+				                  x.SalesOrderNumber.StartsWith(query) ||
+				                  x.SalesPersonID == query.ToNullableInt() ||
+				                  x.ShipDate == query.ToNullableDateTime() ||
+				                  x.ShipMethodID == query.ToInt() ||
+				                  x.ShipToAddressID == query.ToInt() ||
+				                  x.Status == query.ToInt() ||
+				                  x.SubTotal.ToDecimal() == query.ToDecimal() ||
+				                  x.TaxAmt.ToDecimal() == query.ToDecimal() ||
+				                  x.TerritoryID == query.ToNullableInt() ||
+				                  x.TotalDue.ToDecimal() == query.ToDecimal(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<SalesOrderHeader> Get(int salesOrderID)
@@ -154,5 +189,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90452164736622b0f5f069e605ea8eaa</Hash>
+    <Hash>e18e98aea0a24b397b55fbce9c03055c</Hash>
 </Codenesium>*/

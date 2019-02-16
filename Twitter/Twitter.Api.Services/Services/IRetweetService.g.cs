@@ -18,7 +18,7 @@ namespace TwitterNS.Api.Services
 
 		Task<ApiRetweetServerResponseModel> Get(int id);
 
-		Task<List<ApiRetweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiRetweetServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiRetweetServerResponseModel>> ByRetwitterUserId(int? retwitterUserId, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aadbcd25a34155d9687a7548de2a5c92</Hash>
+    <Hash>0548a8f4114024b3f9ffe703673d9753</Hash>
 </Codenesium>*/

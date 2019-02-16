@@ -26,9 +26,22 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PipelineStepStepRequirement>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PipelineStepStepRequirement>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Detail.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.PipelineStepId == query.ToInt() ||
+				                  x.RequirementMet == query.ToBoolean(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PipelineStepStepRequirement> Get(int id)
@@ -79,7 +92,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table PipelineStep via pipelineStepId.
 		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
-			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
+			return await this.Context.Set<PipelineStep>()
+			       .SingleOrDefaultAsync(x => x.Id == pipelineStepId);
 		}
 
 		protected async Task<List<PipelineStepStepRequirement>> Where(
@@ -93,7 +107,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PipelineStepStepRequirement>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
+			return await this.Context.Set<PipelineStepStepRequirement>()
+			       .Include(x => x.PipelineStepIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
 		private async Task<PipelineStepStepRequirement> GetById(int id)
@@ -106,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e42d578a5a68b3a11af12b5e5e228a66</Hash>
+    <Hash>b3683bfe4b001ebf06ac0f401fcc615d</Hash>
 </Codenesium>*/

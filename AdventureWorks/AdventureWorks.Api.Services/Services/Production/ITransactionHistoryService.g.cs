@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiTransactionHistoryServerResponseModel> Get(int transactionID);
 
-		Task<List<ApiTransactionHistoryServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTransactionHistoryServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<ApiTransactionHistoryServerResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8087c4ba1ca633b7162a0ff9d3b20afd</Hash>
+    <Hash>d4444f2e9b817c8e757c3af4d97860a1</Hash>
 </Codenesium>*/

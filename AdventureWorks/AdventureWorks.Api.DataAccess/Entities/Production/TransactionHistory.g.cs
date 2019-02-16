@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int transactionID,
 			decimal actualCost,
 			DateTime modifiedDate,
 			int productID,
@@ -21,9 +22,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			int referenceOrderID,
 			int referenceOrderLineID,
 			DateTime transactionDate,
-			int transactionID,
 			string transactionType)
 		{
+			this.TransactionID = transactionID;
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate;
 			this.ProductID = productID;
@@ -31,7 +32,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ReferenceOrderID = referenceOrderID;
 			this.ReferenceOrderLineID = referenceOrderLineID;
 			this.TransactionDate = transactionDate;
-			this.TransactionID = transactionID;
 			this.TransactionType = transactionType;
 		}
 
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b43abf6eb76b86be2f5689b972676c58</Hash>
+    <Hash>8e97e0337113bb9b263cf880fd3ab378</Hash>
 </Codenesium>*/

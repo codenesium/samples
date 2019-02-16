@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Shift> Get(int shiftID);
 
-		Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Shift> ByName(string name);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a4f293e6b4e4fbc97c0857d851e9158</Hash>
+    <Hash>31c55798169c1483374716883d920146</Hash>
 </Codenesium>*/

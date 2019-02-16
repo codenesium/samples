@@ -14,19 +14,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int stateProvinceID,
 			string countryRegionCode,
 			string countryRegionName,
 			bool isOnlyStateProvinceFlag,
 			string stateProvinceCode,
-			int stateProvinceID,
 			string stateProvinceName,
 			int territoryID)
 		{
+			this.StateProvinceID = stateProvinceID;
 			this.CountryRegionCode = countryRegionCode;
 			this.CountryRegionName = countryRegionName;
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
 			this.StateProvinceCode = stateProvinceCode;
-			this.StateProvinceID = stateProvinceID;
 			this.StateProvinceName = stateProvinceName;
 			this.TerritoryID = territoryID;
 		}
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>66cb15bc264fc11d53839fcd4d2f3d74</Hash>
+    <Hash>4de164342ca09339b01c4f23a94fc871</Hash>
 </Codenesium>*/

@@ -28,7 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void EventStatusId_Create_Valid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.EventStatuByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatu>(new EventStatu()));
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(new EventStatus()));
 
 			var validator = new ApiEventServerRequestModelValidator(eventRepository.Object);
 			await validator.ValidateCreateAsync(new ApiEventServerRequestModel());
@@ -40,7 +40,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void EventStatusId_Create_Invalid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.EventStatuByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatu>(null));
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(null));
 
 			var validator = new ApiEventServerRequestModelValidator(eventRepository.Object);
 
@@ -53,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void EventStatusId_Update_Valid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.EventStatuByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatu>(new EventStatu()));
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(new EventStatus()));
 
 			var validator = new ApiEventServerRequestModelValidator(eventRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiEventServerRequestModel());
@@ -65,7 +65,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void EventStatusId_Update_Invalid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.EventStatuByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatu>(null));
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(null));
 
 			var validator = new ApiEventServerRequestModelValidator(eventRepository.Object);
 
@@ -77,5 +77,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a1848d10031a330e710d6a929318a6b</Hash>
+    <Hash>ff78d03e533b2c3d829bc5b14ea08265</Hash>
 </Codenesium>*/

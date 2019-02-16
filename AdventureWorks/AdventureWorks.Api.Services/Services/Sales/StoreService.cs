@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IStoreRepository storeRepository,
 			IApiStoreServerRequestModelValidator storeModelValidator,
-			IBOLStoreMapper bolStoreMapper,
 			IDALStoreMapper dalStoreMapper,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper)
 			: base(logger,
 			       mediator,
 			       storeRepository,
 			       storeModelValidator,
-			       bolStoreMapper,
 			       dalStoreMapper,
-			       bolCustomerMapper,
 			       dalCustomerMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c030f28bd3039335e8a5b42cde72fcfd</Hash>
+    <Hash>e5fc6dd4cb34ba17ba919c6d5a60c223</Hash>
 </Codenesium>*/

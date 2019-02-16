@@ -26,9 +26,22 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<PipelineStep>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<PipelineStep>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query) ||
+				                  x.PipelineStepStatusId == query.ToInt() ||
+				                  x.ShipperId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<PipelineStep> Get(int id)
@@ -79,43 +92,50 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to this table HandlerPipelineStep via pipelineStepId.
 		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineStepsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<HandlerPipelineStep>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
+			return await this.Context.Set<HandlerPipelineStep>()
+			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
 		}
 
 		// Foreign key reference to this table OtherTransport via pipelineStepId.
 		public async virtual Task<List<OtherTransport>> OtherTransportsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<OtherTransport>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
+			return await this.Context.Set<OtherTransport>()
+			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
 		}
 
 		// Foreign key reference to this table PipelineStepDestination via pipelineStepId.
 		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinationsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PipelineStepDestination>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+			return await this.Context.Set<PipelineStepDestination>()
+			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
 		}
 
 		// Foreign key reference to this table PipelineStepNote via pipelineStepId.
 		public async virtual Task<List<PipelineStepNote>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PipelineStepNote>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
+			return await this.Context.Set<PipelineStepNote>()
+			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
 		}
 
 		// Foreign key reference to this table PipelineStepStepRequirement via pipelineStepId.
 		public async virtual Task<List<PipelineStepStepRequirement>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<PipelineStepStepRequirement>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
+			return await this.Context.Set<PipelineStepStepRequirement>()
+			       .Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
 		// Foreign key reference to table PipelineStepStatu via pipelineStepStatusId.
 		public async virtual Task<PipelineStepStatu> PipelineStepStatuByPipelineStepStatusId(int pipelineStepStatusId)
 		{
-			return await this.Context.Set<PipelineStepStatu>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
+			return await this.Context.Set<PipelineStepStatu>()
+			       .SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
 		}
 
 		// Foreign key reference to table Employee via shipperId.
 		public async virtual Task<Employee> EmployeeByShipperId(int shipperId)
 		{
-			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == shipperId);
+			return await this.Context.Set<Employee>()
+			       .SingleOrDefaultAsync(x => x.Id == shipperId);
 		}
 
 		protected async Task<List<PipelineStep>> Where(
@@ -129,7 +149,11 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<PipelineStep>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStep>();
+			return await this.Context.Set<PipelineStep>()
+			       .Include(x => x.PipelineStepStatusIdNavigation)
+			       .Include(x => x.ShipperIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStep>();
 		}
 
 		private async Task<PipelineStep> GetById(int id)
@@ -142,5 +166,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b44fe4a4288311ba285c959d73a3b26</Hash>
+    <Hash>d6cd95dea19e40556ceff3357d3f7ef7</Hash>
 </Codenesium>*/

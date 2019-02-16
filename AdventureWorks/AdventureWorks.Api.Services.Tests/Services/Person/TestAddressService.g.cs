@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IAddressRepository>();
 			var records = new List<Address>();
 			records.Add(new Address());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new AddressService(mock.LoggerMock.Object,
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			List<ApiAddressServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			CreateResponse<ApiAddressServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			CreateResponse<ApiAddressServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			UpdateResponse<ApiAddressServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			UpdateResponse<ApiAddressServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 validatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.ByRowguid(default(Guid));
@@ -258,7 +247,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode("test_value", "test_value", "test_value", default(int), "test_value");
@@ -276,7 +264,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			ApiAddressServerResponseModel response = await service.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode("test_value", "test_value", "test_value", default(int), "test_value");
@@ -296,7 +283,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			List<ApiAddressServerResponseModel> response = await service.ByStateProvinceID(default(int));
@@ -314,7 +300,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.MediatorMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.AddressModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                 mock.DALMapperMockFactory.DALAddressMapperMock);
 
 			List<ApiAddressServerResponseModel> response = await service.ByStateProvinceID(default(int));
@@ -326,5 +311,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1155d7efedc7eddadc28636c664f6edc</Hash>
+    <Hash>d0525b7967351f1091f66ee494e27377</Hash>
 </Codenesium>*/

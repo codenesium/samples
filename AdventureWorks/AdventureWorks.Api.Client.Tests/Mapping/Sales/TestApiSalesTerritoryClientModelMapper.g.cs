@@ -15,10 +15,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiSalesTerritoryModelMapper();
 			var model = new ApiSalesTerritoryClientRequestModel();
-			model.SetProperties("A", 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
+			model.SetProperties(1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 			ApiSalesTerritoryClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -34,10 +33,9 @@ namespace AdventureWorksNS.Api.Client.Tests
 		{
 			var mapper = new ApiSalesTerritoryModelMapper();
 			var model = new ApiSalesTerritoryClientResponseModel();
-			model.SetProperties(1, "A", 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
+			model.SetProperties(1, 1m, 1m, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m);
 			ApiSalesTerritoryClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Group.Should().Be("A");
 			response.CostLastYear.Should().Be(1m);
 			response.CostYTD.Should().Be(1m);
 			response.CountryRegionCode.Should().Be("A");
@@ -51,5 +49,5 @@ namespace AdventureWorksNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>ed483a50a9088c05335112b77b7c32aa</Hash>
+    <Hash>5ea74619cc99032b96572264c65fbaf7</Hash>
 </Codenesium>*/

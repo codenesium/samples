@@ -28,15 +28,31 @@ namespace TestsNS.Api.Services
 		[JsonProperty]
 		public string SelfReferenceIdEntity { get; private set; } = RouteConstants.SelfReferences;
 
+		[JsonProperty]
+		public ApiSelfReferenceServerResponseModel SelfReferenceIdNavigation { get; private set; }
+
+		public void SetSelfReferenceIdNavigation(ApiSelfReferenceServerResponseModel value)
+		{
+			this.SelfReferenceIdNavigation = value;
+		}
+
 		[Required]
 		[JsonProperty]
 		public int? SelfReferenceId2 { get; private set; }
 
 		[JsonProperty]
 		public string SelfReferenceId2Entity { get; private set; } = RouteConstants.SelfReferences;
+
+		[JsonProperty]
+		public ApiSelfReferenceServerResponseModel SelfReferenceId2Navigation { get; private set; }
+
+		public void SetSelfReferenceId2Navigation(ApiSelfReferenceServerResponseModel value)
+		{
+			this.SelfReferenceId2Navigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>05ec9bc701b3cf99f6bcbf4fdbabc892</Hash>
+    <Hash>837a46a1e216f81f92b51deb45d17b57</Hash>
 </Codenesium>*/

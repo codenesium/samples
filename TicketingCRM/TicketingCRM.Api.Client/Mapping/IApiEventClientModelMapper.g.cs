@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TicketingCRMNS.Api.Contracts;
 
 namespace TicketingCRMNS.Api.Client
 {
@@ -16,5 +17,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a9e790e7a168a8f1e249d0cdbe923d61</Hash>
+    <Hash>ef321ee9663e9ca1694f40ecfc99c481</Hash>
 </Codenesium>*/

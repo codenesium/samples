@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IPersonRepository personRepository,
 			IApiPersonServerRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper,
-			IBOLPasswordMapper bolPasswordMapper,
 			IDALPasswordMapper dalPasswordMapper)
 			: base(logger,
 			       mediator,
 			       personRepository,
 			       personModelValidator,
-			       bolPersonMapper,
 			       dalPersonMapper,
-			       bolPasswordMapper,
 			       dalPasswordMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fbd180b0904f5dcc0f3dea11ffafd86f</Hash>
+    <Hash>27276b543c5b70076e5304f7e00671c7</Hash>
 </Codenesium>*/

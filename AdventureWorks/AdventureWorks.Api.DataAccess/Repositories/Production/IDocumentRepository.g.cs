@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Document> Get(Guid rowguid);
 
-		Task<List<Document>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Document>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Document> ByRowguid(Guid rowguid);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0004bb9bacec2b43c7129ade5e60fd8</Hash>
+    <Hash>3046055310e6d72c65ccd3eb91781013</Hash>
 </Codenesium>*/

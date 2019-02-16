@@ -26,9 +26,24 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Description.StartsWith(query) ||
+				                  x.Id == query.ToInt() ||
+				                  x.JwtKey.StartsWith(query) ||
+				                  x.LastIpAddress.StartsWith(query) ||
+				                  x.MachineGuid == query.ToGuid() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Machine> Get(int id)
@@ -79,13 +94,16 @@ namespace NebulaNS.Api.DataAccess
 		// unique constraint AX_Machine_MachineGuid.
 		public async virtual Task<Machine> ByMachineGuid(Guid machineGuid)
 		{
-			return await this.Context.Set<Machine>().FirstOrDefaultAsync(x => x.MachineGuid == machineGuid);
+			return await this.Context.Set<Machine>()
+
+			       .FirstOrDefaultAsync(x => x.MachineGuid == machineGuid);
 		}
 
 		// Foreign key reference to this table Link via assignedMachineId.
 		public async virtual Task<List<Link>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Link>().Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+			return await this.Context.Set<Link>()
+			       .Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
 		protected async Task<List<Machine>> Where(
@@ -99,7 +117,9 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Machine>();
+			return await this.Context.Set<Machine>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Machine>();
 		}
 
 		private async Task<Machine> GetById(int id)
@@ -112,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e9201ad50a094bf8d818fff189793ba</Hash>
+    <Hash>71471e649f9349ecbb597edcacae6d1c</Hash>
 </Codenesium>*/

@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeServerRequestModelValidator addressTypeModelValidator,
-			IBOLAddressTypeMapper bolAddressTypeMapper,
 			IDALAddressTypeMapper dalAddressTypeMapper)
 			: base(logger,
 			       mediator,
 			       addressTypeRepository,
 			       addressTypeModelValidator,
-			       bolAddressTypeMapper,
 			       dalAddressTypeMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3252f5e22e990f02b7c5a21ac858616e</Hash>
+    <Hash>a3c5daeab2f642f869cfe2cb943e625c</Hash>
 </Codenesium>*/

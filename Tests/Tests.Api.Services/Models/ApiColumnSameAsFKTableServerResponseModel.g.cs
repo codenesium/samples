@@ -28,13 +28,29 @@ namespace TestsNS.Api.Services
 		public string PersonEntity { get; private set; } = RouteConstants.People;
 
 		[JsonProperty]
+		public ApiPersonServerResponseModel PersonNavigation { get; private set; }
+
+		public void SetPersonNavigation(ApiPersonServerResponseModel value)
+		{
+			this.PersonNavigation = value;
+		}
+
+		[JsonProperty]
 		public int PersonId { get; private set; }
 
 		[JsonProperty]
 		public string PersonIdEntity { get; private set; } = RouteConstants.People;
+
+		[JsonProperty]
+		public ApiPersonServerResponseModel PersonIdNavigation { get; private set; }
+
+		public void SetPersonIdNavigation(ApiPersonServerResponseModel value)
+		{
+			this.PersonIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f368567eadbb339fd0184cb1f7b19e0f</Hash>
+    <Hash>8ddf7cda0719788348f02373216c24ed</Hash>
 </Codenesium>*/

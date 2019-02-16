@@ -16,8 +16,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiOtherTransportServerRequestModelValidator OtherTransportModelValidator { get; private set; }
 
-		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
-
 		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
 
 		private ILogger logger;
@@ -27,29 +25,27 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IOtherTransportRepository otherTransportRepository,
 			IApiOtherTransportServerRequestModelValidator otherTransportModelValidator,
-			IBOLOtherTransportMapper bolOtherTransportMapper,
 			IDALOtherTransportMapper dalOtherTransportMapper)
 			: base()
 		{
 			this.OtherTransportRepository = otherTransportRepository;
 			this.OtherTransportModelValidator = otherTransportModelValidator;
-			this.BolOtherTransportMapper = bolOtherTransportMapper;
 			this.DalOtherTransportMapper = dalOtherTransportMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiOtherTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiOtherTransportServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.OtherTransportRepository.All(limit, offset);
+			List<OtherTransport> records = await this.OtherTransportRepository.All(limit, offset, query);
 
-			return this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(records));
+			return this.DalOtherTransportMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiOtherTransportServerResponseModel> Get(int id)
 		{
-			var record = await this.OtherTransportRepository.Get(id);
+			OtherTransport record = await this.OtherTransportRepository.Get(id);
 
 			if (record == null)
 			{
@@ -57,7 +53,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(record));
+				return this.DalOtherTransportMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -68,11 +64,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolOtherTransportMapper.MapModelToBO(default(int), model);
-				var record = await this.OtherTransportRepository.Create(this.DalOtherTransportMapper.MapBOToEF(bo));
+				OtherTransport record = this.DalOtherTransportMapper.MapModelToEntity(default(int), model);
+				record = await this.OtherTransportRepository.Create(record);
 
-				var businessObject = this.DalOtherTransportMapper.MapEFToBO(record);
-				response.SetRecord(this.BolOtherTransportMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalOtherTransportMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new OtherTransportCreatedNotification(response.Record));
 			}
 
@@ -87,13 +82,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolOtherTransportMapper.MapModelToBO(id, model);
-				await this.OtherTransportRepository.Update(this.DalOtherTransportMapper.MapBOToEF(bo));
+				OtherTransport record = this.DalOtherTransportMapper.MapModelToEntity(id, model);
+				await this.OtherTransportRepository.Update(record);
 
-				var record = await this.OtherTransportRepository.Get(id);
+				record = await this.OtherTransportRepository.Get(id);
 
-				var businessObject = this.DalOtherTransportMapper.MapEFToBO(record);
-				var apiModel = this.BolOtherTransportMapper.MapBOToModel(businessObject);
+				ApiOtherTransportServerResponseModel apiModel = this.DalOtherTransportMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new OtherTransportUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiOtherTransportServerResponseModel>.UpdateResponse(apiModel);
@@ -122,5 +116,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab774cf852189e9ba0f0199faf4b6a2a</Hash>
+    <Hash>17c53b521c9179cd13881e159e2b8664</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCurrencyRateServerResponseModel> Get(int currencyRateID);
 
-		Task<List<ApiCurrencyRateServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCurrencyRateServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiCurrencyRateServerResponseModel> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3652ce6b6f7dd6622ed1cf8bf9676016</Hash>
+    <Hash>23c49e28acc816d4a6a086d458ee71c9</Hash>
 </Codenesium>*/

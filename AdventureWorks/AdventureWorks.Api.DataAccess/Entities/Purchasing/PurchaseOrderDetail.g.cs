@@ -14,25 +14,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int purchaseOrderID,
 			DateTime dueDate,
 			decimal lineTotal,
 			DateTime modifiedDate,
 			short orderQty,
 			int productID,
 			int purchaseOrderDetailID,
-			int purchaseOrderID,
 			double receivedQty,
 			double rejectedQty,
 			double stockedQty,
 			decimal unitPrice)
 		{
+			this.PurchaseOrderID = purchaseOrderID;
 			this.DueDate = dueDate;
 			this.LineTotal = lineTotal;
 			this.ModifiedDate = modifiedDate;
 			this.OrderQty = orderQty;
 			this.ProductID = productID;
 			this.PurchaseOrderDetailID = purchaseOrderDetailID;
-			this.PurchaseOrderID = purchaseOrderID;
 			this.ReceivedQty = receivedQty;
 			this.RejectedQty = rejectedQty;
 			this.StockedQty = stockedQty;
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b441d8f5966149b528070ad0a321786</Hash>
+    <Hash>8bb6fa7325530ba120367743e45d1cd7</Hash>
 </Codenesium>*/

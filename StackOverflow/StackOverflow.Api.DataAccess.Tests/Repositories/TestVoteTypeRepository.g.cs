@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<VoteTypeRepository>> loggerMoc = VoteTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = VoteTypeRepositoryMoc.GetContext();
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<VoteTypeRepository>> loggerMoc = VoteTypeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = VoteTypeRepositoryMoc.GetContext();
+			var repository = new VoteTypeRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
 
 			VoteType entity = new VoteType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VoteType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
 
 			var entity = new VoteType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<VoteType>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteTypeRepositoryMoc.GetContext();
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
 			VoteType entity = new VoteType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VoteType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteTypeRepositoryMoc.GetContext();
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
 			VoteType entity = new VoteType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VoteType>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = VoteTypeRepositoryMoc.GetContext();
 			var repository = new VoteTypeRepository(loggerMoc.Object, context);
 			VoteType entity = new VoteType();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<VoteType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fdc9a49c75c01feed8b18da0732a3f10</Hash>
+    <Hash>854d9e0e601b6bd6c4085d054bfe9445</Hash>
 </Codenesium>*/

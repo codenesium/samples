@@ -12,13 +12,11 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IApiAWBuildVersionServerRequestModelValidator aWBuildVersionModelValidator,
-			IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
 			IDALAWBuildVersionMapper dalAWBuildVersionMapper)
 			: base(logger,
 			       mediator,
 			       aWBuildVersionRepository,
 			       aWBuildVersionModelValidator,
-			       bolAWBuildVersionMapper,
 			       dalAWBuildVersionMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b12dab84fe9b6ee6aa5eccc2f1a1107</Hash>
+    <Hash>94be197a8c453ccdab412ca7475d9379</Hash>
 </Codenesium>*/

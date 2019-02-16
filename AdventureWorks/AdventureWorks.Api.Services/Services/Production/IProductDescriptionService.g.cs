@@ -18,12 +18,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductDescriptionServerResponseModel> Get(int productDescriptionID);
 
-		Task<List<ApiProductDescriptionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductDescriptionServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiProductDescriptionServerResponseModel> ByRowguid(Guid rowguid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>69ede4ab47987b4df1256c428a2f4c9b</Hash>
+    <Hash>5fa35e19ec9eb870f8f9b907e136b349</Hash>
 </Codenesium>*/

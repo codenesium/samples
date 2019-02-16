@@ -375,24 +375,23 @@ namespace Codenesium.Foundation.CommonMVC
         public virtual string Audience { get; set; }
     }
 
-    public class SearchQuery
+      public class SearchQuery
     {
         public int Limit { get; private set; } = 0;
 
         public int Offset { get; private set; } = 0;
 
-        public string WhereClause { get; private set; } = string.Empty;
+		public Dictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get; private set; } = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>();
 
         public string Error { get; private set; } = string.Empty;
 
-        public SearchQuery()
-        {
-        }
+		public string Query { get; private set; } = string.Empty;
 
-        public bool Process(int maxLimit, int defaultLimit, int? limit, int? offset, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
+        public bool Process(int maxLimit, int defaultLimit, int? limit, int? offset, string query, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
         {
             this.Offset = offset ?? 0;
             this.Limit = limit ?? maxLimit;
+			this.Query = query ?? string.Empty;
 
             if (this.Limit > maxLimit)
             {
@@ -400,36 +399,7 @@ namespace Codenesium.Foundation.CommonMVC
                 return false;
             }
 
-            foreach (var parameter in queryParameters)
-            {
-                if (parameter.Key.ToUpper() == "OFFSET" || parameter.Key.ToUpper() == "LIMIT")
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(this.WhereClause))
-                {
-                    this.WhereClause += " && ";
-                }
-
-                if (parameter.Value.ToString().ToNullableInt() != null)
-                {
-                    this.WhereClause += $"{parameter.Key}.Equals({parameter.Value})";
-                }
-                else if (parameter.Value.ToString().ToNullableGuid() != null)
-                {
-                    this.WhereClause += $"{parameter.Key}.Equals(Guid(\"{parameter.Value}\"))";
-                }
-                else
-                {
-                    this.WhereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
-                }
-            }
-            
-            if (string.IsNullOrWhiteSpace(this.WhereClause))
-            {
-                this.WhereClause = "1=1";
-            }
+			this.QueryParameters = queryParameters.Where(x => x.Key.ToUpper() != "OFFSET" && x.Key.ToUpper() != "LIMIT").ToDictionary(p => p.Key, p => p.Value);
 
             return true;
         }

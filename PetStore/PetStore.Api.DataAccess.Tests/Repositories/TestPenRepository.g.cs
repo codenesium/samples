@@ -47,10 +47,19 @@ namespace PetStoreNS.Api.DataAccess
 			Mock<ILogger<PenRepository>> loggerMoc = PenRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PenRepositoryMoc.GetContext();
 			var repository = new PenRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<PenRepository>> loggerMoc = PenRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = PenRepositoryMoc.GetContext();
+			var repository = new PenRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PenRepository(loggerMoc.Object, context);
 
 			Pen entity = new Pen();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Pen>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace PetStoreNS.Api.DataAccess
 			var repository = new PenRepository(loggerMoc.Object, context);
 
 			var entity = new Pen();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Pen>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PenRepositoryMoc.GetContext();
 			var repository = new PenRepository(loggerMoc.Object, context);
 			Pen entity = new Pen();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Pen>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PenRepositoryMoc.GetContext();
 			var repository = new PenRepository(loggerMoc.Object, context);
 			Pen entity = new Pen();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Pen>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context = PenRepositoryMoc.GetContext();
 			var repository = new PenRepository(loggerMoc.Object, context);
 			Pen entity = new Pen();
-			entity.SetProperties(2, "B");
+			entity.SetProperties(default(int), "B");
 			context.Set<Pen>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f395b2c590c459175870fc3695dd7b2a</Hash>
+    <Hash>331125f8cea5463808dfe370a9e02880</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int productPhotoID,
 			byte[] largePhoto,
 			string largePhotoFileName,
 			DateTime modifiedDate,
-			int productPhotoID,
 			byte[] thumbNailPhoto,
 			string thumbnailPhotoFileName)
 		{
+			this.ProductPhotoID = productPhotoID;
 			this.LargePhoto = largePhoto;
 			this.LargePhotoFileName = largePhotoFileName;
 			this.ModifiedDate = modifiedDate;
-			this.ProductPhotoID = productPhotoID;
 			this.ThumbNailPhoto = thumbNailPhoto;
 			this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
 		}
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43f4aeaea054b976eb71eb1b32e8162b</Hash>
+    <Hash>4b075fe374bec60c400fe1aa2c2b03b4</Hash>
 </Codenesium>*/

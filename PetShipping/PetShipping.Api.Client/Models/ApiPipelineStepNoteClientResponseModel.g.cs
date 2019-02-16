@@ -19,7 +19,24 @@ namespace PetShippingNS.Api.Client
 			this.PipelineStepId = pipelineStepId;
 
 			this.EmployeeIdEntity = nameof(ApiResponse.Employees);
+
 			this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
+		}
+
+		[JsonProperty]
+		public ApiEmployeeClientResponseModel EmployeeIdNavigation { get; private set; }
+
+		public void SetEmployeeIdNavigation(ApiEmployeeClientResponseModel value)
+		{
+			this.EmployeeIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiPipelineStepClientResponseModel PipelineStepIdNavigation { get; private set; }
+
+		public void SetPipelineStepIdNavigation(ApiPipelineStepClientResponseModel value)
+		{
+			this.PipelineStepIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -43,5 +60,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f5fa4a10bca4ce0e94a154877c915cab</Hash>
+    <Hash>cbdf3ace8175231e9f49ea93b735f5e4</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiSalesTerritoryServerResponseModel> Get(int territoryID);
 
-		Task<List<ApiSalesTerritoryServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesTerritoryServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiSalesTerritoryServerResponseModel> ByName(string name);
 
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bfb58d329f735d3d14054da89a4a0f53</Hash>
+    <Hash>54336de77242d0bb69f8cedc09e80960</Hash>
 </Codenesium>*/

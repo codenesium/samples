@@ -35,15 +35,15 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int OrganizationId { get; private set; }
 
 		[ForeignKey("OrganizationId")]
-		public virtual Organization OrganizationNavigation { get; private set; }
+		public virtual Organization OrganizationIdNavigation { get; private set; }
 
-		public void SetOrganizationNavigation(Organization item)
+		public void SetOrganizationIdNavigation(Organization item)
 		{
-			this.OrganizationNavigation = item;
+			this.OrganizationIdNavigation = item;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d064bddae0f63eb842f116a3bd697cf7</Hash>
+    <Hash>8d2a78ab28a935e05dd904d30aa5c94f</Hash>
 </Codenesium>*/

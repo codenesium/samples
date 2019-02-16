@@ -14,12 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			string diagram,
 			int illustrationID,
+			string diagram,
 			DateTime modifiedDate)
 		{
-			this.Diagram = diagram;
 			this.IllustrationID = illustrationID;
+			this.Diagram = diagram;
 			this.ModifiedDate = modifiedDate;
 		}
 
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5f725e1086434c6cc207303fef819059</Hash>
+    <Hash>a7819a2064a4a7ad95f6b76a4e69434a</Hash>
 </Codenesium>*/

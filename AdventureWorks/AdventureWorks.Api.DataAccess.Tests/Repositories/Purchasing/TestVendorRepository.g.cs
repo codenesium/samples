@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<VendorRepository>> loggerMoc = VendorRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = VendorRepositoryMoc.GetContext();
 			var repository = new VendorRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new VendorRepository(loggerMoc.Object, context);
 
 			Vendor entity = new Vendor();
-			entity.SetProperties("B", true, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+			entity.SetProperties(default(int), "B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
 			context.Set<Vendor>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new VendorRepository(loggerMoc.Object, context);
 
 			var entity = new Vendor();
-			entity.SetProperties("B", true, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+			entity.SetProperties(default(int), "B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<Vendor>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = VendorRepositoryMoc.GetContext();
 			var repository = new VendorRepository(loggerMoc.Object, context);
 			Vendor entity = new Vendor();
-			entity.SetProperties("B", true, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+			entity.SetProperties(default(int), "B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
 			context.Set<Vendor>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = VendorRepositoryMoc.GetContext();
 			var repository = new VendorRepository(loggerMoc.Object, context);
 			Vendor entity = new Vendor();
-			entity.SetProperties("B", true, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+			entity.SetProperties(default(int), "B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
 			context.Set<Vendor>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = VendorRepositoryMoc.GetContext();
 			var repository = new VendorRepository(loggerMoc.Object, context);
 			Vendor entity = new Vendor();
-			entity.SetProperties("B", true, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
+			entity.SetProperties(default(int), "B", true, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, "B");
 			context.Set<Vendor>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a374468a56f1dfb850a6200f19c30751</Hash>
+    <Hash>657cfc2fd811f43b736c24fe09412e5e</Hash>
 </Codenesium>*/

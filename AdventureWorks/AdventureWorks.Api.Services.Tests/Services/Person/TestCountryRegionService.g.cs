@@ -26,20 +26,18 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRegionRepository>();
 			var records = new List<CountryRegion>();
 			records.Add(new CountryRegion());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new CountryRegionService(mock.LoggerMock.Object,
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			List<ApiCountryRegionServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -52,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ApiCountryRegionServerResponseModel response = await service.Get(default(string));
@@ -72,9 +68,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ApiCountryRegionServerResponseModel response = await service.Get(default(string));
@@ -93,9 +87,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			CreateResponse<ApiCountryRegionServerResponseModel> response = await service.Create(model);
@@ -118,9 +110,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			CreateResponse<ApiCountryRegionServerResponseModel> response = await service.Create(model);
@@ -142,9 +132,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			UpdateResponse<ApiCountryRegionServerResponseModel> response = await service.Update(default(string), model);
@@ -168,9 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			UpdateResponse<ApiCountryRegionServerResponseModel> response = await service.Update(default(string), model);
@@ -191,9 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -216,9 +200,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       validatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ActionResponse response = await service.Delete(default(string));
@@ -239,9 +221,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ApiCountryRegionServerResponseModel response = await service.ByName("test_value");
@@ -259,9 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			ApiCountryRegionServerResponseModel response = await service.ByName("test_value");
@@ -281,9 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			List<ApiStateProvinceServerResponseModel> response = await service.StateProvincesByCountryRegionCode(default(string));
@@ -301,9 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.MediatorMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.CountryRegionModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLCountryRegionMapperMock,
 			                                       mock.DALMapperMockFactory.DALCountryRegionMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLStateProvinceMapperMock,
 			                                       mock.DALMapperMockFactory.DALStateProvinceMapperMock);
 
 			List<ApiStateProvinceServerResponseModel> response = await service.StateProvincesByCountryRegionCode(default(string));
@@ -315,5 +289,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8cd389e76090f1e14929378a8978e3e9</Hash>
+    <Hash>7b31a4a83c00df03a372498cdb4ce04e</Hash>
 </Codenesium>*/

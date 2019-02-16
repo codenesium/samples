@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<PhoneNumberTypeRepository>> loggerMoc = PhoneNumberTypeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 
 			PhoneNumberType entity = new PhoneNumberType();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<PhoneNumberType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 
 			var entity = new PhoneNumberType();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<PhoneNumberType>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 			PhoneNumberType entity = new PhoneNumberType();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<PhoneNumberType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 			PhoneNumberType entity = new PhoneNumberType();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<PhoneNumberType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
 			var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 			PhoneNumberType entity = new PhoneNumberType();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
 			context.Set<PhoneNumberType>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8f40db693d11d167c419c10972766875</Hash>
+    <Hash>3b4ad063651262d8156943d230c9a597</Hash>
 </Codenesium>*/

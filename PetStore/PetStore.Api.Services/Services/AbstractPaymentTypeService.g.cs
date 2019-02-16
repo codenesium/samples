@@ -16,11 +16,7 @@ namespace PetStoreNS.Api.Services
 
 		protected IApiPaymentTypeServerRequestModelValidator PaymentTypeModelValidator { get; private set; }
 
-		protected IBOLPaymentTypeMapper BolPaymentTypeMapper { get; private set; }
-
 		protected IDALPaymentTypeMapper DalPaymentTypeMapper { get; private set; }
-
-		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
 		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace PetStoreNS.Api.Services
 			IMediator mediator,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeServerRequestModelValidator paymentTypeModelValidator,
-			IBOLPaymentTypeMapper bolPaymentTypeMapper,
 			IDALPaymentTypeMapper dalPaymentTypeMapper,
-			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
 			this.PaymentTypeRepository = paymentTypeRepository;
 			this.PaymentTypeModelValidator = paymentTypeModelValidator;
-			this.BolPaymentTypeMapper = bolPaymentTypeMapper;
 			this.DalPaymentTypeMapper = dalPaymentTypeMapper;
-			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPaymentTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPaymentTypeServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PaymentTypeRepository.All(limit, offset);
+			List<PaymentType> records = await this.PaymentTypeRepository.All(limit, offset, query);
 
-			return this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(records));
+			return this.DalPaymentTypeMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPaymentTypeServerResponseModel> Get(int id)
 		{
-			var record = await this.PaymentTypeRepository.Get(id);
+			PaymentType record = await this.PaymentTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record));
+				return this.DalPaymentTypeMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPaymentTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.PaymentTypeRepository.Create(this.DalPaymentTypeMapper.MapBOToEF(bo));
+				PaymentType record = this.DalPaymentTypeMapper.MapModelToEntity(default(int), model);
+				record = await this.PaymentTypeRepository.Create(record);
 
-				var businessObject = this.DalPaymentTypeMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPaymentTypeMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPaymentTypeMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PaymentTypeCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace PetStoreNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPaymentTypeMapper.MapModelToBO(id, model);
-				await this.PaymentTypeRepository.Update(this.DalPaymentTypeMapper.MapBOToEF(bo));
+				PaymentType record = this.DalPaymentTypeMapper.MapModelToEntity(id, model);
+				await this.PaymentTypeRepository.Update(record);
 
-				var record = await this.PaymentTypeRepository.Get(id);
+				record = await this.PaymentTypeRepository.Get(id);
 
-				var businessObject = this.DalPaymentTypeMapper.MapEFToBO(record);
-				var apiModel = this.BolPaymentTypeMapper.MapBOToModel(businessObject);
+				ApiPaymentTypeServerResponseModel apiModel = this.DalPaymentTypeMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PaymentTypeUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPaymentTypeServerResponseModel>.UpdateResponse(apiModel);
@@ -131,11 +121,11 @@ namespace PetStoreNS.Api.Services
 		{
 			List<Sale> records = await this.PaymentTypeRepository.SalesByPaymentTypeId(paymentTypeId, limit, offset);
 
-			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
+			return this.DalSaleMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0069c2636e1ade7613cece3daaa607e</Hash>
+    <Hash>9dff4edc89b9c7fc092285307dd8070a</Hash>
 </Codenesium>*/

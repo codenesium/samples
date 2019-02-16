@@ -23,7 +23,24 @@ namespace TwitterNS.Api.Client
 			this.UserUserId = userUserId;
 
 			this.LocationIdEntity = nameof(ApiResponse.Locations);
+
 			this.UserUserIdEntity = nameof(ApiResponse.Users);
+		}
+
+		[JsonProperty]
+		public ApiLocationClientResponseModel LocationIdNavigation { get; private set; }
+
+		public void SetLocationIdNavigation(ApiLocationClientResponseModel value)
+		{
+			this.LocationIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiUserClientResponseModel UserUserIdNavigation { get; private set; }
+
+		public void SetUserUserIdNavigation(ApiUserClientResponseModel value)
+		{
+			this.UserUserIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -53,5 +70,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ab469ef2e539bd449f146b002cd0a599</Hash>
+    <Hash>7cda36fa3deabb3da1e11ccd0838abc3</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiOrganizationServerResponseModel> Get(int id);
 
-		Task<List<ApiOrganizationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiOrganizationServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<ApiOrganizationServerResponseModel> ByName(string name);
 
@@ -27,5 +27,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54752f4d55a006d389eb24686be1bc80</Hash>
+    <Hash>1534b81dd1f095a30572e3a467414518</Hash>
 </Codenesium>*/

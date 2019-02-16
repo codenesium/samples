@@ -26,9 +26,21 @@ namespace TwitterNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<Following>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<Following>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DateFollowed == query.ToNullableDateTime() ||
+				                  x.Muted.StartsWith(query) ||
+				                  x.UserId == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<Following> Get(int userId)
@@ -87,7 +99,9 @@ namespace TwitterNS.Api.DataAccess
 				orderBy = x => x.UserId;
 			}
 
-			return await this.Context.Set<Following>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Following>();
+			return await this.Context.Set<Following>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Following>();
 		}
 
 		private async Task<Following> GetById(int userId)
@@ -100,5 +114,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a95e17f3f44e98343bf55357a5ac7043</Hash>
+    <Hash>242d379cb1436fa6d6aa9f5ac171a61a</Hash>
 </Codenesium>*/

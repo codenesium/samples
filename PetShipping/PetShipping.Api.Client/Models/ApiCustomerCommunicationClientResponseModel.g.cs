@@ -21,7 +21,24 @@ namespace PetShippingNS.Api.Client
 			this.Note = note;
 
 			this.CustomerIdEntity = nameof(ApiResponse.Customers);
+
 			this.EmployeeIdEntity = nameof(ApiResponse.Employees);
+		}
+
+		[JsonProperty]
+		public ApiCustomerClientResponseModel CustomerIdNavigation { get; private set; }
+
+		public void SetCustomerIdNavigation(ApiCustomerClientResponseModel value)
+		{
+			this.CustomerIdNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiEmployeeClientResponseModel EmployeeIdNavigation { get; private set; }
+
+		public void SetEmployeeIdNavigation(ApiEmployeeClientResponseModel value)
+		{
+			this.EmployeeIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -48,5 +65,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c58420c408d65bb4164baf0faba3478a</Hash>
+    <Hash>3fd4fb0cfc3bfc31c1627569028f7df1</Hash>
 </Codenesium>*/

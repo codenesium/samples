@@ -47,9 +47,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			Mock<ILogger<DatabaseLogRepository>> loggerMoc = DatabaseLogRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
 
 			records.Should().NotBeEmpty();
@@ -64,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties("B", "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			context.Set<DatabaseLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 
 			var entity = new DatabaseLog();
-			entity.SetProperties("B", "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<DatabaseLog>().Where(x => true).ToListAsync();
@@ -96,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties("B", "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			context.Set<DatabaseLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties("B", "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			context.Set<DatabaseLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -134,7 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
 			var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 			DatabaseLog entity = new DatabaseLog();
-			entity.SetProperties("B", "B", 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
+			entity.SetProperties(default(int), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
 			context.Set<DatabaseLog>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +160,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff3bcd7eb226dcca8d9925bf338febaf</Hash>
+    <Hash>e067c679c8830f5d27c64b6b8efe13a9</Hash>
 </Codenesium>*/

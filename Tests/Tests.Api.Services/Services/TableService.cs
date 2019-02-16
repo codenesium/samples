@@ -12,13 +12,11 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			ITableRepository tableRepository,
 			IApiTableServerRequestModelValidator tableModelValidator,
-			IBOLTableMapper bolTableMapper,
 			IDALTableMapper dalTableMapper)
 			: base(logger,
 			       mediator,
 			       tableRepository,
 			       tableModelValidator,
-			       bolTableMapper,
 			       dalTableMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9df6997605d9f6656a5ef0f30c9be11</Hash>
+    <Hash>917291d3498656b61b95c135060d18b0</Hash>
 </Codenesium>*/

@@ -14,6 +14,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int salesOrderID,
 			string carrierTrackingNumber,
 			decimal lineTotal,
 			DateTime modifiedDate,
@@ -21,11 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productID,
 			Guid rowguid,
 			int salesOrderDetailID,
-			int salesOrderID,
 			int specialOfferID,
 			decimal unitPrice,
 			decimal unitPriceDiscount)
 		{
+			this.SalesOrderID = salesOrderID;
 			this.CarrierTrackingNumber = carrierTrackingNumber;
 			this.LineTotal = lineTotal;
 			this.ModifiedDate = modifiedDate;
@@ -33,7 +34,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ProductID = productID;
 			this.Rowguid = rowguid;
 			this.SalesOrderDetailID = salesOrderDetailID;
-			this.SalesOrderID = salesOrderID;
 			this.SpecialOfferID = specialOfferID;
 			this.UnitPrice = unitPrice;
 			this.UnitPriceDiscount = unitPriceDiscount;
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e99fb72194d35645ca5520baa310769a</Hash>
+    <Hash>bd271208759bf6f955a8ae2baad1fb4c</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<Location> Get(int locationId);
 
-		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
@@ -24,5 +24,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1354bfa996b86539c0333c7bec8f417d</Hash>
+    <Hash>d17e92232a31ca9e4ca4b239dd7c72f8</Hash>
 </Codenesium>*/

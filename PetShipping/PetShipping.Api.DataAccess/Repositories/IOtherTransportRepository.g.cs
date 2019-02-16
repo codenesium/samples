@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<OtherTransport> Get(int id);
 
-		Task<List<OtherTransport>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<OtherTransport>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Handler> HandlerByHandlerId(int handlerId);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>add6047c1b279aa1e02cad2a6191d539</Hash>
+    <Hash>fe8afae9f5a0a964500dc71795de5d1c</Hash>
 </Codenesium>*/

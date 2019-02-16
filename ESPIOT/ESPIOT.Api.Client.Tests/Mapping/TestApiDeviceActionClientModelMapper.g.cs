@@ -18,7 +18,7 @@ namespace ESPIOTNS.Api.Client.Tests
 			model.SetProperties("A", 1, "A");
 			ApiDeviceActionClientResponseModel response = mapper.MapClientRequestToResponse(1, model);
 			response.Should().NotBeNull();
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
@@ -31,7 +31,7 @@ namespace ESPIOTNS.Api.Client.Tests
 			model.SetProperties(1, "A", 1, "A");
 			ApiDeviceActionClientRequestModel response = mapper.MapClientResponseToRequest(model);
 			response.Should().NotBeNull();
-			response.@Value.Should().Be("A");
+			response.Action.Should().Be("A");
 			response.DeviceId.Should().Be(1);
 			response.Name.Should().Be("A");
 		}
@@ -39,5 +39,5 @@ namespace ESPIOTNS.Api.Client.Tests
 }
 
 /*<Codenesium>
-    <Hash>367e8f9c9b0841e410c9e9f31b6199b7</Hash>
+    <Hash>833be84780518a7dfaeaeccbbbac5581</Hash>
 </Codenesium>*/

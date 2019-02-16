@@ -47,10 +47,19 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = UserRepositoryMoc.GetContext();
+			var repository = new UserRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, "A".ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			User entity = new User();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var repository = new UserRepository(loggerMoc.Object, context);
 
 			var entity = new User();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<User>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			ApplicationDbContext context = UserRepositoryMoc.GetContext();
 			var repository = new UserRepository(loggerMoc.Object, context);
 			User entity = new User();
-			entity.SetProperties(2, "B", "B");
+			entity.SetProperties(default(int), "B", "B");
 			context.Set<User>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>311b29d6d6b99343672aed133aaaa023</Hash>
+    <Hash>6f2dd8e60a909128fb2447a36dddcdf4</Hash>
 </Codenesium>*/

@@ -16,11 +16,7 @@ namespace TestsNS.Api.Services
 
 		protected IApiPersonServerRequestModelValidator PersonModelValidator { get; private set; }
 
-		protected IBOLPersonMapper BolPersonMapper { get; private set; }
-
 		protected IDALPersonMapper DalPersonMapper { get; private set; }
-
-		protected IBOLColumnSameAsFKTableMapper BolColumnSameAsFKTableMapper { get; private set; }
 
 		protected IDALColumnSameAsFKTableMapper DalColumnSameAsFKTableMapper { get; private set; }
 
@@ -31,33 +27,29 @@ namespace TestsNS.Api.Services
 			IMediator mediator,
 			IPersonRepository personRepository,
 			IApiPersonServerRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolPersonMapper,
 			IDALPersonMapper dalPersonMapper,
-			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
 			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base()
 		{
 			this.PersonRepository = personRepository;
 			this.PersonModelValidator = personModelValidator;
-			this.BolPersonMapper = bolPersonMapper;
 			this.DalPersonMapper = dalPersonMapper;
-			this.BolColumnSameAsFKTableMapper = bolColumnSameAsFKTableMapper;
 			this.DalColumnSameAsFKTableMapper = dalColumnSameAsFKTableMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiPersonServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.PersonRepository.All(limit, offset);
+			List<Person> records = await this.PersonRepository.All(limit, offset, query);
 
-			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
+			return this.DalPersonMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiPersonServerResponseModel> Get(int personId)
 		{
-			var record = await this.PersonRepository.Get(personId);
+			Person record = await this.PersonRepository.Get(personId);
 
 			if (record == null)
 			{
@@ -65,7 +57,7 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record));
+				return this.DalPersonMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace TestsNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.PersonRepository.Create(this.DalPersonMapper.MapBOToEF(bo));
+				Person record = this.DalPersonMapper.MapModelToEntity(default(int), model);
+				record = await this.PersonRepository.Create(record);
 
-				var businessObject = this.DalPersonMapper.MapEFToBO(record);
-				response.SetRecord(this.BolPersonMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalPersonMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new PersonCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace TestsNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolPersonMapper.MapModelToBO(personId, model);
-				await this.PersonRepository.Update(this.DalPersonMapper.MapBOToEF(bo));
+				Person record = this.DalPersonMapper.MapModelToEntity(personId, model);
+				await this.PersonRepository.Update(record);
 
-				var record = await this.PersonRepository.Get(personId);
+				record = await this.PersonRepository.Get(personId);
 
-				var businessObject = this.DalPersonMapper.MapEFToBO(record);
-				var apiModel = this.BolPersonMapper.MapBOToModel(businessObject);
+				ApiPersonServerResponseModel apiModel = this.DalPersonMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new PersonUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiPersonServerResponseModel>.UpdateResponse(apiModel);
@@ -131,18 +121,18 @@ namespace TestsNS.Api.Services
 		{
 			List<ColumnSameAsFKTable> records = await this.PersonRepository.ColumnSameAsFKTablesByPerson(person, limit, offset);
 
-			return this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(records));
+			return this.DalColumnSameAsFKTableMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiColumnSameAsFKTableServerResponseModel>> ColumnSameAsFKTablesByPersonId(int personId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<ColumnSameAsFKTable> records = await this.PersonRepository.ColumnSameAsFKTablesByPersonId(personId, limit, offset);
 
-			return this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(records));
+			return this.DalColumnSameAsFKTableMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0bc0d404d79af37a4e0dde07fffee322</Hash>
+    <Hash>51517d0d4786a39f899619be2a4f5b1c</Hash>
 </Codenesium>*/

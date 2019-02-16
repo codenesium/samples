@@ -49,6 +49,14 @@ namespace StudioResourceManagerNS.Api.Services
 		public string EventStatusIdEntity { get; private set; } = RouteConstants.EventStatus;
 
 		[JsonProperty]
+		public ApiEventStatusServerResponseModel EventStatusIdNavigation { get; private set; }
+
+		public void SetEventStatusIdNavigation(ApiEventStatusServerResponseModel value)
+		{
+			this.EventStatusIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[Required]
@@ -70,5 +78,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21792851c0dd1ca5e8e3660f79876641</Hash>
+    <Hash>87e6efd24fcf3d4873eedece2fe2e99e</Hash>
 </Codenesium>*/

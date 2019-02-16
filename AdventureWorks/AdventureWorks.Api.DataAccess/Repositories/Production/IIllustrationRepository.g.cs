@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Illustration> Get(int illustrationID);
 
-		Task<List<Illustration>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Illustration>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ff11c0f147dd40564a4473bf5ae4d65</Hash>
+    <Hash>0a4d53b5e390cc72aa33e0f577410d3e</Hash>
 </Codenesium>*/

@@ -47,10 +47,19 @@ namespace TwitterNS.Api.DataAccess
 			Mock<ILogger<MessengerRepository>> loggerMoc = MessengerRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = MessengerRepositoryMoc.GetContext();
 			var repository = new MessengerRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<MessengerRepository>> loggerMoc = MessengerRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = MessengerRepositoryMoc.GetContext();
+			var repository = new MessengerRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new MessengerRepository(loggerMoc.Object, context);
 
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			context.Set<Messenger>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace TwitterNS.Api.DataAccess
 			var repository = new MessengerRepository(loggerMoc.Object, context);
 
 			var entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			await repository.Create(entity);
 
 			var records = await context.Set<Messenger>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessengerRepositoryMoc.GetContext();
 			var repository = new MessengerRepository(loggerMoc.Object, context);
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			context.Set<Messenger>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessengerRepositoryMoc.GetContext();
 			var repository = new MessengerRepository(loggerMoc.Object, context);
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			context.Set<Messenger>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace TwitterNS.Api.DataAccess
 			ApplicationDbContext context = MessengerRepositoryMoc.GetContext();
 			var repository = new MessengerRepository(loggerMoc.Object, context);
 			Messenger entity = new Messenger();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("02:00:00"), 1, 1);
 			context.Set<Messenger>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e5320ea026155d69c683b9d4a5bf348</Hash>
+    <Hash>3e75dc00919c749720dd23a8e8b7c81d</Hash>
 </Codenesium>*/

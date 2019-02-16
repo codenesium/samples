@@ -50,6 +50,14 @@ namespace StudioResourceManagerNS.Api.Services
 		public string FamilyIdEntity { get; private set; } = RouteConstants.Families;
 
 		[JsonProperty]
+		public ApiFamilyServerResponseModel FamilyIdNavigation { get; private set; }
+
+		public void SetFamilyIdNavigation(ApiFamilyServerResponseModel value)
+		{
+			this.FamilyIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string FirstName { get; private set; }
 
 		[JsonProperty]
@@ -72,9 +80,17 @@ namespace StudioResourceManagerNS.Api.Services
 
 		[JsonProperty]
 		public string UserIdEntity { get; private set; } = RouteConstants.Users;
+
+		[JsonProperty]
+		public ApiUserServerResponseModel UserIdNavigation { get; private set; }
+
+		public void SetUserIdNavigation(ApiUserServerResponseModel value)
+		{
+			this.UserIdNavigation = value;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad3dd488441a6bfdba0dc596921e0620</Hash>
+    <Hash>d6e95373fc0c1119758e38e04808b0f4</Hash>
 </Codenesium>*/

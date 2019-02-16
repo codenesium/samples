@@ -12,17 +12,13 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardServerRequestModelValidator creditCardModelValidator,
-			IBOLCreditCardMapper bolCreditCardMapper,
 			IDALCreditCardMapper dalCreditCardMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       mediator,
 			       creditCardRepository,
 			       creditCardModelValidator,
-			       bolCreditCardMapper,
 			       dalCreditCardMapper,
-			       bolSalesOrderHeaderMapper,
 			       dalSalesOrderHeaderMapper)
 		{
 		}
@@ -30,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d35a825d733d3d56a0520f479e461b13</Hash>
+    <Hash>6969c82eaa7a7bbaa7d4e72c5d7662b6</Hash>
 </Codenesium>*/

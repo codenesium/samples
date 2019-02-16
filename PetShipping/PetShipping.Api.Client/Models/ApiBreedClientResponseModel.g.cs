@@ -20,6 +20,14 @@ namespace PetShippingNS.Api.Client
 		}
 
 		[JsonProperty]
+		public ApiSpeciesClientResponseModel SpeciesIdNavigation { get; private set; }
+
+		public void SetSpeciesIdNavigation(ApiSpeciesClientResponseModel value)
+		{
+			this.SpeciesIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
@@ -34,5 +42,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3ddcc72d83ebcbdc55aae0d54c21e944</Hash>
+    <Hash>8587159b76cf95281c99ad36b5d7bdbc</Hash>
 </Codenesium>*/

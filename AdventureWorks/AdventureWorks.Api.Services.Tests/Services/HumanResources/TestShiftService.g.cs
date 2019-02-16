@@ -26,18 +26,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			var records = new List<Shift>();
 			records.Add(new Shift());
-			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			List<ApiShiftServerResponseModel> response = await service.All();
 
 			response.Should().HaveCount(1);
-			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()));
 		}
 
 		[Fact]
@@ -50,7 +49,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.Get(default(int));
@@ -68,7 +66,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.Get(default(int));
@@ -87,7 +84,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			CreateResponse<ApiShiftServerResponseModel> response = await service.Create(model);
@@ -110,7 +106,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			CreateResponse<ApiShiftServerResponseModel> response = await service.Create(model);
@@ -132,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			UpdateResponse<ApiShiftServerResponseModel> response = await service.Update(default(int), model);
@@ -156,7 +150,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			UpdateResponse<ApiShiftServerResponseModel> response = await service.Update(default(int), model);
@@ -177,7 +170,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -200,7 +192,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               validatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
@@ -221,7 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.ByName("test_value");
@@ -239,7 +229,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.ByName("test_value");
@@ -258,7 +247,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
@@ -276,7 +264,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.MediatorMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLShiftMapperMock,
 			                               mock.DALMapperMockFactory.DALShiftMapperMock);
 
 			ApiShiftServerResponseModel response = await service.ByStartTimeEndTime(default(TimeSpan), default(TimeSpan));
@@ -288,5 +275,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b3f44f1fa1fae15d35e237910f9d0419</Hash>
+    <Hash>3405236a5f57bb3e99f7a0b0b59bdd6b</Hash>
 </Codenesium>*/

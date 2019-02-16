@@ -16,11 +16,7 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IApiCustomerServerRequestModelValidator CustomerModelValidator { get; private set; }
 
-		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
-
 		protected IDALCustomerMapper DalCustomerMapper { get; private set; }
-
-		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
 
@@ -31,28 +27,24 @@ namespace AdventureWorksNS.Api.Services
 			IMediator mediator,
 			ICustomerRepository customerRepository,
 			IApiCustomerServerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolCustomerMapper,
 			IDALCustomerMapper dalCustomerMapper,
-			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
 		{
 			this.CustomerRepository = customerRepository;
 			this.CustomerModelValidator = customerModelValidator;
-			this.BolCustomerMapper = bolCustomerMapper;
 			this.DalCustomerMapper = dalCustomerMapper;
-			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiCustomerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.CustomerRepository.All(limit, offset);
+			var records = await this.CustomerRepository.All(limit, offset, query);
 
-			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
+			return this.DalCustomerMapper.MapBOToModel(records);
 		}
 
 		public virtual async Task<ApiCustomerServerResponseModel> Get(int customerID)
@@ -65,7 +57,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
+				return this.DalCustomerMapper.MapBOToModel(record);
 			}
 		}
 
@@ -76,11 +68,10 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
-				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
+				var bo = this.DalCustomerMapper.MapModelToBO(default(int), model);
+				var record = await this.CustomerRepository.Create(bo);
 
-				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
-				response.SetRecord(this.BolCustomerMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalCustomerMapper.MapBOToModel(record));
 				await this.mediator.Publish(new CustomerCreatedNotification(response.Record));
 			}
 
@@ -95,13 +86,12 @@ namespace AdventureWorksNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolCustomerMapper.MapModelToBO(customerID, model);
-				await this.CustomerRepository.Update(this.DalCustomerMapper.MapBOToEF(bo));
+				var bo = this.DalCustomerMapper.MapModelToBO(customerID, model);
+				await this.CustomerRepository.Update(bo);
 
 				var record = await this.CustomerRepository.Get(customerID);
 
-				var businessObject = this.DalCustomerMapper.MapEFToBO(record);
-				var apiModel = this.BolCustomerMapper.MapBOToModel(businessObject);
+				var apiModel = this.DalCustomerMapper.MapBOToModel(record);
 				await this.mediator.Publish(new CustomerUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiCustomerServerResponseModel>.UpdateResponse(apiModel);
@@ -137,7 +127,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
+				return this.DalCustomerMapper.MapBOToModel(record);
 			}
 		}
 
@@ -151,7 +141,7 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
+				return this.DalCustomerMapper.MapBOToModel(record);
 			}
 		}
 
@@ -159,18 +149,18 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Customer> records = await this.CustomerRepository.ByTerritoryID(territoryID, limit, offset);
 
-			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
+			return this.DalCustomerMapper.MapBOToModel(records);
 		}
 
 		public async virtual Task<List<ApiSalesOrderHeaderServerResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.CustomerRepository.SalesOrderHeadersByCustomerID(customerID, limit, offset);
 
-			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
+			return this.DalSalesOrderHeaderMapper.MapBOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ec2c6cebc809ed8b5d52caed183808e</Hash>
+    <Hash>43581ecd98012bc526e916199a4175b7</Hash>
 </Codenesium>*/

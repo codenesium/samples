@@ -33,10 +33,18 @@ namespace NebulaNS.Api.Services
 		public string LinkIdEntity { get; private set; } = RouteConstants.Links;
 
 		[JsonProperty]
+		public ApiLinkServerResponseModel LinkIdNavigation { get; private set; }
+
+		public void SetLinkIdNavigation(ApiLinkServerResponseModel value)
+		{
+			this.LinkIdNavigation = value;
+		}
+
+		[JsonProperty]
 		public string Log { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6e90a61b292ab2ebfdaa6d01e30116c</Hash>
+    <Hash>3d2bfec062b2333715485797332f0df9</Hash>
 </Codenesium>*/

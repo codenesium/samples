@@ -26,9 +26,20 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.Id == query.ToInt() ||
+				                  x.Name.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<TeacherSkill> Get(int id)
@@ -79,7 +90,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		// Foreign key reference to this table Rate via teacherSkillId.
 		public async virtual Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Rate>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
+			return await this.Context.Set<Rate>()
+			       .Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		protected async Task<List<TeacherSkill>> Where(
@@ -93,7 +105,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
+			return await this.Context.Set<TeacherSkill>()
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
 		}
 
 		private async Task<TeacherSkill> GetById(int id)
@@ -106,5 +120,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8b07c6f4ea256217f4b87dc3e6d20c9d</Hash>
+    <Hash>1f6dbc04973745a68f407d96c32b612c</Hash>
 </Codenesium>*/

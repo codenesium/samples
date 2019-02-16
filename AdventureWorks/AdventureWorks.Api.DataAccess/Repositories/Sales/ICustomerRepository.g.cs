@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Customer> Get(int customerID);
 
-		Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Customer>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<Customer> ByAccountNumber(string accountNumber);
 
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>314bc19a7006bd869a1ed4f142c593a9</Hash>
+    <Hash>85790c636f0b2de6fe9cfbbfc9fd7ac5</Hash>
 </Codenesium>*/

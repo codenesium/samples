@@ -17,7 +17,24 @@ namespace TestsNS.Api.Client
 			this.PersonId = personId;
 
 			this.PersonEntity = nameof(ApiResponse.People);
+
 			this.PersonIdEntity = nameof(ApiResponse.People);
+		}
+
+		[JsonProperty]
+		public ApiPersonClientResponseModel PersonNavigation { get; private set; }
+
+		public void SetPersonNavigation(ApiPersonClientResponseModel value)
+		{
+			this.PersonNavigation = value;
+		}
+
+		[JsonProperty]
+		public ApiPersonClientResponseModel PersonIdNavigation { get; private set; }
+
+		public void SetPersonIdNavigation(ApiPersonClientResponseModel value)
+		{
+			this.PersonIdNavigation = value;
 		}
 
 		[JsonProperty]
@@ -38,5 +55,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>6e4353f4589f5f71123b3cc342115177</Hash>
+    <Hash>1aeddd06f9787e5802ddaff88dae3c64</Hash>
 </Codenesium>*/

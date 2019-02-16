@@ -47,10 +47,19 @@ namespace FileServiceNS.Api.DataAccess
 			Mock<ILogger<FileRepository>> loggerMoc = FileRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = FileRepositoryMoc.GetContext();
 			var repository = new FileRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<FileRepository>> loggerMoc = FileRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = FileRepositoryMoc.GetContext();
+			var repository = new FileRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, 1.ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new FileRepository(loggerMoc.Object, context);
 
 			File entity = new File();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 2, "B", "B", "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
 			context.Set<File>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace FileServiceNS.Api.DataAccess
 			var repository = new FileRepository(loggerMoc.Object, context);
 
 			var entity = new File();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 2, "B", "B", "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
 			await repository.Create(entity);
 
 			var records = await context.Set<File>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = FileRepositoryMoc.GetContext();
 			var repository = new FileRepository(loggerMoc.Object, context);
 			File entity = new File();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 2, "B", "B", "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
 			context.Set<File>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = FileRepositoryMoc.GetContext();
 			var repository = new FileRepository(loggerMoc.Object, context);
 			File entity = new File();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 2, "B", "B", "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
 			context.Set<File>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context = FileRepositoryMoc.GetContext();
 			var repository = new FileRepository(loggerMoc.Object, context);
 			File entity = new File();
-			entity.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, 2, "B", "B", "B");
+			entity.SetProperties(default(int), 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
 			context.Set<File>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00abb1ee3d599e62d0edff18d9853c67</Hash>
+    <Hash>e9e3a1df1f6016ffd2c799d31dce5a10</Hash>
 </Codenesium>*/

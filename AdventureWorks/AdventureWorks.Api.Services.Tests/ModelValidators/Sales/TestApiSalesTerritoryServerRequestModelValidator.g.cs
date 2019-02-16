@@ -73,54 +73,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void @Group_Create_null()
-		{
-			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
-
-			var validator = new ApiSalesTerritoryServerRequestModelValidator(salesTerritoryRepository.Object);
-			await validator.ValidateCreateAsync(new ApiSalesTerritoryServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
-		}
-
-		[Fact]
-		public async void @Group_Update_null()
-		{
-			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
-
-			var validator = new ApiSalesTerritoryServerRequestModelValidator(salesTerritoryRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
-		}
-
-		[Fact]
-		public async void @Group_Create_length()
-		{
-			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
-
-			var validator = new ApiSalesTerritoryServerRequestModelValidator(salesTerritoryRepository.Object);
-			await validator.ValidateCreateAsync(new ApiSalesTerritoryServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
-		}
-
-		[Fact]
-		public async void @Group_Update_length()
-		{
-			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
-			salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
-
-			var validator = new ApiSalesTerritoryServerRequestModelValidator(salesTerritoryRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
-		}
-
-		[Fact]
 		public async void Name_Create_null()
 		{
 			Mock<ISalesTerritoryRepository> salesTerritoryRepository = new Mock<ISalesTerritoryRepository>();
@@ -219,5 +171,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c891bf7792753a5dde8d15825f297f3c</Hash>
+    <Hash>1a42875c5d1618346963b65b61e6231e</Hash>
 </Codenesium>*/

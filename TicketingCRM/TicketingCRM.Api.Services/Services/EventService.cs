@@ -12,13 +12,11 @@ namespace TicketingCRMNS.Api.Services
 			IMediator mediator,
 			IEventRepository eventRepository,
 			IApiEventServerRequestModelValidator eventModelValidator,
-			IBOLEventMapper bolEventMapper,
 			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       mediator,
 			       eventRepository,
 			       eventModelValidator,
-			       bolEventMapper,
 			       dalEventMapper)
 		{
 		}
@@ -26,5 +24,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93fe7674930060e0ff33cf9cb10922ee</Hash>
+    <Hash>6b2832e0fa1f7b8a643e8f07323ad00f</Hash>
 </Codenesium>*/

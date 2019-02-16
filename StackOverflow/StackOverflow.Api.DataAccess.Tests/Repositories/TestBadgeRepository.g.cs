@@ -47,10 +47,19 @@ namespace StackOverflowNS.Api.DataAccess
 			Mock<ILogger<BadgeRepository>> loggerMoc = BadgeRepositoryMoc.GetLoggerMoc();
 			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
 			var repository = new BadgeRepository(loggerMoc.Object, context);
-
-			await context.SaveChangesAsync();
-
 			var records = await repository.All();
+
+			records.Should().NotBeEmpty();
+			records.Count.Should().Be(1);
+		}
+
+		[Fact]
+		public async void AllWithSearch()
+		{
+			Mock<ILogger<BadgeRepository>> loggerMoc = BadgeRepositoryMoc.GetLoggerMoc();
+			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
+			var repository = new BadgeRepository(loggerMoc.Object, context);
+			var records = await repository.All(1, 0, DateTime.Parse("1/1/1987 12:00:00 AM").ToString());
 
 			records.Should().NotBeEmpty();
 			records.Count.Should().Be(1);
@@ -64,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new BadgeRepository(loggerMoc.Object, context);
 
 			Badge entity = new Badge();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 			context.Set<Badge>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -81,7 +90,7 @@ namespace StackOverflowNS.Api.DataAccess
 			var repository = new BadgeRepository(loggerMoc.Object, context);
 
 			var entity = new Badge();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 			await repository.Create(entity);
 
 			var records = await context.Set<Badge>().Where(x => true).ToListAsync();
@@ -96,7 +105,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
 			var repository = new BadgeRepository(loggerMoc.Object, context);
 			Badge entity = new Badge();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 			context.Set<Badge>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -116,9 +125,11 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
 			var repository = new BadgeRepository(loggerMoc.Object, context);
 			Badge entity = new Badge();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 			context.Set<Badge>().Add(entity);
 			await context.SaveChangesAsync();
+
+			context.Entry(entity).State = EntityState.Detached;
 
 			await repository.Update(entity);
 
@@ -134,7 +145,7 @@ namespace StackOverflowNS.Api.DataAccess
 			ApplicationDbContext context = BadgeRepositoryMoc.GetContext();
 			var repository = new BadgeRepository(loggerMoc.Object, context);
 			Badge entity = new Badge();
-			entity.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, "B", 2);
+			entity.SetProperties(default(int), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
 			context.Set<Badge>().Add(entity);
 			await context.SaveChangesAsync();
 
@@ -163,5 +174,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fbf8f1238f2cfd1b69d71c328fbc8771</Hash>
+    <Hash>7410440806761ecd056a7d15b806d371</Hash>
 </Codenesium>*/

@@ -16,19 +16,11 @@ namespace PetShippingNS.Api.Services
 
 		protected IApiHandlerServerRequestModelValidator HandlerModelValidator { get; private set; }
 
-		protected IBOLHandlerMapper BolHandlerMapper { get; private set; }
-
 		protected IDALHandlerMapper DalHandlerMapper { get; private set; }
-
-		protected IBOLAirTransportMapper BolAirTransportMapper { get; private set; }
 
 		protected IDALAirTransportMapper DalAirTransportMapper { get; private set; }
 
-		protected IBOLHandlerPipelineStepMapper BolHandlerPipelineStepMapper { get; private set; }
-
 		protected IDALHandlerPipelineStepMapper DalHandlerPipelineStepMapper { get; private set; }
-
-		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
 
 		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
 
@@ -39,41 +31,33 @@ namespace PetShippingNS.Api.Services
 			IMediator mediator,
 			IHandlerRepository handlerRepository,
 			IApiHandlerServerRequestModelValidator handlerModelValidator,
-			IBOLHandlerMapper bolHandlerMapper,
 			IDALHandlerMapper dalHandlerMapper,
-			IBOLAirTransportMapper bolAirTransportMapper,
 			IDALAirTransportMapper dalAirTransportMapper,
-			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
 			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
-			IBOLOtherTransportMapper bolOtherTransportMapper,
 			IDALOtherTransportMapper dalOtherTransportMapper)
 			: base()
 		{
 			this.HandlerRepository = handlerRepository;
 			this.HandlerModelValidator = handlerModelValidator;
-			this.BolHandlerMapper = bolHandlerMapper;
 			this.DalHandlerMapper = dalHandlerMapper;
-			this.BolAirTransportMapper = bolAirTransportMapper;
 			this.DalAirTransportMapper = dalAirTransportMapper;
-			this.BolHandlerPipelineStepMapper = bolHandlerPipelineStepMapper;
 			this.DalHandlerPipelineStepMapper = dalHandlerPipelineStepMapper;
-			this.BolOtherTransportMapper = bolOtherTransportMapper;
 			this.DalOtherTransportMapper = dalOtherTransportMapper;
 			this.logger = logger;
 
 			this.mediator = mediator;
 		}
 
-		public virtual async Task<List<ApiHandlerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
+		public virtual async Task<List<ApiHandlerServerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string query = "")
 		{
-			var records = await this.HandlerRepository.All(limit, offset);
+			List<Handler> records = await this.HandlerRepository.All(limit, offset, query);
 
-			return this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(records));
+			return this.DalHandlerMapper.MapEntityToModel(records);
 		}
 
 		public virtual async Task<ApiHandlerServerResponseModel> Get(int id)
 		{
-			var record = await this.HandlerRepository.Get(id);
+			Handler record = await this.HandlerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -81,7 +65,7 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.BolHandlerMapper.MapBOToModel(this.DalHandlerMapper.MapEFToBO(record));
+				return this.DalHandlerMapper.MapEntityToModel(record);
 			}
 		}
 
@@ -92,11 +76,10 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BolHandlerMapper.MapModelToBO(default(int), model);
-				var record = await this.HandlerRepository.Create(this.DalHandlerMapper.MapBOToEF(bo));
+				Handler record = this.DalHandlerMapper.MapModelToEntity(default(int), model);
+				record = await this.HandlerRepository.Create(record);
 
-				var businessObject = this.DalHandlerMapper.MapEFToBO(record);
-				response.SetRecord(this.BolHandlerMapper.MapBOToModel(businessObject));
+				response.SetRecord(this.DalHandlerMapper.MapEntityToModel(record));
 				await this.mediator.Publish(new HandlerCreatedNotification(response.Record));
 			}
 
@@ -111,13 +94,12 @@ namespace PetShippingNS.Api.Services
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolHandlerMapper.MapModelToBO(id, model);
-				await this.HandlerRepository.Update(this.DalHandlerMapper.MapBOToEF(bo));
+				Handler record = this.DalHandlerMapper.MapModelToEntity(id, model);
+				await this.HandlerRepository.Update(record);
 
-				var record = await this.HandlerRepository.Get(id);
+				record = await this.HandlerRepository.Get(id);
 
-				var businessObject = this.DalHandlerMapper.MapEFToBO(record);
-				var apiModel = this.BolHandlerMapper.MapBOToModel(businessObject);
+				ApiHandlerServerResponseModel apiModel = this.DalHandlerMapper.MapEntityToModel(record);
 				await this.mediator.Publish(new HandlerUpdatedNotification(apiModel));
 
 				return ValidationResponseFactory<ApiHandlerServerResponseModel>.UpdateResponse(apiModel);
@@ -147,25 +129,25 @@ namespace PetShippingNS.Api.Services
 		{
 			List<AirTransport> records = await this.HandlerRepository.AirTransportsByHandlerId(handlerId, limit, offset);
 
-			return this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(records));
+			return this.DalAirTransportMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiHandlerPipelineStepServerResponseModel>> HandlerPipelineStepsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<HandlerPipelineStep> records = await this.HandlerRepository.HandlerPipelineStepsByHandlerId(handlerId, limit, offset);
 
-			return this.BolHandlerPipelineStepMapper.MapBOToModel(this.DalHandlerPipelineStepMapper.MapEFToBO(records));
+			return this.DalHandlerPipelineStepMapper.MapEntityToModel(records);
 		}
 
 		public async virtual Task<List<ApiOtherTransportServerResponseModel>> OtherTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<OtherTransport> records = await this.HandlerRepository.OtherTransportsByHandlerId(handlerId, limit, offset);
 
-			return this.BolOtherTransportMapper.MapBOToModel(this.DalOtherTransportMapper.MapEFToBO(records));
+			return this.DalOtherTransportMapper.MapEntityToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b6a643116e7c94c5f7a34b6d6856169</Hash>
+    <Hash>f34b93bf3d057b2ec81075c6eaea67ee</Hash>
 </Codenesium>*/

@@ -25,30 +25,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void @Class_Create_length()
-		{
-			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-			productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
-			await validator.ValidateCreateAsync(new ApiProductServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Class, new string('A', 3));
-		}
-
-		[Fact]
-		public async void @Class_Update_length()
-		{
-			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
-			productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
-
-			var validator = new ApiProductServerRequestModelValidator(productRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiProductServerRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.@Class, new string('A', 3));
-		}
-
-		[Fact]
 		public async void Color_Create_length()
 		{
 			Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
@@ -339,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19346b7ce8748be7a26948a3d1281cbc</Hash>
+    <Hash>c2783023fb5a1522cc4b152bbe785d99</Hash>
 </Codenesium>*/

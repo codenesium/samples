@@ -26,9 +26,22 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.DateEntered == query.ToDateTime() ||
+				                  x.Id == query.ToInt() ||
+				                  x.LinkId == query.ToInt() ||
+				                  x.Log.StartsWith(query),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<LinkLog> Get(int id)
@@ -79,7 +92,8 @@ namespace NebulaNS.Api.DataAccess
 		// Foreign key reference to table Link via linkId.
 		public async virtual Task<Link> LinkByLinkId(int linkId)
 		{
-			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.Id == linkId);
+			return await this.Context.Set<Link>()
+			       .SingleOrDefaultAsync(x => x.Id == linkId);
 		}
 
 		protected async Task<List<LinkLog>> Where(
@@ -93,7 +107,10 @@ namespace NebulaNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
+			return await this.Context.Set<LinkLog>()
+			       .Include(x => x.LinkIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
 
 		private async Task<LinkLog> GetById(int id)
@@ -106,5 +123,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>86734dda516d3954ea05af75e7c026cf</Hash>
+    <Hash>2c1b7f7e4423088889281e6de88a30f5</Hash>
 </Codenesium>*/

@@ -26,9 +26,21 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0)
+		public virtual Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0, string query = "")
 		{
-			return this.Where(x => true, limit, offset);
+			if (string.IsNullOrWhiteSpace(query))
+			{
+				return this.Where(x => true, limit, offset);
+			}
+			else
+			{
+				return this.Where(x =>
+				                  x.CountryId == query.ToInt() ||
+				                  x.Detail.StartsWith(query) ||
+				                  x.Id == query.ToInt(),
+				                  limit,
+				                  offset);
+			}
 		}
 
 		public async virtual Task<CountryRequirement> Get(int id)
@@ -79,7 +91,8 @@ namespace PetShippingNS.Api.DataAccess
 		// Foreign key reference to table Country via countryId.
 		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
-			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
+			return await this.Context.Set<Country>()
+			       .SingleOrDefaultAsync(x => x.Id == countryId);
 		}
 
 		protected async Task<List<CountryRequirement>> Where(
@@ -93,7 +106,10 @@ namespace PetShippingNS.Api.DataAccess
 				orderBy = x => x.Id;
 			}
 
-			return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
+			return await this.Context.Set<CountryRequirement>()
+			       .Include(x => x.CountryIdNavigation)
+
+			       .Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
 		}
 
 		private async Task<CountryRequirement> GetById(int id)
@@ -106,5 +122,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff92acf8a6a3726a319fe5bc44671d78</Hash>
+    <Hash>d0d2ecca8f7070f800610d60ffd5de47</Hash>
 </Codenesium>*/

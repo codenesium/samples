@@ -18,10 +18,10 @@ namespace StackOverflowNS.Api.Services
 
 		Task<ApiBadgeServerResponseModel> Get(int id);
 
-		Task<List<ApiBadgeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBadgeServerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>804204b61c773968fd39fd0dda5cbc81</Hash>
+    <Hash>07b034461baa2ec337ca9dc6f776cc7e</Hash>
 </Codenesium>*/

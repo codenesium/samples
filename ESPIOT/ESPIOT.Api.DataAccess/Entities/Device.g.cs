@@ -15,17 +15,27 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
+			DateTime dateOfLastPing,
+			bool isActive,
 			string name,
 			Guid publicId)
 		{
 			this.Id = id;
+			this.DateOfLastPing = dateOfLastPing;
+			this.IsActive = isActive;
 			this.Name = name;
 			this.PublicId = publicId;
 		}
 
+		[Column("dateOfLastPing")]
+		public virtual DateTime DateOfLastPing { get; private set; }
+
 		[Key]
 		[Column("id")]
 		public virtual int Id { get; private set; }
+
+		[Column("isActive")]
+		public virtual bool IsActive { get; private set; }
 
 		[MaxLength(90)]
 		[Column("name")]
@@ -37,5 +47,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>85b2715760a90c9a84c6ab41f6993601</Hash>
+    <Hash>08f54f564c081951fde6c0b315686235</Hash>
 </Codenesium>*/

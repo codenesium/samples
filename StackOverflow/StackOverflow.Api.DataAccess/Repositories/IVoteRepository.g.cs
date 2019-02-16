@@ -15,12 +15,12 @@ namespace StackOverflowNS.Api.DataAccess
 
 		Task<Vote> Get(int id);
 
-		Task<List<Vote>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<Vote>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<List<Vote>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>52f683e2876bf66d7c5b56f4b829fe3a</Hash>
+    <Hash>4531ab68705f1f18bace7ce6381df3fc</Hash>
 </Codenesium>*/

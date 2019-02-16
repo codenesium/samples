@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<StateProvince> Get(int stateProvinceID);
 
-		Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0);
+		Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0, string query = "");
 
 		Task<StateProvince> ByName(string name);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>553facaa06ef6d2f618bf85d8f1d58ca</Hash>
+    <Hash>7be02d0bd70d1fbfb7cef2489e78b4d2</Hash>
 </Codenesium>*/
